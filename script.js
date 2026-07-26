@@ -2,7 +2,9 @@ import { db } from "./firebase-config.js";
 
 import {
 collection,
-getDocs
+getDocs,
+addDoc,
+serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 let allQuestions = [];
 
@@ -306,33 +308,54 @@ submitTest();
 
 // SUBMIT TEST
 
-
-
-function submitTest(){
-
-
-clearInterval(timer);
-
-
+async function submitTest(){
 
 let score = 0;
 
-
-
 testQuestions.forEach((question,index)=>{
 
-
 if(selectedAnswers[index] === question.answer){
-
-
 score++;
+}
 
+});
+
+try{
+
+await addDoc(collection(db,"results"),{
+
+studentName: localStorage.getItem("studentName") || "Student",
+
+district: localStorage.getItem("district") || "",
+
+testType: testType,
+
+score: score,
+
+totalQuestions: testQuestions.length,
+
+percentage: Math.round((score/testQuestions.length)*100),
+
+createdAt: serverTimestamp()
+
+});
+
+}catch(e){
+
+console.log(e);
 
 }
 
+localStorage.setItem("score",score);
+localStorage.setItem("totalQuestions",testQuestions.length);
+localStorage.setItem("testType",testType);
+localStorage.setItem("questions",JSON.stringify(testQuestions));
+localStorage.setItem("userAnswers",JSON.stringify(selectedAnswers));
 
+window.location.href="result.html";
 
-});
+}
+
 
 
 
@@ -570,3 +593,7 @@ confirmSubmit();
 
 };
 
+document.getElementById("submitBtn").addEventListener("click", function () {
+    alert("Submit Button Clicked");
+    confirmSubmit();
+});
