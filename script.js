@@ -59,14 +59,53 @@ else if(testType === "monthly"){
 
 async function loadQuestions(){
 
-
 try{
 
+const snapshot = await getDocs(
+collection(db,"questions")
+);
 
-const response = await fetch("questions.json");
+
+allQuestions=[];
 
 
-allQuestions = await response.json();
+snapshot.forEach((doc)=>{
+
+allQuestions.push(doc.data());
+
+});
+
+
+
+testQuestions =
+allQuestions
+.sort(()=>Math.random()-0.5)
+.slice(0,totalQuestions);
+
+
+
+selectedAnswers =
+new Array(testQuestions.length)
+.fill(null);
+
+
+
+showQuestion();
+
+
+}
+
+catch(error){
+
+console.log(
+"Firebase Question Loading Error",
+error
+);
+
+}
+
+
+}
 
 
 
