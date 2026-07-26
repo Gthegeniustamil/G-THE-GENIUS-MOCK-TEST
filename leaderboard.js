@@ -1,114 +1,104 @@
 import { db } from "./firebase-config.js";
 
-
 import {
-
 collection,
-getDocs,
-query,
-orderBy
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-const leaderList =
-document.getElementById("leaderList");
-
-
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 async function loadLeaderboard(){
 
 
-try{
+const leaderList =
+document.getElementById("leaderList");
 
 
-const q = query(
-
-collection(db,"results"),
-
-orderBy("score","desc")
-
-);
+leaderList.innerHTML = "Loading...";
 
 
 
 const snapshot =
-await getDocs(q);
+await getDocs(collection(db,"results"));
 
 
 
-leaderList.innerHTML="";
-
-
-
-let rank=1;
+let students = [];
 
 
 
 snapshot.forEach((doc)=>{
 
-
 let data = doc.data();
 
+students.push(data);
+
+});
+
+
+
+// Score high to low sort
+
+students.sort((a,b)=>{
+
+return b.percentage - a.percentage;
+
+});
+
+
+
+leaderList.innerHTML = "";
+
+
+
+let rank = 1;
+
+
+
+students.forEach((student)=>{
 
 
 leaderList.innerHTML += `
 
-
-<div class="rank-card">
+<div class="leader-card">
 
 
 <h2>
 
-${rank} 🏆
+${rank <= 3 
+? ["🥇","🥈","🥉"][rank-1]
+: "🏅"
+}
+
+Rank ${rank}
 
 </h2>
 
 
-<div>
-
 <h3>
-${data.studentName}
+👤 ${student.studentName}
 </h3>
 
 
 <p>
-📍 ${data.district}
+📍 ${student.district}
 </p>
 
 
 <p>
-📝 ${data.testType}
+🎯 Test : ${student.testType}
 </p>
-
-
-</div>
-
-
-
-<div>
-
-<h2>
-${data.score}/${data.totalQuestions}
-</h2>
 
 
 <p>
-${data.percentage}%
+📝 Score : ${student.score}/${student.totalQuestions}
 </p>
 
 
-</div>
+<p>
+📈 ${student.percentage}%
 
+</p>
 
 
 </div>
@@ -117,28 +107,13 @@ ${data.percentage}%
 `;
 
 
-
 rank++;
 
 
 });
 
 
-
 }
-
-catch(error){
-
-console.log(error);
-
-leaderList.innerHTML =
-"Error Loading Leaderboard";
-
-}
-
-
-}
-
 
 
 
