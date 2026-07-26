@@ -3,113 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G THE GENIUS Dashboard</title>
+<title>Dashboard | G THE GENIUS</title>
 
 <link rel="stylesheet" href="style.css">
-
-<style>
-
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#0b1d3a;
-color:white;
-}
-
-.header{
-background:#001a33;
-padding:20px;
-text-align:center;
-font-size:24px;
-font-weight:bold;
-color:gold;
-box-shadow:0 2px 10px rgba(0,0,0,.4);
-}
-
-.welcome{
-padding:20px;
-text-align:center;
-}
-
-.card{
-background:white;
-color:black;
-margin:15px;
-padding:18px;
-border-radius:12px;
-text-align:center;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-}
-
-.card:hover{
-transform:scale(1.02);
-}
-
-.daily{
-border-left:8px solid green;
-}
-
-.weekly{
-border-left:8px solid orange;
-}
-
-.monthly{
-border-left:8px solid red;
-}
-
-.other{
-border-left:8px solid #003366;
-}
-
-.footer{
-text-align:center;
-padding:20px;
-color:white;
-font-size:14px;
-}
-
-</style>
-
 </head>
 
 <body>
 
 <div class="header">
-🛡️ G THE GENIUS
+<h2>🛡️ G THE GENIUS</h2>
+<p>TNUSRB MOCK TEST PORTAL</p>
 </div>
 
-<div class="welcome">
-
-<h2 id="student"></h2>
-
-<p id="district"></p>
-
+<div class="welcome-card">
+<h3 id="studentName"></h3>
+<p id="studentDistrict"></p>
 </div>
 
-<div class="card daily" onclick="window.location.href='test.html'"
-🟢 DAILY MOCK TEST<br>
-10 Questions
-</div>
+<div class="menu">
 
-<div class="card weekly" onclick="window.location.href='test.html?type=weekly'"
-🟡 WEEKLY MOCK TEST<br>
-25 Questions
-</div>
+<button class="daily" onclick="location.href='test.html?type=daily'">
+🟢 DAILY MOCK TEST
+<br>
+<small>10 Questions</small>
+</button>
 
-<div class="card monthly" onclick="window.location.href='test.html?type=monthly'"
-🔴 MONTHLY GRAND TEST<br>
-100 Questions
-</div>
+<button class="weekly" onclick="location.href='test.html?type=weekly'">
+🟡 WEEKLY MOCK TEST
+<br>
+<small>25 Questions</small>
+</button>
 
-<div class="card other" onclick="alert('Previous Tests Coming Soon')">
-📚 PREVIOUS TESTS
-</div>
+<button class="monthly" onclick="location.href='test.html?type=monthly'">
+🔴 MONTHLY GRAND TEST
+<br>
+<small>100 Questions</small>
+</button>
 
-<div class="card other" onclick="alert('Leaderboard Coming Soon')">
+<button onclick="location.href='leaderboard.html'">
 🏆 LEADERBOARD
+</button>
+
+<button onclick="location.href='result.html'">
+📊 MY RESULTS
+</button>
+
+<button onclick="alert('Coming Soon')">
+📚 PREVIOUS TESTS
+</button>
+
 </div>
 
-<div class="card other" onclick="alert
+<script>
+
+document.getElementById("studentName").innerHTML =
+"👤 " + localStorage.getItem("studentName");
+
+document.getElementById("studentDistrict").innerHTML =
+"📍 " + localStorage.getItem("district");
+
+</script>
+
+</body>
+</html>
