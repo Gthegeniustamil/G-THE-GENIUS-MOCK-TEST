@@ -218,52 +218,6 @@ document.getElementById("uploadStatus").innerHTML =
 
 });
 
-const text = document.getElementById("bulkJson").value;
-
-if(text.trim() === ""){
-
-alert("Paste JSON First");
-
-return;
-
-}
-
-try{
-
-const questions = JSON.parse(text);
-
-let count = 0;
-
-for(const q of questions){
-
-await addDoc(collection(db,"questions"),{
-
-question:q.question,
-options:q.options,
-answer:q.answer,
-explanation:q.explanation,
-createdAt:serverTimestamp()
-
-});
-
-count++;
-
-}
-
-document.getElementById("uploadStatus").innerHTML =
-"✅ " + count + " Questions Uploaded Successfully";
-loadQuestions();
-}
-catch(error){
-
-console.log(error);
-
-document.getElementById("uploadStatus").innerHTML =
-"❌ Invalid JSON";
-
-}
-
-};
 
 async function loadQuestions(){
 
