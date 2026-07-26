@@ -1,1 +1,311 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
+
+body{
+
+    background:linear-gradient(180deg,#06152e,#0b2a52);
+    min-height:100vh;
+    color:white;
+
+}
+
+
+.dashboard-container{
+
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:15px;
+
+}
+
+
+
+/* TOP PROFILE */
+
+
+.top-header{
+
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:25px;
+
+    padding:20px;
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+}
+
+
+
+.logo{
+
+    width:65px;
+    height:65px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#ffd700,#ff9800);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:32px;
+
+}
+
+
+
+.brand h1{
+
+    color:#ffd700;
+    font-size:22px;
+
+}
+
+
+.brand p{
+
+    color:#ddd;
+    font-size:13px;
+
+}
+
+
+
+.student-info{
+
+    margin-top:20px;
+
+    background:white;
+
+    color:#06152e;
+
+    border-radius:20px;
+
+    padding:18px;
+
+    text-align:center;
+
+}
+
+
+.student-info h3{
+
+    font-size:20px;
+
+}
+
+
+
+.student-info p{
+
+    color:#003366;
+    margin-top:5px;
+
+}
+
+
+
+
+/* TEST TITLE */
+
+
+.test-section{
+
+    margin-top:25px;
+
+}
+
+
+.test-section h2{
+
+    margin-bottom:15px;
+
+}
+
+
+
+
+
+/* TEST CARDS */
+
+
+.test-grid{
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+}
+
+
+
+.test-card{
+
+    padding:22px;
+
+    border-radius:25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+}
+
+
+
+.test-card h3{
+
+    font-size:18px;
+
+}
+
+
+.test-card h1{
+
+    font-size:38px;
+
+}
+
+
+
+.test-card p{
+
+    font-size:13px;
+
+}
+
+
+
+.test-card button{
+
+    margin-top:10px;
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:20px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+.daily{
+
+    background:linear-gradient(135deg,#00b894,#008f6a);
+
+}
+
+
+.weekly{
+
+    background:linear-gradient(135deg,#ffc107,#ff9800);
+
+    color:#111;
+
+}
+
+
+.monthly{
+
+    background:linear-gradient(135deg,#ff416c,#ff4b2b);
+
+}
+
+
+
+
+
+.test-card button{
+
+    background:white;
+
+    color:#003366;
+
+}
+
+
+
+
+
+/* MENU */
+
+
+.menu-section{
+
+    margin-top:25px;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+
+}
+
+
+
+.menu-card{
+
+    background:rgba(255,255,255,.1);
+
+    border-radius:20px;
+
+    padding:20px 10px;
+
+    text-align:center;
+
+    border:1px solid rgba(255,255,255,.15);
+
+}
+
+
+
+.menu-card h3{
+
+    margin-top:10px;
+
+    font-size:14px;
+
+}
+
+
+
+.menu-card p{
+
+    font-size:12px;
+
+    color:#ddd;
+
+}
+
+
+
+@media(max-width:350px){
+
+.menu-section{
+
+grid-template-columns:1fr;
+
+}
+
+}
