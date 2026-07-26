@@ -79,29 +79,23 @@ Start Test
 
 function goDashboard(){
 
-let name =
-document.getElementById("studentName").value;
+let name = document.getElementById("studentName").value;
+let district = document.getElementById("district").value;
+let exam = document.getElementById("exam").value;
 
-let district =
-document.getElementById("district").value;
+if(name === "" || district === "" || exam === ""){
 
-
-if(name === "" || district === ""){
-
-alert("Enter Student Name and Select District");
+alert("Please fill all details");
 
 return;
 
 }
 
-
 localStorage.setItem("studentName", name);
-
 localStorage.setItem("district", district);
+localStorage.setItem("exam", exam);
 
-
-window.location.href="dashboard.html";
-
+window.location.href = "dashboard.html";
 
 }
 
