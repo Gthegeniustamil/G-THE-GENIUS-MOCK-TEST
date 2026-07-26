@@ -9,9 +9,11 @@ import { db, auth } from "./firebase-config.js";
 import {
 collection,
 addDoc,
+getDocs,
+deleteDoc,
+doc,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 
 const saveButton =
 document.getElementById("saveQuestion");
@@ -203,5 +205,75 @@ document.getElementById("uploadStatus").innerHTML =
 "❌ Invalid JSON";
 
 }
+
+};
+
+async function loadQuestions(){
+
+const questionList = document.getElementById("questionList");
+const questionCount = document.getElementById("questionCount");
+
+questionList.innerHTML = "Loading...";
+
+const snapshot = await getDocs(collection(db,"questions"));
+
+questionList.innerHTML = "";
+
+questionCount.innerHTML =
+"📊 Total Questions : " + snapshot.size;
+
+snapshot.forEach((questionDoc)=>{
+
+const q = questionDoc.data();
+
+questionList.innerHTML += `
+
+<div class="question-card">
+
+<h3>${q.question}</h3>
+
+<p>A. ${q.options[0]}</p>
+<p>B. ${q.options[1]}</p>
+<p>C. ${q.options[2]}</p>
+<p>D. ${q.options[3]}</p>
+
+<button onclick="deleteQuestion('${questionDoc.id}')">
+🗑 Delete
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+window.deleteQuestion = async function(id){
+
+if(confirm("Delete this question?")){
+
+await deleteDoc(doc(db,"questions",id));
+
+loadQuestions();
+
+}
+
+}
+
+loadQuestions();
+
+document.getElementById("searchQuestion").onkeyup = function(){
+
+const value = this.value.toLowerCase();
+
+document.querySelectorAll(".question-card").forEach(card=>{
+
+card.style.display =
+card.innerText.toLowerCase().includes(value)
+? "block"
+: "none";
+
+});
 
 };
