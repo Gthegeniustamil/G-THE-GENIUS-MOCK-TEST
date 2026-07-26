@@ -1,3 +1,10 @@
+import {
+
+signOut
+
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 import { db } from "./firebase-config.js";
 
 
@@ -145,5 +152,19 @@ alert("❌ Error Saving Question");
 }
 
 
+
+};
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+
+logoutBtn.onclick = async function(){
+
+await signOut(auth);
+
+
+window.location.href =
+"admin-login.html";
 
 };
