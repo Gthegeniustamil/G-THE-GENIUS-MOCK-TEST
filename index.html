@@ -61,7 +61,37 @@
 <button onclick="goDashboard()">
 Start Test
 </button>
+<script>
 
+function goDashboard(){
+
+let name =
+document.getElementById("studentName").value;
+
+let district =
+document.getElementById("district").value;
+
+
+if(name === "" || district === ""){
+
+alert("Enter Student Name and Select District");
+
+return;
+
+}
+
+
+localStorage.setItem("studentName", name);
+
+localStorage.setItem("district", district);
+
+
+window.location.href="dashboard.html";
+
+
+}
+
+</script>
 
 <script type="module" src="script.js"></script>
 
