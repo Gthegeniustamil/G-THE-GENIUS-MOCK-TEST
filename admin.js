@@ -311,3 +311,98 @@ alert("❌ Update Failed");
 }
 
 };
+async function loadResults(){
+
+const resultList =
+document.getElementById("resultList");
+
+const resultCount =
+document.getElementById("resultCount");
+
+
+resultList.innerHTML="Loading...";
+
+
+const snapshot =
+await getDocs(collection(db,"results"));
+
+
+resultList.innerHTML="";
+
+
+resultCount.innerHTML =
+"📊 Total Results : " + snapshot.size;
+
+
+
+snapshot.forEach((resultDoc)=>{
+
+
+const r = resultDoc.data();
+
+
+
+resultList.innerHTML += `
+
+<div class="result-card">
+
+<h3>
+👤 ${r.studentName}
+</h3>
+
+<p>
+📍 District : ${r.district}
+</p>
+
+<p>
+🎯 Test : ${r.testType}
+</p>
+
+<p>
+📝 Score : ${r.score} / ${r.totalQuestions}
+</p>
+
+<p>
+📈 Percentage : ${r.percentage}%
+</p>
+
+
+<button onclick="deleteResult('${resultDoc.id}')">
+
+🗑 Delete
+
+</button>
+
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+
+window.deleteResult = async function(id){
+
+
+if(confirm("Delete this Result?")){
+
+
+await deleteDoc(
+doc(db,"results",id)
+);
+
+
+loadResults();
+
+
+}
+
+
+}
+
+
+loadResults();
