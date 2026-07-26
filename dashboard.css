@@ -390,3 +390,51 @@ text-align:center;
 
 
 }
+
+/* MY RANK CARD */
+
+.student-rank-card{
+
+background:linear-gradient(135deg,#0f2747,#163b6d);
+
+padding:20px;
+
+margin:20px 0;
+
+border-radius:18px;
+
+text-align:center;
+
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
+
+border:1px solid #ffd700;
+
+}
+
+
+.student-rank-card h2{
+
+color:#ffd700;
+
+font-size:24px;
+
+margin-bottom:15px;
+
+}
+
+
+.student-rank-card p{
+
+background:#071426;
+
+padding:12px;
+
+border-radius:10px;
+
+margin:10px 0;
+
+font-size:17px;
+
+color:white;
+
+}
