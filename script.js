@@ -91,7 +91,7 @@ new Array(testQuestions.length)
 
 showQuestion();
 
-startTimer();
+
 
 createPalette();
 }
@@ -251,11 +251,6 @@ showQuestion();
 
 };
 
-// TIMER SETTINGS
-
-let timeLeft = 20 * 60;
-
-let timer;
 
 
 
@@ -306,8 +301,6 @@ submitTest();
 }
 
 
-
-// START TIMER AFTER QUESTIONS LOAD
 
 
 
