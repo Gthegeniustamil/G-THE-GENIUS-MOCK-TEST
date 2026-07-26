@@ -1,21 +1,74 @@
-function startPortal(){
+// G THE GENIUS - Test Engine Part 1
 
-const name=document.getElementById("studentName").value.trim();
+let questions = [];
+let currentQuestion = 0;
+let answers = [];
 
-const district=document.getElementById("district").value;
+async function loadQuestions() {
 
-if(name==="" || district===""){
+    const response = await fetch("questions/daily/Day001.json");
+    questions = await response.json();
 
-alert("Please Enter Name and Select District");
+    showQuestion();
 
-return;
+}
+
+function showQuestion() {
+
+    document.getElementById("qno").innerText = currentQuestion + 1;
+
+    document.getElementById("question").innerText =
+    questions[currentQuestion].question;
+
+    document.getElementById("op1").innerText =
+    "A. " + questions[currentQuestion].options[0];
+
+    document.getElementById("op2").innerText =
+    "B. " + questions[currentQuestion].options[1];
+
+    document.getElementById("op3").innerText =
+    "C. " + questions[currentQuestion].options[2];
+
+    document.getElementById("op4").innerText =
+    "D. " + questions[currentQuestion].options[3];
 
 }
 
-localStorage.setItem("studentName",name);
+function selectAnswer(option){
 
-localStorage.setItem("district",district);
+    answers[currentQuestion]=option;
 
-window.location.href="dashboard.html";
+    alert("Option Selected");
 
 }
+
+document.getElementById("op1").onclick=()=>selectAnswer(0);
+document.getElementById("op2").onclick=()=>selectAnswer(1);
+document.getElementById("op3").onclick=()=>selectAnswer(2);
+document.getElementById("op4").onclick=()=>selectAnswer(3);
+
+document.querySelector(".next").onclick=()=>{
+
+    if(currentQuestion<questions.length-1){
+
+        currentQuestion++;
+
+        showQuestion();
+
+    }
+
+};
+
+document.querySelector(".prev").onclick=()=>{
+
+    if(currentQuestion>0){
+
+        currentQuestion--;
+
+        showQuestion();
+
+    }
+
+};
+
+loadQuestions();
