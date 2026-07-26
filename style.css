@@ -45,3 +45,48 @@ cursor:pointer;
 button:hover{
 background:#e68900;
 }
+.header{
+background:#001f4d;
+color:#fff;
+text-align:center;
+padding:20px;
+}
+
+.welcome-card{
+margin:15px;
+background:#fff;
+padding:15px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:15px;
+padding:15px;
+}
+
+.menu button{
+padding:18px;
+font-size:18px;
+border:none;
+border-radius:12px;
+background:#003366;
+color:white;
+cursor:pointer;
+}
+
+.daily{
+background:#198754 !important;
+}
+
+.weekly{
+background:#ffc107 !important;
+color:#000 !important;
+}
+
+.monthly{
+background:#dc3545 !important;
+}
