@@ -6,315 +6,213 @@ getDocs,
 addDoc,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 let allQuestions = [];
-
 let testQuestions = [];
-
 let currentQuestion = 0;
-
 let selectedAnswers = [];
 
 let testType = "daily";
-
 let totalQuestions = 10;
 
-
-// GET TEST TYPE FROM URL
-
 const urlParams = new URLSearchParams(window.location.search);
-
 testType = urlParams.get("type") || "daily";
 
-
-
-// SET QUESTION COUNT
-
-if(testType === "daily"){
-
+if(testType==="daily"){
     totalQuestions = 10;
-
-    document.getElementById("testType").innerHTML =
-    "🟢 Daily Mock Test";
-
+    document.getElementById("testType").innerHTML="🟢 Daily Mock Test";
 }
-
-
-else if(testType === "weekly"){
-
+else if(testType==="weekly"){
     totalQuestions = 25;
-
-    document.getElementById("testType").innerHTML =
-    "🟡 Weekly Mock Test";
-
+    document.getElementById("testType").innerHTML="🟡 Weekly Mock Test";
 }
-
-
-else if(testType === "monthly"){
-
+else{
     totalQuestions = 100;
-
-    document.getElementById("testType").innerHTML =
-    "🔴 Monthly Grand Test";
-
+    document.getElementById("testType").innerHTML="🔴 Monthly Grand Test";
 }
-
-
-
-
-
-// LOAD QUESTIONS JSON
-
 
 async function loadQuestions(){
 
-try{
+    document.getElementById("questionText").innerHTML="Loading Questions...";
 
-const snapshot = await getDocs(
-collection(db,"questions")
-);
+    try{
 
-allQuestions=[];
+        const snapshot = await getDocs(collection(db,"questions"));
 
-snapshot.forEach((doc)=>{
-allQuestions.push(doc.data());
-});
+        allQuestions=[];
 
+        snapshot.forEach((doc)=>{
+            allQuestions.push(doc.data());
+        });
 
-testQuestions =
-allQuestions
-.sort(()=>Math.random()-0.5)
-.slice(0,totalQuestions);
+        if(allQuestions.length===0){
+            document.getElementById("questionText").innerHTML="No Questions Found";
+            return;
+        }
 
+        testQuestions = allQuestions
+        .sort(()=>Math.random()-0.5)
+        .slice(0,totalQuestions);
 
-selectedAnswers =
-new Array(testQuestions.length)
-.fill(null);
+        selectedAnswers = new Array(testQuestions.length).fill(null);
 
+        showQuestion();
+        createPalette();
 
-showQuestion();
+    }catch(error){
 
+        console.log(error);
 
+        document.getElementById("questionText").innerHTML="Failed to Load Questions";
 
-createPalette();
-}
-
-catch(error){
-
-console.log(error);
-
-}
+    }
 
 }
 
-
-// START
-loadQuestions();
-
-
-// DISPLAY QUESTION
 function showQuestion(){
 
-if(testQuestions.length === 0){
+    const q = testQuestions[currentQuestion];
 
-document.getElementById("questionText").innerHTML =
-"No Questions Available";
+    document.getElementById("questionNumber").innerHTML =
+    "Question " + (currentQuestion+1) + " / " + testQuestions.length;
 
-return;
+    document.getElementById("questionText").innerHTML =
+    q.question;
 
-}
-    
-let q = testQuestions[currentQuestion];
+    const optionBox = document.getElementById("options");
 
+    optionBox.innerHTML="";
 
+    q.options.forEach((option,index)=>{
 
-document.getElementById("questionNumber").innerHTML =
+        const btn = document.createElement("button");
 
-"Question " + (currentQuestion + 1) +
-" / " + testQuestions.length;
+        btn.className="option";
 
+        btn.innerHTML=option;
 
+        if(selectedAnswers[currentQuestion]===index){
+            btn.classList.add("selected");
+        }
 
-document.getElementById("questionText").innerHTML =
+        btn.onclick=function(){
 
-q.question;
+            selectedAnswers[currentQuestion]=index;
 
+            showQuestion();
 
+        };
 
-let optionContainer = 
-document.getElementById("options");
+        optionBox.appendChild(btn);
 
-
-optionContainer.innerHTML = "";
-
-
-
-
-
-q.options.forEach((option,index)=>{
-
-
-let button = document.createElement("button");
-
-
-button.className="option";
-
-
-button.innerHTML = option;
-
-
-
-
-// CHECK SELECTED ANSWER
-
-if(selectedAnswers[currentQuestion] === index){
-
-button.classList.add("selected");
+    });
 
 }
 
-
-
-
-button.onclick = function(){
-
-
-selectedAnswers[currentQuestion] = index;
-
-
-showQuestion();
-
-
-};
-
-
-
-
-optionContainer.appendChild(button);
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
+loadQuestions();
 
 // NEXT BUTTON
+document.getElementById("nextBtn").onclick = function(){
 
+    if(currentQuestion < testQuestions.length - 1){
 
-document.getElementById("nextBtn")
-.onclick=function(){
+        currentQuestion++;
 
+        showQuestion();
 
-if(currentQuestion < testQuestions.length-1){
+        updatePalette();
 
-
-currentQuestion++;
-
-
-showQuestion();
-
-
-}
-
+    }
 
 };
-
-
-
-
-
-
 
 // PREVIOUS BUTTON
+document.getElementById("previousBtn").onclick = function(){
 
+    if(currentQuestion > 0){
 
-document.getElementById("previousBtn")
-.onclick=function(){
+        currentQuestion--;
 
+        showQuestion();
 
-if(currentQuestion > 0){
+        updatePalette();
 
-
-currentQuestion--;
-
-
-showQuestion();
-
-
-}
-
+    }
 
 };
 
+// CREATE QUESTION PALETTE
+function createPalette(){
 
+    const palette = document.createElement("div");
 
+    palette.id = "questionPalette";
 
-// START TIMER
+    testQuestions.forEach((q,index)=>{
 
-function startTimer(){
+        const btn = document.createElement("button");
 
+        btn.innerHTML = index + 1;
 
-timer = setInterval(function(){
+        btn.className = "palette-btn";
 
+        btn.onclick = function(){
 
-let minutes = Math.floor(timeLeft / 60);
+            currentQuestion = index;
 
-let seconds = timeLeft % 60;
+            showQuestion();
 
+            updatePalette();
 
+        };
 
-document.getElementById("timer").innerHTML =
+        palette.appendChild(btn);
 
-minutes + ":" + 
-(seconds < 10 ? "0" : "") +
-seconds;
+    });
 
+    document.querySelector(".question-box").prepend(palette);
 
-
-timeLeft--;
-
-
-
-// AUTO SUBMIT
-
-if(timeLeft < 0){
-
-
-clearInterval(timer);
-
-submitTest();
-
+    updatePalette();
 
 }
 
+// UPDATE PALETTE
+function updatePalette(){
 
+    const buttons = document.querySelectorAll(".palette-btn");
 
-},1000);
+    buttons.forEach((btn,index)=>{
 
+        btn.classList.remove("answered","active");
 
+        if(selectedAnswers[index] !== null){
+            btn.classList.add("answered");
+        }
 
-}
+        if(index === currentQuestion){
+            btn.classList.add("active");
+        }
 
+    });
 
+            }
 
-
-
+// ======================
 // SUBMIT TEST
+// ======================
+
+import {
+addDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 async function submitTest(){
 
 let score = 0;
 
-testQuestions.forEach((question,index)=>{
+testQuestions.forEach((q,index)=>{
 
-if(selectedAnswers[index] === question.answer){
+if(selectedAnswers[index]===q.answer){
 score++;
 }
 
@@ -328,272 +226,61 @@ studentName: localStorage.getItem("studentName") || "Student",
 
 district: localStorage.getItem("district") || "",
 
-testType: testType,
+testType:testType,
 
-score: score,
+score:score,
 
-totalQuestions: testQuestions.length,
+totalQuestions:testQuestions.length,
 
-percentage: Math.round((score/testQuestions.length)*100),
+percentage:Math.round(score/testQuestions.length*100),
 
-createdAt: serverTimestamp()
+createdAt:serverTimestamp()
 
 });
 
-}catch(e){
+}catch(error){
 
-console.log(e);
+console.log(error);
 
 }
 
 localStorage.setItem("score",score);
 localStorage.setItem("totalQuestions",testQuestions.length);
-localStorage.setItem("testType",testType);
 localStorage.setItem("questions",JSON.stringify(testQuestions));
 localStorage.setItem("userAnswers",JSON.stringify(selectedAnswers));
+localStorage.setItem("testType",testType);
 
 window.location.href="result.html";
 
 }
 
-
-
-
-
-
-// SAVE RESULT
-
-
-localStorage.setItem(
-"score",
-score
-);
-
-
-
-localStorage.setItem(
-"totalQuestions",
-testQuestions.length
-);
-
-
-
-localStorage.setItem(
-"testType",
-testType
-);
-
-
-
-localStorage.setItem(
-"questions",
-JSON.stringify(testQuestions)
-);
-
-
-
-localStorage.setItem(
-"userAnswers",
-JSON.stringify(selectedAnswers)
-);
-
-
-
-
-
-// GO RESULT PAGE
-
-
-window.location.href="result.html";
-
-
-
-}
-
-// QUESTION PALETTE
-
-
-function createPalette(){
-
-
-let palette = document.createElement("div");
-
-palette.id = "questionPalette";
-
-
-testQuestions.forEach((q,index)=>{
-
-
-let btn = document.createElement("button");
-
-
-btn.innerHTML = index + 1;
-
-
-btn.className="palette-btn";
-
-
-
-btn.onclick=function(){
-
-
-currentQuestion = index;
-
-
-showQuestion();
-
-
-};
-
-
-
-
-palette.appendChild(btn);
-
-
-
-});
-
-
-
-document
-.querySelector(".question-box")
-.insertBefore(
-palette,
-document.getElementById("questionText")
-);
-
-
-
-}
-
-
-
-
-
-// UPDATE PALETTE STATUS
-
-
-function updatePalette(){
-
-
-let buttons =
-document.querySelectorAll(".palette-btn");
-
-
-
-buttons.forEach((btn,index)=>{
-
-
-btn.classList.remove(
-"answered",
-"active"
-);
-
-
-
-if(selectedAnswers[index] !== null){
-
-btn.classList.add("answered");
-
-}
-
-
-
-if(index === currentQuestion){
-
-btn.classList.add("active");
-
-}
-
-
-});
-
-
-
-}
-
-
-
-
-
-// MODIFY SHOW QUESTION
-
-
-let oldShowQuestion = showQuestion;
-
-
-showQuestion = function(){
-
-
-oldShowQuestion();
-
-
-updatePalette();
-
-
-};
-
-
-
-
-
-// SUBMIT CONFIRMATION
-
+// ======================
+// CONFIRM SUBMIT
+// ======================
 
 function confirmSubmit(){
 
+let unanswered =
+selectedAnswers.filter(x=>x===null).length;
 
-let unanswered = selectedAnswers.filter(
-answer => answer === null
-).length;
+if(unanswered>0){
 
-
-
-if(unanswered > 0){
-
-
-let result = confirm(
-
-unanswered +
-" questions unanswered.\nSubmit Test?"
-
-);
-
-
-
-if(result){
+if(confirm(unanswered+" Questions not answered.\nSubmit Test?")){
 
 submitTest();
 
 }
 
-
-}
-
-else{
-
+}else{
 
 submitTest();
 
+}
 
 }
 
-
-}
-
-
-
-
-
-document.getElementById("submitBtn")
-.onclick=function(){
+document.getElementById("submitBtn").onclick=function(){
 
 confirmSubmit();
 
 };
-
-document.getElementById("submitBtn").addEventListener("click", function () {
-    alert("Submit Button Clicked");
-    confirmSubmit();
-});
