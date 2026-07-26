@@ -11,6 +11,7 @@ collection,
 addDoc,
 getDocs,
 deleteDoc,
+updateDoc,
 doc,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -237,6 +238,10 @@ questionList.innerHTML += `
 <p>C. ${q.options[2]}</p>
 <p>D. ${q.options[3]}</p>
 
+<button onclick="editQuestion('${questionDoc.id}')">
+✏️ Edit
+</button>
+
 <button onclick="deleteQuestion('${questionDoc.id}')">
 🗑 Delete
 </button>
@@ -275,5 +280,23 @@ card.innerText.toLowerCase().includes(value)
 : "none";
 
 });
+
+};
+
+window.editQuestion = async function(id){
+
+const newQuestion = prompt("Enter New Question");
+
+if(newQuestion == null || newQuestion.trim()=="") return;
+
+await updateDoc(doc(db,"questions",id),{
+
+question:newQuestion
+
+});
+
+alert("✅ Question Updated");
+
+loadQuestions();
 
 };
