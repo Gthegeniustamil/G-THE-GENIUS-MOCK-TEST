@@ -314,19 +314,6 @@ submitTest();
 // SUBMIT TEST
 
 
-document.getElementById("submitBtn")
-.onclick=function(){
-
-
-submitTest();
-
-
-};
-
-
-
-
-
 
 function submitTest(){
 
