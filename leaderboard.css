@@ -1,208 +1,89 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
-
 body{
 
-    min-height:100vh;
-
-    background:
-    linear-gradient(180deg,#06152e,#0b2a52);
-
-    color:white;
+margin:0;
+font-family:Arial, sans-serif;
+background:#071426;
+color:white;
 
 }
-
 
 
 .leader-container{
 
-    width:100%;
-    max-width:600px;
+width:90%;
+max-width:600px;
+margin:30px auto;
+text-align:center;
 
-    margin:auto;
+}
 
-    padding:15px;
+
+.leader-container h1{
+
+color:#ffd700;
+font-size:32px;
+
+}
+
+
+.leader-container h2{
+
+margin-bottom:25px;
 
 }
 
 
 
+.leader-card{
 
-/* HEADER */
-
-
-.leader-header{
-
-    background:
-    linear-gradient(135deg,#001f4d,#123b6d);
-
-    padding:25px;
-
-    border-radius:25px;
-
-    text-align:center;
-
-    box-shadow:0 8px 25px rgba(0,0,0,.4);
+background:#102542;
+border-radius:15px;
+padding:20px;
+margin-bottom:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
 
 }
 
 
+.leader-card h2{
 
-.leader-header h1{
-
-    color:#ffd700;
-
-    margin-bottom:8px;
+color:#ffd700;
 
 }
 
 
+.leader-card h3{
 
-.leader-header p{
-
-    color:#ddd;
-
-}
-
-
-
-
-
-/* RANK CARD */
-
-
-.rank-card{
-
-    margin-top:18px;
-
-    background:
-    rgba(255,255,255,.12);
-
-    backdrop-filter:blur(10px);
-
-    border-radius:22px;
-
-    padding:18px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    border:
-    1px solid rgba(255,255,255,.2);
-
-    box-shadow:
-    0 8px 20px rgba(0,0,0,.3);
+font-size:22px;
 
 }
 
 
+.leader-card p{
 
-
-.rank-card h2{
-
-    color:#ffd700;
-
-}
-
-
-
-.rank-card h3{
-
-    font-size:18px;
+font-size:16px;
+margin:8px;
 
 }
 
-
-
-.rank-card p{
-
-    color:#ddd;
-
-    margin-top:5px;
-
-}
-
-
-
-
-/* TOP RANK EFFECT */
-
-
-.rank-card:nth-child(1){
-
-    border:2px solid #ffd700;
-
-}
-
-
-
-.rank-card:nth-child(2){
-
-    border:2px solid #c0c0c0;
-
-}
-
-
-
-.rank-card:nth-child(3){
-
-    border:2px solid #cd7f32;
-
-}
-
-
-
-
-
-/* BUTTON */
 
 
 button{
 
-    margin-top:25px;
-
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:20px;
-
-    background:#ff9800;
-
-    color:white;
-
-    font-size:18px;
-
-    font-weight:bold;
+background:#ffd700;
+color:#000;
+border:none;
+padding:12px 25px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+margin-top:20px;
 
 }
 
 
+button:hover{
 
-
-
-@media(max-width:400px){
-
-
-.rank-card{
-
-flex-direction:column;
-
-text-align:center;
-
-gap:10px;
-
-}
-
+transform:scale(1.05);
 
 }
