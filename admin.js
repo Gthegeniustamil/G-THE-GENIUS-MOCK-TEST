@@ -287,16 +287,27 @@ window.editQuestion = async function(id){
 
 const newQuestion = prompt("Enter New Question");
 
-if(newQuestion == null || newQuestion.trim()=="") return;
+if(newQuestion == null || newQuestion.trim() == ""){
+    return;
+}
+
+try{
 
 await updateDoc(doc(db,"questions",id),{
-
-question:newQuestion
-
+    question: newQuestion.trim()
 });
 
-alert("✅ Question Updated");
+alert("✅ Question Updated Successfully");
 
 loadQuestions();
+
+}
+catch(error){
+
+console.log(error);
+
+alert("❌ Update Failed");
+
+}
 
 };
