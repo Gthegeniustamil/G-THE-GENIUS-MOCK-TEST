@@ -1,1 +1,289 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
+
+body{
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(180deg,#06152e,#0b2a52);
+
+    color:white;
+
+}
+
+
+
+.result-container{
+
+    width:100%;
+
+    max-width:600px;
+
+    margin:auto;
+
+    padding:15px;
+
+}
+
+
+
+
+
+/* HEADER */
+
+
+.result-header{
+
+    background:
+    linear-gradient(135deg,#001f4d,#123b6d);
+
+    padding:25px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.4);
+
+}
+
+
+
+.result-header h1{
+
+    color:#ffd700;
+
+    margin-bottom:8px;
+
+}
+
+
+
+.result-header p{
+
+    color:#ddd;
+
+}
+
+
+
+
+
+/* SCORE */
+
+
+.score-card{
+
+    margin-top:20px;
+
+    background:white;
+
+    color:#001f4d;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+
+}
+
+
+
+.score-card h1{
+
+    font-size:45px;
+
+    color:#ff9800;
+
+    margin:15px 0;
+
+}
+
+
+
+.score-card p{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* STATS */
+
+
+.stats{
+
+    margin-top:20px;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+
+}
+
+
+
+.stats div{
+
+    background:
+    rgba(255,255,255,.12);
+
+    padding:18px 8px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    backdrop-filter:blur(10px);
+
+}
+
+
+
+.stats h3{
+
+    font-size:28px;
+
+    color:#ffd700;
+
+}
+
+
+
+.stats p{
+
+    font-size:13px;
+
+}
+
+
+
+
+
+/* REVIEW */
+
+
+.review-title{
+
+    margin-top:25px;
+
+    color:#ffd700;
+
+}
+
+
+
+#reviewContainer{
+
+    margin-top:15px;
+
+}
+
+
+
+.review-card{
+
+    background:white;
+
+    color:#001f4d;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    border-radius:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+
+}
+
+
+
+.review-card h3{
+
+    margin-bottom:10px;
+
+}
+
+
+
+.correct{
+
+    color:#198754;
+
+    font-weight:bold;
+
+}
+
+
+
+.wrong{
+
+    color:#dc3545;
+
+    font-weight:bold;
+
+}
+
+
+
+
+button{
+
+    margin-top:20px;
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#ff9800;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+@media(max-width:400px){
+
+
+.stats{
+
+grid-template-columns:1fr;
+
+}
+
+
+.score-card h1{
+
+font-size:38px;
+
+}
+
+
+}
