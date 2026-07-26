@@ -132,10 +132,44 @@ Top Rank Students
 
 
 
+
+
 <!-- ADD QUESTION FORM -->
 
-
 <div class="question-form">
+
+<h2>➕ Add New Question</h2>
+
+<input id="question" type="text" placeholder="Enter Question">
+
+<input id="option0" type="text" placeholder="Option A">
+
+<input id="option1" type="text" placeholder="Option B">
+
+<input id="option2" type="text" placeholder="Option C">
+
+<input id="option3" type="text" placeholder="Option D">
+
+<select id="answer">
+
+<option value="">Correct Answer</option>
+<option value="0">Option A</option>
+<option value="1">Option B</option>
+<option value="2">Option C</option>
+<option value="3">Option D</option>
+
+</select>
+
+<textarea id="explanation" placeholder="Explanation"></textarea>
+
+<button id="saveQuestion">
+Save Question
+</button>
+
+</div>
+
+<!-- BULK UPLOAD -->
+
 <div class="bulk-upload">
 
 <h2>📤 Bulk Question Upload</h2>
@@ -155,98 +189,3 @@ Upload Questions
 <p id="uploadStatus"></p>
 
 </div>
-
-<h2>
-➕ Add New Question
-</h2>
-
-
-
-<input 
-id="question"
-type="text"
-placeholder="Enter Question">
-
-
-<input 
-id="option0"
-type="text"
-placeholder="Option A">
-
-
-<input 
-id="option1"
-type="text"
-placeholder="Option B">
-
-
-<input 
-id="option2"
-type="text"
-placeholder="Option C">
-
-
-<input 
-id="option3"
-type="text"
-placeholder="Option D">
-
-
-
-<select id="answer">
-
-<option value="">
-Correct Answer
-</option>
-
-<option value="0">
-Option A
-</option>
-
-<option value="1">
-Option B
-</option>
-
-<option value="2">
-Option C
-</option>
-
-<option value="3">
-Option D
-</option>
-
-</select>
-
-
-
-<textarea 
-id="explanation"
-placeholder="Explanation">
-</textarea>
-
-
-
-<button id="saveQuestion">
-
-Save Question
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-<script type="module" src="admin.js"></script>
-
-
-</body>
-
-</html>
