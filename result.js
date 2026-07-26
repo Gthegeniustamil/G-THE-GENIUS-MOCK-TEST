@@ -184,3 +184,59 @@ reviewBox.appendChild(card);
 
 
 });
+
+async function saveResult(){
+
+
+try{
+
+
+await addDoc(collection(db,"results"),{
+
+
+studentName:
+localStorage.getItem("studentName") || "Student",
+
+
+district:
+localStorage.getItem("district") || "Unknown",
+
+
+testType:testType,
+
+
+score:score,
+
+
+totalQuestions:totalQuestions,
+
+
+percentage:percentage,
+
+
+date:serverTimestamp()
+
+
+});
+
+
+console.log("Result Saved Successfully");
+
+
+}
+
+catch(error){
+
+console.log(
+"Save Error:",
+error
+);
+
+}
+
+
+}
+
+
+
+saveResult();
