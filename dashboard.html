@@ -1,68 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard | G THE GENIUS</title>
+
+<title>G THE GENIUS Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<div class="header">
-<h2>🛡️ G THE GENIUS</h2>
-<p>TNUSRB MOCK TEST PORTAL</p>
+<div class="dashboard-container">
+
+
+<!-- Header -->
+
+<header class="top-header">
+
+<div class="brand">
+
+<div class="logo">
+🛡️
 </div>
 
-<div class="welcome-card">
-<h3 id="studentName"></h3>
-<p id="studentDistrict"></p>
+<div>
+<h1>G THE GENIUS</h1>
+<p>TNUSRB Exam Portal</p>
 </div>
-
-<div class="menu">
-
-<button class="daily" onclick="location.href='test.html?type=daily'">
-🟢 DAILY MOCK TEST
-<br>
-<small>10 Questions</small>
-</button>
-
-<button class="weekly" onclick="location.href='test.html?type=weekly'">
-🟡 WEEKLY MOCK TEST
-<br>
-<small>25 Questions</small>
-</button>
-
-<button class="monthly" onclick="location.href='test.html?type=monthly'">
-🔴 MONTHLY GRAND TEST
-<br>
-<small>100 Questions</small>
-</button>
-
-<button onclick="location.href='leaderboard.html'">
-🏆 LEADERBOARD
-</button>
-
-<button onclick="location.href='result.html'">
-📊 MY RESULTS
-</button>
-
-<button onclick="alert('Coming Soon')">
-📚 PREVIOUS TESTS
-</button>
 
 </div>
 
-<script>
 
-document.getElementById("studentName").innerHTML =
-"👤 " + localStorage.getItem("studentName");
+<div class="student-info">
 
-document.getElementById("studentDistrict").innerHTML =
-"📍 " + localStorage.getItem("district");
+<h3 id="studentName">
+Welcome Gopal
+</h3>
 
-</script>
+<p>
+📍 Tiruppur
+</p>
+
+</div>
+
+
+</header>
+
+
+
+<!-- Test Section -->
+
+<section class="test-section">
+
+
+<h2>
+🚔 Mock Test
+</h2>
+
+
+<div class="test-grid">
+
+
+
+<div class="test-card daily">
+
+<h3>
+🟢 Daily Mock Test
+</h3>
+
+<h1>
+10
+</h1>
+
+<p>
+Questions
+</p>
+
+<button onclick="location.href='mocktest.html?type=daily'">
+Start Test
+</button>
+
+</div>
+
+
+
+
+<div class="test-card weekly">
+
+<h3>
+🟡 Weekly Mock Test
+</h3>
+
+<h1>
+25
+</h1>
+
+<p>
+Questions
+</p>
+
+<button onclick="location.href='mocktest.html?type=weekly'">
+Start Test
+</button>
+
+</div>
+
+
+
+
+<div class="test-card monthly">
+
+<h3>
+🔴 Monthly Grand Test
+</h3>
+
+<h1>
+100
+</h1>
+
+<p>
+Questions
+</p>
+
+<button onclick="location.href='mocktest.html?type=monthly'">
+Start Test
+</button>
+
+</div>
+
+
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- Menu Section -->
+
+
+<section class="menu-section">
+
+
+<div class="menu-card"
+onclick="location.href='leaderboard.html'">
+
+🏆
+
+<h3>
+Leaderboard
+</h3>
+
+<p>
+Top Rankers
+</p>
+
+</div>
+
+
+
+<div class="menu-card"
+onclick="location.href='result.html'">
+
+📊
+
+<h3>
+My Results
+</h3>
+
+<p>
+Score History
+</p>
+
+</div>
+
+
+
+<div class="menu-card">
+
+📚
+
+<h3>
+Previous Tests
+</h3>
+
+<p>
+Practice Again
+</p>
+
+</div>
+
+
+
+</section>
+
+
+
+</div>
+
 
 </body>
 </html>
