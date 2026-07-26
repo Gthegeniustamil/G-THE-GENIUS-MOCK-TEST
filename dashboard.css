@@ -7,10 +7,14 @@
 
 
 body{
-    background:
-    linear-gradient(180deg,#020b1c,#092c55);
-    min-height:100vh;
-    color:white;
+
+background:
+linear-gradient(180deg,#020b1c,#092c55);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
 }
 
 
@@ -19,8 +23,10 @@ body{
 
     width:100%;
     max-width:520px;
+    min-height:100vh;
     margin:auto;
     padding:15px;
+
 
 }
 
