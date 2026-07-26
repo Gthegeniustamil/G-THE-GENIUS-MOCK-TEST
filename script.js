@@ -91,7 +91,9 @@ new Array(testQuestions.length)
 
 showQuestion();
 
+startTimer();
 
+createPalette();
 }
 
 catch(error){
@@ -110,7 +112,15 @@ loadQuestions();
 // DISPLAY QUESTION
 function showQuestion(){
 
+if(testQuestions.length === 0){
 
+document.getElementById("questionText").innerHTML =
+"No Questions Available";
+
+return;
+
+}
+    
 let q = testQuestions[currentQuestion];
 
 
@@ -298,16 +308,6 @@ submitTest();
 
 
 // START TIMER AFTER QUESTIONS LOAD
-
-setTimeout(()=>{
-
-startTimer();
-
-},500);
-
-
-
-
 
 
 
@@ -590,18 +590,3 @@ confirmSubmit();
 
 };
 
-
-
-
-
-
-// CREATE PALETTE AFTER LOAD
-
-
-setTimeout(()=>{
-
-
-createPalette();
-
-
-},1000);
