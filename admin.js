@@ -1,14 +1,7 @@
-document.addEventListener("DOMContentLoaded", ()=>{
-
-});
-import {
-
-signOut
-
-} from 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import { db, auth } from "./firebase-config.js";
+
 import {
 collection,
 addDoc,
@@ -19,162 +12,84 @@ doc,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const saveButton =
-document.getElementById("saveQuestion");
-
-
-
-
+const saveButton = document.getElementById("saveQuestion");
+const logoutBtn = document.getElementById("logoutBtn");
+const uploadBtn = document.getElementById("uploadBtn");
 
 saveButton.onclick = async function(){
 
+const question = document.getElementById("question").value.trim();
 
-let question =
-document.getElementById("question").value;
-
-
-let options = [
-
-
-document.getElementById("option0").value,
-
-document.getElementById("option1").value,
-
-document.getElementById("option2").value,
-
-document.getElementById("option3").value
-
-
+const options = [
+document.getElementById("option0").value.trim(),
+document.getElementById("option1").value.trim(),
+document.getElementById("option2").value.trim(),
+document.getElementById("option3").value.trim()
 ];
 
+const answer = Number(document.getElementById("answer").value);
 
+const explanation =
+document.getElementById("explanation").value.trim();
 
-let answer =
-Number(document.getElementById("answer").value);
-
-
-
-let explanation =
-document.getElementById("explanation").value;
-
-
-
-
-
-if(
-question==="" ||
-options.includes("") ||
-isNaN(answer)
-){
+if(question==="" || options.includes("") || isNaN(answer)){
 
 alert("Please fill all fields");
-
 return;
 
 }
 
-
-
-
-
 try{
 
+await addDoc(collection(db,"questions"),{
 
-await addDoc(
-
-collection(db,"questions"),
-
-{
-
-
-question:question,
-
-
-options:options,
-
-
-answer:answer,
-
-
-explanation:explanation,
-
-
+question,
+options,
+answer,
+explanation,
 createdAt:serverTimestamp()
-
-
-}
-
-);
-
-
-
-alert("✅ Question Added Successfully");
-loadQuestions();
-
-
-// Clear Form
-
-
-document.getElementById("question").value="";
-
-
-options.forEach((x,index)=>{
-
-document.getElementById("option"+index).value="";
 
 });
 
+alert("✅ Question Added Successfully");
 
+document.getElementById("question").value="";
+document.getElementById("option0").value="";
+document.getElementById("option1").value="";
+document.getElementById("option2").value="";
+document.getElementById("option3").value="";
 document.getElementById("answer").value="";
-
-
 document.getElementById("explanation").value="";
 
-
+loadQuestions();
 
 }
-
-
 catch(error){
 
-
 console.log(error);
-
-
 alert("❌ Error Saving Question");
-
 
 }
 
-
-
 };
-
-const logoutBtn =
-document.getElementById("logoutBtn");
-
 
 logoutBtn.onclick = async function(){
 
 await signOut(auth);
 
-
-window.location.href =
-"admin-login.html";
+window.location.href="admin-login.html";
 
 };
 
-const uploadBtn = document.getElementById("uploadBtn");
+// ================= BULK UPLOAD =================
 
-uploadBtn.addEventListener("click", async function(){
+uploadBtn.onclick = async function () {
 
-const text = document.getElementById("bulkJson").value;
+const text = document.getElementById("bulkJson").value.trim();
 
-if(text.trim() === ""){
-
+if(text === ""){
 alert("Paste JSON First");
 return;
-
 }
 
 try{
@@ -185,23 +100,24 @@ let count = 0;
 
 for(const q of questions){
 
-await addDoc(
-collection(db,"questions"),
-{
-question:q.question,
-options:q.options,
-answer:q.answer,
-explanation:q.explanation,
-createdAt:serverTimestamp()
-}
-);
+await addDoc(collection(db,"questions"),{
+
+question: q.question,
+options: q.options,
+answer: q.answer,
+explanation: q.explanation,
+createdAt: serverTimestamp()
+
+});
 
 count++;
 
 }
 
 document.getElementById("uploadStatus").innerHTML =
-"✅ "+count+" Questions Uploaded Successfully";
+"✅ " + count + " Questions Uploaded Successfully";
+
+document.getElementById("bulkJson").value="";
 
 loadQuestions();
 
@@ -216,19 +132,25 @@ document.getElementById("uploadStatus").innerHTML =
 
 }
 
-});
+};
 
+
+// ================= LOAD QUESTIONS =================
 
 async function loadQuestions(){
 
-const questionList = document.getElementById("questionList");
-const questionCount = document.getElementById("questionCount");
+const questionList =
+document.getElementById("questionList");
+
+const questionCount =
+document.getElementById("questionCount");
 
 questionList.innerHTML = "Loading...";
 
-const snapshot = await getDocs(collection(db,"questions"));
+const snapshot =
+await getDocs(collection(db,"questions"));
 
-questionList.innerHTML = "";
+questionList.innerHTML="";
 
 questionCount.innerHTML =
 "📊 Total Questions : " + snapshot.size;
@@ -264,6 +186,8 @@ questionList.innerHTML += `
 
 }
 
+// ================= DELETE QUESTION =================
+
 window.deleteQuestion = async function(id){
 
 if(confirm("Delete this question?")){
@@ -274,37 +198,25 @@ loadQuestions();
 
 }
 
-}
-
-loadQuestions();
-
-document.getElementById("searchQuestion").onkeyup = function(){
-
-const value = this.value.toLowerCase();
-
-document.querySelectorAll(".question-card").forEach(card=>{
-
-card.style.display =
-card.innerText.toLowerCase().includes(value)
-? "block"
-: "none";
-
-});
-
 };
+
+
+// ================= EDIT QUESTION =================
 
 window.editQuestion = async function(id){
 
 const newQuestion = prompt("Enter New Question");
 
-if(newQuestion == null || newQuestion.trim() == ""){
-    return;
+if(newQuestion == null || newQuestion.trim()==""){
+return;
 }
 
 try{
 
 await updateDoc(doc(db,"questions",id),{
-    question: newQuestion.trim()
+
+question:newQuestion.trim()
+
 });
 
 alert("✅ Question Updated Successfully");
@@ -321,68 +233,69 @@ alert("❌ Update Failed");
 }
 
 };
+
+
+// ================= SEARCH QUESTION =================
+
+document.getElementById("searchQuestion").onkeyup = function(){
+
+const value = this.value.toLowerCase();
+
+document.querySelectorAll(".question-card").forEach(card=>{
+
+card.style.display =
+card.innerText.toLowerCase().includes(value)
+? "block"
+: "none";
+
+});
+
+};
+
+
+// ================= INITIAL LOAD =================
+
+loadQuestions();
+
+// ================= STUDENT RESULTS =================
+
 async function loadResults(){
 
-const resultList =
-document.getElementById("resultList");
+const resultList = document.getElementById("resultList");
+const resultCount = document.getElementById("resultCount");
 
-const resultCount =
-document.getElementById("resultCount");
+if(!resultList) return;
 
+resultList.innerHTML = "Loading...";
 
-resultList.innerHTML="Loading...";
+const snapshot = await getDocs(collection(db,"results"));
 
-
-const snapshot =
-await getDocs(collection(db,"results"));
-
-
-resultList.innerHTML="";
-
+resultList.innerHTML = "";
 
 resultCount.innerHTML =
 "📊 Total Results : " + snapshot.size;
 
-
-
 snapshot.forEach((resultDoc)=>{
 
-
 const r = resultDoc.data();
-
-
 
 resultList.innerHTML += `
 
 <div class="result-card">
 
-<h3>
-👤 ${r.studentName}
-</h3>
+<h3>👤 ${r.studentName}</h3>
 
-<p>
-📍 District : ${r.district}
-</p>
+<p>📍 District : ${r.district}</p>
 
-<p>
-🎯 Test : ${r.testType}
-</p>
+<p>🎯 Test : ${r.testType}</p>
 
-<p>
-📝 Score : ${r.score} / ${r.totalQuestions}
-</p>
+<p>📝 Score : ${r.score} / ${r.totalQuestions}</p>
 
-<p>
-📈 Percentage : ${r.percentage}%
-</p>
-
+<p>📈 Percentage : ${r.percentage}%</p>
 
 <button onclick="deleteResult('${resultDoc.id}')">
-
 🗑 Delete
-
 </button>
-
 
 </div>
 
@@ -390,29 +303,46 @@ resultList.innerHTML += `
 
 });
 
-
 }
-
-
 
 window.deleteResult = async function(id){
 
-
 if(confirm("Delete this Result?")){
 
-
-await deleteDoc(
-doc(db,"results",id)
-);
-
+await deleteDoc(doc(db,"results",id));
 
 loadResults();
 
+}
+
+};
+
+
+// ================= SEARCH RESULT =================
+
+const searchResult = document.getElementById("searchResult");
+
+if(searchResult){
+
+searchResult.onkeyup = function(){
+
+const value = this.value.toLowerCase();
+
+document.querySelectorAll(".result-card").forEach(card=>{
+
+card.style.display =
+card.innerText.toLowerCase().includes(value)
+? "block"
+: "none";
+
+});
+
+};
 
 }
 
 
-}
+// ================= INITIAL LOAD =================
 
-
+loadQuestions();
 loadResults();
