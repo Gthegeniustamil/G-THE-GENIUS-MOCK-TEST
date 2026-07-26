@@ -1,3 +1,9 @@
+import { db } from "./firebase-config.js";
+
+import {
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 let allQuestions = [];
 
 let testQuestions = [];
@@ -65,29 +71,22 @@ const snapshot = await getDocs(
 collection(db,"questions")
 );
 
-
 allQuestions=[];
 
-
 snapshot.forEach((doc)=>{
-
 allQuestions.push(doc.data());
-
 });
 
 
-
 testQuestions =
 allQuestions
 .sort(()=>Math.random()-0.5)
 .slice(0,totalQuestions);
 
 
-
 selectedAnswers =
 new Array(testQuestions.length)
 .fill(null);
-
 
 
 showQuestion();
@@ -97,70 +96,18 @@ showQuestion();
 
 catch(error){
 
-console.log(
-"Firebase Question Loading Error",
-error
-);
+console.log(error);
 
 }
 
-
 }
-
-
-
-// RANDOM QUESTIONS
-
-
-testQuestions =
-allQuestions
-.sort(()=>Math.random()-0.5)
-.slice(0,totalQuestions);
-
-
-
-// CREATE ANSWER ARRAY
-
-
-selectedAnswers =
-new Array(testQuestions.length)
-.fill(null);
-
-
-
-// SHOW FIRST QUESTION
-
-
-showQuestion();
-
-
-
-}
-
-
-catch(error){
-
-
-console.log(
-"Questions Loading Error:",
-error
-);
-
-
-}
-
-
-
-}
-
 
 
 // START
-
 loadQuestions();
 
-// DISPLAY QUESTION
 
+// DISPLAY QUESTION
 function showQuestion(){
 
 
