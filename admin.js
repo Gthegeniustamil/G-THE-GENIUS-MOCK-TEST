@@ -6,7 +6,10 @@ signOut
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import { db } from "./firebase-config.js";
-
+import {
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
 
@@ -167,4 +170,8 @@ await signOut(auth);
 window.location.href =
 "admin-login.html";
 
+};
+document.getElementById("uploadBtn").onclick = async function () {
+
+    // Upload code
 };
