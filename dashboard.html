@@ -55,26 +55,11 @@ TNUSRB Exam Portal
 <div class="student-info">
 
 
-<h3>
-👤 Welcome Gopal
-</h3>
+<h3 id="welcomeName">👤 Welcome</h3>
 
+<p id="welcomeDistrict">📍 District</p>
 
-<p>
-📍 Tiruppur
-</p>
-
-
-<p>
-🚔 Police Exam Preparation
-</p>
-
-
-</div>
-
-
-
-
+<p id="welcomeExam">🎯 Selected Exam</p>
 
 
 
@@ -289,10 +274,21 @@ Practice Again
 
 
 
-
 </div>
 
+<script>
+
+document.getElementById("welcomeName").innerHTML =
+"👤 Welcome " + (localStorage.getItem("studentName") || "Student");
+
+document.getElementById("welcomeDistrict").innerHTML =
+"📍 " + (localStorage.getItem("district") || "");
+
+document.getElementById("welcomeExam").innerHTML =
+"🎯 " + (localStorage.getItem("exam") || "");
+
+</script>
 
 </body>
-
+  
 </html>
