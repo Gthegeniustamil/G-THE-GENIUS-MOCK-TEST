@@ -105,7 +105,7 @@ createdAt:serverTimestamp()
 
 
 alert("✅ Question Added Successfully");
-
+loadQuestions();
 
 
 // Clear Form
@@ -195,7 +195,7 @@ count++;
 
 document.getElementById("uploadStatus").innerHTML =
 "✅ " + count + " Questions Uploaded Successfully";
-
+loadQuestions();
 }
 catch(error){
 
