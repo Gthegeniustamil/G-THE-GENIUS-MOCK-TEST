@@ -37,11 +37,11 @@ ${item.description}
 </p>
 
 
-<a href="${item.pdf}" target="_blank">
+<button onclick="openPDF('${item.pdf}')">
 
-📖 Open PDF
+📖 Read Now
 
-</a>
+</button>
 
 
 </div>
@@ -75,5 +75,19 @@ document.getElementById("materialsContainer").innerHTML =
 function goDashboard(){
 
 window.location.href="dashboard.html";
+
+}
+
+
+function openPDF(url){
+
+document.getElementById("pdfViewerBox").style.display="block";
+
+document.getElementById("pdfViewer").src=url;
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
 
 }
