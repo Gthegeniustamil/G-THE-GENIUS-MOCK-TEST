@@ -38,7 +38,7 @@ async function loadQuestions(){
     try{
 
         const snapshot = await getDocs(collection(db,"questions"));
-
+alert("Questions: " + snapshot.size);
         allQuestions=[];
 
         snapshot.forEach((doc)=>{
