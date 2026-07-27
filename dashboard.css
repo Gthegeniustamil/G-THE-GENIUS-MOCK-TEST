@@ -1,572 +1,537 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Arial',sans-serif;
-}
+/* ========================= */
+/* G THE GENIUS Dashboard v4 */
+/* ========================= */
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
 body{
 
-background:
-linear-gradient(180deg,#020b1c,#092c55);
+background:#081b3a;
 
-min-height:100vh;
-
-overflow-x:hidden;
+color:#fff;
 
 }
-
-
 
 .dashboard-container{
 
-    width:100%;
-    max-width:520px;
-    min-height:100vh;
-    margin:auto;
-    padding:15px;
+width:100%;
 
+max-width:500px;
 
-}
+margin:auto;
 
-
-
-/* HEADER */
-
-.top-header{
-
-    background:
-    linear-gradient(135deg,#102a43,#001f4d);
-
-    border-radius:25px;
-
-    padding:22px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,.4);
+padding:15px;
 
 }
 
+/* Announcement */
 
+.announcement{
 
-.logo{
+background:#ff9800;
 
-    width:70px;
+color:#fff;
 
-    height:70px;
-
-    border-radius:50%;
-
-    background:
-    linear-gradient(135deg,#ffd700,#ff9800);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:35px;
-
-    box-shadow:
-    0 0 20px rgba(255,215,0,.5);
-
-}
-
-
-
-.brand h1{
-
-    color:#ffd700;
-
-    font-size:24px;
-
-}
-
-
-
-.brand p{
-
-    color:#ddd;
-
-    font-size:13px;
-
-}
-
-
-
-/* PROFILE */
-
-
-.student-info{
-
-    margin-top:18px;
-
-    background:
-    linear-gradient(135deg,#ffffff,#e9f2ff);
-
-    color:#001f4d;
-
-    border-radius:22px;
-
-    padding:18px;
-
-    text-align:center;
-
-    box-shadow:
-    0 8px 20px rgba(0,0,0,.3);
-
-}
-
-
-
-.student-info h3{
-
-    font-size:20px;
-
-}
-
-
-
-.student-info p{
-
-    margin-top:6px;
-
-    font-size:14px;
-
-}
-
-
-
-/* TITLE */
-
-
-.test-section{
-
-    margin-top:25px;
-
-}
-
-
-.test-section h2{
-
-    margin-bottom:15px;
-
-    color:#ffd700;
-
-}
-
-
-
-/* TEST CARDS */
-
-
-.test-grid{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:16px;
-
-}
-
-
-
-.test-card{
-
-    padding:22px;
-
-    border-radius:25px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    box-shadow:
-    0 12px 25px rgba(0,0,0,.35);
-
-    transition:.3s;
-
-}
-
-
-
-.test-card:hover{
-
-    transform:translateY(-5px);
-
-}
-
-
-
-.test-card h3{
-
-    font-size:18px;
-
-}
-
-
-.test-card h1{
-
-    font-size:42px;
-
-    margin:5px 0;
-
-}
-
-
-
-.test-card p{
-
-    font-size:14px;
-
-}
-
-
-
-
-.test-card button{
-
-    background:white;
-
-    color:#001f4d;
-
-    border:none;
-
-    padding:12px 18px;
-
-    border-radius:25px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-
-
-.test-card button:hover{
-
-    transform:scale(1.05);
-
-}
-
-
-
-
-.daily{
-
-background:
-linear-gradient(135deg,#00c853,#00897b);
-
-}
-
-
-
-.weekly{
-
-background:
-linear-gradient(135deg,#ffd600,#ff9800);
-
-color:#111;
-
-}
-
-
-
-.monthly{
-
-background:
-linear-gradient(135deg,#ff1744,#d50000);
-
-}
-
-
-
-
-
-/* MENU */
-
-
-.menu-section{
-
-    margin-top:25px;
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:12px;
-
-}
-
-
-
-.menu-card{
-
-    background:
-    rgba(255,255,255,.12);
-
-    backdrop-filter:blur(10px);
-
-    border-radius:20px;
-
-    padding:18px 8px;
-
-    text-align:center;
-
-    border:
-    1px solid rgba(255,255,255,.2);
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-
-
-.menu-card:hover{
-
-    transform:translateY(-5px);
-
-}
-
-
-
-.menu-card:first-line{
-
-    font-size:30px;
-
-}
-
-
-
-.menu-card h3{
-
-    margin-top:8px;
-
-    font-size:14px;
-
-}
-
-
-
-.menu-card p{
-
-    color:#ddd;
-
-    font-size:12px;
-
-}
-
-
-
-
-@media(max-width:360px){
-
-.menu-section{
-
-grid-template-columns:1fr;
-
-}
-
-
-.test-card{
-
-flex-direction:column;
-
-gap:15px;
+padding:12px;
 
 text-align:center;
 
+font-weight:bold;
+
+border-radius:10px;
+
+margin-bottom:15px;
+
 }
 
+/* Header */
+
+.top-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
 
 }
 
-/* MY RANK CARD */
+.logo h1{
 
-.student-rank-card{
+font-size:28px;
 
-background:linear-gradient(135deg,#0f2747,#163b6d);
+color:#ffd700;
+
+}
+
+.logo p{
+
+font-size:12px;
+
+color:#ddd;
+
+margin-top:5px;
+
+}
+
+.top-menu{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.top-menu a{
+
+text-decoration:none;
+
+color:#fff;
+
+background:#143b73;
+
+padding:8px 12px;
+
+border-radius:8px;
+
+font-size:13px;
+
+transition:.3s;
+
+}
+
+.top-menu a:hover{
+
+background:#ffd700;
+
+color:#000;
+
+}
+
+/* Hero */
+
+.hero-banner{
+
+background:linear-gradient(135deg,#0b4db7,#1d74ff);
 
 padding:20px;
-
-margin:20px 0;
 
 border-radius:18px;
 
 text-align:center;
 
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
+margin-bottom:20px;
 
-border:1px solid #ffd700;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
 
 }
 
+.hero-banner h2{
 
-.student-rank-card h2{
+font-size:24px;
+
+margin-bottom:10px;
+
+}
+
+.hero-banner h3{
 
 color:#ffd700;
 
-font-size:24px;
+margin-bottom:10px;
+
+}
+
+.hero-banner p{
+
+line-height:1.6;
+
+}
+
+/* Student */
+
+.student-info{
+
+background:#102c5f;
+
+padding:18px;
+
+border-radius:15px;
+
+margin-bottom:20px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+
+}
+
+.student-info h2{
+
+color:#ffd700;
+
+margin-bottom:10px;
+
+}
+
+.student-info p{
+
+margin:6px 0;
+
+}
+
+/* Test Section */
+
+.test-section h2{
+
+margin-bottom:15px;
+
+color:#ffd700;
+
+}
+
+.test-grid{
+
+display:grid;
+
+grid-template-columns:1fr;
+
+gap:15px;
+
+}
+
+/* ========================= */
+/* TEST CARDS */
+/* ========================= */
+
+.test-card{
+
+background:#102c5f;
+
+padding:20px;
+
+border-radius:18px;
+
+text-align:center;
+
+box-shadow:0 6px 15px rgba(0,0,0,.3);
+
+transition:.3s;
+
+}
+
+.test-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.test-card h3{
+
+margin-bottom:10px;
+
+color:#ffd700;
+
+}
+
+.test-card h1{
+
+font-size:45px;
+
+margin:10px 0;
+
+}
+
+.test-card p{
 
 margin-bottom:15px;
 
 }
 
+.test-card button{
 
-.student-rank-card p{
+width:100%;
 
-background:#071426;
+padding:12px;
+
+border:none;
+
+border-radius:10px;
+
+background:#ffd700;
+
+color:#000;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.test-card button:hover{
+
+background:#ff9800;
+
+color:#fff;
+
+}
+
+/* ========================= */
+/* PERFORMANCE */
+/* ========================= */
+
+.student-rank-card{
+
+background:#102c5f;
+
+padding:20px;
+
+border-radius:18px;
+
+margin-top:20px;
+
+}
+
+.quick-stats{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+
+margin:20px 0;
+
+}
+
+.stat-card{
+
+background:#143b73;
+
+padding:15px;
+
+border-radius:12px;
+
+text-align:center;
+
+}
+
+.stat-card h2{
+
+margin-top:10px;
+
+color:#ffd700;
+
+}
+
+/* ========================= */
+/* WHY CHOOSE */
+/* ========================= */
+
+.why-section{
+
+margin-top:25px;
+
+}
+
+.why-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:12px;
+
+margin-top:15px;
+
+}
+
+.why-card{
+
+background:#102c5f;
+
+padding:15px;
+
+border-radius:15px;
+
+text-align:center;
+
+}
+
+/* ========================= */
+/* UPDATES */
+/* ========================= */
+
+.updates-section{
+
+margin-top:25px;
+
+}
+
+.update-card{
+
+background:#143b73;
+
+padding:15px;
+
+margin-top:10px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.update-card:hover{
+
+background:#ffd700;
+
+color:#000;
+
+}
+
+/* ========================= */
+/* CONTACT */
+/* ========================= */
+
+.social-section{
+
+margin-top:30px;
+
+text-align:center;
+
+}
+
+.social-links{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+margin-top:15px;
+
+}
+
+.social-links a{
+
+text-decoration:none;
 
 padding:12px;
 
 border-radius:10px;
 
-margin:10px 0;
-
-font-size:17px;
-
-color:white;
-
-}
-
-/* ANNOUNCEMENT */
-
-.announcement{
-background:linear-gradient(90deg,#FFD700,#FFA500);
-color:#001f4d;
 font-weight:bold;
-text-align:center;
-padding:12px;
-border-radius:12px;
-margin-bottom:15px;
-animation:blink 2s infinite;
-}
 
-@keyframes blink{
-50%{
-opacity:.7;
-}
-}
-
-/* QUICK STATS */
-
-.quick-stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-bottom:15px;
-}
-
-.stat-card{
-background:#071426;
-padding:15px;
-border-radius:12px;
 color:white;
-text-align:center;
-border:1px solid gold;
+
 }
 
-.stat-card h2{
-margin-top:8px;
-color:#FFD700;
-}
+.email-btn{
 
-/* SOCIAL SECTION */
+background:#4caf50;
 
-.social-section{
-margin-top:25px;
-text-align:center;
-}
-
-.social-section h2{
-color:#FFD700;
-margin-bottom:15px;
-}
-
-.social-links{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.social-links a{
-display:flex;
-justify-content:center;
-align-items:center;
-text-decoration:none;
-padding:15px;
-border-radius:50px;
-font-weight:bold;
-font-size:18px;
-color:white;
-transition:.3s;
-}
-
-.social-links a:hover{
-transform:scale(1.03);
 }
 
 .youtube-btn{
-background:#FF0000;
-}
 
-.youtube-btn::after{
-content:" SUBSCRIBE";
-background:white;
-color:#FF0000;
-padding:4px 12px;
-border-radius:20px;
-margin-left:10px;
-font-size:13px;
+background:#ff0000;
+
 }
 
 .telegram-btn{
+
 background:#229ED9;
+
 }
 
-.telegram-btn::after{
-content:" JOIN";
-background:white;
-color:#229ED9;
-padding:4px 12px;
-border-radius:20px;
-margin-left:10px;
-font-size:13px;
-}
-
+/* ========================= */
 /* FOOTER */
+/* ========================= */
 
 .footer{
-margin-top:30px;
+
+margin-top:35px;
+
 padding:20px;
+
 text-align:center;
-background:#111;
-color:white;
-border-top:2px solid gold;
+
+background:#06152e;
+
+border-radius:18px;
+
 }
 
 .footer h3{
-color:#FFD700;
-margin-bottom:8px;
+
+color:#ffd700;
+
+margin-bottom:10px;
+
 }
 
-.version{
-color:#00ff99;
-font-weight:bold;
+.footer p{
+
+margin:5px 0;
+
 }
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media(max-width:480px){
+
+.logo h1{
+
+font-size:22px;
+
+}
+
+.hero-banner h2{
+
+font-size:20px;
+
+}
+
+.quick-stats{
+
+grid-template-columns:1fr;
+
+}
+
+.why-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.top-header{
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.top-menu{
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+}
+
