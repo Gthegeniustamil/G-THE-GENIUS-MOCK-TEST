@@ -73,8 +73,9 @@ function showQuestion(){
 
     const q = testQuestions[currentQuestion];
 
+
     document.getElementById("questionNumber").innerHTML =
-    "Question " + (currentQuestion+1) + " / " + testQuestions.length;
+    "Question " + (currentQuestion + 1) + " / " + testQuestions.length;
 
 
     document.getElementById("questionText").innerHTML =
@@ -83,7 +84,7 @@ function showQuestion(){
 
     const optionBox = document.getElementById("options");
 
-    optionBox.innerHTML="";
+    optionBox.innerHTML = "";
 
 
     q.options.forEach((option,index)=>{
@@ -91,37 +92,66 @@ function showQuestion(){
 
         const btn = document.createElement("button");
 
-        btn.className="option";
+        btn.className = "option";
 
-        btn.innerHTML=option;
+        btn.innerHTML = option;
 
 
-        if(selectedAnswers[currentQuestion]===index){
+        if(selectedAnswers[currentQuestion] === index){
 
             btn.classList.add("selected");
 
         }
 
 
-        btn.onclick=function(){
+        btn.onclick = function(){
 
-            selectedAnswers[currentQuestion]=index;
+            selectedAnswers[currentQuestion] = index;
 
             showQuestion();
-            function updateLiveScore(){
+
+            updateLiveScore();
+
+        };
+
+
+        optionBox.appendChild(btn);
+
+
+    });
+
+
+
+    // Progress Bar Update
+
+    let answered =
+    selectedAnswers.filter(a => a !== null).length;
+
+
+    document.getElementById("progressText").innerHTML =
+    "Answered : " + answered + " / " + testQuestions.length;
+
+
+    document.getElementById("progressFill").style.width =
+    (answered / testQuestions.length) * 100 + "%";
+
+
+    updateLiveScore();
+
+}
+
+function updateLiveScore(){
 
     let score = 0;
 
 
     testQuestions.forEach((q,index)=>{
 
-
         if(selectedAnswers[index] === q.answer){
 
             score++;
 
         }
-
 
     });
 
@@ -138,62 +168,8 @@ function showQuestion(){
     document.getElementById("livePercentage").innerHTML =
     percentage + "%";
 
-
-            }
-
-        };
-
-
-        optionBox.appendChild(btn);
-
-
-    });
-
-
-    // ✅ Progress Update - FOR LOOP வெளியே
-
-    let answered = selectedAnswers.filter(a => a !== null).length;
-
-
-    document.getElementById("progressText").innerHTML =
-    "Answered : " + answered + " / " + testQuestions.length;
-
-
-    document.getElementById("progressFill").style.width =
-    (answered / testQuestions.length) * 100 + "%";
-
-
 }
-        const btn = document.createElement("button");
 
-        btn.className="option";
-
-        btn.innerHTML=option;
-
-        if(selectedAnswers[currentQuestion]===index){
-            btn.classList.add("selected");
-        }
-
-        btn.onclick=function(){
-
-            selectedAnswers[currentQuestion]=index;
-
-            showQuestion();
-
-        };
-
-        optionBox.appendChild(btn);
-        let answered = selectedAnswers.filter(a => a !== null).length;
-
-document.getElementById("progressText").innerHTML =
-"Answered : " + answered + " / " + testQuestions.length;
-
-document.getElementById("progressFill").style.width =
-(answered / testQuestions.length) * 100 + "%";
-
-    });
-
-}
 
 
 loadQuestions();
