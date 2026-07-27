@@ -61,3 +61,9 @@ function goDashboard(){
     window.location.href = "dashboard.html";
 
 }
+
+document.getElementById("dashboardBtn").onclick = function(){
+
+    window.location.href = "dashboard.html";
+
+};
