@@ -406,3 +406,23 @@ padding:12px;
 }
 
 }
+
+.live-score-box{
+
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+    padding:10px;
+    border-radius:10px;
+    background:#111827;
+    color:white;
+    font-weight:bold;
+
+}
+
+
+#livePercentage{
+
+    color:#00e676;
+
+}
