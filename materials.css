@@ -1,1 +1,113 @@
+*{
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
+
+body{
+
+    margin:0;
+    background:#071426;
+    color:white;
+
+}
+
+
+.materials-container{
+
+    width:90%;
+    max-width:600px;
+    margin:auto;
+    padding:20px;
+
+}
+
+
+
+.materials-header{
+
+    text-align:center;
+    padding:20px;
+    background:linear-gradient(135deg,#0d47a1,#1565c0);
+    border-radius:15px;
+    margin-bottom:20px;
+
+}
+
+
+.materials-header h1{
+
+    margin:0;
+    font-size:28px;
+
+}
+
+
+.materials-header p{
+
+    margin-top:8px;
+    font-size:18px;
+
+}
+
+
+
+/* MATERIAL CARD */
+
+.material-card{
+
+    background:#11243d;
+    padding:18px;
+    margin-bottom:15px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+
+}
+
+
+.material-card h3{
+
+    margin-top:0;
+    color:#ffd700;
+
+}
+
+
+.material-card p{
+
+    color:#ddd;
+
+}
+
+
+
+.material-card a{
+
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    background:#00c853;
+    color:white;
+    text-decoration:none;
+    border-radius:20px;
+    font-weight:bold;
+
+}
+
+
+
+/* BACK BUTTON */
+
+.back-btn{
+
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    border:none;
+    border-radius:12px;
+    background:#ff9800;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+
+}
