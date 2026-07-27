@@ -714,3 +714,7 @@ background:linear-gradient(135deg,#1565c0,#42a5f5);
     width:60px;
     height:auto;
 }
+
+.logo{
+    text-align:center;
+}
