@@ -76,24 +76,6 @@
 🚀 Start Test
 </button>
 
-<div class="social-links">
-
-<a href="https://youtube.com/@gthegeniustamil?si=-eQvyYvRwwYpqjJm" target="_blank" class="youtube-btn">
-📺 YouTube
-</a>
-
-<a href="https://t.me/gthegenius" target="_blank" class="telegram-btn">
-📢 Telegram
-</a>
-
-<a href="mailto:gthegenius7@gmail.com" class="contact-btn">
-📧 Email
-</a>
-
-</div>
-
-</div>
-
 <script>
 
 function goDashboard(){
@@ -103,11 +85,8 @@ let district = document.getElementById("district").value;
 let exam = document.getElementById("exam").value;
 
 if(name === "" || district === "" || exam === ""){
-
-alert("Please fill all details");
-
-return;
-
+    alert("Please fill all details");
+    return;
 }
 
 localStorage.setItem("studentName", name);
@@ -118,13 +97,13 @@ window.location.href = "dashboard.html";
 
 }
 
+</script>
+
 <footer class="footer">
 
 <h3>🛡️ G THE GENIUS</h3>
 
-<p>
-ALL GOVERNMENT EXAM MOCK TEST PLATFORM
-</p>
+<p>ALL GOVERNMENT EXAM MOCK TEST PLATFORM</p>
 
 <div class="footer-links">
 
@@ -146,9 +125,7 @@ ALL GOVERNMENT EXAM MOCK TEST PLATFORM
 © 2026 G THE GENIUS
 </p>
 
-<p>
-ALL RIGHTS RESERVED
-</p>
+<p>ALL RIGHTS RESERVED</p>
 
 <p class="version">
 Version 2.0
@@ -156,9 +133,7 @@ Version 2.0
 
 </footer>
 
-  </script>
-
 <script type="module" src="script.js"></script>
-  
+
 </body>
 </html>
