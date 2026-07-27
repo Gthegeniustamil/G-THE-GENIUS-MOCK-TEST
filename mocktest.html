@@ -20,7 +20,20 @@
 
 
 <!-- HEADER -->
+<div class="progress-box">
 
+<p id="progressText">
+Answered : 0 / 10
+</p>
+
+<div class="progress">
+
+<div id="progressFill"></div>
+
+</div>
+
+</div>
+  
 <div class="test-header">
 
 <h2>
@@ -54,7 +67,12 @@ Practice Test
 <h3 id="questionNumber">
 Question 1
 </h3>
+  
+<div id="questionPalette">
 
+<!-- JavaScript automatically creates palette buttons -->
+
+</div>
 
 <p id="questionText">
 Loading Question...
@@ -99,26 +117,22 @@ Option D
 
 <!-- NAVIGATION -->
 
-
 <div class="navigation">
-
 
 <button id="previousBtn">
 ⬅ Previous
 </button>
 
-
 <button id="nextBtn">
 Next ➡
 </button>
 
-
 </div>
 
+<button id="submitBtn" class="submit-btn">
+✅ Submit Test
+</button>
 
-
-
-<button id="submitBtn">
 
 Submit Test
 
