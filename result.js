@@ -62,8 +62,11 @@ function goDashboard(){
 
 }
 
-document.getElementById("dashboardBtn").onclick = function(){
 
-    window.location.href = "dashboard.html";
+const dashboardBtn = document.getElementById("dashboardBtn");
 
-};
+if(dashboardBtn){
+
+dashboardBtn.onclick = goDashboard;
+
+}
