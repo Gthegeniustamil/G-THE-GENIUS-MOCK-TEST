@@ -711,9 +711,6 @@ background:linear-gradient(135deg,#1565c0,#42a5f5);
 
       }
 .logo-img{
-    width:120px;
+    width:60px;
     height:auto;
-    object-fit:contain;
-    display:block;
-    margin:10px auto;
 }
