@@ -71,6 +71,7 @@ alert("Questions: " + snapshot.size);
 
 function showQuestion(){
 
+    
     const q = testQuestions[currentQuestion];
 
     document.getElementById("questionNumber").innerHTML =
@@ -84,6 +85,7 @@ function showQuestion(){
     optionBox.innerHTML="";
 
     q.options.forEach((option,index)=>{
+        
 
         const btn = document.createElement("button");
 
@@ -104,10 +106,18 @@ function showQuestion(){
         };
 
         optionBox.appendChild(btn);
+        let answered = selectedAnswers.filter(a => a !== null).length;
+
+document.getElementById("progressText").innerHTML =
+"Answered : " + answered + " / " + testQuestions.length;
+
+document.getElementById("progressFill").style.width =
+(answered / testQuestions.length) * 100 + "%";
 
     });
 
 }
+
 
 loadQuestions();
 
