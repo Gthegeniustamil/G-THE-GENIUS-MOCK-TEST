@@ -22,8 +22,9 @@
 <input 
 type="text" 
 id="searchInput"
+onkeyup="searchMaterials()"
 placeholder="🔍 Search Materials...">
-
+  
 </div>
 
 
@@ -59,17 +60,6 @@ PET
 
 <div class="materials-container">
 
-  <div id="pdfViewerBox" style="display:none;">
-
-<h3>📖 Study Material</h3>
-
-<iframe 
-id="pdfViewer"
-width="100%"
-height="600px">
-</iframe>
-
-  </div>
 
 <!-- HEADER -->
 
@@ -86,28 +76,40 @@ Study Materials
 </div>
 
 
+<!-- PDF VIEWER -->
 
-<!-- MATERIALS LIST -->
+<div id="pdfViewerBox" style="display:none;">
+
+<h3>📖 Study Material</h3>
+
+<iframe 
+id="pdfViewer"
+width="100%"
+height="600px">
+</iframe>
+
+</div>
+
+
+<!-- MATERIAL LIST -->
 
 <div id="materialsContainer">
-
 
 <p>
 Loading Materials...
 </p>
 
-
 </div>
 
-
-
-<!-- BACK BUTTON -->
 
 <button onclick="goDashboard()" class="back-btn">
 
 ⬅ Back to Dashboard
 
 </button>
+
+
+</div>
 
 
 
