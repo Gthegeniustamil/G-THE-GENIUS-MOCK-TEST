@@ -191,38 +191,76 @@ grid-template-columns:1fr;
 }
 
 }
-
 .social-links{
 display:flex;
-justify-content:center;
-flex-wrap:wrap;
+flex-direction:column;
 gap:15px;
-margin-top:20px;
+margin-top:25px;
 }
 
 .social-links a{
-text-decoration:none;
-padding:12px 20px;
-border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+width:100%;
+padding:16px;
+border-radius:50px;
+font-size:20px;
 font-weight:bold;
-color:white;
+text-decoration:none;
+color:#fff;
 transition:0.3s;
+box-shadow:0 6px 15px rgba(0,0,0,.25);
 }
 
 .social-links a:hover{
-transform:scale(1.05);
+transform:translateY(-3px);
 }
 
 .youtube-btn{
 background:#FF0000;
 }
 
+.youtube-btn::after{
+content:"Subscribe";
+font-size:16px;
+background:#fff;
+color:#FF0000;
+padding:5px 14px;
+border-radius:20px;
+margin-left:10px;
+font-weight:bold;
+}
+
 .telegram-btn{
 background:#229ED9;
 }
 
+.telegram-btn::after{
+content:"Join";
+font-size:16px;
+background:#fff;
+color:#229ED9;
+padding:5px 18px;
+border-radius:20px;
+margin-left:10px;
+font-weight:bold;
+}
+
 .contact-btn{
 background:#444;
+}
+
+.contact-btn::after{
+content:"Contact";
+font-size:16px;
+background:#fff;
+color:#444;
+padding:5px 14px;
+border-radius:20px;
+margin-left:10px;
+font-weight:bold;
 }
 
 .footer{
