@@ -444,3 +444,129 @@ font-size:17px;
 color:white;
 
 }
+
+/* ANNOUNCEMENT */
+
+.announcement{
+background:linear-gradient(90deg,#FFD700,#FFA500);
+color:#001f4d;
+font-weight:bold;
+text-align:center;
+padding:12px;
+border-radius:12px;
+margin-bottom:15px;
+animation:blink 2s infinite;
+}
+
+@keyframes blink{
+50%{
+opacity:.7;
+}
+}
+
+/* QUICK STATS */
+
+.quick-stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:15px;
+}
+
+.stat-card{
+background:#071426;
+padding:15px;
+border-radius:12px;
+color:white;
+text-align:center;
+border:1px solid gold;
+}
+
+.stat-card h2{
+margin-top:8px;
+color:#FFD700;
+}
+
+/* SOCIAL SECTION */
+
+.social-section{
+margin-top:25px;
+text-align:center;
+}
+
+.social-section h2{
+color:#FFD700;
+margin-bottom:15px;
+}
+
+.social-links{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.social-links a{
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+padding:15px;
+border-radius:50px;
+font-weight:bold;
+font-size:18px;
+color:white;
+transition:.3s;
+}
+
+.social-links a:hover{
+transform:scale(1.03);
+}
+
+.youtube-btn{
+background:#FF0000;
+}
+
+.youtube-btn::after{
+content:" SUBSCRIBE";
+background:white;
+color:#FF0000;
+padding:4px 12px;
+border-radius:20px;
+margin-left:10px;
+font-size:13px;
+}
+
+.telegram-btn{
+background:#229ED9;
+}
+
+.telegram-btn::after{
+content:" JOIN";
+background:white;
+color:#229ED9;
+padding:4px 12px;
+border-radius:20px;
+margin-left:10px;
+font-size:13px;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:30px;
+padding:20px;
+text-align:center;
+background:#111;
+color:white;
+border-top:2px solid gold;
+}
+
+.footer h3{
+color:#FFD700;
+margin-bottom:8px;
+}
+
+.version{
+color:#00ff99;
+font-weight:bold;
+}
