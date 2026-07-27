@@ -84,8 +84,45 @@ function showQuestion(){
 
     optionBox.innerHTML="";
 
-    q.options.forEach((option,index)=>{
-        
+q.options.forEach((option,index)=>{
+
+    const btn = document.createElement("button");
+
+    btn.className="option";
+
+    btn.innerHTML = option;
+
+
+    if(selectedAnswers[currentQuestion] === index){
+        btn.classList.add("selected");
+    }
+
+
+    btn.onclick = function(){
+
+        selectedAnswers[currentQuestion] = index;
+
+        showQuestion();
+
+    };
+
+
+    optionBox.appendChild(btn);
+
+});
+
+
+// ✅ Progress Update
+
+let answered = selectedAnswers.filter(a => a !== null).length;
+
+
+document.getElementById("progressText").innerHTML =
+"Answered : " + answered + " / " + testQuestions.length;
+
+
+document.getElementById("progressFill").style.width =
+(answered / testQuestions.length) * 100 + "%";
 
         const btn = document.createElement("button");
 
