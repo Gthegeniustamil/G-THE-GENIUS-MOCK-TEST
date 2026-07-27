@@ -191,3 +191,36 @@ grid-template-columns:1fr;
 }
 
 }
+
+.social-links{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:15px;
+margin-top:20px;
+}
+
+.social-links a{
+text-decoration:none;
+padding:12px 20px;
+border-radius:10px;
+font-weight:bold;
+color:white;
+transition:0.3s;
+}
+
+.social-links a:hover{
+transform:scale(1.05);
+}
+
+.youtube-btn{
+background:#FF0000;
+}
+
+.telegram-btn{
+background:#229ED9;
+}
+
+.contact-btn{
+background:#444;
+}
