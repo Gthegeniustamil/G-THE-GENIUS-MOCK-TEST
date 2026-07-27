@@ -108,6 +108,38 @@ function showQuestion(){
             selectedAnswers[currentQuestion]=index;
 
             showQuestion();
+            function updateLiveScore(){
+
+    let score = 0;
+
+
+    testQuestions.forEach((q,index)=>{
+
+
+        if(selectedAnswers[index] === q.answer){
+
+            score++;
+
+        }
+
+
+    });
+
+
+    let percentage = Math.round(
+        (score / testQuestions.length) * 100
+    );
+
+
+    document.getElementById("liveScore").innerHTML =
+    "Score : " + score + " / " + testQuestions.length;
+
+
+    document.getElementById("livePercentage").innerHTML =
+    percentage + "%";
+
+
+            }
 
         };
 
