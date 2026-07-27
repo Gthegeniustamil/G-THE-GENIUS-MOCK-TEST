@@ -132,3 +132,9 @@ document.getElementById("districtRank").innerHTML =
 
 
 loadMyRank();
+
+function openMaterials(){
+
+    window.location.href="materials.html";
+
+}
