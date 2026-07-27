@@ -320,9 +320,9 @@ color:#ccc;
 }
 
 
-.logo{
-    width:120px;
-    height:120px;
+.logo-img{
+    width:180px;
+    height:auto;
     object-fit:contain;
     display:block;
     margin:0 auto 20px;
