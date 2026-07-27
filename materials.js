@@ -1,97 +1,127 @@
-let allMaterials = [];
+*{
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
 
-// LOAD MATERIALS
+body{
 
-document.addEventListener("DOMContentLoaded", function(){
+    margin:0;
+    background:#071426;
+    color:white;
 
-    fetch("materials.json")
-
-    .then(response => response.json())
-
-    .then(data => {
-
-        allMaterials = data;
-
-        displayMaterials(allMaterials);
-
-    })
-
-    .catch(error=>{
-
-        console.log(error);
-
-        document.getElementById("materialsContainer").innerHTML =
-        "❌ Failed to Load Materials";
-
-    });
-
-
-});
+}
 
 
 
+.materials-container{
 
-// DISPLAY MATERIALS
+    width:92%;
+    max-width:700px;
+    margin:auto;
+    padding:20px;
 
-function displayMaterials(materials){
-
-
-    const container =
-    document.getElementById("materialsContainer");
-
-
-    container.innerHTML = "";
-
-
-    if(materials.length === 0){
-
-        container.innerHTML =
-        "No Materials Found";
-
-        return;
-
-    }
+}
 
 
 
-    materials.forEach(item=>{
+/* HEADER */
+
+.materials-header{
+
+    text-align:center;
+    background:linear-gradient(135deg,#0d47a1,#1565c0);
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:20px;
+
+}
 
 
-        container.innerHTML += `
+.materials-header h1{
 
-        <div class="material-card">
+    margin:0;
+    font-size:28px;
 
-
-            <h3>
-            📚 ${item.title}
-            </h3>
+}
 
 
-            <p>
-            📂 Category : ${item.category}
-            </p>
+.materials-header p{
+
+    font-size:18px;
+
+}
 
 
-            <p>
-            ${item.description}
-            </p>
 
 
-            <button onclick="openPDF('${item.pdf}')">
+/* SEARCH */
 
-            📖 Read Now
+.search-box{
 
-            </button>
+    width:92%;
+    max-width:700px;
+    margin:20px auto 10px;
+
+}
 
 
-        </div>
+.search-box input{
 
-        `;
+    width:100%;
+    padding:14px;
+
+    border:none;
+    outline:none;
+
+    border-radius:25px;
+
+    font-size:16px;
+
+}
 
 
-    });
 
+/* CATEGORY BUTTON */
+
+.category-box{
+
+    width:92%;
+    max-width:700px;
+
+    margin:auto;
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+
+}
+
+
+.category-box button{
+
+    padding:10px 16px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#1565c0;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+
+.category-box button:hover{
+
+    background:#00c853;
 
 }
 
@@ -99,31 +129,61 @@ function displayMaterials(materials){
 
 
 
-
-// SEARCH MATERIALS
-
-function searchMaterials(){
+/* MATERIAL CARD */
 
 
-    let text =
-    document.getElementById("searchInput").value.toLowerCase();
+.material-card{
+
+    background:#11243d;
+
+    padding:20px;
+
+    margin-bottom:15px;
+
+    border-radius:18px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+
+}
 
 
 
-    let filtered =
-    allMaterials.filter(item=>
+.material-card h3{
+
+    color:#ffd700;
+
+    margin-top:0;
+
+}
 
 
-        item.title.toLowerCase().includes(text) ||
 
-        item.category.toLowerCase().includes(text)
+.material-card p{
+
+    color:#ddd;
+
+}
 
 
-    );
+
+/* READ BUTTON */
 
 
-    displayMaterials(filtered);
+.material-card button{
 
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:25px;
+
+    background:#00c853;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
 
 }
 
@@ -131,77 +191,78 @@ function searchMaterials(){
 
 
 
-
-// CATEGORY FILTER
-
-function filterCategory(category){
+/* PDF VIEWER */
 
 
-    if(category === "All"){
+#pdfViewerBox{
 
-        displayMaterials(allMaterials);
+    background:#11243d;
 
-        return;
+    padding:15px;
 
-    }
+    border-radius:15px;
 
+    margin-bottom:20px;
 
-
-    let filtered =
-
-    allMaterials.filter(item=>
+}
 
 
-        item.category === category
+#pdfViewer{
 
+    border:none;
 
-    );
-
-
-    displayMaterials(filtered);
-
+    border-radius:10px;
 
 }
 
 
 
 
+/* BACK BUTTON */
 
 
-// OPEN PDF INSIDE PAGE
+.back-btn{
 
-function openPDF(url){
+    width:100%;
+
+    padding:15px;
+
+    margin-top:20px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#ff9800;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
 
 
-    document.getElementById("pdfViewerBox").style.display="block";
 
 
-    document.getElementById("pdfViewer").src=url;
+@media(max-width:600px){
 
 
+.materials-header h1{
 
-    window.scrollTo({
-
-        top:document.body.scrollHeight,
-
-        behavior:"smooth"
-
-    });
-
+    font-size:22px;
 
 }
 
 
+.category-box button{
 
+    font-size:13px;
 
-
-
-// BACK TO DASHBOARD
-
-function goDashboard(){
-
-
-    window.location.href="dashboard.html";
-
+    padding:8px 12px;
 
 }
+
+
+        }
