@@ -71,59 +71,67 @@ alert("Questions: " + snapshot.size);
 
 function showQuestion(){
 
-    
     const q = testQuestions[currentQuestion];
 
     document.getElementById("questionNumber").innerHTML =
     "Question " + (currentQuestion+1) + " / " + testQuestions.length;
 
+
     document.getElementById("questionText").innerHTML =
     q.question;
+
 
     const optionBox = document.getElementById("options");
 
     optionBox.innerHTML="";
 
-q.options.forEach((option,index)=>{
 
-    const btn = document.createElement("button");
-
-    btn.className="option";
-
-    btn.innerHTML = option;
+    q.options.forEach((option,index)=>{
 
 
-    if(selectedAnswers[currentQuestion] === index){
-        btn.classList.add("selected");
-    }
+        const btn = document.createElement("button");
+
+        btn.className="option";
+
+        btn.innerHTML=option;
 
 
-    btn.onclick = function(){
+        if(selectedAnswers[currentQuestion]===index){
 
-        selectedAnswers[currentQuestion] = index;
+            btn.classList.add("selected");
 
-        showQuestion();
-
-    };
+        }
 
 
-    optionBox.appendChild(btn);
+        btn.onclick=function(){
 
-});
+            selectedAnswers[currentQuestion]=index;
 
+            showQuestion();
 
-// ✅ Progress Update
-
-let answered = selectedAnswers.filter(a => a !== null).length;
-
-
-document.getElementById("progressText").innerHTML =
-"Answered : " + answered + " / " + testQuestions.length;
+        };
 
 
-document.getElementById("progressFill").style.width =
-(answered / testQuestions.length) * 100 + "%";
+        optionBox.appendChild(btn);
 
+
+    });
+
+
+    // ✅ Progress Update - FOR LOOP வெளியே
+
+    let answered = selectedAnswers.filter(a => a !== null).length;
+
+
+    document.getElementById("progressText").innerHTML =
+    "Answered : " + answered + " / " + testQuestions.length;
+
+
+    document.getElementById("progressFill").style.width =
+    (answered / testQuestions.length) * 100 + "%";
+
+
+}
         const btn = document.createElement("button");
 
         btn.className="option";
