@@ -1,109 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>G THE GENIUS Dashboard</title>
-
-<link rel="stylesheet" href="dashboard.css">
-
-</head>
-
-
 <body>
-
 
 <div class="dashboard-container">
 
+<!-- TOP ANNOUNCEMENT -->
 
+<div class="announcement">
+📢 Welcome to <b>G THE GENIUS</b> | ALL EXAM MOCK TEST PORTAL
+</div>
 
-<!-- TOP HEADER -->
+<!-- HEADER -->
 
-  <div class="announcement">
-
-📢 Welcome to G THE GENIUS Mock Test Portal 🚔
-
-  </div>
-
-<div class="top-header">
-
+<header class="top-header">
 
 <div class="logo">
-🛡️
+
+<h1>G THE GENIUS</h1>
+
+<p>ALL EXAM MOCK TEST PORTAL</p>
+
 </div>
 
+<nav class="top-menu">
 
-<div class="brand">
+<a href="dashboard.html">🏠 Home</a>
 
-<h1>
-G THE GENIUS
-</h1>
+<a href="leaderboard.html">🏆 Leaderboard</a>
+
+<a href="materials.html">📚 Materials</a>
+
+</nav>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero-banner">
+
+<h2>
+🚀 Welcome to G THE GENIUS
+</h2>
+
+<h3>
+ALL EXAM MOCK TEST PORTAL
+</h3>
 
 <p>
-All Government Exam Portal
+
+Prepare Smart • Practice Daily • Achieve Your Dream Government Job
+
 </p>
 
-</div>
-
-</div>
+</section>
 
 <!-- STUDENT PROFILE -->
 
-
 <div class="student-info">
 
-<h3 id="welcomeName">👤 Welcome</h3>
-
-<p id="welcomeDistrict">📍 District</p>
-
-<p id="welcomeExam">🎯 Selected Exam</p>
-
-</div>
-
-
-<!-- MOCK TEST -->
-
-
-<section class="test-section">
-
-
-<h2>
-🔥 Start Your Mock Test
+<h2 id="welcomeName">
+👤 Welcome Student
 </h2>
 
+<p id="welcomeDistrict">
+📍 District
+</p>
 
-
-<div class="test-grid">
-
-
-
-
-
-<div class="test-card daily">
-
-
-<div>
-
-<h3>
-🟢 Daily Mock Test
-</h3>
-
-
-<h1>
-10
-</h1>
-
-
-<p>
-Questions
+<p id="welcomeExam">
+🎯 Selected Exam
 </p>
 
 </div>
 
+<!-- MOCK TEST -->
 
+<section class="test-section">
+
+<h2>
+🚔 Start Your Mock Test
+</h2>
+
+<div class="test-grid">
+
+<!-- DAILY -->
+
+<div class="test-card daily">
+
+<h3>🟢 Daily Mock Test</h3>
+
+<h1>10</h1>
+
+<p>Questions</p>
 
 <button onclick="location.href='mocktest.html?type=daily'">
 
@@ -111,36 +96,17 @@ START
 
 </button>
 
-
 </div>
 
-
-
-
-
+<!-- WEEKLY -->
 
 <div class="test-card weekly">
 
+<h3>🟡 Weekly Mock Test</h3>
 
-<div>
+<h1>25</h1>
 
-<h3>
-🟡 Weekly Mock Test
-</h3>
-
-
-<h1>
-25
-</h1>
-
-
-<p>
-Questions
-</p>
-
-</div>
-
-
+<p>Questions</p>
 
 <button onclick="location.href='mocktest.html?type=weekly'">
 
@@ -148,37 +114,17 @@ START
 
 </button>
 
-
 </div>
 
-
-
-
-
-
+<!-- MONTHLY -->
 
 <div class="test-card monthly">
 
+<h3>🔴 Monthly Grand Test</h3>
 
-<div>
+<h1>100</h1>
 
-<h3>
-🔴 Monthly Grand Test
-</h3>
-
-
-<h1>
-100
-</h1>
-
-
-<p>
-Questions
-</p>
-
-</div>
-
-
+<p>Questions</p>
 
 <button onclick="location.href='mocktest.html?type=monthly'">
 
@@ -186,42 +132,42 @@ START
 
 </button>
 
-
 </div>
-
-
-
-
-</div>
-
-
-</section>
-
 
 <!-- STUDY MATERIALS -->
 
-<div class="menu-card" id="materialsBtn">
+<div class="test-card materials">
 
-📚
-
-<h3>
-Study Materials
-</h3>
+<h3>📚 Study Materials</h3>
 
 <p>
-Notes & Preparation
+
+Notes • PDF • Practice Materials
+
 </p>
+
+<button onclick="location.href='materials.html'">
+
+OPEN
+
+</button>
 
 </div>
 
+</div>
 
+</section>
 
+<!-- PART 2 STARTS HERE -->
 
-<!-- MY RANK -->
+  <!-- ========================= -->
+<!-- MY PERFORMANCE -->
+<!-- ========================= -->
 
 <div class="student-rank-card">
 
 <h2>🏆 My Performance</h2>
+
 <div class="quick-stats">
 
 <div class="stat-card">
@@ -240,7 +186,7 @@ Notes & Preparation
 </div>
 
 </div>
-  
+
 <p id="myScore">
 📝 Score : Loading...
 </p>
@@ -255,112 +201,142 @@ Notes & Preparation
 
 </div>
 
+<!-- ========================= -->
+<!-- WHY CHOOSE -->
+<!-- ========================= -->
 
+<section class="why-section">
 
-<!-- MENU -->
+<h2>✨ Why Choose G THE GENIUS?</h2>
 
-<div class="social-section">
+<div class="why-grid">
 
-<h2>Follow G THE GENIUS</h2>
+<div class="why-card">
+📝
+<h3>Online Mock Tests</h3>
+<p>Practice with real exam pattern.</p>
+</div>
+
+<div class="why-card">
+📚
+<h3>Daily Questions</h3>
+<p>Updated Government Exam Questions.</p>
+</div>
+
+<div class="why-card">
+🏆
+<h3>Leaderboard</h3>
+<p>Compete with top aspirants.</p>
+</div>
+
+<div class="why-card">
+📊
+<h3>Performance Analysis</h3>
+<p>Track your progress.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- LATEST UPDATES -->
+<!-- ========================= -->
+
+<section class="updates-section">
+
+<h2>🔥 Latest Updates</h2>
+
+<div class="update-card">
+✅ Daily Mock Test Available
+</div>
+
+<div class="update-card">
+✅ Weekly Mock Test Available
+</div>
+
+<div class="update-card">
+✅ Monthly Grand Test Available
+</div>
+
+<div class="update-card" onclick="alert('🚧 Coming Soon')">
+🚧 Video Courses - Coming Soon
+</div>
+
+<div class="update-card" onclick="alert('🚧 Coming Soon')">
+🚧 Live Classes - Coming Soon
+</div>
+
+<div class="update-card" onclick="alert('🚧 Coming Soon')">
+🚧 AI Performance Report - Coming Soon
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- CONTACT -->
+<!-- ========================= -->
+
+<section class="social-section">
+
+<h2>📞 Contact Us</h2>
 
 <div class="social-links">
 
-<a href="https://youtube.com/@gthegeniustamil?si=-eQvyYvRwwYpqjJm" target="_blank" class="youtube-btn">
-📺 Subscribe
+<a href="mailto:gthegenius7@gmail.com"
+class="email-btn">
+
+📧 gthegenius7@gmail.com
+
 </a>
 
-<a href="https://t.me/gthegenius" target="_blank" class="telegram-btn">
-📢 Join Telegram
+<a href="https://youtube.com/@gthegeniustamil?si=-eQvyYvRwwYpqjJm"
+target="_blank"
+class="youtube-btn">
+
+📺 YouTube
+
+</a>
+
+<a href="https://t.me/gthegenius"
+target="_blank"
+class="telegram-btn">
+
+📢 Telegram
+
 </a>
 
 </div>
 
-</div>
-  
-<div class="menu-section">
+</section>
 
-
-
-<div class="menu-card"
-onclick="location.href='leaderboard.html'">
-
-🏆
-
-<h3>
-Leaderboard
-</h3>
-
-<p>
-Top Rankers
-</p>
-
-</div>
-
-
-<div class="menu-card"
-onclick="location.href='result.html'">
-
-
-📊
-
-<h3>
-My Results
-</h3>
-
-<p>
-Score History
-</p>
-
-</div>
-
-
-
-
-
-<div class="menu-card">
-
-
-📚
-
-<h3>
-Previous Tests
-</h3>
-
-<p>
-Practice Again
-</p>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-</div>
-
+<!-- ========================= -->
+<!-- FOOTER -->
+<!-- ========================= -->
 
 <footer class="footer">
 
-<h3>🛡️ G THE GENIUS</h3>
+<h3>G THE GENIUS</h3>
 
-<p>ALL GOVERNMENT EXAM MOCK TEST PLATFORM</p>
+<p>
+ALL EXAM MOCK TEST PORTAL
+</p>
 
-<p>© 2026 G THE GENIUS</p>
+<p>
+© 2026 G THE GENIUS
+</p>
 
-<p>ALL RIGHTS RESERVED</p>
-
-<p class="version">Version 3.0</p>
+<p>
+Version 4.0
+</p>
 
 </footer>
+
+</div>
 
 <script type="module" src="dashboard.js"></script>
 
 </body>
-  
+
 </html>
+
