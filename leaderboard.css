@@ -87,3 +87,18 @@ button:hover{
 transform:scale(1.05);
 
 }
+
+.leader-tabs{
+display:flex;
+justify-content:center;
+gap:10px;
+margin:20px 0;
+}
+
+.leader-tabs button{
+padding:10px 18px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
