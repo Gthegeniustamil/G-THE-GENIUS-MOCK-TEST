@@ -84,6 +84,9 @@ Welcome 👋
 </p>
 
 </div>
+
+
+
 <div class="streak-card">
 
 <h2>🔥 Daily Streak</h2>
@@ -97,7 +100,9 @@ Welcome 👋
 </p>
 
 </div>
-  
+
+
+
 
 
 <!-- TEST CARDS -->
@@ -185,6 +190,7 @@ Start Test
 
 
 
+
 <div class="menu-buttons">
 
 <button onclick="location.href='profile.html'">
@@ -202,13 +208,19 @@ Start Test
 </div>
 
 
-<!-- FOOTER -->
+
+
+
+<!-- FOOTER START -->
+
 
 <div class="dashboard-footer">
+
 
 <h3>
 📞 Contact Us
 </h3>
+
 
 
 <div class="social-icons">
@@ -219,9 +231,11 @@ Start Test
 </a>
 
 
+
 <a href="YOUR_TELEGRAM_LINK" target="_blank" class="telegram">
 ✈️
 </a>
+
 
 
 <a href="mailto:gthegenius7@gmail.com" class="email">
@@ -229,7 +243,9 @@ Start Test
 </a>
 
 
+
 </div>
+
 
 
 
@@ -241,31 +257,50 @@ Start Test
 
 All Rights Reserved
 
+<br>
+
+TNUSRB Mock Test & Learning Platform
+
 </p>
 
 
+
+</div>
+
+
+<!-- FOOTER END -->
+
+
+
+
+
 </div>
 
 
 
-</div>
 
 
 <script type="module" src="dashboard.js"></script>
 
 
+
 <script>
+
 
 document.getElementById("studentName").innerHTML =
 localStorage.getItem("studentName") || "Student";
+
 
 
 document.getElementById("district").innerHTML =
 localStorage.getItem("district") || "-";
 
 
+
 document.getElementById("streakDays").innerHTML =
 localStorage.getItem("streak") || 0;
+
+
 
 
 
@@ -278,6 +313,7 @@ window.location.href =
 
 
 
+
 function logout(){
 
 localStorage.clear();
@@ -285,6 +321,8 @@ localStorage.clear();
 window.location.href="index.html";
 
 }
+
+
 
 </script>
 
