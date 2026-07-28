@@ -65,7 +65,7 @@ userData.data().name
 
 localStorage.setItem(
 "email",
-userData.data().email
+user.email
 );
   
 localStorage.setItem(
