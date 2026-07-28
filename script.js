@@ -36,17 +36,13 @@ else{
     document.getElementById("testType").innerHTML="🔴 Monthly Grand Test";
 }
 
-let timer;
 
 function startTimer(){
-   ...
+
 }
 
-async function loadQuestions(){
+async function loadQuestions(){ startTimer();
 
-   startTimer();
-
-   ...
 }
 
     let timeLeft = timeLimit;
