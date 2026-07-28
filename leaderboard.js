@@ -66,80 +66,40 @@ s=>s.testType.toLowerCase()===filter
 }
 
 
-
-// Sort Percentage
+// Sort by Marks
 
 students.sort((a,b)=>{
 
-return b.percentage - a.percentage;
+return b.score - a.score;
 
 });
-
 
 
 
 const leaderList =
 document.getElementById("leaderList");
 
-
-
-leaderList.innerHTML="";
-
-
-
-let rank=1;
-
-
-
-students.forEach((student)=>{
-
-
-
 leaderList.innerHTML += `
 
-<div class="leader-card">
+<div class="leader-card ${rank==1?"first":rank==2?"second":rank==3?"third":""}">
 
-
-<h2>
-
-${rank==1?"🥇":
-rank==2?"🥈":
-rank==3?"🥉":"🏅"}
-
-Rank ${rank}
-
-</h2>
-
-
-<h3>
-👤 ${student.studentName}
-</h3>
-
-
-<p>
-📍 ${student.district}
-</p>
-
-
-<p>
-🎯 ${student.testType}
-</p>
-
-
-<p>
-📝 Score :
-${student.score}/${student.totalQuestions}
-
-</p>
-
-
-<p>
-📈 ${student.percentage}%
-</p>
-
-
+<div class="rank-col">
+${rank==1?"🥇":rank==2?"🥈":rank==3?"🥉":"#"+rank}
 </div>
 
+<div class="name-col">
+${student.studentName}
+</div>
+
+<div class="district-col">
+${student.district}
+</div>
+
+<div class="mark-col">
+${student.score}/${student.totalQuestions}
+</div>
+
+</div>
 
 `;
 
@@ -203,7 +163,7 @@ s=>s.district===myDistrict
 
 districtStudents.sort((a,b)=>{
 
-return b.percentage-a.percentage;
+return b.score-a.score;
 
 });
 
@@ -225,16 +185,21 @@ districtBox.innerHTML += `
 
 <div class="leader-card">
 
+<div class="rank-col">
+${rank}
+</div>
 
-<h3>
-${rank}. 👤 ${student.studentName}
-</h3>
+<div class="name-col">
+${student.studentName}
+</div>
 
+<div class="district-col">
+${student.district}
+</div>
 
-<p>
-📈 ${student.percentage}%
-</p>
-
+<div class="mark-col">
+${student.score}/${student.totalQuestions}
+</div>
 
 </div>
 
