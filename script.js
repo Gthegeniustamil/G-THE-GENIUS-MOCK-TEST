@@ -14,25 +14,56 @@ let selectedAnswers = [];
 
 let testType = "daily";
 let totalQuestions = 10;
+let timeLimit = 300; // Default 5 Minutes
 
 const urlParams = new URLSearchParams(window.location.search);
 testType = urlParams.get("type") || "daily";
 
 if(testType==="daily"){
     totalQuestions = 10;
+    timeLimit = 5 * 60;
     document.getElementById("testType").innerHTML="🟢 Daily Mock Test";
 }
 else if(testType==="weekly"){
     totalQuestions = 25;
+    timeLimit = 10 * 60;
     document.getElementById("testType").innerHTML="🟡 Weekly Mock Test";
 }
 else{
     totalQuestions = 100;
+    timeLimit = 60 * 60;
     document.getElementById("testType").innerHTML="🔴 Monthly Grand Test";
 }
 
 async function loadQuestions(){
 
+    let timer;
+
+function startTimer(){
+
+    let timeLeft = timeLimit;
+
+    timer = setInterval(() => {
+
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+
+        document.getElementById("timer").innerHTML =
+            `⏰ ${minutes}:${seconds.toString().padStart(2,"0")}`;
+
+        if(timeLeft <= 0){
+            clearInterval(timer);
+            alert("Time Over! Test Submitted.");
+            submitTest();
+        }
+
+        timeLeft--;
+
+    },1000);
+
+}
+
+startTimer();
     document.getElementById("questionText").innerHTML="Loading Questions...";
 
     try{
@@ -220,7 +251,7 @@ function updatePalette(){
 
 
 async function submitTest(){
-
+clearInterval(timer);
 let score = 0;
 
 testQuestions.forEach((q,index)=>{
