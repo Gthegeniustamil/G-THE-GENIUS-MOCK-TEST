@@ -588,6 +588,42 @@ serverTimestamp()
 
 }
 
+// DAILY STREAK UPDATE
+
+let today = new Date().toLocaleDateString();
+
+let lastDate = localStorage.getItem("lastTestDate");
+
+let streak = Number(localStorage.getItem("streak")) || 0;
+
+
+if(lastDate !== today){
+
+    let yesterday = new Date();
+
+    yesterday.setDate(yesterday.getDate()-1);
+
+    let yesterdayDate = yesterday.toLocaleDateString();
+
+
+    if(lastDate === yesterdayDate){
+
+        streak++;
+
+    }
+    else{
+
+        streak = 1;
+
+    }
+
+
+    localStorage.setItem("streak", streak);
+
+    localStorage.setItem("lastTestDate", today);
+
+}
+    
 catch(error){
 
 
