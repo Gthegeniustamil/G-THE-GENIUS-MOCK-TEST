@@ -39,10 +39,10 @@ students.push(data);
 
 // Score high to low sort
 
+students = students.filter(student => student.testType === currentType);
+
 students.sort((a,b)=>{
-
-return b.percentage - a.percentage;
-
+    return b.percentage - a.percentage;
 });
 
 
