@@ -36,14 +36,7 @@ else{
     document.getElementById("testType").innerHTML="🔴 Monthly Grand Test";
 }
 
-
-function startTimer(){
-
-}
-
-async function loadQuestions(){ startTimer();
-
-}
+function startTimer() {
 
     let timeLeft = timeLimit;
 
@@ -53,115 +46,60 @@ async function loadQuestions(){ startTimer();
         let seconds = timeLeft % 60;
 
         document.getElementById("timer").innerHTML =
-            `⏰ ${minutes}:${seconds.toString().padStart(2,"0")}`;
+            `⏰ ${minutes}:${seconds.toString().padStart(2, "0")}`;
 
-        if(timeLeft <= 0){
+        if (timeLeft <= 0) {
             clearInterval(timer);
             alert("Time Over! Test Submitted.");
             submitTest();
+            return;
         }
 
         timeLeft--;
 
-    },1000);
-
+    }, 1000);
 }
 
-startTimer();
-    document.getElementById("questionText").innerHTML="Loading Questions...";
+async function loadQuestions() {
 
-    try{
+    startTimer();
 
-        const snapshot = await getDocs(collection(db,"questions"));
-alert("Questions: " + snapshot.size);
-        allQuestions=[];
+    document.getElementById("questionText").innerHTML = "Loading Questions...";
 
-        snapshot.forEach((doc)=>{
+    try {
+
+        const snapshot = await getDocs(collection(db, "questions"));
+        alert("Questions: " + snapshot.size);
+
+        allQuestions = [];
+
+        snapshot.forEach((doc) => {
             allQuestions.push(doc.data());
         });
 
-        if(allQuestions.length===0){
-            document.getElementById("questionText").innerHTML="No Questions Found";
+        if (allQuestions.length === 0) {
+            document.getElementById("questionText").innerHTML = "No Questions Found";
             return;
         }
 
         testQuestions = allQuestions
-        .sort(()=>Math.random()-0.5)
-        .slice(0,totalQuestions);
+            .sort(() => Math.random() - 0.5)
+            .slice(0, totalQuestions);
 
         selectedAnswers = new Array(testQuestions.length).fill(null);
 
         showQuestion();
         createPalette();
 
-    }catch(error){
+    } catch (error) {
 
         console.log(error);
-
-        document.getElementById("questionText").innerHTML="Failed to Load Questions";
+        document.getElementById("questionText").innerHTML = "Failed to Load Questions";
 
     }
-
 }
 
-function showQuestion(){
-
-    const q = testQuestions[currentQuestion];
-
-
-    document.getElementById("questionNumber").innerHTML =
-    "Question " + (currentQuestion + 1) + " / " + testQuestions.length;
-
-
-    document.getElementById("questionText").innerHTML =
-    q.question;
-
-
-    const optionBox = document.getElementById("options");
-
-    optionBox.innerHTML = "";
-
-
-    q.options.forEach((option,index)=>{
-
-
-        const btn = document.createElement("button");
-
-        btn.className = "option";
-
-        btn.innerHTML = option;
-
-
-        if(selectedAnswers[currentQuestion] === index){
-
-            btn.classList.add("selected");
-
-        }
-
-
-        btn.onclick = function(){
-
-    selectedAnswers[currentQuestion] = index;
-
-    showQuestion();
-
-};
-
-
-        optionBox.appendChild(btn);
-
-
-    });
-
-
-    
-}
-
-
-
-
-
-loadQuestions();
+        
 
 // NEXT BUTTON
 document.getElementById("nextBtn").onclick = function(){
