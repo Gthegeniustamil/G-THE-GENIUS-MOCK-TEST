@@ -102,7 +102,27 @@ Welcome 👋
 </div>
 
 
+<!-- PLAYER LEVEL -->
 
+<div class="level-card">
+
+<h2>⭐ Player Level</h2>
+
+<h3>
+Level <span id="playerLevel">1</span>
+</h3>
+
+<div class="xp-bar">
+<div class="xp-fill" id="xpFill"></div>
+</div>
+
+<p>
+XP :
+<span id="playerXP">0</span> /
+100
+</p>
+
+</div>
 
 
 <!-- TEST CARDS -->
@@ -301,7 +321,18 @@ document.getElementById("streakDays").innerHTML =
 localStorage.getItem("streak") || 0;
 
 
+// PLAYER LEVEL
 
+let xp = Number(localStorage.getItem("xp")) || 0;
+
+let level = Math.floor(xp/100)+1;
+
+document.getElementById("playerLevel").innerHTML = level;
+
+document.getElementById("playerXP").innerHTML = xp % 100;
+
+document.getElementById("xpFill").style.width =
+(xp % 100) + "%";
 
 
 function startTest(type){
