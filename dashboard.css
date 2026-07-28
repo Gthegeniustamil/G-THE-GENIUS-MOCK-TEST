@@ -451,3 +451,17 @@ color:#1e3a8a;
 margin-bottom:20px;
 
 }
+
+
+/* Copyright */
+
+.copyright{
+
+text-align:center;
+margin-top:20px;
+font-size:16px;
+font-weight:600;
+line-height:1.8;
+color:#334155;
+
+}
