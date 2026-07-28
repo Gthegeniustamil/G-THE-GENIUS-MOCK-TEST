@@ -228,6 +228,8 @@ Start Test
 <script type="module" src="dashboard.js"></script>
 
 
+<script>
+
 document.getElementById("studentName").innerHTML =
 localStorage.getItem("studentName") || "Student";
 
@@ -240,14 +242,13 @@ document.getElementById("streakDays").innerHTML =
 localStorage.getItem("streak") || 0;
 
 
+
 function startTest(type){
 
 window.location.href =
 "mocktest.html?type="+type;
 
 }
-
-
 
 
 
@@ -259,8 +260,9 @@ window.location.href="index.html";
 
 }
 
-
 </script>
+
+
 
 
 
