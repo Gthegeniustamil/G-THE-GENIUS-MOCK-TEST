@@ -1,79 +1,112 @@
-import { db, auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 
-import {
-onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
 doc,
 getDoc,
 collection,
-getDocs
+getDocs,
+query,
+where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-onAuthStateChanged(auth, async (user)=>{
 
 
-if(user){
+
+async function loadProfile(){
 
 
-const uid = user.uid;
+const user = auth.currentUser;
 
 
-// Student Details
 
-const studentRef = doc(db,"students",uid);
+if(!user){
 
-const studentSnap = await getDoc(studentRef);
+alert("Please Login First");
 
+window.location.href="index.html";
 
-let studentData;
-
-
-if(studentSnap.exists()){
-
-studentData = studentSnap.data();
-
-
-document.getElementById("name").innerHTML =
-studentData.name;
-
-
-document.getElementById("email").innerHTML =
-studentData.email;
-
-
-document.getElementById("district").innerHTML =
-studentData.district;
+return;
 
 }
 
 
 
-// Results Load
 
-const snapshot =
-await getDocs(collection(db,"results"));
+// Load User Data
+
+const userDoc = await getDoc(
+
+doc(db,"users",user.uid)
+
+);
 
 
-let allResults = [];
+
+if(userDoc.exists()){
+
+
+let data = userDoc.data();
+
+
+
+document.getElementById("studentName").innerHTML =
+data.name;
+
+
+document.getElementById("email").innerHTML =
+data.email;
+
+
+document.getElementById("district").innerHTML =
+data.district;
+
+
+}
+
+
+
+
+
+
+
+// Load Test Results
+
+
+const resultSnapshot =
+
+await getDocs(
+
+query(
+
+collection(db,"results"),
+
+where("studentName","==",
+
+localStorage.getItem("studentName"))
+
+)
+
+);
+
+
+
+
 
 let total = 0;
 
 let best = 0;
 
+let totalPercentage = 0;
 
 
-snapshot.forEach((doc)=>{
+
+resultSnapshot.forEach((doc)=>{
+
 
 let data = doc.data();
 
-allResults.push(data);
-
-
-
-if(data.studentName === studentData.name){
 
 total++;
 
@@ -84,110 +117,51 @@ best = data.percentage;
 
 }
 
-}
+
+totalPercentage += data.percentage;
+
 
 
 });
 
 
 
-// Best Score
+
+
+let average = 0;
+
+
+
+if(total > 0){
+
+average =
+Math.round(totalPercentage / total);
+
+}
+
+
+
+
 
 document.getElementById("totalTests").innerHTML =
 total;
 
 
+
 document.getElementById("bestScore").innerHTML =
-best + "%";
+best+"%";
 
 
 
-
-// Overall Rank
-
-allResults.sort((a,b)=>{
-
-return b.percentage - a.percentage;
-
-});
-
-
-let overallRank = 1;
-
-
-for(let i=0;i<allResults.length;i++){
-
-
-if(allResults[i].studentName === studentData.name){
-
-break;
-
-}
-
-
-overallRank++;
-
-}
+document.getElementById("averageScore").innerHTML =
+average+"%";
 
 
 
-document.getElementById("overallRank").innerHTML =
-overallRank;
-
-
-
-
-// District Rank
-
-let districtResults =
-allResults.filter((student)=>{
-
-return student.district === studentData.district;
-
-});
-
-
-districtResults.sort((a,b)=>{
-
-return b.percentage - a.percentage;
-
-});
-
-
-let districtRank = 1;
-
-
-for(let i=0;i<districtResults.length;i++){
-
-
-if(districtResults[i].studentName === studentData.name){
-
-break;
-
-}
-
-
-districtRank++;
 
 
 }
 
 
 
-document.getElementById("districtRank").innerHTML =
-districtRank;
-
-
-
-}
-else{
-
-
-window.location.href="index.html";
-
-
-}
-
-
-
-});
+loadProfile();
