@@ -173,7 +173,85 @@ button:hover{
 
 }
 
+/* SOCIAL ICONS */
 
+.social-icons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    margin-top:20px;
+
+    margin-bottom:10px;
+
+}
+
+
+.social{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+    color:white;
+
+    transition:0.3s;
+
+}
+
+
+.social:hover{
+
+    transform:scale(1.1);
+
+}
+
+
+/* YouTube */
+
+.youtube{
+
+    background:#ff0000;
+
+}
+
+
+/* Telegram */
+
+.telegram{
+
+    background:#0088cc;
+
+}
+
+
+/* Email */
+
+.email{
+
+    background:#64748b;
+
+}
+
+
+.social-icons a{
+
+    text-decoration:none;
+
+}
 
 
 @media(max-width:600px){
