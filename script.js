@@ -11,6 +11,7 @@ let allQuestions = [];
 let testQuestions = [];
 let currentQuestion = 0;
 let selectedAnswers = [];
+let timer;
 
 let testType = "daily";
 let totalQuestions = 10;
@@ -35,11 +36,18 @@ else{
     document.getElementById("testType").innerHTML="🔴 Monthly Grand Test";
 }
 
-async function loadQuestions(){
-
-    let timer;
+let timer;
 
 function startTimer(){
+   ...
+}
+
+async function loadQuestions(){
+
+   startTimer();
+
+   ...
+}
 
     let timeLeft = timeLimit;
 
