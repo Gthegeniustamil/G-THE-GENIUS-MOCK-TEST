@@ -426,3 +426,11 @@ padding:12px;
     color:#00e676;
 
 }
+
+#timer{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    color:#ffcc00;
+    margin:15px 0;
+}
