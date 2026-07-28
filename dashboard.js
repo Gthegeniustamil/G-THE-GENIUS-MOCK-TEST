@@ -1,64 +1,142 @@
-import { auth } from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 
 import {
-onAuthStateChanged,
-signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// Check Login
 
-onAuthStateChanged(auth, (user)=>{
-
-
-    if(user){
+async function loadDashboardStats(){
 
 
-        let name =
-        localStorage.getItem("studentName") || "Student";
+let studentName =
+localStorage.getItem("studentName");
 
 
-        document.getElementById("studentName").innerHTML = name;
+
+if(!studentName){
+return;
+}
 
 
-    }
-    else{
+
+const snapshot =
+await getDocs(collection(db,"results"));
 
 
-        window.location.href = "index.html";
+
+let totalTests = 0;
+
+let bestScore = 0;
+
+let totalPercentage = 0;
+
+let rankList = [];
 
 
-    }
+
+snapshot.forEach((doc)=>{
+
+
+let data = doc.data();
+
+
+rankList.push(data);
+
+
+
+if(data.studentName === studentName){
+
+
+totalTests++;
+
+
+if(data.percentage > bestScore){
+
+bestScore = data.percentage;
+
+}
+
+
+totalPercentage += data.percentage;
+
+
+}
 
 
 });
 
 
 
-// Logout
 
-document.getElementById("logoutBtn").onclick = function(){
+// Average
 
-
-    signOut(auth).then(()=>{
+let average = 0;
 
 
-        localStorage.clear();
+if(totalTests > 0){
 
-        alert("Logged Out Successfully");
-
-
-        window.location.href="index.html";
-
-
-    });
-
-
-};
-
-function startTest(type){
-
-    window.location.href =
-    "mocktest.html?type=" + type;
+average =
+Math.round(totalPercentage / totalTests);
 
 }
+
+
+
+
+// Rank Calculation
+
+
+rankList.sort((a,b)=>{
+
+return b.percentage - a.percentage;
+
+});
+
+
+
+let myRank = "-";
+
+
+rankList.forEach((student,index)=>{
+
+
+if(student.studentName === studentName){
+
+myRank = index + 1;
+
+}
+
+
+});
+
+
+
+
+
+document.getElementById("totalTests").innerHTML =
+totalTests;
+
+
+
+document.getElementById("bestScore").innerHTML =
+bestScore+"%";
+
+
+
+document.getElementById("averageScore").innerHTML =
+average+"%";
+
+
+
+document.getElementById("myRank").innerHTML =
+"#"+myRank;
+
+
+
+}
+
+
+
+loadDashboardStats();
