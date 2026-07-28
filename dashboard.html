@@ -106,12 +106,13 @@ Welcome 👋
 </div>
 
 // PLAYER LEVEL SYSTEM
+// PLAYER LEVEL SYSTEM
 
 let xp = Number(localStorage.getItem("xp")) || 0;
 
 
 // Level 1 = 50 XP
-// Every level increase +50 XP
+// Every next level +50 XP
 
 
 let level = Math.floor(xp / 50) + 1;
@@ -131,16 +132,12 @@ document.getElementById("playerLevel").innerHTML =
 level;
 
 
-
 document.getElementById("playerXP").innerHTML =
 currentXP + " / " + nextLevelXP;
 
 
-
 document.getElementById("xpFill").style.width =
 ((currentXP / 50) * 100) + "%";
-
-
 <!-- TEST CARDS -->
 
 
