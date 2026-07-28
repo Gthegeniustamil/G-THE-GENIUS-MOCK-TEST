@@ -434,3 +434,41 @@ padding:12px;
     color:#ffcc00;
     margin:15px 0;
 }
+
+/* ===== TEST HEADER ===== */
+
+.test-header{
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:15px;
+margin-bottom:20px;
+
+}
+
+.test-logo{
+
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid gold;
+
+}
+
+.test-header h2{
+
+margin:0;
+color:#fff;
+font-size:26px;
+
+}
+
+.test-header p{
+
+margin:5px 0 0;
+color:#ddd;
+font-size:14px;
+
+}
