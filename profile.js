@@ -85,11 +85,13 @@ average = Math.round(totalPercentage / totalTests);
 document.getElementById("totalTests").innerHTML =
 totalTests;
 
-document.getElementById("bestScore").innerHTML =
-bestScore + "%";
+let bestMarks = Math.round((bestScore / 100) * 20);
 
-document.getElementById("averageScore").innerHTML =
-average + "%";
+
+document.getElementById("bestScore").innerHTML =
+bestMarks + " / 20";
+
+
 
 }
 
