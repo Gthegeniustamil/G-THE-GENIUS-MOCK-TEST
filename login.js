@@ -88,16 +88,10 @@ window.location.href="dashboard.html";
 
 catch(error){
 
-
-console.log(error.code);
-
+console.log(error);
 
 alert(
-"Login Failed : "+error.code
+error.code + "\n" + error.message
 );
 
-
 }
-
-
-};
