@@ -2,7 +2,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:"Poppins",Arial,sans-serif;
+    font-family:Arial, sans-serif;
 }
 
 
@@ -11,11 +11,13 @@ body{
     min-height:100vh;
 
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
     background:
-    linear-gradient(160deg,#020617,#1e40af);
+    linear-gradient(160deg,#020617,#1d4ed8);
 
     padding:20px;
 
@@ -23,46 +25,54 @@ body{
 
 
 
+/* LOGIN / REGISTER CARD */
 
 .login-box{
 
     width:100%;
+
     max-width:380px;
 
-    background:rgba(255,255,255,0.12);
+    padding:30px 25px;
+
+    background:rgba(255,255,255,0.15);
 
     backdrop-filter:blur(15px);
 
     border-radius:30px;
 
-    padding:30px 25px;
-
     text-align:center;
-
-    border:1px solid rgba(255,255,255,0.2);
 
     box-shadow:
     0 20px 40px rgba(0,0,0,0.4);
+
+    border:1px solid rgba(255,255,255,0.3);
+
+    position:relative;
+
+    z-index:5;
 
 }
 
 
 
 
+/* LOGO */
 
 .logo-area{
+
+    text-align:center;
 
     margin-bottom:15px;
 
 }
 
 
-
 .login-logo{
 
-    width:110px;
+    width:100px;
 
-    height:110px;
+    height:100px;
 
     border-radius:50%;
 
@@ -70,14 +80,14 @@ body{
 
     border:4px solid #facc15;
 
-    box-shadow:
-    0 0 25px #facc15;
+    box-shadow:0 0 20px #facc15;
 
 }
 
 
 
 
+/* TITLE */
 
 .login-box h1{
 
@@ -90,8 +100,7 @@ body{
 }
 
 
-
-.login-box h3{
+.tagline{
 
     color:#e2e8f0;
 
@@ -103,6 +112,14 @@ body{
 
 
 
+/* INPUT */
+
+.input-box{
+
+    width:100%;
+
+}
+
 
 
 input,
@@ -110,11 +127,17 @@ select{
 
     width:100%;
 
-    height:50px;
+    height:52px;
+
+    padding:0 20px;
 
     margin:10px 0;
 
-    padding:0 18px;
+    font-size:16px;
+
+    color:#000;
+
+    background:white;
 
     border:none;
 
@@ -122,9 +145,17 @@ select{
 
     border-radius:25px;
 
-    background:white;
+    position:relative;
 
-    font-size:15px;
+    z-index:10;
+
+}
+
+
+
+input::placeholder{
+
+    color:#64748b;
 
 }
 
@@ -132,11 +163,13 @@ select{
 
 
 
+/* BUTTON */
+
 button{
 
     width:100%;
 
-    height:50px;
+    height:52px;
 
     margin-top:15px;
 
@@ -169,8 +202,9 @@ button:hover{
 
 
 
+/* SECOND BUTTON */
 
-button:last-child{
+button:nth-of-type(2){
 
     background:white;
 
@@ -182,9 +216,13 @@ button:last-child{
 
 
 
-::placeholder{
+.bottom-text{
 
-    color:#64748b;
+    margin-top:25px;
+
+    color:#e2e8f0;
+
+    font-size:14px;
 
 }
 
@@ -192,7 +230,23 @@ button:last-child{
 
 
 
-@media(max-width:500px){
+.footer{
+
+    color:white;
+
+    text-align:center;
+
+    margin-top:20px;
+
+}
+
+
+
+
+/* MOBILE */
+
+@media(max-width:480px){
+
 
 .login-box{
 
@@ -203,10 +257,18 @@ button:last-child{
 
 .login-logo{
 
-    width:95px;
+    width:90px;
 
-    height:95px;
+    height:90px;
 
 }
+
+
+.login-box h1{
+
+    font-size:24px;
+
+}
+
 
 }
