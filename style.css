@@ -2,7 +2,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:"Poppins",Arial,sans-serif;
 }
 
 
@@ -17,51 +17,43 @@ body{
     align-items:center;
 
     background:
-    linear-gradient(160deg,#020617,#1d4ed8);
+    linear-gradient(160deg,#020617,#1e40af);
 
     padding:20px;
 
 }
 
 
-
-/* LOGIN / REGISTER CARD */
+/* MAIN APP CARD */
 
 .login-box{
 
     width:100%;
 
-    max-width:380px;
+    max-width:400px;
 
     padding:30px 25px;
 
-    background:rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.12);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter:blur(18px);
 
     border-radius:30px;
 
     text-align:center;
 
+    border:1px solid rgba(255,255,255,0.25);
+
     box-shadow:
     0 20px 40px rgba(0,0,0,0.4);
 
-    border:1px solid rgba(255,255,255,0.3);
-
-    position:relative;
-
-    z-index:5;
-
 }
-
 
 
 
 /* LOGO */
 
 .logo-area{
-
-    text-align:center;
 
     margin-bottom:15px;
 
@@ -70,9 +62,9 @@ body{
 
 .login-logo{
 
-    width:100px;
+    width:110px;
 
-    height:100px;
+    height:110px;
 
     border-radius:50%;
 
@@ -80,10 +72,9 @@ body{
 
     border:4px solid #facc15;
 
-    box-shadow:0 0 20px #facc15;
+    box-shadow:0 0 25px #facc15;
 
 }
-
 
 
 
@@ -106,24 +97,53 @@ body{
 
     font-size:15px;
 
-    margin-bottom:25px;
+    margin-bottom:20px;
 
 }
+
+
+
+
+/* WELCOME BOX */
+
+.welcome-card{
+
+    background:rgba(255,255,255,0.15);
+
+    border-radius:20px;
+
+    padding:15px;
+
+    margin-bottom:20px;
+
+    color:white;
+
+    font-size:14px;
+
+}
+
+
+.welcome-card h3{
+
+    margin-bottom:10px;
+
+    color:#facc15;
+
+}
+
+
+.welcome-card p{
+
+    margin:7px 0;
+
+}
+
 
 
 
 /* INPUT */
 
-.input-box{
-
-    width:100%;
-
-}
-
-
-
-input,
-select{
+input{
 
     width:100%;
 
@@ -133,24 +153,19 @@ select{
 
     margin:10px 0;
 
-    font-size:16px;
-
-    color:#000;
-
-    background:white;
-
     border:none;
 
     outline:none;
 
     border-radius:25px;
 
-    position:relative;
+    background:white;
 
-    z-index:10;
+    color:#020617;
+
+    font-size:16px;
 
 }
-
 
 
 input::placeholder{
@@ -158,8 +173,6 @@ input::placeholder{
     color:#64748b;
 
 }
-
-
 
 
 
@@ -177,20 +190,19 @@ button{
 
     border-radius:25px;
 
+    cursor:pointer;
+
     font-size:16px;
 
     font-weight:bold;
-
-    cursor:pointer;
 
     background:#facc15;
 
     color:#020617;
 
-    transition:0.3s;
+    transition:.3s;
 
 }
-
 
 
 button:hover{
@@ -201,24 +213,22 @@ button:hover{
 
 
 
-
 /* SECOND BUTTON */
 
 button:nth-of-type(2){
 
     background:white;
 
-    color:#1e3a8a;
+    color:#1e40af;
 
 }
 
 
 
 
-
 .bottom-text{
 
-    margin-top:25px;
+    margin:20px 0;
 
     color:#e2e8f0;
 
@@ -229,28 +239,78 @@ button:nth-of-type(2){
 
 
 
+/* FOOTER */
 
 .footer{
 
+    margin-top:20px;
+
     color:white;
 
-    text-align:center;
+    font-size:13px;
 
-    margin-top:20px;
+}
+
+
+
+.social-box{
+
+    background:rgba(255,255,255,0.12);
+
+    padding:12px;
+
+    margin:10px 0;
+
+    border-radius:15px;
+
+}
+
+
+.social-box p{
+
+    font-weight:bold;
+
+    margin-bottom:5px;
+
+}
+
+
+.social-box a{
+
+    color:#facc15;
+
+    text-decoration:none;
+
+    font-weight:bold;
 
 }
 
 
 
 
+.copyright{
+
+    margin-top:20px;
+
+    padding-top:15px;
+
+    border-top:1px solid rgba(255,255,255,0.3);
+
+    color:#cbd5e1;
+
+    font-size:12px;
+
+}
+
+
+
 /* MOBILE */
 
-@media(max-width:480px){
-
+@media(max-width:450px){
 
 .login-box{
 
-    padding:25px 20px;
+    padding:25px 18px;
 
 }
 
@@ -269,6 +329,5 @@ button:nth-of-type(2){
     font-size:24px;
 
 }
-
 
 }
