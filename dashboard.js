@@ -1,30 +1,31 @@
 import { auth } from "./firebase-config.js";
 
 import {
-signOut,
-onAuthStateChanged
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const nameBox = document.getElementById("studentName");
+// Check Login
 
-
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth, (user)=>{
 
 
     if(user){
+
 
         let name =
         localStorage.getItem("studentName") || "Student";
 
 
-        nameBox.innerHTML = name;
+        document.getElementById("studentName").innerHTML = name;
 
 
-    }else{
+    }
+    else{
 
 
-        window.location.href="index.html";
+        window.location.href = "index.html";
 
 
     }
@@ -34,6 +35,8 @@ onAuthStateChanged(auth,(user)=>{
 
 
 
+// Logout
+
 document.getElementById("logoutBtn").onclick = function(){
 
 
@@ -41,6 +44,8 @@ document.getElementById("logoutBtn").onclick = function(){
 
 
         localStorage.clear();
+
+        alert("Logged Out Successfully");
 
 
         window.location.href="index.html";
