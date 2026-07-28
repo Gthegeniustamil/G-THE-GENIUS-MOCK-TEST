@@ -300,3 +300,10 @@ document.getElementById("submitBtn").onclick=function(){
 confirmSubmit();
 
 };
+
+document.getElementById("studentName").innerHTML =
+localStorage.getItem("studentName") || "Student";
+
+
+document.getElementById("studentDistrict").innerHTML =
+localStorage.getItem("district") || "Not Selected";
