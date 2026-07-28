@@ -55,3 +55,10 @@ document.getElementById("logoutBtn").onclick = function(){
 
 
 };
+
+function startTest(type){
+
+    window.location.href =
+    "mocktest.html?type=" + type;
+
+}
