@@ -16,104 +16,159 @@
 <body>
 
 
-<div class="dashboard">
+<div class="dashboard-container">
 
 
-<div class="top-header">
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png" class="logo">
+<!-- LOGO -->
 
-<div>
-<h1>🛡️ G THE GENIUS</h1>
-<p>TNUSRB MOCK TEST PORTAL</p>
-</div>
+<div class="logo-area">
 
-<button id="logoutBtn">
-🚪 Logout
-</button>
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="dashboard-logo">
 
 </div>
 
 
 
-<div class="welcome-card">
+
+<h1>
+🛡️ G THE GENIUS
+</h1>
+
+
+<h3>
+TNUSRB MOCK TEST PORTAL
+</h3>
+
+
+
+
+<div class="student-card">
+
 
 <h2>
-👋 Welcome <span id="studentName"></span>
+Welcome 👋
+<span id="studentName">
+Student
+</span>
 </h2>
 
+
 <p>
-Prepare • Practice • Achieve Your Dream
+📍 District :
+<span id="district">
+-
+</span>
 </p>
+
 
 </div>
 
 
 
 
-<div class="test-grid">
-<div class="test-grid">
+
+<!-- TEST CARDS -->
 
 
 <div class="test-card daily">
 
-<h2>🟢 Daily Mock Test</h2>
+<h2>
+🟢 Daily Mock Test
+</h2>
 
-<p>10 Questions</p>
-<p>Time: 5 Minutes</p>
+<p>
+10 Questions
+</p>
+
+<p>
+⏰ 5 Minutes
+</p>
+
 
 <button onclick="startTest('daily')">
+
 Start Test
+
 </button>
 
 </div>
+
+
 
 
 
 <div class="test-card weekly">
 
-<h2>🟡 Weekly Mock Test</h2>
+<h2>
+🟡 Weekly Mock Test
+</h2>
 
-<p>25 Questions</p>
-<p>Time: 10 Minutes</p>
+<p>
+25 Questions
+</p>
+
+<p>
+⏰ 10 Minutes
+</p>
+
 
 <button onclick="startTest('weekly')">
+
 Start Test
+
 </button>
 
 </div>
+
 
 
 
 
 <div class="test-card monthly">
 
-<h2>🔴 Monthly Grand Test</h2>
+<h2>
+🔴 Monthly Grand Test
+</h2>
 
-<p>100 Questions</p>
-<p>Time: 60 Minutes</p>
+<p>
+100 Questions
+</p>
+
+<p>
+⏰ 60 Minutes
+</p>
+
 
 <button onclick="startTest('monthly')">
+
 Start Test
+
 </button>
 
 </div>
 
 
-</div>
 
 
 
-<div class="menu">
+
+<div class="menu-buttons">
 
 
 <button onclick="location.href='leaderboard.html'">
+
 🏆 Leaderboard
+
 </button>
 
 
-<button onclick="location.href='profile.html'">
-👤 My Profile
+
+<button onclick="logout()">
+
+🚪 Logout
+
 </button>
 
 
@@ -125,10 +180,22 @@ Start Test
 
 
 
-<script type="module" src="dashboard.js"></script>
+
 
 
 <script>
+
+
+document.getElementById("studentName").innerHTML =
+localStorage.getItem("studentName") || "Student";
+
+
+document.getElementById("district").innerHTML =
+localStorage.getItem("district") || "-";
+
+
+
+
 
 function startTest(type){
 
@@ -137,7 +204,21 @@ window.location.href =
 
 }
 
+
+
+
+
+function logout(){
+
+localStorage.clear();
+
+window.location.href="index.html";
+
+}
+
+
 </script>
+
 
 
 </body>
