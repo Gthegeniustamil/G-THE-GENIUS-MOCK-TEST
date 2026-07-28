@@ -18,7 +18,7 @@ body{
 
 .leader-container{
 
-    max-width:800px;
+    max-width:700px;
     margin:auto;
     background:white;
     padding:25px;
@@ -29,91 +29,49 @@ body{
 
 
 
-.header{
+h1{
 
     text-align:center;
-    margin-bottom:25px;
-
-}
-
-
-.logo{
-
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid #facc15;
-
-}
-
-
-.header h1{
-
     color:#1e3a8a;
-    margin-top:10px;
-
-}
-
-
-.header p{
-
-    color:#64748b;
+    margin-bottom:10px;
 
 }
 
 
 
-/* MAIN TABS */
+h2{
 
-.tabs,
-.test-tabs{
-
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    flex-wrap:wrap;
+    text-align:center;
     margin:15px 0;
-
-}
-
-
-.tabs button,
-.test-tabs button{
-
-    padding:12px 18px;
-    border:none;
-    border-radius:12px;
-    background:#1e3a8a;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-
-}
-
-
-.test-tabs button{
-
-    background:#facc15;
-    color:#020617;
+    color:#334155;
 
 }
 
 
 
-/* TITLE */
 
-#rankTitle{
+
+.student-filter{
 
     text-align:center;
-    color:#1e3a8a;
-    margin:20px;
+    margin-bottom:20px;
 
 }
 
 
 
-/* LEADER CARD */
+#testFilter{
+
+    width:90%;
+    padding:12px;
+    border-radius:12px;
+    border:2px solid #2563eb;
+    font-size:16px;
+
+}
+
+
+
 
 
 .leader-card{
@@ -122,8 +80,8 @@ body{
     margin:15px 0;
     padding:20px;
     border-radius:18px;
-    border-left:6px solid #facc15;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    border-left:6px solid #2563eb;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
 
 }
 
@@ -136,12 +94,14 @@ body{
 }
 
 
+
 .leader-card h3{
 
     margin:10px 0;
-    color:#334155;
+    color:#020617;
 
 }
+
 
 
 .leader-card p{
@@ -153,10 +113,16 @@ body{
 
 
 
-/* BACK BUTTON */
+#districtRank .leader-card{
+
+    border-left-color:#f59e0b;
+
+}
 
 
-.leader-container > button{
+
+
+button{
 
     width:100%;
     padding:14px;
@@ -167,7 +133,14 @@ body{
     color:white;
     font-size:16px;
     font-weight:bold;
-    cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+    background:#2563eb;
 
 }
 
@@ -179,15 +152,7 @@ body{
 
 .leader-container{
 
-    padding:15px;
-
-}
-
-
-.tabs button,
-.test-tabs button{
-
-    width:100%;
+padding:15px;
 
 }
 
