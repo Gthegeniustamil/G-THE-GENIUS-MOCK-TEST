@@ -1,27 +1,21 @@
-import { auth, db } from "./firebase-config.js";
-
+import { db } from "./firebase-config.js";
 
 import {
-doc,
-getDoc,
 collection,
 getDocs,
 query,
 where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-
-
-
 async function loadProfile(){
 
+// Local Storage Data
 
-const user = auth.currentUser;
+const studentName = localStorage.getItem("studentName");
+const email = localStorage.getItem("email");
+const district = localStorage.getItem("district");
 
-
-
-if(!user){
+if(!studentName){
 
 alert("Please Login First");
 
@@ -31,137 +25,82 @@ return;
 
 }
 
-
-
-
-// Load User Data
-
-const userDoc = await getDoc(
-
-doc(db,"users",user.uid)
-
-);
-
-
-
-if(userDoc.exists()){
-
-
-let data = userDoc.data();
-
-
+// Show Profile
 
 document.getElementById("studentName").innerHTML =
-data.name;
-
+studentName;
 
 document.getElementById("email").innerHTML =
-data.email;
-
+email || "-";
 
 document.getElementById("district").innerHTML =
-data.district;
-
-
-}
-
-
-
-
-
-
+district || "-";
 
 // Load Test Results
 
+try{
 
-const resultSnapshot =
-
-await getDocs(
+const resultSnapshot = await getDocs(
 
 query(
 
 collection(db,"results"),
 
-where("studentName","==",
-
-localStorage.getItem("studentName"))
+where("studentName","==",studentName)
 
 )
 
 );
 
-
-
-
-
-let total = 0;
-
-let best = 0;
-
+let totalTests = 0;
+let bestScore = 0;
 let totalPercentage = 0;
-
-
 
 resultSnapshot.forEach((doc)=>{
 
+const data = doc.data();
 
-let data = doc.data();
+totalTests++;
 
+const percentage = data.percentage || 0;
 
-total++;
+if(percentage > bestScore){
 
-
-if(data.percentage > best){
-
-best = data.percentage;
+bestScore = percentage;
 
 }
 
-
-totalPercentage += data.percentage;
-
-
+totalPercentage += percentage;
 
 });
 
-
-
-
-
 let average = 0;
 
+if(totalTests > 0){
 
-
-if(total > 0){
-
-average =
-Math.round(totalPercentage / total);
+average = Math.round(totalPercentage / totalTests);
 
 }
-
-
-
-
 
 document.getElementById("totalTests").innerHTML =
-total;
-
-
+totalTests;
 
 document.getElementById("bestScore").innerHTML =
-best+"%";
-
-
+bestScore + "%";
 
 document.getElementById("averageScore").innerHTML =
-average+"%";
-
-
-
-
+average + "%";
 
 }
 
+catch(error){
 
+console.log(error);
+
+alert("Failed to load profile.");
+
+}
+
+}
 
 loadProfile();
