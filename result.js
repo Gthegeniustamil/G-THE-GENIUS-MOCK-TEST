@@ -1,72 +1,190 @@
-const score = Number(localStorage.getItem("score")) || 0;
-const totalQuestions = Number(localStorage.getItem("totalQuestions")) || 0;
+import { db } from "./firebase-config.js";
 
-const questions =
+import {
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+let score =
+Number(localStorage.getItem("score")) || 0;
+
+
+let total =
+Number(localStorage.getItem("totalQuestions")) || 0;
+
+
+
+let questions =
 JSON.parse(localStorage.getItem("questions")) || [];
 
-const userAnswers =
+
+
+let userAnswers =
 JSON.parse(localStorage.getItem("userAnswers")) || [];
 
+
+
+let testType =
+localStorage.getItem("testType") || "Daily";
+
+
+
+
+// Student Details
+
+document.getElementById("studentName").innerHTML =
+localStorage.getItem("studentName") || "Student";
+
+
+document.getElementById("district").innerHTML =
+localStorage.getItem("district") || "-";
+
+
+document.getElementById("testType").innerHTML =
+testType;
+
+
+
+
+
+
+// Score
+
 document.getElementById("score").innerHTML =
-score + " / " + totalQuestions;
+
+score + " / " + total;
+
+
+
+let percentage = 0;
+
+
+if(total>0){
+
+percentage =
+Math.round((score/total)*100);
+
+}
+
+
 
 document.getElementById("percentage").innerHTML =
-Math.round((score / totalQuestions) * 100) + "%";
+
+percentage + "%";
+
+
+
+
+
+
+
+// Review
 
 const reviewContainer =
 document.getElementById("reviewContainer");
 
+
+
+reviewContainer.innerHTML = "";
+
+
+
+
+
 questions.forEach((q,index)=>{
 
-const userAnswer = userAnswers[index];
 
-const correct = userAnswer === q.answer;
+let userAnswer =
+userAnswers[index];
+
+
+
+let correct =
+q.answer;
+
+
+
+let result =
+userAnswer === correct;
+
+
 
 reviewContainer.innerHTML += `
 
+
 <div class="review-card">
 
-<h3>Q${index+1}. ${q.question}</h3>
+
+<h3>
+${index+1}. ${q.question}
+</h3>
+
 
 <p>
-<b>Your Answer :</b>
-${userAnswer!=null ? q.options[userAnswer] : "Not Answered"}
+
+Your Answer:
+
+<b>
+${q.options[userAnswer] || "Not Answered"}
+</b>
+
 </p>
 
-<p style="color:green">
-<b>Correct Answer :</b>
-${q.options[q.answer]}
-</p>
+
 
 <p>
-<b>Explanation :</b>
-${q.explanation}
-</p>
 
-<p style="font-weight:bold;
-color:${correct ? "green" : "red"}">
+Correct Answer:
 
-${correct ? "✅ Correct" : "❌ Wrong"}
+<b>
+${q.options[correct]}
+</b>
 
 </p>
+
+
+
+<p>
+
+${result ? "✅ Correct" : "❌ Wrong"}
+
+</p>
+
+
+
+<p>
+
+💡 Explanation:
+
+${q.explanation || "Explanation not available"}
+
+</p>
+
+
 
 </div>
 
+
 `;
+
+
 
 });
 
-function goDashboard(){
-
-    window.location.href = "dashboard.html";
-
-}
 
 
-const dashboardBtn = document.getElementById("dashboardBtn");
 
-if(dashboardBtn){
 
-dashboardBtn.onclick = goDashboard;
 
-}
+// Dashboard Button
+
+
+document.getElementById("dashboardBtn").onclick=function(){
+
+
+window.location.href="dashboard.html";
+
+
+};
