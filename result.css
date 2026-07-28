@@ -1,54 +1,197 @@
-body{
-margin:0;
-padding:20px;
-background:#0f172a;
-font-family:Arial,sans-serif;
-color:white;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
+
+
+body{
+
+    min-height:100vh;
+    background:linear-gradient(135deg,#020617,#1e3a8a);
+    padding:20px;
+
+}
+
+
 
 .result-container{
-max-width:900px;
-margin:auto;
+
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.3);
+
 }
+
+
+
+.result-container h1{
+
+    text-align:center;
+    color:#1e3a8a;
+    margin-bottom:10px;
+
+}
+
+
+
+.result-container h2{
+
+    text-align:center;
+    color:#475569;
+    margin-bottom:20px;
+
+}
+
+
+
+
+.student-result{
+
+    background:#f8fafc;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:20px;
+
+}
+
+
+
+.student-result p{
+
+    margin:8px 0;
+    font-size:16px;
+
+}
+
+
+
+.student-result span{
+
+    font-weight:bold;
+    color:#2563eb;
+
+}
+
+
+
+
 
 .score-box{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-text-align:center;
-margin-bottom:20px;
+
+    text-align:center;
+    background:#facc15;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:25px;
+
 }
 
-#score{
-font-size:40px;
-margin:0;
-color:#00e676;
+
+
+.score-box h3{
+
+    font-size:35px;
+    color:#020617;
+
 }
 
-#percentage{
-font-size:22px;
-color:#ffd54f;
+
+
+.score-box p{
+
+    font-size:25px;
+    font-weight:bold;
+
 }
+
+
+
+
 
 .review-card{
-background:#1e293b;
-padding:15px;
-margin-bottom:15px;
-border-radius:10px;
-border-left:5px solid #00e676;
+
+    background:#f8fafc;
+    padding:20px;
+    margin:15px 0;
+    border-radius:18px;
+    border-left:6px solid #2563eb;
+
 }
+
+
+
+.review-card h3{
+
+    color:#1e3a8a;
+    margin-bottom:15px;
+
+}
+
+
+
+.review-card p{
+
+    margin:10px 0;
+    color:#334155;
+
+}
+
+
+
+.review-card b{
+
+    color:#020617;
+
+}
+
+
+
+
 
 button{
-padding:12px 25px;
-margin:10px;
-border:none;
-border-radius:8px;
-background:#2196f3;
-color:white;
-cursor:pointer;
-font-size:16px;
+
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    background:#1e3a8a;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+
 }
 
+
+
 button:hover{
-background:#1976d2;
+
+    background:#2563eb;
+
+}
+
+
+
+
+@media(max-width:600px){
+
+.result-container{
+
+    padding:15px;
+
+}
+
+
+.score-box h3{
+
+    font-size:28px;
+
+}
+
 }
