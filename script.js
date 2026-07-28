@@ -23,11 +23,11 @@ let timeLimit = 300;
 
 
 
-// URL Test Type
+const urlParams =
+new URLSearchParams(window.location.search);
 
-const urlParams = new URLSearchParams(window.location.search);
-
-testType = urlParams.get("type") || "daily";
+testType =
+urlParams.get("type") || "daily";
 
 
 
@@ -38,49 +38,42 @@ localStorage.getItem("studentName") || "Student";
 
 
 document.getElementById("studentDistrict").innerHTML =
-localStorage.getItem("district") || "Not Selected";
+localStorage.getItem("district") || "-";
 
 
 
 
-
-// Test Type Settings
+// Test Type
 
 if(testType==="daily"){
 
-    totalQuestions = 10;
-    timeLimit = 5 * 60;
+totalQuestions = 10;
+timeLimit = 300;
 
-    document.getElementById("testType").innerHTML =
-    "🟢 Daily Mock Test";
+document.getElementById("testType").innerHTML =
+"🟢 Daily Mock Test";
 
 }
-
 
 else if(testType==="weekly"){
 
-    totalQuestions = 25;
-    timeLimit = 10 * 60;
+totalQuestions = 25;
+timeLimit = 600;
 
-    document.getElementById("testType").innerHTML =
-    "🟡 Weekly Mock Test";
+document.getElementById("testType").innerHTML =
+"🟡 Weekly Mock Test";
 
 }
-
 
 else{
 
+totalQuestions = 100;
+timeLimit = 3600;
 
-    totalQuestions = 100;
-    timeLimit = 60 * 60;
-
-    document.getElementById("testType").innerHTML =
-    "🔴 Monthly Grand Test";
+document.getElementById("testType").innerHTML =
+"🔴 Monthly Grand Test";
 
 }
-
-
-
 
 
 
@@ -89,40 +82,30 @@ else{
 
 function startTimer(){
 
-
 let timeLeft = timeLimit;
 
 
+timer=setInterval(()=>{
 
-timer = setInterval(()=>{
 
+let min=Math.floor(timeLeft/60);
 
-let minutes = Math.floor(timeLeft/60);
-
-let seconds = timeLeft % 60;
-
+let sec=timeLeft%60;
 
 
 document.getElementById("timer").innerHTML =
-
-`⏰ ${minutes}:${seconds.toString().padStart(2,"0")}`;
-
+`⏰ ${min}:${sec.toString().padStart(2,"0")}`;
 
 
-if(timeLeft <=0){
-
+if(timeLeft<=0){
 
 clearInterval(timer);
 
-
 alert("Time Over! Test Submitted");
-
 
 submitTest();
 
-
 return;
-
 
 }
 
@@ -130,9 +113,7 @@ return;
 timeLeft--;
 
 
-
 },1000);
-
 
 
 }
@@ -141,22 +122,17 @@ timeLeft--;
 
 
 
-
-
-
-
 // LOAD QUESTIONS
 
-
 async function loadQuestions(){
+
+
+try{
 
 
 document.getElementById("questionText").innerHTML =
 "Loading Questions...";
 
-
-
-try{
 
 
 const snapshot =
@@ -176,6 +152,13 @@ allQuestions.push(doc.data());
 
 
 
+console.log(
+"Questions Loaded:",
+allQuestions
+);
+
+
+
 if(allQuestions.length===0){
 
 document.getElementById("questionText").innerHTML =
@@ -188,10 +171,9 @@ return;
 
 
 
-testQuestions = allQuestions
-
+testQuestions =
+allQuestions
 .sort(()=>Math.random()-0.5)
-
 .slice(0,totalQuestions);
 
 
@@ -203,11 +185,7 @@ new Array(testQuestions.length).fill(null);
 
 showQuestion();
 
-
 createPalette();
-
-
-// Start Timer after loading
 
 startTimer();
 
@@ -217,24 +195,22 @@ startTimer();
 
 catch(error){
 
+
 console.log(error);
+
 
 document.getElementById("questionText").innerHTML =
 "Failed To Load Questions";
 
-}
-
-
 
 }
 
 
+}
 
 
 
 loadQuestions();
-
-
 
 
 
@@ -247,45 +223,41 @@ loadQuestions();
 function showQuestion(){
 
 
-const q = testQuestions[currentQuestion];
+let q =
+testQuestions[currentQuestion];
 
 
 
 document.getElementById("questionNumber").innerHTML =
-
-"Question "+(currentQuestion+1)+" / "+testQuestions.length;
+"Question "+(currentQuestion+1)+
+" / "+
+testQuestions.length;
 
 
 
 document.getElementById("questionText").innerHTML =
-
 q.question;
 
 
 
-const optionBox =
+let box =
 document.getElementById("options");
 
 
-
-optionBox.innerHTML="";
-
+box.innerHTML="";
 
 
 
 q.options.forEach((option,index)=>{
 
 
-let btn =
-document.createElement("button");
-
+let btn=document.createElement("button");
 
 
 btn.className="option";
 
 
 btn.innerHTML=option;
-
 
 
 
@@ -313,7 +285,7 @@ updatePalette();
 
 
 
-optionBox.appendChild(btn);
+box.appendChild(btn);
 
 
 
@@ -327,23 +299,18 @@ optionBox.appendChild(btn);
 
 
 
-
-
-
 // NEXT
-
 
 document.getElementById("nextBtn").onclick=function(){
 
 
-if(currentQuestion < testQuestions.length-1){
+if(currentQuestion <
+testQuestions.length-1){
 
 
 currentQuestion++;
 
-
 showQuestion();
-
 
 updatePalette();
 
@@ -352,7 +319,6 @@ updatePalette();
 
 
 };
-
 
 
 
@@ -370,9 +336,7 @@ if(currentQuestion>0){
 
 currentQuestion--;
 
-
 showQuestion();
-
 
 updatePalette();
 
@@ -388,22 +352,17 @@ updatePalette();
 
 
 
-
-
-// QUESTION PALETTE
+// PALETTE
 
 
 function createPalette(){
 
 
-
-const palette =
+let palette =
 document.createElement("div");
 
 
-
 palette.id="questionPalette";
-
 
 
 
@@ -414,9 +373,7 @@ let btn =
 document.createElement("button");
 
 
-
 btn.innerHTML=index+1;
-
 
 btn.className="palette-btn";
 
@@ -427,9 +384,7 @@ btn.onclick=function(){
 
 currentQuestion=index;
 
-
 showQuestion();
-
 
 updatePalette();
 
@@ -451,16 +406,7 @@ document.querySelector(".question-box")
 
 
 
-updatePalette();
-
-
-
 }
-
-
-
-
-
 
 
 
@@ -468,17 +414,14 @@ updatePalette();
 function updatePalette(){
 
 
-const buttons =
-document.querySelectorAll(".palette-btn");
-
-
-
-buttons.forEach((btn,index)=>{
+document
+.querySelectorAll(".palette-btn")
+.forEach((btn,index)=>{
 
 
 btn.classList.remove(
-"answered",
-"active"
+"active",
+"answered"
 );
 
 
@@ -490,7 +433,6 @@ btn.classList.add("answered");
 }
 
 
-
 if(index===currentQuestion){
 
 btn.classList.add("active");
@@ -498,9 +440,7 @@ btn.classList.add("active");
 }
 
 
-
 });
-
 
 
 }
@@ -511,9 +451,7 @@ btn.classList.add("active");
 
 
 
-
-
-// SUBMIT TEST
+// SUBMIT
 
 
 async function submitTest(){
@@ -546,17 +484,17 @@ score++;
 try{
 
 
-await addDoc(collection(db,"results"),{
+await addDoc(
+collection(db,"results"),
+{
 
 
 studentName:
 localStorage.getItem("studentName") || "Student",
 
 
-
 district:
-localStorage.getItem("district") || "",
-
+localStorage.getItem("district") || "-",
 
 
 testType:testType,
@@ -569,65 +507,95 @@ totalQuestions:
 testQuestions.length,
 
 
-
 percentage:
 Math.round(
 (score/testQuestions.length)*100
 ),
 
 
-
 createdAt:
 serverTimestamp()
-
 
 
 });
 
 
 
-}
+// STREAK
 
-// DAILY STREAK UPDATE
 
-let today = new Date().toLocaleDateString();
+let today =
+new Date().toLocaleDateString();
 
-let lastDate = localStorage.getItem("lastTestDate");
 
-let streak = Number(localStorage.getItem("streak")) || 0;
+let lastDate =
+localStorage.getItem("lastTestDate");
+
+
+let streak =
+Number(localStorage.getItem("streak")) || 0;
+
 
 
 if(lastDate !== today){
 
-    let yesterday = new Date();
 
-    yesterday.setDate(yesterday.getDate()-1);
-
-    let yesterdayDate = yesterday.toLocaleDateString();
+let yesterday =
+new Date();
 
 
-    if(lastDate === yesterdayDate){
-
-        streak++;
-
-    }
-    else{
-
-        streak = 1;
-
-    }
+yesterday.setDate(
+yesterday.getDate()-1
+);
 
 
-    localStorage.setItem("streak", streak);
 
-    localStorage.setItem("lastTestDate", today);
+if(lastDate === yesterday.toLocaleDateString()){
+
+
+streak++;
+
 
 }
-    
+
+else{
+
+
+streak=1;
+
+
+}
+
+
+
+localStorage.setItem(
+"streak",
+streak
+);
+
+
+
+localStorage.setItem(
+"lastTestDate",
+today
+);
+
+
+}
+
+
+
+}
+
+
+
 catch(error){
 
 
-console.log(error);
+console.log(
+"Save Error:",
+error
+);
 
 
 }
@@ -635,9 +603,10 @@ console.log(error);
 
 
 
-
-
-localStorage.setItem("score",score);
+localStorage.setItem(
+"score",
+score
+);
 
 
 localStorage.setItem(
@@ -646,19 +615,16 @@ testQuestions.length
 );
 
 
-
 localStorage.setItem(
 "questions",
 JSON.stringify(testQuestions)
 );
 
 
-
 localStorage.setItem(
 "userAnswers",
 JSON.stringify(selectedAnswers)
 );
-
 
 
 localStorage.setItem(
@@ -671,17 +637,12 @@ testType
 window.location.href="result.html";
 
 
-
 }
 
 
 
 
 
-
-
-
-// CONFIRM SUBMIT
 
 
 function confirmSubmit(){
@@ -697,7 +658,7 @@ if(unanswered>0){
 
 if(confirm(
 unanswered+
-" Questions not answered.\nSubmit Test?"
+" Questions not answered. Submit?"
 )){
 
 
@@ -705,7 +666,6 @@ submitTest();
 
 
 }
-
 
 
 }
@@ -725,8 +685,8 @@ submitTest();
 
 
 
-
-document.getElementById("submitBtn").onclick=function(){
+document.getElementById("submitBtn")
+.onclick=function(){
 
 confirmSubmit();
 
