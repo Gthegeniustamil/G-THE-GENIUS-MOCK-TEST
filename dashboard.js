@@ -1,140 +1,52 @@
-import { db } from "./firebase-config.js";
+import { auth } from "./firebase-config.js";
 
 import {
-collection,
-getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+signOut,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-// Student Details
-
-document.getElementById("welcomeName").innerHTML =
-"👤 Welcome " + (localStorage.getItem("studentName") || "Student");
+const nameBox = document.getElementById("studentName");
 
 
-document.getElementById("welcomeDistrict").innerHTML =
-"📍 " + (localStorage.getItem("district") || "");
+onAuthStateChanged(auth,(user)=>{
 
 
-document.getElementById("welcomeExam").innerHTML =
-"🎯 " + (localStorage.getItem("exam") || "");
+    if(user){
+
+        let name =
+        localStorage.getItem("studentName") || "Student";
 
 
+        nameBox.innerHTML = name;
 
 
-async function loadMyRank(){
+    }else{
 
 
-let name = localStorage.getItem("studentName");
-
-let district = localStorage.getItem("district");
+        window.location.href="index.html";
 
 
-
-const snapshot = await getDocs(
-collection(db,"results")
-);
-
-
-
-let students=[];
-
-
-snapshot.forEach((doc)=>{
-
-students.push(doc.data());
-
-});
-
-
-
-students.sort((a,b)=>{
-
-return b.percentage - a.percentage;
-
-});
-
-
-
-let overallRank = 0;
-
-
-students.forEach((student,index)=>{
-
-if(student.studentName === name){
-
-overallRank = index + 1;
-
-}
-
-});
-
-
-
-let districtStudents =
-students.filter((student)=>{
-
-return student.district === district;
-
-});
-
-
-let districtRank = 0;
-
-
-districtStudents.forEach((student,index)=>{
-
-
-if(student.studentName === name){
-
-districtRank = index + 1;
-
-}
+    }
 
 
 });
 
 
 
-let myResult =
-students.find((student)=>{
-
-return student.studentName === name;
-
-});
+document.getElementById("logoutBtn").onclick = function(){
 
 
-
-if(myResult){
-
-
-document.getElementById("myScore").innerHTML =
-"📝 Score : " +
-myResult.score +
-"/" +
-myResult.totalQuestions;
+    signOut(auth).then(()=>{
 
 
-
-document.getElementById("myRank").innerHTML =
-"🌍 Overall Rank : " + overallRank;
+        localStorage.clear();
 
 
-
-document.getElementById("districtRank").innerHTML =
-"📍 District Rank : " + districtRank;
+        window.location.href="index.html";
 
 
-}
+    });
 
 
-}
-
-
-loadMyRank();
-
-function openMaterials(){
-
-    window.location.href="materials.html";
-
-}
+};
