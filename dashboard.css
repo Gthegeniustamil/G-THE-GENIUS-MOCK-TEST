@@ -271,3 +271,126 @@ margin:8px 0;
 font-weight:bold;
 
 }
+
+/* =====================
+   DASHBOARD FOOTER
+===================== */
+
+.dashboard-footer{
+
+    margin-top:30px;
+
+    padding:20px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,0.12);
+
+    border-radius:25px;
+
+    backdrop-filter:blur(10px);
+
+}
+
+
+
+.dashboard-footer h3{
+
+    color:white;
+
+    margin-bottom:15px;
+
+    font-size:20px;
+
+}
+
+
+
+
+.social-icons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+
+
+.social-icons a{
+
+    width:60px;
+
+    height:60px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    font-size:30px;
+
+    text-decoration:none;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+
+}
+
+
+
+
+/* YouTube */
+
+.youtube{
+
+    background:#ff0000;
+
+    color:white;
+
+}
+
+
+
+
+/* Telegram */
+
+.telegram{
+
+    background:#229ED9;
+
+    color:white;
+
+}
+
+
+
+
+/* Email */
+
+.email{
+
+    background:#facc15;
+
+    color:#020617;
+
+}
+
+
+
+
+.copyright{
+
+    margin-top:20px;
+
+    color:#e2e8f0;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
