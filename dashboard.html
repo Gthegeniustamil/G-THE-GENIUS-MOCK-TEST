@@ -44,24 +44,38 @@ ALL GOVERNMENT EXAM PREPARATION PORTAL
 
 
 
+<!-- STUDENT INFO -->
+
 <div class="student-card">
+
 
 <h2>
 Welcome 👋
 <span id="studentName">Student</span>
 </h2>
 
+
 <p>
 📍 District :
 <span id="district">-</span>
 </p>
 
+
 </div>
 
 
+
+
+
+<!-- PERFORMANCE -->
+
 <div class="stats-card">
 
-<h2>📊 My Performance</h2>
+
+<h2>
+📊 My Performance
+</h2>
+
 
 
 <p>
@@ -70,16 +84,12 @@ Welcome 👋
 </p>
 
 
+
 <p>
 🏆 Best Score:
 <span id="bestScore">0 / 20</span>
 </p>
 
-
-<p>
-📈 Average Score:
-<span id="averageScore">0 / 20</span>
-</p>
 
 
 <p>
@@ -88,72 +98,113 @@ Welcome 👋
 </p>
 
 
+
 </div>
+
+
+
+
+
+<!-- DAILY STREAK -->
 
 
 <div class="streak-card">
 
-<h2>🔥 Daily Streak</h2>
+
+<h2>
+🔥 Daily Streak
+</h2>
+
 
 <p>
 <span id="streakDays">0</span> Days 🔥
 </p>
 
+
 <p>
 🏅 Keep practicing daily!
 </p>
 
+
 </div>
 
-// PLAYER LEVEL SYSTEM
-// PLAYER LEVEL SYSTEM
-
-let xp = Number(localStorage.getItem("xp")) || 0;
-
-
-// Level 1 = 50 XP
-// Every next level +50 XP
-
-
-let level = Math.floor(xp / 50) + 1;
-
-
-let previousLevelXP = (level - 1) * 50;
-
-
-let currentXP = xp - previousLevelXP;
-
-
-let nextLevelXP = level * 50;
 
 
 
-document.getElementById("playerLevel").innerHTML =
-level;
 
 
-document.getElementById("playerXP").innerHTML =
-currentXP + " / " + nextLevelXP;
+<!-- PLAYER LEVEL -->
 
 
-document.getElementById("xpFill").style.width =
-((currentXP / 50) * 100) + "%";
+<div class="level-card">
+
+
+<h2>
+⭐ Player Level
+</h2>
+
+
+
+<h3>
+
+Level 
+<span id="playerLevel">
+1
+</span>
+
+</h3>
+
+
+
+<div class="xp-bar">
+
+<div class="xp-fill" id="xpFill"></div>
+
+</div>
+
+
+
+<p>
+
+XP :
+
+<span id="playerXP">
+0 / 50
+</span>
+
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
 <!-- TEST CARDS -->
 
 
 <div class="test-card daily">
 
+
 <h2>
 🟢 Daily Mock Test
 </h2>
+
 
 <p>
 10 Questions
 </p>
 
+
 <p>
 ⏰ 5 Minutes
 </p>
+
 
 
 <button onclick="startTest('daily')">
@@ -161,6 +212,8 @@ document.getElementById("xpFill").style.width =
 Start Test
 
 </button>
+
+
 
 </div>
 
@@ -170,17 +223,21 @@ Start Test
 
 <div class="test-card weekly">
 
+
 <h2>
 🟡 Weekly Mock Test
 </h2>
+
 
 <p>
 25 Questions
 </p>
 
+
 <p>
 ⏰ 10 Minutes
 </p>
+
 
 
 <button onclick="startTest('weekly')">
@@ -189,25 +246,30 @@ Start Test
 
 </button>
 
+
+
 </div>
 
-
-
+  <!-- MONTHLY TEST -->
 
 
 <div class="test-card monthly">
+
 
 <h2>
 🔴 Monthly Grand Test
 </h2>
 
+
 <p>
 100 Questions
 </p>
 
+
 <p>
 ⏰ 60 Minutes
 </p>
+
 
 
 <button onclick="startTest('monthly')">
@@ -216,27 +278,44 @@ Start Test
 
 </button>
 
+
 </div>
 
 
 
 
 
+
+
+<!-- MENU BUTTONS -->
 
 
 <div class="menu-buttons">
 
+
 <button onclick="location.href='profile.html'">
+
 👤 My Profile
+
 </button>
+
+
 
 <button onclick="location.href='leaderboard.html'">
+
 🏆 Leaderboard
+
 </button>
 
+
+
 <button onclick="logout()">
+
 🚪 Logout
+
 </button>
+
+
 
 </div>
 
@@ -244,7 +323,10 @@ Start Test
 
 
 
-<!-- FOOTER START -->
+
+
+
+<!-- FOOTER -->
 
 
 <div class="dashboard-footer">
@@ -258,23 +340,44 @@ Start Test
 
 
 
+
+
 <div class="social-icons">
 
 
-<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7" target="_blank" class="youtube">
+<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank"
+class="youtube">
+
 ▶️
+
 </a>
 
 
-<a href="https://t.me/gthegenius" target="_blank" class="telegram">
+
+
+<a href="https://t.me/gthegenius"
+target="_blank"
+class="telegram">
+
 ✈️
+
 </a>
-  
-<a href="mailto:gthegenius7@gmail.com" class="email">
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com"
+class="email">
+
 ✉️
+
 </a>
-  
+
+
+
 </div>
+
 
 
 
@@ -298,8 +401,6 @@ TNUSRB Mock Test & Learning Platform
 </div>
 
 
-<!-- FOOTER END -->
-
 
 
 
@@ -314,52 +415,143 @@ TNUSRB Mock Test & Learning Platform
 
 
 
+
+
 <script>
 
 
+// STUDENT DETAILS
+
+
 document.getElementById("studentName").innerHTML =
+
 localStorage.getItem("studentName") || "Student";
 
 
 
+
 document.getElementById("district").innerHTML =
+
 localStorage.getItem("district") || "-";
 
 
 
+
+
+
+// DAILY STREAK
+
+
 document.getElementById("streakDays").innerHTML =
+
 localStorage.getItem("streak") || 0;
 
 
-// PLAYER LEVEL
 
-let xp = Number(localStorage.getItem("xp")) || 0;
 
-let level = Math.floor(xp/100)+1;
 
-document.getElementById("playerLevel").innerHTML = level;
 
-document.getElementById("playerXP").innerHTML = xp % 100;
+
+// =======================
+// PLAYER LEVEL SYSTEM
+// =======================
+
+
+
+let xp =
+
+Number(localStorage.getItem("xp")) || 0;
+
+
+
+// Level 1 = 50 XP
+// Every level +50 XP
+
+
+
+let level =
+
+Math.floor(xp / 50) + 1;
+
+
+
+let previousLevelXP =
+
+(level - 1) * 50;
+
+
+
+let currentXP =
+
+xp - previousLevelXP;
+
+
+
+let nextLevelXP =
+
+level * 50;
+
+
+
+
+
+document.getElementById("playerLevel").innerHTML =
+
+level;
+
+
+
+
+
+document.getElementById("playerXP").innerHTML =
+
+currentXP + " / " + nextLevelXP;
+
+
+
+
 
 document.getElementById("xpFill").style.width =
-(xp % 100) + "%";
+
+((currentXP / 50) * 100) + "%";
+
+
+
+
+
+
+
+
+// START TEST
 
 
 function startTest(type){
 
+
 window.location.href =
-"mocktest.html?type="+type;
+
+"mocktest.html?type=" + type;
+
 
 }
 
 
 
 
+
+
+
+// LOGOUT
+
+
 function logout(){
+
 
 localStorage.clear();
 
+
 window.location.href="index.html";
+
 
 }
 
@@ -374,3 +566,4 @@ window.location.href="index.html";
 </body>
 
 </html>
+
