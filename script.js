@@ -98,9 +98,39 @@ async function loadQuestions() {
 
     }
 }
+loadQuestions();     
 
-        
+function showQuestion(){
 
+    const q = testQuestions[currentQuestion];
+
+    document.getElementById("questionNumber").innerHTML =
+        "Question " + (currentQuestion + 1) + " / " + testQuestions.length;
+
+    document.getElementById("questionText").innerHTML = q.question;
+
+    const optionBox = document.getElementById("options");
+    optionBox.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.innerHTML = option;
+
+        if(selectedAnswers[currentQuestion] === index){
+            btn.classList.add("selected");
+        }
+
+        btn.onclick = function(){
+            selectedAnswers[currentQuestion] = index;
+            showQuestion();
+            updatePalette();
+        };
+
+        optionBox.appendChild(btn);
+    });
+}
 // NEXT BUTTON
 document.getElementById("nextBtn").onclick = function(){
 
