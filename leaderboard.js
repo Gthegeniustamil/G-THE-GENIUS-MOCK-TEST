@@ -8,19 +8,9 @@ getDocs
 
 let allStudents = [];
 
-let rankMode = "overall";
-
-let selectedTest = "daily";
 
 
-
-const leaderList =
-document.getElementById("leaderList");
-
-const rankTitle =
-document.getElementById("rankTitle");
-
-
+// Load Results
 
 async function loadLeaderboard(){
 
@@ -29,7 +19,9 @@ const snapshot =
 await getDocs(collection(db,"results"));
 
 
-allStudents=[];
+
+allStudents = [];
+
 
 
 snapshot.forEach((doc)=>{
@@ -39,68 +31,43 @@ allStudents.push(doc.data());
 });
 
 
+
 showLeaderboard();
+
 
 }
 
 
 
 
+
+
+// Show Overall Leaderboard
+
 function showLeaderboard(){
+
+
+let filter =
+document.getElementById("testFilter").value;
+
 
 
 let students = [...allStudents];
 
 
-// Test Filter
 
-students = students.filter((student)=>{
+if(filter !== "all"){
 
-
-return student.testType === selectedTest;
-
-
-});
-
-
-
-
-// District Filter
-
-if(rankMode==="district"){
-
-
-let myDistrict =
-localStorage.getItem("district");
-
-
-students = students.filter((student)=>{
-
-
-return student.district === myDistrict;
-
-
-});
-
-
-rankTitle.innerHTML =
-"📍 District Ranking - " + myDistrict;
-
-
-}
-else{
-
-
-rankTitle.innerHTML =
-"🌍 Overall Ranking";
-
+students =
+students.filter(
+s=>s.testType.toLowerCase()===filter
+);
 
 }
 
 
 
-
-// Sort Score
+// Sort Percentage
 
 students.sort((a,b)=>{
 
@@ -108,6 +75,11 @@ return b.percentage - a.percentage;
 
 });
 
+
+
+
+const leaderList =
+document.getElementById("leaderList");
 
 
 
@@ -122,25 +94,21 @@ let rank=1;
 students.forEach((student)=>{
 
 
-leaderList.innerHTML += `
 
+leaderList.innerHTML += `
 
 <div class="leader-card">
 
 
 <h2>
 
-${
-rank==1 ? "🥇" :
-rank==2 ? "🥈" :
-rank==3 ? "🥉" :
-"🏅"
-}
+${rank==1?"🥇":
+rank==2?"🥈":
+rank==3?"🥉":"🏅"}
 
 Rank ${rank}
 
 </h2>
-
 
 
 <h3>
@@ -154,25 +122,124 @@ Rank ${rank}
 
 
 <p>
-🎯 Test : ${student.testType}
+🎯 ${student.testType}
 </p>
 
 
 <p>
-📝 Score : ${student.score}/${student.totalQuestions}
+📝 Score :
+${student.score}/${student.totalQuestions}
+
 </p>
 
 
 <p>
-📈 Percentage : ${student.percentage}%
+📈 ${student.percentage}%
 </p>
-
 
 
 </div>
 
 
 `;
+
+
+
+rank++;
+
+
+});
+
+
+
+showDistrictRank();
+
+
+
+}
+
+
+
+
+
+
+
+
+// District Rank
+
+function showDistrictRank(){
+
+
+let myDistrict =
+localStorage.getItem("district");
+
+
+
+let districtBox =
+document.getElementById("districtRank");
+
+
+
+if(!myDistrict){
+
+districtBox.innerHTML =
+"District Not Selected";
+
+return;
+
+}
+
+
+
+let districtStudents =
+allStudents.filter(
+
+s=>s.district===myDistrict
+
+);
+
+
+
+
+districtStudents.sort((a,b)=>{
+
+return b.percentage-a.percentage;
+
+});
+
+
+
+
+districtBox.innerHTML="";
+
+
+
+let rank=1;
+
+
+
+districtStudents.forEach((student)=>{
+
+
+districtBox.innerHTML += `
+
+<div class="leader-card">
+
+
+<h3>
+${rank}. 👤 ${student.studentName}
+</h3>
+
+
+<p>
+📈 ${student.percentage}%
+</p>
+
+
+</div>
+
+`;
+
 
 
 rank++;
@@ -185,57 +252,21 @@ rank++;
 
 
 
-// Buttons
 
 
-document.getElementById("overallBtn").onclick=function(){
 
-rankMode="overall";
+
+// Filter Change
+
+document.getElementById("testFilter")
+.onchange=function(){
+
 
 showLeaderboard();
 
-};
-
-
-
-document.getElementById("districtBtn").onclick=function(){
-
-rankMode="district";
-
-showLeaderboard();
 
 };
 
-
-
-
-document.getElementById("dailyBtn").onclick=function(){
-
-selectedTest="daily";
-
-showLeaderboard();
-
-};
-
-
-
-document.getElementById("weeklyBtn").onclick=function(){
-
-selectedTest="weekly";
-
-showLeaderboard();
-
-};
-
-
-
-document.getElementById("monthlyBtn").onclick=function(){
-
-selectedTest="monthly";
-
-showLeaderboard();
-
-};
 
 
 
