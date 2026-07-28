@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS - Student Login</title>
+<title>G THE GENIUS - Login</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -19,108 +19,78 @@
 <div class="login-box">
 
 
-<img src="assets/logo.png" class="logo">
+<div class="logo-area">
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="login-logo">
+
+</div>
+
+
 
 <h1>🛡️ G THE GENIUS</h1>
 
-<h3>TNUSRB MOCK TEST PORTAL</h3>
+<p class="tagline">
+TNUSRB MOCK TEST APP
+</p>
 
 
 
-<input 
-type="text" 
-id="studentName" 
-placeholder="Enter Student Name">
+
+<div class="input-box">
+
+<input
+type="email"
+id="email"
+placeholder="📧 Enter Email">
+
+</div>
 
 
 
-<select id="district">
 
-<option value="">Select District</option>
+<div class="input-box">
 
-<option>Ariyalur</option>
-<option>Chengalpattu</option>
-<option>Chennai</option>
-<option>Coimbatore</option>
-<option>Cuddalore</option>
-<option>Dharmapuri</option>
-<option>Dindigul</option>
-<option>Erode</option>
-<option>Kallakurichi</option>
-<option>Kancheepuram</option>
-<option>Kanyakumari</option>
-<option>Karur</option>
-<option>Krishnagiri</option>
-<option>Madurai</option>
-<option>Mayiladuthurai</option>
-<option>Nagapattinam</option>
-<option>Namakkal</option>
-<option>Nilgiris</option>
-<option>Perambalur</option>
-<option>Pudukkottai</option>
-<option>Ramanathapuram</option>
-<option>Ranipet</option>
-<option>Salem</option>
-<option>Sivagangai</option>
-<option>Tenkasi</option>
-<option>Thanjavur</option>
-<option>Theni</option>
-<option>Thoothukudi</option>
-<option>Tiruchirappalli</option>
-<option>Tirunelveli</option>
-<option>Tirupattur</option>
-<option>Tiruppur</option>
-<option>Tiruvallur</option>
-<option>Tiruvannamalai</option>
-<option>Tiruvarur</option>
-<option>Vellore</option>
-<option>Viluppuram</option>
-<option>Virudhunagar</option>
+<input
+type="password"
+id="password"
+placeholder="🔒 Enter Password">
 
-</select>
+</div>
 
 
 
-<button onclick="goDashboard()">
 
-START MOCK TEST
+<button id="loginBtn">
+
+🔑 LOGIN
 
 </button>
+
+
+
+
+<button onclick="location.href='register.html'">
+
+🆕 CREATE ACCOUNT
+
+</button>
+
+
+
+<p class="bottom-text">
+
+🚔 Prepare • Practice • Achieve
+
+</p>
+
 
 
 </div>
 
 
 
-<script>
-
-function goDashboard(){
-
-let name = document.getElementById("studentName").value.trim();
-
-let district = document.getElementById("district").value;
-
-
-if(name==="" || district===""){
-
-alert("Enter Student Name and Select District");
-
-return;
-
-}
-
-
-localStorage.setItem("studentName",name);
-
-localStorage.setItem("district",district);
-
-
-window.location.href="dashboard.html";
-
-
-}
-
-</script>
+<script type="module" src="login.js"></script>
 
 
 </body>
