@@ -1,5 +1,5 @@
 import { db } from "./firebase-config.js";
-
+let currentType = "daily";
 import {
 collection,
 getDocs
@@ -116,5 +116,20 @@ rank++;
 }
 
 
+
+document.getElementById("dailyBtn").onclick = function(){
+    currentType = "daily";
+    loadLeaderboard();
+};
+
+document.getElementById("weeklyBtn").onclick = function(){
+    currentType = "weekly";
+    loadLeaderboard();
+};
+
+document.getElementById("monthlyBtn").onclick = function(){
+    currentType = "monthly";
+    loadLeaderboard();
+};
 
 loadLeaderboard();
