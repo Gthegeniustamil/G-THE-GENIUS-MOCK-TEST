@@ -158,3 +158,98 @@ padding:15px;
 
 
 }
+
+/* ===== LEADERBOARD V2 ===== */
+
+.leader-header{
+
+display:grid;
+grid-template-columns:55px 1.5fr 1fr 70px;
+padding:12px 10px;
+background:#1e3a8a;
+color:#fff;
+font-weight:bold;
+border-radius:10px;
+margin:15px 0 8px;
+
+}
+
+#leaderList .leader-card,
+#districtRank .leader-card{
+
+display:grid;
+grid-template-columns:55px 1.5fr 1fr 70px;
+align-items:center;
+padding:12px 10px;
+margin:6px 0;
+border-radius:10px;
+background:#f8fafc;
+border:none;
+box-shadow:none;
+
+}
+
+.rank-col,
+.name-col,
+.district-col,
+.mark-col{
+
+font-size:15px;
+font-weight:600;
+
+}
+
+#leaderList .leader-card h2,
+#leaderList .leader-card h3,
+#leaderList .leader-card p,
+
+#districtRank .leader-card h2,
+#districtRank .leader-card h3,
+#districtRank .leader-card p{
+
+margin:0;
+font-size:15px;
+
+}
+
+/* Top 3 */
+
+.first{
+
+background:#FFF8DC !important;
+border-left:5px solid gold !important;
+
+}
+
+.second{
+
+background:#F1F5F9 !important;
+border-left:5px solid silver !important;
+
+}
+
+.third{
+
+background:#FDE7D3 !important;
+border-left:5px solid #cd7f32 !important;
+
+}
+
+@media(max-width:600px){
+
+.leader-header{
+
+grid-template-columns:45px 1.4fr .9fr 60px;
+font-size:13px;
+
+}
+
+#leaderList .leader-card,
+#districtRank .leader-card{
+
+grid-template-columns:45px 1.4fr .9fr 60px;
+font-size:13px;
+
+}
+
+}
