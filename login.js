@@ -63,7 +63,11 @@ localStorage.setItem(
 userData.data().name
 );
 
-
+localStorage.setItem(
+"email",
+userData.data().email
+);
+  
 localStorage.setItem(
 "district",
 userData.data().district
