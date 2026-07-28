@@ -74,7 +74,41 @@ document.getElementById("percentage").innerHTML =
 
 percentage + "%";
 
+// =====================
+// XP REWARD SYSTEM
+// =====================
 
+
+let oldXP =
+Number(localStorage.getItem("xp")) || 0;
+
+
+// Correct Answer XP
+
+let answerXP = score * 5;
+
+
+// Complete Test Bonus
+
+let bonusXP = 30;
+
+
+// Total XP Earned
+
+let earnedXP =
+answerXP + bonusXP;
+
+
+
+let newXP =
+oldXP + earnedXP;
+
+
+
+localStorage.setItem(
+"xp",
+newXP
+);
 
 
 
