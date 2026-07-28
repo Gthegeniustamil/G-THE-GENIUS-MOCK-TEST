@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>G THE GENIUS Dashboard</title>
@@ -16,412 +15,146 @@
 
 <body>
 
-  <div class="user-bar">
 
-<h3>
-👤 Welcome, <span id="studentName"></span>
-</h3>
+<div class="dashboard">
+
+
+<div class="top-header">
+
+<img src="assets/logo.png" class="logo">
+
+<div>
+<h1>🛡️ G THE GENIUS</h1>
+<p>TNUSRB MOCK TEST PORTAL</p>
+</div>
 
 <button id="logoutBtn">
 🚪 Logout
 </button>
 
-  </div>
-  
-<div class="dashboard-container">
-
-<!-- TOP ANNOUNCEMENT -->
-
-<div class="app-header">
-
-<div class="left-header">
-
-<h2>🛡️ G THE GENIUS</h2>
-
-<p>ALL EXAM MOCK TEST PORTAL</p>
-
 </div>
 
 
-<div class="right-header">
-
-<div class="notify-btn"
-onclick="alert('🔥 Daily Mock Test Available\n\n📚 Study Materials Updated\n\n🚧 Live Classes Coming Soon')">
-
-🔔
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- HEADER -->
-
-<header class="top-header">
-
-<div class="logo">
-  
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png" class="logo-img">
-  
-<h1>G THE GENIUS</h1>
-
-<p>ALL EXAM MOCK TEST PORTAL</p>
-
-</div>
-
-<nav class="top-menu">
-
-<a href="dashboard.html">🏠 Home</a>
-
-<a href="leaderboard.html">🏆 Leaderboard</a>
-
-<a href="materials.html">📚 Materials</a>
-
-</nav>
-
-</header>
 
 <div class="welcome-card">
 
-<h2 id="welcomeName">
-👋 Welcome Student
+<h2>
+👋 Welcome <span id="studentName"></span>
 </h2>
 
-<p id="welcomeDistrict">
-📍 District
+<p>
+Prepare • Practice • Achieve Your Dream
 </p>
-
-<p id="welcomeExam">
-🎯 Selected Exam
-</p>
-
-<h3>
-Practice Today • Achieve Tomorrow 🚔
-</h3>
 
 </div>
 
-<!-- MOCK TEST -->
 
-<section class="test-section">
 
-<h2>
-🚀 Choose Your Test
-</h2>
 
 <div class="test-grid">
 
-<!-- DAILY -->
 
 <div class="test-card daily">
 
-<h3>🟢 Daily Mock Test</h3>
+<h2>🟢 Daily Mock Test</h2>
 
-<h1>10</h1>
+<p>
+10 Questions
+</p>
 
-<p>Questions</p>
+<p>
+⏰ 5 Minutes
+</p>
 
-<button onclick="location.href='mocktest.html?type=daily'">
-
-START
-
+<button onclick="startTest('daily')">
+Start Test
 </button>
 
 </div>
 
-<!-- WEEKLY -->
+
 
 <div class="test-card weekly">
 
-<h3>🟡 Weekly Mock Test</h3>
+<h2>🟡 Weekly Mock Test</h2>
 
-<h1>25</h1>
+<p>
+25 Questions
+</p>
 
-<p>Questions</p>
+<p>
+⏰ 10 Minutes
+</p>
 
-<button onclick="location.href='mocktest.html?type=weekly'">
-
-START
-
+<button onclick="startTest('weekly')">
+Start Test
 </button>
 
 </div>
 
-<!-- MONTHLY -->
+
+
 
 <div class="test-card monthly">
 
-<h3>🔴 Monthly Grand Test</h3>
+<h2>🔴 Monthly Grand Test</h2>
 
-<h1>100</h1>
+<p>
+100 Questions
+</p>
 
-<p>Questions</p>
+<p>
+⏰ 60 Minutes
+</p>
 
-<button onclick="location.href='mocktest.html?type=monthly'">
-
-START
-
+<button onclick="startTest('monthly')">
+Start Test
 </button>
 
 </div>
 
-<!-- STUDY MATERIALS -->
 
-<div class="test-card materials">
+</div>
 
-<h3>📚 Study Materials</h3>
 
-<p>
 
-Notes • PDF • Practice Materials
 
-</p>
 
-<button onclick="location.href='materials.html'">
+<div class="menu">
 
-OPEN
 
+<button onclick="location.href='leaderboard.html'">
+🏆 Leaderboard
 </button>
 
-</div>
 
-</div>
+<button onclick="location.href='profile.html'">
+👤 My Profile
+</button>
 
-</section>
-
-<!-- PART 2 STARTS HERE -->
-
-<!-- MY PERFORMANCE -->
-
-<div class="student-rank-card">
-
-<h2>🏆 My Performance</h2>
-
-<div class="quick-stats">
-
-<div class="stat-card">
-
-<span>🔥 Daily Streak</span>
-
-<h2 id="streak">0</h2>
-
-</div>
-
-<div class="stat-card">
-
-<span>📝 Tests Completed</span>
-
-<h2 id="completed">0</h2>
 
 </div>
 
 
-<div class="stat-card">
-
-<span>⭐ Best Score</span>
-
-<h2 id="bestScore">0</h2>
-
-</div>
-
-</div>
-
-<p id="myScore">
-📝 Score : Loading...
-</p>
-
-<p id="myRank">
-🌍 Overall Rank : Loading...
-</p>
-
-<p id="districtRank">
-📍 District Rank : Loading...
-</p>
-
-</div>
-
-<!-- ========================= -->
-<!-- WHY CHOOSE -->
-<!-- ========================= -->
-
-<section class="why-section">
-
-<h2>✨ Why Choose G THE GENIUS?</h2>
-
-<div class="why-grid">
-
-<div class="why-card">
-📝
-<h3>Online Mock Tests</h3>
-<p>Practice with real exam pattern.</p>
-</div>
-
-<div class="why-card">
-📚
-<h3>Daily Questions</h3>
-<p>Updated Government Exam Questions.</p>
-</div>
-
-<div class="why-card">
-🏆
-<h3>Leaderboard</h3>
-<p>Compete with top aspirants.</p>
-</div>
-
-<div class="why-card">
-📊
-<h3>Performance Analysis</h3>
-<p>Track your progress.</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- LATEST UPDATES -->
-<!-- ========================= -->
-
-<section class="updates-section">
-
-<h2>🔥 Latest Updates</h2>
-
-<div class="update-card">
-✅ Daily Mock Test Available
-</div>
-
-<div class="update-card">
-✅ Weekly Mock Test Available
-</div>
-
-<div class="update-card">
-✅ Monthly Grand Test Available
-</div>
-
-<div class="update-card" onclick="alert('🚧 Coming Soon')">
-🚧 Video Courses - Coming Soon
-</div>
-
-<div class="update-card" onclick="alert('🚧 Coming Soon')">
-🚧 Live Classes - Coming Soon
-</div>
-
-<div class="update-card" onclick="alert('🚧 Coming Soon')">
-🚧 AI Performance Report - Coming Soon
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- CONTACT -->
-<!-- ========================= -->
-
-<section class="social-section">
-
-<h2>📞 Contact Us</h2>
-
-<div class="social-links">
-
-<a href="mailto:gthegenius7@gmail.com"
-class="email-btn">
-
-📧 gthegenius7@gmail.com
-
-</a>
-
-<a href="https://youtube.com/@gthegeniustamil?si=-eQvyYvRwwYpqjJm"
-target="_blank"
-class="youtube-btn">
-
-📺 YouTube
-
-</a>
-
-<a href="https://t.me/gthegenius"
-target="_blank"
-class="telegram-btn">
-
-📢 Telegram
-
-</a>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- FOOTER -->
-<!-- ========================= -->
-
-<footer class="footer">
-
-<h3>G THE GENIUS</h3>
-
-<p>
-ALL EXAM MOCK TEST PORTAL
-</p>
-
-<p>
-© 2026 G THE GENIUS
-</p>
-
-<p>
-Version 4.0
-</p>
-
-</footer>
 
 </div>
 
 
-  <!-- Bottom Navigation -->
 
-<div class="bottom-nav">
-
-<div class="nav-item active"
-onclick="location.href='dashboard.html'">
-
-🏠
-<span>Home</span>
-
-</div>
-
-<div class="nav-item"
-onclick="location.href='mocktest.html?type=daily'">
-
-📝
-<span>Tests</span>
-
-</div>
-
-<div class="nav-item"
-onclick="location.href='materials.html'">
-
-📚
-<span>Materials</span>
-
-</div>
-
-<div class="nav-item"
-onclick="location.href='leaderboard.html'">
-
-🏆
-<span>Rank</span>
-
-</div>
-
-<div class="nav-item"
-onclick="alert('👤 Profile Coming Soon')">
-
-👤
-<span>Profile</span>
-
-</div>
-
-</div>
 <script type="module" src="dashboard.js"></script>
+
+
+<script>
+
+function startTest(type){
+
+window.location.href =
+"mocktest.html?type="+type;
+
+}
+
+</script>
+
 
 </body>
 
