@@ -1,83 +1,243 @@
 import { db } from "./firebase-config.js";
 
 import {
-  collection,
-  getDocs
+collection,
+getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-let currentType = "daily";
 
-async function loadLeaderboard() {
+let allStudents = [];
 
-    const leaderList = document.getElementById("leaderList");
-    leaderList.innerHTML = "Loading...";
+let rankMode = "overall";
 
-    const snapshot = await getDocs(collection(db, "results"));
+let selectedTest = "daily";
 
-    let students = [];
 
-    snapshot.forEach((doc) => {
-        students.push(doc.data());
-    });
 
-    // Filter by Test Type
-    students = students.filter(student => student.testType === currentType);
+const leaderList =
+document.getElementById("leaderList");
 
-    // Sort by Percentage
-    students.sort((a, b) => b.percentage - a.percentage);
+const rankTitle =
+document.getElementById("rankTitle");
 
-    leaderList.innerHTML = "";
 
-    if (students.length === 0) {
-        leaderList.innerHTML = "<h3>No Results Found</h3>";
-        return;
-    }
 
-    let rank = 1;
+async function loadLeaderboard(){
 
-    students.forEach((student) => {
 
-        leaderList.innerHTML += `
-        <div class="leader-card">
+const snapshot =
+await getDocs(collection(db,"results"));
 
-            <h2>
-            ${rank <= 3 ? ["🥇","🥈","🥉"][rank-1] : "🏅"}
-            Rank ${rank}
-            </h2>
 
-            <h3>👤 ${student.studentName}</h3>
+allStudents=[];
 
-            <p>📍 ${student.district}</p>
 
-            <p>🎯 Test : ${student.testType}</p>
+snapshot.forEach((doc)=>{
 
-            <p>📝 Score : ${student.score}/${student.totalQuestions}</p>
+allStudents.push(doc.data());
 
-            <p>📈 ${student.percentage}%</p>
+});
 
-        </div>
-        `;
 
-        rank++;
-    });
+showLeaderboard();
 
 }
 
-// Button Events
-document.getElementById("dailyBtn").onclick = () => {
-    currentType = "daily";
-    loadLeaderboard();
+
+
+
+function showLeaderboard(){
+
+
+let students = [...allStudents];
+
+
+// Test Filter
+
+students = students.filter((student)=>{
+
+
+return student.testType === selectedTest;
+
+
+});
+
+
+
+
+// District Filter
+
+if(rankMode==="district"){
+
+
+let myDistrict =
+localStorage.getItem("district");
+
+
+students = students.filter((student)=>{
+
+
+return student.district === myDistrict;
+
+
+});
+
+
+rankTitle.innerHTML =
+"📍 District Ranking - " + myDistrict;
+
+
+}
+else{
+
+
+rankTitle.innerHTML =
+"🌍 Overall Ranking";
+
+
+}
+
+
+
+
+// Sort Score
+
+students.sort((a,b)=>{
+
+return b.percentage - a.percentage;
+
+});
+
+
+
+
+leaderList.innerHTML="";
+
+
+
+let rank=1;
+
+
+
+students.forEach((student)=>{
+
+
+leaderList.innerHTML += `
+
+
+<div class="leader-card">
+
+
+<h2>
+
+${
+rank==1 ? "🥇" :
+rank==2 ? "🥈" :
+rank==3 ? "🥉" :
+"🏅"
+}
+
+Rank ${rank}
+
+</h2>
+
+
+
+<h3>
+👤 ${student.studentName}
+</h3>
+
+
+<p>
+📍 ${student.district}
+</p>
+
+
+<p>
+🎯 Test : ${student.testType}
+</p>
+
+
+<p>
+📝 Score : ${student.score}/${student.totalQuestions}
+</p>
+
+
+<p>
+📈 Percentage : ${student.percentage}%
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+rank++;
+
+
+});
+
+
+}
+
+
+
+// Buttons
+
+
+document.getElementById("overallBtn").onclick=function(){
+
+rankMode="overall";
+
+showLeaderboard();
+
 };
 
-document.getElementById("weeklyBtn").onclick = () => {
-    currentType = "weekly";
-    loadLeaderboard();
+
+
+document.getElementById("districtBtn").onclick=function(){
+
+rankMode="district";
+
+showLeaderboard();
+
 };
 
-document.getElementById("monthlyBtn").onclick = () => {
-    currentType = "monthly";
-    loadLeaderboard();
+
+
+
+document.getElementById("dailyBtn").onclick=function(){
+
+selectedTest="daily";
+
+showLeaderboard();
+
 };
 
-// Default Load
+
+
+document.getElementById("weeklyBtn").onclick=function(){
+
+selectedTest="weekly";
+
+showLeaderboard();
+
+};
+
+
+
+document.getElementById("monthlyBtn").onclick=function(){
+
+selectedTest="monthly";
+
+showLeaderboard();
+
+};
+
+
+
+
 loadLeaderboard();
