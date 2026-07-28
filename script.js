@@ -60,44 +60,49 @@ function startTimer() {
     }, 1000);
 }
 
-async function loadQuestions() {
+async function loadQuestions(){
 
-    startTimer();
+    document.getElementById("questionText").innerHTML =
+    "Loading Questions...";
 
-    document.getElementById("questionText").innerHTML = "Loading Questions...";
+    try{
 
-    try {
+        const snapshot = await getDocs(collection(db,"questions"));
 
-        const snapshot = await getDocs(collection(db, "questions"));
-        alert("Questions: " + snapshot.size);
+        allQuestions=[];
 
-        allQuestions = [];
-
-        snapshot.forEach((doc) => {
+        snapshot.forEach((doc)=>{
             allQuestions.push(doc.data());
         });
 
-        if (allQuestions.length === 0) {
-            document.getElementById("questionText").innerHTML = "No Questions Found";
-            return;
-        }
 
         testQuestions = allQuestions
-            .sort(() => Math.random() - 0.5)
-            .slice(0, totalQuestions);
+        .sort(()=>Math.random()-0.5)
+        .slice(0,totalQuestions);
 
-        selectedAnswers = new Array(testQuestions.length).fill(null);
+
+        selectedAnswers =
+        new Array(testQuestions.length).fill(null);
+
 
         showQuestion();
+
         createPalette();
 
-    } catch (error) {
 
-        console.log(error);
-        document.getElementById("questionText").innerHTML = "Failed to Load Questions";
+        // Questions Ready ஆன பிறகு Timer Start
+        startTimer();
+
 
     }
+    catch(error){
+
+        console.log(error);
+
+    }
+
 }
+
 loadQuestions();     
 
 function showQuestion(){
