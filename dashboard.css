@@ -441,3 +441,13 @@ background:linear-gradient(90deg,#22c55e,#16a34a);
 transition:.5s;
 
 }
+
+.contact-title{
+
+text-align:center;
+font-size:22px;
+font-weight:700;
+color:#1e3a8a;
+margin-bottom:20px;
+
+}
