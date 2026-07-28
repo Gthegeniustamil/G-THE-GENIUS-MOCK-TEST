@@ -120,13 +120,20 @@ totalTests;
 
 
 
-document.getElementById("bestScore").innerHTML =
-bestScore+"%";
+// Convert Percentage to Marks (20 Questions)
 
+let bestMarks = Math.round((bestScore / 100) * 20);
+
+let averageMarks = Math.round((average / 100) * 20);
+
+
+
+document.getElementById("bestScore").innerHTML =
+bestMarks + " / 20";
 
 
 document.getElementById("averageScore").innerHTML =
-average+"%";
+averageMarks + " / 20";
 
 
 
