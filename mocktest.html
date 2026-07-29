@@ -4,9 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS Mock Test</title>
+<title>
+G THE GENIUS Mock Test
+</title>
+
 
 <link rel="stylesheet" href="mocktest.css">
 
@@ -16,104 +20,128 @@
 <body>
 
 
-<div class="test-container">
+<header class="test-header">
 
 
-<!-- HEADER -->
-  
-<div class="test-header">
+<img 
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="test-logo"
+>
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="test-logo">
 
 <div>
 
-<h2>🛡️ G THE GENIUS</h2>
-
-<p>ALL GOVERNMENT EXAM PREPARATION PORTAL</p>
-
-</div>
-
-</div>
-
-<div class="test-info">
-
-<span id="testType">
-Daily Mock Test
-</span>
-
-<span>
-Practice Test
-</span>
-
-</div>
+<h2>
+G THE GENIUS
+</h2>
 
 
-<div class="student-info">
+<p id="testTitle">
 
-<p>
-👤 Student:
-<span id="studentName"></span>
+Mock Test
+
 </p>
 
-<p>
-📍 District:
-<span id="studentDistrict"></span>
-</p>
 
 </div>
+
 
 
 <div id="timer">
+
 ⏰ 05:00
+
 </div>
 
 
+</header>
 
 
 
-<!-- QUESTION BOX -->
 
 
-<div class="question-box">
 
 
-<h3 id="questionNumber">
-Question 1
+<section class="student-test-info">
+
+
+<h3>
+
+🎯 <span id="examName">
+
+TNUSRB
+
+</span>
+
 </h3>
-  
 
-<p id="questionText">
-Loading Question...
+
+
+<p>
+
+Test Type:
+
+<span id="testType">
+
+Daily Mock Test
+
+</span>
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="question-area">
+
+
+<div class="question-top">
+
+
+<p>
+
+Question 
+
+<span id="currentQuestion">
+
+1
+
+</span>
+
+/
+
+<span id="totalQuestions">
+
+10
+
+</span>
+
+
 </p>
 
 
 
-<div id="options">
-
-
-<button class="option">
-Option A
-</button>
-
-
-<button class="option">
-Option B
-</button>
-
-
-<button class="option">
-Option C
-</button>
-
-
-<button class="option">
-Option D
-</button>
-
-
 </div>
 
+
+
+
+
+
+<div class="question-card">
+
+
+<h2 id="questionText">
+
+Loading Question...
+
+</h2>
 
 
 </div>
@@ -124,30 +152,416 @@ Option D
 
 
 
-<!-- NAVIGATION -->
+<div class="options">
+
+
+<button class="option"
+id="option0">
+
+A
+
+</button>
+
+
+<button class="option"
+id="option1">
+
+B
+
+</button>
+
+
+<button class="option"
+id="option2">
+
+C
+
+</button>
+
+
+<button class="option"
+id="option3">
+
+D
+
+</button>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
 
 <div class="navigation">
 
+
 <button id="previousBtn">
+
 ⬅ Previous
+
 </button>
+
+
 
 <button id="nextBtn">
+
 Next ➡
+
 </button>
-
-</div>
-
-<button id="submitBtn" class="submit-btn">
-✅ Submit Test
-</button>
-
 
 
 </div>
 
 
-<script type="module" src="script.js"></script>
+
+
+
+<button id="submitBtn"
+class="submit-btn">
+
+
+Submit Test
+
+</button>
+
+
+<!-- =========================
+QUESTION PALETTE
+========================= -->
+
+
+<section class="palette-card">
+
+
+<h3>
+
+📌 Question Palette
+
+</h3>
+
+
+
+<div id="questionPalette"
+class="question-palette">
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+PROGRESS
+========================= -->
+
+
+<section class="progress-card">
+
+
+<p>
+
+Test Progress
+
+</p>
+
+
+
+<div class="progress-bar">
+
+
+<div id="testProgress">
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+ATTEMPT INFO
+========================= -->
+
+
+<section class="attempt-card">
+
+
+<h3>
+
+📊 Test Details
+
+</h3>
+
+
+
+<div class="attempt-grid">
+
+
+<div>
+
+<h2 id="attemptNumber">
+
+1
+
+</h2>
+
+<p>
+
+Attempt
+
+</p>
+
+</div>
+
+
+
+
+<div>
+
+<h2 id="totalMarks">
+
+10
+
+</h2>
+
+<p>
+
+Marks
+
+</p>
+
+</div>
+
+
+
+
+<div>
+
+<h2 id="timeLimit">
+
+5
+
+</h2>
+
+<p>
+
+Minutes
+
+</p>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+SUBMIT CONFIRM BOX
+========================= -->
+
+
+<div id="submitConfirm"
+class="submit-confirm">
+
+
+
+<h3>
+
+⚠️ Submit Test?
+
+</h3>
+
+
+
+<p>
+
+Once submitted, you cannot change answers.
+
+</p>
+
+
+
+<button id="confirmSubmit">
+
+Yes Submit
+
+</button>
+
+
+
+<button id="cancelSubmit">
+
+Continue Test
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- =========================
+BOTTOM NAV
+========================= -->
+
+
+<nav class="bottom-nav">
+
+
+<a href="dashboard.html">
+
+🏠
+
+<br>
+
+Home
+
+</a>
+
+
+
+
+<a href="practice.html">
+
+📚
+
+<br>
+
+Practice
+
+</a>
+
+
+
+
+<a href="leaderboard.html">
+
+🏆
+
+<br>
+
+Leaderboard
+
+</a>
+
+
+
+
+<a href="profile.html">
+
+👤
+
+<br>
+
+Profile
+
+</a>
+
+
+
+</nav>
+
+
+
+
+
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
+
+
+<footer class="footer">
+
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+
+
+<a href="https://youtube.com/@gthegeniustamil">
+
+▶ YouTube Channel
+
+</a>
+
+
+
+
+<a href="https://t.me/gthegenius">
+
+📢 Telegram
+
+</a>
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+📧 Email
+
+</a>
+
+
+
+
+<p>
+
+© 2026 G THE GENIUS.
+All Rights Reserved.
+
+</p>
+
+
+
+</footer>
+
+
+
+<script type="module" src="mocktest.js"></script>
 
 
 </body>
