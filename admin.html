@@ -19,47 +19,78 @@
 <div class="admin-container">
 
 
-
 <!-- HEADER -->
 
 <div class="admin-header">
 
-<h1>
-🛡️ G THE GENIUS
-</h1>
+<h1>🛡️ G THE GENIUS</h1>
 
-<p>
-Admin Control Panel
-</p>
-
-</div>
+<p>Admin Control Panel</p>
 
 <button id="logoutBtn">
 🚪 Logout
 </button>
 
+</div>
+
 
 
 <!-- MENU -->
 
-
 <div class="admin-menu">
 
 
+<div class="admin-card"
+onclick="showSection('addSection')">
 
-<div class="admin-card">
+<h2>➕</h2>
 
-<h2>
-➕
-</h2>
+<h3>Add Question</h3>
 
-<h3>
-Add Question
-</h3>
+<p>Create New Questions</p>
 
-<p>
-Create New Mock Test Questions
-</p>
+</div>
+
+
+
+<div class="admin-card"
+onclick="showSection('uploadSection')">
+
+<h2>📤</h2>
+
+<h3>Bulk Upload</h3>
+
+<p>Upload JSON Questions</p>
+
+</div>
+
+
+
+<div class="admin-card"
+onclick="showSection('manageSection')">
+
+<h2>📚</h2>
+
+<h3>Manage Questions</h3>
+
+<p>Edit / Delete Questions</p>
+
+</div>
+
+
+
+<div class="admin-card"
+onclick="showSection('resultSection')">
+
+<h2>👨‍🎓</h2>
+
+<h3>Students Result</h3>
+
+<p>View Performance</p>
+
+</div>
+
+
 
 </div>
 
@@ -67,189 +98,248 @@ Create New Mock Test Questions
 
 
 
-<div class="admin-card">
+<!-- ADD QUESTION -->
 
-<h2>
-📚
-</h2>
+<div class="section question-form"
+id="addSection">
 
-<h3>
-Manage Questions
-</h3>
-
-<p>
-Edit / Delete Questions
-</p>
-
-</div>
-
-
-
-
-
-<div class="admin-card">
-
-<h2>
-👨‍🎓
-</h2>
-
-<h3>
-Students Result
-</h3>
-
-<p>
-View Exam Performance
-</p>
-
-</div>
-
-
-
-
-
-<div class="admin-card">
-
-<h2>
-🏆
-</h2>
-
-<h3>
-Leaderboard
-</h3>
-
-<p>
-Top Rank Students
-</p>
-
-</div>
-
-
-
-
-</div>
-
-
-
-<!-- ADD QUESTION FORM -->
-
-<div class="question-form">
 
 <h2>➕ Add New Question</h2>
 
-<input id="question" type="text" placeholder="Enter Question">
 
-<input id="option0" type="text" placeholder="Option A">
+<input id="question"
+placeholder="Enter Question">
 
-<input id="option1" type="text" placeholder="Option B">
 
-<input id="option2" type="text" placeholder="Option C">
+<input id="option0"
+placeholder="Option A">
 
-<input id="option3" type="text" placeholder="Option D">
+
+<input id="option1"
+placeholder="Option B">
+
+
+<input id="option2"
+placeholder="Option C">
+
+
+<input id="option3"
+placeholder="Option D">
+
 
 <select id="answer">
-    <option value="">Correct Answer</option>
-    <option value="0">Option A</option>
-    <option value="1">Option B</option>
-    <option value="2">Option C</option>
-    <option value="3">Option D</option>
+
+<option value="">
+Correct Answer
+</option>
+
+<option value="0">
+Option A
+</option>
+
+<option value="1">
+Option B
+</option>
+
+<option value="2">
+Option C
+</option>
+
+<option value="3">
+Option D
+</option>
+
 </select>
 
-<textarea id="explanation" placeholder="Explanation"></textarea>
+
+
+<textarea
+id="explanation"
+placeholder="Explanation">
+</textarea>
+
+
 
 <button id="saveQuestion">
-Save Question
+✅ Save Question
 </button>
 
+
 </div>
-    
+
+
+
+
+
+
+
 <!-- BULK UPLOAD -->
 
-<div class="bulk-upload">
 
-<h2>📤 Bulk Question Upload</h2>
+<div class="section bulk-upload"
+id="uploadSection">
 
-    <button id="removeDuplicateBtn" class="btn btn-danger">
+
+<h2>
+📤 Bulk Question Upload
+</h2>
+
+
+
+<button
+id="removeDuplicateBtn">
+
 🧹 Remove Duplicate Questions
-    </button>
-    
+
+</button>
+
+
+
 <textarea
 id="bulkJson"
 rows="15"
 placeholder="Paste JSON Questions Here">
 </textarea>
 
-<br><br>
+
 
 <button id="uploadBtn">
+
 Upload Questions
+
 </button>
+
+
 
 <p id="uploadStatus"></p>
 
-</div>
-<!-- STUDENT RESULTS -->
-
-<div class="results-section">
-
-<h2>👨‍🎓 Students Results</h2>
-
-<input
-type="text"
-id="searchResult"
-placeholder="🔍 Search Student">
-
-<div id="resultCount"></div>
-
-<div id="resultList"></div>
 
 </div>
+
+
+
+
+
+
 
 
 <!-- MANAGE QUESTIONS -->
 
-<div class="manage-questions">
 
-<h2>📚 Manage Questions</h2>
+<div class="section manage-questions"
+id="manageSection">
+
+
+<h2>
+📚 Manage Questions
+</h2>
+
+
 
 <input
-type="text"
 id="searchQuestion"
 placeholder="🔍 Search Question">
 
+
+
 <div id="questionCount"></div>
 
+
+
 <div id="questionList"></div>
+
+
 
 </div>
 
 
-</div> <!-- admin-container -->
 
 
-<script type="module" src="admin.js"></script>
 
-</body>
-</html>
 
-<div class="manage-questions">
 
-<h2>📚 Manage Questions</h2>
+
+
+
+<!-- RESULTS -->
+
+
+<div class="section results-section"
+id="resultSection">
+
+
+<h2>
+👨‍🎓 Students Results
+</h2>
+
+
 
 <input
-type="text"
-id="searchQuestion"
-placeholder="🔍 Search Question">
+id="searchResult"
+placeholder="🔍 Search Student">
 
-<div id="questionCount"></div>
 
-<div id="questionList"></div>
+
+<div id="resultCount"></div>
+
+
+
+<div id="resultList"></div>
+
+
 
 </div>
-    
-</div> <!-- admin-container -->
+
+
+
+
+
+
+
+</div>
+
+
+
+
 
 <script type="module" src="admin.js"></script>
 
-</body>
-</html>
 
+<script>
+
+
+function showSection(id){
+
+
+document
+.querySelectorAll(".section")
+.forEach(section=>{
+
+
+section.style.display="none";
+
+
+});
+
+
+document
+.getElementById(id)
+.style.display="block";
+
+
+}
+
+
+
+// Default Open
+
+showSection("addSection");
+
+
+</script>
+
+
+
+</body>
+
+</html>
