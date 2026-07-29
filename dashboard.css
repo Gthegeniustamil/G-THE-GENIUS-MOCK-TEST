@@ -1,31 +1,46 @@
 /* =========================
-G THE GENIUS DASHBOARD
-PREMIUM MOBILE UI
+G THE GENIUS DASHBOARD CSS
+PART 1
 ========================= */
 
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+
 }
+
 
 
 body{
 
-    background:
-    linear-gradient(
-    180deg,
-    #081229,
-    #102451
-    );
 
-    color:white;
-    min-height:100vh;
-    padding-bottom:90px;
+background:
+
+linear-gradient(
+180deg,
+#081229,
+#102451
+);
+
+
+color:white;
+
+
+min-height:100vh;
+
+
+padding-bottom:90px;
+
 
 }
+
+
+
+
 
 
 
@@ -34,93 +49,102 @@ HEADER
 ========================= */
 
 
-.header{
+.dashboard-header{
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
 
-    padding:15px 18px;
+display:flex;
 
-    background:
-    rgba(255,255,255,0.08);
 
-    backdrop-filter:blur(15px);
+align-items:center;
 
-    border-bottom:
-    1px solid rgba(255,215,0,.25);
+
+gap:15px;
+
+
+padding:20px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+
+border-bottom:
+
+1px solid rgba(255,215,0,.3);
+
+
 
 }
 
 
 
-.logo-box{
+.dashboard-logo{
 
-    display:flex;
-    align-items:center;
-    gap:12px;
+
+width:70px;
+
+
+height:70px;
+
+
+border-radius:50%;
+
+
+object-fit:cover;
+
+
+border:
+
+3px solid #FFD700;
+
+
+background:white;
+
+
+padding:2px;
+
 
 }
 
 
 
-.logo{
+.dashboard-header h2{
 
-    width:60px;
-    height:60px;
 
-    border-radius:50%;
+color:#FFD700;
 
-    object-fit:cover;
 
-    border:
-    3px solid #FFD700;
+font-size:24px;
 
-    padding:2px;
-
-    background:white;
 
 }
 
 
 
-.logo-box h2{
+.dashboard-header p{
 
-    color:#FFD700;
 
-    font-size:20px;
+color:#ddd;
+
+
+font-size:13px;
+
 
 }
 
 
 
-.logo-box p{
-
-    font-size:12px;
-
-    color:#ddd;
-
-}
 
 
-
-.profile-icon{
-
-    width:45px;
-    height:45px;
-
-    border-radius:50%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:22px;
-
-    border:
-    2px solid #FFD700;
-
-}
 
 
 
@@ -131,108 +155,146 @@ WELCOME CARD
 
 .welcome-card{
 
-    margin:18px;
 
-    padding:20px;
-
-    border-radius:20px;
+margin:20px;
 
 
-    background:
-    rgba(255,255,255,.08);
+padding:25px;
 
 
-    border:
-    1px solid rgba(255,215,0,.25);
+
+border-radius:28px;
 
 
-    backdrop-filter:blur(15px);
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,215,0,.18),
+
+rgba(255,255,255,.08)
+
+);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.35);
+
+
+
+box-shadow:
+
+0 0 25px rgba(255,215,0,.15);
+
+
 
 }
+
 
 
 
 .welcome-card h2{
 
-    color:#FFD700;
 
-    margin-bottom:10px;
+color:white;
+
+
+font-size:22px;
+
 
 }
+
+
+
+.welcome-card span{
+
+
+color:#FFD700;
+
+
+}
+
 
 
 
 .welcome-card p{
 
-    color:#eee;
 
-    font-size:14px;
+margin-top:10px;
+
+
+color:#ddd;
+
 
 }
+
+
+
+
+
 
 
 
 /* =========================
-XP CARD
+LEVEL BOX
 ========================= */
 
 
-.xp-card{
-
-    margin:18px;
-
-    padding:20px;
-
-    border-radius:22px;
+.level-box{
 
 
-    background:
-    linear-gradient(
-    135deg,
-    rgba(255,215,0,.15),
-    rgba(255,255,255,.08)
-    );
+margin-top:20px;
 
 
-    border:
-    1px solid rgba(255,215,0,.35);
+padding:18px;
+
+
+border-radius:20px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
 
 
 }
 
 
 
-.xp-card h3{
+.level-box h3{
 
-    color:#FFD700;
+
+color:#FFD700;
+
 
 }
 
 
 
-.xp-card h1{
-
-    font-size:42px;
-
-    margin:5px 0;
-
-}
+.xp-bar{
 
 
+height:12px;
 
-.progress{
 
-    width:100%;
+background:#222;
 
-    height:12px;
 
-    background:#222;
+border-radius:20px;
 
-    border-radius:20px;
 
-    margin-top:15px;
+overflow:hidden;
 
-    overflow:hidden;
+
+margin:15px 0;
+
 
 }
 
@@ -240,181 +302,142 @@ XP CARD
 
 #xpProgress{
 
-    height:100%;
 
-    width:0%;
-
-    background:#FFD700;
-
-    border-radius:20px;
-
-}
-
-/* =========================
-DAILY MISSION
-========================= */
+height:100%;
 
 
-.mission-card{
+width:0%;
 
-    margin:18px;
 
-    padding:20px;
+background:#FFD700;
 
-    border-radius:22px;
 
-    background:
-    rgba(255,255,255,.08);
+border-radius:20px;
 
-    border:
-    1px solid rgba(255,215,0,.25);
 
-    backdrop-filter:blur(15px);
+transition:.5s;
+
 
 }
 
 
 
-.mission-card h2{
+.level-box p{
 
-    color:#FFD700;
 
-    margin-bottom:15px;
+font-size:14px;
+
 
 }
 
 
 
-.mission-item{
-
-    padding:12px;
-
-    margin:10px 0;
-
-    background:
-    rgba(255,255,255,.08);
-
-    border-radius:12px;
-
-    font-size:14px;
-
-}
 
 
-
-.mission-card p{
-
-    color:#FFD700;
-
-    margin-top:15px;
-
-}
 
 
 
 /* =========================
-CONTINUE PRACTICE
+TEST SECTION
 ========================= */
 
 
-.continue-card{
-
-    margin:18px;
-
-    padding:20px;
-
-    border-radius:22px;
+.test-section{
 
 
-    background:
-    linear-gradient(
-    135deg,
-    rgba(0,255,127,.15),
-    rgba(255,255,255,.08)
-    );
+margin:20px;
 
-
-    border:
-    1px solid rgba(0,255,127,.35);
 
 }
 
 
 
-.continue-card h2{
-
-    color:#00ff7f;
-
-}
+.test-section h2{
 
 
+color:#FFD700;
 
-.btn{
 
-    width:100%;
+margin-bottom:20px;
 
-    padding:14px;
-
-    margin-top:15px;
-
-    border:none;
-
-    border-radius:15px;
-
-    background:#FFD700;
-
-    color:#081229;
-
-    font-size:16px;
-
-    font-weight:bold;
 
 }
+
+
+
+
+
 
 
 
 /* =========================
-TEST CARDS
+TEST GRID
 ========================= */
-
-
-.section-title{
-
-    margin:20px 18px;
-
-    color:#FFD700;
-
-}
-
 
 
 .test-grid{
 
-    display:grid;
 
-    grid-template-columns:1fr;
+display:grid;
 
-    gap:15px;
 
-    padding:18px;
+grid-template-columns:
+
+repeat(3,1fr);
+
+
+
+gap:15px;
+
 
 }
 
 
 
+
+
+
+
+
+/* =========================
+TEST CARD
+========================= */
+
+
 .test-card{
 
-    padding:20px;
 
-    border-radius:22px;
+padding:22px 15px;
 
-    background:
-    rgba(255,255,255,.08);
 
-    border:
-    1px solid rgba(255,215,0,.25);
+text-align:center;
 
-    backdrop-filter:blur(15px);
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.test-card h2{
+
+
+font-size:35px;
+
 
 }
 
@@ -422,9 +445,12 @@ TEST CARDS
 
 .test-card h3{
 
-    color:#FFD700;
 
-    margin-bottom:10px;
+margin:12px 0;
+
+
+color:#FFD700;
+
 
 }
 
@@ -432,18 +458,80 @@ TEST CARDS
 
 .test-card p{
 
-    color:#ddd;
 
-    margin:6px 0;
+font-size:13px;
+
+
+color:#ddd;
+
+
+margin:6px;
+
 
 }
 
 
 
+
+
+
+.test-card button{
+
+
+margin-top:15px;
+
+
+padding:12px 20px;
+
+
+border:none;
+
+
+border-radius:18px;
+
+
+
+background:#FFD700;
+
+
+color:#081229;
+
+
+font-weight:bold;
+
+
+cursor:pointer;
+
+
+}
+
+
+
+.test-card button:hover{
+
+
+transform:scale(1.05);
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+TEST COLORS
+========================= */
+
+
 .daily{
 
-    border-left:
-    5px solid #00ff7f;
+
+border-color:#00ff7f;
+
 
 }
 
@@ -451,8 +539,9 @@ TEST CARDS
 
 .weekly{
 
-    border-left:
-    5px solid #FFD700;
+
+border-color:#FFD700;
+
 
 }
 
@@ -460,68 +549,231 @@ TEST CARDS
 
 .monthly{
 
-    border-left:
-    5px solid red;
+
+border-color:#ff4444;
+
 
 }
+
+/* =========================
+QUICK ACCESS SECTION
+========================= */
+
+
+.quick-section{
+
+
+margin:20px;
+
+
+}
+
+
+
+.quick-section h2{
+
+
+color:#FFD700;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+
+
+.quick-grid{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+
+repeat(3,1fr);
+
+
+
+gap:15px;
+
+
+}
+
+
+
+
+.quick-card{
+
+
+padding:22px 12px;
+
+
+text-align:center;
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+cursor:pointer;
+
+
+transition:.3s;
+
+
+}
+
+
+
+
+
+.quick-card:hover{
+
+
+transform:translateY(-5px);
+
+
+
+background:
+
+rgba(255,215,0,.15);
+
+
+
+}
+
+
+
+
+
+.quick-card h2{
+
+
+font-size:35px;
+
+
+}
+
+
+
+.quick-card h3{
+
+
+color:#FFD700;
+
+
+margin:10px 0;
+
+
+}
+
+
+
+.quick-card p{
+
+
+font-size:12px;
+
+
+color:#ddd;
+
+
+}
+
+
+
+
+
 
 
 
 /* =========================
-RANK CARD
+MOTIVATION CARD
 ========================= */
 
 
-.rank-card{
+.motivation-card{
 
-    margin:18px;
 
-    padding:20px;
+margin:20px;
 
-    border-radius:22px;
 
-    background:
-    rgba(255,255,255,.08);
+padding:25px;
 
-    border:
-    1px solid rgba(255,215,0,.25);
+
+
+text-align:center;
+
+
+
+border-radius:25px;
+
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,215,0,.15),
+
+rgba(255,255,255,.08)
+
+);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.3);
+
+
 
 }
 
 
 
-.rank-card h2{
+.motivation-card h2{
 
-    color:#FFD700;
+
+color:#FFD700;
+
+
+margin-bottom:15px;
+
 
 }
 
 
 
-.rank-box{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:15px;
-
-    margin-top:12px;
-
-    background:
-    rgba(255,255,255,.08);
-
-    border-radius:15px;
-
-}
+.motivation-card p{
 
 
+color:#ddd;
 
-.rank-box h2{
 
-    color:white;
+font-size:15px;
+
+
+font-style:italic;
+
 
 }
 
@@ -529,143 +781,8 @@ RANK CARD
 
 
 
-/* =========================
-BADGE CARD
-========================= */
 
 
-.badge-card{
-
-    margin:18px;
-
-    padding:20px;
-
-    text-align:center;
-
-    border-radius:22px;
-
-    background:
-    rgba(255,255,255,.08);
-
-    border:
-    1px solid rgba(255,215,0,.25);
-
-}
-
-
-
-.badge-card h2{
-
-    color:#FFD700;
-
-}
-
-
-
-.badge{
-
-    margin:20px auto;
-
-    padding:20px;
-
-    width:150px;
-
-    border-radius:50%;
-
-    background:
-    rgba(255,215,0,.15);
-
-    border:
-    2px solid #FFD700;
-
-    font-size:35px;
-
-}
-
-
-
-.badge span{
-
-    display:block;
-
-    font-size:13px;
-
-    margin-top:10px;
-
-}
-
-
-
-/* =========================
-PERFORMANCE
-========================= */
-
-
-.performance-card{
-
-    margin:18px;
-
-    padding:20px;
-
-    border-radius:22px;
-
-    background:
-    rgba(255,255,255,.08);
-
-}
-
-
-
-.performance-card h2{
-
-    color:#FFD700;
-
-}
-
-
-
-.stats{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    text-align:center;
-
-    gap:10px;
-
-    margin-top:20px;
-
-}
-
-
-
-.stats div{
-
-    padding:15px 5px;
-
-    background:
-    rgba(255,255,255,.08);
-
-    border-radius:15px;
-
-}
-
-
-
-.stats h3{
-
-    color:#FFD700;
-
-}
-
-
-
-.stats p{
-
-    font-size:12px;
-
-}
 
 /* =========================
 BOTTOM NAVIGATION
@@ -674,37 +791,55 @@ BOTTOM NAVIGATION
 
 .bottom-nav{
 
-    position:fixed;
 
-    bottom:0;
-
-    left:0;
-
-    width:100%;
-
-    height:70px;
+position:fixed;
 
 
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
+bottom:0;
 
 
-    background:
-    rgba(8,18,41,.95);
+left:0;
 
 
-    backdrop-filter:
-    blur(15px);
+width:100%;
 
 
-    border-top:
-    1px solid rgba(255,215,0,.25);
+height:70px;
 
 
-    z-index:999;
+
+display:flex;
+
+
+justify-content:space-around;
+
+
+
+align-items:center;
+
+
+
+background:
+
+rgba(8,18,41,.95);
+
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+
+border-top:
+
+1px solid rgba(255,215,0,.3);
+
+
+
+z-index:999;
+
+
 
 }
 
@@ -712,39 +847,18 @@ BOTTOM NAVIGATION
 
 .bottom-nav a{
 
-    text-decoration:none;
 
-    color:white;
-
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
+text-decoration:none;
 
 
-    font-size:12px;
-
-    transition:.3s;
-
-}
+color:white;
 
 
-
-.bottom-nav a span{
-
-    font-size:24px;
-
-    margin-bottom:3px;
-
-}
+font-size:12px;
 
 
+text-align:center;
 
-.bottom-nav a.active{
-
-    color:#FFD700;
 
 }
 
@@ -752,11 +866,14 @@ BOTTOM NAVIGATION
 
 .bottom-nav a:hover{
 
-    color:#FFD700;
 
-    transform:translateY(-5px);
+color:#FFD700;
+
 
 }
+
+
+
 
 
 
@@ -768,25 +885,60 @@ FOOTER
 
 .footer{
 
-    margin:30px 18px 100px;
 
-    padding:22px;
-
-
-    text-align:center;
+margin:25px 20px 100px;
 
 
-    border-radius:22px;
+padding:25px;
 
 
-    background:
 
-    rgba(255,255,255,.08);
+text-align:center;
 
 
-    border:
 
-    1px solid rgba(255,215,0,.25);
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.footer-logo{
+
+
+width:75px;
+
+
+height:75px;
+
+
+border-radius:50%;
+
+
+object-fit:cover;
+
+
+
+border:
+
+3px solid #FFD700;
+
+
+background:white;
 
 
 }
@@ -795,36 +947,12 @@ FOOTER
 
 .footer h3{
 
-    color:#FFD700;
 
-    font-size:22px;
-
-    margin-bottom:15px;
-
-}
+color:#FFD700;
 
 
+margin-top:12px;
 
-.footer a{
-
-    display:block;
-
-    color:white;
-
-    text-decoration:none;
-
-    margin:10px;
-
-
-    font-size:14px;
-
-}
-
-
-
-.footer a:hover{
-
-    color:#FFD700;
 
 }
 
@@ -832,56 +960,46 @@ FOOTER
 
 .footer p{
 
-    margin-top:15px;
 
-    color:#aaa;
+color:#aaa;
 
-    font-size:12px;
+
+font-size:13px;
+
+
+margin:10px;
+
 
 }
 
 
 
-/* =========================
-LOGO ANIMATION
-========================= */
+.footer a{
 
 
-.logo{
+display:block;
 
-    animation:
 
-    logoPulse 3s infinite;
+color:white;
+
+
+text-decoration:none;
+
+
+margin:8px;
+
+
+font-size:14px;
+
 
 }
 
 
 
-@keyframes logoPulse{
+.footer a:hover{
 
 
-0%{
-
-box-shadow:
-0 0 0 rgba(255,215,0,0);
-
-}
-
-
-50%{
-
-box-shadow:
-0 0 25px rgba(255,215,0,.7);
-
-}
-
-
-100%{
-
-box-shadow:
-0 0 0 rgba(255,215,0,0);
-
-}
+color:#FFD700;
 
 
 }
@@ -889,101 +1007,6 @@ box-shadow:
 
 
 
-
-/* =========================
-BADGE ANIMATION
-========================= */
-
-
-.badge{
-
-    animation:
-
-    badgeGlow 2s infinite;
-
-}
-
-
-
-@keyframes badgeGlow{
-
-
-0%{
-
-transform:scale(1);
-
-}
-
-
-50%{
-
-transform:scale(1.05);
-
-}
-
-
-
-100%{
-
-transform:scale(1);
-
-}
-
-
-}
-
-
-
-
-
-/* =========================
-CARD ANIMATION
-========================= */
-
-
-.welcome-card,
-.xp-card,
-.mission-card,
-.continue-card,
-.test-card,
-.rank-card,
-.badge-card,
-.performance-card{
-
-
-animation:
-
-slideUp .5s ease;
-
-
-}
-
-
-
-@keyframes slideUp{
-
-
-from{
-
-opacity:0;
-
-transform:
-translateY(20px);
-
-}
-
-
-to{
-
-opacity:1;
-
-transform:
-translateY(0);
-
-}
-
-
-}
 
 
 
@@ -993,49 +1016,69 @@ MOBILE RESPONSIVE
 ========================= */
 
 
-@media(max-width:600px){
+@media(max-width:700px){
 
 
 
-.logo{
+.test-grid{
 
-width:55px;
 
-height:55px;
+grid-template-columns:
+
+1fr;
+
 
 }
 
 
 
-.logo-box h2{
+.quick-grid{
 
-font-size:17px;
+
+grid-template-columns:
+
+repeat(3,1fr);
+
 
 }
 
 
 
-.profile-icon{
+.quick-card{
 
-width:40px;
 
-height:40px;
+padding:15px 8px;
+
 
 }
 
 
 
-.stats h3{
+.quick-card h2{
 
-font-size:18px;
+
+font-size:28px;
+
 
 }
 
 
 
-.test-card{
+.welcome-card{
 
-padding:18px;
+
+margin:15px;
+
+
+}
+
+
+
+.dashboard-header h2{
+
+
+font-size:20px;
+
 
 }
 
@@ -1043,53 +1086,9 @@ padding:18px;
 
 .bottom-nav{
 
+
 height:65px;
 
-}
-
-
-
-.bottom-nav a span{
-
-font-size:22px;
-
-}
-
-
-
-}
-
-
-
-
-/* =========================
-LARGE MOBILE
-========================= */
-
-
-@media(min-width:700px){
-
-
-.test-grid{
-
-grid-template-columns:
-repeat(3,1fr);
-
-}
-
-
-
-.continue-card,
-.rank-card,
-.badge-card,
-.performance-card,
-.mission-card{
-
-max-width:700px;
-
-margin-left:auto;
-
-margin-right:auto;
 
 }
 
