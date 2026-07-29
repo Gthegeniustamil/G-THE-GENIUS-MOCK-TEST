@@ -1,13 +1,28 @@
-import { db, auth } from "./firebase-config.js";
+// =========================
+// G THE GENIUS LEADERBOARD JS
+// PART 1
+// =========================
+
+
+import { db } from "./firebase-config.js";
 
 
 import {
 
 collection,
-
-getDocs
+getDocs,
+query,
+orderBy
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+let allResults = [];
+
+
 
 
 
@@ -20,49 +35,51 @@ getDocs
 async function loadLeaderboard(){
 
 
+
 try{
 
 
-const snapshot =
 
-await getDocs(
+const q = query(
 
 collection(
 db,
 "results"
+),
+
+orderBy(
+"percentage",
+"desc"
 )
 
 );
 
 
 
-let students = [];
+
+
+const snap =
+
+await getDocs(q);
 
 
 
-snapshot.forEach((doc)=>{
 
 
-let data =
-doc.data();
+allResults=[];
 
 
 
-students.push({
+
+
+snap.forEach(doc=>{
+
+
+allResults.push({
 
 id:doc.id,
 
-name:data.studentName || "Student",
-
-district:data.district || "-",
-
-exam:data.examType || "TNUSRB",
-
-score:data.score || 0,
-
-percentage:data.percentage || 0,
-
-studentId:data.studentId || ""
+...doc.data()
 
 });
 
@@ -73,53 +90,33 @@ studentId:data.studentId || ""
 
 
 
-// SORT HIGH SCORE
+
+displayTopThree();
 
 
-students.sort(
-
-(a,b)=>
-
-b.percentage -
-
-a.percentage
-
-);
-
-
-
-
-
-
-displayTopPlayers(
-students
-);
-
-
-
-displayRanking(
-students
-);
-
-
-
-loadMyRank(
-students
+displayLeaderboard(
+allResults
 );
 
 
 
 }
+
+
 
 catch(error){
 
 
 console.log(
+
 "Leaderboard Error",
+
 error
+
 );
 
 
+
 }
 
 
@@ -133,121 +130,86 @@ error
 
 
 // =========================
-// TOP PLAYERS
+// TOP 3 DISPLAY
 // =========================
 
 
-function displayTopPlayers(data){
+function displayTopThree(){
 
 
-const box =
+
+if(
+allResults.length===0
+) return;
+
+
+
+
+let first =
+allResults[0];
+
+let second =
+allResults[1];
+
+let third =
+allResults[2];
+
+
+
+
 
 document.getElementById(
-"topPlayers"
-);
+"firstName"
+).innerHTML =
 
+first?.studentName || "-";
 
 
-if(!box) return;
 
+document.getElementById(
+"firstScore"
+).innerHTML =
 
+(first?.percentage || 0)+"%";
 
-box.innerHTML="";
 
 
 
-data.slice(0,3)
 
-.forEach((student,index)=>{
 
+document.getElementById(
+"secondName"
+).innerHTML =
 
+second?.studentName || "-";
 
-let medal;
 
 
+document.getElementById(
+"secondScore"
+).innerHTML =
 
-if(index===0)
+(second?.percentage || 0)+"%";
 
-medal="🥇";
 
 
-else if(index===1)
 
-medal="🥈";
 
 
-else
+document.getElementById(
+"thirdName"
+).innerHTML =
 
-medal="🥉";
+third?.studentName || "-";
 
 
 
+document.getElementById(
+"thirdScore"
+).innerHTML =
 
+(third?.percentage || 0)+"%";
 
-box.innerHTML +=
-
-
-`
-
-<div class="rank-card">
-
-
-<div class="rank-position">
-
-${medal}
-
-</div>
-
-
-
-<div class="rank-info">
-
-
-<h3>
-
-${student.name}
-
-</h3>
-
-
-<p>
-
-📍 ${student.district}
-
-</p>
-
-
-<p>
-
-🎯 ${student.exam}
-
-</p>
-
-
-</div>
-
-
-
-<div class="rank-score">
-
-
-<h3>
-
-${student.percentage}%
-
-</h3>
-
-
-</div>
-
-
-</div>
-
-`;
-
-
-
-});
 
 
 }
@@ -258,23 +220,21 @@ ${student.percentage}%
 
 
 
+
 // =========================
-// FULL RANKING
+// DISPLAY LIST
 // =========================
 
 
-function displayRanking(data){
+function displayLeaderboard(data){
+
 
 
 const list =
 
 document.getElementById(
-"leaderboardList"
+"leaderList"
 );
-
-
-
-if(!list) return;
 
 
 
@@ -282,72 +242,89 @@ list.innerHTML="";
 
 
 
-data.forEach((student,index)=>{
+
+
+data.forEach(
+(student,index)=>{
 
 
 
-list.innerHTML +=
+let div =
+
+document.createElement(
+"div"
+);
 
 
-`
 
-<div class="rank-card">
+div.className =
+"rank-row";
 
 
-<div class="rank-position">
 
+
+
+
+let badge =
+
+getBadge(
+student.percentage
+);
+
+
+
+
+
+
+div.innerHTML = `
+
+
+<span class="rank">
 
 #${index+1}
 
-
-</div>
-
-
-
-<div class="rank-info">
-
-
-<h3>
-
-${student.name}
-
-</h3>
-
-
-<p>
-
-📍 ${student.district}
-
-</p>
-
-
-<p>
-
-🎯 ${student.exam}
-
-</p>
-
-
-</div>
+</span>
 
 
 
-<div class="rank-score">
+<span>
+
+${student.studentName || "Student"}
+
+<br>
+
+<small>
+
+${student.district || "-"}
+
+</small>
+
+</span>
 
 
-<h3>
 
-${student.percentage}%
+<span class="score">
 
-</h3>
+${student.percentage || 0}%
 
-
-</div>
+</span>
 
 
-</div>
+
+<span>
+
+${badge}
+
+</span>
+
 
 `;
+
+
+
+
+
+list.appendChild(div);
 
 
 
@@ -356,6 +333,215 @@ ${student.percentage}%
 
 
 }
+
+
+
+
+
+
+
+// =========================
+// BADGE SYSTEM
+// =========================
+
+
+function getBadge(score){
+
+
+
+if(score>=90)
+
+return "🏆 Master";
+
+
+
+if(score>=75)
+
+return "🥇 Pro";
+
+
+
+if(score>=50)
+
+return "🥈 Rising";
+
+
+
+return "⭐ Starter";
+
+
+}
+
+
+
+
+
+
+
+// =========================
+// START
+// =========================
+
+
+loadLeaderboard();
+
+
+
+console.log(
+
+"✅ G THE GENIUS LEADERBOARD READY"
+
+);
+
+// =========================
+// FILTER SYSTEM
+// =========================
+
+
+const testFilter =
+
+document.getElementById(
+"testFilter"
+);
+
+
+
+const rankFilter =
+
+document.getElementById(
+"rankFilter"
+);
+
+
+
+
+
+if(testFilter){
+
+
+testFilter.onchange = ()=>{
+
+
+applyFilter();
+
+
+};
+
+
+}
+
+
+
+
+
+
+if(rankFilter){
+
+
+rankFilter.onchange = ()=>{
+
+
+applyFilter();
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+function applyFilter(){
+
+
+
+let data = [...allResults];
+
+
+
+
+
+
+// TEST TYPE FILTER
+
+
+let type =
+
+testFilter?.value || "all";
+
+
+
+
+if(type !== "all"){
+
+
+
+data = data.filter(
+
+item =>
+
+item.testType === type
+
+);
+
+
+}
+
+
+
+
+
+
+
+// DISTRICT FILTER
+
+
+let rankType =
+
+rankFilter?.value || "overall";
+
+
+
+
+if(rankType==="district"){
+
+
+
+let district =
+
+localStorage.getItem(
+"district"
+);
+
+
+
+data = data.filter(
+
+item =>
+
+item.district === district
+
+);
+
+
+
+}
+
+
+
+
+
+displayLeaderboard(data);
+
+
+
+}
+
 
 
 
@@ -368,37 +554,80 @@ ${student.percentage}%
 // =========================
 
 
-function loadMyRank(data){
-
-
-const user =
-auth.currentUser;
+function showMyRank(){
 
 
 
-if(!user) return;
+let userName =
+
+localStorage.getItem(
+"studentName"
+);
 
 
 
-let rank = 0;
+let district =
+
+localStorage.getItem(
+"district"
+);
 
 
-let score = 0;
 
 
 
-data.forEach((student,index)=>{
+let overallRank = 0;
+
+let districtRank = 0;
 
 
-if(student.studentId === user.uid){
+
+let bestScore = 0;
 
 
-rank=index+1;
 
-score=student.percentage;
+
+
+
+
+allResults.forEach(
+
+(item,index)=>{
+
+
+
+if(
+
+item.studentName === userName
+
+){
+
+
+
+overallRank = index+1;
+
+
+
+if(
+
+item.percentage > bestScore
+
+){
+
+
+bestScore = item.percentage;
 
 
 }
+
+
+
+}
+
+
+
+
+
 
 
 });
@@ -406,7 +635,59 @@ score=student.percentage;
 
 
 
-const rankBox =
+
+
+
+
+let dRank = 1;
+
+
+
+allResults.forEach(
+
+(item)=>{
+
+
+
+if(
+
+item.district === district
+
+){
+
+
+
+if(
+
+item.studentName === userName
+
+){
+
+
+districtRank = dRank;
+
+
+}
+
+
+
+dRank++;
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+let rankElement =
 
 document.getElementById(
 "myRank"
@@ -414,294 +695,18 @@ document.getElementById(
 
 
 
-const scoreBox =
+if(rankElement)
 
-document.getElementById(
-"myScore"
-);
+rankElement.innerHTML =
 
+overallRank || "-";
 
 
-if(rankBox)
 
-rankBox.innerHTML =
-rank;
 
 
 
-if(scoreBox)
-
-scoreBox.innerHTML =
-score;
-
-
-
-}
-
-
-
-
-
-// =========================
-// START
-// =========================
-
-
-auth.onAuthStateChanged(
-
-(user)=>{
-
-
-if(user){
-
-
-loadLeaderboard();
-
-
-}
-
-
-});
-
-// =========================
-// GLOBAL DATA
-// =========================
-
-let allStudents = [];
-
-
-
-
-
-// =========================
-// FILTER LEADERBOARD
-// =========================
-
-
-function applyFilter(){
-
-
-let exam =
-
-document.getElementById(
-"examFilter"
-).value;
-
-
-
-let district =
-
-document.getElementById(
-"districtFilter"
-).value;
-
-
-
-
-
-let filtered = allStudents.filter(
-(student)=>{
-
-
-let examMatch =
-(exam==="all" ||
-student.exam===exam);
-
-
-
-let districtMatch =
-(district==="all" ||
-student.district===district);
-
-
-
-return examMatch && districtMatch;
-
-
-});
-
-
-
-displayTopPlayers(filtered);
-
-
-displayRanking(filtered);
-
-
-loadMyRank(filtered);
-
-
-}
-
-
-
-
-
-
-// =========================
-// LOAD DISTRICTS
-// =========================
-
-
-function loadDistricts(){
-
-
-const select =
-
-document.getElementById(
-"districtFilter"
-);
-
-
-
-if(!select) return;
-
-
-
-let districts = [];
-
-
-
-allStudents.forEach(
-(student)=>{
-
-
-if(
-!districts.includes(
-student.district
-)
-){
-
-districts.push(
-student.district
-);
-
-}
-
-
-});
-
-
-
-
-districts.sort();
-
-
-
-
-districts.forEach(
-(district)=>{
-
-
-select.innerHTML +=
-
-
-`
-
-<option value="${district}">
-
-${district}
-
-</option>
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// DISTRICT RANK
-// =========================
-
-
-function loadDistrictRank(){
-
-
-const user =
-auth.currentUser;
-
-
-if(!user) return;
-
-
-
-let myStudent;
-
-
-
-allStudents.forEach(
-(student)=>{
-
-
-if(student.studentId === user.uid){
-
-myStudent = student;
-
-}
-
-
-});
-
-
-
-if(!myStudent)
-return;
-
-
-
-
-let districtStudents =
-
-allStudents.filter(
-(student)=>
-
-student.district ===
-myStudent.district
-
-);
-
-
-
-
-districtStudents.sort(
-
-(a,b)=>
-
-b.percentage -
-a.percentage
-
-);
-
-
-
-
-let rank =
-
-districtStudents.findIndex(
-
-(student)=>
-
-student.studentId ===
-user.uid
-
-)+1;
-
-
-
-
-
-const box =
+let districtElement =
 
 document.getElementById(
 "myDistrictRank"
@@ -709,107 +714,35 @@ document.getElementById(
 
 
 
-if(box){
+if(districtElement)
 
-box.innerHTML =
-rank;
+districtElement.innerHTML =
 
-}
-
-
-}
+districtRank || "-";
 
 
 
 
 
 
-
-// =========================
-// PERFORMANCE DATA
-// =========================
-
-
-function loadPerformance(){
-
-
-const user =
-auth.currentUser;
-
-
-if(!user) return;
-
-
-
-let tests = 0;
-
-let bestScore = 0;
-
-
-
-allStudents.forEach(
-(student)=>{
-
-
-if(
-student.studentId === user.uid
-){
-
-
-tests++;
-
-
-
-if(
-student.percentage >
-bestScore
-){
-
-bestScore =
-student.percentage;
-
-}
-
-
-}
-
-
-});
-
-
-
-
-
-const testBox =
+let scoreElement =
 
 document.getElementById(
-"totalTests"
+"myPercentage"
 );
 
 
 
-const scoreBox =
+if(scoreElement)
 
-document.getElementById(
-"bestScore"
-);
+scoreElement.innerHTML =
 
-
-
-if(testBox)
-
-testBox.innerHTML =
-tests;
-
-
-
-if(scoreBox)
-
-scoreBox.innerHTML =
 bestScore+"%";
 
 
+
 }
+
 
 
 
@@ -818,66 +751,119 @@ bestScore+"%";
 
 
 // =========================
-// EVENT LISTENER
+// LOAD BADGES
 // =========================
 
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+function loadBadges(){
 
 
-const examFilter =
+
+let badges =
+
+JSON.parse(
+
+localStorage.getItem(
+"badges"
+
+)
+
+)||[];
+
+
+
+
+
+let box =
 
 document.getElementById(
-"examFilter"
-);
-
-
-
-const districtFilter =
-
-document.getElementById(
-"districtFilter"
+"badgeList"
 );
 
 
 
 
-if(examFilter){
 
-examFilter.addEventListener(
-"change",
-applyFilter
-);
+if(!box) return;
+
+
+
+
+
+box.innerHTML="";
+
+
+
+
+
+if(
+badges.length===0
+){
+
+
+box.innerHTML =
+
+"<span>No Badge</span>";
+
+
+return;
+
 
 }
 
 
 
-if(districtFilter){
 
-districtFilter.addEventListener(
-"change",
-applyFilter
+
+badges.forEach(
+
+badge=>{
+
+
+
+let span =
+
+document.createElement(
+"span"
 );
 
-}
+
+
+span.className =
+"badge-item";
+
+
+
+span.innerHTML =
+
+"🏅 "+badge;
+
+
+
+box.appendChild(span);
+
 
 
 });
 
 
 
+}
+
+
+
+
+
 
 
 
 // =========================
-// UPDATE LOAD FUNCTION
+// UPDATE AFTER LOAD
 // =========================
 
 
 const oldLoadLeaderboard =
+
 loadLeaderboard;
 
 
@@ -885,322 +871,31 @@ loadLeaderboard;
 loadLeaderboard = async function(){
 
 
+
 await oldLoadLeaderboard();
 
 
-const snapshot =
 
-await getDocs(
+showMyRank();
 
-collection(
-db,
-"results"
-)
 
-);
 
+loadBadges();
 
 
-allStudents=[];
 
+};
 
 
-snapshot.forEach((doc)=>{
 
 
-let data =
-doc.data();
 
 
-
-allStudents.push({
-
-name:data.studentName || "Student",
-
-district:data.district || "-",
-
-exam:data.examType || "TNUSRB",
-
-percentage:data.percentage || 0,
-
-score:data.score || 0,
-
-studentId:data.studentId || ""
-
-});
-
-
-});
-
-
-
-allStudents.sort(
-
-(a,b)=>
-
-b.percentage-a.percentage
-
-);
-
-
-
-loadDistricts();
-
-
-loadDistrictRank();
-
-
-loadPerformance();
-
-
-}
-
-// =========================
-// LOADING DISPLAY
-// =========================
-
-
-function showLoading(){
-
-
-const list =
-
-document.getElementById(
-"leaderboardList"
-);
-
-
-
-if(list){
-
-
-list.innerHTML =
-
-`
-
-<div class="rank-card">
-
-<h3>
-⏳ Loading Ranking...
-</h3>
-
-</div>
-
-`;
-
-}
-
-
-}
-
-
-
-
-
-
-// =========================
-// EMPTY DATA CHECK
-// =========================
-
-
-function checkEmpty(data){
-
-
-const list =
-
-document.getElementById(
-"leaderboardList"
-);
-
-
-
-if(
-data.length===0
-){
-
-
-if(list){
-
-
-list.innerHTML =
-
-`
-
-<div class="rank-card">
-
-
-<h3>
-
-😔 No Results Found
-
-</h3>
-
-
-<p>
-
-Complete Mock Test to appear in Ranking
-
-</p>
-
-
-</div>
-
-`;
-
-}
-
-
-
-return true;
-
-
-}
-
-
-
-return false;
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// HIGHLIGHT MY CARD
-// =========================
-
-
-function highlightMyRank(){
-
-
-const user =
-auth.currentUser;
-
-
-
-if(!user)
-return;
-
-
-
-const cards =
-
-document.querySelectorAll(
-".rank-card"
-);
-
-
-
-cards.forEach(card=>{
-
-
-if(
-card.innerText.includes(
-user.email
-)
-){
-
-
-card.style.border =
-"2px solid #FFD700";
-
-
-}
-
-
-});
-
-
-}
-
-
-
-
-
-
-// =========================
-// REFRESH LEADERBOARD
-// =========================
-
-
-setInterval(()=>{
-
-
-if(auth.currentUser){
-
-
-showLoading();
-
-
-setTimeout(()=>{
-
-
-loadLeaderboard();
-
-
-},1000);
-
-
-
-}
-
-
-
-},60000);
-
-
-
-
-
-
-// =========================
-// LOGOUT SECURITY
-// =========================
-
-
-auth.onAuthStateChanged(
-(user)=>{
-
-
-if(!user){
-
-
-location.href =
-"login.html";
-
-
-}
-
-
-});
-
-
-
-
-
-
-// =========================
-// PAGE READY
-// =========================
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-showLoading();
 
 
 console.log(
-"🏆 G THE GENIUS LEADERBOARD READY"
+
+"✅ Leaderboard Final Ready"
+
 );
 
-
-});
