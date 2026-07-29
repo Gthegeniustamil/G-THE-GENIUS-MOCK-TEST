@@ -7,11 +7,14 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>
 G THE GENIUS Dashboard
 </title>
 
+
 <link rel="stylesheet" href="dashboard.css">
+
 
 </head>
 
@@ -19,42 +22,45 @@ G THE GENIUS Dashboard
 <body>
 
 
-<!-- ================= HEADER ================= -->
+
+<!-- =========================
+HEADER
+========================= -->
 
 
-<header class="header">
+<header class="dashboard-header">
 
 
-<div class="logo-box">
+<img
 
-<img 
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="logo"
+
+class="dashboard-logo"
+
+
 >
+
 
 
 <div>
 
+
 <h2>
+
 G THE GENIUS
+
 </h2>
 
+
 <p>
-Government Exam Preparation
+
+Government Exam Mock Test
+
 </p>
 
-</div>
-
 
 </div>
 
-
-
-<div class="profile-icon">
-
-👤
-
-</div>
 
 
 </header>
@@ -63,93 +69,66 @@ Government Exam Preparation
 
 
 
-<!-- ================= WELCOME ================= -->
+
+
+
+<!-- =========================
+WELCOME CARD
+========================= -->
 
 
 <section class="welcome-card">
 
 
+
 <h2>
-👋 Welcome,
+
+👋 Welcome
+
 <span id="studentName">
+
 Student
+
 </span>
+
 </h2>
+
 
 
 <p>
 
-🎯 Preparing For:
+📍 District :
 
-<span id="examGoal">
-TNUSRB
+<span id="studentDistrict">
+
+-
 
 </span>
 
 </p>
 
 
-</section>
 
 
+<div class="level-box">
 
-
-
-<!-- ================= XP CARD ================= -->
-
-
-<section class="xp-card">
-
-
-<div>
 
 <h3>
-⭐ Level
-</h3>
 
+Level
 
-<h1 id="level">
+<span id="userLevel">
 
 1
 
-</h1>
+</span>
 
-
-</div>
-
-
-
-<div>
-
-
-<h3>
-XP
+🏅
 
 </h3>
 
 
-<h2>
-
-<span id="xp">
-0
-
-</span>
-
-/ 
-
-<span id="nextXP">
-100
-
-</span>
-
-</h2>
-
-
-</div>
-
-
-
-<div class="progress">
+<div class="xp-bar">
 
 
 <div id="xpProgress">
@@ -161,108 +140,22 @@ XP
 
 
 
-</section>
-
-
-
-
-
-<!-- ================= DAILY MISSION ================= -->
-
-
-<section class="mission-card">
-
-
-<h2>
-🎯 Today's Mission
-</h2>
-
-
-<div class="mission-item">
-
-✅
-
-Practice 20 Questions
-
-</div>
-
-
-<div class="mission-item">
-
-⬜
-
-Complete Daily Test
-
-</div>
-
-
-<div class="mission-item">
-
-⬜
-
-Earn 100 XP
-
-</div>
-
-
-
 <p>
 
-Reward:
+XP :
 
-⭐ +50 XP
+<span id="userXP">
 
-</p>
-
-
-</section>
-
-
-<!-- ================= CONTINUE PRACTICE ================= -->
-
-
-<section class="continue-card" id="continueBox">
-
-
-<h2>
-▶ Continue Practice
-</h2>
-
-
-<p>
-📚 Subject:
-<span id="continueSubject">
--
-</span>
-
-</p>
-
-
-<p>
-
-📂 Topic:
-
-<span id="continueTopic">
--
-</span>
-
-</p>
-
-
-<p>
-
-Question:
-
-<span id="continueQuestion">
 0
+
 </span>
 
 </p>
 
 
-<button class="btn">
-Continue
-</button>
+
+</div>
+
 
 
 </section>
@@ -271,73 +164,126 @@ Continue
 
 
 
-<!-- ================= TEST SECTION ================= -->
 
 
-<h2 class="section-title">
 
-📝 Mock Tests
+<!-- =========================
+MOCK TEST SECTION
+========================= -->
+
+
+<section class="test-section">
+
+
+
+<h2>
+
+🎯 Start Your Test
 
 </h2>
 
 
 
-<section class="test-grid">
 
+
+
+
+<div class="test-grid">
+
+
+
+<!-- DAILY -->
 
 
 <div class="test-card daily">
 
 
+<h2>
+
+🟢
+
+</h2>
+
+
 <h3>
-🟢 Daily Test
+
+Daily Mock Test
+
 </h3>
 
 
+
 <p>
+
 10 Questions
+
 </p>
 
 
 <p>
-5 Attempts / Day
+
+⏱ 5 Minutes
+
 </p>
 
 
-<button class="btn">
 
-Start
+
+<button onclick="location.href='mocktest.html?type=daily'">
+
+Start Test
 
 </button>
+
 
 
 </div>
 
 
 
+
+
+
+
+<!-- WEEKLY -->
 
 
 <div class="test-card weekly">
 
 
+<h2>
+
+🟡
+
+</h2>
+
+
 <h3>
-🟡 Weekly Test
+
+Weekly Mock Test
+
 </h3>
 
 
+
 <p>
+
 25 Questions
+
 </p>
 
 
 <p>
-3 Attempts / Week
+
+⏱ 10 Minutes
+
 </p>
 
 
-<button class="btn">
 
-Start
+<button onclick="location.href='mocktest.html?type=weekly'">
+
+Start Test
 
 </button>
 
@@ -346,30 +292,50 @@ Start
 
 
 
+
+
+
+
+
+<!-- MONTHLY -->
 
 
 <div class="test-card monthly">
 
 
+<h2>
+
+🔴
+
+</h2>
+
+
 <h3>
-🔴 Monthly Grand Test
+
+Monthly Grand Test
+
 </h3>
 
 
+
 <p>
+
 100 Questions
+
 </p>
 
 
 <p>
-1st & 15th
+
+⏱ 60 Minutes
 
 </p>
 
 
-<button class="btn">
 
-Start
+<button onclick="location.href='mocktest.html?type=monthly'">
+
+Start Test
 
 </button>
 
@@ -378,68 +344,6 @@ Start
 
 
 
-</section>
-
-
-
-
-
-<!-- ================= RANK CARD ================= -->
-
-
-<section class="rank-card">
-
-
-<h2>
-🏆 Your Rank
-</h2>
-
-
-<div class="rank-box">
-
-
-<p>
-
-🇮🇳 Tamil Nadu Rank
-
-</p>
-
-
-<h2>
-
-#<span id="stateRank">
-0
-
-</span>
-
-</h2>
-
-
-</div>
-
-
-
-
-<div class="rank-box">
-
-
-<p>
-
-📍 District Rank
-
-</p>
-
-
-<h2>
-
-#<span id="districtRank">
-0
-
-</span>
-
-</h2>
-
-
 </div>
 
 
@@ -449,124 +353,126 @@ Start
 
 
 
-<!-- ================= BADGE ================= -->
-
-
-<section class="badge-card">
-
-
-<h2>
-
-🎖 Latest Achievement
-
-</h2>
-
-
-<div class="badge">
-
-
-🏅
-
-<span id="latestBadge">
-
-No Badge Yet
-
-</span>
-
-
-</div>
 
 
 
-<p>
+<script type="module" src="dashboard.js"></script>
 
-Total Badges:
-
-<span id="badgeCount">
-
-0
-
-</span>
-
-</p>
+  <!-- =========================
+QUICK MENU
+========================= -->
 
 
-</section>
-
-
-
-
-
-<!-- ================= PERFORMANCE ================= -->
-
-
-<section class="performance-card">
+<section class="quick-section">
 
 
 <h2>
 
-📊 Performance
+⚡ Quick Access
 
 </h2>
 
 
 
-<div class="stats">
+
+<div class="quick-grid">
 
 
-<div>
 
-<h3 id="practiceCount">
+<div class="quick-card"
+onclick="location.href='practice.html'">
 
-0
 
-</h3>
+<h2>
 
-<p>
+📚
+
+</h2>
+
+
+<h3>
 
 Practice
 
-</p>
-
-</div>
-
-
-
-
-<div>
-
-<h3 id="accuracyBox">
-
-0%
-
 </h3>
+
 
 <p>
 
-Accuracy
+Unlimited Questions
 
 </p>
+
 
 </div>
 
 
 
 
-<div>
 
-<h3 id="mockCount">
 
-0
+
+<div class="quick-card"
+onclick="location.href='leaderboard.html'">
+
+
+<h2>
+
+🏆
+
+</h2>
+
+
+<h3>
+
+Leaderboard
 
 </h3>
 
+
 <p>
 
-Mock Tests
+Check Rank
 
 </p>
 
+
 </div>
+
+
+
+
+
+
+
+
+<div class="quick-card"
+onclick="location.href='profile.html'">
+
+
+<h2>
+
+👤
+
+</h2>
+
+
+<h3>
+
+Profile
+
+</h3>
+
+
+<p>
+
+My Progress
+
+</p>
+
+
+</div>
+
 
 
 </div>
@@ -578,17 +484,54 @@ Mock Tests
 
 
 
-<!-- ================= BOTTOM NAV ================= -->
+
+
+
+<!-- =========================
+MOTIVATION CARD
+========================= -->
+
+
+<section class="motivation-card">
+
+
+<h2>
+
+🔥 Today's Motivation
+
+</h2>
+
+
+
+<p>
+
+"Success comes from daily practice and consistency."
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+BOTTOM NAVIGATION
+========================= -->
 
 
 <nav class="bottom-nav">
 
 
-<a href="dashboard.html" class="active">
+<a href="dashboard.html">
 
-<span>
 🏠
-</span>
+
+<br>
 
 Home
 
@@ -596,11 +539,12 @@ Home
 
 
 
+
 <a href="practice.html">
 
-<span>
 📚
-</span>
+
+<br>
 
 Practice
 
@@ -608,27 +552,30 @@ Practice
 
 
 
+
 <a href="leaderboard.html">
 
-<span>
 🏆
-</span>
 
-Leaderboard
+<br>
+
+Rank
 
 </a>
+
 
 
 
 <a href="profile.html">
 
-<span>
 👤
-</span>
+
+<br>
 
 Profile
 
 </a>
+
 
 
 </nav>
@@ -637,30 +584,74 @@ Profile
 
 
 
-<!-- ================= FOOTER ================= -->
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
 
 
 <footer class="footer">
 
 
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="footer-logo"
+
+
+>
+
+
+
+
 <h3>
+
 G THE GENIUS
+
 </h3>
 
 
+
+<p>
+
+All Government Exam Mock Test Platform
+
+</p>
+
+
+
+
+
 <a href="https://youtube.com/@gthegeniustamil">
+
 ▶ YouTube Channel
+
 </a>
+
+
+
 
 
 <a href="https://t.me/gthegenius">
-📢 Telegram
+
+📢 Telegram Channel
+
 </a>
+
+
+
 
 
 <a href="mailto:gthegenius7@gmail.com">
+
 📧 Email
+
 </a>
+
+
 
 
 
@@ -672,13 +663,11 @@ All Rights Reserved.
 </p>
 
 
-  </footer>
 
-
-<script type="module" src="dashboard.js"></script>
-
+</footer>
 
 </body>
+
 
 </html>
 
