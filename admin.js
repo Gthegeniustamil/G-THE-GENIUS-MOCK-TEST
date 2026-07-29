@@ -751,7 +751,85 @@ window.onerror = function(message, source, line, column, error){
 console.log("✅ G THE GENIUS ADMIN PANEL READY");
 
 /* DASHBOARD STATS */
+// ================= DASHBOARD STATS =================
 
+async function loadDashboardStats(){
+
+try{
+
+// Questions Count
+
+const questionSnap =
+await getDocs(collection(db,"questions"));
+
+const totalQuestions =
+document.getElementById("totalQuestions");
+
+if(totalQuestions){
+
+totalQuestions.innerHTML =
+questionSnap.size;
+
+}
+
+
+// Results Count
+
+const resultSnap =
+await getDocs(collection(db,"results"));
+
+const totalResults =
+document.getElementById("totalResults");
+
+if(totalResults){
+
+totalResults.innerHTML =
+resultSnap.size;
+
+}
+
+
+// Unique Students
+
+let students = new Set();
+
+
+resultSnap.forEach((doc)=>{
+
+const data = doc.data();
+
+if(data.studentName){
+
+students.add(data.studentName);
+
+}
+
+});
+
+
+const totalStudents =
+document.getElementById("totalStudents");
+
+
+if(totalStudents){
+
+totalStudents.innerHTML =
+students.size;
+
+}
+
+
+}
+catch(error){
+
+console.log(
+"Dashboard Error:",
+error
+);
+
+}
+
+}
 .dashboard-stats{
 
 display:grid;
