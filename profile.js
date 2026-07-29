@@ -1,232 +1,151 @@
-import { db, auth } from "./firebase-config.js";
+// =========================
+// G THE GENIUS PROFILE JS
+// PART 1
+// =========================
+
+
+import { auth, db } from "./firebase-config.js";
 
 
 import {
 
 doc,
-
-getDoc
+getDoc,
+collection,
+query,
+where,
+getDocs
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-// =========================
-// LEVEL CALCULATION
-// =========================
-
-
-function calculateLevel(xp){
-
-
-return Math.floor(xp / 100) + 1;
-
-
-}
-
-
-
 
 
 // =========================
-// LOAD PROFILE DATA
+// LOAD PROFILE
 // =========================
 
 
 async function loadProfile(){
 
 
-try{
-
 
 const user =
+
 auth.currentUser;
 
 
 
 if(!user){
 
+console.log(
+"User Not Login"
+);
+
 return;
 
 }
 
 
 
+
+
+try{
+
+
 const userRef =
+
 doc(
+
 db,
-"students",
+
+"users",
+
 user.uid
+
 );
+
 
 
 
 const snap =
+
 await getDoc(userRef);
 
 
 
-if(!snap.exists()){
-
-return;
-
-}
 
 
+if(
+snap.exists()
+){
 
-const data =
-snap.data();
+
+let data = snap.data();
 
 
 
 
-
-// NAME
-
-
-const name =
 document.getElementById(
-"studentName"
-);
+"profileName"
+).innerHTML =
 
-
-if(name){
-
-name.innerHTML =
 data.name || "Student";
 
-}
 
 
 
 
-
-// EXAM GOAL
-
-
-const exam =
 document.getElementById(
-"examGoal"
-);
+"profileDistrict"
+).innerHTML =
 
-
-if(exam){
-
-exam.innerHTML =
-data.examGoal || "TNUSRB";
-
-}
-
-
-
-
-
-
-// DISTRICT
-
-
-const district =
-document.getElementById(
-"district"
-);
-
-
-
-if(district){
-
-district.innerHTML =
 data.district || "-";
 
-}
 
 
 
 
-
-
-// XP
-
-
-let xp =
-data.xp || 0;
-
-
-
-let level =
-calculateLevel(xp);
-
-
-
-
-
-document.getElementById(
-"xp"
-).innerHTML =
-xp;
-
-
-
-
-document.getElementById(
-"level"
-).innerHTML =
-level;
-
-
-
-
-
-
-let nextXP =
-level * 100;
-
-
-
-document.getElementById(
-"nextXP"
-).innerHTML =
-nextXP;
-
-
-
-
-
-
-// XP BAR
-
-
-let percent =
-(xp / nextXP) * 100;
-
-
-
-const bar =
-document.getElementById(
-"xpProgress"
+localStorage.setItem(
+"studentName",
+data.name || "Student"
 );
 
 
 
-if(bar){
 
-
-bar.style.width =
-percent + "%";
-
-
-}
+localStorage.setItem(
+"district",
+data.district || "-"
+);
 
 
 
 }
+
+
+
+
+
+
+loadLevel();
+
+
+loadStatistics();
+
+
+
+}
+
 
 
 catch(error){
 
 
 console.log(
-"Profile Load Error",
+"Profile Error",
 error
 );
 
@@ -241,12 +160,236 @@ error
 
 
 
+
+
+
 // =========================
-// START
+// XP LEVEL SYSTEM
+// =========================
+
+
+function loadLevel(){
+
+
+
+let xp =
+
+Number(
+
+localStorage.getItem(
+"xp"
+
+)
+
+)||0;
+
+
+
+
+
+
+let level =
+
+Math.floor(
+xp / 100
+
+)+1;
+
+
+
+
+
+let progress =
+
+xp % 100;
+
+
+
+
+
+
+document.getElementById(
+"profileXP"
+).innerHTML =
+
+xp;
+
+
+
+
+
+
+document.getElementById(
+"profileLevel"
+).innerHTML =
+
+level;
+
+
+
+
+
+
+
+document.getElementById(
+"profileXPBar"
+).style.width =
+
+progress+"%";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// LOAD STATISTICS
+// =========================
+
+
+async function loadStatistics(){
+
+
+
+const user =
+
+auth.currentUser;
+
+
+
+if(!user) return;
+
+
+
+
+
+const q = query(
+
+collection(db,"results"),
+
+where(
+"studentId",
+"==",
+user.uid
+)
+
+);
+
+
+
+
+
+const snap =
+
+await getDocs(q);
+
+
+
+
+
+let total = 0;
+
+
+let totalScore = 0;
+
+
+let best = 0;
+
+
+
+
+
+snap.forEach(doc=>{
+
+
+let data = doc.data();
+
+
+
+total++;
+
+
+totalScore +=
+
+Number(data.score)||0;
+
+
+
+
+if(
+
+Number(data.percentage)>best
+
+){
+
+
+best =
+
+Number(data.percentage);
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+document.getElementById(
+"totalTests"
+).innerHTML =
+
+total;
+
+
+
+
+
+document.getElementById(
+"totalScore"
+).innerHTML =
+
+totalScore;
+
+
+
+
+
+document.getElementById(
+"bestPercentage"
+).innerHTML =
+
+best+"%";
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// AUTH START
 // =========================
 
 
 auth.onAuthStateChanged(
+
 (user)=>{
 
 
@@ -262,53 +405,100 @@ loadProfile();
 
 });
 
+
+
+
+
+
+console.log(
+
+"✅ G THE GENIUS PROFILE READY"
+
+);
+
 // =========================
-// LOAD BADGES
+// BADGE SYSTEM
 // =========================
 
 
 function loadBadges(){
 
 
-let badges =
+let xp =
 
-JSON.parse(
+Number(
 
-localStorage.getItem("badges")
+localStorage.getItem("xp")
 
-) || [];
+)||0;
 
 
 
-const gallery =
+let badges = [];
+
+
+
+
+
+if(xp >= 100){
+
+badges.push("🌱 Beginner");
+
+}
+
+
+
+if(xp >= 300){
+
+badges.push("🔥 Active Learner");
+
+}
+
+
+
+if(xp >= 500){
+
+badges.push("🏆 Test Master");
+
+}
+
+
+
+if(xp >= 1000){
+
+badges.push("👑 Genius Champion");
+
+}
+
+
+
+
+
+
+let badgeBox =
 
 document.getElementById(
-"badgeGallery"
+"profileBadges"
 );
 
 
 
-if(!gallery) return;
+if(!badgeBox) return;
 
 
 
-gallery.innerHTML="";
+badgeBox.innerHTML="";
+
+
 
 
 
 if(badges.length===0){
 
 
-gallery.innerHTML =
+badgeBox.innerHTML =
 
-`
-
-<p>
-🏅 No Badges Earned Yet
-</p>
-
-`;
-
+"<div class='badge-item'>⭐ Beginner</div>";
 
 return;
 
@@ -317,330 +507,165 @@ return;
 
 
 
-badges.forEach((badge)=>{
+
+badges.forEach(
+
+badge=>{
 
 
-gallery.innerHTML +=
+let div =
+
+document.createElement("div");
 
 
-`
 
-<div class="badge-item">
+div.className =
 
-
-🏅
+"badge-item";
 
 
-<p>
 
-${badge}
+div.innerHTML =
 
-</p>
-
-
-</div>
+badge;
 
 
-`;
+
+badgeBox.appendChild(div);
+
+
+
+}
+
+);
+
+
+
+localStorage.setItem(
+
+"badges",
+
+JSON.stringify(badges)
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// CURRENT RANK
+// =========================
+
+
+async function loadRank(){
+
+
+
+const user =
+
+auth.currentUser;
+
+
+
+if(!user) return;
+
+
+
+
+
+const q = query(
+
+collection(db,"results")
+
+);
+
+
+
+
+
+const snap =
+
+await getDocs(q);
+
+
+
+
+
+let results=[];
+
+
+
+snap.forEach(doc=>{
+
+
+results.push(doc.data());
 
 
 });
 
 
 
-}
 
 
 
+results.sort(
 
+(a,b)=>
 
-// =========================
-// LOAD PERFORMANCE
-// =========================
+Number(b.percentage)-Number(a.percentage)
 
-
-function loadPerformance(){
-
-
-let practice =
-
-localStorage.getItem(
-"totalPractice"
-) || 0;
-
-
-
-let accuracy =
-
-localStorage.getItem(
-"accuracy"
-) || 0;
-
-
-
-let tests =
-
-localStorage.getItem(
-"mockTests"
-) || 0;
-
-
-
-
-
-const practiceBox =
-
-document.getElementById(
-"totalPractice"
-);
-
-
-
-const accuracyBox =
-
-document.getElementById(
-"accuracy"
-);
-
-
-
-const testBox =
-
-document.getElementById(
-"mockTests"
 );
 
 
 
 
 
-if(practiceBox)
 
-practiceBox.innerHTML =
-practice;
+let rank = "-";
 
 
 
-if(accuracyBox)
+results.forEach(
 
-accuracyBox.innerHTML =
-accuracy+"%";
-
+(item,index)=>{
 
 
-if(testBox)
+if(
 
-testBox.innerHTML =
-tests;
+item.studentId === user.uid
 
+){
+
+
+
+rank = index+1;
 
 
 }
 
-
-
-
-
-
-
-// =========================
-// PRACTICE HISTORY
-// =========================
-
-
-function loadPracticeHistory(){
-
-
-const history =
-
-JSON.parse(
-
-localStorage.getItem(
-"practiceHistory"
-)
-
-) || [];
-
-
-
-const box =
-
-document.getElementById(
-"practiceHistory"
-);
-
-
-
-if(!box) return;
-
-
-
-box.innerHTML="";
-
-
-
-if(history.length===0){
-
-
-box.innerHTML =
-
-`
-<p>
-No Practice History
-</p>
-`;
-
-return;
-
-}
-
-
-
-history.slice(0,10).forEach((item)=>{
-
-
-box.innerHTML +=
-
-
-`
-
-<div class="history-card">
-
-
-<h3>
-
-📚 ${item.subject}
-
-</h3>
-
-
-<p>
-
-📂 ${item.topic}
-
-</p>
-
-
-<p>
-
-Score:
-${item.score || 0}
-
-</p>
-
-
-
-</div>
-
-
-`;
 
 
 });
 
 
 
-}
 
 
-
-
-
-// =========================
-// TEST HISTORY
-// =========================
-
-
-function loadTestHistory(){
-
-
-const history =
-
-JSON.parse(
-
-localStorage.getItem(
-"testHistory"
-)
-
-) || [];
-
-
-
-const box =
 
 document.getElementById(
-"testHistory"
-);
+"currentRank"
+).innerHTML =
 
+rank;
 
-
-if(!box) return;
-
-
-
-box.innerHTML="";
-
-
-
-if(history.length===0){
-
-
-box.innerHTML =
-
-`
-<p>
-No Tests Taken
-</p>
-
-`;
-
-return;
-
-}
-
-
-
-history.slice(0,10).forEach((test)=>{
-
-
-box.innerHTML +=
-
-
-`
-
-<div class="history-card">
-
-
-<h3>
-
-📝 ${test.type}
-
-</h3>
-
-
-<p>
-
-Score:
-${test.score}/${test.total}
-
-</p>
-
-
-<p>
-
-Percentage:
-${test.percentage}%
-
-</p>
-
-
-</div>
-
-`;
-
-
-
-});
 
 
 }
@@ -651,36 +676,9 @@ ${test.percentage}%
 
 
 
-// =========================
-// INITIAL LOAD
-// =========================
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-loadBadges();
-
-
-loadPerformance();
-
-
-loadPracticeHistory();
-
-
-loadTestHistory();
-
-
-}
-
-);
 
 // =========================
-// LOGOUT SYSTEM
+// LOGOUT
 // =========================
 
 
@@ -695,30 +693,30 @@ document.getElementById(
 if(logoutBtn){
 
 
-logoutBtn.onclick = async function(){
 
-
-try{
-
-
-await auth.signOut();
+logoutBtn.onclick = ()=>{
 
 
 
-alert(
-"Logout Successfully"
-);
+auth.signOut()
+
+.then(()=>{
 
 
 
-location.href =
-"login.html";
+localStorage.clear();
 
 
 
-}
+window.location.href =
 
-catch(error){
+"index.html";
+
+
+
+})
+
+.catch(error=>{
 
 
 console.log(
@@ -727,7 +725,8 @@ error
 );
 
 
-}
+});
+
 
 
 };
@@ -739,123 +738,45 @@ error
 
 
 
-// =========================
-// LOGIN SECURITY CHECK
-// =========================
-
-
-auth.onAuthStateChanged(
-
-(user)=>{
-
-
-if(!user){
-
-
-location.href =
-"login.html";
-
-
-}
-
-
-}
-
-);
-
-
-
-
 
 
 
 // =========================
-// AUTO REFRESH PROFILE
+// LOAD ALL
 // =========================
 
 
-setInterval(()=>{
+const oldLoadProfile =
+
+loadProfile;
 
 
-if(auth.currentUser){
+
+loadProfile = async function(){
 
 
-loadProfile();
 
+await oldLoadProfile();
 
-loadPerformance();
 
 
 loadBadges();
 
 
-}
 
-
-},30000);
-
+loadRank();
 
 
 
-
-
-
-// =========================
-// BOTTOM NAV ACTIVE
-// =========================
-
-
-const navItems =
-
-document.querySelectorAll(
-".bottom-nav a"
-);
-
-
-
-navItems.forEach(item=>{
-
-
-item.addEventListener(
-"click",
-function(){
-
-
-navItems.forEach(nav=>{
-
-
-nav.classList.remove(
-"active"
-);
-
-
-});
-
-
-
-this.classList.add(
-"active"
-);
-
-
-
-});
-
-
-});
+};
 
 
 
 
-
-
-
-// =========================
-// PROFILE READY
-// =========================
 
 
 console.log(
-"✅ G THE GENIUS PROFILE READY"
-);
 
+"✅ PROFILE FINAL READY"
+
+);
