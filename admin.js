@@ -26,7 +26,18 @@ const topicSelect = document.getElementById("topic");
 
 
 const topics = {
-
+"General Knowledge":[
+"Indian GK",
+"World GK",
+"Important Days",
+"Books and Authors",
+"Awards",
+"Sports",
+"Organizations",
+"States and Capitals",
+"National Symbols"
+],
+  
 "Indian Polity":[
 "Constitution",
 "Fundamental Rights",
