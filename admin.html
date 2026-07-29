@@ -5,234 +5,699 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS - Admin Panel</title>
+
+<title>
+G THE GENIUS Admin Panel
+</title>
+
 
 <link rel="stylesheet" href="admin.css">
 
+
 </head>
+
 
 <body>
 
-<div class="admin-container">
 
-<!-- HEADER -->
+
+
+<!-- =========================
+ADMIN HEADER
+========================= -->
+
 
 <header class="admin-header">
 
-<h1>🛠️ G THE GENIUS</h1>
 
-<p>Professional Admin Panel</p>
+<img
 
-<button id="logoutBtn" class="logout-btn">
-🚪 Logout
-</button>
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 
-</header>
+class="admin-logo"
 
-<!-- DASHBOARD -->
 
-<div class="dashboard-cards">
+>
 
-<div class="card">
 
-<h2 id="totalQuestions">0</h2>
 
-<p>Total Questions</p>
+<div>
 
-</div>
+<h2>
 
-<div class="card">
+G THE GENIUS
 
-<h2 id="totalStudents">0</h2>
+</h2>
 
-<p>Total Students</p>
-
-</div>
-
-<div class="card">
-
-<h2 id="totalResults">0</h2>
-
-<p>Total Results</p>
-
-</div>
-
-</div>
-
-<!-- SEARCH -->
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchQuestion"
-placeholder="🔍 Search Question">
-
-</div>
-
-<!-- BULK UPLOAD -->
-
-<div class="section">
-
-<h2>📤 Bulk Upload Questions</h2>
-
-<label>📚 Select Subject</label>
-
-<select id="bulkSubject">
-
-<option value="">Select Subject</option>
-
-<option value="General Knowledge">General Knowledge</option>
-
-<option value="Indian Polity">Indian Polity</option>
-
-<option value="Indian History">Indian History</option>
-
-<option value="Indian Geography">Indian Geography</option>
-
-<option value="Indian Economy">Indian Economy</option>
-
-<option value="General Science">General Science</option>
-
-<option value="Physics">Physics</option>
-
-<option value="Chemistry">Chemistry</option>
-
-<option value="Biology">Biology</option>
-
-<option value="Tamil">Tamil</option>
-
-<option value="English">English</option>
-
-<option value="Reasoning">Reasoning</option>
-
-<option value="Aptitude">Aptitude</option>
-
-<option value="Computer">Computer</option>
-
-<option value="Current Affairs">Current Affairs</option>
-
-<option value="Psychology">Psychology</option>
-
-<option value="Physical Training">Physical Training</option>
-
-<option value="TNUSRB Special">TNUSRB Special</option>
-
-<option value="TNPSC Special">TNPSC Special</option>
-
-</select>
-
-<br><br>
-
-<label>📂 Select Topic</label>
-
-<select id="bulkTopic">
-
-<option value="">Select Topic</option>
-
-</select>
-
-<br><br>
-
-<label>📋 Paste JSON Questions</label>
-
-<textarea
-id="bulkJson"
-rows="12"
-placeholder="Paste JSON Questions Here..."></textarea>
-
-<br><br>
-
-<button id="uploadBtn">
-
-📤 Upload Questions
-
-</button>
-
-<div id="uploadStatus"></div>
-
-</div>
-
-  <!-- ================= QUESTION MANAGEMENT ================= -->
-
-<div class="section">
-
-<h2>📚 All Questions</h2>
-
-<p id="questionCount">
-📊 Total Questions : 0
-</p>
-
-<div id="questionList">
-
-</div>
-
-</div>
-
-
-<!-- ================= STUDENTS ================= -->
-
-<div class="section">
-
-<h2>👨‍🎓 Students</h2>
-
-<div id="studentList">
-
-</div>
-
-</div>
-
-
-<!-- ================= RESULTS ================= -->
-
-<div class="section">
-
-<h2>🏆 Student Results</h2>
-
-<p id="resultCount">
-📊 Total Results : 0
-</p>
-
-<div id="resultList">
-
-</div>
-
-</div>
-
-
-<!-- ================= LEADERBOARD ================= -->
-
-<div class="section">
-
-<h2>🥇 Leaderboard</h2>
-
-<div id="leaderboardList">
-
-</div>
-
-</div>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer class="footer">
 
 <p>
 
-© 2026 G THE GENIUS
+Admin Question Panel
 
 </p>
 
-</footer>
 
 </div>
+
+
+</header>
+
+
+
+
+
+
+
+
+<!-- =========================
+ADD QUESTION CARD
+========================= -->
+
+
+<section class="admin-card">
+
+
+<h2>
+
+➕ Add Single Question
+
+</h2>
+
+
+
+
+
+<!-- SUBJECT -->
+
+
+<label>
+
+Subject
+
+</label>
+
+
+
+<select id="subject">
+
+
+<option value="Indian Polity">
+
+Indian Polity
+
+</option>
+
+
+<option value="Indian History">
+
+Indian History
+
+</option>
+
+
+<option value="Geography">
+
+Geography
+
+</option>
+
+
+<option value="General Science">
+
+General Science
+
+</option>
+
+
+<option value="Tamil Nadu GK">
+
+Tamil Nadu GK
+
+</option>
+
+
+<option value="Current Affairs">
+
+Current Affairs
+
+</option>
+
+
+
+</select>
+
+
+
+
+
+
+
+
+<!-- TOPIC -->
+
+
+<label>
+
+Topic
+
+</label>
+
+
+
+<input
+
+type="text"
+
+id="topic"
+
+placeholder="Example: Fundamental Rights"
+
+>
+
+
+
+
+
+
+
+
+<!-- QUESTION -->
+
+
+<label>
+
+Question
+
+</label>
+
+
+
+<textarea
+
+id="question"
+
+placeholder="Enter Question"
+
+></textarea>
+
+
+
+
+
+
+
+
+<!-- OPTIONS -->
+
+
+<label>
+
+Option A
+
+</label>
+
+
+<input
+
+type="text"
+
+id="optionA"
+
+placeholder="Option A"
+
+>
+
+
+
+
+<label>
+
+Option B
+
+</label>
+
+
+<input
+
+type="text"
+
+id="optionB"
+
+placeholder="Option B"
+
+>
+
+
+
+
+<label>
+
+Option C
+
+</label>
+
+
+<input
+
+type="text"
+
+id="optionC"
+
+placeholder="Option C"
+
+>
+
+
+
+
+<label>
+
+Option D
+
+</label>
+
+
+<input
+
+type="text"
+
+id="optionD"
+
+placeholder="Option D"
+
+>
+
+
+
+
+
+
+
+
+<!-- ANSWER -->
+
+
+<label>
+
+Correct Answer
+
+</label>
+
+
+<select id="answer">
+
+
+<option value="0">
+
+Option A
+
+</option>
+
+
+
+<option value="1">
+
+Option B
+
+</option>
+
+
+
+<option value="2">
+
+Option C
+
+</option>
+
+
+
+<option value="3">
+
+Option D
+
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+
+<!-- EXPLANATION -->
+
+
+<label>
+
+Explanation
+
+</label>
+
+
+
+<textarea
+
+id="explanation"
+
+placeholder="Answer Explanation"
+
+></textarea>
+
+
+
+
+
+
+
+
+<button id="addQuestionBtn">
+
+
+Add Question
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
 
 
 <script type="module" src="admin.js"></script>
 
+<!-- =========================
+BULK UPLOAD SECTION
+========================= -->
+
+
+<section class="bulk-card">
+
+
+<h2>
+
+📂 Bulk Question Upload
+
+</h2>
+
+
+
+
+<p>
+
+JSON file மூலம் 100 / 500 / 1000 Questions upload செய்யலாம்
+
+</p>
+
+
+
+
+
+
+
+<!-- SUBJECT FILTER -->
+
+
+<label>
+
+Subject
+
+</label>
+
+
+<select id="bulkSubject">
+
+
+<option value="Indian Polity">
+
+Indian Polity
+
+</option>
+
+
+<option value="Indian History">
+
+Indian History
+
+</option>
+
+
+<option value="Geography">
+
+Geography
+
+</option>
+
+
+<option value="General Science">
+
+General Science
+
+</option>
+
+
+<option value="Tamil Nadu GK">
+
+Tamil Nadu GK
+
+</option>
+
+
+<option value="Current Affairs">
+
+Current Affairs
+
+</option>
+
+
+
+</select>
+
+
+
+
+
+
+
+<!-- TOPIC -->
+
+
+<label>
+
+Topic
+
+</label>
+
+
+<input
+
+type="text"
+
+id="bulkTopic"
+
+placeholder="Example: Parliament"
+
+>
+
+
+
+
+
+
+
+
+<!-- JSON FILE -->
+
+
+<label>
+
+Upload JSON File
+
+</label>
+
+
+
+<input
+
+type="file"
+
+id="jsonFile"
+
+accept=".json"
+
+>
+
+
+
+
+
+
+
+
+<!-- PREVIEW -->
+
+
+<div class="preview-box">
+
+
+<h3>
+
+📊 Preview
+
+</h3>
+
+
+
+<p>
+
+Total Questions :
+
+<span id="questionCount">
+
+0
+
+</span>
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- UPLOAD BUTTON -->
+
+
+<button id="bulkUploadBtn">
+
+
+🚀 Upload Questions
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+QUESTION MANAGEMENT
+========================= -->
+
+
+<section class="manage-card">
+
+
+<h2>
+
+📝 Question Management
+
+</h2>
+
+
+
+
+
+<div class="search-box">
+
+
+<input
+
+type="text"
+
+id="searchQuestion"
+
+placeholder="Search Question"
+
+>
+
+
+
+<button id="searchBtn">
+
+🔍 Search
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="questionList">
+
+
+<!-- Questions Display Here -->
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+ADMIN FOOTER
+========================= -->
+
+
+<footer class="admin-footer">
+
+
+<h3>
+
+G THE GENIUS ADMIN
+
+</h3>
+
+
+
+<p>
+
+Manage Your Exam Question Bank
+
+</p>
+
+
+</footer>
+  
 </body>
+
 
 </html>
