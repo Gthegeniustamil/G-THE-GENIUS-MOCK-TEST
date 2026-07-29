@@ -7,232 +7,20 @@
 import { db } from "./firebase-config.js";
 
 
-import {
+import { db } from "./firebase-config.js";
+
 
 import {
 
 collection,
 addDoc,
 serverTimestamp,
-getDocs
+getDocs,
+deleteDoc,
+doc,
+updateDoc
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-// =========================
-// ADD SINGLE QUESTION
-// =========================
-
-
-const addBtn =
-
-document.getElementById(
-"addQuestionBtn"
-);
-
-
-
-
-
-
-if(addBtn){
-
-
-
-addBtn.onclick = async ()=>{
-
-
-
-try{
-
-
-
-let subject =
-
-document.getElementById(
-"subject"
-).value;
-
-
-
-
-
-let topic =
-
-document.getElementById(
-"topic"
-).value;
-
-
-
-
-
-let question =
-
-document.getElementById(
-"question"
-).value;
-
-
-
-
-
-let options = [
-
-
-
-document.getElementById(
-"optionA"
-).value,
-
-
-
-document.getElementById(
-"optionB"
-).value,
-
-
-
-document.getElementById(
-"optionC"
-).value,
-
-
-
-document.getElementById(
-"optionD"
-).value
-
-
-
-];
-
-
-
-
-
-let answer =
-
-Number(
-
-document.getElementById(
-"answer"
-).value
-
-);
-
-
-
-
-
-let explanation =
-
-document.getElementById(
-"explanation"
-).value;
-
-
-
-
-
-
-
-if(
-
-!question ||
-
-!topic
-
-){
-
-
-alert(
-"Please fill Question and Topic"
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-
-await addDoc(
-
-collection(
-
-db,
-
-"questions"
-
-),
-
-{
-
-
-subject:
-
-subject,
-
-
-topic:
-
-topic,
-
-
-question:
-
-question,
-
-
-options:
-
-options,
-
-
-answer:
-
-answer,
-
-
-explanation:
-
-explanation,
-
-
-
-createdAt:
-
-serverTimestamp()
-
-
-
-}
-
-
-
-);
-
-
-
-
-
-
-
-alert(
-
-"✅ Question Added Successfully"
-
-);
-
-
-
-
 
 
 
@@ -730,6 +518,7 @@ alert(
 "Upload Failed"
 );
 
+bulkUploadBtn.innerHTML =
 "🚀 Upload Questions";
 
 }
@@ -891,7 +680,7 @@ id:item.id,
 
 
 displayQuestions(allQuestions);
-
+loadAdminStats();
 
 
 }
@@ -1143,7 +932,6 @@ alert(
 loadQuestionsAdmin();
 
 
-
 }
 
 
@@ -1252,7 +1040,7 @@ displayQuestions(result);
 
 
 loadQuestionsAdmin();
-loadAdminStats();
+
 
 
 console.log(
@@ -1894,74 +1682,6 @@ document.getElementById(
 
 
 loadQuestionsAdmin();
-
-
-
-clearQuestionForm();
-
-function clearQuestionForm(){
-
-document.getElementById("subject").selectedIndex=0;
-
-document.getElementById("topic").value="";
-
-document.getElementById("question").value="";
-
-document.getElementById("optionA").value="";
-
-document.getElementById("optionB").value="";
-
-document.getElementById("optionC").value="";
-
-document.getElementById("optionD").value="";
-
-document.getElementById("answer").selectedIndex=0;
-
-document.getElementById("explanation").value="";
-
-}
-
-
-}
-
-
-
-catch(error){
-
-
-
-console.log(
-
-"Update Error",
-
-error
-
-);
-
-
-
-alert(
-
-"❌ Update Failed"
-
-);
-
-
-
-}
-
-
-
-};
-
-
-
-}
-
-
-
-
-
 
 
 
