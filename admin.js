@@ -9,12 +9,16 @@ getDocs,
 deleteDoc,
 updateDoc,
 doc,
-serverTimestamp
+serverTimestamp,
+query,
+where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const saveButton = document.getElementById("saveQuestion");
 const logoutBtn = document.getElementById("logoutBtn");
 const uploadBtn = document.getElementById("uploadBtn");
+
+// ================= SINGLE QUESTION SAVE =================
 
 saveButton.onclick = async function(){
 
@@ -40,6 +44,22 @@ return;
 }
 
 try{
+
+// Duplicate Check
+
+const q = query(
+collection(db,"questions"),
+where("question","==",question)
+);
+
+const snapshot = await getDocs(q);
+
+if(!snapshot.empty){
+
+alert("⚠️ Question Already Exists");
+return;
+
+}
 
 await addDoc(collection(db,"questions"),{
 
@@ -73,6 +93,8 @@ alert("❌ Error Saving Question");
 
 };
 
+// ================= LOGOUT =================
+
 logoutBtn.onclick = async function(){
 
 await signOut(auth);
@@ -96,26 +118,107 @@ try{
 
 const questions = JSON.parse(text);
 
-let count = 0;
+// Existing Questions Load
 
-for(const q of questions){
+const snapshot = await getDocs(collection(db,"questions"));
 
-await addDoc(collection(db,"questions"),{
+const existingQuestions = new Set();
 
-question: q.question,
-options: q.options,
-answer: q.answer,
-explanation: q.explanation,
-createdAt: serverTimestamp()
+snapshot.forEach((doc)=>{
 
-});
+const data = doc.data();
 
-count++;
+if(data.question){
+
+existingQuestions.add(
+data.question.trim().toLowerCase()
+);
 
 }
 
+});
+
+let added = 0;
+let skipped = 0;
+let failed = 0;
+
+const total = questions.length;
+
 document.getElementById("uploadStatus").innerHTML =
-"✅ " + count + " Questions Uploaded Successfully";
+"⏳ Upload Started...";
+
+uploadBtn.disabled = true;
+
+for(let i=0;i<questions.length;i++){
+
+const q = questions[i];
+
+try{
+
+const questionText =
+q.question.trim().toLowerCase();
+
+document.getElementById("uploadStatus").innerHTML =
+
+`
+Uploading ${i+1} / ${total}<br>
+✅ Added : ${added}<br>
+⏭️ Skipped : ${skipped}<br>
+❌ Failed : ${failed}
+`;
+
+if(existingQuestions.has(questionText)){
+
+skipped++;
+continue;
+
+}
+
+await addDoc(collection(db,"questions"),{
+
+question:q.question,
+
+options:q.options,
+
+answer:q.answer,
+
+explanation:q.explanation,
+
+createdAt:serverTimestamp()
+
+});
+
+existingQuestions.add(questionText);
+
+added++;
+
+}
+catch(err){
+
+console.log(err);
+
+failed++;
+
+}
+
+}
+
+uploadBtn.disabled = false;
+
+document.getElementById("uploadStatus").innerHTML =
+
+`
+<h3>✅ Upload Completed</h3>
+
+<p>📥 Total : ${total}</p>
+
+<p>✅ Added : ${added}</p>
+
+<p>⏭️ Duplicate Skipped : ${skipped}</p>
+
+<p>❌ Failed : ${failed}</p>
+
+`;
 
 document.getElementById("bulkJson").value="";
 
@@ -123,9 +226,87 @@ loadQuestions();
 
 }
 
+  // ================= REMOVE DUPLICATES =================
+
+const removeDuplicateBtn =
+document.getElementById("removeDuplicateBtn");
+
+if(removeDuplicateBtn){
+
+removeDuplicateBtn.onclick = async function(){
+
+const ok = confirm(
+"Duplicate Questions delete செய்யவா?\n\nஇந்த action-ஐ Undo செய்ய முடியாது."
+);
+
+if(!ok) return;
+
+removeDuplicateBtn.disabled = true;
+removeDuplicateBtn.innerHTML = "Cleaning...";
+
+try{
+
+const snapshot =
+await getDocs(collection(db,"questions"));
+
+const questionMap = new Map();
+
+let deleted = 0;
+
+for(const questionDoc of snapshot.docs){
+
+const data = questionDoc.data();
+
+const key = data.question
+.trim()
+.toLowerCase();
+
+if(questionMap.has(key)){
+
+await deleteDoc(
+doc(db,"questions",questionDoc.id)
+);
+
+deleted++;
+
+}
+else{
+
+questionMap.set(key,true);
+
+}
+
+}
+
+alert(
+"✅ Duplicate Cleaning Completed\n\nDeleted : "
++ deleted
+);
+
+loadQuestions();
+
+}
 catch(error){
 
 console.log(error);
+
+alert("❌ Error Removing Duplicates");
+
+}
+
+removeDuplicateBtn.disabled = false;
+removeDuplicateBtn.innerHTML =
+"🧹 Remove Duplicate Questions";
+
+};
+
+}
+  
+catch(error){
+
+console.log(error);
+
+uploadBtn.disabled=false;
 
 document.getElementById("uploadStatus").innerHTML =
 "❌ Invalid JSON";
@@ -134,215 +315,3 @@ document.getElementById("uploadStatus").innerHTML =
 
 };
 
-
-// ================= LOAD QUESTIONS =================
-
-async function loadQuestions(){
-
-const questionList =
-document.getElementById("questionList");
-
-const questionCount =
-document.getElementById("questionCount");
-
-questionList.innerHTML = "Loading...";
-
-const snapshot =
-await getDocs(collection(db,"questions"));
-
-questionList.innerHTML="";
-
-questionCount.innerHTML =
-"📊 Total Questions : " + snapshot.size;
-
-snapshot.forEach((questionDoc)=>{
-
-const q = questionDoc.data();
-
-questionList.innerHTML += `
-
-<div class="question-card">
-
-<h3>${q.question}</h3>
-
-<p>A. ${q.options[0]}</p>
-<p>B. ${q.options[1]}</p>
-<p>C. ${q.options[2]}</p>
-<p>D. ${q.options[3]}</p>
-
-<button onclick="editQuestion('${questionDoc.id}')">
-✏️ Edit
-</button>
-
-<button onclick="deleteQuestion('${questionDoc.id}')">
-🗑 Delete
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-// ================= DELETE QUESTION =================
-
-window.deleteQuestion = async function(id){
-
-if(confirm("Delete this question?")){
-
-await deleteDoc(doc(db,"questions",id));
-
-loadQuestions();
-
-}
-
-};
-
-
-// ================= EDIT QUESTION =================
-
-window.editQuestion = async function(id){
-
-const newQuestion = prompt("Enter New Question");
-
-if(newQuestion == null || newQuestion.trim()==""){
-return;
-}
-
-try{
-
-await updateDoc(doc(db,"questions",id),{
-
-question:newQuestion.trim()
-
-});
-
-alert("✅ Question Updated Successfully");
-
-loadQuestions();
-
-}
-catch(error){
-
-console.log(error);
-
-alert("❌ Update Failed");
-
-}
-
-};
-
-
-// ================= SEARCH QUESTION =================
-
-document.getElementById("searchQuestion").onkeyup = function(){
-
-const value = this.value.toLowerCase();
-
-document.querySelectorAll(".question-card").forEach(card=>{
-
-card.style.display =
-card.innerText.toLowerCase().includes(value)
-? "block"
-: "none";
-
-});
-
-};
-
-
-// ================= INITIAL LOAD =================
-
-loadQuestions();
-
-// ================= STUDENT RESULTS =================
-
-async function loadResults(){
-
-const resultList = document.getElementById("resultList");
-const resultCount = document.getElementById("resultCount");
-
-if(!resultList) return;
-
-resultList.innerHTML = "Loading...";
-
-const snapshot = await getDocs(collection(db,"results"));
-
-resultList.innerHTML = "";
-
-resultCount.innerHTML =
-"📊 Total Results : " + snapshot.size;
-
-snapshot.forEach((resultDoc)=>{
-
-const r = resultDoc.data();
-
-resultList.innerHTML += `
-
-<div class="result-card">
-
-<h3>👤 ${r.studentName}</h3>
-
-<p>📍 District : ${r.district}</p>
-
-<p>🎯 Test : ${r.testType}</p>
-
-<p>📝 Score : ${r.score} / ${r.totalQuestions}</p>
-
-<p>📈 Percentage : ${r.percentage}%</p>
-
-<button onclick="deleteResult('${resultDoc.id}')">
-🗑 Delete
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-window.deleteResult = async function(id){
-
-if(confirm("Delete this Result?")){
-
-await deleteDoc(doc(db,"results",id));
-
-loadResults();
-
-}
-
-};
-
-
-// ================= SEARCH RESULT =================
-
-const searchResult = document.getElementById("searchResult");
-
-if(searchResult){
-
-searchResult.onkeyup = function(){
-
-const value = this.value.toLowerCase();
-
-document.querySelectorAll(".result-card").forEach(card=>{
-
-card.style.display =
-card.innerText.toLowerCase().includes(value)
-? "block"
-: "none";
-
-});
-
-};
-
-}
-
-
-// ================= INITIAL LOAD =================
-
-loadQuestions();
-loadResults();
