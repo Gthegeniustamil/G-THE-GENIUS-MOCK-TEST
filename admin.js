@@ -1175,3 +1175,168 @@ console.log(
 
 );
 
+// =========================
+// ADMIN DASHBOARD STATS
+// =========================
+
+
+async function loadAdminStats(){
+
+
+try{
+
+
+const snap = await getDocs(
+
+collection(
+db,
+"questions"
+)
+
+);
+
+
+
+let total = 0;
+
+let polity = 0;
+
+let history = 0;
+
+let science = 0;
+
+let tamilnadu = 0;
+
+
+
+
+
+snap.forEach((doc)=>{
+
+
+let data = doc.data();
+
+
+
+total++;
+
+
+
+
+
+if(data.subject === "Indian Polity"){
+
+polity++;
+
+}
+
+
+
+if(data.subject === "Indian History"){
+
+history++;
+
+}
+
+
+
+if(data.subject === "General Science"){
+
+science++;
+
+}
+
+
+
+if(data.subject === "Tamil Nadu GK"){
+
+tamilnadu++;
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+document.getElementById(
+"totalQuestions"
+).innerHTML = total;
+
+
+
+
+
+document.getElementById(
+"polityCount"
+).innerHTML = polity;
+
+
+
+
+
+document.getElementById(
+"historyCount"
+).innerHTML = history;
+
+
+
+
+
+document.getElementById(
+"scienceCount"
+).innerHTML = science;
+
+
+
+
+
+document.getElementById(
+"tnCount"
+).innerHTML = tamilnadu;
+
+
+
+
+
+console.log(
+"✅ Admin Stats Updated"
+);
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+"Stats Error",
+error
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+// LOAD STATS
+
+loadAdminStats();
