@@ -22,32 +22,44 @@ G THE GENIUS Profile
 <body>
 
 
-<!-- ================= HEADER ================= -->
+
+<!-- =========================
+HEADER
+========================= -->
 
 
 <header class="profile-header">
 
 
-<img 
+<img
+
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
 class="profile-logo"
+
+
 >
+
 
 
 <div>
 
+
 <h2>
+
 G THE GENIUS
+
 </h2>
 
 
 <p>
+
 Student Profile
+
 </p>
 
 
 </div>
-
 
 
 </header>
@@ -56,38 +68,48 @@ Student Profile
 
 
 
-<!-- ================= PROFILE CARD ================= -->
+
+
+
+<!-- =========================
+PROFILE CARD
+========================= -->
 
 
 <section class="profile-card">
 
 
-<div class="student-avatar">
 
-👤
+<img
 
-</div>
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="student-avatar"
+
+
+>
 
 
 
-<h2 id="studentName">
 
-Student Name
+<h2 id="profileName">
+
+Student
 
 </h2>
 
 
 
+
 <p>
 
-🎯 Preparing For:
+📍 
 
-<span id="examGoal">
+<span id="profileDistrict">
 
-TNUSRB
+-
 
 </span>
-
 
 </p>
 
@@ -95,14 +117,13 @@ TNUSRB
 
 <p>
 
-📍 District:
+🎯 Exam :
 
-<span id="district">
+<span id="profileExam">
 
--
+TNUSRB
 
 </span>
-
 
 </p>
 
@@ -114,7 +135,12 @@ TNUSRB
 
 
 
-<!-- ================= LEVEL CARD ================= -->
+
+
+
+<!-- =========================
+LEVEL SECTION
+========================= -->
 
 
 <section class="level-card">
@@ -122,27 +148,34 @@ TNUSRB
 
 <h2>
 
-⭐ Level
-
-<span id="level">
-
-1
-
-</span>
-
+🏅 Level System
 
 </h2>
 
 
 
-<div class="xp-info">
+<div class="level-info">
+
+
+<h1>
+
+Level 
+
+<span id="profileLevel">
+
+1
+
+</span>
+
+</h1>
+
 
 
 <p>
 
-XP:
+XP :
 
-<span id="xp">
+<span id="profileXP">
 
 0
 
@@ -152,27 +185,18 @@ XP:
 
 
 
-<p>
-
-Next Level:
-
-<span id="nextXP">
-
-100
-
-</span>
-
-</p>
-
-
 </div>
 
 
 
-<div class="xp-bar">
 
 
-<div id="xpProgress">
+
+<div class="xp-container">
+
+
+<div id="profileXPBar">
+
 
 </div>
 
@@ -184,62 +208,144 @@ Next Level:
 </section>
 
 
-<!-- ================= BADGE GALLERY ================= -->
+
+
+
+
+
+
+<!-- =========================
+STATISTICS BASE
+========================= -->
+
+
+<section class="stats-card">
+
+
+<h2>
+
+📊 My Statistics
+
+</h2>
+
+
+
+
+<div class="stats-grid">
+
+
+<div>
+
+
+<h2 id="totalTests">
+
+0
+
+</h2>
+
+
+<p>
+
+Tests
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<h2 id="totalScore">
+
+0
+
+</h2>
+
+
+<p>
+
+Score
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<h2 id="bestPercentage">
+
+0%
+
+</h2>
+
+
+<p>
+
+Best
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<script type="module" src="profile.js"></script>
+
+  <!-- =========================
+BADGE COLLECTION
+========================= -->
 
 
 <section class="badge-section">
 
 
 <h2>
+
 🏅 My Badges
+
 </h2>
 
 
-<div 
-id="badgeGallery"
-class="badge-gallery"
->
+
+
+<div id="profileBadges">
 
 
 <div class="badge-item">
 
-🥉
-
-<p>
-Beginner
-
-</p>
+⭐ Beginner
 
 </div>
 
 
 
-<div class="badge-item">
-
-🥈
-
-<p>
-Practice Star
-
-</p>
-
 </div>
 
-
-
-<div class="badge-item">
-
-🥇
-
-<p>
-Master
-
-</p>
-
-</div>
-
-
-</div>
 
 
 </section>
@@ -248,73 +354,95 @@ Master
 
 
 
-<!-- ================= PERFORMANCE ================= -->
 
 
-<section class="performance-section">
+
+<!-- =========================
+ACHIEVEMENT CARD
+========================= -->
+
+
+<section class="achievement-card">
 
 
 <h2>
-📊 Performance
+
+🎖 Achievements
+
 </h2>
 
 
 
-<div class="performance-grid">
+<div class="achievement-grid">
 
 
-<div class="stat-card">
+<div>
 
-<h3 id="totalPractice">
+
+<h1 id="completedTests">
 
 0
 
-</h3>
+</h1>
+
 
 <p>
-Practice
+
+Completed Tests
 
 </p>
+
 
 </div>
 
 
 
-<div class="stat-card">
 
-<h3 id="accuracy">
+<div>
+
+
+<h1 id="highestScore">
 
 0%
 
-</h3>
+</h1>
+
 
 <p>
-Accuracy
+
+Highest Score
 
 </p>
 
+
 </div>
 
 
 
-<div class="stat-card">
 
-<h3 id="mockTests">
+<div>
 
-0
 
-</h3>
+<h1 id="currentRank">
+
+-
+
+</h1>
+
 
 <p>
-Mock Tests
+
+Current Rank
 
 </p>
 
-</div>
-
-
 
 </div>
+
+
+
+</div>
+
 
 
 </section>
@@ -323,82 +451,19 @@ Mock Tests
 
 
 
-<!-- ================= PRACTICE HISTORY ================= -->
-
-
-<section class="history-section">
-
-
-<h2>
-📚 Practice History
-</h2>
 
 
 
-<div id="practiceHistory">
-
-
-<p>
-No History
-
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- ================= TEST HISTORY ================= -->
-
-
-<section class="history-section">
-
-
-<h2>
-📝 Test History
-</h2>
-
-
-
-<div id="testHistory">
-
-
-<p>
-No Tests Taken
-
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- ================= ACCOUNT ================= -->
+<!-- =========================
+ACCOUNT ACTION
+========================= -->
 
 
 <section class="account-card">
 
 
-<h2>
-⚙️ Account
-</h2>
+<button id="logoutBtn">
 
-
-
-<button 
-id="logoutBtn"
-class="logout-btn"
->
 
 🚪 Logout
 
@@ -412,7 +477,12 @@ class="logout-btn"
 
 
 
-<!-- ================= BOTTOM NAV ================= -->
+
+
+
+<!-- =========================
+BOTTOM NAVIGATION
+========================= -->
 
 
 <nav class="bottom-nav">
@@ -421,40 +491,52 @@ class="logout-btn"
 <a href="dashboard.html">
 
 🏠
+
 <br>
+
 Home
 
 </a>
 
 
 
+
 <a href="practice.html">
 
 📚
+
 <br>
+
 Practice
 
 </a>
 
 
 
+
 <a href="leaderboard.html">
 
 🏆
+
 <br>
-Leaderboard
+
+Rank
 
 </a>
 
 
 
-<a href="profile.html" class="active">
+
+<a href="profile.html">
 
 👤
+
 <br>
+
 Profile
 
 </a>
+
 
 
 </nav>
@@ -463,15 +545,43 @@ Profile
 
 
 
-<!-- ================= FOOTER ================= -->
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
 
 
 <footer class="footer">
 
 
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="footer-logo"
+
+
+>
+
+
+
 <h3>
+
 G THE GENIUS
+
 </h3>
+
+
+
+
+<p>
+
+All Government Exam Mock Test Platform
+
+</p>
+
 
 
 
@@ -483,11 +593,15 @@ G THE GENIUS
 
 
 
+
+
 <a href="https://t.me/gthegenius">
 
-📢 Telegram
+📢 Telegram Channel
 
 </a>
+
+
 
 
 
@@ -496,6 +610,8 @@ G THE GENIUS
 📧 Email
 
 </a>
+
+
 
 
 
@@ -510,11 +626,8 @@ All Rights Reserved.
 
 </footer>
 
-
-<script type="module" src="profile.js"></script>
-
-
 </body>
 
 
 </html>
+
