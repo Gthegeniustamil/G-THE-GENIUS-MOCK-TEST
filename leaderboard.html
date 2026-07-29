@@ -4,9 +4,12 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS Leaderboard</title>
+<title>
+G THE GENIUS Leaderboard
+</title>
 
 <link rel="stylesheet" href="leaderboard.css">
 
@@ -16,91 +19,474 @@
 <body>
 
 
-<div class="leader-container">
+<!-- HEADER -->
+
+<header class="leader-header">
 
 
-<h1>🏆 G THE GENIUS</h1>
+<img 
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="leader-logo"
+>
 
-<h2>Overall Leaderboard</h2>
+
+<div>
+
+<h2>
+G THE GENIUS
+</h2>
+
+<p>
+Student Ranking
+</p>
+
+</div>
 
 
-<div class="student-filter">
+</header>
 
-<select id="testFilter">
+
+
+
+
+<!-- MY RANK -->
+
+
+<section class="my-rank-card">
+
+
+<h2>
+🏆 My Rank
+</h2>
+
+
+<div class="rank-number">
+
+#<span id="myRank">
+
+0
+
+</span>
+
+</div>
+
+
+
+<p>
+
+⭐ Score:
+
+<span id="myScore">
+
+0
+
+</span>
+
+%
+
+</p>
+
+
+
+<p>
+
+📍 District Rank:
+
+#<span id="myDistrictRank">
+
+0
+
+</span>
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+<!-- FILTER -->
+
+
+<section class="filter-card">
+
+
+<h3>
+Filter Ranking
+</h3>
+
+
+<select id="examFilter">
+
 
 <option value="all">
-All Tests
+
+All Exams
+
 </option>
 
-<option value="daily">
-Daily Mock Test
+
+<option value="TNUSRB">
+
+TNUSRB
+
 </option>
 
-<option value="weekly">
-Weekly Mock Test
+
+<option value="TNPSC">
+
+TNPSC
+
 </option>
 
-<option value="monthly">
-Monthly Grand Test
-</option>
 
 </select>
 
 
-</div>
 
 
-<!-- OVERALL LEADERBOARD -->
-
-<div class="leader-header">
-
-<span class="rank-col">🏆 Rank</span>
-
-<span class="name-col">👤 Name</span>
-
-<span class="district-col">📍 District</span>
-
-<span class="mark-col">📝 Marks</span>
-
-</div>
-
-<div id="leaderList">
-
-Loading...
-
-</div>
+<select id="districtFilter">
 
 
-<!-- DISTRICT LEADERBOARD -->
+<option value="all">
 
-<h2>📍 District Leaderboard</h2>
+All District
 
-<div class="leader-header">
+</option>
 
-<span class="rank-col">🏆 Rank</span>
 
-<span class="name-col">👤 Name</span>
+</select>
 
-<span class="district-col">📍 District</span>
 
-<span class="mark-col">📝 Marks</span>
 
-</div>
+</section>
 
-<div id="districtRank">
 
-Loading...
 
-</div>
 
-<button onclick="location.href='dashboard.html'">
 
-🏠 Back Dashboard
+<!-- TOP 3 -->
 
-</button>
+
+<section class="top-rank">
+
+
+<h2>
+🔥 Top Performers
+</h2>
+
+
+<div id="topPlayers">
 
 
 </div>
+
+
+</section>
+
+<!-- =========================
+FULL RANKING
+========================= -->
+
+
+<section class="ranking-section">
+
+
+<h2>
+🏅 Overall Ranking
+</h2>
+
+
+
+<div id="leaderboardList">
+
+
+<!-- Dynamic Firebase Data -->
+
+
+<div class="rank-card">
+
+
+<div class="rank-position">
+
+🥇
+
+</div>
+
+
+<div class="rank-info">
+
+
+<h3>
+
+Student Name
+
+</h3>
+
+
+<p>
+
+📍 District
+
+</p>
+
+
+<p>
+
+🎯 Exam
+
+</p>
+
+
+</div>
+
+
+<div class="rank-score">
+
+
+<h3>
+
+95%
+
+</h3>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- =========================
+MY PERFORMANCE
+========================= -->
+
+
+<section class="performance-card">
+
+
+<h2>
+📊 My Performance
+</h2>
+
+
+
+<div class="performance-grid">
+
+
+<div>
+
+
+<h3 id="totalTests">
+
+0
+
+</h3>
+
+
+<p>
+Tests
+
+</p>
+
+
+</div>
+
+
+
+<div>
+
+
+<h3 id="bestScore">
+
+0%
+
+</h3>
+
+
+<p>
+Best Score
+
+</p>
+
+
+</div>
+
+
+
+
+<div>
+
+
+<h3 id="totalXP">
+
+0
+
+</h3>
+
+
+<p>
+XP
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- =========================
+BOTTOM NAV
+========================= -->
+
+
+<nav class="bottom-nav">
+
+
+<a href="dashboard.html">
+
+
+🏠
+
+<br>
+
+Home
+
+
+</a>
+
+
+
+<a href="practice.html">
+
+
+📚
+
+<br>
+
+Practice
+
+
+</a>
+
+
+
+
+<a href="leaderboard.html" class="active">
+
+
+🏆
+
+<br>
+
+Leaderboard
+
+
+</a>
+
+
+
+
+<a href="profile.html">
+
+
+👤
+
+<br>
+
+Profile
+
+
+</a>
+
+
+
+</nav>
+
+
+
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
+
+
+<footer class="footer">
+
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+
+
+<a href="https://youtube.com/@gthegeniustamil">
+
+▶ YouTube Channel
+
+</a>
+
+
+
+
+<a href="https://t.me/gthegenius">
+
+📢 Telegram
+
+</a>
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+📧 Email
+
+</a>
+
+
+
+
+<p>
+
+© 2026 G THE GENIUS.
+All Rights Reserved.
+
+</p>
+
+
+</footer>
+  
 
 
 
