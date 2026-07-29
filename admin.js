@@ -19,7 +19,116 @@ import {
 const saveButton = document.getElementById("saveQuestion");
 const logoutBtn = document.getElementById("logoutBtn");
 const uploadBtn = document.getElementById("uploadBtn");
+// ================= SUBJECT TOPIC SYSTEM =================
 
+const subjectSelect = document.getElementById("subject");
+const topicSelect = document.getElementById("topic");
+
+
+const topics = {
+
+"Indian Polity":[
+"Constitution",
+"Fundamental Rights",
+"Parliament",
+"President",
+"Governor",
+"Judiciary"
+],
+
+
+"Indian History":[
+"Ancient India",
+"Medieval India",
+"Modern India",
+"Freedom Struggle"
+],
+
+
+"Indian Geography":[
+"Physical Geography",
+"Indian Rivers",
+"Climate",
+"Soil"
+],
+
+
+"Science":[
+"Physics",
+"Chemistry",
+"Biology",
+"General Science"
+],
+
+
+"Psychology":[
+"Memory",
+"Concentration",
+"Confidence",
+"Stress Management"
+],
+
+
+"Physical Training":[
+"Running",
+"Long Jump",
+"High Jump",
+"Rope Climbing",
+"Endurance"
+],
+
+
+"Current Affairs":[
+"National",
+"International",
+"Sports",
+"Awards"
+]
+
+};
+
+
+
+// Subject Change
+
+if(subjectSelect){
+
+subjectSelect.onchange = function(){
+
+let selected = this.value;
+
+
+topicSelect.innerHTML =
+`
+<option value="">
+📂 Select Topic
+</option>
+`;
+
+
+if(topics[selected]){
+
+topics[selected].forEach(topic=>{
+
+
+topicSelect.innerHTML +=
+`
+<option value="${topic}">
+${topic}
+</option>
+`;
+
+
+});
+
+
+}
+
+
+};
+
+
+}
 // ================= SAVE SINGLE QUESTION =================
 
 saveButton.onclick = async function () {
