@@ -168,112 +168,6 @@ Tamil Nadu GK
 
 
 
-<!-- =========================
-ADD QUESTION CARD
-========================= -->
-
-
-<section class="admin-card">
-
-
-<h2>
-
-➕ Add Single Question
-
-</h2>
-
-
-
-
-
-<!-- SUBJECT -->
-
-
-<label>
-
-Subject
-
-</label>
-
-
-
-<select id="subject">
-
-
-<option value="Indian Polity">
-
-Indian Polity
-
-</option>
-
-
-<option value="Indian History">
-
-Indian History
-
-</option>
-
-
-<option value="Geography">
-
-Geography
-
-</option>
-
-
-<option value="General Science">
-
-General Science
-
-</option>
-
-
-<option value="Tamil Nadu GK">
-
-Tamil Nadu GK
-
-</option>
-
-
-<option value="Current Affairs">
-
-Current Affairs
-
-</option>
-
-
-
-</select>
-
-
-
-
-
-
-
-
-<!-- TOPIC -->
-
-
-<label>
-
-Topic
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="topic"
-
-placeholder="Example: Fundamental Rights"
-
->
-
-
 
 
 
@@ -499,30 +393,115 @@ Add Question
 <!-- =========================
 BULK UPLOAD SECTION
 ========================= -->
-
-
 <section class="bulk-card">
 
-
 <h2>
-
 📂 Bulk Question Upload
-
 </h2>
 
 
+<label>
+Subject
+</label>
+
+<select id="bulkSubject">
+
+<option>Indian Polity</option>
+<option>Indian History</option>
+<option>Geography</option>
+<option>General Science</option>
+<option>Tamil Nadu GK</option>
+<option>Current Affairs</option>
+<option>Economics</option>
+<option>Physics</option>
+<option>Chemistry</option>
+<option>Biology</option>
+<option>Computer Science</option>
+<option>Aptitude</option>
+<option>Reasoning</option>
+<option>Tamil</option>
+<option>English</option>
+
+</select>
+
+
+
+<label>
+Topic
+</label>
+
+<input
+
+id="bulkTopic"
+
+placeholder="Example: Fundamental Rights"
+
+>
+
+
+
+
+<label>
+Paste Questions
+</label>
+
+
+<textarea
+
+id="bulkText"
+
+placeholder="Paste questions here..."
+
+></textarea>
+
+
+
+
+
+<button id="bulkUploadBtn">
+
+🚀 Upload Questions
+
+</button>
+
+
+
+
+<div class="upload-report">
+
+<h3>
+📊 Upload Report
+</h3>
 
 
 <p>
-
-JSON file மூலம் 100 / 500 / 1000 Questions upload செய்யலாம்
-
+Total :
+<span id="bulkTotal">0</span>
 </p>
 
 
+<p>
+✅ Added :
+<span id="addedCount">0</span>
+</p>
 
 
+<p>
+⚠️ Skipped :
+<span id="skippedCount">0</span>
+</p>
 
+
+<p>
+❌ Failed :
+<span id="failedCount">0</span>
+</p>
+
+
+</div>
+
+
+</section>
 
 
 <!-- SUBJECT FILTER -->
