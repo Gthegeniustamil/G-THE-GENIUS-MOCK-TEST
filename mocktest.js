@@ -1277,87 +1277,42 @@ return correct;
 // =========================
 // SUBMIT BUTTON
 // =========================
+
+
+
+
+
+
+
+
 async function submitTest(){
 
 alert("Submit Working");
 
 clearInterval(timer);
 
-...
-}
+let score = calculateScore();
 
+await saveResult(score);
+
+alert(
+"🎉 Test Completed\n\n" +
+"Score : " +
+score +
+"/" +
+testQuestions.length
+);
+
+window.location.href = "result.html";
+
+}
 const submitBtn = document.getElementById("submitBtn");
 
 if (submitBtn) {
-
     submitBtn.onclick = async () => {
-
         await submitTest();
-
     };
-
-  }
-
-
-
-
-
-
-
-
-const confirmSubmit =
-
-document.getElementById(
-"confirmSubmit"
-);
-
-
-
-if(confirmSubmit){
-
-
-confirmSubmit.onclick = ()=>{
-
-
-submitTest();
-
-
-};
-
-
 }
-
-
-
-
-
-
-
-const cancelSubmit =
-
-document.getElementById(
-"cancelSubmit"
-);
-
-
-
-if(cancelSubmit){
-
-
-cancelSubmit.onclick = ()=>{
-
-
-document.getElementById(
-"submitConfirm"
-).style.display="none";
-
-
-};
-
-
-}
-
-
 // =========================
 // SAVE RESULT FIREBASE
 // =========================
@@ -1543,3 +1498,4 @@ console.log(
 "✅ G THE GENIUS MOCK TEST READY"
 
 );
+alert("MockTest JS Loaded");
