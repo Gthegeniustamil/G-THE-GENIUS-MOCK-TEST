@@ -1,1 +1,335 @@
+/* =========================
+   G THE GENIUS PRACTICE
+   PREMIUM UI
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(180deg,#081229,#0d1b3d);
+    color:#fff;
+    min-height:100vh;
+    padding-bottom:90px;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:999;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 18px;
+    background:rgba(8,18,41,.95);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(255,215,0,.25);
+}
+
+.logo-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #FFD700;
+    background:#fff;
+    padding:2px;
+    box-shadow:0 0 18px rgba(255,215,0,.6);
+}
+
+.logo-box h2{
+    color:#FFD700;
+    font-size:20px;
+    font-weight:700;
+}
+
+.logo-box p{
+    color:#ddd;
+    font-size:12px;
+}
+
+.profile-icon{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    border:2px solid #FFD700;
+    background:rgba(255,255,255,.08);
+}
+
+/* =========================
+WELCOME CARD
+========================= */
+
+.welcome-card{
+    margin:18px;
+    padding:18px;
+    border-radius:20px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,215,0,.25);
+    backdrop-filter:blur(12px);
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+
+.welcome-card h2{
+    color:#FFD700;
+    margin-bottom:8px;
+}
+
+.welcome-card p{
+    color:#eee;
+    font-size:14px;
+    line-height:1.6;
+}
+
+/* =========================
+SECTION TITLE
+========================= */
+
+.section-title{
+    margin:20px 18px 12px;
+    color:#FFD700;
+    font-size:18px;
+    font-weight:600;
+}
+
+/* =========================
+SUBJECT GRID
+========================= */
+
+.subject-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    padding:18px;
+}
+
+.subject-card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,215,0,0.25);
+    border-radius:18px;
+    padding:20px 12px;
+    text-align:center;
+    backdrop-filter:blur(12px);
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    transition:.3s;
+    cursor:pointer;
+}
+
+.subject-card:hover,
+.subject-card:active{
+    transform:translateY(-6px) scale(1.03);
+    border-color:#FFD700;
+    box-shadow:0 0 20px rgba(255,215,0,.45);
+}
+
+.subject-card{
+    font-size:34px;
+}
+
+.subject-card span{
+    display:block;
+    margin-top:12px;
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    line-height:20px;
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.btn{
+    width:100%;
+    background:#FFD700;
+    color:#081229;
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:scale(1.03);
+}
+
+.btn:active{
+    transform:scale(.97);
+}
+
+/* =========================
+BOTTOM NAVIGATION
+========================= */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:70px;
+    background:rgba(8,18,41,.96);
+    backdrop-filter:blur(15px);
+    border-top:1px solid rgba(255,215,0,.25);
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    z-index:999;
+}
+
+.bottom-nav a{
+    text-decoration:none;
+    color:#ffffff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    transition:.3s;
+}
+
+.bottom-nav a span{
+    font-size:24px;
+    margin-bottom:3px;
+}
+
+.bottom-nav a.active{
+    color:#FFD700;
+}
+
+.bottom-nav a:hover{
+    color:#FFD700;
+}
+
+/* =========================
+FOOTER
+========================= */
+
+.footer{
+    margin:35px 18px 100px;
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,215,0,.20);
+    text-align:center;
+}
+
+.footer h3{
+    color:#FFD700;
+    margin-bottom:12px;
+}
+
+.footer a{
+    display:block;
+    color:#ffffff;
+    text-decoration:none;
+    margin:8px 0;
+    transition:.3s;
+}
+
+.footer a:hover{
+    color:#FFD700;
+}
+
+.footer p{
+    margin-top:15px;
+    color:#bbbbbb;
+    font-size:13px;
+}
+
+/* =========================
+SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+    width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#FFD700;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+    background:#081229;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+.subject-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.logo{
+    width:55px;
+    height:55px;
+}
+
+.logo-box h2{
+    font-size:18px;
+}
+
+.logo-box p{
+    font-size:11px;
+}
+
+.subject-card{
+    padding:18px 10px;
+}
+
+.subject-card span{
+    font-size:13px;
+}
+
+}
+
+@media(max-width:420px){
+
+.subject-grid{
+    gap:12px;
+}
+
+.subject-card{
+    font-size:30px;
+}
+
+.subject-card span{
+    font-size:12px;
+}
+
+.bottom-nav{
+    height:68px;
+}
+
+.bottom-nav a span{
+    font-size:22px;
+}
+
+  }
 
