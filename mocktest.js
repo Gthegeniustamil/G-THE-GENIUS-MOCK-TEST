@@ -1427,14 +1427,6 @@ wrong++;
 
 
 
-let percentage = Math.round(
-
-(score / testQuestions.length) * 100
-
-);
-
-
-
 
 
 
@@ -1484,7 +1476,6 @@ total:testQuestions.length,
 
 
 
-percentage:percentage,
 
 
 
