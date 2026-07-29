@@ -228,6 +228,133 @@ logoutBtn.onclick = async function () {
 
 };
 
+// ================= BULK SUBJECT TOPIC =================
+
+const bulkSubject =
+document.getElementById("bulkSubject");
+
+const bulkTopic =
+document.getElementById("bulkTopic");
+
+
+const bulkTopics = {
+
+
+"General Knowledge":[
+"Indian GK",
+"World GK",
+"Important Days",
+"Books and Authors",
+"Awards",
+"Sports",
+"States and Capitals"
+],
+
+
+"Indian Polity":[
+"Constitution",
+"Fundamental Rights",
+"Parliament",
+"President",
+"Governor",
+"Judiciary"
+],
+
+
+"Indian History":[
+"Ancient India",
+"Medieval India",
+"Modern India",
+"Freedom Struggle"
+],
+
+
+"Indian Geography":[
+"Physical Geography",
+"Rivers",
+"Climate",
+"Soil"
+],
+
+
+"Science":[
+"Physics",
+"Chemistry",
+"Biology",
+"General Science"
+],
+
+
+"Psychology":[
+"Memory",
+"Concentration",
+"Confidence",
+"Stress Management"
+],
+
+
+"Physical Training":[
+"Running",
+"Long Jump",
+"High Jump",
+"Rope Climbing"
+],
+
+
+"Current Affairs":[
+"National",
+"International",
+"Sports",
+"Awards"
+]
+
+};
+
+
+
+
+if(bulkSubject){
+
+
+bulkSubject.onchange=function(){
+
+
+let selected=this.value;
+
+
+bulkTopic.innerHTML=
+`
+<option value="">
+📂 Select Topic
+</option>
+`;
+
+
+if(bulkTopics[selected]){
+
+
+bulkTopics[selected].forEach(topic=>{
+
+
+bulkTopic.innerHTML +=
+`
+<option value="${topic}">
+${topic}
+</option>
+`;
+
+
+});
+
+
+}
+
+
+};
+
+
+}
+
 // ================= BULK UPLOAD =================
 
 uploadBtn.onclick = async function () {
@@ -343,7 +470,10 @@ uploadBtn.onclick = async function () {
 
             explanation:
               q.explanation || "",
-
+            
+subject: selectedSubject,
+topic: selectedTopic
+  
             createdAt:
               serverTimestamp()
 
