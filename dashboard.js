@@ -1,504 +1,277 @@
-import { db, auth } from "./firebase-config.js";
+// =========================
+// G THE GENIUS DASHBOARD JS
+// PART 1
+// =========================
+
+
+import { auth, db } from "./firebase-config.js";
+
 
 import {
+
 doc,
-getDoc,
-collection,
-getDocs,
-query,
-where
+getDoc
+
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// =========================
-// LEVEL SYSTEM
-// =========================
-
-function calculateLevel(xp){
-
-return Math.floor(xp / 100) + 1;
-
-}
-
 
 
 // =========================
-// LOAD STUDENT PROFILE
+// LOAD STUDENT DATA
 // =========================
 
 
-async function loadProfile(){
+async function loadStudentData(){
 
-
-try{
 
 
 const user =
+
 auth.currentUser;
+
 
 
 if(!user){
 
-console.log("User not login");
-
-return;
-
-}
-
-
-
-const profileRef =
-doc(
-db,
-"students",
-user.uid
-);
-
-
-
-const snap =
-await getDoc(profileRef);
-
-
-
-if(!snap.exists()){
-
-return;
-
-}
-
-
-
-const data =
-snap.data();
-
-
-
-// Name
-
-const studentName =
-document.getElementById(
-"studentName"
-);
-
-
-if(studentName){
-
-studentName.innerHTML =
-data.name || "Student";
-
-}
-
-
-
-// Exam Goal
-
-const examGoal =
-document.getElementById(
-"examGoal"
-);
-
-
-if(examGoal){
-
-examGoal.innerHTML =
-data.examGoal || "TNUSRB";
-
-}
-
-
-
-
-// XP
-
-let xp =
-data.xp || 0;
-
-
-
-let level =
-calculateLevel(xp);
-
-
-
-document.getElementById(
-"xp"
-).innerHTML = xp;
-
-
-
-document.getElementById(
-"level"
-).innerHTML = level;
-
-
-
-// Next XP
-
-let nextXP =
-(level*100);
-
-
-
-document.getElementById(
-"nextXP"
-).innerHTML =
-nextXP;
-
-
-
-
-// Progress
-
-
-let progress =
-(xp/nextXP)*100;
-
-
-
-const bar =
-document.getElementById(
-"xpProgress"
-);
-
-
-
-if(bar){
-
-bar.style.width =
-progress+"%";
-
-}
-
-
-
-
-}
-
-
-catch(error){
 
 console.log(
-"Profile Error",
-error
+"User Not Login"
 );
-
-}
-
-
-
-}
-
-
-
-// =========================
-// LOAD PRACTICE STATS
-// =========================
-
-
-function loadStats(){
-
-
-const practice =
-localStorage.getItem(
-"totalPractice"
-)||0;
-
-
-const accuracy =
-localStorage.getItem(
-"accuracy"
-)||0;
-
-
-
-const practiceBox =
-document.getElementById(
-"practiceCount"
-);
-
-
-
-const accuracyBox =
-document.getElementById(
-"accuracyBox"
-);
-
-
-
-if(practiceBox){
-
-practiceBox.innerHTML =
-practice;
-
-}
-
-
-
-if(accuracyBox){
-
-accuracyBox.innerHTML =
-accuracy+"%";
-
-}
-
-
-
-}
-
-
-// =========================
-// INIT
-// =========================
-
-
-auth.onAuthStateChanged(
-(user)=>{
-
-
-if(user){
-
-loadProfile();
-
-loadStats();
-
-}
-
-
-});
-
-// =========================
-// CONTINUE PRACTICE LOAD
-// =========================
-
-
-function loadContinuePractice(){
-
-
-const data =
-localStorage.getItem(
-"continuePractice"
-);
-
-
-
-const subject =
-document.getElementById(
-"continueSubject"
-);
-
-
-const topic =
-document.getElementById(
-"continueTopic"
-);
-
-
-const question =
-document.getElementById(
-"continueQuestion"
-);
-
-
-
-if(!data){
-
-
-if(subject)
-subject.innerHTML="-";
 
 
 return;
 
-}
-
-
-
-const practice =
-JSON.parse(data);
-
-
-
-if(subject){
-
-subject.innerHTML =
-practice.subject || "-";
-
-}
-
-
-if(topic){
-
-topic.innerHTML =
-practice.topic || "-";
-
-}
-
-
-if(question){
-
-question.innerHTML =
-Number(practice.question)+1;
 
 }
 
 
 
-}
-
-
-
-
-
-// =========================
-// BADGE LOAD
-// =========================
-
-
-function loadBadges(){
-
-
-let badges =
-JSON.parse(
-localStorage.getItem(
-"badges"
-)
-)||[];
-
-
-
-const badgeCount =
-document.getElementById(
-"badgeCount"
-);
-
-
-
-const latestBadge =
-document.getElementById(
-"latestBadge"
-);
-
-
-
-if(badgeCount){
-
-badgeCount.innerHTML =
-badges.length;
-
-}
-
-
-
-if(latestBadge){
-
-
-if(badges.length>0){
-
-
-latestBadge.innerHTML =
-badges[badges.length-1];
-
-
-}
-else{
-
-
-latestBadge.innerHTML =
-"No Badge Yet";
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-// =========================
-// LOAD RANK
-// =========================
-
-
-async function loadRank(){
 
 
 try{
 
 
-const user =
-auth.currentUser;
+const userRef =
 
+doc(
 
-if(!user) return;
+db,
 
+"users",
 
+user.uid
 
-const resultsSnap =
-await getDocs(
-collection(db,"results")
 );
 
 
 
-let tamilRank=1;
+
+
+const snap =
+
+await getDoc(userRef);
 
 
 
-let districtRank=1;
-
-
-
-let myScore=0;
-
-
-
-resultsSnap.forEach(doc=>{
-
-
-const data =
-doc.data();
-
-
-
-if(data.studentId === user.uid){
-
-
-myScore =
-data.percentage || 0;
-
-
-}
-
-
-
-});
-
-
-
-// Simple Rank Calculation
-
-resultsSnap.forEach(doc=>{
-
-
-const data =
-doc.data();
 
 
 if(
-(data.percentage || 0)
->
-myScore
+snap.exists()
 ){
 
-tamilRank++;
+
+
+let data = snap.data();
+
+
+
+
+
+document.getElementById(
+"studentName"
+).innerHTML =
+
+data.name || "Student";
+
+
+
+
+
+document.getElementById(
+"studentDistrict"
+).innerHTML =
+
+data.district || "-";
+
+
+
+
+
+localStorage.setItem(
+
+"studentName",
+
+data.name || "Student"
+
+);
+
+
+
+
+
+localStorage.setItem(
+
+"district",
+
+data.district || "-"
+
+);
+
+
+
+}
+
+
+
+
+
+
+loadXP();
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+
+"Dashboard Error",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// XP LEVEL SYSTEM
+// =========================
+
+
+function loadXP(){
+
+
+
+let xp =
+
+Number(
+
+localStorage.getItem(
+"xp"
+
+)
+
+)||0;
+
+
+
+
+
+
+let level =
+
+Math.floor(
+xp / 100
+)+1;
+
+
+
+
+
+
+let levelXP =
+
+xp % 100;
+
+
+
+
+
+
+document.getElementById(
+"userXP"
+).innerHTML =
+
+xp;
+
+
+
+
+
+document.getElementById(
+"userLevel"
+).innerHTML =
+
+level;
+
+
+
+
+
+
+document.getElementById(
+"xpProgress"
+).style.width =
+
+levelXP+"%";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// AUTH CHECK
+// =========================
+
+
+auth.onAuthStateChanged(
+
+(user)=>{
+
+
+
+if(user){
+
+
+loadStudentData();
+
 
 }
 
@@ -508,119 +281,254 @@ tamilRank++;
 
 
 
-const stateRank =
-document.getElementById(
-"stateRank"
+
+
+
+console.log(
+
+"✅ G THE GENIUS DASHBOARD READY"
+
+);
+
+// =========================
+// TEST ACCESS CHECK
+// =========================
+
+
+function checkTestStatus(){
+
+
+
+let attempts =
+
+JSON.parse(
+
+localStorage.getItem(
+"mockAttempts"
+
+)
+
+)|| {};
+
+
+
+let today =
+
+new Date()
+.toLocaleDateString();
+
+
+
+
+
+
+// DAILY STATUS
+
+
+let dailyBtn =
+
+document.querySelector(
+".daily button"
 );
 
 
 
-if(stateRank){
+if(dailyBtn){
 
-stateRank.innerHTML =
-tamilRank;
+
+
+if(
+
+attempts.dailyDate === today
+
+&&
+
+attempts.daily >= 5
+
+){
+
+
+
+dailyBtn.innerHTML =
+
+"Completed ✅";
+
+
+
+dailyBtn.disabled = true;
+
+
+
+}
+
+
 
 }
 
 
 
 
-const district =
-document.getElementById(
-"districtRank"
+
+
+
+
+// WEEKLY STATUS
+
+
+let weeklyBtn =
+
+document.querySelector(
+".weekly button"
 );
+
+
+
+if(weeklyBtn){
+
+
+
+if(
+
+attempts.weekly >= 3
+
+){
+
+
+
+weeklyBtn.innerHTML =
+
+"Completed ✅";
+
+
+
+weeklyBtn.disabled = true;
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// LOGOUT
+// =========================
+
+
+function logoutUser(){
+
+
+
+auth.signOut()
+
+.then(()=>{
+
+
+localStorage.clear();
+
+
+
+window.location.href =
+
+"index.html";
+
+
+
+})
+
+.catch(error=>{
+
+
+console.log(
+"Logout Error",
+error
+);
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// PROFILE SYNC
+// =========================
+
+
+function syncProfile(){
+
+
+
+let name =
+
+localStorage.getItem(
+"studentName"
+);
+
+
+
+let district =
+
+localStorage.getItem(
+"district"
+);
+
+
+
+
+
+if(name){
+
+
+document.getElementById(
+"studentName"
+).innerHTML =
+
+name;
+
+
+
+}
+
+
 
 
 
 if(district){
 
-district.innerHTML =
-districtRank;
-
-}
 
 
+document.getElementById(
+"studentDistrict"
+).innerHTML =
 
-}
+district;
 
-catch(error){
-
-console.log(
-"Rank Error",
-error
-);
-
-}
-
-
-}
-
-
-
-
-
-// =========================
-// TEST BUTTON LINKS
-// =========================
-
-
-document.addEventListener(
-"click",
-function(e){
-
-
-if(
-e.target.innerText.includes(
-"Start"
-)
-){
-
-
-let card =
-e.target.closest(
-".test-card"
-);
-
-
-
-if(!card) return;
-
-
-
-if(
-card.classList.contains(
-"daily"
-)
-){
-
-location.href =
-"mocktest.html?type=daily";
-
-
-}
-
-
-else if(
-card.classList.contains(
-"weekly"
-)
-){
-
-location.href =
-"mocktest.html?type=weekly";
-
-
-}
-
-
-else if(
-card.classList.contains(
-"monthly"
-)
-){
-
-location.href =
-"mocktest.html?type=monthly";
 
 
 }
@@ -630,8 +538,6 @@ location.href =
 }
 
 
-
-});
 
 
 
@@ -639,263 +545,43 @@ location.href =
 
 
 // =========================
-// DAILY MISSION
+// START DASHBOARD
 // =========================
 
 
-function updateMission(){
+const oldLoadStudentData =
 
-
-let practice =
-Number(
-localStorage.getItem(
-"totalPractice"
-)
-)||0;
+loadStudentData;
 
 
 
-const mission =
-document.querySelector(
-".mission-card"
-);
+loadStudentData = async function(){
 
 
 
-if(!mission) return;
+await oldLoadStudentData();
 
 
 
-if(practice>=20){
-
-
-mission.innerHTML +=
-
-`
-
-<p>
-🎉 Today's Practice Mission Completed!
-</p>
-
-`;
+checkTestStatus();
 
 
 
-}
+syncProfile();
 
-
-
-}
-
-
-
-
-
-// =========================
-// DASHBOARD START
-// =========================
-
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-loadContinuePractice();
-
-
-loadBadges();
-
-
-updateMission();
-
-
-
-});
-
-
-auth.onAuthStateChanged(
-(user)=>{
-
-
-if(user){
-
-loadRank();
-
-}
-
-
-});
-
-// =========================
-// LOGOUT SYSTEM
-// =========================
-
-
-const profileIcon =
-document.querySelector(
-".profile-icon"
-);
-
-
-
-if(profileIcon){
-
-
-profileIcon.onclick = function(){
-
-
-location.href =
-"profile.html";
 
 
 };
 
 
-}
 
 
 
 
-
-// =========================
-// CONTINUE BUTTON
-// =========================
-
-
-const continueBtn =
-document.querySelector(
-".continue-card .btn"
-);
-
-
-
-if(continueBtn){
-
-
-continueBtn.onclick=function(){
-
-
-location.href =
-"practice.html";
-
-
-};
-
-
-}
-
-
-
-
-
-// =========================
-// BOTTOM NAV ACTIVE
-// =========================
-
-
-const navLinks =
-document.querySelectorAll(
-".bottom-nav a"
-);
-
-
-
-navLinks.forEach(link=>{
-
-
-link.addEventListener(
-"click",
-function(){
-
-
-navLinks.forEach(item=>{
-
-item.classList.remove(
-"active"
-);
-
-});
-
-
-this.classList.add(
-"active"
-);
-
-
-});
-
-
-});
-
-
-
-
-
-// =========================
-// AUTO PROFILE REFRESH
-// =========================
-
-
-setInterval(()=>{
-
-
-if(auth.currentUser){
-
-
-loadProfile();
-
-
-loadStats();
-
-
-loadBadges();
-
-
-}
-
-
-
-},30000);
-
-
-
-
-
-
-// =========================
-// SECURITY CHECK
-// =========================
-
-
-auth.onAuthStateChanged(
-(user)=>{
-
-
-if(!user){
-
-
-location.href =
-"login.html";
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-// =========================
-// APP READY
-// =========================
 
 
 console.log(
-"✅ G THE GENIUS DASHBOARD READY"
-);
 
+"✅ Dashboard Final Integration Completed"
+
+);
