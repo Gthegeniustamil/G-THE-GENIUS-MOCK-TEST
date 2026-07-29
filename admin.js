@@ -228,16 +228,21 @@ logoutBtn.onclick = async function () {
 
 };
 
+
 // ================= BULK SUBJECT TOPIC =================
 
-const bulkSubject = 
+
+const bulkSubject =
 document.getElementById("bulkSubject");
 
-const bulkTopic = 
+
+const bulkTopic =
 document.getElementById("bulkTopic");
 
 
+
 const bulkTopics = {
+
 
 "General Knowledge":[
 "Indian GK",
@@ -246,6 +251,7 @@ const bulkTopics = {
 "Books and Authors",
 "Awards",
 "Sports",
+"Organizations",
 "States and Capitals",
 "National Symbols"
 ],
@@ -254,7 +260,6 @@ const bulkTopics = {
 "Indian Polity":[
 "Constitution",
 "Fundamental Rights",
-"Directive Principles",
 "Parliament",
 "President",
 "Governor",
@@ -274,8 +279,7 @@ const bulkTopics = {
 "Physical Geography",
 "Rivers",
 "Climate",
-"Soil",
-"Natural Resources"
+"Soil"
 ],
 
 
@@ -283,8 +287,7 @@ const bulkTopics = {
 "Banking",
 "Budget",
 "Tax",
-"Finance",
-"Economy Basics"
+"Finance"
 ],
 
 
@@ -300,16 +303,14 @@ const bulkTopics = {
 "Motion",
 "Force",
 "Energy",
-"Electricity",
-"Light"
+"Electricity"
 ],
 
 
 "Chemistry":[
 "Atoms",
 "Elements",
-"Acids and Bases",
-"Chemical Reactions"
+"Acids and Bases"
 ],
 
 
@@ -365,8 +366,7 @@ const bulkTopics = {
 "National",
 "International",
 "Sports",
-"Awards",
-"Appointments"
+"Awards"
 ],
 
 
@@ -382,8 +382,7 @@ const bulkTopics = {
 "Running",
 "Long Jump",
 "High Jump",
-"Rope Climbing",
-"Endurance"
+"Rope Climbing"
 ],
 
 
@@ -404,29 +403,40 @@ const bulkTopics = {
 
 
 
-// Subject Change Event
 
-if(bulkSubject){
-
-bulkSubject.onchange = function(){
-
-let selected = this.value;
+// Topic Load
 
 
-bulkTopic.innerHTML = `
+if(bulkSubject && bulkTopic){
+
+
+bulkSubject.addEventListener(
+"change",
+()=>{
+
+
+let subject =
+bulkSubject.value;
+
+
+bulkTopic.innerHTML =
+`
 <option value="">
-📂 Select Topic
+Select Topic
 </option>
 `;
 
 
-if(bulkTopics[selected]){
+
+if(bulkTopics[subject]){
 
 
-bulkTopics[selected].forEach(function(topic){
+bulkTopics[subject].forEach(
+(topic)=>{
 
 
-bulkTopic.innerHTML += `
+bulkTopic.innerHTML +=
+`
 <option value="${topic}">
 ${topic}
 </option>
@@ -439,10 +449,253 @@ ${topic}
 }
 
 
+});
+
+
+}
+
+
+
+// ================= BULK UPLOAD =================
+
+
+const uploadBtn =
+document.getElementById("uploadBtn");
+
+
+
+if(uploadBtn){
+
+
+uploadBtn.onclick = async function(){
+
+
+
+const selectedSubject =
+bulkSubject.value;
+
+
+const selectedTopic =
+bulkTopic.value;
+
+
+const bulkJson =
+document.getElementById("bulkJson").value.trim();
+
+
+
+if(
+selectedSubject==="" ||
+selectedTopic===""
+){
+
+alert(
+"Select Subject and Topic"
+);
+
+return;
+
+}
+
+
+
+if(bulkJson===""){
+
+alert(
+"Paste JSON Questions"
+);
+
+return;
+
+}
+
+
+
+try{
+
+
+const questions =
+JSON.parse(bulkJson);
+
+
+
+const snapshot =
+await getDocs(
+collection(db,"questions")
+);
+
+
+
+let existing =
+new Set();
+
+
+
+snapshot.forEach(doc=>{
+
+
+let data =
+doc.data();
+
+
+if(data.question){
+
+existing.add(
+data.question
+.trim()
+.toLowerCase()
+);
+
+
+}
+
+
+});
+
+
+
+let added=0;
+let duplicate=0;
+let failed=0;
+
+
+
+for(let q of questions){
+
+
+
+if(
+!q.question ||
+!q.options ||
+q.options.length!==4
+){
+
+failed++;
+
+continue;
+
+}
+
+
+
+let key =
+q.question
+.trim()
+.toLowerCase();
+
+
+
+if(existing.has(key)){
+
+
+duplicate++;
+
+continue;
+
+
+}
+
+
+
+await addDoc(
+collection(db,"questions"),
+{
+
+
+question:
+q.question.trim(),
+
+
+options:
+q.options,
+
+
+answer:
+q.answer,
+
+
+explanation:
+q.explanation || "",
+
+
+
+subject:
+selectedSubject,
+
+
+
+topic:
+selectedTopic,
+
+
+
+createdAt:
+serverTimestamp()
+
+
+}
+
+);
+
+
+
+existing.add(key);
+
+
+added++;
+
+
+}
+
+
+
+
+document.getElementById(
+"uploadStatus"
+).innerHTML = `
+
+
+<h3>✅ Upload Completed</h3>
+
+<p>Added : ${added}</p>
+
+<p>Duplicate : ${duplicate}</p>
+
+<p>Failed : ${failed}</p>
+
+
+`;
+
+
+
+document.getElementById(
+"bulkJson"
+).value="";
+
+
+
+}
+
+catch(error){
+
+
+console.error(error);
+
+
+alert(
+"Invalid JSON Format"
+);
+
+
+}
+
+
+
 };
 
 
 }
+
 
 
 // ================= BULK UPLOAD =================
