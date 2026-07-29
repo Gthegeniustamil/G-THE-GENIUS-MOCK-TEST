@@ -9,17 +9,14 @@ import { db } from "./firebase-config.js";
 
 import {
 
+import {
+
 collection,
 addDoc,
 serverTimestamp,
-getDocs,
-deleteDoc,
-doc,
-updateDoc
+getDocs
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
 
 // =========================
 // ADD SINGLE QUESTION
@@ -337,92 +334,310 @@ console.log(
 
 );
 
-// =========================
-// BULK QUESTION UPLOAD
-// PART 2
-// =========================
-
-
-
-let bulkQuestions = [];
-
-
-
 
 // =========================
-// READ JSON FILE
+// BULK PASTE UPLOAD
+// DUPLICATE CHECK SYSTEM
 // =========================
 
 
-const jsonFile =
-
-document.getElementById(
-"jsonFile"
-);
+const bulkUploadBtn = 
+document.getElementById("bulkUploadBtn");
 
 
 
-if(jsonFile){
+if(bulkUploadBtn){
+
+
+bulkUploadBtn.onclick = async ()=>{
+
+
+let subject = 
+document.getElementById("bulkSubject").value;
 
 
 
-jsonFile.onchange = (event)=>{
-
-
-let file =
-
-event.target.files[0];
+let topic = 
+document.getElementById("bulkTopic").value;
 
 
 
-if(!file) return;
-
-
-
-
-let reader =
-
-new FileReader();
+let text =
+document.getElementById("bulkText").value.trim();
 
 
 
 
 
-reader.onload = ()=>{
+if(!text){
+
+alert("Please paste questions");
+
+return;
+
+}
+
+
+
+
+let total = 0;
+
+let added = 0;
+
+let skipped = 0;
+
+let failed = 0;
+
+
 
 
 
 try{
 
 
-bulkQuestions =
+// Existing Questions Load
 
-JSON.parse(
+const snap = await getDocs(
 
-reader.result
+collection(db,"questions")
+
+);
+
+
+
+let existingQuestions = [];
+
+
+
+snap.forEach(doc=>{
+
+
+let data = doc.data();
+
+
+existingQuestions.push(
+
+data.question
+.trim()
+.toLowerCase()
+
+);
+
+
+});
+
+
+
+
+
+
+// Split Questions
+
+let questions = text.split(/\n\s*\n/);
+
+
+
+
+total = questions.length;
+
+
+
+
+for(let item of questions){
+
+
+try{
+
+
+
+let lines = item.split("\n");
+
+
+
+let question = "";
+
+let options = [];
+
+let answer = 0;
+
+let explanation = "";
+
+
+
+
+
+lines.forEach(line=>{
+
+
+line=line.trim();
+
+
+
+if(
+line.match(/^\d+\./)
+){
+
+question = line.replace(/^\d+\./,"").trim();
+
+}
+
+
+
+else if(
+line.startsWith("A)")
+){
+
+options[0]=line.replace("A)","").trim();
+
+}
+
+
+
+else if(
+line.startsWith("B)")
+){
+
+options[1]=line.replace("B)","").trim();
+
+}
+
+
+
+else if(
+line.startsWith("C)")
+){
+
+options[2]=line.replace("C)","").trim();
+
+}
+
+
+
+else if(
+line.startsWith("D)")
+){
+
+options[3]=line.replace("D)","").trim();
+
+}
+
+
+
+else if(
+line.startsWith("Answer:")
+){
+
+let ans = line.replace("Answer:","").trim();
+
+
+answer =
+
+ans.charCodeAt(0)-65;
+
+
+}
+
+
+
+else if(
+line.startsWith("Explanation:")
+){
+
+explanation =
+line.replace("Explanation:","").trim();
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+if(!question){
+
+failed++;
+
+continue;
+
+}
+
+
+
+
+
+
+// Duplicate Check
+
+
+if(
+
+existingQuestions.includes(
+
+question.toLowerCase()
+
+)
+
+){
+
+
+skipped++;
+
+continue;
+
+
+}
+
+
+
+
+
+
+// Add Firebase
+
+
+await addDoc(
+
+collection(db,"questions"),
+
+{
+
+
+subject:subject,
+
+topic:topic,
+
+question:question,
+
+options:options,
+
+answer:answer,
+
+explanation:explanation,
+
+createdAt:serverTimestamp()
+
+
+}
 
 );
 
 
 
 
+existingQuestions.push(
 
-document.getElementById(
-"questionCount"
-).innerHTML =
-
-bulkQuestions.length;
-
-
-
-
-
-
-alert(
-
-"✅ JSON Loaded Successfully"
+question.toLowerCase()
 
 );
+
+
+
+added++;
 
 
 
@@ -433,29 +648,12 @@ alert(
 catch(error){
 
 
-alert(
-
-"❌ Invalid JSON File"
-
-);
-
+failed++;
 
 
 }
 
 
-
-};
-
-
-
-
-
-reader.readAsText(file);
-
-
-
-};
 
 
 
@@ -465,159 +663,28 @@ reader.readAsText(file);
 
 
 
-
-
-
-// =========================
-// BULK UPLOAD TO FIREBASE
-// =========================
-
-
-const bulkBtn =
 
 document.getElementById(
-"bulkUploadBtn"
-);
+"bulkTotal"
+).innerHTML = total;
 
 
-
-
-
-if(bulkBtn){
-
-
-
-bulkBtn.onclick = async ()=>{
-
-
-
-if(
-
-bulkQuestions.length===0
-
-){
-
-
-alert(
-
-"Please Select JSON File"
-
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-let subject =
 
 document.getElementById(
-"bulkSubject"
-).value;
+"addedCount"
+).innerHTML = added;
 
 
-
-
-
-let topic =
 
 document.getElementById(
-"bulkTopic"
-).value;
+"skippedCount"
+).innerHTML = skipped;
 
 
 
-
-
-
-try{
-
-
-
-bulkBtn.innerHTML =
-
-"Uploading...";
-
-
-
-
-
-
-for(let q of bulkQuestions){
-
-
-
-await addDoc(
-
-collection(
-
-db,
-
-"questions"
-
-),
-
-{
-
-
-subject:
-
-q.subject || subject,
-
-
-
-topic:
-
-q.topic || topic,
-
-
-
-question:
-
-q.question,
-
-
-
-options:
-
-q.options,
-
-
-
-answer:
-
-Number(q.answer),
-
-
-
-explanation:
-
-q.explanation || "",
-
-
-
-createdAt:
-
-serverTimestamp()
-
-
-
-}
-
-
-
-);
-
-
-
-}
+document.getElementById(
+"failedCount"
+).innerHTML = failed;
 
 
 
@@ -626,7 +693,13 @@ serverTimestamp()
 
 alert(
 
-"🎉 All Questions Uploaded Successfully"
+`Upload Completed
+
+✅ Added : ${added}
+
+⚠️ Skipped : ${skipped}
+
+❌ Failed : ${failed}`
 
 );
 
@@ -634,23 +707,47 @@ alert(
 
 
 
-bulkQuestions=[];
-
-
-
 document.getElementById(
-"questionCount"
-).innerHTML="0";
+"bulkText"
+).value="";
 
 
 
-bulkBtn.innerHTML =
+
+}
+
+
+catch(error){
+
+
+console.log(
+"Bulk Upload Error",
+error
+);
+
+
+alert(
+"Upload Failed"
+);
 
 "🚀 Upload Questions";
 
+}
+
+
+
+};
+
+
 
 
 }
+
+
+
+
+
+
 
 
 
