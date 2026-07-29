@@ -1116,26 +1116,13 @@ showQuestion();
 // =========================
 
 
-const oldLoadQuestions =
+const oldLoadQuestions = loadMockQuestions;
 
-loadMockQuestions;
-
-
-
-loadMockQuestions = async function(){
-
-
-await oldLoadQuestions();
-
-
-
-createPalette();
-
-
-showQuestion();
-
-
-  }
+loadMockQuestions = async function () {
+    await oldLoadQuestions();
+    createPalette();
+    showQuestion();
+};
 
 
 // =========================
