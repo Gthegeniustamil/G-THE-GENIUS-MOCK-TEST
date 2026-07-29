@@ -1277,44 +1277,27 @@ return correct;
 // =========================
 // SUBMIT BUTTON
 // =========================
+async function submitTest(){
 
+alert("Submit Working");
 
-const submitBtn =
+clearInterval(timer);
 
-document.getElementById(
-"submitBtn"
-);
-
-
-
-if(submitBtn){
-
-
-submitBtn.onclick = ()=>{
-
-
-let confirmBox =
-
-document.getElementById(
-"submitConfirm"
-);
-
-
-
-if(confirmBox){
-
-
-confirmBox.style.display="block";
-
-
+...
 }
 
+const submitBtn = document.getElementById("submitBtn");
 
-};
+if (submitBtn) {
 
+    submitBtn.onclick = async () => {
 
+        await submitTest();
 
-}
+    };
+
+  }
+
 
 
 
