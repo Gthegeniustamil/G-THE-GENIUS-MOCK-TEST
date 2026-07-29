@@ -1,10 +1,8 @@
 // =========================
 // G THE GENIUS ADMIN JS
+// FINAL VERSION
 // PART 1
 // =========================
-
-
-import { db } from "./firebase-config.js";
 
 
 import { db } from "./firebase-config.js";
@@ -24,108 +22,10 @@ updateDoc
 
 
 
-// CLEAR FORM
-
-
-document.getElementById(
-"topic"
-).value="";
-
-
-
-document.getElementById(
-"question"
-).value="";
-
-
-
-document.getElementById(
-"optionA"
-).value="";
-
-
-
-document.getElementById(
-"optionB"
-).value="";
-
-
-
-document.getElementById(
-"optionC"
-).value="";
-
-
-
-document.getElementById(
-"optionD"
-).value="";
-
-
-
-document.getElementById(
-"explanation"
-).value="";
-
-
-
-
-
-
-}
-
-
-
-catch(error){
-
-
-
-console.log(
-
-"Add Question Error",
-
-error
-
-);
-
-
-
-alert(
-
-"❌ Error Adding Question"
-
-);
-
-
-
-}
-
-
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-console.log(
-
-"✅ Admin Single Upload Ready"
-
-);
-
 
 // =========================
 // BULK PASTE UPLOAD
-// DUPLICATE CHECK SYSTEM
+// DUPLICATE CHECK
 // =========================
 
 
@@ -140,12 +40,12 @@ if(bulkUploadBtn){
 bulkUploadBtn.onclick = async ()=>{
 
 
-let subject = 
+let subject =
 document.getElementById("bulkSubject").value;
 
 
 
-let topic = 
+let topic =
 document.getElementById("bulkTopic").value;
 
 
@@ -159,7 +59,7 @@ document.getElementById("bulkText").value.trim();
 
 if(!text){
 
-alert("Please paste questions");
+alert("Paste Questions First");
 
 return;
 
@@ -167,15 +67,10 @@ return;
 
 
 
-
 let total = 0;
-
 let added = 0;
-
 let skipped = 0;
-
 let failed = 0;
-
 
 
 
@@ -183,7 +78,8 @@ let failed = 0;
 try{
 
 
-// Existing Questions Load
+
+// Existing Questions
 
 const snap = await getDocs(
 
@@ -193,17 +89,17 @@ collection(db,"questions")
 
 
 
-let existingQuestions = [];
+let existing = [];
 
 
 
-snap.forEach(doc=>{
+snap.forEach(item=>{
 
 
-let data = doc.data();
+let data = item.data();
 
 
-existingQuestions.push(
+existing.push(
 
 data.question
 .trim()
@@ -217,39 +113,33 @@ data.question
 
 
 
-
-
 // Split Questions
 
-let questions = text.split(/\n\s*\n/);
+let questionBlocks =
+
+text.split(/\n\s*\n/);
+
+
+
+total = questionBlocks.length;
 
 
 
 
-total = questions.length;
 
-
-
-
-for(let item of questions){
+for(let block of questionBlocks){
 
 
 try{
 
 
-
-let lines = item.split("\n");
-
+let lines = block.split("\n");
 
 
-let question = "";
-
-let options = [];
-
-let answer = 0;
-
-let explanation = "";
-
+let question="";
+let options=[];
+let answer=0;
+let explanation="";
 
 
 
@@ -261,61 +151,72 @@ line=line.trim();
 
 
 
-if(
-line.match(/^\d+\./)
-){
+if(line.match(/^\d+\./)){
 
-question = line.replace(/^\d+\./,"").trim();
+
+question =
+
+line.replace(/^\d+\./,"").trim();
+
 
 }
 
 
 
-else if(
-line.startsWith("A)")
-){
+else if(line.startsWith("A)")){
 
-options[0]=line.replace("A)","").trim();
+
+options[0]=
+
+line.replace("A)","").trim();
+
 
 }
 
 
 
-else if(
-line.startsWith("B)")
-){
+else if(line.startsWith("B)")){
 
-options[1]=line.replace("B)","").trim();
+
+options[1]=
+
+line.replace("B)","").trim();
+
 
 }
 
 
 
-else if(
-line.startsWith("C)")
-){
+else if(line.startsWith("C)")){
 
-options[2]=line.replace("C)","").trim();
+
+options[2]=
+
+line.replace("C)","").trim();
+
 
 }
 
 
 
-else if(
-line.startsWith("D)")
-){
+else if(line.startsWith("D)")){
 
-options[3]=line.replace("D)","").trim();
+
+options[3]=
+
+line.replace("D)","").trim();
+
 
 }
 
 
 
-else if(
-line.startsWith("Answer:")
-){
+else if(line.startsWith("Answer:")){
 
-let ans = line.replace("Answer:","").trim();
+
+let ans =
+
+line.replace("Answer:","").trim();
 
 
 answer =
@@ -327,19 +228,19 @@ ans.charCodeAt(0)-65;
 
 
 
-else if(
-line.startsWith("Explanation:")
-){
+else if(line.startsWith("Explanation:")){
+
 
 explanation =
+
 line.replace("Explanation:","").trim();
+
 
 }
 
 
 
 });
-
 
 
 
@@ -364,7 +265,7 @@ continue;
 
 if(
 
-existingQuestions.includes(
+existing.includes(
 
 question.toLowerCase()
 
@@ -377,15 +278,13 @@ skipped++;
 
 continue;
 
-
 }
 
 
 
 
 
-
-// Add Firebase
+// Firebase Add
 
 
 await addDoc(
@@ -416,8 +315,7 @@ createdAt:serverTimestamp()
 
 
 
-
-existingQuestions.push(
+existing.push(
 
 question.toLowerCase()
 
@@ -432,7 +330,6 @@ added++;
 }
 
 
-
 catch(error){
 
 
@@ -443,9 +340,8 @@ failed++;
 
 
 
-
-
 }
+
 
 
 
@@ -505,69 +401,24 @@ document.getElementById(
 }
 
 
+
 catch(error){
 
 
 console.log(
+
 "Bulk Upload Error",
+
 error
+
 );
+
 
 
 alert(
 "Upload Failed"
 );
 
-bulkUploadBtn.innerHTML =
-"🚀 Upload Questions";
-
-}
-
-
-
-};
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-catch(error){
-
-
-
-console.log(
-
-"Bulk Upload Error",
-
-error
-
-);
-
-
-
-alert(
-
-"❌ Upload Failed"
-
-);
-
-
-
-bulkBtn.innerHTML =
-
-"🚀 Upload Questions";
-
 
 
 }
@@ -583,19 +434,13 @@ bulkBtn.innerHTML =
 
 
 
-
-
-
-
 console.log(
-
-"✅ Bulk Upload System Ready"
-
+"✅ Bulk Paste Upload Ready"
 );
 
-  // =========================
+// =========================
 // QUESTION MANAGEMENT
-// PART 3
+// PART 2
 // =========================
 
 
@@ -611,7 +456,6 @@ let allQuestions = [];
 async function loadQuestionsAdmin(){
 
 
-
 const list =
 
 document.getElementById(
@@ -624,30 +468,18 @@ if(!list) return;
 
 
 
-list.innerHTML =
-
-"Loading Questions...";
-
-
+list.innerHTML = "Loading Questions...";
 
 
 
 try{
 
 
+const snap = await getDocs(
 
-const snap =
-
-await getDocs(
-
-collection(
-db,
-"questions"
-)
+collection(db,"questions")
 
 );
-
-
 
 
 
@@ -656,7 +488,6 @@ allQuestions=[];
 
 
 snap.forEach(item=>{
-
 
 
 allQuestions.push({
@@ -668,9 +499,7 @@ id:item.id,
 ...item.data()
 
 
-
 });
-
 
 
 });
@@ -680,7 +509,13 @@ id:item.id,
 
 
 displayQuestions(allQuestions);
+
+
+
+// Stats Load
+
 loadAdminStats();
+
 
 
 }
@@ -690,10 +525,9 @@ loadAdminStats();
 catch(error){
 
 
-
 console.log(
 
-"Load Error",
+"Load Question Error",
 
 error
 
@@ -702,17 +536,14 @@ error
 
 
 list.innerHTML =
-
 "Error Loading Questions";
 
 
-
 }
 
 
 
 }
-
 
 
 
@@ -730,7 +561,7 @@ function displayQuestions(data){
 
 
 
-let list =
+const list =
 
 document.getElementById(
 "questionList"
@@ -748,9 +579,7 @@ list.innerHTML="";
 
 
 
-
 data.forEach(q=>{
-
 
 
 let div =
@@ -761,42 +590,32 @@ document.createElement(
 
 
 
-div.className=
-
+div.className =
 "question-item";
 
 
 
 
 
-div.innerHTML=
-
+div.innerHTML =
 
 
 `
 
 <h3>
-
 ${q.question}
-
 </h3>
 
 
 <p>
-
 📚 Subject :
-
-<span>${q.subject}</span>
-
+${q.subject}
 </p>
 
 
 <p>
-
 📌 Topic :
-
-<span>${q.topic}</span>
-
+${q.topic}
 </p>
 
 
@@ -819,14 +638,12 @@ D) ${q.options[3]}
 </p>
 
 
-
 <p>
-
 ✅ Answer :
-
 ${q.answer}
-
 </p>
+
+
 
 <button
 
@@ -840,6 +657,8 @@ onclick="editQuestion('${q.id}')"
 
 </button>
 
+
+
 <button
 
 class="delete-btn"
@@ -852,7 +671,9 @@ onclick="deleteQuestion('${q.id}')"
 
 </button>
 
+
 `;
+
 
 
 list.appendChild(div);
@@ -881,9 +702,7 @@ window.deleteQuestion = async function(id){
 
 
 
-let confirmDelete =
-
-confirm(
+let ok = confirm(
 
 "Delete this question?"
 
@@ -891,12 +710,7 @@ confirm(
 
 
 
-if(!confirmDelete)
-
-return;
-
-
-
+if(!ok) return;
 
 
 
@@ -919,11 +733,9 @@ id
 
 
 
-
-
 alert(
 
-"✅ Question Deleted"
+"✅ Deleted Successfully"
 
 );
 
@@ -932,12 +744,11 @@ alert(
 loadQuestionsAdmin();
 
 
+
 }
 
 
-
 catch(error){
-
 
 
 console.log(
@@ -964,7 +775,7 @@ error
 
 
 // =========================
-// SEARCH QUESTION
+// SEARCH
 // =========================
 
 
@@ -983,16 +794,13 @@ if(searchBtn){
 searchBtn.onclick = ()=>{
 
 
-
 let text =
 
 document.getElementById(
 "searchQuestion"
-).value
-
+)
+.value
 .toLowerCase();
-
-
 
 
 
@@ -1002,16 +810,231 @@ let result =
 allQuestions.filter(q=>
 
 
-
 q.question
-
 .toLowerCase()
-
 .includes(text)
 
 
-
 );
+
+
+
+
+displayQuestions(result);
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// SUBJECT TOPIC FILTER
+// =========================
+
+
+const filterSubject =
+
+document.getElementById(
+"filterSubject"
+);
+
+
+
+const filterTopic =
+
+document.getElementById(
+"filterTopic"
+);
+
+
+
+const filterBtn =
+
+document.getElementById(
+"filterBtn"
+);
+
+
+
+
+
+
+
+if(filterSubject){
+
+
+
+filterSubject.onchange = ()=>{
+
+
+let subject =
+
+filterSubject.value;
+
+
+
+
+let topics=[];
+
+
+
+
+allQuestions.forEach(q=>{
+
+
+if(
+
+subject==="all"
+
+||
+
+q.subject===subject
+
+){
+
+
+
+if(
+
+!topics.includes(q.topic)
+
+){
+
+
+topics.push(q.topic);
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+filterTopic.innerHTML =
+
+`
+
+<option value="all">
+
+All Topics
+
+</option>
+
+`;
+
+
+
+
+
+
+topics.forEach(t=>{
+
+
+filterTopic.innerHTML +=
+
+
+`
+
+<option value="${t}">
+
+${t}
+
+</option>
+
+
+`;
+
+
+
+});
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+if(filterBtn){
+
+
+
+filterBtn.onclick = ()=>{
+
+
+let subject =
+
+filterSubject.value;
+
+
+
+let topic =
+
+filterTopic.value;
+
+
+
+
+
+
+let result =
+
+allQuestions.filter(q=>{
+
+
+
+let s =
+
+subject==="all"
+
+||
+
+q.subject===subject;
+
+
+
+
+let t =
+
+topic==="all"
+
+||
+
+q.topic===topic;
+
+
+
+return s && t;
+
+
+
+});
 
 
 
@@ -1045,12 +1068,14 @@ loadQuestionsAdmin();
 
 console.log(
 
-"✅ Admin Panel Final Ready"
+"✅ Question Management Ready"
 
 );
 
+
 // =========================
 // ADMIN DASHBOARD STATS
+// PART 3
 // =========================
 
 
@@ -1062,10 +1087,7 @@ try{
 
 const snap = await getDocs(
 
-collection(
-db,
-"questions"
-)
+collection(db,"questions")
 
 );
 
@@ -1085,11 +1107,10 @@ let tamilnadu = 0;
 
 
 
-snap.forEach((doc)=>{
+snap.forEach(item=>{
 
 
-let data = doc.data();
-
+let data = item.data();
 
 
 total++;
@@ -1097,8 +1118,7 @@ total++;
 
 
 
-
-if(data.subject === "Indian Polity"){
+if(data.subject==="Indian Polity"){
 
 polity++;
 
@@ -1106,7 +1126,7 @@ polity++;
 
 
 
-if(data.subject === "Indian History"){
+if(data.subject==="Indian History"){
 
 history++;
 
@@ -1114,7 +1134,7 @@ history++;
 
 
 
-if(data.subject === "General Science"){
+if(data.subject==="General Science"){
 
 science++;
 
@@ -1122,7 +1142,7 @@ science++;
 
 
 
-if(data.subject === "Tamil Nadu GK"){
+if(data.subject==="Tamil Nadu GK"){
 
 tamilnadu++;
 
@@ -1137,55 +1157,71 @@ tamilnadu++;
 
 
 
-
-document.getElementById(
-"totalQuestions"
-).innerHTML = total;
+let totalBox =
+document.getElementById("totalQuestions");
 
 
+if(totalBox)
 
-
-
-document.getElementById(
-"polityCount"
-).innerHTML = polity;
+totalBox.innerHTML = total;
 
 
 
 
+let polityBox =
+document.getElementById("polityCount");
 
-document.getElementById(
-"historyCount"
-).innerHTML = history;
+
+if(polityBox)
+
+polityBox.innerHTML = polity;
 
 
 
 
 
-document.getElementById(
-"scienceCount"
-).innerHTML = science;
+let historyBox =
+document.getElementById("historyCount");
+
+
+if(historyBox)
+
+historyBox.innerHTML = history;
 
 
 
 
 
-document.getElementById(
-"tnCount"
-).innerHTML = tamilnadu;
+let scienceBox =
+document.getElementById("scienceCount");
 
+
+if(scienceBox)
+
+scienceBox.innerHTML = science;
+
+
+
+
+
+let tnBox =
+document.getElementById("tnCount");
+
+
+if(tnBox)
+
+tnBox.innerHTML = tamilnadu;
 
 
 
 
 console.log(
-"✅ Admin Stats Updated"
+"✅ Stats Updated"
 );
 
 
 
 }
-
 
 
 catch(error){
@@ -1207,239 +1243,12 @@ error
 
 
 
-// =========================
-// SUBJECT TOPIC FILTER
-// =========================
-
-
-const filterSubject =
-
-document.getElementById(
-"filterSubject"
-);
-
-
-const filterTopic =
-
-document.getElementById(
-"filterTopic"
-);
-
-
-const filterBtn =
-
-document.getElementById(
-"filterBtn"
-);
-
-
-
 
 
 
 
 // =========================
-// LOAD TOPICS BASED ON SUBJECT
-// =========================
-
-
-if(filterSubject){
-
-
-
-filterSubject.onchange = ()=>{
-
-
-let subject =
-
-filterSubject.value;
-
-
-
-
-let topics = [];
-
-
-
-
-
-allQuestions.forEach(q=>{
-
-
-if(
-
-subject==="all" ||
-
-q.subject===subject
-
-){
-
-
-
-if(
-
-!topics.includes(q.topic)
-
-){
-
-
-topics.push(q.topic);
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-filterTopic.innerHTML =
-
-`<option value="all">
-All Topics
-</option>`;
-
-
-
-
-
-
-topics.forEach(topic=>{
-
-
-
-filterTopic.innerHTML +=
-
-
-`
-
-<option value="${topic}">
-
-${topic}
-
-</option>
-
-`;
-
-
-
-});
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// FILTER QUESTIONS
-// =========================
-
-
-if(filterBtn){
-
-
-
-filterBtn.onclick = ()=>{
-
-
-
-let subject =
-
-filterSubject.value;
-
-
-
-let topic =
-
-filterTopic.value;
-
-
-
-
-
-let result =
-
-allQuestions.filter(q=>{
-
-
-
-let subjectMatch =
-
-
-subject==="all" ||
-
-q.subject===subject;
-
-
-
-
-
-
-let topicMatch =
-
-
-topic==="all" ||
-
-q.topic===topic;
-
-
-
-
-
-
-return subjectMatch && topicMatch;
-
-
-
-});
-
-
-
-
-
-
-displayQuestions(result);
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-console.log(
-
-"✅ Subject Topic Filter Ready"
-
-);
-
-// =========================
-// EDIT QUESTION SYSTEM
+// EDIT QUESTION
 // =========================
 
 
@@ -1448,20 +1257,16 @@ let editQuestionId = null;
 
 
 
-
-// =========================
-// EDIT BUTTON FUNCTION
-// =========================
-
-
 window.editQuestion = function(id){
+
 
 
 let q = allQuestions.find(
 
-item => item.id === id
+item=>item.id===id
 
 );
+
 
 
 
@@ -1469,31 +1274,54 @@ if(!q) return;
 
 
 
-editQuestionId = id;
+editQuestionId=id;
 
 
 
-document.getElementById("subject").value = q.subject;
+// If old edit form exists
 
-document.getElementById("topic").value = q.topic;
-
-document.getElementById("question").value = q.question;
+if(document.getElementById("subject")){
 
 
-document.getElementById("optionA").value = q.options[0];
+document.getElementById("subject").value=q.subject;
 
-document.getElementById("optionB").value = q.options[1];
+document.getElementById("topic").value=q.topic;
 
-document.getElementById("optionC").value = q.options[2];
-
-document.getElementById("optionD").value = q.options[3];
+document.getElementById("question").value=q.question;
 
 
-document.getElementById("answer").value = q.answer;
+document.getElementById("optionA").value=q.options[0];
+
+document.getElementById("optionB").value=q.options[1];
+
+document.getElementById("optionC").value=q.options[2];
+
+document.getElementById("optionD").value=q.options[3];
 
 
-document.getElementById("explanation").value = q.explanation;
+document.getElementById("answer").value=q.answer;
 
+
+document.getElementById("explanation").value=q.explanation;
+
+
+}
+
+
+
+if(document.getElementById("updateQuestionBtn")){
+
+
+document.getElementById(
+"updateQuestionBtn"
+).style.display="block";
+
+
+}
+
+
+
+if(document.getElementById("addQuestionBtn")){
 
 
 document.getElementById(
@@ -1501,11 +1329,7 @@ document.getElementById(
 ).style.display="none";
 
 
-
-document.getElementById(
-"updateQuestionBtn"
-).style.display="block";
-
+}
 
 
 
@@ -1529,6 +1353,8 @@ behavior:"smooth"
 
 
 
+
+
 // =========================
 // UPDATE QUESTION
 // =========================
@@ -1543,7 +1369,6 @@ document.getElementById(
 
 
 
-
 if(updateBtn){
 
 
@@ -1552,7 +1377,10 @@ updateBtn.onclick = async ()=>{
 
 
 
-if(!editQuestionId) return;
+if(!editQuestionId)
+
+return;
+
 
 
 
@@ -1600,12 +1428,9 @@ options:[
 
 document.getElementById("optionA").value,
 
-
 document.getElementById("optionB").value,
 
-
 document.getElementById("optionC").value,
-
 
 document.getElementById("optionD").value
 
@@ -1649,7 +1474,7 @@ serverTimestamp()
 
 alert(
 
-"✅ Question Updated Successfully"
+"✅ Question Updated"
 
 );
 
@@ -1662,6 +1487,7 @@ editQuestionId=null;
 
 
 
+if(document.getElementById("updateQuestionBtn")){
 
 
 document.getElementById(
@@ -1669,7 +1495,11 @@ document.getElementById(
 ).style.display="none";
 
 
+}
 
+
+
+if(document.getElementById("addQuestionBtn")){
 
 
 document.getElementById(
@@ -1677,11 +1507,54 @@ document.getElementById(
 ).style.display="block";
 
 
+}
 
 
 
 
 loadQuestionsAdmin();
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+
+"Update Error",
+
+error
+
+);
+
+
+
+alert(
+"❌ Update Failed"
+);
+
+
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -1693,25 +1566,54 @@ loadQuestionsAdmin();
 function clearQuestionForm(){
 
 
-document.getElementById("topic").value="";
+
+let ids=[
+
+"topic",
+
+"question",
+
+"optionA",
+
+"optionB",
+
+"optionC",
+
+"optionD",
+
+"explanation"
+
+];
 
 
-document.getElementById("question").value="";
 
 
-document.getElementById("optionA").value="";
+ids.forEach(id=>{
 
 
-document.getElementById("optionB").value="";
+let el=document.getElementById(id);
 
 
-document.getElementById("optionC").value="";
+if(el)
+
+el.value="";
 
 
-document.getElementById("optionD").value="";
+});
 
-
-document.getElementById("explanation").value="";
 
 
 }
+
+
+
+
+
+
+
+
+console.log(
+
+"✅ G THE GENIUS ADMIN FINAL READY"
+
+);
