@@ -153,18 +153,6 @@ data.total;
 
 
 
-
-document.getElementById(
-"percentage"
-).innerHTML =
-
-data.percentage+"%";
-
-
-
-
-
-
 document.getElementById(
 "testType"
 ).innerHTML =
@@ -204,60 +192,20 @@ calculateAnalysis(data);
 
 function calculateAnalysis(data){
 
-
-
-let correct =
-
-data.score;
-
-
-
-let total =
-
-data.total;
-
-
-
-let wrong =
-
-total - correct;
-
-
-
-let skipped = 0;
-
-
-
-
-
-
 document.getElementById(
 "correctCount"
 ).innerHTML =
-
-correct;
-
-
-
-
+data.correct || 0;
 
 document.getElementById(
 "wrongCount"
 ).innerHTML =
-
-wrong;
-
-
-
-
+data.wrong || 0;
 
 document.getElementById(
 "skipCount"
 ).innerHTML =
-
-skipped;
-
-
+data.skipped || 0;
 
 }
 
@@ -305,7 +253,7 @@ query(
 collection(db,"results"),
 
 orderBy(
-"percentage",
+"score",
 "desc"
 )
 
@@ -449,7 +397,8 @@ let text =
 
 🎯 Score : ${document.getElementById("score").innerHTML}/${document.getElementById("total").innerHTML}
 
-📊 Percentage : ${document.getElementById("percentage").innerHTML}
+
+🎯 Marks : ${document.getElementById("score").innerHTML}/${document.getElementById("total").innerHTML}
 
 🚀 Prepare More With G THE GENIUS`;
 
