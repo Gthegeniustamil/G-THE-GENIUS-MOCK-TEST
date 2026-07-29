@@ -4,160 +4,554 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Practice - G THE GENIUS</title>
+<title>
+G THE GENIUS Practice
+</title>
+
 
 <link rel="stylesheet" href="practice.css">
 
+
 </head>
+
 
 <body>
 
-<!-- Header -->
 
-<header class="header">
+<!-- HEADER -->
 
-<div class="logo-box">
+<header class="practice-header">
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png" class="logo">
+
+<img 
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="practice-logo"
+>
+
+
 
 <div>
 
-<h2>G THE GENIUS</h2>
+<h2>
+G THE GENIUS
+</h2>
 
-<p>Government Exam Practice</p>
+
+<p>
+Unlimited Practice
+</p>
+
 
 </div>
 
-</div>
-
-<div class="profile-icon">
-👤
-</div>
 
 </header>
 
-<!-- Welcome Card -->
+
+
+
+
+<!-- WELCOME CARD -->
+
 
 <section class="welcome-card">
 
-<h2>📚 Practice Mode</h2>
+
+<h2>
+
+📚 Practice Zone
+
+</h2>
+
 
 <p>
-Unlimited Practice • No Leaderboard • Learn with Explanation
+
+Choose Subject & Topic
+
+and improve your score
+
 </p>
+
 
 </section>
 
-<!-- Subject Title -->
 
-<h3 class="section-title">
+
+
+
+
+<!-- SUBJECT SELECT -->
+
+
+<section class="select-card">
+
+
+<h2>
+
+📖 Select Subject
+
+</h2>
+
+
+
+<select id="subjectSelect">
+
+
+<option value="">
+
 Select Subject
+
+</option>
+
+
+<option value="Indian Polity">
+
+Indian Polity
+
+</option>
+
+
+<option value="Indian History">
+
+Indian History
+
+</option>
+
+
+<option value="Geography">
+
+Geography
+
+</option>
+
+
+<option value="General Science">
+
+General Science
+
+</option>
+
+
+<option value="Tamil Nadu GK">
+
+Tamil Nadu GK
+
+</option>
+
+
+</select>
+
+
+
+</section>
+
+
+
+
+
+
+
+<!-- TOPIC SELECT -->
+
+
+<section class="select-card">
+
+
+<h2>
+
+📂 Select Topic
+
+</h2>
+
+
+
+<select id="topicSelect">
+
+
+<option>
+
+Select Topic
+
+</option>
+
+
+</select>
+
+
+
+</section>
+
+
+
+
+
+
+
+<!-- START BUTTON -->
+
+
+<button id="startPractice"
+class="start-btn">
+
+
+🚀 Start Practice
+
+
+</button>
+
+<!-- =========================
+PRACTICE AREA
+========================= -->
+
+
+<section class="practice-box" id="practiceArea">
+
+
+<div class="progress-box">
+
+
+<p>
+
+Question 
+
+<span id="questionNo">
+
+1
+
+</span>
+
+/
+
+<span id="totalQuestions">
+
+10
+
+</span>
+
+
+</p>
+
+
+
+<div class="question-progress">
+
+
+<div id="progressBar">
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- QUESTION -->
+
+
+<div class="question-card">
+
+
+<h2 id="questionText">
+
+
+Question Loading...
+
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- OPTIONS -->
+
+
+<div class="options-box">
+
+
+
+<button class="option"
+id="option1">
+
+
+A
+
+</button>
+
+
+
+<button class="option"
+id="option2">
+
+
+B
+
+</button>
+
+
+
+
+<button class="option"
+id="option3">
+
+
+C
+
+</button>
+
+
+
+
+<button class="option"
+id="option4">
+
+
+D
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- EXPLANATION -->
+
+
+<div class="explanation-card"
+id="explanationBox">
+
+
+<h3>
+
+💡 Explanation
+
 </h3>
 
-<!-- Subject Grid -->
 
-<div class="subject-grid">
+<p id="explanationText">
 
-<div class="subject-card" data-subject="General Knowledge">
-📘
-<span>General Knowledge</span>
-</div>
 
-<div class="subject-card" data-subject="Indian Polity">
-🏛️
-<span>Indian Polity</span>
-</div>
+Answer explanation will appear here
 
-<div class="subject-card" data-subject="Indian History">
-📜
-<span>Indian History</span>
-</div>
+</p>
 
-<div class="subject-card" data-subject="Indian Geography">
-🗺️
-<span>Indian Geography</span>
-</div>
-
-<div class="subject-card" data-subject="Indian Economy">
-💰
-<span>Indian Economy</span>
-</div>
-
-<div class="subject-card" data-subject="General Science">
-🔬
-<span>General Science</span>
-</div>
-
-<div class="subject-card" data-subject="Physics">
-⚛️
-<span>Physics</span>
-</div>
-
-<div class="subject-card" data-subject="Chemistry">
-🧪
-<span>Chemistry</span>
-</div>
-
-<div class="subject-card" data-subject="Biology">
-🧬
-<span>Biology</span>
-</div>
-
-<div class="subject-card" data-subject="Reasoning">
-🧠
-<span>Reasoning</span>
-</div>
-
-<div class="subject-card" data-subject="Aptitude">
-➗
-<span>Aptitude</span>
-</div>
-
-<div class="subject-card" data-subject="Computer">
-💻
-<span>Computer</span>
-</div>
-
-<div class="subject-card" data-subject="Current Affairs">
-📰
-<span>Current Affairs</span>
-</div>
-
-<div class="subject-card" data-subject="Tamil">
-📝
-<span>Tamil</span>
-</div>
-
-<div class="subject-card" data-subject="English">
-📖
-<span>English</span>
-</div>
-
-<div class="subject-card" data-subject="Psychology">
-🧠
-<span>Psychology</span>
-</div>
-
-<div class="subject-card" data-subject="Physical Training">
-🏃
-<span>Physical Training</span>
-</div>
-
-<div class="subject-card" data-subject="TNUSRB Special">
-🚔
-<span>TNUSRB Special</span>
-</div>
-
-<div class="subject-card" data-subject="TNPSC Special">
-🏛️
-<span>TNPSC Special</span>
-</div>
 
 </div>
+
+
+
+
+
+
+
+
+<!-- REWARD -->
+
+
+<div class="reward-card">
+
+
+<h3>
+
+⭐ XP Earned:
+
+<span id="xpEarned">
+
+0
+
+</span>
+
+</h3>
+
+
+<p id="badgeMessage">
+
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<button id="nextQuestion"
+class="next-btn">
+
+
+Next Question ➡️
+
+
+</button>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+BOTTOM NAV
+========================= -->
+
+
+<nav class="bottom-nav">
+
+
+<a href="dashboard.html">
+
+
+🏠
+
+<br>
+
+Home
+
+
+</a>
+
+
+
+
+<a href="practice.html" class="active">
+
+
+📚
+
+<br>
+
+Practice
+
+
+</a>
+
+
+
+
+<a href="leaderboard.html">
+
+
+🏆
+
+<br>
+
+Leaderboard
+
+
+</a>
+
+
+
+
+<a href="profile.html">
+
+
+👤
+
+<br>
+
+Profile
+
+
+</a>
+
+
+
+</nav>
+
+
+
+
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
+
+
+<footer class="footer">
+
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+
+
+<a href="https://youtube.com/@gthegeniustamil">
+
+▶ YouTube Channel
+
+</a>
+
+
+
+
+<a href="https://t.me/gthegenius">
+
+📢 Telegram
+
+</a>
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+📧 Email
+
+</a>
+
+
+
+<p>
+
+© 2026 G THE GENIUS.
+All Rights Reserved.
+
+</p>
+
+
+
+</footer>
+
+
+
 
 <script type="module" src="practice.js"></script>
+
 
 </body>
 
