@@ -174,19 +174,17 @@ ${index+1}. ${q.question}
 Your Answer:
 
 <b>
-${q.options[userAnswer] || "Not Answered"}
+${userAnswerText}
 </b>
 
 </p>
-
-
 
 <p>
 
 Correct Answer:
 
 <b>
-${q.options[correct]}
+${correctAnswerText}
 </b>
 
 </p>
