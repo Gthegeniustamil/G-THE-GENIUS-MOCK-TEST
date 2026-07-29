@@ -713,26 +713,7 @@ console.log(
 // =========================
 
 
-import {
-
-getDocs,
-deleteDoc,
-doc
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-
-
 let allQuestions = [];
-
-
-
-
-
 
 
 
@@ -961,7 +942,17 @@ ${q.answer}
 
 </p>
 
+<button
 
+class="edit-btn"
+
+onclick="editQuestion('${q.id}')"
+
+>
+
+✏️ Edit
+
+</button>
 
 <button
 
@@ -1164,7 +1155,7 @@ displayQuestions(result);
 
 
 loadQuestionsAdmin();
-
+loadAdminStats();
 
 
 console.log(
@@ -1329,15 +1320,6 @@ error
 }
 
 
-
-
-
-
-
-
-// LOAD STATS
-
-loadAdminStats();
 
 
 // =========================
@@ -1820,8 +1802,27 @@ loadQuestionsAdmin();
 
 clearQuestionForm();
 
+function clearQuestionForm(){
 
+document.getElementById("subject").selectedIndex=0;
 
+document.getElementById("topic").value="";
+
+document.getElementById("question").value="";
+
+document.getElementById("optionA").value="";
+
+document.getElementById("optionB").value="";
+
+document.getElementById("optionC").value="";
+
+document.getElementById("optionD").value="";
+
+document.getElementById("answer").selectedIndex=0;
+
+document.getElementById("explanation").value="";
+
+}
 
 
 }
