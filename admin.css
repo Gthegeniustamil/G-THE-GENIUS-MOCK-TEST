@@ -907,3 +907,233 @@ font-size:15px;
 
 }
 
+/* =========================
+ADMIN HEADER UPDATE
+========================= */
+
+
+.admin-header{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+justify-content:space-between;
+
+padding:20px;
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+border-bottom:
+
+1px solid rgba(255,215,0,.3);
+
+
+}
+
+
+
+.admin-header div{
+
+flex:1;
+
+}
+
+
+
+.admin-header h2{
+
+color:#FFD700;
+
+font-size:24px;
+
+}
+
+
+
+.admin-header h4{
+
+margin-top:8px;
+
+color:white;
+
+font-size:16px;
+
+}
+
+
+
+.admin-header p{
+
+color:#ddd;
+
+font-size:13px;
+
+margin:5px 0;
+
+}
+
+
+
+
+
+/* =========================
+ADMIN STATUS
+========================= */
+
+
+#adminStatus{
+
+display:inline-block;
+
+margin-top:8px;
+
+padding:6px 12px;
+
+
+border-radius:15px;
+
+
+background:
+
+rgba(0,255,100,.15);
+
+
+color:#00ff66;
+
+
+font-size:12px;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+LOGOUT BUTTON
+========================= */
+
+
+#adminLogoutBtn{
+
+
+padding:12px 18px;
+
+
+border:none;
+
+
+border-radius:20px;
+
+
+
+background:#ff4444;
+
+
+
+color:white;
+
+
+font-weight:bold;
+
+
+font-size:14px;
+
+
+cursor:pointer;
+
+
+
+}
+
+
+#adminLogoutBtn:hover{
+
+
+transform:scale(1.05);
+
+
+background:#ff2222;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+MOBILE HEADER
+========================= */
+
+
+@media(max-width:600px){
+
+
+.admin-header{
+
+
+flex-wrap:wrap;
+
+
+}
+
+
+
+.admin-logo{
+
+
+width:60px;
+
+height:60px;
+
+
+}
+
+
+
+.admin-header h2{
+
+
+font-size:20px;
+
+
+}
+
+
+
+#adminLogoutBtn{
+
+
+width:100%;
+
+
+margin-top:10px;
+
+
+}
+
+
+
+}
