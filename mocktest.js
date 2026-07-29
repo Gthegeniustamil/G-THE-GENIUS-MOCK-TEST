@@ -1375,48 +1375,61 @@ document.getElementById(
 }
 
 
-
-
-
-
-
-
 // =========================
 // SAVE RESULT FIREBASE
 // =========================
 
 
-async function saveResult(
-score
-){
+async function saveResult(score){
 
 
-
-const user =
-
-auth.currentUser;
-
+const user = auth.currentUser;
 
 
 if(!user) return;
 
 
 
+let correct = 0;
+
+let wrong = 0;
+
+let skipped = 0;
 
 
-let percentage =
+
+testQuestions.forEach((q,index)=>{
 
 
-Math.round(
+if(selectedAnswers[index] === null){
 
-(
-score /
+skipped++;
 
-testQuestions.length
+}
 
-)
+else if(selectedAnswers[index] == q.answer){
 
-*100
+correct++;
+
+}
+
+else{
+
+wrong++;
+
+}
+
+
+
+});
+
+
+
+
+
+let percentage = Math.round(
+
+(score / testQuestions.length) * 100
 
 );
 
@@ -1425,95 +1438,75 @@ testQuestions.length
 
 
 
-
 await addDoc(
 
-collection(
-db,
-"results"
-),
+collection(db,"results"),
 
 {
 
 
-studentId:
-
-user.uid,
-
+studentId:user.uid,
 
 
 studentName:
 
-localStorage.getItem(
-"studentName"
-)
-
+localStorage.getItem("studentName")
 ||
-
 "Student",
-
 
 
 
 district:
 
-localStorage.getItem(
-"district"
-)
-
+localStorage.getItem("district")
 ||
-
 "-",
-
-
 
 
 
 examType:
 
-localStorage.getItem(
-"examGoal"
-)
-
+localStorage.getItem("examGoal")
 ||
-
 "TNUSRB",
 
 
 
-
-
-testType:
-
-testType,
+testType:testType,
 
 
 
-
-score:
-
-score,
+score:score,
 
 
 
-
-total:
-
-testQuestions.length,
+total:testQuestions.length,
 
 
 
-
-percentage:
-
-percentage,
+percentage:percentage,
 
 
 
+// NEW DATA
 
-timestamp:
+correct:correct,
 
-serverTimestamp()
+wrong:wrong,
+
+skipped:skipped,
+
+
+
+answers:selectedAnswers,
+
+
+
+questions:testQuestions,
+
+
+
+timestamp:serverTimestamp()
 
 
 }
@@ -1529,6 +1522,8 @@ return percentage;
 
 
 }
+
+
 
 
 
