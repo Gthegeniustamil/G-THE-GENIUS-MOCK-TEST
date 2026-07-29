@@ -43,11 +43,17 @@
 </div>
 
 
-<div class="stat-card">
+<div class="stat-card"
+onclick="showSection('studentSection')">
+
 <h2 id="totalStudents">
 0
 </h2>
-<p>👨‍🎓 Students</p>
+
+<p>
+👨‍🎓 Students
+</p>
+
 </div>
 
 
@@ -59,11 +65,17 @@
 </div>
 
 
-<div class="stat-card">
+<div class="stat-card"
+onclick="showSection('leaderboardSection')">
+
 <h2>
 🏆
 </h2>
-<p>Leaderboard</p>
+
+<p>
+Leaderboard
+</p>
+
 </div>
 
 </div>
@@ -324,7 +336,26 @@ placeholder="🔍 Search Student">
 </div>
 
 
+<!-- STUDENTS LIST -->
 
+<div class="section" id="studentSection">
+
+<h2>👨‍🎓 Students List</h2>
+
+<div id="studentList"></div>
+
+</div>
+
+
+<!-- LEADERBOARD -->
+
+<div class="section" id="leaderboardSection">
+
+<h2>🏆 Leaderboard</h2>
+
+<div id="leaderboardList"></div>
+
+</div>
 
 
 
