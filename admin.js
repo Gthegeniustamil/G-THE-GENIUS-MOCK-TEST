@@ -750,6 +750,8 @@ window.onerror = function(message, source, line, column, error){
 
 console.log("✅ G THE GENIUS ADMIN PANEL READY");
 
+loadDashboardStats();
+
 /* DASHBOARD STATS */
 // ================= DASHBOARD STATS =================
 
