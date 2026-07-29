@@ -33,30 +33,29 @@ const params = new URLSearchParams(window.location.search);
 
 testType = params.get("type") || "daily";
 
-switch (testType) {
+switch(testType){
 
-  case "daily":
-    totalQuestions = 10;
-    timeLimit = 5 * 60;
-    break;
+    case "daily":
+        totalQuestions = 10;
+        timeLimit = 5 * 60;
+        break;
 
-  case "weekly":
-    totalQuestions = 25;
-    timeLimit = 10 * 60;
-    break;
+    case "weekly":
+        totalQuestions = 25;
+        timeLimit = 10 * 60;
+        break;
 
-  case "monthly":
-    totalQuestions = 100;
-    timeLimit = 60 * 60;
-    break;
-
+    case "monthly":
+        totalQuestions = 100;
+        timeLimit = 60 * 60;
+        break;
 }
 
 // =========================
 // AUTH CHECK
 // =========================
 
-auth.onAuthStateChanged(async (user)=>{
+auth.onAuthStateChanged(async(user)=>{
 
     if(!user){
 
@@ -65,7 +64,6 @@ auth.onAuthStateChanged(async (user)=>{
         window.location.href="login.html";
 
         return;
-
     }
 
     await loadMockQuestions();
@@ -88,18 +86,20 @@ async function loadMockQuestions(){
 
             const data = doc.data();
 
+            const options = Array.isArray(data.options)
+            ? data.options
+            : [
+                data.option1 || "",
+                data.option2 || "",
+                data.option3 || "",
+                data.option4 || ""
+            ];
+
             testQuestions.push({
 
-                question : data.question,
+                question : data.question || "",
 
-                options : Array.isArray(data.options)
-                    ? data.options
-                    : [
-                        data.option1,
-                        data.option2,
-                        data.option3,
-                        data.option4
-                    ],
+                options : options,
 
                 answer : Number(
                     data.answer ??
@@ -108,13 +108,13 @@ async function loadMockQuestions(){
                 ),
 
                 explanation :
-                    data.explanation || "",
+                data.explanation || "",
 
                 subject :
-                    data.subject || "",
+                data.subject || "",
 
                 topic :
-                    data.topic || ""
+                data.topic || ""
 
             });
 
@@ -128,18 +128,20 @@ async function loadMockQuestions(){
 
         }
 
-        // Random
+        // Shuffle
 
         testQuestions.sort(()=>Math.random()-0.5);
 
+        // Limit
+
         testQuestions =
-            testQuestions.slice(0,totalQuestions);
+        testQuestions.slice(0,totalQuestions);
 
         selectedAnswers =
-            new Array(testQuestions.length).fill(null);
+        new Array(testQuestions.length).fill(null);
 
         document.getElementById("totalQuestions").innerHTML =
-            testQuestions.length;
+        testQuestions.length;
 
         createPalette();
 
@@ -153,11 +155,11 @@ async function loadMockQuestions(){
 
         console.error(error);
 
-        alert(error.message);
+        alert("Question Load Error");
 
     }
 
-            }
+}
 
 // =========================
 // SHOW QUESTION
@@ -180,8 +182,7 @@ function showQuestion(){
 
     buttons.forEach((btn,index)=>{
 
-        btn.innerHTML =
-        q.options[index] || "";
+        btn.innerHTML = q.options[index] || "";
 
         btn.classList.remove("selected");
 
@@ -205,8 +206,6 @@ function showQuestion(){
 
 }
 
-
-
 // =========================
 // SELECT ANSWER
 // =========================
@@ -216,11 +215,7 @@ function selectAnswer(index){
     selectedAnswers[currentIndex]=index;
 
     document.querySelectorAll(".option")
-    .forEach(btn=>{
-
-        btn.classList.remove("selected");
-
-    });
+    .forEach(btn=>btn.classList.remove("selected"));
 
     document.querySelectorAll(".option")[index]
     .classList.add("selected");
@@ -228,8 +223,6 @@ function selectAnswer(index){
     updatePalette();
 
 }
-
-
 
 // =========================
 // QUESTION PALETTE
@@ -239,6 +232,8 @@ function createPalette(){
 
     const box =
     document.getElementById("questionPalette");
+
+    if(!box) return;
 
     box.innerHTML="";
 
@@ -263,8 +258,6 @@ function createPalette(){
 
 }
 
-
-
 // =========================
 // UPDATE PALETTE
 // =========================
@@ -278,10 +271,8 @@ function updatePalette(){
 
     buttons.forEach((btn,index)=>{
 
-        btn.classList.remove(
-        "active",
-        "answered"
-        );
+        btn.classList.remove("active");
+        btn.classList.remove("answered");
 
         if(index===currentIndex){
 
@@ -299,8 +290,6 @@ function updatePalette(){
 
 }
 
-
-
 // =========================
 // PROGRESS BAR
 // =========================
@@ -308,30 +297,20 @@ function updatePalette(){
 function updateProgress(){
 
     const percent =
-    ((currentIndex+1)/
-    testQuestions.length)*100;
+    ((currentIndex+1)/testQuestions.length)*100;
 
-    document.getElementById(
-    "testProgress"
-    ).style.width =
-    percent+"%";
+    document.getElementById("testProgress").style.width =
+    percent + "%";
 
 }
-
-
 
 // =========================
 // NEXT BUTTON
 // =========================
 
-document.getElementById(
-"nextBtn"
-).onclick=()=>{
+document.getElementById("nextBtn").onclick = ()=>{
 
-    if(
-    currentIndex <
-    testQuestions.length-1
-    ){
+    if(currentIndex < testQuestions.length-1){
 
         currentIndex++;
 
@@ -341,15 +320,11 @@ document.getElementById(
 
 };
 
-
-
 // =========================
 // PREVIOUS BUTTON
 // =========================
 
-document.getElementById(
-"previousBtn"
-).onclick=()=>{
+document.getElementById("previousBtn").onclick = ()=>{
 
     if(currentIndex>0){
 
@@ -360,7 +335,6 @@ document.getElementById(
     }
 
 };
-
 // =========================
 // TIMER
 // =========================
@@ -393,9 +367,9 @@ function startTimer(){
 
 function updateTimer(seconds){
 
-    let min = Math.floor(seconds/60);
+    let min = Math.floor(seconds / 60);
 
-    let sec = seconds%60;
+    let sec = seconds % 60;
 
     document.getElementById("timer").innerHTML =
     "⏰ " +
@@ -404,8 +378,6 @@ function updateTimer(seconds){
     String(sec).padStart(2,"0");
 
 }
-
-
 
 // =========================
 // CALCULATE RESULT
@@ -419,13 +391,13 @@ function calculateResult(){
 
     testQuestions.forEach((q,index)=>{
 
-        if(selectedAnswers[index]===null){
+        if(selectedAnswers[index] === null){
 
             skipped++;
 
         }
 
-        else if(selectedAnswers[index]==q.answer){
+        else if(selectedAnswers[index] == q.answer){
 
             correct++;
 
@@ -441,152 +413,130 @@ function calculateResult(){
 
     return {
 
-        score:correct,
-        correct,
-        wrong,
-        skipped
+        score: correct,
+        correct: correct,
+        wrong: wrong,
+        skipped: skipped
 
     };
 
 }
 
-
-
 // =========================
 // SUBMIT BUTTON
 // =========================
 
-document.getElementById("submitBtn").onclick=()=>{
+document.getElementById("submitBtn").onclick = ()=>{
 
-    document.getElementById(
-    "submitConfirm"
-    ).style.display="block";
+    document.getElementById("submitConfirm").style.display="block";
 
 };
 
-document.getElementById("cancelSubmit").onclick=()=>{
+document.getElementById("cancelSubmit").onclick = ()=>{
 
-    document.getElementById(
-    "submitConfirm"
-    ).style.display="none";
+    document.getElementById("submitConfirm").style.display="none";
 
 };
 
-document.getElementById("confirmSubmit").onclick=()=>{
+document.getElementById("confirmSubmit").onclick = async ()=>{
 
-    submitTest();
+    document.getElementById("submitConfirm").style.display="none";
+
+    await submitTest();
 
 };
-
-
-
 // =========================
-// SAVE RESULT
+// SAVE RESULT FIREBASE
 // =========================
 
 async function saveResult(result){
 
     const user = auth.currentUser;
 
-    await addDoc(
+    if(!user){
 
-        collection(db,"results"),
+        alert("User Not Logged In");
 
-        {
+        return;
+    }
 
-            studentId:user.uid,
+    await addDoc(collection(db,"results"),{
 
-            studentName:
-            localStorage.getItem("studentName") || "Student",
+        studentId : user.uid,
 
-            district:
-            localStorage.getItem("district") || "-",
+        studentName :
+        localStorage.getItem("studentName") || "Student",
 
-            examType:
-            localStorage.getItem("examGoal") || "TNUSRB",
+        district :
+        localStorage.getItem("district") || "-",
 
-            testType:testType,
+        examType :
+        localStorage.getItem("examGoal") || "TNUSRB",
 
-            score:result.score,
+        testType : testType,
 
-            total:testQuestions.length,
+        score : result.score,
 
-            correct:result.correct,
+        total : testQuestions.length,
 
-            wrong:result.wrong,
+        correct : result.correct,
 
-            skipped:result.skipped,
+        wrong : result.wrong,
 
-            answers:selectedAnswers,
+        skipped : result.skipped,
 
-            questions:testQuestions,
+        answers : selectedAnswers,
 
-            timestamp:serverTimestamp()
+        questions : testQuestions,
 
-        }
+        timestamp : serverTimestamp()
 
-    );
+    });
 
 }
 
-
-
 // =========================
-// SUBMIT TEST
-// =========================
-
-async function submitTest(){
-
-    clearInterval(timer);
-
-    let result = calculateResult();
-
-    await saveResult(result);
-
-    window.location.href="result.html";
-
-        }
-
-
-
-// =========================
-// SAVE RESULT TO LOCAL
+// SAVE RESULT LOCAL
 // =========================
 
 function saveResultLocal(result){
 
     localStorage.setItem("lastResult",JSON.stringify({
 
-        score:result.score,
+        score : result.score,
 
-        total:testQuestions.length,
+        total : testQuestions.length,
 
-        correct:result.correct,
+        correct : result.correct,
 
-        wrong:result.wrong,
+        wrong : result.wrong,
 
-        skipped:result.skipped,
+        skipped : result.skipped,
 
-        answers:selectedAnswers,
+        answers : selectedAnswers,
 
-        questions:testQuestions,
+        questions : testQuestions,
 
-        testType:testType,
+        testType : testType,
 
-        examType:
+        examType :
         localStorage.getItem("examGoal") || "TNUSRB"
 
     }));
 
 }
 
-
-
 // =========================
 // SUBMIT TEST
 // =========================
 
+let submitted = false;
+
 async function submitTest(){
+
+    if(submitted) return;
+
+    submitted = true;
 
     try{
 
@@ -606,7 +556,7 @@ async function submitTest(){
             testQuestions.length
         );
 
-        window.location.href="result.html";
+        window.location.href = "result.html";
 
     }
 
@@ -614,39 +564,19 @@ async function submitTest(){
 
         console.error(error);
 
+        submitted = false;
+
         alert("❌ Result Save Failed");
 
     }
 
 }
 
-
-
 // =========================
-// PREVENT DOUBLE SUBMIT
+// PREVENT EXIT
 // =========================
 
-let submitted=false;
-
-const oldSubmit=submitTest;
-
-submitTest=async function(){
-
-    if(submitted) return;
-
-    submitted=true;
-
-    await oldSubmit();
-
-};
-
-
-
-// =========================
-// PAGE EXIT WARNING
-// =========================
-
-window.onbeforeunload=function(){
+window.onbeforeunload = function(){
 
     if(!submitted){
 
@@ -655,8 +585,6 @@ window.onbeforeunload=function(){
     }
 
 };
-
-
 
 // =========================
 // FINAL READY
