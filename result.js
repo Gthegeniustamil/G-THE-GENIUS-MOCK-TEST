@@ -128,7 +128,7 @@ reviewContainer.innerHTML = "";
 
 
 questions.forEach((q,index)=>{
-
+console.log(q);
 
 let userAnswer = userAnswers[index];
 
