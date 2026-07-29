@@ -1,566 +1,1177 @@
-// ================= FIREBASE IMPORT =================
+// =========================
+// G THE GENIUS ADMIN JS
+// PART 1
+// =========================
 
-import { db, auth } from "./firebase-config.js";
+
+import { db } from "./firebase-config.js";
 
 
 import {
-signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-
-import {
 collection,
 addDoc,
+serverTimestamp,
 getDocs,
 deleteDoc,
-doc,
-serverTimestamp
+doc
+
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-// ================= LOGOUT =================
 
 
-const logoutBtn =
-document.getElementById("logoutBtn");
+// =========================
+// ADD SINGLE QUESTION
+// =========================
 
 
-if(logoutBtn){
+const addBtn =
 
-
-logoutBtn.onclick = async()=>{
-
-
-await signOut(auth);
-
-
-window.location.href =
-"admin-login.html";
-
-
-};
-
-
-}
-
-
-
-
-// ================= BULK SUBJECT TOPIC =================
-
-
-const bulkSubject =
-document.getElementById("bulkSubject");
-
-
-const bulkTopic =
-document.getElementById("bulkTopic");
-
-
-
-const bulkTopics = {
-
-
-"General Knowledge":[
-"Indian GK",
-"World GK",
-"Important Days",
-"Books and Authors",
-"Awards",
-"Sports",
-"Organizations",
-"States and Capitals",
-"National Symbols"
-],
-
-
-"Indian Polity":[
-"Constitution",
-"Fundamental Rights",
-"Parliament",
-"President",
-"Governor",
-"Judiciary"
-],
-
-
-"Indian History":[
-"Ancient India",
-"Medieval India",
-"Modern India",
-"Freedom Struggle"
-],
-
-
-"Indian Geography":[
-"Physical Geography",
-"Rivers",
-"Climate",
-"Soil"
-],
-
-
-"Indian Economy":[
-"Banking",
-"Budget",
-"Tax",
-"Finance"
-],
-
-
-"General Science":[
-"Physics",
-"Chemistry",
-"Biology",
-"Scientific Facts"
-],
-
-
-"Psychology":[
-"Memory",
-"Concentration",
-"Confidence",
-"Stress Management"
-],
-
-
-"Physical Training":[
-"Running",
-"Long Jump",
-"High Jump",
-"Rope Climbing"
-],
-
-
-"Current Affairs":[
-"National",
-"International",
-"Sports",
-"Awards"
-],
-
-
-"Reasoning":[
-"Analogy",
-"Series",
-"Coding Decoding",
-"Blood Relation"
-],
-
-
-"Aptitude":[
-"Percentage",
-"Profit and Loss",
-"Time and Work",
-"Ratio"
-],
-
-
-"Computer":[
-"Basics",
-"Hardware",
-"Software",
-"Internet"
-],
-
-
-"Tamil":[
-"Grammar",
-"Literature",
-"Authors",
-"Poems"
-],
-
-
-"English":[
-"Grammar",
-"Vocabulary",
-"Synonyms",
-"Antonyms"
-],
-
-
-"TNUSRB Special":[
-"Police GK",
-"Police Act",
-"Previous Questions"
-],
-
-
-"TNPSC Special":[
-"Tamil Nadu GK",
-"Government Schemes",
-"Previous Questions"
-]
-
-};
-
-
-
-
-// LOAD TOPIC
-
-
-if(bulkSubject && bulkTopic){
-
-
-bulkSubject.onchange = ()=>{
-
-
-let subject =
-bulkSubject.value;
-
-
-
-bulkTopic.innerHTML = `
-
-<option value="">
-📂 Select Topic
-</option>
-
-`;
-
-
-
-if(bulkTopics[subject]){
-
-
-bulkTopics[subject].forEach(topic=>{
-
-
-bulkTopic.innerHTML += `
-
-<option value="${topic}">
-${topic}
-</option>
-
-`;
-
-
-});
-
-
-}
-
-
-
-};
-
-
-}
-
-// ================= BULK UPLOAD =================
-
-const uploadBtn = document.getElementById("uploadBtn");
-const bulkJson = document.getElementById("bulkJson");
-const uploadStatus = document.getElementById("uploadStatus");
-
-if (uploadBtn) {
-
-uploadBtn.onclick = async function () {
-
-const selectedSubject = bulkSubject.value;
-const selectedTopic = bulkTopic.value;
-
-if (selectedSubject === "") {
-alert("Please Select Subject");
-return;
-}
-
-if (selectedTopic === "") {
-alert("Please Select Topic");
-return;
-}
-
-const jsonText = bulkJson.value.trim();
-
-if (jsonText === "") {
-alert("Paste JSON Questions");
-return;
-}
-
-try {
-
-const questions = JSON.parse(jsonText);
-
-if (!Array.isArray(questions)) {
-alert("JSON must be an Array");
-return;
-}
-
-uploadBtn.disabled = true;
-uploadStatus.innerHTML = "⏳ Uploading...";
-
-const snapshot = await getDocs(
-collection(db, "questions")
+document.getElementById(
+"addQuestionBtn"
 );
 
-const existingQuestions = new Set();
 
-snapshot.forEach((docSnap) => {
 
-const data = docSnap.data();
 
-if (data.question) {
 
-existingQuestions.add(
-data.question.trim().toLowerCase()
-);
 
-}
+if(addBtn){
 
-});
 
-let added = 0;
-let duplicate = 0;
-let failed = 0;
 
-for (const q of questions) {
+addBtn.onclick = async ()=>{
 
-try {
 
-if (
-!q.question ||
-!Array.isArray(q.options) ||
-q.options.length !== 4
-) {
-
-failed++;
-continue;
-
-}
-
-const questionText =
-q.question.trim().toLowerCase();
-
-if (existingQuestions.has(questionText)) {
-
-duplicate++;
-continue;
-
-}
-
-await addDoc(
-collection(db, "questions"),
-{
-
-question: q.question.trim(),
-
-options: q.options,
-
-answer: Number(q.answer),
-
-explanation:
-q.explanation || "",
-
-subject: selectedSubject,
-
-topic: selectedTopic,
-
-createdAt:
-serverTimestamp()
-
-}
-
-);
-
-existingQuestions.add(questionText);
-
-added++;
-
-}
-catch (err) {
-
-console.error(err);
-
-failed++;
-
-}
-
-}
-
-uploadBtn.disabled = false;
-
-uploadStatus.innerHTML = `
-
-<h3>✅ Upload Completed</h3>
-
-<p>📦 Added : ${added}</p>
-
-<p>⏭️ Duplicate : ${duplicate}</p>
-
-<p>❌ Failed : ${failed}</p>
-
-`;
-
-bulkJson.value = "";
-
-}
-catch (error) {
-
-console.error(error);
-
-uploadBtn.disabled = false;
-
-uploadStatus.innerHTML =
-"❌ Invalid JSON Format";
-
-}
-
-};
-
-  }
-
-// ================= LOAD QUESTIONS =================
-
-async function loadQuestions() {
-
-const questionList =
-document.getElementById("questionList");
-
-const questionCount =
-document.getElementById("questionCount");
-
-if(!questionList) return;
-
-questionList.innerHTML = "Loading...";
-
-const snapshot =
-await getDocs(collection(db,"questions"));
-
-questionList.innerHTML = "";
-
-if(questionCount){
-
-questionCount.innerHTML =
-"📚 Total Questions : " + snapshot.size;
-
-}
-
-snapshot.forEach((questionDoc)=>{
-
-const q = questionDoc.data();
-
-questionList.innerHTML += `
-
-<div class="question-card">
-
-<h3>${q.question}</h3>
-
-<p><b>📚 Subject :</b> ${q.subject || "-"}</p>
-
-<p><b>📂 Topic :</b> ${q.topic || "-"}</p>
-
-<p><b>A.</b> ${q.options[0]}</p>
-<p><b>B.</b> ${q.options[1]}</p>
-<p><b>C.</b> ${q.options[2]}</p>
-<p><b>D.</b> ${q.options[3]}</p>
-
-<p><b>✅ Answer :</b>
-${q.options[q.answer]}
-</p>
-
-<button onclick="deleteQuestion('${questionDoc.id}')">
-🗑 Delete
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-
-// ================= DELETE QUESTION =================
-
-window.deleteQuestion = async function(id){
-
-if(!confirm("Delete this Question?")) return;
 
 try{
 
-await deleteDoc(doc(db,"questions",id));
 
-alert("Question Deleted");
 
-loadQuestions();
+let subject =
+
+document.getElementById(
+"subject"
+).value;
+
+
+
+
+
+let topic =
+
+document.getElementById(
+"topic"
+).value;
+
+
+
+
+
+let question =
+
+document.getElementById(
+"question"
+).value;
+
+
+
+
+
+let options = [
+
+
+
+document.getElementById(
+"optionA"
+).value,
+
+
+
+document.getElementById(
+"optionB"
+).value,
+
+
+
+document.getElementById(
+"optionC"
+).value,
+
+
+
+document.getElementById(
+"optionD"
+).value
+
+
+
+];
+
+
+
+
+
+let answer =
+
+Number(
+
+document.getElementById(
+"answer"
+).value
+
+);
+
+
+
+
+
+let explanation =
+
+document.getElementById(
+"explanation"
+).value;
+
+
+
+
+
+
+
+if(
+
+!question ||
+
+!topic
+
+){
+
+
+alert(
+"Please fill Question and Topic"
+);
+
+
+return;
+
 
 }
+
+
+
+
+
+
+
+
+await addDoc(
+
+collection(
+
+db,
+
+"questions"
+
+),
+
+{
+
+
+subject:
+
+subject,
+
+
+topic:
+
+topic,
+
+
+question:
+
+question,
+
+
+options:
+
+options,
+
+
+answer:
+
+answer,
+
+
+explanation:
+
+explanation,
+
+
+
+createdAt:
+
+serverTimestamp()
+
+
+
+}
+
+
+
+);
+
+
+
+
+
+
+
+alert(
+
+"✅ Question Added Successfully"
+
+);
+
+
+
+
+
+
+
+// CLEAR FORM
+
+
+document.getElementById(
+"topic"
+).value="";
+
+
+
+document.getElementById(
+"question"
+).value="";
+
+
+
+document.getElementById(
+"optionA"
+).value="";
+
+
+
+document.getElementById(
+"optionB"
+).value="";
+
+
+
+document.getElementById(
+"optionC"
+).value="";
+
+
+
+document.getElementById(
+"optionD"
+).value="";
+
+
+
+document.getElementById(
+"explanation"
+).value="";
+
+
+
+
+
+
+}
+
+
+
 catch(error){
 
-console.error(error);
 
-alert("Delete Failed");
+
+console.log(
+
+"Add Question Error",
+
+error
+
+);
+
+
+
+alert(
+
+"❌ Error Adding Question"
+
+);
+
+
 
 }
+
+
+
+
 
 };
 
 
 
-// ================= SEARCH =================
+}
 
-const searchQuestion =
-document.getElementById("searchQuestion");
 
-if(searchQuestion){
 
-searchQuestion.onkeyup=function(){
 
-const value =
-this.value.toLowerCase();
 
-document.querySelectorAll(".question-card")
-.forEach(card=>{
 
-card.style.display =
-card.innerText
-.toLowerCase()
-.includes(value)
-? "block"
-: "none";
+
+console.log(
+
+"✅ Admin Single Upload Ready"
+
+);
+
+// =========================
+// BULK QUESTION UPLOAD
+// PART 2
+// =========================
+
+
+
+let bulkQuestions = [];
+
+
+
+
+// =========================
+// READ JSON FILE
+// =========================
+
+
+const jsonFile =
+
+document.getElementById(
+"jsonFile"
+);
+
+
+
+if(jsonFile){
+
+
+
+jsonFile.onchange = (event)=>{
+
+
+let file =
+
+event.target.files[0];
+
+
+
+if(!file) return;
+
+
+
+
+let reader =
+
+new FileReader();
+
+
+
+
+
+reader.onload = ()=>{
+
+
+
+try{
+
+
+bulkQuestions =
+
+JSON.parse(
+
+reader.result
+
+);
+
+
+
+
+
+document.getElementById(
+"questionCount"
+).innerHTML =
+
+bulkQuestions.length;
+
+
+
+
+
+
+alert(
+
+"✅ JSON Loaded Successfully"
+
+);
+
+
+
+}
+
+
+
+catch(error){
+
+
+alert(
+
+"❌ Invalid JSON File"
+
+);
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+reader.readAsText(file);
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// BULK UPLOAD TO FIREBASE
+// =========================
+
+
+const bulkBtn =
+
+document.getElementById(
+"bulkUploadBtn"
+);
+
+
+
+
+
+if(bulkBtn){
+
+
+
+bulkBtn.onclick = async ()=>{
+
+
+
+if(
+
+bulkQuestions.length===0
+
+){
+
+
+alert(
+
+"Please Select JSON File"
+
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+let subject =
+
+document.getElementById(
+"bulkSubject"
+).value;
+
+
+
+
+
+let topic =
+
+document.getElementById(
+"bulkTopic"
+).value;
+
+
+
+
+
+
+try{
+
+
+
+bulkBtn.innerHTML =
+
+"Uploading...";
+
+
+
+
+
+
+for(let q of bulkQuestions){
+
+
+
+await addDoc(
+
+collection(
+
+db,
+
+"questions"
+
+),
+
+{
+
+
+subject:
+
+q.subject || subject,
+
+
+
+topic:
+
+q.topic || topic,
+
+
+
+question:
+
+q.question,
+
+
+
+options:
+
+q.options,
+
+
+
+answer:
+
+Number(q.answer),
+
+
+
+explanation:
+
+q.explanation || "",
+
+
+
+createdAt:
+
+serverTimestamp()
+
+
+
+}
+
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+alert(
+
+"🎉 All Questions Uploaded Successfully"
+
+);
+
+
+
+
+
+bulkQuestions=[];
+
+
+
+document.getElementById(
+"questionCount"
+).innerHTML="0";
+
+
+
+bulkBtn.innerHTML =
+
+"🚀 Upload Questions";
+
+
+
+}
+
+
+
+
+
+catch(error){
+
+
+
+console.log(
+
+"Bulk Upload Error",
+
+error
+
+);
+
+
+
+alert(
+
+"❌ Upload Failed"
+
+);
+
+
+
+bulkBtn.innerHTML =
+
+"🚀 Upload Questions";
+
+
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+console.log(
+
+"✅ Bulk Upload System Ready"
+
+);
+
+  // =========================
+// QUESTION MANAGEMENT
+// PART 3
+// =========================
+
+
+import {
+
+getDocs,
+deleteDoc,
+doc
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+
+let allQuestions = [];
+
+
+
+
+
+
+
+
+// =========================
+// LOAD QUESTIONS
+// =========================
+
+
+async function loadQuestionsAdmin(){
+
+
+
+const list =
+
+document.getElementById(
+"questionList"
+);
+
+
+
+if(!list) return;
+
+
+
+list.innerHTML =
+
+"Loading Questions...";
+
+
+
+
+
+try{
+
+
+
+const snap =
+
+await getDocs(
+
+collection(
+db,
+"questions"
+)
+
+);
+
+
+
+
+
+allQuestions=[];
+
+
+
+snap.forEach(item=>{
+
+
+
+allQuestions.push({
+
+
+id:item.id,
+
+
+...item.data()
+
+
 
 });
 
+
+
+});
+
+
+
+
+
+displayQuestions(allQuestions);
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.log(
+
+"Load Error",
+
+error
+
+);
+
+
+
+list.innerHTML =
+
+"Error Loading Questions";
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// DISPLAY QUESTIONS
+// =========================
+
+
+function displayQuestions(data){
+
+
+
+let list =
+
+document.getElementById(
+"questionList"
+);
+
+
+
+if(!list) return;
+
+
+
+
+list.innerHTML="";
+
+
+
+
+
+data.forEach(q=>{
+
+
+
+let div =
+
+document.createElement(
+"div"
+);
+
+
+
+div.className=
+
+"question-item";
+
+
+
+
+
+div.innerHTML=
+
+
+
+`
+
+<h3>
+
+${q.question}
+
+</h3>
+
+
+<p>
+
+📚 Subject :
+
+<span>${q.subject}</span>
+
+</p>
+
+
+<p>
+
+📌 Topic :
+
+<span>${q.topic}</span>
+
+</p>
+
+
+<p>
+
+A) ${q.options[0]}
+
+<br>
+
+B) ${q.options[1]}
+
+<br>
+
+C) ${q.options[2]}
+
+<br>
+
+D) ${q.options[3]}
+
+</p>
+
+
+
+<p>
+
+✅ Answer :
+
+${q.answer}
+
+</p>
+
+
+
+<button
+
+class="delete-btn"
+
+onclick="deleteQuestion('${q.id}')"
+
+>
+
+🗑 Delete
+
+</button>
+
+`;
+
+
+list.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// DELETE QUESTION
+// =========================
+
+
+window.deleteQuestion = async function(id){
+
+
+
+let confirmDelete =
+
+confirm(
+
+"Delete this question?"
+
+);
+
+
+
+if(!confirmDelete)
+
+return;
+
+
+
+
+
+
+try{
+
+
+await deleteDoc(
+
+doc(
+
+db,
+
+"questions",
+
+id
+
+)
+
+);
+
+
+
+
+
+alert(
+
+"✅ Question Deleted"
+
+);
+
+
+
+loadQuestionsAdmin();
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.log(
+
+"Delete Error",
+
+error
+
+);
+
+
+
+}
+
+
+
 };
 
-}
 
 
 
-// ================= DASHBOARD STATS =================
-
-async function loadDashboardStats(){
-
-const totalQuestions =
-document.getElementById("totalQuestions");
-
-if(!totalQuestions) return;
-
-const snapshot =
-await getDocs(collection(db,"questions"));
-
-totalQuestions.innerHTML =
-snapshot.size;
-
-}
 
 
 
-// ================= PAGE LOAD =================
 
-window.addEventListener(
-"DOMContentLoaded",
-async()=>{
+// =========================
+// SEARCH QUESTION
+// =========================
 
-await loadQuestions();
 
-await loadDashboardStats();
+const searchBtn =
 
-}
+document.getElementById(
+"searchBtn"
 );
+
+
+
+if(searchBtn){
+
+
+
+searchBtn.onclick = ()=>{
+
+
+
+let text =
+
+document.getElementById(
+"searchQuestion"
+).value
+
+.toLowerCase();
+
+
+
+
+
+
+let result =
+
+allQuestions.filter(q=>
+
+
+
+q.question
+
+.toLowerCase()
+
+.includes(text)
+
+
+
+);
+
+
+
+
+
+displayQuestions(result);
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// START ADMIN
+// =========================
+
+
+loadQuestionsAdmin();
+
+
+
+console.log(
+
+"✅ Admin Panel Final Ready"
+
+);
+
