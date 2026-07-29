@@ -260,3 +260,243 @@ grid-template-columns:1fr;
 
 
 }
+
+/* ================= TAB SECTIONS ================= */
+
+.section{
+
+    margin-top:25px;
+
+    animation:fade .3s ease;
+
+}
+
+
+/* HIDE EMPTY SECTION */
+
+.section[style*="display: none"]{
+
+    display:none !important;
+
+}
+
+
+
+@keyframes fade{
+
+from{
+
+    opacity:0;
+
+    transform:translateY(10px);
+
+}
+
+to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+}
+
+
+
+
+
+/* BULK UPLOAD */
+
+
+.bulk-upload{
+
+    background:white;
+
+    color:#001f4d;
+
+    padding:20px;
+
+    border-radius:25px;
+
+    margin-top:25px;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.3);
+
+}
+
+
+
+.bulk-upload h2{
+
+    color:#001f4d;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.bulk-upload textarea{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    border:1px solid #ccc;
+
+    font-size:14px;
+
+}
+
+
+
+.bulk-upload button{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#001f4d;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+/* MANAGE QUESTIONS */
+
+
+.manage-questions,
+.results-section{
+
+
+    background:white;
+
+    color:#001f4d;
+
+    padding:20px;
+
+    border-radius:25px;
+
+    margin-top:25px;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.3);
+
+}
+
+
+
+.manage-questions input,
+.results-section input{
+
+
+    width:100%;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    border:1px solid #ccc;
+
+    margin-top:10px;
+
+}
+
+
+
+
+/* QUESTION CARD */
+
+
+.question-card,
+.result-card{
+
+
+    background:#f5f7fb;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    color:#001f4d;
+
+}
+
+
+
+.question-card button,
+.result-card button{
+
+
+    margin-top:10px;
+
+    padding:10px 15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#001f4d;
+
+    color:white;
+
+}
+
+
+
+
+
+/* DELETE BUTTON */
+
+
+#removeDuplicateBtn{
+
+    background:#d32f2f;
+
+}
+
+
+
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+
+.admin-container{
+
+    padding:10px;
+
+}
+
+
+.admin-header{
+
+    border-radius:20px;
+
+}
+
+
+    }
