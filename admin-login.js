@@ -1,57 +1,81 @@
-import { auth } from "./firebase-config.js";
+// =========================
+// G THE GENIUS ADMIN LOGIN JS
+// =========================
+
+
+import { auth, db } from "./firebase-config.js";
 
 
 import {
 
-signInWithEmailAndPassword
+signInWithEmailAndPassword,
+onAuthStateChanged
 
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
+import {
 
+doc,
+getDoc
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+
+// =========================
+// ADMIN LOGIN
+// =========================
 
 
 const loginBtn =
-document.getElementById("loginBtn");
+
+document.getElementById(
+"adminLoginBtn"
+);
 
 
 
 
 
-loginBtn.onclick = async function(){
+if(loginBtn){
+
+
+
+loginBtn.onclick = async ()=>{
+
 
 
 let email =
-document.getElementById("email").value;
+
+document.getElementById(
+"adminEmail"
+).value;
+
+
+
 
 
 let password =
-document.getElementById("password").value;
 
-
-
-let message =
-document.getElementById("message");
-
+document.getElementById(
+"adminPassword"
+).value;
 
 
 
 
-if(email==="" || password===""){
 
+let errorBox =
 
-message.innerHTML =
-"⚠️ Enter Email and Password";
+document.getElementById(
+"loginError"
+);
 
-
-return;
-
-
-}
 
 
 
@@ -59,6 +83,15 @@ return;
 
 try{
 
+
+
+errorBox.innerHTML="";
+
+
+
+
+
+const result =
 
 await signInWithEmailAndPassword(
 
@@ -71,20 +104,86 @@ password
 );
 
 
-console.log("Login Success");
-  
-message.innerHTML =
-"✅ Login Successful";
 
 
 
-setTimeout(()=>{
+
+const user =
+
+result.user;
 
 
-window.location.href="admin.html";
 
 
-},1000);
+
+
+// CHECK ADMIN DATA
+
+
+const adminRef =
+
+doc(
+
+db,
+
+"admins",
+
+user.uid
+
+);
+
+
+
+
+
+
+const adminSnap =
+
+await getDoc(adminRef);
+
+
+
+
+
+
+
+if(
+
+adminSnap.exists()
+
+){
+
+
+
+localStorage.setItem(
+
+"isAdmin",
+
+"true"
+
+);
+
+
+
+window.location.href =
+
+"admin.html";
+
+
+
+}
+
+else{
+
+
+
+errorBox.innerHTML =
+
+"❌ You are not an Admin";
+
+
+
+auth.signOut();
 
 
 
@@ -92,14 +191,28 @@ window.location.href="admin.html";
 
 
 
+}
+
+
+
+
+
 catch(error){
 
 
-console.log(error);
+
+console.log(
+
+error
+
+);
 
 
-message.innerHTML =
+
+errorBox.innerHTML =
+
 "❌ Invalid Email or Password";
+
 
 
 }
@@ -107,3 +220,93 @@ message.innerHTML =
 
 
 };
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// AUTO CHECK
+// =========================
+
+
+onAuthStateChanged(
+
+auth,
+
+async(user)=>{
+
+
+
+if(!user) return;
+
+
+
+
+
+
+const adminRef =
+
+doc(
+
+db,
+
+"admins",
+
+user.uid
+
+);
+
+
+
+
+
+
+const snap =
+
+await getDoc(adminRef);
+
+
+
+
+
+if(
+
+snap.exists()
+
+){
+
+
+
+console.log(
+
+"Admin Verified"
+
+);
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+console.log(
+
+"✅ Admin Login System Ready"
+
+);
