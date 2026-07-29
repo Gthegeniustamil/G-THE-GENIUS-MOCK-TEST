@@ -346,7 +346,8 @@ db,
 
 );
 
-
+alert("Questions Loaded : " + snap.size);
+console.log("Questions Loaded :", snap.size);
 
 
 
@@ -544,14 +545,8 @@ startTimer();
 }
 
 catch(error){
-
-
-console.log(
-"Question Load Error",
-error
-);
-
-
+    console.error(error);
+    alert("Error : " + error.message);
 }
 
 
@@ -648,7 +643,16 @@ loadMockQuestions();
 // =========================
 // SHOW QUESTION
 // =========================
+function showQuestion(){
 
+    alert("showQuestion Called");
+
+    let q = testQuestions[currentIndex];
+
+    if(!q) return;
+
+    ...
+}
 
 function showQuestion(){
 
