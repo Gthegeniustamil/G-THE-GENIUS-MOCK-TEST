@@ -1340,3 +1340,235 @@ error
 // LOAD STATS
 
 loadAdminStats();
+
+
+// =========================
+// SUBJECT TOPIC FILTER
+// =========================
+
+
+const filterSubject =
+
+document.getElementById(
+"filterSubject"
+);
+
+
+const filterTopic =
+
+document.getElementById(
+"filterTopic"
+);
+
+
+const filterBtn =
+
+document.getElementById(
+"filterBtn"
+);
+
+
+
+
+
+
+
+// =========================
+// LOAD TOPICS BASED ON SUBJECT
+// =========================
+
+
+if(filterSubject){
+
+
+
+filterSubject.onchange = ()=>{
+
+
+let subject =
+
+filterSubject.value;
+
+
+
+
+let topics = [];
+
+
+
+
+
+allQuestions.forEach(q=>{
+
+
+if(
+
+subject==="all" ||
+
+q.subject===subject
+
+){
+
+
+
+if(
+
+!topics.includes(q.topic)
+
+){
+
+
+topics.push(q.topic);
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+filterTopic.innerHTML =
+
+`<option value="all">
+All Topics
+</option>`;
+
+
+
+
+
+
+topics.forEach(topic=>{
+
+
+
+filterTopic.innerHTML +=
+
+
+`
+
+<option value="${topic}">
+
+${topic}
+
+</option>
+
+`;
+
+
+
+});
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// FILTER QUESTIONS
+// =========================
+
+
+if(filterBtn){
+
+
+
+filterBtn.onclick = ()=>{
+
+
+
+let subject =
+
+filterSubject.value;
+
+
+
+let topic =
+
+filterTopic.value;
+
+
+
+
+
+let result =
+
+allQuestions.filter(q=>{
+
+
+
+let subjectMatch =
+
+
+subject==="all" ||
+
+q.subject===subject;
+
+
+
+
+
+
+let topicMatch =
+
+
+topic==="all" ||
+
+q.topic===topic;
+
+
+
+
+
+
+return subjectMatch && topicMatch;
+
+
+
+});
+
+
+
+
+
+
+displayQuestions(result);
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+console.log(
+
+"✅ Subject Topic Filter Ready"
+
+);
