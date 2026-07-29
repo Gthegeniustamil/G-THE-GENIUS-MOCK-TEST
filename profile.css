@@ -1,5 +1,6 @@
 /* =========================
 G THE GENIUS PROFILE CSS
+PART 1
 ========================= */
 
 
@@ -13,22 +14,32 @@ font-family:'Poppins',sans-serif;
 }
 
 
+
 body{
 
+
 background:
+
 linear-gradient(
 180deg,
 #081229,
 #102451
 );
 
+
 color:white;
+
 
 min-height:100vh;
 
+
 padding-bottom:90px;
 
+
 }
+
+
+
 
 
 
@@ -39,21 +50,37 @@ HEADER
 
 .profile-header{
 
+
 display:flex;
+
 
 align-items:center;
 
+
 gap:15px;
+
 
 padding:20px;
 
+
+
 background:
+
 rgba(255,255,255,.08);
 
-backdrop-filter:blur(15px);
+
+
+backdrop-filter:
+
+blur(15px);
+
+
 
 border-bottom:
+
 1px solid rgba(255,215,0,.3);
+
+
 
 }
 
@@ -61,21 +88,30 @@ border-bottom:
 
 .profile-logo{
 
-width:65px;
 
-height:65px;
+width:70px;
+
+
+height:70px;
+
 
 border-radius:50%;
 
+
 object-fit:cover;
+
+
 
 border:
 
 3px solid #FFD700;
 
+
 background:white;
 
+
 padding:2px;
+
 
 }
 
@@ -83,9 +119,12 @@ padding:2px;
 
 .profile-header h2{
 
+
 color:#FFD700;
 
-font-size:22px;
+
+font-size:24px;
+
 
 }
 
@@ -93,11 +132,18 @@ font-size:22px;
 
 .profile-header p{
 
+
 color:#ddd;
+
 
 font-size:13px;
 
+
 }
+
+
+
+
 
 
 
@@ -108,25 +154,46 @@ PROFILE CARD
 
 .profile-card{
 
+
 margin:20px;
 
-padding:25px;
+
+padding:30px;
+
 
 text-align:center;
 
-border-radius:25px;
+
+
+border-radius:30px;
+
+
 
 background:
 
-rgba(255,255,255,.08);
+linear-gradient(
+
+135deg,
+
+rgba(255,215,0,.18),
+
+rgba(255,255,255,.08)
+
+);
+
 
 
 border:
 
-1px solid rgba(255,215,0,.25);
+1px solid rgba(255,215,0,.35);
 
 
-backdrop-filter:blur(15px);
+
+box-shadow:
+
+0 0 25px rgba(255,215,0,.15);
+
+
 
 }
 
@@ -134,33 +201,31 @@ backdrop-filter:blur(15px);
 
 .student-avatar{
 
-width:90px;
 
-height:90px;
-
-margin:auto;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
+width:120px;
 
 
-font-size:45px;
+height:120px;
 
 
 border-radius:50%;
 
 
-background:
+object-fit:cover;
 
-rgba(255,215,0,.15);
 
 
 border:
 
-3px solid #FFD700;
+4px solid #FFD700;
+
+
+
+background:white;
+
+
+padding:3px;
+
 
 
 }
@@ -169,9 +234,12 @@ border:
 
 .profile-card h2{
 
+
 margin-top:15px;
 
+
 color:#FFD700;
+
 
 }
 
@@ -179,11 +247,26 @@ color:#FFD700;
 
 .profile-card p{
 
+
 margin-top:10px;
+
 
 color:#ddd;
 
+
 }
+
+
+
+.profile-card span{
+
+
+color:#FFD700;
+
+
+}
+
+
 
 
 
@@ -196,11 +279,374 @@ LEVEL CARD
 
 .level-card{
 
+
 margin:20px;
 
-padding:22px;
+
+padding:25px;
+
 
 border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.level-card h2{
+
+
+color:#FFD700;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+.level-info{
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+
+}
+
+
+
+.level-info h1{
+
+
+color:#FFD700;
+
+
+font-size:28px;
+
+
+}
+
+
+
+.level-info p{
+
+
+color:#ddd;
+
+
+}
+
+
+
+
+
+
+
+/* XP BAR */
+
+
+.xp-container{
+
+
+height:14px;
+
+
+background:#222;
+
+
+border-radius:20px;
+
+
+overflow:hidden;
+
+
+margin-top:20px;
+
+
+}
+
+
+
+#profileXPBar{
+
+
+height:100%;
+
+
+width:0%;
+
+
+background:#FFD700;
+
+
+border-radius:20px;
+
+
+transition:.5s;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+STATISTICS CARD
+========================= */
+
+
+.stats-card{
+
+
+margin:20px;
+
+
+padding:25px;
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.stats-card h2{
+
+
+color:#FFD700;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+.stats-grid{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+
+repeat(3,1fr);
+
+
+
+gap:12px;
+
+
+}
+
+
+
+.stats-grid div{
+
+
+padding:18px 10px;
+
+
+text-align:center;
+
+
+
+border-radius:20px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+}
+
+
+
+.stats-grid h2{
+
+
+color:#FFD700;
+
+
+font-size:26px;
+
+
+}
+
+
+
+.stats-grid p{
+
+
+font-size:12px;
+
+
+color:#ddd;
+
+
+}
+
+/* =========================
+BADGE SECTION
+========================= */
+
+
+.badge-section{
+
+
+margin:20px;
+
+
+padding:25px;
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.badge-section h2{
+
+
+color:#FFD700;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+#profileBadges{
+
+
+display:flex;
+
+
+flex-wrap:wrap;
+
+
+gap:12px;
+
+
+}
+
+
+
+.badge-item{
+
+
+padding:12px 18px;
+
+
+border-radius:20px;
+
+
+
+background:
+
+rgba(255,215,0,.15);
+
+
+
+border:
+
+1px solid #FFD700;
+
+
+
+color:#FFD700;
+
+
+font-weight:bold;
+
+
+font-size:14px;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ACHIEVEMENT CARD
+========================= */
+
+
+.achievement-card{
+
+
+margin:20px;
+
+
+padding:25px;
+
+
+border-radius:25px;
+
 
 
 background:
@@ -216,342 +662,132 @@ rgba(255,255,255,.08)
 );
 
 
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-}
-
-
-
-.level-card h2{
-
-color:#FFD700;
-
-margin-bottom:15px;
-
-}
-
-
-
-.xp-info{
-
-display:flex;
-
-justify-content:space-between;
-
-margin-bottom:15px;
-
-}
-
-
-
-.xp-info p{
-
-color:#ddd;
-
-}
-
-
-
-.xp-bar{
-
-height:14px;
-
-width:100%;
-
-background:#222;
-
-border-radius:20px;
-
-overflow:hidden;
-
-}
-
-
-
-#xpProgress{
-
-height:100%;
-
-width:0%;
-
-background:#FFD700;
-
-border-radius:20px;
-
-transition:.5s;
-
-}
-
-
-
-/* =========================
-COMMON SECTION
-========================= */
-
-
-.badge-section,
-.performance-section,
-.history-section,
-.account-card{
-
-margin:20px;
-
-padding:22px;
-
-border-radius:25px;
-
-background:
-
-rgba(255,255,255,.08);
-
 
 border:
 
-1px solid rgba(255,215,0,.25);
+1px solid rgba(255,215,0,.3);
+
 
 
 }
 
 
 
-section h2{
+.achievement-card h2{
+
 
 color:#FFD700;
+
 
 margin-bottom:20px;
 
+
 }
 
-/* =========================
-BADGE GALLERY
-========================= */
 
 
-.badge-gallery{
+.achievement-grid{
+
 
 display:grid;
 
+
 grid-template-columns:
+
+
 repeat(3,1fr);
 
+
+
 gap:12px;
+
 
 }
 
 
 
-.badge-item{
+.achievement-grid div{
 
-padding:18px 5px;
 
 text-align:center;
+
+
+padding:18px 10px;
+
 
 border-radius:20px;
 
 
-background:
-
-rgba(255,215,0,.12);
-
-
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-font-size:30px;
-
-
-transition:.3s;
-
-
-}
-
-
-
-.badge-item p{
-
-font-size:12px;
-
-margin-top:8px;
-
-color:white;
-
-}
-
-
-
-.badge-item:hover{
-
-transform:
-
-translateY(-5px);
-
-
-box-shadow:
-
-0 0 20px rgba(255,215,0,.5);
-
-
-}
-
-
-
-
-
-/* =========================
-PERFORMANCE GRID
-========================= */
-
-
-.performance-grid{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(3,1fr);
-
-gap:12px;
-
-
-}
-
-
-
-.stat-card{
-
-padding:18px 5px;
-
-text-align:center;
-
-border-radius:18px;
-
 
 background:
 
 rgba(255,255,255,.08);
 
 
-border:
-
-1px solid rgba(255,215,0,.25);
-
 
 }
 
 
 
-.stat-card h3{
+.achievement-grid h1{
 
-font-size:22px;
 
 color:#FFD700;
 
+
+font-size:28px;
+
+
 }
 
 
 
-.stat-card p{
+.achievement-grid p{
+
 
 font-size:12px;
 
+
 color:#ddd;
 
-margin-top:5px;
 
 }
+
+
 
 
 
 
 
 /* =========================
-HISTORY CARD
+ACCOUNT BUTTON
 ========================= */
 
 
-#practiceHistory,
-#testHistory{
+.account-card{
 
 
-display:flex;
-
-flex-direction:column;
-
-gap:12px;
+margin:20px;
 
 
 }
 
 
 
-.history-card{
-
-padding:15px;
-
-border-radius:18px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-border:
-
-1px solid rgba(255,215,0,.2);
-
-
-}
-
-
-
-.history-card h3{
-
-color:#FFD700;
-
-font-size:16px;
-
-}
-
-
-
-.history-card p{
-
-color:#ddd;
-
-font-size:13px;
-
-margin-top:6px;
-
-}
-
-
-
-
-
-/* =========================
-LOGOUT BUTTON
-========================= */
-
-
-.logout-btn{
+#logoutBtn{
 
 
 width:100%;
 
 
-padding:15px;
+padding:16px;
 
 
 border:none;
 
 
-border-radius:18px;
+border-radius:20px;
+
 
 
 background:
@@ -559,7 +795,9 @@ background:
 #ff4444;
 
 
+
 color:white;
+
 
 
 font-size:16px;
@@ -571,29 +809,28 @@ font-weight:bold;
 cursor:pointer;
 
 
-transition:.3s;
+
+}
+
+
+
+#logoutBtn:hover{
+
+
+transform:scale(1.03);
 
 
 }
 
 
 
-.logout-btn:hover{
-
-
-transform:
-
-scale(1.03);
-
-
-}
 
 
 
 
 
 /* =========================
-BOTTOM NAV
+BOTTOM NAVIGATION
 ========================= */
 
 
@@ -615,13 +852,16 @@ width:100%;
 height:70px;
 
 
+
 display:flex;
 
 
 justify-content:space-around;
 
 
+
 align-items:center;
+
 
 
 background:
@@ -629,9 +869,11 @@ background:
 rgba(8,18,41,.95);
 
 
+
 backdrop-filter:
 
 blur(15px);
+
 
 
 border-top:
@@ -639,7 +881,9 @@ border-top:
 1px solid rgba(255,215,0,.3);
 
 
+
 z-index:999;
+
 
 
 }
@@ -655,20 +899,10 @@ text-decoration:none;
 color:white;
 
 
-text-align:center;
-
-
 font-size:12px;
 
 
-}
-
-
-
-.bottom-nav a.active{
-
-
-color:#FFD700;
+text-align:center;
 
 
 }
@@ -687,6 +921,8 @@ color:#FFD700;
 
 
 
+
+
 /* =========================
 FOOTER
 ========================= */
@@ -698,13 +934,15 @@ FOOTER
 margin:25px 20px 100px;
 
 
-padding:20px;
+padding:25px;
 
 
 text-align:center;
 
 
-border-radius:22px;
+
+border-radius:25px;
+
 
 
 background:
@@ -712,9 +950,40 @@ background:
 rgba(255,255,255,.08);
 
 
+
 border:
 
 1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.footer-logo{
+
+
+width:75px;
+
+
+height:75px;
+
+
+border-radius:50%;
+
+
+object-fit:cover;
+
+
+
+border:
+
+3px solid #FFD700;
+
+
+
+background:white;
 
 
 }
@@ -727,7 +996,23 @@ border:
 color:#FFD700;
 
 
-margin-bottom:15px;
+margin-top:12px;
+
+
+}
+
+
+
+.footer p{
+
+
+color:#aaa;
+
+
+font-size:13px;
+
+
+margin:10px;
 
 
 }
@@ -756,76 +1041,15 @@ font-size:14px;
 
 
 
-.footer p{
+.footer a:hover{
 
 
-font-size:12px;
-
-
-color:#aaa;
-
-
-margin-top:15px;
+color:#FFD700;
 
 
 }
 
 
-
-
-
-/* =========================
-ANIMATION
-========================= */
-
-
-.profile-card,
-.level-card,
-.badge-section,
-.performance-section,
-.history-section,
-.account-card{
-
-
-animation:
-
-slideUp .5s ease;
-
-
-}
-
-
-
-@keyframes slideUp{
-
-
-from{
-
-
-opacity:0;
-
-
-transform:
-translateY(20px);
-
-
-}
-
-
-to{
-
-
-opacity:1;
-
-
-transform:
-translateY(0);
-
-
-}
-
-
-}
 
 
 
@@ -840,7 +1064,10 @@ MOBILE RESPONSIVE
 
 
 
-.badge-gallery{
+.stats-grid,
+
+
+.achievement-grid{
 
 
 grid-template-columns:
@@ -852,35 +1079,37 @@ repeat(3,1fr);
 
 
 
-.performance-grid{
+.student-avatar{
 
 
-grid-template-columns:
+width:100px;
 
-repeat(3,1fr);
+
+height:100px;
 
 
 }
 
 
 
-.profile-header h2{
+.level-info h1{
 
-font-size:18px;
+
+font-size:22px;
+
 
 }
 
 
 
-.profile-logo{
+.achievement-grid h1{
 
-width:55px;
 
-height:55px;
+font-size:22px;
+
 
 }
 
 
 
-    }
-
+}
