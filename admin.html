@@ -4,685 +4,234 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS Admin Panel</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>G THE GENIUS - Admin Panel</title>
 
 <link rel="stylesheet" href="admin.css">
 
 </head>
 
-
 <body>
-
 
 <div class="admin-container">
 
-
 <!-- HEADER -->
 
-<div class="admin-header">
+<header class="admin-header">
 
-<h1>🛡️ G THE GENIUS</h1>
+<h1>🛠️ G THE GENIUS</h1>
 
-<p>Admin Control Panel</p>
+<p>Professional Admin Panel</p>
 
-<button id="logoutBtn">
+<button id="logoutBtn" class="logout-btn">
 🚪 Logout
 </button>
 
-</div>
+</header>
 
-<div class="dashboard-stats">
+<!-- DASHBOARD -->
 
-<div class="stat-card">
-<h2 id="totalQuestions">
-0
-</h2>
-<p>📚 Total Questions</p>
-</div>
+<div class="dashboard-cards">
 
+<div class="card">
 
-<div class="stat-card"
-onclick="showSection('studentSection')">
+<h2 id="totalQuestions">0</h2>
 
-<h2 id="totalStudents">
-0
-</h2>
-
-<p>
-👨‍🎓 Students
-</p>
+<p>Total Questions</p>
 
 </div>
 
+<div class="card">
 
-<div class="stat-card">
-<h2 id="totalResults">
-0
-</h2>
-<p>📝 Tests Taken</p>
+<h2 id="totalStudents">0</h2>
+
+<p>Total Students</p>
+
 </div>
 
+<div class="card">
 
-<div class="stat-card"
-onclick="showSection('leaderboardSection')">
+<h2 id="totalResults">0</h2>
 
-<h2>
-🏆
-</h2>
-
-<p>
-Leaderboard
-</p>
+<p>Total Results</p>
 
 </div>
 
 </div>
 
-<!-- MENU -->
+<!-- SEARCH -->
 
-<div class="admin-menu">
-
-
-<div class="admin-card"
-onclick="showSection('addSection')">
-
-<h2>➕</h2>
-
-<h3>Add Question</h3>
-
-  <select id="subject">
-
-<option value="">
-📚 Select Subject
-</option>
-
- <option value="General Knowledge">
-General Knowledge (GK)
- </option>
-    
-<option value="Indian Polity">
-Indian Polity
-</option>
-
-<option value="Indian History">
-Indian History
-</option>
-
-<option value="Indian Geography">
-Indian Geography
-</option>
-
-<option value="Economy">
-Economy
-</option>
-
-<option value="Science">
-Science
-</option>
-
-<option value="Physics">
-Physics
-</option>
-
-<option value="Chemistry">
-Chemistry
-</option>
-
-<option value="Biology">
-Biology
-</option>
-
-<option value="Tamil">
-Tamil
-</option>
-
-<option value="English">
-English
-</option>
-
-<option value="Psychology">
-Psychology
-</option>
-
-<option value="Physical Training">
-Physical Training
-</option>
-
-<option value="Current Affairs">
-Current Affairs
-</option>
-
-<option value="Reasoning">
-Reasoning
-</option>
-
-<option value="Aptitude">
-Aptitude
-</option>
-
-<option value="Computer">
-Computer
-</option>
-
-</select>
-
-
-<select id="topic">
-
-<option value="">
-📂 Select Topic
-</option>
-
-</select>
-  
-<p>Create New Questions</p>
-
-</div>
-
-
-
-<div class="admin-card"
-onclick="showSection('uploadSection')">
-
-<h2>📤</h2>
-
-<h3>Bulk Upload</h3>
-
-  <select id="bulkSubject">
-
-<option value="">
-📚 Select Subject
-</option>
-
-<option value="General Knowledge">
-General Knowledge (GK)
-</option>
-
-<option value="Indian Polity">
-Indian Polity
-</option>
-
-<option value="Indian History">
-Indian History
-</option>
-
-<option value="Indian Geography">
-Indian Geography
-</option>
-
-<option value="Indian Economy">
-Indian Economy
-</option>
-
-<option value="General Science">
-General Science
-</option>
-
-<option value="Physics">
-Physics
-</option>
-
-<option value="Chemistry">
-Chemistry
-</option>
-
-<option value="Biology">
-Biology
-</option>
-
-<option value="Tamil">
-Tamil
-</option>
-
-<option value="English">
-English
-</option>
-
-<option value="Reasoning">
-Reasoning
-</option>
-
-<option value="Aptitude">
-Aptitude
-</option>
-
-<option value="Computer">
-Computer
-</option>
-
-<option value="Current Affairs">
-Current Affairs
-</option>
-
-<option value="Psychology">
-Psychology
-</option>
-
-<option value="Physical Training">
-Physical Training
-</option>
-
-<option value="TNUSRB Special">
-TNUSRB Special
-</option>
-
-<option value="TNPSC Special">
-TNPSC Special
-</option>
-
-  </select>
-
-
-<select id="bulkTopic">
-
-<option value="">
-📂 Select Topic
-</option>
-
-</select>
-  
-<p>Upload JSON Questions</p>
-
-</div>
-
-
-
-<div class="admin-card"
-onclick="showSection('manageSection')">
-
-<h2>📚</h2>
-
-<h3>Manage Questions</h3>
-
-<p>Edit / Delete Questions</p>
-
-</div>
-
-
-
-<div class="admin-card"
-onclick="showSection('resultSection')">
-
-<h2>👨‍🎓</h2>
-
-<h3>Students Result</h3>
-
-<p>View Performance</p>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<!-- ADD QUESTION -->
-
-<div class="section question-form"
-id="addSection">
-
-
-<h2>➕ Add New Question</h2>
-
-
-<input id="question"
-placeholder="Enter Question">
-
-
-<input id="option0"
-placeholder="Option A">
-
-
-<input id="option1"
-placeholder="Option B">
-
-
-<input id="option2"
-placeholder="Option C">
-
-
-<input id="option3"
-placeholder="Option D">
-
-
-<select id="answer">
-
-<option value="">
-Correct Answer
-</option>
-
-<option value="0">
-Option A
-</option>
-
-<option value="1">
-Option B
-</option>
-
-<option value="2">
-Option C
-</option>
-
-<option value="3">
-Option D
-</option>
-
-</select>
-
-
-
-<textarea
-id="explanation"
-placeholder="Explanation">
-</textarea>
-
-
-
-<button id="saveQuestion">
-✅ Save Question
-</button>
-
-
-</div>
-
-
-<!-- ================= BULK UPLOAD ================= -->
-
-<div class="section">
-
-<h2>📤 Bulk Question Upload</h2>
-
-
-<!-- Subject -->
-
-<label>
-📚 Select Subject
-</label>
-
-<select id="bulkSubject">
-
-<option value="">
-Select Subject
-</option>
-
-<option value="General Knowledge">
-General Knowledge (GK)
-</option>
-
-<option value="Indian Polity">
-Indian Polity
-</option>
-
-<option value="Indian History">
-Indian History
-</option>
-
-<option value="Indian Geography">
-Indian Geography
-</option>
-
-<option value="Indian Economy">
-Indian Economy
-</option>
-
-<option value="General Science">
-General Science
-</option>
-
-<option value="Physics">
-Physics
-</option>
-
-<option value="Chemistry">
-Chemistry
-</option>
-
-<option value="Biology">
-Biology
-</option>
-
-<option value="Tamil">
-Tamil
-</option>
-
-<option value="English">
-English
-</option>
-
-<option value="Reasoning">
-Reasoning
-</option>
-
-<option value="Aptitude">
-Aptitude
-</option>
-
-<option value="Computer">
-Computer
-</option>
-
-<option value="Current Affairs">
-Current Affairs
-</option>
-
-<option value="Psychology">
-Psychology
-</option>
-
-<option value="Physical Training">
-Physical Training
-</option>
-
-<option value="TNUSRB Special">
-TNUSRB Special
-</option>
-
-<option value="TNPSC Special">
-TNPSC Special
-</option>
-
-</select>
-
-
-
-<br><br>
-
-
-<!-- Topic -->
-
-<label>
-📂 Select Topic
-</label>
-
-
-<select id="bulkTopic">
-
-<option value="">
-Select Topic
-</option>
-
-</select>
-
-
-<br><br>
-
-
-<!-- JSON -->
-
-<label>
-📝 Paste JSON Questions
-</label>
-
-
-<textarea 
-id="bulkJson"
-placeholder='[
-{
-"question":"Question",
-"options":["A","B","C","D"],
-"answer":0,
-"explanation":"Explanation"
-}
-]'
-rows="12"></textarea>
-
-
-
-<br>
-
-
-<button id="uploadBtn">
-📤 Upload Questions
-</button>
-
-
-<div id="uploadStatus"></div>
-
-
-</div>
-
-
-
-<!-- MANAGE QUESTIONS -->
-
-
-<div class="section manage-questions"
-id="manageSection">
-
-
-<h2>
-📚 Manage Questions
-</h2>
-
-
+<div class="search-box">
 
 <input
+type="text"
 id="searchQuestion"
 placeholder="🔍 Search Question">
 
+</div>
 
+<!-- BULK UPLOAD -->
 
-<div id="questionCount"></div>
+<div class="section">
 
+<h2>📤 Bulk Upload Questions</h2>
 
+<label>📚 Select Subject</label>
 
-<div id="questionList"></div>
+<select id="bulkSubject">
 
+<option value="">Select Subject</option>
 
+<option value="General Knowledge">General Knowledge</option>
+
+<option value="Indian Polity">Indian Polity</option>
+
+<option value="Indian History">Indian History</option>
+
+<option value="Indian Geography">Indian Geography</option>
+
+<option value="Indian Economy">Indian Economy</option>
+
+<option value="General Science">General Science</option>
+
+<option value="Physics">Physics</option>
+
+<option value="Chemistry">Chemistry</option>
+
+<option value="Biology">Biology</option>
+
+<option value="Tamil">Tamil</option>
+
+<option value="English">English</option>
+
+<option value="Reasoning">Reasoning</option>
+
+<option value="Aptitude">Aptitude</option>
+
+<option value="Computer">Computer</option>
+
+<option value="Current Affairs">Current Affairs</option>
+
+<option value="Psychology">Psychology</option>
+
+<option value="Physical Training">Physical Training</option>
+
+<option value="TNUSRB Special">TNUSRB Special</option>
+
+<option value="TNPSC Special">TNPSC Special</option>
+
+</select>
+
+<br><br>
+
+<label>📂 Select Topic</label>
+
+<select id="bulkTopic">
+
+<option value="">Select Topic</option>
+
+</select>
+
+<br><br>
+
+<label>📋 Paste JSON Questions</label>
+
+<textarea
+id="bulkJson"
+rows="12"
+placeholder="Paste JSON Questions Here..."></textarea>
+
+<br><br>
+
+<button id="uploadBtn">
+
+📤 Upload Questions
+
+</button>
+
+<div id="uploadStatus"></div>
+
+</div>
+
+  <!-- ================= QUESTION MANAGEMENT ================= -->
+
+<div class="section">
+
+<h2>📚 All Questions</h2>
+
+<p id="questionCount">
+📊 Total Questions : 0
+</p>
+
+<div id="questionList">
+
+</div>
 
 </div>
 
 
+<!-- ================= STUDENTS ================= -->
 
+<div class="section">
 
+<h2>👨‍🎓 Students</h2>
 
+<div id="studentList">
 
-
-
-
-
-<!-- RESULTS -->
-
-
-<div class="section results-section"
-id="resultSection">
-
-
-<h2>
-👨‍🎓 Students Results
-</h2>
-
-
-
-<input
-id="searchResult"
-placeholder="🔍 Search Student">
-
-
-
-<div id="resultCount"></div>
-
-
-
-<div id="resultList"></div>
-
-
+</div>
 
 </div>
 
 
-<!-- STUDENTS LIST -->
+<!-- ================= RESULTS ================= -->
 
-<div class="section" id="studentSection">
+<div class="section">
 
-<h2>👨‍🎓 Students List</h2>
+<h2>🏆 Student Results</h2>
 
-<div id="studentList"></div>
+<p id="resultCount">
+📊 Total Results : 0
+</p>
+
+<div id="resultList">
+
+</div>
 
 </div>
 
 
-<!-- LEADERBOARD -->
+<!-- ================= LEADERBOARD ================= -->
 
-<div class="section" id="leaderboardSection">
+<div class="section">
 
-<h2>🏆 Leaderboard</h2>
+<h2>🥇 Leaderboard</h2>
 
-<div id="leaderboardList"></div>
+<div id="leaderboardList">
+
+</div>
 
 </div>
 
 
+<!-- ================= FOOTER ================= -->
 
+<footer class="footer">
+
+<p>
+
+© 2026 G THE GENIUS
+
+</p>
+
+</footer>
 
 </div>
-
-
-
 
 
 <script type="module" src="admin.js"></script>
-
-
-<script>
-
-
-function showSection(id){
-
-
-document
-.querySelectorAll(".section")
-.forEach(section=>{
-
-
-section.style.display="none";
-
-
-});
-
-
-document
-.getElementById(id)
-.style.display="block";
-
-
-}
-
-
-
-// Default Open
-
-showSection("addSection");
-
-
-</script>
-
-
 
 </body>
 
