@@ -7,11 +7,14 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>
 G THE GENIUS Leaderboard
 </title>
 
+
 <link rel="stylesheet" href="leaderboard.css">
+
 
 </head>
 
@@ -19,7 +22,11 @@ G THE GENIUS Leaderboard
 <body>
 
 
-<!-- HEADER -->
+
+<!-- =========================
+HEADER
+========================= -->
+
 
 <header class="leader-header">
 
@@ -30,15 +37,18 @@ class="leader-logo"
 >
 
 
+
 <div>
 
 <h2>
 G THE GENIUS
 </h2>
 
+
 <p>
-Student Ranking
+🏆 Leaderboard
 </p>
+
 
 </div>
 
@@ -49,278 +59,360 @@ Student Ranking
 
 
 
-<!-- MY RANK -->
+
+
+
+<!-- =========================
+TITLE
+========================= -->
+
+
+<section class="leader-title">
+
+
+<h1>
+
+🏆 Top Performers
+
+</h1>
+
+
+
+<p>
+
+Overall & District Ranking
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+FILTER
+========================= -->
+
+
+<section class="filter-card">
+
+
+<select id="testFilter">
+
+
+<option value="all">
+
+All Tests
+
+</option>
+
+
+<option value="daily">
+
+Daily Mock Test
+
+</option>
+
+
+
+<option value="weekly">
+
+Weekly Mock Test
+
+</option>
+
+
+
+<option value="monthly">
+
+Monthly Grand Test
+
+</option>
+
+
+</select>
+
+
+
+
+
+<select id="rankFilter">
+
+
+<option value="overall">
+
+Overall Rank
+
+</option>
+
+
+
+<option value="district">
+
+District Rank
+
+</option>
+
+
+
+</select>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+TOP 3
+========================= -->
+
+
+<section class="top-three">
+
+
+<div class="rank-box second">
+
+
+<h2>
+🥈
+</h2>
+
+
+<h3 id="secondName">
+
+-
+
+</h3>
+
+
+<p id="secondScore">
+
+0%
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="rank-box first">
+
+
+<h2>
+🥇
+</h2>
+
+
+<h3 id="firstName">
+
+-
+
+</h3>
+
+
+<p id="firstScore">
+
+0%
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="rank-box third">
+
+
+<h2>
+🥉
+</h2>
+
+
+<h3 id="thirdName">
+
+-
+
+</h3>
+
+
+<p id="thirdScore">
+
+0%
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+LEADERBOARD TABLE
+========================= -->
+
+
+<section class="leader-card">
+
+
+<h2>
+
+📊 Ranking List
+
+</h2>
+
+
+
+
+<div class="table-header">
+
+
+<span>
+Rank
+</span>
+
+
+<span>
+Student
+</span>
+
+
+<span>
+Score
+</span>
+
+
+<span>
+Badge
+</span>
+
+
+</div>
+
+
+
+
+
+<div id="leaderList">
+
+
+<!-- Data Load Firebase -->
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<script type="module" src="leaderboard.js"></script>
+<!-- =========================
+MY RANK CARD
+========================= -->
 
 
 <section class="my-rank-card">
 
 
 <h2>
-🏆 My Rank
-</h2>
 
+👤 My Performance
 
-<div class="rank-number">
-
-#<span id="myRank">
-
-0
-
-</span>
-
-</div>
-
-
-
-<p>
-
-⭐ Score:
-
-<span id="myScore">
-
-0
-
-</span>
-
-%
-
-</p>
-
-
-
-<p>
-
-📍 District Rank:
-
-#<span id="myDistrictRank">
-
-0
-
-</span>
-
-</p>
-
-
-
-</section>
-
-
-
-
-
-<!-- FILTER -->
-
-
-<section class="filter-card">
-
-
-<h3>
-Filter Ranking
-</h3>
-
-
-<select id="examFilter">
-
-
-<option value="all">
-
-All Exams
-
-</option>
-
-
-<option value="TNUSRB">
-
-TNUSRB
-
-</option>
-
-
-<option value="TNPSC">
-
-TNPSC
-
-</option>
-
-
-</select>
-
-
-
-
-<select id="districtFilter">
-
-
-<option value="all">
-
-All District
-
-</option>
-
-
-</select>
-
-
-
-</section>
-
-
-
-
-
-<!-- TOP 3 -->
-
-
-<section class="top-rank">
-
-
-<h2>
-🔥 Top Performers
-</h2>
-
-
-<div id="topPlayers">
-
-
-</div>
-
-
-</section>
-
-<!-- =========================
-FULL RANKING
-========================= -->
-
-
-<section class="ranking-section">
-
-
-<h2>
-🏅 Overall Ranking
 </h2>
 
 
 
-<div id="leaderboardList">
-
-
-<!-- Dynamic Firebase Data -->
-
-
-<div class="rank-card">
-
-
-<div class="rank-position">
-
-🥇
-
-</div>
-
-
-<div class="rank-info">
-
-
-<h3>
-
-Student Name
-
-</h3>
-
-
-<p>
-
-📍 District
-
-</p>
-
-
-<p>
-
-🎯 Exam
-
-</p>
-
-
-</div>
-
-
-<div class="rank-score">
-
-
-<h3>
-
-95%
-
-</h3>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<!-- =========================
-MY PERFORMANCE
-========================= -->
-
-
-<section class="performance-card">
-
-
-<h2>
-📊 My Performance
-</h2>
-
-
-
-<div class="performance-grid">
+<div class="my-rank-grid">
 
 
 <div>
 
 
-<h3 id="totalTests">
+<h1 id="myRank">
 
-0
+-
 
-</h3>
+</h1>
 
 
 <p>
-Tests
+
+Overall Rank
 
 </p>
 
 
 </div>
+
 
 
 
 <div>
 
 
-<h3 id="bestScore">
+<h1 id="myDistrictRank">
+
+-
+
+</h1>
+
+
+<p>
+
+District Rank
+
+</p>
+
+
+</div>
+
+
+
+
+<div>
+
+
+<h1 id="myPercentage">
 
 0%
 
-</h3>
+</h1>
 
 
 <p>
+
 Best Score
 
 </p>
@@ -330,27 +422,6 @@ Best Score
 
 
 
-
-<div>
-
-
-<h3 id="totalXP">
-
-0
-
-</h3>
-
-
-<p>
-XP
-
-</p>
-
-
-</div>
-
-
-
 </div>
 
 
@@ -361,8 +432,50 @@ XP
 
 
 
+
+
 <!-- =========================
-BOTTOM NAV
+MY BADGES
+========================= -->
+
+
+<section class="badge-card">
+
+
+<h2>
+
+🏅 My Badges
+
+</h2>
+
+
+
+
+<div id="badgeList">
+
+
+<span>
+
+No Badge
+
+</span>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+BOTTOM NAVIGATION
 ========================= -->
 
 
@@ -383,6 +496,7 @@ Home
 
 
 
+
 <a href="practice.html">
 
 
@@ -398,14 +512,14 @@ Practice
 
 
 
-<a href="leaderboard.html" class="active">
+<a href="leaderboard.html">
 
 
 🏆
 
 <br>
 
-Leaderboard
+Rank
 
 
 </a>
@@ -434,6 +548,8 @@ Profile
 
 
 
+
+
 <!-- =========================
 FOOTER
 ========================= -->
@@ -442,11 +558,31 @@ FOOTER
 <footer class="footer">
 
 
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="footer-logo"
+
+
+>
+
+
+
 <h3>
 
 G THE GENIUS
 
 </h3>
+
+
+
+<p>
+
+All Government Exam Mock Test Platform
+
+</p>
+
 
 
 
@@ -461,7 +597,7 @@ G THE GENIUS
 
 <a href="https://t.me/gthegenius">
 
-📢 Telegram
+📢 Telegram Channel
 
 </a>
 
@@ -485,14 +621,10 @@ All Rights Reserved.
 </p>
 
 
+
 </footer>
-  
-
-
-
-<script type="module" src="leaderboard.js"></script>
-
 
 </body>
+
 
 </html>
