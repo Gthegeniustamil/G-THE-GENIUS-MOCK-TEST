@@ -3,762 +3,207 @@
 // PART 1
 // =========================
 
-
 import { db, auth } from "./firebase-config.js";
 
-
 import {
-
-collection,
-getDocs,
-addDoc,
-serverTimestamp
-
+  collection,
+  getDocs,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
 
 // =========================
 // VARIABLES
 // =========================
 
-
 let testQuestions = [];
-
 let currentIndex = 0;
-
 let selectedAnswers = [];
+let timer = null;
 
 let testType = "daily";
-
+let totalQuestions = 10;
 let timeLimit = 300;
-
-let timer;
-
-
 
 // =========================
 // GET TEST TYPE
 // =========================
 
+const params = new URLSearchParams(window.location.search);
 
-const params =
+testType = params.get("type") || "daily";
 
-new URLSearchParams(
-window.location.search
-);
+switch (testType) {
 
+  case "daily":
+    totalQuestions = 10;
+    timeLimit = 5 * 60;
+    break;
 
+  case "weekly":
+    totalQuestions = 25;
+    timeLimit = 10 * 60;
+    break;
 
-testType =
-
-params.get("type") || "daily";
-
-
-
-
-
-if(testType==="daily"){
-
-timeLimit = 5*60;
-
-}
-
-
-else if(testType==="weekly"){
-
-timeLimit = 10*60;
+  case "monthly":
+    totalQuestions = 100;
+    timeLimit = 60 * 60;
+    break;
 
 }
-
-
-else if(testType==="monthly"){
-
-timeLimit = 60*60;
-
-}
-
-
-
-
-
-
 
 // =========================
-// ATTEMPT LIMIT
+// AUTH CHECK
 // =========================
 
+auth.onAuthStateChanged(async (user)=>{
 
-function checkAttempt(){
+    if(!user){
 
+        alert("Please Login");
 
-let today =
+        window.location.href="login.html";
 
-new Date()
-.toLocaleDateString();
+        return;
 
+    }
 
+    await loadMockQuestions();
 
-let attempts =
-
-JSON.parse(
-
-localStorage.getItem(
-"mockAttempts"
-)
-
-)|| {};
-
-
-
-
-
-if(testType==="daily"){
-
-
-if(
-attempts.dailyDate === today
-&&
-attempts.daily >=5
-){
-
-
-alert(
-"Daily 5 attempts completed"
-);
-
-
-return false;
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-if(testType==="weekly"){
-
-
-
-let week =
-
-getWeekNumber();
-
-
-
-if(
-attempts.week === week
-&&
-attempts.weekly >=3
-){
-
-
-alert(
-"Weekly 3 attempts completed"
-);
-
-
-return false;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-if(testType==="monthly"){
-
-
-let date =
-
-new Date()
-.getDate();
-
-
-
-if(
-date!==1 &&
-date!==15
-){
-
-
-alert(
-"Monthly Test available only on 1st and 15th"
-);
-
-
-return false;
-
-
-}
-
-
-}
-
-
-
-
-
-return true;
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// SAVE ATTEMPT
-// =========================
-
-
-function saveAttempt(){
-
-
-
-let attempts =
-
-JSON.parse(
-
-localStorage.getItem(
-"mockAttempts"
-)
-
-)|| {};
-
-
-
-let today =
-
-new Date()
-.toLocaleDateString();
-
-
-
-
-
-if(testType==="daily"){
-
-
-if(
-attempts.dailyDate !== today
-){
-
-attempts.dailyDate=today;
-
-attempts.daily=0;
-
-
-}
-
-
-attempts.daily++;
-
-}
-
-
-
-else if(testType==="weekly"){
-
-
-attempts.week=getWeekNumber();
-
-
-attempts.weekly =
-(attempts.weekly||0)+1;
-
-
-}
-
-
-
-
-else{
-
-
-attempts.monthly =
-(attempts.monthly||0)+1;
-
-
-}
-
-
-
-localStorage.setItem(
-
-"mockAttempts",
-
-JSON.stringify(
-attempts
-)
-
-);
-
-
-}
-
-
-
-
-
-
-
-
+});
 
 // =========================
 // LOAD QUESTIONS
 // =========================
 
-
 async function loadMockQuestions(){
 
+    try{
 
-try{
+        const snap = await getDocs(collection(db,"questions"));
 
+        testQuestions = [];
 
-const snap =
+        snap.forEach(doc=>{
 
-await getDocs(
+            const data = doc.data();
 
-collection(
-db,
-"questions"
-)
+            testQuestions.push({
 
-);
+                question : data.question,
 
-alert("Questions Loaded : " + snap.size);
-console.log("Questions Loaded :", snap.size);
+                options : Array.isArray(data.options)
+                    ? data.options
+                    : [
+                        data.option1,
+                        data.option2,
+                        data.option3,
+                        data.option4
+                    ],
 
+                answer : Number(
+                    data.answer ??
+                    data.correctAnswer ??
+                    0
+                ),
 
+                explanation :
+                    data.explanation || "",
 
-testQuestions=[];
+                subject :
+                    data.subject || "",
 
+                topic :
+                    data.topic || ""
 
+            });
 
+        });
 
+        if(testQuestions.length===0){
 
-snap.forEach(doc=>{
+            alert("No Questions Found");
 
+            return;
 
-let data =
-doc.data();
+        }
 
+        // Random
 
+        testQuestions.sort(()=>Math.random()-0.5);
 
+        testQuestions =
+            testQuestions.slice(0,totalQuestions);
 
+        selectedAnswers =
+            new Array(testQuestions.length).fill(null);
 
-let options=[];
+        document.getElementById("totalQuestions").innerHTML =
+            testQuestions.length;
 
+        createPalette();
 
+        showQuestion();
 
+        startTimer();
 
+    }
 
-// Format 1 Support
+    catch(error){
 
+        console.error(error);
 
-if(data.option1){
+        alert(error.message);
 
+    }
 
-options=[
-
-data.option1,
-
-data.option2,
-
-data.option3,
-
-data.option4
-
-];
-
-
-}
-
-
-
-
-// Format 2 Support
-
-
-else if(
-Array.isArray(
-data.options
-)
-){
-
-
-options=data.options;
-
-
-}
-
-
-
-
-
-
-testQuestions.push({
-
-
-question:
-
-data.question,
-
-
-options:options,
-
-
-answer:
-
-data.answer ??
-data.correctAnswer,
-
-
-explanation:
-
-data.explanation || "No Explanation",
-
-
-subject:
-
-data.subject || "",
-
-
-topic:
-
-data.topic || ""
-
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-// Random
-
-
-testQuestions =
-
-testQuestions
-
-.sort(
-()=>0.5-Math.random()
-);
-
-
-
-
-
-
-
-// Question count
-
-
-if(testType==="daily"){
-
-
-testQuestions =
-testQuestions.slice(0,10);
-
-
-}
-
-
-else if(testType==="weekly"){
-
-
-testQuestions =
-testQuestions.slice(0,25);
-
-
-}
-
-
-else{
-
-
-testQuestions =
-testQuestions.slice(0,100);
-
-
-}
-
-
-
-
-
-selectedAnswers =
-
-new Array(
-testQuestions.length
-).fill(null);
-
-
-
-
-
-
-
-document.getElementById(
-"totalQuestions"
-).innerHTML =
-
-testQuestions.length;
-
-
-
-showQuestion();
-
-
-
-startTimer();
-
-
-
-}
-
-catch(error){
-    console.error(error);
-    alert("Error : " + error.message);
-}
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// WEEK NUMBER
-// =========================
-
-
-function getWeekNumber(){
-
-
-let date = new Date();
-
-
-let firstDay =
-
-new Date(
-date.getFullYear(),
-0,
-1
-);
-
-
-
-return Math.ceil(
-
-(
-(
-date-firstDay
-)
-
-/
-
-86400000
-+
-
-firstDay.getDay()+1
-
-)
-
-/7
-
-);
-
-
-
-}
-
-
-
-
-
-// =========================
-// START
-// =========================
-
-
-auth.onAuthStateChanged(
-(user)=>{
-
-
-if(user){
-
-
-if(
-checkAttempt()
-){
-
-
-saveAttempt();
-
-
-loadMockQuestions();
-
-
-}
-
-
-}
-
-
-
-});
+            }
 
 // =========================
 // SHOW QUESTION
 // =========================
-function showQuestion(){
-
-    alert("showQuestion Called");
-
-    let q = testQuestions[currentIndex];
-
-    if(!q) return;
-
-    ...
-}
 
 function showQuestion(){
 
+    if(testQuestions.length===0) return;
 
-let q =
+    const q = testQuestions[currentIndex];
 
-testQuestions[currentIndex];
+    document.getElementById("currentQuestion").innerHTML =
+    currentIndex + 1;
 
+    document.getElementById("questionText").innerHTML =
+    q.question;
 
+    const buttons =
+    document.querySelectorAll(".option");
 
-if(!q) return;
+    buttons.forEach((btn,index)=>{
 
+        btn.innerHTML =
+        q.options[index] || "";
 
+        btn.classList.remove("selected");
 
+        if(selectedAnswers[currentIndex]===index){
 
+            btn.classList.add("selected");
 
-document.getElementById(
-"currentQuestion"
-).innerHTML =
+        }
 
-currentIndex + 1;
+        btn.onclick = ()=>{
 
+            selectAnswer(index);
 
+        };
 
+    });
 
+    updatePalette();
 
-document.getElementById(
-"questionText"
-).innerHTML =
-
-q.question;
-
-
-
-
-
-
-let buttons =
-
-document.querySelectorAll(
-".option"
-);
-
-
-
-
-
-
-buttons.forEach(
-(button,index)=>{
-
-
-button.innerHTML =
-
-q.options[index] || "";
-
-
-
-button.classList.remove(
-"selected"
-);
-
-
-
-button.onclick = ()=>{
-
-
-selectAnswer(index);
-
-
-};
-
-
-
-if(
-selectedAnswers[currentIndex]===index
-){
-
-
-button.classList.add(
-"selected"
-);
-
+    updateProgress();
 
 }
-
-
-
-});
-
-
-
-
-
-updateProgress();
-
-
-updatePalette();
-
-
-}
-
-
-
-
-
 
 
 
@@ -766,52 +211,23 @@ updatePalette();
 // SELECT ANSWER
 // =========================
 
-
 function selectAnswer(index){
 
+    selectedAnswers[currentIndex]=index;
 
-selectedAnswers[currentIndex]=index;
+    document.querySelectorAll(".option")
+    .forEach(btn=>{
 
+        btn.classList.remove("selected");
 
+    });
 
-let buttons =
+    document.querySelectorAll(".option")[index]
+    .classList.add("selected");
 
-document.querySelectorAll(
-".option"
-);
-
-
-
-buttons.forEach(btn=>{
-
-
-btn.classList.remove(
-"selected"
-);
-
-
-});
-
-
-
-
-
-buttons[index].classList.add(
-"selected"
-);
-
-
-
-updatePalette();
-
-
+    updatePalette();
 
 }
-
-
-
-
-
 
 
 
@@ -819,73 +235,33 @@ updatePalette();
 // QUESTION PALETTE
 // =========================
 
-
 function createPalette(){
 
+    const box =
+    document.getElementById("questionPalette");
 
-const box =
+    box.innerHTML="";
 
-document.getElementById(
-"questionPalette"
-);
+    testQuestions.forEach((q,index)=>{
 
+        const btn =
+        document.createElement("button");
 
+        btn.innerHTML=index+1;
 
-if(!box) return;
+        btn.onclick=()=>{
 
+            currentIndex=index;
 
+            showQuestion();
 
-box.innerHTML="";
+        };
 
+        box.appendChild(btn);
 
-
-
-testQuestions.forEach(
-(question,index)=>{
-
-
-
-let btn =
-
-document.createElement(
-"button"
-);
-
-
-
-btn.innerHTML =
-index+1;
-
-
-
-
-btn.onclick = ()=>{
-
-
-currentIndex=index;
-
-
-showQuestion();
-
-
-
-};
-
-
-
-box.appendChild(btn);
-
-
-
-});
-
+    });
 
 }
-
-
-
-
-
 
 
 
@@ -893,127 +269,54 @@ box.appendChild(btn);
 // UPDATE PALETTE
 // =========================
 
-
 function updatePalette(){
 
+    const buttons =
+    document.querySelectorAll(
+    "#questionPalette button"
+    );
 
+    buttons.forEach((btn,index)=>{
 
-const buttons =
+        btn.classList.remove(
+        "active",
+        "answered"
+        );
 
-document.querySelectorAll(
-"#questionPalette button"
-);
+        if(index===currentIndex){
 
+            btn.classList.add("active");
 
+        }
 
-buttons.forEach(
-(button,index)=>{
+        if(selectedAnswers[index]!==null){
 
+            btn.classList.add("answered");
 
+        }
 
-button.classList.remove(
-"active"
-);
-
-
-button.classList.remove(
-"answered"
-);
-
-
-
-
-
-if(index===currentIndex){
-
-
-button.classList.add(
-"active"
-);
-
+    });
 
 }
-
-
-
-if(
-selectedAnswers[index]!==null
-){
-
-
-button.classList.add(
-"answered"
-);
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-
-
 
 
 
 // =========================
-// PROGRESS
+// PROGRESS BAR
 // =========================
-
 
 function updateProgress(){
 
+    const percent =
+    ((currentIndex+1)/
+    testQuestions.length)*100;
 
-let percent =
-
-
-(
-(currentIndex+1)
-
-/
-
-testQuestions.length
-
-)
-
-*100;
-
-
-
-
-
-const bar =
-
-document.getElementById(
-"testProgress"
-);
-
-
-
-if(bar){
-
-
-bar.style.width =
-
-percent+"%";
-
+    document.getElementById(
+    "testProgress"
+    ).style.width =
+    percent+"%";
 
 }
-
-
-
-}
-
-
-
-
 
 
 
@@ -1021,49 +324,22 @@ percent+"%";
 // NEXT BUTTON
 // =========================
 
-
-const nextBtn =
-
 document.getElementById(
 "nextBtn"
-);
+).onclick=()=>{
 
+    if(
+    currentIndex <
+    testQuestions.length-1
+    ){
 
+        currentIndex++;
 
-if(nextBtn){
+        showQuestion();
 
-
-
-nextBtn.onclick = ()=>{
-
-
-if(
-currentIndex <
-testQuestions.length-1
-){
-
-
-
-currentIndex++;
-
-
-showQuestion();
-
-
-
-}
-
-
+    }
 
 };
-
-
-
-}
-
-
-
-
 
 
 
@@ -1071,197 +347,108 @@ showQuestion();
 // PREVIOUS BUTTON
 // =========================
 
-
-const previousBtn =
-
 document.getElementById(
 "previousBtn"
-);
+).onclick=()=>{
 
+    if(currentIndex>0){
 
+        currentIndex--;
 
-if(previousBtn){
+        showQuestion();
 
-
-previousBtn.onclick = ()=>{
-
-
-if(
-currentIndex>0
-){
-
-
-currentIndex--;
-
-
-showQuestion();
-
-
-
-}
-
-
+    }
 
 };
 
-
-
-}
-
-
-
-
-
-
-
-
 // =========================
-// CREATE AFTER LOAD
+// TIMER
 // =========================
-
-
-const oldLoadQuestions = loadMockQuestions;
-
-loadMockQuestions = async function () {
-    await oldLoadQuestions();
-    createPalette();
-    showQuestion();
-};
-
-
-// =========================
-// TIMER SYSTEM
-// =========================
-
 
 function startTimer(){
 
+    let seconds = timeLimit;
 
-let seconds = timeLimit;
+    updateTimer(seconds);
 
+    timer = setInterval(()=>{
 
+        seconds--;
 
-timer = setInterval(()=>{
+        updateTimer(seconds);
 
+        if(seconds <= 0){
 
-let min =
+            clearInterval(timer);
 
-Math.floor(seconds/60);
+            alert("⏰ Time Over");
 
+            submitTest();
 
+        }
 
-let sec =
-
-seconds % 60;
-
-
-
-document.getElementById(
-"timer"
-).innerHTML =
-
-
-"⏰ "
-
-+
-
-String(min).padStart(2,"0")
-
-+
-
-":"
-
-+
-
-String(sec).padStart(2,"0");
-
-
-
-
-
-
-seconds--;
-
-
-
-
-
-if(seconds < 0){
-
-
-clearInterval(timer);
-
-
-alert(
-"Time Finished! Test Submitted"
-);
-
-
-
-submitTest();
-
-
+    },1000);
 
 }
 
+function updateTimer(seconds){
 
+    let min = Math.floor(seconds/60);
 
-},1000);
+    let sec = seconds%60;
 
-
+    document.getElementById("timer").innerHTML =
+    "⏰ " +
+    String(min).padStart(2,"0") +
+    ":" +
+    String(sec).padStart(2,"0");
 
 }
-
-
-
-
 
 
 
 // =========================
-// CALCULATE SCORE
+// CALCULATE RESULT
 // =========================
 
+function calculateResult(){
 
-function calculateScore(){
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
 
+    testQuestions.forEach((q,index)=>{
 
+        if(selectedAnswers[index]===null){
 
-let correct = 0;
+            skipped++;
 
+        }
 
+        else if(selectedAnswers[index]==q.answer){
 
-testQuestions.forEach(
-(question,index)=>{
+            correct++;
 
+        }
 
+        else{
 
-if(
-selectedAnswers[index] == question.answer
-){
+            wrong++;
 
+        }
 
-correct++;
+    });
 
+    return {
+
+        score:correct,
+        correct,
+        wrong,
+        skipped
+
+    };
 
 }
-
-
-
-});
-
-
-
-
-return correct;
-
-
-
-}
-
-
-
-
 
 
 
@@ -1269,186 +456,78 @@ return correct;
 // SUBMIT BUTTON
 // =========================
 
+document.getElementById("submitBtn").onclick=()=>{
+
+    document.getElementById(
+    "submitConfirm"
+    ).style.display="block";
+
+};
+
+document.getElementById("cancelSubmit").onclick=()=>{
+
+    document.getElementById(
+    "submitConfirm"
+    ).style.display="none";
+
+};
+
+document.getElementById("confirmSubmit").onclick=()=>{
+
+    submitTest();
+
+};
 
 
 
-
-
-
-
-async function submitTest(){
-
-alert("Submit Working");
-
-clearInterval(timer);
-
-let score = calculateScore();
-
-await saveResult(score);
-
-alert(
-"🎉 Test Completed\n\n" +
-"Score : " +
-score +
-"/" +
-testQuestions.length
-);
-
-window.location.href = "result.html";
-
-}
-const submitBtn = document.getElementById("submitBtn");
-
-if (submitBtn) {
-    submitBtn.onclick = async () => {
-        await submitTest();
-    };
-}
 // =========================
-// SAVE RESULT FIREBASE
+// SAVE RESULT
 // =========================
 
+async function saveResult(result){
 
-async function saveResult(score){
+    const user = auth.currentUser;
 
+    await addDoc(
 
-const user = auth.currentUser;
+        collection(db,"results"),
 
+        {
 
-if(!user) return;
+            studentId:user.uid,
 
+            studentName:
+            localStorage.getItem("studentName") || "Student",
 
+            district:
+            localStorage.getItem("district") || "-",
 
-let correct = 0;
+            examType:
+            localStorage.getItem("examGoal") || "TNUSRB",
 
-let wrong = 0;
+            testType:testType,
 
-let skipped = 0;
+            score:result.score,
 
+            total:testQuestions.length,
 
+            correct:result.correct,
 
-testQuestions.forEach((q,index)=>{
+            wrong:result.wrong,
 
+            skipped:result.skipped,
 
-if(selectedAnswers[index] === null){
+            answers:selectedAnswers,
 
-skipped++;
+            questions:testQuestions,
+
+            timestamp:serverTimestamp()
+
+        }
+
+    );
 
 }
-
-else if(selectedAnswers[index] == q.answer){
-
-correct++;
-
-}
-
-else{
-
-wrong++;
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-
-await addDoc(
-
-collection(db,"results"),
-
-{
-
-
-studentId:user.uid,
-
-
-studentName:
-
-localStorage.getItem("studentName")
-||
-"Student",
-
-
-
-district:
-
-localStorage.getItem("district")
-||
-"-",
-
-
-
-examType:
-
-localStorage.getItem("examGoal")
-||
-"TNUSRB",
-
-
-
-testType:testType,
-
-
-
-score:score,
-
-
-
-total:testQuestions.length,
-
-
-
-
-
-
-// NEW DATA
-
-correct:correct,
-
-wrong:wrong,
-
-skipped:skipped,
-
-
-
-answers:selectedAnswers,
-
-
-
-questions:testQuestions,
-
-
-
-timestamp:serverTimestamp()
-
-
-}
-
-
-
-);
-
-
-
-return true;
-
-
-
-}
-
-
-
-
-
-
-
 
 
 
@@ -1456,26 +535,126 @@ return true;
 // SUBMIT TEST
 // =========================
 
+async function submitTest(){
+
+    clearInterval(timer);
+
+    let result = calculateResult();
+
+    await saveResult(result);
+
+    window.location.href="result.html";
+
+        }
+
+
+
+// =========================
+// SAVE RESULT TO LOCAL
+// =========================
+
+function saveResultLocal(result){
+
+    localStorage.setItem("lastResult",JSON.stringify({
+
+        score:result.score,
+
+        total:testQuestions.length,
+
+        correct:result.correct,
+
+        wrong:result.wrong,
+
+        skipped:result.skipped,
+
+        answers:selectedAnswers,
+
+        questions:testQuestions,
+
+        testType:testType,
+
+        examType:
+        localStorage.getItem("examGoal") || "TNUSRB"
+
+    }));
+
+}
+
+
+
+// =========================
+// SUBMIT TEST
+// =========================
 
 async function submitTest(){
 
-clearInterval(timer);
+    try{
 
-let score = calculateScore();
+        clearInterval(timer);
 
-await saveResult(score);
+        const result = calculateResult();
 
-alert(
-"🎉 Test Completed\n\n" +
-"Score : " +
-score +
-"/" +
-testQuestions.length
-);
+        saveResultLocal(result);
 
-window.location.href = "result.html";
+        await saveResult(result);
+
+        alert(
+            "🎉 Test Completed\n\n" +
+            "Marks : " +
+            result.score +
+            " / " +
+            testQuestions.length
+        );
+
+        window.location.href="result.html";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("❌ Result Save Failed");
+
+    }
 
 }
+
+
+
+// =========================
+// PREVENT DOUBLE SUBMIT
+// =========================
+
+let submitted=false;
+
+const oldSubmit=submitTest;
+
+submitTest=async function(){
+
+    if(submitted) return;
+
+    submitted=true;
+
+    await oldSubmit();
+
+};
+
+
+
+// =========================
+// PAGE EXIT WARNING
+// =========================
+
+window.onbeforeunload=function(){
+
+    if(!submitted){
+
+        return "Test is running.";
+
+    }
+
+};
 
 
 
@@ -1483,10 +662,4 @@ window.location.href = "result.html";
 // FINAL READY
 // =========================
 
-
-console.log(
-
-"✅ G THE GENIUS MOCK TEST READY"
-
-);
-alert("MockTest JS Loaded");
+console.log("✅ G THE GENIUS MOCK TEST READY");
