@@ -454,7 +454,23 @@ uploadBtn.onclick = async function () {
 
   const uploadStatus =
     document.getElementById("uploadStatus");
+const selectedSubject =
+document.getElementById("bulkSubject").value;
 
+
+const selectedTopic =
+document.getElementById("bulkTopic").value;
+
+
+if(selectedSubject === "" || selectedTopic === ""){
+
+alert("Please Select Subject and Topic");
+
+return;
+
+}
+  
+  
   const text = bulkJson.value.trim();
 
   if (text === "") {
@@ -562,7 +578,7 @@ uploadBtn.onclick = async function () {
               q.explanation || "",
             
 subject: selectedSubject,
-topic: selectedTopic
+topic: selectedTopic,
   
             createdAt:
               serverTimestamp()
