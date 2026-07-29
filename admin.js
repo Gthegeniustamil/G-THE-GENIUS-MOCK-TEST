@@ -832,3 +832,234 @@ error
 }
 
 }
+
+// ================= STUDENTS LIST =================
+
+async function loadStudentsList(){
+
+const studentList =
+document.getElementById("studentList");
+
+if(!studentList) return;
+
+
+const snapshot =
+await getDocs(collection(db,"results"));
+
+
+let students = {};
+
+
+snapshot.forEach((docSnap)=>{
+
+const data = docSnap.data();
+
+const name = data.studentName;
+
+if(!name) return;
+
+
+if(!students[name]){
+
+students[name]={
+
+name:name,
+
+district:data.district || "N/A",
+
+tests:1,
+
+bestMark:data.score || 0,
+
+totalQuestions:data.totalQuestions || 0
+
+};
+
+}
+else{
+
+
+students[name].tests++;
+
+
+if((data.score || 0) > students[name].bestMark){
+
+students[name].bestMark =
+data.score;
+
+students[name].totalQuestions =
+data.totalQuestions;
+
+}
+
+
+}
+
+
+});
+
+
+
+studentList.innerHTML="";
+
+
+Object.values(students).forEach((s,index)=>{
+
+
+studentList.innerHTML += `
+
+<div class="result-card">
+
+<h3>
+👤 ${index+1}. ${s.name}
+</h3>
+
+<p>
+📍 District : ${s.district}
+</p>
+
+<p>
+📝 Tests Taken : ${s.tests}
+</p>
+
+<p>
+🎯 Best Mark : ${s.bestMark} / ${s.totalQuestions}
+</p>
+
+
+</div>
+
+`;
+
+
+});
+
+
+}
+
+
+
+// ================= ADMIN LEADERBOARD =================
+
+
+async function loadAdminLeaderboard(){
+
+const leaderboardList =
+document.getElementById("leaderboardList");
+
+
+if(!leaderboardList) return;
+
+
+
+const snapshot =
+await getDocs(collection(db,"results"));
+
+
+let students = {};
+
+
+
+snapshot.forEach((docSnap)=>{
+
+
+const data = docSnap.data();
+
+const name = data.studentName;
+
+
+if(!name) return;
+
+
+
+if(!students[name] ||
+(data.score || 0) > students[name].mark){
+
+
+students[name]={
+
+name:name,
+
+district:data.district || "N/A",
+
+mark:data.score || 0,
+
+total:data.totalQuestions || 0
+
+};
+
+
+}
+
+
+
+});
+
+
+
+let ranking =
+Object.values(students);
+
+
+
+ranking.sort((a,b)=>
+b.mark - a.mark
+);
+
+
+
+leaderboardList.innerHTML="";
+
+
+
+ranking.forEach((s,index)=>{
+
+
+let medal="";
+
+if(index===0) medal="🥇";
+else if(index===1) medal="🥈";
+else if(index===2) medal="🥉";
+
+
+
+leaderboardList.innerHTML += `
+
+<div class="result-card">
+
+<h3>
+${medal} ${index+1}. ${s.name}
+</h3>
+
+<p>
+📍 District : ${s.district}
+</p>
+
+<p>
+🎯 Mark : ${s.mark} / ${s.total}
+</p>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+// ================= LOAD EXTRA SECTIONS =================
+
+
+window.addEventListener("DOMContentLoaded",()=>{
+
+loadStudentsList();
+
+loadAdminLeaderboard();
+
+});
