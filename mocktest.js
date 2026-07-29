@@ -1508,7 +1508,7 @@ timestamp:serverTimestamp()
 
 
 
-return percentage;
+return true;
 
 
 
@@ -1530,77 +1530,23 @@ return percentage;
 
 async function submitTest(){
 
-
-
 clearInterval(timer);
 
+let score = calculateScore();
 
-
-let score =
-
-calculateScore();
-
-
-
-let percentage =
-
-await saveResult(
-score
-);
-
-
-
-
+await saveResult(score);
 
 alert(
-
-"🎉 Test Completed\n\n"
-
-+
-
-"Score : "
-
-+
-
-score
-
-+
-
-"/"
-
-+
-
+"🎉 Test Completed\n\n" +
+"Score : " +
+score +
+"/" +
 testQuestions.length
-
-+
-
-"\nPercentage : "
-
-+
-
-percentage
-
-+
-
-"%"
-
 );
 
-
-
-
-
-window.location.href =
-
-"result.html";
-
-
+window.location.href = "result.html";
 
 }
-
-
-
-
 
 
 
