@@ -230,15 +230,14 @@ logoutBtn.onclick = async function () {
 
 // ================= BULK SUBJECT TOPIC =================
 
-const bulkSubject =
+const bulkSubject = 
 document.getElementById("bulkSubject");
 
-const bulkTopic =
+const bulkTopic = 
 document.getElementById("bulkTopic");
 
 
 const bulkTopics = {
-
 
 "General Knowledge":[
 "Indian GK",
@@ -247,13 +246,15 @@ const bulkTopics = {
 "Books and Authors",
 "Awards",
 "Sports",
-"States and Capitals"
+"States and Capitals",
+"National Symbols"
 ],
 
 
 "Indian Polity":[
 "Constitution",
 "Fundamental Rights",
+"Directive Principles",
 "Parliament",
 "President",
 "Governor",
@@ -273,15 +274,99 @@ const bulkTopics = {
 "Physical Geography",
 "Rivers",
 "Climate",
-"Soil"
+"Soil",
+"Natural Resources"
 ],
 
 
-"Science":[
+"Indian Economy":[
+"Banking",
+"Budget",
+"Tax",
+"Finance",
+"Economy Basics"
+],
+
+
+"General Science":[
 "Physics",
 "Chemistry",
 "Biology",
-"General Science"
+"Scientific Facts"
+],
+
+
+"Physics":[
+"Motion",
+"Force",
+"Energy",
+"Electricity",
+"Light"
+],
+
+
+"Chemistry":[
+"Atoms",
+"Elements",
+"Acids and Bases",
+"Chemical Reactions"
+],
+
+
+"Biology":[
+"Human Body",
+"Plants",
+"Animals",
+"Diseases"
+],
+
+
+"Tamil":[
+"Grammar",
+"Literature",
+"Authors",
+"Poems"
+],
+
+
+"English":[
+"Grammar",
+"Vocabulary",
+"Synonyms",
+"Antonyms"
+],
+
+
+"Reasoning":[
+"Analogy",
+"Series",
+"Coding Decoding",
+"Blood Relation"
+],
+
+
+"Aptitude":[
+"Percentage",
+"Profit and Loss",
+"Time and Work",
+"Ratio"
+],
+
+
+"Computer":[
+"Basics",
+"Hardware",
+"Software",
+"Internet"
+],
+
+
+"Current Affairs":[
+"National",
+"International",
+"Sports",
+"Awards",
+"Appointments"
 ],
 
 
@@ -297,33 +382,38 @@ const bulkTopics = {
 "Running",
 "Long Jump",
 "High Jump",
-"Rope Climbing"
+"Rope Climbing",
+"Endurance"
 ],
 
 
-"Current Affairs":[
-"National",
-"International",
-"Sports",
-"Awards"
+"TNUSRB Special":[
+"Police GK",
+"Police Act",
+"Previous Questions"
+],
+
+
+"TNPSC Special":[
+"Tamil Nadu GK",
+"Government Schemes",
+"Previous Questions"
 ]
 
 };
 
 
 
+// Subject Change Event
 
 if(bulkSubject){
 
+bulkSubject.onchange = function(){
 
-bulkSubject.onchange=function(){
-
-
-let selected=this.value;
+let selected = this.value;
 
 
-bulkTopic.innerHTML=
-`
+bulkTopic.innerHTML = `
 <option value="">
 📂 Select Topic
 </option>
@@ -333,11 +423,10 @@ bulkTopic.innerHTML=
 if(bulkTopics[selected]){
 
 
-bulkTopics[selected].forEach(topic=>{
+bulkTopics[selected].forEach(function(topic){
 
 
-bulkTopic.innerHTML +=
-`
+bulkTopic.innerHTML += `
 <option value="${topic}">
 ${topic}
 </option>
@@ -354,6 +443,7 @@ ${topic}
 
 
 }
+
 
 // ================= BULK UPLOAD =================
 
