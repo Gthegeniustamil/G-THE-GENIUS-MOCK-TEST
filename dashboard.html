@@ -4,9 +4,12 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS Dashboard</title>
+<title>
+G THE GENIUS Dashboard
+</title>
 
 <link rel="stylesheet" href="dashboard.css">
 
@@ -16,149 +19,188 @@
 <body>
 
 
-<div class="dashboard-container">
+<!-- ================= HEADER ================= -->
 
 
+<header class="header">
 
-<!-- LOGO -->
 
-<div class="logo-area">
+<div class="logo-box">
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="dashboard-logo">
+<img 
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo"
+>
+
+
+<div>
+
+<h2>
+G THE GENIUS
+</h2>
+
+<p>
+Government Exam Preparation
+</p>
+
+</div>
+
 
 </div>
 
 
 
+<div class="profile-icon">
 
-<h1>
-🛡️ G THE GENIUS
+👤
+
+</div>
+
+
+</header>
+
+
+
+
+
+<!-- ================= WELCOME ================= -->
+
+
+<section class="welcome-card">
+
+
+<h2>
+👋 Welcome,
+<span id="studentName">
+Student
+</span>
+</h2>
+
+
+<p>
+
+🎯 Preparing For:
+
+<span id="examGoal">
+TNUSRB
+
+</span>
+
+</p>
+
+
+</section>
+
+
+
+
+
+<!-- ================= XP CARD ================= -->
+
+
+<section class="xp-card">
+
+
+<div>
+
+<h3>
+⭐ Level
+</h3>
+
+
+<h1 id="level">
+
+1
+
 </h1>
 
 
-<h3>
-ALL GOVERNMENT EXAM PREPARATION PORTAL
-</h3>
-
-
-
-
-<!-- STUDENT INFO -->
-
-<div class="student-card">
-
-
-<h2>
-Welcome 👋
-<span id="studentName">Student</span>
-</h2>
-
-
-<p>
-📍 District :
-<span id="district">-</span>
-</p>
-
-
 </div>
 
 
 
-
-
-<!-- PERFORMANCE -->
-
-<div class="stats-card">
-
-
-<h2>
-📊 My Performance
-</h2>
-
-
-
-<p>
-📝 Total Tests:
-<span id="totalTests">0</span>
-</p>
-
-
-
-<p>
-🏆 Best Score:
-<span id="bestScore">0 / 20</span>
-</p>
-
-
-
-<p>
-🔥 Rank:
-<span id="myRank">-</span>
-</p>
-
-
-
-</div>
-
-
-
-
-
-<!-- DAILY STREAK -->
-
-
-<div class="streak-card">
-
-
-<h2>
-🔥 Daily Streak
-</h2>
-
-
-<p>
-<span id="streakDays">0</span> Days 🔥
-</p>
-
-
-<p>
-🏅 Keep practicing daily!
-</p>
-
-
-</div>
-
-
-
-
-
-
-<!-- PLAYER LEVEL -->
-
-
-<div class="level-card">
-
-
-<h2>
-⭐ Player Level
-</h2>
-
+<div>
 
 
 <h3>
-
-Level 
-<span id="playerLevel">
-1
-</span>
+XP
 
 </h3>
 
 
+<h2>
 
-<div class="xp-bar">
+<span id="xp">
+0
 
-<div class="xp-fill" id="xpFill"></div>
+</span>
+
+/ 
+
+<span id="nextXP">
+100
+
+</span>
+
+</h2>
+
+
+</div>
+
+
+
+<div class="progress">
+
+
+<div id="xpProgress">
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<!-- ================= DAILY MISSION ================= -->
+
+
+<section class="mission-card">
+
+
+<h2>
+🎯 Today's Mission
+</h2>
+
+
+<div class="mission-item">
+
+✅
+
+Practice 20 Questions
+
+</div>
+
+
+<div class="mission-item">
+
+⬜
+
+Complete Daily Test
+
+</div>
+
+
+<div class="mission-item">
+
+⬜
+
+Earn 100 XP
 
 </div>
 
@@ -166,34 +208,90 @@ Level
 
 <p>
 
-XP :
+Reward:
 
-<span id="playerXP">
-0 / 50
-</span>
-
+⭐ +50 XP
 
 </p>
 
 
-
-</div>
-
+</section>
 
 
+<!-- ================= CONTINUE PRACTICE ================= -->
+
+
+<section class="continue-card" id="continueBox">
+
+
+<h2>
+▶ Continue Practice
+</h2>
+
+
+<p>
+📚 Subject:
+<span id="continueSubject">
+-
+</span>
+
+</p>
+
+
+<p>
+
+📂 Topic:
+
+<span id="continueTopic">
+-
+</span>
+
+</p>
+
+
+<p>
+
+Question:
+
+<span id="continueQuestion">
+0
+</span>
+
+</p>
+
+
+<button class="btn">
+Continue
+</button>
+
+
+</section>
 
 
 
 
-<!-- TEST CARDS -->
+
+<!-- ================= TEST SECTION ================= -->
+
+
+<h2 class="section-title">
+
+📝 Mock Tests
+
+</h2>
+
+
+
+<section class="test-grid">
+
 
 
 <div class="test-card daily">
 
 
-<h2>
-🟢 Daily Mock Test
-</h2>
+<h3>
+🟢 Daily Test
+</h3>
 
 
 <p>
@@ -202,17 +300,15 @@ XP :
 
 
 <p>
-⏰ 5 Minutes
+5 Attempts / Day
 </p>
 
 
+<button class="btn">
 
-<button onclick="startTest('daily')">
-
-Start Test
+Start
 
 </button>
-
 
 
 </div>
@@ -224,9 +320,9 @@ Start Test
 <div class="test-card weekly">
 
 
-<h2>
-🟡 Weekly Mock Test
-</h2>
+<h3>
+🟡 Weekly Test
+</h3>
 
 
 <p>
@@ -235,30 +331,29 @@ Start Test
 
 
 <p>
-⏰ 10 Minutes
+3 Attempts / Week
 </p>
 
 
+<button class="btn">
 
-<button onclick="startTest('weekly')">
-
-Start Test
+Start
 
 </button>
 
 
-
 </div>
 
-  <!-- MONTHLY TEST -->
+
+
 
 
 <div class="test-card monthly">
 
 
-<h2>
+<h3>
 🔴 Monthly Grand Test
-</h2>
+</h3>
 
 
 <p>
@@ -267,14 +362,14 @@ Start Test
 
 
 <p>
-⏰ 60 Minutes
+1st & 15th
+
 </p>
 
 
+<button class="btn">
 
-<button onclick="startTest('monthly')">
-
-Start Test
+Start
 
 </button>
 
@@ -283,38 +378,41 @@ Start Test
 
 
 
+</section>
 
 
 
 
-<!-- MENU BUTTONS -->
+
+<!-- ================= RANK CARD ================= -->
 
 
-<div class="menu-buttons">
+<section class="rank-card">
 
 
-<button onclick="location.href='profile.html'">
-
-👤 My Profile
-
-</button>
+<h2>
+🏆 Your Rank
+</h2>
 
 
-
-<button onclick="location.href='leaderboard.html'">
-
-🏆 Leaderboard
-
-</button>
+<div class="rank-box">
 
 
+<p>
 
-<button onclick="logout()">
+🇮🇳 Tamil Nadu Rank
 
-🚪 Logout
+</p>
 
-</button>
 
+<h2>
+
+#<span id="stateRank">
+0
+
+</span>
+
+</h2>
 
 
 </div>
@@ -322,245 +420,262 @@ Start Test
 
 
 
+<div class="rank-box">
+
+
+<p>
+
+📍 District Rank
+
+</p>
+
+
+<h2>
+
+#<span id="districtRank">
+0
+
+</span>
+
+</h2>
+
+
+</div>
+
+
+</section>
 
 
 
 
-<!-- FOOTER -->
+
+<!-- ================= BADGE ================= -->
 
 
-<div class="dashboard-footer">
+<section class="badge-card">
 
 
-<h3 class="contact-title">
+<h2>
 
-📞 Contact Us
+🎖 Latest Achievement
+
+</h2>
+
+
+<div class="badge">
+
+
+🏅
+
+<span id="latestBadge">
+
+No Badge Yet
+
+</span>
+
+
+</div>
+
+
+
+<p>
+
+Total Badges:
+
+<span id="badgeCount">
+
+0
+
+</span>
+
+</p>
+
+
+</section>
+
+
+
+
+
+<!-- ================= PERFORMANCE ================= -->
+
+
+<section class="performance-card">
+
+
+<h2>
+
+📊 Performance
+
+</h2>
+
+
+
+<div class="stats">
+
+
+<div>
+
+<h3 id="practiceCount">
+
+0
 
 </h3>
 
+<p>
 
+Practice
 
-
-
-<div class="social-icons">
-
-
-<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
-target="_blank"
-class="youtube">
-
-▶️
-
-</a>
-
-
-
-
-<a href="https://t.me/gthegenius"
-target="_blank"
-class="telegram">
-
-✈️
-
-</a>
-
-
-
-
-<a href="mailto:gthegenius7@gmail.com"
-class="email">
-
-✉️
-
-</a>
-
-
+</p>
 
 </div>
 
 
 
 
+<div>
 
-<p class="copyright">
+<h3 id="accuracyBox">
 
-© 2026 G THE GENIUS
+0%
 
-<br>
+</h3>
 
-All Rights Reserved
+<p>
 
-<br>
+Accuracy
 
-TNUSRB Mock Test & Learning Platform
+</p>
+
+</div>
+
+
+
+
+<div>
+
+<h3 id="mockCount">
+
+0
+
+</h3>
+
+<p>
+
+Mock Tests
+
+</p>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ================= BOTTOM NAV ================= -->
+
+
+<nav class="bottom-nav">
+
+
+<a href="dashboard.html" class="active">
+
+<span>
+🏠
+</span>
+
+Home
+
+</a>
+
+
+
+<a href="practice.html">
+
+<span>
+📚
+</span>
+
+Practice
+
+</a>
+
+
+
+<a href="leaderboard.html">
+
+<span>
+🏆
+</span>
+
+Leaderboard
+
+</a>
+
+
+
+<a href="profile.html">
+
+<span>
+👤
+</span>
+
+Profile
+
+</a>
+
+
+</nav>
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
+<footer class="footer">
+
+
+<h3>
+G THE GENIUS
+</h3>
+
+
+<a href="https://youtube.com/@gthegeniustamil">
+▶ YouTube Channel
+</a>
+
+
+<a href="https://t.me/gthegenius">
+📢 Telegram
+</a>
+
+
+<a href="mailto:gthegenius7@gmail.com">
+📧 Email
+</a>
+
+
+
+<p>
+
+© 2026 G THE GENIUS.
+All Rights Reserved.
 
 </p>
 
 
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
+  </footer>
 
 
 <script type="module" src="dashboard.js"></script>
-
-
-
-
-
-<script>
-
-
-// STUDENT DETAILS
-
-
-document.getElementById("studentName").innerHTML =
-
-localStorage.getItem("studentName") || "Student";
-
-
-
-
-document.getElementById("district").innerHTML =
-
-localStorage.getItem("district") || "-";
-
-
-
-
-
-
-// DAILY STREAK
-
-
-document.getElementById("streakDays").innerHTML =
-
-localStorage.getItem("streak") || 0;
-
-
-
-
-
-
-
-// =======================
-// PLAYER LEVEL SYSTEM
-// =======================
-
-
-
-let xp =
-
-Number(localStorage.getItem("xp")) || 0;
-
-
-
-// Level 1 = 50 XP
-// Every level +50 XP
-
-
-
-let level =
-
-Math.floor(xp / 50) + 1;
-
-
-
-let previousLevelXP =
-
-(level - 1) * 50;
-
-
-
-let currentXP =
-
-xp - previousLevelXP;
-
-
-
-let nextLevelXP =
-
-level * 50;
-
-
-
-
-
-document.getElementById("playerLevel").innerHTML =
-
-level;
-
-
-
-
-
-document.getElementById("playerXP").innerHTML =
-
-currentXP + " / " + nextLevelXP;
-
-
-
-
-
-document.getElementById("xpFill").style.width =
-
-((currentXP / 50) * 100) + "%";
-
-
-
-
-
-
-
-
-// START TEST
-
-
-function startTest(type){
-
-
-window.location.href =
-
-"mocktest.html?type=" + type;
-
-
-}
-
-
-
-
-
-
-
-// LOGOUT
-
-
-function logout(){
-
-
-localStorage.clear();
-
-
-window.location.href="index.html";
-
-
-}
-
-
-
-</script>
-
-
-
 
 
 </body>
