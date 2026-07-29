@@ -14,7 +14,6 @@ font-family:'Poppins',sans-serif;
 }
 
 
-
 body{
 
 
@@ -29,12 +28,15 @@ linear-gradient(
 
 color:white;
 
+
 min-height:100vh;
+
 
 padding-bottom:90px;
 
 
 }
+
 
 
 
@@ -50,7 +52,9 @@ HEADER
 
 display:flex;
 
+
 align-items:center;
+
 
 gap:15px;
 
@@ -58,9 +62,11 @@ gap:15px;
 padding:20px;
 
 
+
 background:
 
 rgba(255,255,255,.08);
+
 
 
 backdrop-filter:
@@ -68,9 +74,11 @@ backdrop-filter:
 blur(15px);
 
 
+
 border-bottom:
 
 1px solid rgba(255,215,0,.3);
+
 
 
 }
@@ -81,6 +89,7 @@ border-bottom:
 
 
 width:65px;
+
 
 height:65px;
 
@@ -96,10 +105,10 @@ border:
 3px solid #FFD700;
 
 
-padding:2px;
-
-
 background:white;
+
+
+padding:2px;
 
 
 }
@@ -110,6 +119,7 @@ background:white;
 
 
 color:#FFD700;
+
 
 font-size:22px;
 
@@ -123,10 +133,512 @@ font-size:22px;
 
 color:#ddd;
 
+
+}
+
+
+
+
+
+
+
+/* =========================
+TITLE
+========================= */
+
+
+.leader-title{
+
+
+margin:20px;
+
+
+padding:25px;
+
+
+text-align:center;
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.leader-title h1{
+
+
+color:#FFD700;
+
+
+font-size:28px;
+
+
+}
+
+
+
+.leader-title p{
+
+
+margin-top:8px;
+
+
+color:#ddd;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+FILTER
+========================= */
+
+
+.filter-card{
+
+
+margin:20px;
+
+
+display:flex;
+
+
+gap:12px;
+
+
+
+}
+
+
+
+.filter-card select{
+
+
+flex:1;
+
+
+padding:14px;
+
+
+border-radius:18px;
+
+
+background:
+
+rgba(255,255,255,.1);
+
+
+
+color:white;
+
+
+
+border:
+
+1px solid rgba(255,215,0,.3);
+
+
+
+outline:none;
+
+
+}
+
+
+
+.filter-card option{
+
+
+background:#081229;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+TOP THREE
+========================= */
+
+
+.top-three{
+
+
+display:flex;
+
+
+align-items:end;
+
+
+justify-content:center;
+
+
+gap:12px;
+
+
+margin:25px 20px;
+
+
+}
+
+
+
+.rank-box{
+
+
+width:30%;
+
+
+padding:20px 10px;
+
+
+text-align:center;
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.3);
+
+
+
+}
+
+
+
+.rank-box h2{
+
+
+font-size:35px;
+
+
+}
+
+
+
+.rank-box h3{
+
+
+font-size:14px;
+
+
+margin-top:10px;
+
+
+color:white;
+
+
+}
+
+
+
+.rank-box p{
+
+
+color:#FFD700;
+
+
+margin-top:8px;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+/* FIRST RANK */
+
+
+.rank-box.first{
+
+
+transform:
+
+translateY(-20px);
+
+
+
+border:
+
+2px solid #FFD700;
+
+
+
+background:
+
+rgba(255,215,0,.15);
+
+
+
+}
+
+
+
+
+
+/* SECOND */
+
+
+.rank-box.second{
+
+
+border-color:#C0C0C0;
+
+
+}
+
+
+
+
+
+/* THIRD */
+
+
+.rank-box.third{
+
+
+border-color:#CD7F32;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+LEADERBOARD CARD
+========================= */
+
+
+.leader-card{
+
+
+margin:20px;
+
+
+padding:20px;
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.leader-card h2{
+
+
+color:#FFD700;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+
+
+
+/* TABLE HEADER */
+
+
+.table-header{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+.5fr 2fr 1fr 1fr;
+
+
+
+padding:12px;
+
+
+border-radius:15px;
+
+
+
+background:
+
+rgba(255,215,0,.15);
+
+
+
+color:#FFD700;
+
+
+
 font-size:13px;
 
 
 }
+
+/* =========================
+RANKING LIST ROW
+========================= */
+
+
+#leaderList{
+
+
+margin-top:15px;
+
+
+}
+
+
+
+.rank-row{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+
+.5fr 2fr 1fr 1fr;
+
+
+
+align-items:center;
+
+
+padding:15px 10px;
+
+
+margin-bottom:10px;
+
+
+border-radius:18px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.15);
+
+
+
+}
+
+
+
+.rank-row span{
+
+
+font-size:14px;
+
+
+}
+
+
+
+.rank-row .rank{
+
+
+color:#FFD700;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+.rank-row .score{
+
+
+color:#FFD700;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+.rank-row:hover{
+
+
+background:
+
+rgba(255,215,0,.15);
+
+
+}
+
 
 
 
@@ -146,35 +658,21 @@ margin:20px;
 padding:25px;
 
 
-text-align:center;
-
 
 border-radius:25px;
 
 
+
 background:
 
-linear-gradient(
-
-135deg,
-
-rgba(255,215,0,.20),
-
-rgba(255,255,255,.08)
-
-);
+rgba(255,215,0,.12);
 
 
 
 border:
 
-1px solid rgba(255,215,0,.35);
+1px solid #FFD700;
 
-
-
-box-shadow:
-
-0 0 20px rgba(255,215,0,.15);
 
 
 }
@@ -187,165 +685,6 @@ box-shadow:
 color:#FFD700;
 
 
-margin-bottom:15px;
-
-
-}
-
-
-
-.rank-number{
-
-
-font-size:55px;
-
-
-font-weight:bold;
-
-
-color:white;
-
-
-}
-
-
-
-.my-rank-card p{
-
-
-margin-top:10px;
-
-
-color:#ddd;
-
-
-}
-
-
-
-
-
-/* =========================
-FILTER CARD
-========================= */
-
-
-.filter-card{
-
-
-margin:20px;
-
-
-padding:20px;
-
-
-border-radius:22px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-.filter-card h3{
-
-
-color:#FFD700;
-
-
-margin-bottom:15px;
-
-
-}
-
-
-
-.filter-card select{
-
-
-width:100%;
-
-
-padding:14px;
-
-
-margin-top:10px;
-
-
-border:none;
-
-
-border-radius:15px;
-
-
-background:#081229;
-
-
-color:white;
-
-
-border:
-
-1px solid #FFD700;
-
-
-font-size:15px;
-
-
-}
-
-
-
-
-
-
-/* =========================
-TOP RANK SECTION
-========================= */
-
-
-.top-rank{
-
-
-margin:20px;
-
-
-padding:20px;
-
-
-border-radius:25px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-.top-rank h2{
-
-
-color:#FFD700;
-
-
 margin-bottom:20px;
 
 
@@ -353,219 +692,7 @@ margin-bottom:20px;
 
 
 
-
-
-#topPlayers{
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-gap:15px;
-
-
-}
-
-
-
-
-
-/* =========================
-RANK CARD BASE
-========================= */
-
-
-.rank-card{
-
-
-display:flex;
-
-
-align-items:center;
-
-
-gap:15px;
-
-
-padding:18px;
-
-
-border-radius:20px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.20);
-
-
-}
-
-
-
-.rank-position{
-
-
-font-size:35px;
-
-
-width:45px;
-
-
-text-align:center;
-
-
-}
-
-
-
-.rank-info{
-
-
-flex:1;
-
-
-}
-
-
-
-.rank-info h3{
-
-
-color:#FFD700;
-
-
-font-size:17px;
-
-
-}
-
-
-
-.rank-info p{
-
-
-font-size:13px;
-
-
-color:#ddd;
-
-
-margin-top:4px;
-
-
-}
-
-
-
-.rank-score h3{
-
-
-color:white;
-
-
-font-size:20px;
-
-
-}
-
-/* =========================
-TOP 3 MEDAL DESIGN
-========================= */
-
-
-.rank-card:nth-child(1){
-
-border:
-
-2px solid #FFD700;
-
-box-shadow:
-
-0 0 20px rgba(255,215,0,.4);
-
-}
-
-
-
-.rank-card:nth-child(2){
-
-border:
-
-2px solid silver;
-
-}
-
-
-
-.rank-card:nth-child(3){
-
-border:
-
-2px solid #cd7f32;
-
-}
-
-
-
-
-
-/* =========================
-PERFORMANCE CARD
-========================= */
-
-
-.performance-card{
-
-
-margin:20px;
-
-
-padding:22px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.performance-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-.performance-grid{
+.my-rank-grid{
 
 
 display:grid;
@@ -573,7 +700,9 @@ display:grid;
 
 grid-template-columns:
 
+
 repeat(3,1fr);
+
 
 
 gap:12px;
@@ -583,13 +712,13 @@ gap:12px;
 
 
 
-.performance-grid div{
-
-
-padding:18px 5px;
+.my-rank-grid div{
 
 
 text-align:center;
+
+
+padding:15px;
 
 
 border-radius:18px;
@@ -606,20 +735,20 @@ rgba(255,255,255,.08);
 
 
 
-.performance-grid h3{
+.my-rank-grid h1{
 
 
 color:#FFD700;
 
 
-font-size:22px;
+font-size:28px;
 
 
 }
 
 
 
-.performance-grid p{
+.my-rank-grid p{
 
 
 font-size:12px;
@@ -628,67 +757,119 @@ font-size:12px;
 color:#ddd;
 
 
+margin-top:8px;
+
+
 }
 
 
 
 
 
+
+
 /* =========================
-RANK ANIMATION
+BADGE CARD
 ========================= */
 
 
-.rank-card{
+.badge-card{
 
 
-animation:
+margin:20px;
 
-slideUp .5s ease;
+
+padding:22px;
+
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
 
 
 }
 
 
 
-@keyframes slideUp{
+.badge-card h2{
 
 
-from{
+color:#FFD700;
 
 
-opacity:0;
-
-
-transform:
-translateY(20px);
+margin-bottom:15px;
 
 
 }
 
 
 
-to{
+#badgeList{
 
 
-opacity:1;
+display:flex;
 
 
-transform:
-translateY(0);
+flex-wrap:wrap;
+
+
+gap:10px;
 
 
 }
 
 
+
+.badge-item{
+
+
+padding:10px 15px;
+
+
+border-radius:20px;
+
+
+
+background:
+
+rgba(255,215,0,.15);
+
+
+
+border:
+
+1px solid #FFD700;
+
+
+
+color:#FFD700;
+
+
+font-size:14px;
+
+
 }
+
+
 
 
 
 
 
 /* =========================
-BOTTOM NAVIGATION
+BOTTOM NAV
 ========================= */
 
 
@@ -707,7 +888,6 @@ left:0;
 width:100%;
 
 
-
 height:70px;
 
 
@@ -716,6 +896,7 @@ display:flex;
 
 
 justify-content:space-around;
+
 
 
 align-items:center;
@@ -743,6 +924,7 @@ border-top:
 z-index:999;
 
 
+
 }
 
 
@@ -756,10 +938,10 @@ text-decoration:none;
 color:white;
 
 
-text-align:center;
-
-
 font-size:12px;
+
+
+text-align:center;
 
 
 }
@@ -776,14 +958,6 @@ color:#FFD700;
 
 
 
-.bottom-nav a:hover{
-
-
-color:#FFD700;
-
-
-}
-
 
 
 
@@ -799,14 +973,15 @@ FOOTER
 margin:25px 20px 100px;
 
 
-padding:20px;
+padding:25px;
+
 
 
 text-align:center;
 
 
 
-border-radius:22px;
+border-radius:25px;
 
 
 
@@ -826,13 +1001,53 @@ border:
 
 
 
+.footer-logo{
+
+
+width:70px;
+
+
+height:70px;
+
+
+border-radius:50%;
+
+
+object-fit:cover;
+
+
+border:
+
+3px solid #FFD700;
+
+
+}
+
+
+
 .footer h3{
 
 
 color:#FFD700;
 
 
-margin-bottom:15px;
+margin-top:10px;
+
+
+}
+
+
+
+.footer p{
+
+
+color:#aaa;
+
+
+font-size:13px;
+
+
+margin:10px;
 
 
 }
@@ -861,30 +1076,6 @@ font-size:14px;
 
 
 
-.footer a:hover{
-
-
-color:#FFD700;
-
-
-}
-
-
-
-.footer p{
-
-
-font-size:12px;
-
-
-color:#aaa;
-
-
-margin-top:15px;
-
-
-}
-
 
 
 
@@ -898,39 +1089,37 @@ MOBILE RESPONSIVE
 
 
 
-.leader-logo{
+.filter-card{
 
 
-width:55px;
-
-height:55px;
-
-
-}
-
-
-
-.leader-header h2{
-
-
-font-size:18px;
+flex-direction:column;
 
 
 }
 
 
 
-.rank-card{
+.top-three{
 
 
-padding:15px;
+gap:8px;
 
 
 }
 
 
 
-.rank-position{
+.rank-box{
+
+
+padding:15px 5px;
+
+
+}
+
+
+
+.rank-box h2{
 
 
 font-size:28px;
@@ -940,25 +1129,43 @@ font-size:28px;
 
 
 
-.performance-grid{
+.table-header,
+
+
+.rank-row{
 
 
 grid-template-columns:
 
-repeat(3,1fr);
+
+.5fr 1.8fr 1fr 1fr;
+
+
+font-size:12px;
 
 
 }
 
 
 
-.bottom-nav{
+.my-rank-grid{
 
 
-height:65px;
+gap:8px;
 
 
 }
+
+
+
+.my-rank-grid h1{
+
+
+font-size:22px;
+
+
+}
+
 
 
 }
