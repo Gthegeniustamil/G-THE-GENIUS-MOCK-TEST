@@ -130,18 +130,31 @@ reviewContainer.innerHTML = "";
 questions.forEach((q,index)=>{
 
 
-let userAnswer =
-userAnswers[index];
+let userAnswer = userAnswers[index];
 
+let correctAnswerText = "";
 
+if (typeof q.answer === "number") {
+    correctAnswerText = q.options[q.answer];
+} else if (!isNaN(Number(q.answer))) {
+    correctAnswerText = q.options[Number(q.answer)];
+} else {
+    correctAnswerText = q.answer;
+}
 
-let correct =
-q.answer;
+let userAnswerText = "Not Answered";
 
+if (userAnswer !== null && userAnswer !== undefined) {
+    if (typeof userAnswer === "number") {
+        userAnswerText = q.options[userAnswer];
+    } else if (!isNaN(Number(userAnswer))) {
+        userAnswerText = q.options[Number(userAnswer)];
+    } else {
+        userAnswerText = userAnswer;
+    }
+}
 
-
-let result =
-userAnswer === correct;
+let result = (userAnswerText === correctAnswerText);
 
 
 
