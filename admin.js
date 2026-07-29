@@ -314,7 +314,11 @@ async function loadQuestions() {
 <p><b>C.</b> ${q.options[2]}</p>
 <p><b>D.</b> ${q.options[3]}</p>
 
-<p><b>✅ Answer :</b> ${q.options[q.answer]}</p>
+<p><b>✅ Answer :</b> ${
+typeof q.answer === "number"
+? q.options[q.answer]
+: q.answer
+}</p>
 
 <button onclick="editQuestion('${questionDoc.id}')">
 ✏️ Edit
