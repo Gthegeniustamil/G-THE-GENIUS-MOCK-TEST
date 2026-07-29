@@ -14,12 +14,10 @@ addDoc,
 serverTimestamp,
 getDocs,
 deleteDoc,
-doc
+doc,
+updateDoc
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
 
 
 
@@ -1572,3 +1570,330 @@ console.log(
 "✅ Subject Topic Filter Ready"
 
 );
+
+// =========================
+// EDIT QUESTION SYSTEM
+// =========================
+
+
+let editQuestionId = null;
+
+
+
+
+
+// =========================
+// EDIT BUTTON FUNCTION
+// =========================
+
+
+window.editQuestion = function(id){
+
+
+let q = allQuestions.find(
+
+item => item.id === id
+
+);
+
+
+
+if(!q) return;
+
+
+
+editQuestionId = id;
+
+
+
+document.getElementById("subject").value = q.subject;
+
+document.getElementById("topic").value = q.topic;
+
+document.getElementById("question").value = q.question;
+
+
+document.getElementById("optionA").value = q.options[0];
+
+document.getElementById("optionB").value = q.options[1];
+
+document.getElementById("optionC").value = q.options[2];
+
+document.getElementById("optionD").value = q.options[3];
+
+
+document.getElementById("answer").value = q.answer;
+
+
+document.getElementById("explanation").value = q.explanation;
+
+
+
+document.getElementById(
+"addQuestionBtn"
+).style.display="none";
+
+
+
+document.getElementById(
+"updateQuestionBtn"
+).style.display="block";
+
+
+
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+
+
+};
+
+
+
+
+
+
+
+
+// =========================
+// UPDATE QUESTION
+// =========================
+
+
+const updateBtn =
+
+document.getElementById(
+"updateQuestionBtn"
+);
+
+
+
+
+
+if(updateBtn){
+
+
+
+updateBtn.onclick = async ()=>{
+
+
+
+if(!editQuestionId) return;
+
+
+
+
+
+try{
+
+
+
+await updateDoc(
+
+doc(
+
+db,
+
+"questions",
+
+editQuestionId
+
+),
+
+{
+
+
+subject:
+
+document.getElementById("subject").value,
+
+
+
+topic:
+
+document.getElementById("topic").value,
+
+
+
+question:
+
+document.getElementById("question").value,
+
+
+
+options:[
+
+
+document.getElementById("optionA").value,
+
+
+document.getElementById("optionB").value,
+
+
+document.getElementById("optionC").value,
+
+
+document.getElementById("optionD").value
+
+
+],
+
+
+
+answer:
+
+Number(
+
+document.getElementById("answer").value
+
+),
+
+
+
+explanation:
+
+document.getElementById("explanation").value,
+
+
+
+updatedAt:
+
+serverTimestamp()
+
+
+
+}
+
+
+
+);
+
+
+
+
+
+
+alert(
+
+"✅ Question Updated Successfully"
+
+);
+
+
+
+
+
+
+editQuestionId=null;
+
+
+
+
+
+document.getElementById(
+"updateQuestionBtn"
+).style.display="none";
+
+
+
+
+
+document.getElementById(
+"addQuestionBtn"
+).style.display="block";
+
+
+
+
+
+
+loadQuestionsAdmin();
+
+
+
+clearQuestionForm();
+
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.log(
+
+"Update Error",
+
+error
+
+);
+
+
+
+alert(
+
+"❌ Update Failed"
+
+);
+
+
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// CLEAR FORM
+// =========================
+
+
+function clearQuestionForm(){
+
+
+document.getElementById("topic").value="";
+
+
+document.getElementById("question").value="";
+
+
+document.getElementById("optionA").value="";
+
+
+document.getElementById("optionB").value="";
+
+
+document.getElementById("optionC").value="";
+
+
+document.getElementById("optionD").value="";
+
+
+document.getElementById("explanation").value="";
+
+
+}
