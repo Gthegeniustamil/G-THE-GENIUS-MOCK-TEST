@@ -1,94 +1,35 @@
+// =========================
+// G THE GENIUS PRACTICE JS
+// PART 1
+// =========================
+
+
 import { db } from "./firebase-config.js";
 
 
 import {
 
 collection,
-getDocs,
-query,
-where
+getDocs
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-// =========================
-// VARIABLES
-// =========================
-
 
 let questions = [];
 
-let currentQuestion = 0;
+let practiceQuestions = [];
+
+let currentIndex = 0;
 
 let score = 0;
 
-let selectedSubject = "";
+let correct = 0;
 
-let selectedTopic = "";
+let wrong = 0;
 
-
-
-
-
-// =========================
-// SUBJECT TOPIC DATA
-// =========================
-
-
-const topics = {
-
-
-"Indian Polity":[
-
-"Constitution",
-"Fundamental Rights",
-"President",
-"Prime Minister",
-"Parliament"
-
-],
-
-
-"Indian History":[
-
-"Ancient India",
-"Freedom Struggle",
-"Chola History",
-"Indian Independence"
-
-],
-
-
-"Geography":[
-
-"India Geography",
-"World Geography",
-"Climate"
-
-],
-
-
-"General Science":[
-
-"Physics",
-"Chemistry",
-"Biology"
-
-],
-
-
-"Tamil Nadu GK":[
-
-"History",
-"Districts",
-"Government Schemes"
-
-]
-
-
-};
 
 
 
@@ -97,90 +38,86 @@ const topics = {
 
 
 // =========================
-// LOAD TOPICS
+// LOAD QUESTIONS
 // =========================
 
 
-const subjectSelect =
-
-document.getElementById(
-"subjectSelect"
-);
+async function loadQuestions(){
 
 
 
-const topicSelect =
+try{
 
-document.getElementById(
-"topicSelect"
+
+const snap = await getDocs(
+
+collection(
+db,
+"questions"
+)
+
 );
 
 
 
 
-if(subjectSelect){
 
-
-subjectSelect.addEventListener(
-
-"change",
-
-()=>{
-
-
-selectedSubject =
-
-subjectSelect.value;
+questions=[];
 
 
 
-topicSelect.innerHTML =
-
-`
-
-<option>
-
-Select Topic
-
-</option>
-
-`;
+snap.forEach(doc=>{
 
 
+questions.push({
 
-if(topics[selectedSubject]){
+id:doc.id,
 
+...doc.data()
 
-topics[selectedSubject]
-
-.forEach(topic=>{
-
-
-topicSelect.innerHTML +=
-
-
-`
-
-<option value="${topic}">
-
-${topic}
-
-</option>
-
-`;
-
+});
 
 
 });
 
-}
 
 
-}
+
+console.log(
+
+"Questions Loaded",
+
+questions.length
 
 );
 
+
+
 }
+
+
+
+catch(error){
+
+
+
+console.log(
+
+"Question Load Error",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+
 
 
 
@@ -203,157 +140,73 @@ document.getElementById(
 if(startBtn){
 
 
-startBtn.onclick = async()=>{
 
+startBtn.onclick = ()=>{
 
-selectedTopic =
 
-topicSelect.value;
 
-
-
-if(
-!selectedSubject ||
-!selectedTopic
-){
-
-
-alert(
-"Select Subject & Topic"
-);
-
-
-return;
-
-
-}
-
-
-
-
-await loadQuestions();
-
-
-
-};
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// LOAD QUESTIONS FIRESTORE
-// =========================
-
-
-async function loadQuestions(){
-
-
-try{
-
-
-const q =
-
-query(
-
-collection(db,"questions"),
-
-where(
-"subject",
-"==",
-selectedSubject
-
-)
-
-);
-
-
-
-const snap =
-
-await getDocs(q);
-
-
-
-questions=[];
-
-
-
-snap.forEach(doc=>{
-
-
-let data =
-doc.data();
-
-
-
-if(
-data.topic === selectedTopic
-){
-
-
-questions.push(data);
-
-
-}
-
-
-});
-
-
-
-
-
-if(
-questions.length===0
-){
-
-
-alert(
-"No Questions Available"
-);
-
-
-
-return;
-
-
-}
-
-
-
-
-
-// Random 10 Questions
-
-
-questions =
-
-questions.sort(
-()=>0.5-Math.random()
-)
-.slice(0,10);
-
-
-
-
+let category =
 
 document.getElementById(
-"practiceArea"
-).style.display =
-"block";
+"categorySelect"
+).value;
 
 
 
-document.querySelector(
-".select-card"
-).style.display =
-"none";
+
+
+
+if(category==="all"){
+
+
+
+practiceQuestions =
+
+[...questions];
+
+
+
+}
+
+else{
+
+
+practiceQuestions =
+
+questions.filter(
+
+q=>
+
+q.category === category
+
+);
+
+
+
+}
+
+
+
+
+
+
+practiceQuestions.sort(
+
+()=>Math.random()-0.5
+
+);
+
+
+
+
+
+currentIndex=0;
+
+score=0;
+
+correct=0;
+
+wrong=0;
 
 
 
@@ -361,21 +214,18 @@ showQuestion();
 
 
 
-}
-
-catch(error){
-
-
-console.log(
-error
-);
-
-
-}
+};
 
 
 
 }
+
+
+
+
+
+
+
 
 // =========================
 // SHOW QUESTION
@@ -385,29 +235,48 @@ error
 function showQuestion(){
 
 
-let question =
 
-questions[currentQuestion];
+if(
+
+currentIndex >= practiceQuestions.length
+
+){
 
 
 
-if(!question)
+alert(
+
+"Practice Completed 🎉"
+
+);
+
+
+
 return;
 
 
+}
+
+
+
+
+
+
+let q =
+
+practiceQuestions[currentIndex];
+
+
+
+
 
 
 document.getElementById(
-"questionNo"
+"questionNumber"
 ).innerHTML =
-currentQuestion + 1;
 
+currentIndex+1;
 
-
-document.getElementById(
-"totalQuestions"
-).innerHTML =
-questions.length;
 
 
 
@@ -416,67 +285,51 @@ questions.length;
 document.getElementById(
 "questionText"
 ).innerHTML =
-question.question;
+
+q.question;
 
 
 
 
 
 
-let options = [
 
-question.option1,
-
-question.option2,
-
-question.option3,
-
-question.option4
-
-];
+for(let i=0;i<4;i++){
 
 
 
+let btn =
 
-
-let buttons =
-
-document.querySelectorAll(
-".option"
+document.getElementById(
+"option"+i
 );
 
 
 
+btn.innerHTML =
 
-
-buttons.forEach(
-(button,index)=>{
-
-
-button.innerHTML =
-
-options[index];
+q.options[i];
 
 
 
-button.className =
-"option";
+btn.className =
+
+"option-btn";
 
 
 
-button.disabled =
-false;
+btn.disabled=false;
 
 
 
-button.onclick = ()=>{
+btn.onclick = ()=>{
 
 
 checkAnswer(
 
-button,
+i,
 
-index
+q.answer
 
 );
 
@@ -485,26 +338,9 @@ index
 
 
 
-});
+}
 
 
-
-
-
-// Hide Explanation
-
-
-document.getElementById(
-"explanationBox"
-).style.display =
-"none";
-
-
-
-
-
-
-updateProgress();
 
 
 
@@ -516,38 +352,22 @@ updateProgress();
 
 
 
+
 // =========================
-// CHECK ANSWER
+// ANSWER CHECK
 // =========================
 
 
-function checkAnswer(
-button,
-index
-){
-
-
-let question =
-
-questions[currentQuestion];
-
-
-
-let correctAnswer =
-
-Number(
-question.answer
-);
-
-
+function checkAnswer(selected,answer){
 
 
 
 let buttons =
 
 document.querySelectorAll(
-".option"
+".option-btn"
 );
+
 
 
 
@@ -556,7 +376,7 @@ document.querySelectorAll(
 buttons.forEach(btn=>{
 
 
-btn.disabled = true;
+btn.disabled=true;
 
 
 });
@@ -565,21 +385,21 @@ btn.disabled = true;
 
 
 
-
-if(index === correctAnswer){
-
-
-button.classList.add(
-"correct"
-);
+if(selected == answer){
 
 
 
 score++;
 
 
+correct++;
 
-addXP(10);
+
+
+buttons[selected]
+.classList.add(
+"correct"
+);
 
 
 
@@ -588,14 +408,18 @@ addXP(10);
 else{
 
 
-button.classList.add(
+wrong++;
+
+
+
+buttons[selected]
+.classList.add(
 "wrong"
 );
 
 
 
-buttons[correctAnswer]
-
+buttons[answer]
 .classList.add(
 "correct"
 );
@@ -608,7 +432,7 @@ buttons[correctAnswer]
 
 
 
-showExplanation();
+updateScore();
 
 
 
@@ -620,37 +444,80 @@ showExplanation();
 
 
 
+
 // =========================
-// EXPLANATION
+// UPDATE SCORE
 // =========================
 
 
-function showExplanation(){
-
-
-let question =
-
-questions[currentQuestion];
+function updateScore(){
 
 
 
 document.getElementById(
-"explanationText"
+"practiceScore"
 ).innerHTML =
 
-question.explanation ||
-"No Explanation";
+score;
+
 
 
 
 document.getElementById(
-"explanationBox"
-).style.display =
-"block";
+"correctCount"
+).innerHTML =
+
+correct;
+
+
+
+
+document.getElementById(
+"wrongCount"
+).innerHTML =
+
+wrong;
+
+
+
+
+
+
+let total =
+
+correct+wrong;
+
+
+
+let accuracy =
+
+total ?
+
+Math.round(
+
+(correct/total)*100
+
+)
+
+:
+
+0;
+
+
+
+
+
+
+document.getElementById(
+"accuracy"
+).innerHTML =
+
+accuracy+"%";
 
 
 
 }
+
 
 
 
@@ -674,31 +541,15 @@ document.getElementById(
 if(nextBtn){
 
 
+
 nextBtn.onclick = ()=>{
 
 
-currentQuestion++;
 
-
-
-
-if(
-currentQuestion < questions.length
-){
+currentIndex++;
 
 
 showQuestion();
-
-
-}
-
-else{
-
-
-finishPractice();
-
-
-}
 
 
 
@@ -715,8 +566,60 @@ finishPractice();
 
 
 
+loadQuestions();
+
+
+
+console.log(
+
+"✅ Practice JS Loaded"
+
+);
+
 // =========================
-// PROGRESS BAR
+// EXPLANATION SYSTEM
+// =========================
+
+
+function showExplanation(text){
+
+
+let box =
+
+document.getElementById(
+"explanationBox"
+);
+
+
+
+if(!box) return;
+
+
+
+
+box.style.display="block";
+
+
+
+box.innerHTML =
+
+"💡 Explanation : <br>" +
+
+(text || "No explanation available");
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// UPDATE PROGRESS
 // =========================
 
 
@@ -724,27 +627,24 @@ function updateProgress(){
 
 
 
-let percent =
+let total =
 
-(
-(currentQuestion+1)
+practiceQuestions.length;
 
-/
 
-questions.length
 
-)
+let progress =
 
-*100;
+((currentIndex+1)/total)*100;
 
 
 
 
 
-const bar =
+let bar =
 
 document.getElementById(
-"progressBar"
+"practiceProgress"
 );
 
 
@@ -752,9 +652,10 @@ document.getElementById(
 if(bar){
 
 
+
 bar.style.width =
 
-percent+"%";
+progress+"%";
 
 
 }
@@ -763,12 +664,20 @@ percent+"%";
 
 }
 
+
+
+
+
+
+
+
 // =========================
-// ADD XP SYSTEM
+// XP ADD SYSTEM
 // =========================
 
 
-function addXP(points){
+function addPracticeXP(){
+
 
 
 let xp =
@@ -780,181 +689,39 @@ localStorage.getItem(
 
 )
 
-) || 0;
+)||0;
 
 
 
-xp += points;
+
+
+
+let newXP =
+
+xp + (correct * 5);
+
+
+
 
 
 
 localStorage.setItem(
+
 "xp",
-xp
-);
 
-
-
-
-
-document.getElementById(
-"xpEarned"
-).innerHTML =
-
-points;
-
-
-
-
-
-checkBadge(xp);
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// LEVEL SYSTEM
-// =========================
-
-
-function getLevel(xp){
-
-
-return Math.floor(
-xp / 100
-) + 1;
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// BADGE UNLOCK
-// =========================
-
-
-function checkBadge(xp){
-
-
-
-let badges =
-
-JSON.parse(
-
-localStorage.getItem(
-"badges"
-
-)
-
-) || [];
-
-
-
-
-
-let newBadge = "";
-
-
-
-
-
-if(
-xp >= 100 &&
-!badges.includes(
-"Beginner"
-)
-){
-
-
-newBadge="Beginner";
-
-
-}
-
-
-
-
-else if(
-xp >= 500 &&
-!badges.includes(
-"Practice Star"
-)
-){
-
-
-newBadge="Practice Star";
-
-
-}
-
-
-
-
-else if(
-xp >= 1000 &&
-!badges.includes(
-"Master Learner"
-)
-){
-
-
-newBadge="Master Learner";
-
-
-}
-
-
-
-
-
-
-
-if(newBadge){
-
-
-badges.push(
-newBadge
-);
-
-
-
-localStorage.setItem(
-
-"badges",
-
-JSON.stringify(
-badges
-)
+newXP
 
 );
 
 
 
+console.log(
 
+"XP Added",
 
-document.getElementById(
-"badgeMessage"
-).innerHTML =
+newXP
 
-"🏅 Badge Unlocked : "
-+
-newBadge;
-
-
-
-}
+);
 
 
 
@@ -968,11 +735,44 @@ newBadge;
 
 
 // =========================
-// SAVE PRACTICE HISTORY
+// SAVE PRACTICE DATA
 // =========================
 
 
-function savePracticeHistory(){
+function savePractice(){
+
+
+
+let data = {
+
+
+date:
+
+new Date().toLocaleDateString(),
+
+
+correct:
+
+
+correct,
+
+
+wrong:
+
+
+wrong,
+
+
+score:
+
+
+score
+
+
+
+};
+
+
 
 
 
@@ -985,33 +785,14 @@ localStorage.getItem(
 
 )
 
-) || [];
+)||[];
 
 
 
 
 
-history.unshift({
 
-
-subject:selectedSubject,
-
-
-topic:selectedTopic,
-
-
-score:score,
-
-
-total:questions.length,
-
-
-date:new Date()
-.toLocaleDateString()
-
-
-
-});
+history.push(data);
 
 
 
@@ -1021,9 +802,7 @@ localStorage.setItem(
 
 "practiceHistory",
 
-JSON.stringify(
-history
-)
+JSON.stringify(history)
 
 );
 
@@ -1037,23 +816,21 @@ history
 
 
 
+
 // =========================
-// FINISH PRACTICE
+// COMPLETE SUMMARY
 // =========================
 
 
-function finishPractice(){
+function practiceComplete(){
 
 
 
-savePracticeHistory();
+addPracticeXP();
 
 
 
-
-let totalXP =
-
-score * 10;
+savePractice();
 
 
 
@@ -1061,40 +838,17 @@ score * 10;
 
 alert(
 
-"🎉 Practice Completed\n\n"
+"🎉 Practice Completed\n\n"+
 
-+
+"Correct : "+correct+
 
-"Score : "
+"\nWrong : "+wrong+
 
-+
-
-score
-
-+
-
-"/"
-
-+
-
-questions.length
-
-+
-
-"\nXP Earned : "
-
-+
-
-totalXP
+"\nScore : "+score
 
 );
 
 
-
-
-
-location.href =
-"profile.html";
 
 
 
@@ -1104,43 +858,33 @@ location.href =
 
 
 
-
-
 // =========================
-// UPDATE PRACTICE COUNT
+// OVERRIDE NEXT BUTTON
 // =========================
 
 
-function updatePracticeCount(){
+const oldShowQuestion =
+
+showQuestion;
 
 
 
-let count =
-
-Number(
-
-localStorage.getItem(
-"totalPractice"
-
-)
-
-) || 0;
+showQuestion = function(){
 
 
 
-count++;
+if(
+
+currentIndex >= practiceQuestions.length
+
+){
 
 
 
+practiceComplete();
 
-localStorage.setItem(
 
-"totalPractice",
-
-count
-
-);
-
+return;
 
 
 }
@@ -1149,10 +893,42 @@ count
 
 
 
+oldShowQuestion();
+
+
+
+updateProgress();
+
+
+
+
+
+let q =
+
+practiceQuestions[currentIndex];
+
+
+
+
+showExplanation(
+
+q.explanation
+
+);
+
+
+
+};
+
+
+
+
+
+
 
 
 // =========================
-// PAGE READY
+// INITIAL LOAD
 // =========================
 
 
@@ -1163,18 +939,21 @@ document.addEventListener(
 ()=>{
 
 
-updatePracticeCount();
+updateScore();
 
 
 
-console.log(
-
-"✅ G THE GENIUS PRACTICE READY"
+}
 
 );
 
 
 
-});
 
 
+
+console.log(
+
+"✅ Practice Final Integration Ready"
+
+);
