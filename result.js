@@ -154,7 +154,7 @@ if (userAnswer !== null && userAnswer !== undefined) {
     }
 }
 
-let result = (userAnswerText === correctAnswerText);
+let result = Number(userAnswer) === Number(q.answer);
 
 
 
