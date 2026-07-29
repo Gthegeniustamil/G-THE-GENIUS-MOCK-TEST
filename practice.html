@@ -7,6 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>
 G THE GENIUS Practice
 </title>
@@ -21,14 +22,23 @@ G THE GENIUS Practice
 <body>
 
 
-<!-- HEADER -->
+
+
+<!-- =========================
+HEADER
+========================= -->
+
 
 <header class="practice-header">
 
 
-<img 
+<img
+
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
 class="practice-logo"
+
+
 >
 
 
@@ -36,12 +46,16 @@ class="practice-logo"
 <div>
 
 <h2>
+
 G THE GENIUS
+
 </h2>
 
 
 <p>
-Unlimited Practice
+
+Practice Zone
+
 </p>
 
 
@@ -54,273 +68,192 @@ Unlimited Practice
 
 
 
-<!-- WELCOME CARD -->
-
-
-<section class="welcome-card">
-
-
-<h2>
-
-📚 Practice Zone
-
-</h2>
-
-
-<p>
-
-Choose Subject & Topic
-
-and improve your score
-
-</p>
-
-
-</section>
 
 
 
+<!-- =========================
+CATEGORY SECTION
+========================= -->
 
 
-
-<!-- SUBJECT SELECT -->
-
-
-<section class="select-card">
+<section class="category-card">
 
 
 <h2>
 
-📖 Select Subject
+📚 Select Category
 
 </h2>
 
 
 
-<select id="subjectSelect">
+
+<select id="categorySelect">
 
 
-<option value="">
+<option value="all">
 
-Select Subject
+All Questions
 
 </option>
 
 
-<option value="Indian Polity">
+
+<option value="polity">
 
 Indian Polity
 
 </option>
 
 
-<option value="Indian History">
+
+<option value="history">
 
 Indian History
 
 </option>
 
 
-<option value="Geography">
+
+<option value="geography">
 
 Geography
 
 </option>
 
 
-<option value="General Science">
+
+<option value="science">
 
 General Science
 
 </option>
 
 
-<option value="Tamil Nadu GK">
+
+<option value="tamilnadu">
 
 Tamil Nadu GK
 
 </option>
 
 
-</select>
-
-
-
-</section>
-
-
-
-
-
-
-
-<!-- TOPIC SELECT -->
-
-
-<section class="select-card">
-
-
-<h2>
-
-📂 Select Topic
-
-</h2>
-
-
-
-<select id="topicSelect">
-
-
-<option>
-
-Select Topic
-
-</option>
-
 
 </select>
 
 
 
-</section>
+
+<button id="startPractice">
 
 
-
-
-
-
-
-<!-- START BUTTON -->
-
-
-<button id="startPractice"
-class="start-btn">
-
-
-🚀 Start Practice
-
+Start Practice
 
 </button>
 
+
+
+</section>
+
+
+
+
+
+
+
+
 <!-- =========================
-PRACTICE AREA
+PRACTICE BOX
 ========================= -->
 
 
-<section class="practice-box" id="practiceArea">
+<section class="practice-box">
 
 
-<div class="progress-box">
+
+<div class="progress-info">
 
 
 <p>
 
 Question 
 
-<span id="questionNo">
+<span id="questionNumber">
 
-1
-
-</span>
-
-/
-
-<span id="totalQuestions">
-
-10
+0
 
 </span>
-
 
 </p>
 
 
 
-<div class="question-progress">
+<p>
 
+Score :
 
-<div id="progressBar">
+<span id="practiceScore">
+
+0
+
+</span>
+
+</p>
+
 
 
 </div>
 
 
-</div>
-
-
-</div>
 
 
 
 
-
-<!-- QUESTION -->
-
-
-<div class="question-card">
 
 
 <h2 id="questionText">
 
-
-Question Loading...
-
+Select category and start practice
 
 </h2>
 
 
-</div>
 
 
 
-
-
-
-
-<!-- OPTIONS -->
 
 
 <div class="options-box">
 
 
 
-<button class="option"
-id="option1">
+<button class="option-btn" id="option0">
 
-
-A
+Option A
 
 </button>
 
 
 
-<button class="option"
-id="option2">
+<button class="option-btn" id="option1">
 
-
-B
+Option B
 
 </button>
 
 
 
+<button class="option-btn" id="option2">
 
-<button class="option"
-id="option3">
-
-
-C
+Option C
 
 </button>
 
 
 
+<button class="option-btn" id="option3">
 
-<button class="option"
-id="option4">
-
-
-D
+Option D
 
 </button>
 
@@ -333,26 +266,9 @@ D
 
 
 
-<!-- EXPLANATION -->
 
 
-<div class="explanation-card"
-id="explanationBox">
-
-
-<h3>
-
-💡 Explanation
-
-</h3>
-
-
-<p id="explanationText">
-
-
-Answer explanation will appear here
-
-</p>
+<div id="explanationBox">
 
 
 </div>
@@ -363,50 +279,141 @@ Answer explanation will appear here
 
 
 
-
-<!-- REWARD -->
-
-
-<div class="reward-card">
-
-
-<h3>
-
-⭐ XP Earned:
-
-<span id="xpEarned">
-
-0
-
-</span>
-
-</h3>
-
-
-<p id="badgeMessage">
-
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-<button id="nextQuestion"
-class="next-btn">
+<button id="nextQuestion">
 
 
 Next Question ➡️
 
-
 </button>
 
+
+
+</section>
+
+
+
+
+
+
+
+
+<script type="module" src="practice.js"></script>
+
+<!-- =========================
+ANSWER RESULT CARD
+========================= -->
+
+
+<section class="result-card" id="resultCard">
+
+
+<h2>
+
+📊 Practice Result
+
+</h2>
+
+
+
+<div class="result-grid">
+
+
+<div>
+
+<h1 id="correctCount">
+
+0
+
+</h1>
+
+<p>
+
+Correct
+
+</p>
+
+</div>
+
+
+
+
+
+<div>
+
+<h1 id="wrongCount">
+
+0
+
+</h1>
+
+<p>
+
+Wrong
+
+</p>
+
+</div>
+
+
+
+
+
+<div>
+
+<h1 id="accuracy">
+
+0%
+
+</h1>
+
+<p>
+
+Accuracy
+
+</p>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+PROGRESS BAR
+========================= -->
+
+
+<section class="practice-progress">
+
+
+<h3>
+
+Your Progress
+
+</h3>
+
+
+
+<div class="progress-container">
+
+
+<div id="practiceProgress">
+
+
+</div>
+
+
+</div>
 
 
 
@@ -420,7 +427,40 @@ Next Question ➡️
 
 
 <!-- =========================
-BOTTOM NAV
+MOTIVATION CARD
+========================= -->
+
+
+<section class="practice-motivation">
+
+
+<h2>
+
+🔥 Keep Practicing
+
+</h2>
+
+
+
+<p>
+
+Every question makes you stronger for your government exam.
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+BOTTOM NAVIGATION
 ========================= -->
 
 
@@ -442,7 +482,8 @@ Home
 
 
 
-<a href="practice.html" class="active">
+
+<a href="practice.html">
 
 
 📚
@@ -457,6 +498,7 @@ Practice
 
 
 
+
 <a href="leaderboard.html">
 
 
@@ -464,10 +506,11 @@ Practice
 
 <br>
 
-Leaderboard
+Rank
 
 
 </a>
+
 
 
 
@@ -485,8 +528,8 @@ Profile
 </a>
 
 
-
 </nav>
+
 
 
 
@@ -502,11 +545,33 @@ FOOTER
 <footer class="footer">
 
 
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="footer-logo"
+
+
+>
+
+
+
 <h3>
 
 G THE GENIUS
 
 </h3>
+
+
+
+
+<p>
+
+All Government Exam Mock Test Platform
+
+</p>
+
+
 
 
 
@@ -519,11 +584,13 @@ G THE GENIUS
 
 
 
+
 <a href="https://t.me/gthegenius">
 
-📢 Telegram
+📢 Telegram Channel
 
 </a>
+
 
 
 
@@ -536,23 +603,20 @@ G THE GENIUS
 
 
 
+
+
 <p>
 
-© 2026 G THE GENIUS.
-All Rights Reserved.
+© 2026 G THE GENIUS
 
 </p>
 
 
 
 </footer>
-
-
-
-
-<script type="module" src="practice.js"></script>
-
-
+  
 </body>
 
+
 </html>
+
