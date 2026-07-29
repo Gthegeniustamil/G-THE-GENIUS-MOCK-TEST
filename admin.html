@@ -391,58 +391,160 @@ placeholder="Explanation">
 </div>
 
 
+<!-- ================= BULK UPLOAD ================= -->
+
+<div class="section">
+
+<h2>📤 Bulk Question Upload</h2>
+
+
+<!-- Subject -->
+
+<label>
+📚 Select Subject
+</label>
+
+<select id="bulkSubject">
+
+<option value="">
+Select Subject
+</option>
+
+<option value="General Knowledge">
+General Knowledge (GK)
+</option>
+
+<option value="Indian Polity">
+Indian Polity
+</option>
+
+<option value="Indian History">
+Indian History
+</option>
+
+<option value="Indian Geography">
+Indian Geography
+</option>
+
+<option value="Indian Economy">
+Indian Economy
+</option>
+
+<option value="General Science">
+General Science
+</option>
+
+<option value="Physics">
+Physics
+</option>
+
+<option value="Chemistry">
+Chemistry
+</option>
+
+<option value="Biology">
+Biology
+</option>
+
+<option value="Tamil">
+Tamil
+</option>
+
+<option value="English">
+English
+</option>
+
+<option value="Reasoning">
+Reasoning
+</option>
+
+<option value="Aptitude">
+Aptitude
+</option>
+
+<option value="Computer">
+Computer
+</option>
+
+<option value="Current Affairs">
+Current Affairs
+</option>
+
+<option value="Psychology">
+Psychology
+</option>
+
+<option value="Physical Training">
+Physical Training
+</option>
+
+<option value="TNUSRB Special">
+TNUSRB Special
+</option>
+
+<option value="TNPSC Special">
+TNPSC Special
+</option>
+
+</select>
 
 
 
+<br><br>
 
 
-<!-- BULK UPLOAD -->
+<!-- Topic -->
+
+<label>
+📂 Select Topic
+</label>
 
 
-<div class="section bulk-upload"
-id="uploadSection">
+<select id="bulkTopic">
+
+<option value="">
+Select Topic
+</option>
+
+</select>
 
 
-<h2>
-📤 Bulk Question Upload
-</h2>
+<br><br>
 
 
+<!-- JSON -->
 
-<button
-id="removeDuplicateBtn">
-
-🧹 Remove Duplicate Questions
-
-</button>
+<label>
+📝 Paste JSON Questions
+</label>
 
 
-
-<textarea
+<textarea 
 id="bulkJson"
-rows="15"
-placeholder="Paste JSON Questions Here">
-</textarea>
+placeholder='[
+{
+"question":"Question",
+"options":["A","B","C","D"],
+"answer":0,
+"explanation":"Explanation"
+}
+]'
+rows="12"></textarea>
 
+
+
+<br>
 
 
 <button id="uploadBtn">
-
-Upload Questions
-
+📤 Upload Questions
 </button>
 
 
-
-<p id="uploadStatus"></p>
+<div id="uploadStatus"></div>
 
 
 </div>
-
-
-
-
-
 
 
 
