@@ -4,15 +4,284 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-G THE GENIUS Admin Panel
-</title>
+<title>G THE GENIUS Admin Panel</title>
 
 
-<link rel="stylesheet" href="admin.css">
+<style>
+
+*{
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+
+body{
+
+    margin:0;
+    min-height:100vh;
+    background:
+    linear-gradient(135deg,#050b18,#081d45);
+
+    color:white;
+    padding:20px;
+
+}
+
+
+
+.admin-container{
+
+    max-width:750px;
+    margin:auto;
+
+}
+
+
+
+.header{
+
+    text-align:center;
+    margin-bottom:20px;
+
+}
+
+
+.logo{
+
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+
+    border:3px solid #FFD700;
+
+}
+
+
+
+.header h1{
+
+    color:#FFD700;
+    margin:10px 0 5px;
+    font-size:28px;
+
+}
+
+
+.badge{
+
+    display:inline-block;
+    background:#FFD700;
+    color:#000;
+    padding:6px 15px;
+
+    border-radius:20px;
+    font-weight:bold;
+    font-size:14px;
+
+}
+
+
+
+/* CARD */
+
+
+.card{
+
+    background:
+    rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,215,0,0.3);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.4);
+
+}
+
+
+
+/* INPUT AREA */
+
+
+label{
+
+    display:block;
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#FFD700;
+
+}
+
+
+
+select,
+textarea{
+
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    border:none;
+
+    outline:none;
+
+    background:#101c3a;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+
+
+select:focus,
+textarea:focus{
+
+    border:1px solid #FFD700;
+
+}
+
+
+
+textarea{
+
+    height:260px;
+
+    resize:none;
+
+}
+
+
+
+/* BUTTON */
+
+
+.upload-btn{
+
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:30px;
+
+
+    background:
+    linear-gradient(90deg,#FFD700,#ffae00);
+
+
+    color:#000;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+}
+
+
+
+.upload-btn:hover{
+
+    transform:scale(1.03);
+
+}
+
+
+
+/* PROGRESS */
+
+
+.progress-card{
+
+    margin-top:25px;
+
+    background:#050b18;
+
+    padding:18px;
+
+    border-radius:15px;
+
+}
+
+
+
+.progress-title{
+
+    color:#FFD700;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.progress{
+
+    height:22px;
+
+    background:#222;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+
+.progress-bar{
+
+    width:0%;
+
+    height:100%;
+
+    background:#00ff88;
+
+    transition:.5s;
+
+}
+
+
+
+.result-box{
+
+    margin-top:15px;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+}
+
+
+
+</style>
 
 
 </head>
@@ -21,43 +290,23 @@ G THE GENIUS Admin Panel
 <body>
 
 
-<!-- =========================
-ADMIN HEADER
-========================= -->
+
+<div class="admin-container">
 
 
-<header class="admin-header">
+<div class="header">
 
 
-<img
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="admin-logo"
->
+<img src="assets/logo.png" class="logo">
 
 
-<div>
-
-<h2>
-G THE GENIUS
-</h2>
-
-<p>
-Admin Question Panel
-</p>
+<h1>
+🚔 G THE GENIUS
+</h1>
 
 
-<h4 id="adminName">
-Admin
-</h4>
-
-
-<p id="adminRole">
-Administrator
-</p>
-
-
-<span id="adminStatus">
-Checking...
+<span class="badge">
+ADMIN PANEL
 </span>
 
 
@@ -65,221 +314,44 @@ Checking...
 
 
 
-<button id="adminLogoutBtn">
-
-🚪 Logout
-
-</button>
 
 
-</header>
-
-
-
-
-
-
-
-<!-- =========================
-ADMIN STATS
-========================= -->
-
-
-<section class="admin-stats">
-
-
-<div class="stat-card">
-
-<h2 id="totalQuestions">
-0
-</h2>
-
-<p>
-Total Questions
-</p>
-
-</div>
-
-
-
-<div class="stat-card">
-
-<h2 id="polityCount">
-0
-</h2>
-
-<p>
-Indian Polity
-</p>
-
-</div>
-
-
-
-<div class="stat-card">
-
-<h2 id="historyCount">
-0
-</h2>
-
-<p>
-Indian History
-</p>
-
-</div>
-
-
-
-<div class="stat-card">
-
-<h2 id="scienceCount">
-0
-</h2>
-
-<p>
-General Science
-</p>
-
-</div>
-
-
-
-<div class="stat-card">
-
-<h2 id="tnCount">
-0
-</h2>
-
-<p>
-Tamil Nadu GK
-</p>
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-BULK UPLOAD
-========================= -->
-
-
-<section class="bulk-card">
-
-
-<h2>
-📂 Bulk Question Upload
-</h2>
-
+<div class="card">
 
 
 
 <label>
-Subject
+📚 Select Subject
 </label>
 
 
-
-<select id="bulkSubject">
+<select id="subject">
 
 
 <option value="">
-Select Subject
+Choose Subject
 </option>
 
 
-<option>Indian Polity</option>
-
-<option>Indian Constitution</option>
-
-<option>Indian History</option>
-
-<option>World History</option>
-
-<option>Freedom Struggle</option>
-
-<option>Tamil Nadu History</option>
-
-
-<option>Geography</option>
-
-<option>Indian Geography</option>
-
-<option>World Geography</option>
-
-<option>Tamil Nadu Geography</option>
-
-
-<option>General Science</option>
-
-<option>Physics</option>
-
-<option>Chemistry</option>
-
-<option>Biology</option>
-
-<option>Botany</option>
-
-<option>Zoology</option>
-
-<option>Environment</option>
-
-<option>Science & Technology</option>
-
-
-<option>Economics</option>
-
-<option>Indian Economy</option>
-
-<option>Tamil Nadu Economy</option>
-
-
-<option>Current Affairs</option>
+<option>General Knowledge</option>
 
 <option>Tamil Nadu GK</option>
 
+<option>Indian Polity</option>
 
-<option>Computer Science</option>
+<option>History</option>
 
+<option>Geography</option>
+
+<option>Science</option>
 
 <option>Aptitude</option>
 
-
 <option>Reasoning</option>
 
+<option>Current Affairs</option>
 
-<option>Tamil</option>
-
-
-<option>English</option>
-
-
-<option>Sports</option>
-
-<option>Awards and Honours</option>
-
-<option>Books and Authors</option>
-
-<option>Important Days</option>
-
-<option>Art and Culture</option>
-
-<option>Defence</option>
-
-<option>Space Technology</option>
-
-
-<option>Previous Year Questions</option>
-
-<option>Model Questions</option>
+<option>TNUSRB Special</option>
 
 
 </select>
@@ -289,19 +361,16 @@ Select Subject
 
 
 
-
-
 <label>
-Topic
+📌 Select Topic
 </label>
 
 
+<select id="topic">
 
-<select id="bulkTopic">
 
-
-<option value="">
-Select Topic
+<option>
+Choose Topic
 </option>
 
 
@@ -312,546 +381,69 @@ Select Topic
 
 
 
-
-
 <label>
-Upload JSON File
+📝 Bulk Questions JSON
 </label>
 
 
-<input
-
-type="file"
-
-id="jsonFile"
-
-accept=".json"
-
->
-
-<label>
-OR Paste JSON Questions
-</label>
-
-
-<textarea
-
-id="bulkText"
-
-placeholder='Paste JSON here...'
-
-></textarea>
-
-
-
-
-
-<div class="preview-box">
-
-
-<h3>
-📊 Preview
-</h3>
-
-
-
-<p>
-
-Total Questions :
-
-<span id="questionCount">
-
-0
-
-</span>
-
-
-</p>
-
-
-
-
-<button id="previewBtn">
-
-👁 Preview
-
-</button>
-
-
-
-
-<button id="validateBtn">
-
-🔍 Validate
-
-</button>
-
-
-
-
-
-<div id="previewList">
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-<button id="bulkUploadBtn">
-
-🚀 Upload Questions
-
-</button>
-
-
-
-
-
-
-
-<div class="upload-report">
-
-
-<h3>
-📊 Upload Report
-</h3>
-
-
-
-<p>
-
-Total :
-
-<span id="bulkTotal">
-0
-</span>
-
-</p>
-
-
-
-<p>
-
-✅ Added :
-
-<span id="addedCount">
-0
-</span>
-
-</p>
-
-
-
-<p>
-
-⚠️ Duplicate :
-
-<span id="skippedCount">
-0
-</span>
-
-</p>
-
-
-
-<p>
-
-❌ Failed :
-
-<span id="failedCount">
-0
-</span>
-
-</p>
-
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-
-
-<!-- =========================
-QUESTION MANAGEMENT
-========================= -->
-
-
-<section class="manage-card">
-
-
-<h2>
-📝 Question Management
-</h2>
-
-
-
-
-
-<!-- FILTER -->
-
-
-<div class="filter-box">
-
-
-
-<select id="filterSubject">
-
-
-<option value="all">
-
-All Subjects
-
-</option>
-
-
-<option>
-Indian Polity
-</option>
-
-
-<option>
-Indian History
-</option>
-
-
-<option>
-Geography
-</option>
-
-
-<option>
-General Science
-</option>
-
-
-<option>
-Tamil Nadu GK
-</option>
-
-
-<option>
-Current Affairs
-</option>
-
-
-</select>
-
-
-
-
-
-
-<select id="filterTopic">
-
-
-<option value="all">
-
-All Topics
-
-</option>
-
-
-</select>
-
-
-
-
-
-
-<button id="filterBtn">
-
-🔍 Filter
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- SEARCH -->
-
-
-<div class="search-box">
-
-
-<input
-
-type="text"
-
-id="searchQuestion"
-
-placeholder="Search Question"
-
->
-
-
-
-<button id="searchBtn">
-
-🔍 Search
-
-</button>
-
-
-</div>
-
-
-<!-- =========================
-EDIT QUESTION BOX
-========================= -->
-
-<div id="editBox">
-
-
-<h2>
-✏️ Edit Question
-</h2>
-
-
-<input 
-type="hidden"
-id="editId"
->
-
-
-
-<label>
-Question
-</label>
-
-<textarea
-id="editQuestion"
-placeholder="Enter Question">
+<textarea 
+id="bulkQuestions"
+placeholder="Paste 25 / 50 / 100 Questions JSON here...">
 </textarea>
 
 
 
 
-<label>
-Option A
-</label>
-
-<input
-type="text"
-id="editOption1"
->
 
 
+<button class="upload-btn" id="uploadBtn">
 
-<label>
-Option B
-</label>
-
-<input
-type="text"
-id="editOption2"
->
-
-
-
-<label>
-Option C
-</label>
-
-<input
-type="text"
-id="editOption3"
->
-
-
-
-<label>
-Option D
-</label>
-
-<input
-type="text"
-id="editOption4"
->
-
-
-
-<label>
-Correct Answer Number
-</label>
-
-<input
-type="number"
-id="editAnswer"
-placeholder="0,1,2,3"
->
-
-
-
-
-<button id="updateQuestionBtn">
-
-💾 Update Question
+🚀 UPLOAD QUESTIONS
 
 </button>
 
 
 
-</div>
-  
 
 
 
-<!-- QUESTION LIST -->
+<div class="progress-card">
 
 
-<div id="questionList">
+<div class="progress-title">
 
-
-<p>
-
-Loading Questions...
-
-</p>
-
+📊 Upload Progress
 
 </div>
 
 
+<div class="progress">
 
-</section>
+<div class="progress-bar" id="progressBar">
 
+</div>
 
-
-
-
-
-
-
-
-<!-- =========================
-UPLOAD HISTORY
-========================= -->
-
-
-<section class="history-card">
-
-
-<h2>
-
-📂 Upload History
-
-</h2>
+</div>
 
 
 
-<div id="uploadHistory">
+<div class="result-box" id="result">
 
+Waiting for upload...
 
-<p>
+</div>
 
-No Upload History
-
-</p>
 
 
 </div>
 
 
 
-</section>
+</div>
 
 
 
-
-
-
-
-
-
-<!-- =========================
-EXPORT
-========================= -->
-
-
-<section class="export-card">
-
-
-<h2>
-
-📥 Question Backup
-
-</h2>
-
-
-<p>
-
-Download complete question bank JSON file
-
-</p>
-
-
-
-<button id="exportBtn">
-
-⬇️ Export JSON
-
-</button>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- =========================
-ADMIN FOOTER
-========================= -->
-
-
-<footer class="admin-footer">
-
-
-<h3>
-
-G THE GENIUS ADMIN
-
-</h3>
-
-
-
-<p>
-
-Government Exam Question Bank Management
-
-</p>
-
-
-
-</footer>
+</div>
 
 
 
@@ -860,5 +452,5 @@ Government Exam Question Bank Management
 
 </body>
 
-</html>
 
+</html>
