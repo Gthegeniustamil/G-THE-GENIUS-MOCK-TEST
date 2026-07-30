@@ -664,3 +664,1487 @@ topics["Model Questions"] = [
 ];
 
 console.log("✅ PART 1A-6 Loaded");
+
+// =========================
+// PART 2A-1
+// LOAD QUESTIONS FROM FIRESTORE
+// =========================
+
+import {
+  collection,
+  getDocs,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let allQuestions = [];
+
+// =========================
+// LOAD QUESTIONS
+// =========================
+
+async function loadQuestions() {
+
+    const list = document.getElementById("questionList");
+
+    if (!list) return;
+
+    list.innerHTML = `
+        <div class="loading">
+            Loading Questions...
+        </div>
+    `;
+
+    try {
+
+        const snapshot = await getDocs(
+            collection(db, "questions")
+        );
+
+        allQuestions = [];
+
+        snapshot.forEach((item) => {
+
+            allQuestions.push({
+                id: item.id,
+                ...item.data()
+            });
+
+        });
+
+        displayQuestions(allQuestions);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        list.innerHTML = `
+            <p>Failed to load questions.</p>
+        `;
+
+    }
+
+}
+
+// =========================
+// DISPLAY QUESTIONS
+// =========================
+
+function displayQuestions(data) {
+
+    const list = document.getElementById("questionList");
+
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    if (data.length === 0) {
+
+        list.innerHTML = `
+            <p>No Questions Found.</p>
+        `;
+
+        return;
+    }
+
+    data.forEach((q) => {
+
+        const card = document.createElement("div");
+
+        card.className = "question-item";
+
+        card.innerHTML = `
+
+<h3>${q.question}</h3>
+
+<p><b>Subject :</b> ${q.subject}</p>
+
+<p><b>Topic :</b> ${q.topic}</p>
+
+<p>
+A) ${q.options?.[0] || ""}
+<br>
+B) ${q.options?.[1] || ""}
+<br>
+C) ${q.options?.[2] || ""}
+<br>
+D) ${q.options?.[3] || ""}
+</p>
+
+<p>
+<b>Correct Answer :</b> ${q.answer}
+</p>
+
+<p>
+<b>Explanation :</b>
+${q.explanation || "-"}
+</p>
+
+<button
+class="delete-btn"
+onclick="deleteQuestion('${q.id}')">
+🗑 Delete
+</button>
+
+        `;
+
+        list.appendChild(card);
+
+    });
+
+}
+
+// =========================
+// DELETE QUESTION
+// =========================
+
+window.deleteQuestion = async function (id) {
+
+    const confirmDelete = confirm(
+        "Are you sure you want to delete this question?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+
+        await deleteDoc(
+            doc(db, "questions", id)
+        );
+
+        alert("✅ Question Deleted Successfully");
+
+        loadQuestions();
+        loadAdminStats();
+
+    }
+
+    catch (error) {
+
+        console.error("Delete Error :", error);
+
+        alert("❌ Failed to Delete Question");
+
+    }
+
+};
+
+
+// =========================
+// SEARCH QUESTIONS
+// =========================
+
+const searchBtn = document.getElementById("searchBtn");
+
+if (searchBtn) {
+
+    searchBtn.onclick = () => {
+
+        const keyword = document
+            .getElementById("searchQuestion")
+            .value
+            .trim()
+            .toLowerCase();
+
+        if (keyword === "") {
+
+            displayQuestions(allQuestions);
+            return;
+
+        }
+
+        const result = allQuestions.filter(q => {
+
+            return (
+
+                q.question?.toLowerCase().includes(keyword) ||
+
+                q.subject?.toLowerCase().includes(keyword) ||
+
+                q.topic?.toLowerCase().includes(keyword)
+
+            );
+
+        });
+
+        displayQuestions(result);
+
+    };
+
+}
+
+// =========================
+// SUBJECT FILTER
+// =========================
+
+const filterSubject = document.getElementById("filterSubject");
+const filterTopic = document.getElementById("filterTopic");
+const filterBtn = document.getElementById("filterBtn");
+
+if (filterSubject) {
+
+    filterSubject.addEventListener("change", function () {
+
+        const subject = this.value;
+
+        filterTopic.innerHTML = `
+            <option value="all">
+                All Topics
+            </option>
+        `;
+
+        let topicList = [];
+
+        allQuestions.forEach(q => {
+
+            if (
+                subject === "all" ||
+                q.subject === subject
+            ) {
+
+                if (
+                    q.topic &&
+                    !topicList.includes(q.topic)
+                ) {
+
+                    topicList.push(q.topic);
+
+                }
+
+            }
+
+        });
+
+        topicList.sort();
+
+        topicList.forEach(topic => {
+
+            filterTopic.innerHTML += `
+                <option value="${topic}">
+                    ${topic}
+                </option>
+            `;
+
+        });
+
+    });
+
+}
+
+// =========================
+// APPLY FILTER
+// =========================
+
+if (filterBtn) {
+
+    filterBtn.addEventListener("click", () => {
+
+        const subject = filterSubject.value;
+        const topic = filterTopic.value;
+
+        const filteredQuestions = allQuestions.filter(q => {
+
+            const subjectMatch =
+                subject === "all" ||
+                q.subject === subject;
+
+            const topicMatch =
+                topic === "all" ||
+                q.topic === topic;
+
+            return subjectMatch && topicMatch;
+
+        });
+
+        displayQuestions(filteredQuestions);
+
+    });
+
+      // =========================
+// INITIALIZE ADMIN PANEL
+// =========================
+
+window.addEventListener("load", async () => {
+
+    try {
+
+        await loadQuestions();
+        await loadAdminStats();
+
+        console.log("✅ Questions Loaded");
+        console.log("✅ Admin Stats Loaded");
+        console.log("🚀 G THE GENIUS Admin Panel Ready");
+
+    }
+
+    catch (error) {
+
+        console.error("Initialization Error:", error);
+
+    }
+
+});
+
+}
+// =========================
+// VALIDATE QUESTION
+// =========================
+
+function validateQuestion(question) {
+
+    if (!question.question || question.question.trim() === "") {
+        return false;
+    }
+
+    if (!question.options || !Array.isArray(question.options)) {
+        return false;
+    }
+
+    if (question.options.length !== 4) {
+        return false;
+    }
+
+    for (let option of question.options) {
+        if (!option || option.trim() === "") {
+            return false;
+        }
+    }
+
+    if (
+        question.answer === undefined ||
+        question.answer === null ||
+        question.answer < 0 ||
+        question.answer > 3
+    ) {
+        return false;
+    }
+
+    return true;
+}
+
+console.log("✅ Question Validation Ready");
+
+
+
+// =========================
+// PART 3A-1
+// JSON FILE PREVIEW
+// =========================
+
+const jsonFile = document.getElementById("jsonFile");
+const questionCount = document.getElementById("questionCount");
+
+let previewQuestions = [];
+
+if (jsonFile) {
+
+    jsonFile.addEventListener("change", (event) => {
+
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+
+            try {
+
+                const data = JSON.parse(e.target.result);
+
+                if (!Array.isArray(data)) {
+
+                    alert("❌ Invalid JSON Format");
+                    return;
+
+                }
+
+                previewQuestions = data;
+
+                if (questionCount) {
+                    questionCount.textContent = data.length;
+                }
+
+                console.log("✅ JSON Loaded");
+                console.log(previewQuestions);
+
+                alert(`✅ ${data.length} Questions Loaded Successfully`);
+
+            }
+
+            catch (err) {
+
+                alert("❌ Invalid JSON File");
+
+            }
+
+        };
+
+        reader.readAsText(file);
+
+    });
+
+          }
+
+// =========================
+// PART 3A-2
+// JSON VALIDATION
+// =========================
+
+function validateQuestion(question) {
+
+    if (!question.question) return false;
+
+    if (!question.options) return false;
+
+    if (!Array.isArray(question.options)) return false;
+
+    if (question.options.length !== 4) return false;
+
+    if (question.answer === undefined || question.answer === null) return false;
+
+    return true;
+
+}
+
+function checkQuestions() {
+
+    if (previewQuestions.length === 0) {
+
+        alert("⚠️ Load JSON File First");
+        return;
+
+    }
+
+    let valid = 0;
+    let invalid = 0;
+
+    previewQuestions.forEach(q => {
+
+        if (validateQuestion(q)) {
+            valid++;
+        } else {
+            invalid++;
+        }
+
+    });
+
+    alert(
+`Validation Report
+
+✅ Valid Questions : ${valid}
+
+❌ Invalid Questions : ${invalid}`
+    );
+
+}
+
+const validateBtn = document.getElementById("validateBtn");
+
+if (validateBtn) {
+
+    validateBtn.addEventListener("click", checkQuestions);
+
+}
+
+console.log("✅ JSON Validation Ready");
+
+// =========================
+// PART 3A-3
+// SHOW PREVIEW
+// =========================
+
+function showPreview() {
+
+    const previewList =
+        document.getElementById("previewList");
+
+    if (!previewList) return;
+
+    previewList.innerHTML = "";
+
+    if (previewQuestions.length === 0) {
+
+        previewList.innerHTML = `
+            <p>No Questions Loaded</p>
+        `;
+
+        return;
+    }
+
+    previewQuestions.forEach((q, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "preview-item";
+
+        card.innerHTML = `
+
+<h4>${index + 1}. ${q.question}</h4>
+
+<p>
+A) ${q.options?.[0] || ""}
+</p>
+
+<p>
+B) ${q.options?.[1] || ""}
+</p>
+
+<p>
+C) ${q.options?.[2] || ""}
+</p>
+
+<p>
+D) ${q.options?.[3] || ""}
+</p>
+
+<p>
+<b>Answer :</b> ${q.answer}
+</p>
+
+<hr>
+
+`;
+
+        previewList.appendChild(card);
+
+    });
+
+}
+
+
+// =========================
+// PREVIEW BUTTON
+// =========================
+
+const previewBtn =
+document.getElementById("previewBtn");
+
+if (previewBtn) {
+
+    previewBtn.addEventListener("click", () => {
+
+        if (previewQuestions.length === 0) {
+
+            alert("Please Load JSON File First");
+
+            return;
+
+        }
+
+        showPreview();
+
+    });
+
+}
+
+console.log("✅ Preview System Ready");
+
+// =========================
+// PART 3A-4
+// DUPLICATE CHECK + UPLOAD
+// =========================
+
+async function isDuplicate(question) {
+
+    try {
+
+        const q = query(
+            collection(db, "questions"),
+            where("question", "==", question)
+        );
+
+        const snap = await getDocs(q);
+
+        return !snap.empty;
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        return false;
+
+    }
+
+}
+
+
+
+const bulkUploadBtn =
+document.getElementById("bulkUploadBtn");
+
+if (bulkUploadBtn) {
+
+bulkUploadBtn.addEventListener("click", async () => {
+
+    const subject =
+    document.getElementById("bulkSubject").value;
+
+    const topic =
+    document.getElementById("bulkTopic").value;
+
+    if (!subject || !topic) {
+
+        alert("Select Subject & Topic");
+
+        return;
+
+    }
+
+    if (previewQuestions.length === 0) {
+
+        alert("Load JSON File First");
+
+        return;
+
+    }
+
+    let added = 0;
+    let duplicate = 0;
+    let failed = 0;
+
+    for (const q of previewQuestions) {
+
+        try {
+
+            if (!validateQuestion(q)) {
+
+                failed++;
+                continue;
+
+            }
+
+            const exists =
+            await isDuplicate(q.question);
+
+            if (exists) {
+
+                duplicate++;
+                continue;
+
+            }
+
+            await addDoc(
+                collection(db, "questions"),
+                {
+
+                    questionId:
+                    "GTG-" + Date.now(),
+
+                    subject,
+
+                    topic,
+
+                    question:
+                    q.question,
+
+                    options:
+                    q.options,
+
+                    answer:
+                    Number(q.answer),
+
+                    explanation:
+                    q.explanation || "",
+
+                    createdAt:
+                    serverTimestamp()
+
+                }
+            );
+
+            added++;
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+            failed++;
+
+        }
+
+              }
+
+             // =========================
+    // UPLOAD REPORT
+    // =========================
+
+    const total = previewQuestions.length;
+
+    if (document.getElementById("bulkTotal")) {
+        document.getElementById("bulkTotal").textContent = total;
+    }
+
+    if (document.getElementById("addedCount")) {
+        document.getElementById("addedCount").textContent = added;
+    }
+
+    if (document.getElementById("skippedCount")) {
+        document.getElementById("skippedCount").textContent = duplicate;
+    }
+
+    if (document.getElementById("failedCount")) {
+        document.getElementById("failedCount").textContent = failed;
+    }
+await saveUploadHistory({
+
+    subject: subject,
+
+    topic: topic,
+
+    total: total,
+
+    added: added,
+
+    duplicate: duplicate,
+
+    failed: failed
+
+});
+    alert(
+`✅ Upload Completed
+
+Total      : ${total}
+Added      : ${added}
+Duplicate  : ${duplicate}
+Failed     : ${failed}`
+    );
+
+    // =========================
+    // CLEAR AFTER UPLOAD
+    // =========================
+
+    previewQuestions = [];
+
+    const jsonFile =
+        document.getElementById("jsonFile");
+
+    if (jsonFile) {
+        jsonFile.value = "";
+    }
+
+    const bulkText =
+        document.getElementById("bulkText");
+
+    if (bulkText) {
+        bulkText.value = "";
+    }
+
+    const previewList =
+        document.getElementById("previewList");
+
+    if (previewList) {
+        previewList.innerHTML = "";
+    }
+
+    const questionCount =
+        document.getElementById("questionCount");
+
+    if (questionCount) {
+        questionCount.textContent = "0";
+    }
+
+    // Refresh Question List & Stats
+    await loadQuestions();
+    await loadAdminStats();
+
+    console.log("✅ Upload Finished");
+
+}); // bulkUploadBtn click end
+
+} // bulkUploadBtn if end
+
+// =========================
+// PART 3A-6
+// SAVE UPLOAD HISTORY
+// =========================
+
+async function saveUploadHistory(data) {
+
+    try {
+
+        await addDoc(
+
+            collection(db, "uploadHistory"),
+
+            {
+
+                uploadId:
+                    "GTG-UP-" + Date.now(),
+
+                subject:
+                    data.subject,
+
+                topic:
+                    data.topic,
+
+                total:
+                    data.total,
+
+                added:
+                    data.added,
+
+                duplicate:
+                    data.duplicate,
+
+                failed:
+                    data.failed,
+
+                uploadedAt:
+                    serverTimestamp()
+
+            }
+
+        );
+
+        console.log("✅ Upload History Saved");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Upload History Error",
+            error
+        );
+
+    }
+
+}
+
+// =========================
+// PART 4A-1
+// LOAD UPLOAD HISTORY
+// =========================
+
+async function loadUploadHistory() {
+
+    const historyBox =
+        document.getElementById("uploadHistory");
+
+    if (!historyBox) return;
+
+    historyBox.innerHTML = `
+        <p>Loading Upload History...</p>
+    `;
+
+    try {
+
+        const snap = await getDocs(
+            collection(db, "uploadHistory")
+        );
+
+        historyBox.innerHTML = "";
+
+        if (snap.empty) {
+
+            historyBox.innerHTML = `
+                <p>No Upload History Found</p>
+            `;
+
+            return;
+
+        }
+
+        snap.forEach(doc => {
+
+            const data = doc.data();
+
+            const card =
+                document.createElement("div");
+
+            card.className = "history-card";
+
+            let uploadedDate = "-";
+
+            try {
+
+                if (data.uploadedAt) {
+
+                    uploadedDate =
+                        data.uploadedAt
+                        .toDate()
+                        .toLocaleString("en-IN");
+
+                }
+
+            } catch (e) {}
+
+            card.innerHTML = `
+
+<h3>📂 ${data.uploadId}</h3>
+
+<p><b>Subject :</b> ${data.subject}</p>
+
+<p><b>Topic :</b> ${data.topic}</p>
+
+<p><b>Total :</b> ${data.total}</p>
+
+<p>✅ Added : ${data.added}</p>
+
+<p>⚠️ Duplicate : ${data.duplicate}</p>
+
+<p>❌ Failed : ${data.failed}</p>
+
+<p>🕒 ${uploadedDate}</p>
+
+<hr>
+
+`;
+
+            historyBox.appendChild(card);
+
+        });
+
+        console.log("✅ Upload History Loaded");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "History Load Error",
+            error
+        );
+
+        historyBox.innerHTML = `
+            <p>Failed to Load Upload History</p>
+        `;
+
+    }
+
+}
+
+// =========================
+// PART 4A-2
+// EXPORT QUESTIONS JSON
+// =========================
+
+async function exportQuestions() {
+
+    try {
+
+        const snapshot = await getDocs(
+            collection(db, "questions")
+        );
+
+        let questions = [];
+
+        snapshot.forEach((doc) => {
+
+            const data = doc.data();
+
+            questions.push({
+
+                question: data.question,
+
+                options: data.options,
+
+                answer: data.answer,
+
+                explanation: data.explanation || "",
+
+                subject: data.subject,
+
+                topic: data.topic
+
+            });
+
+        });
+
+        const jsonData =
+            JSON.stringify(
+                questions,
+                null,
+                2
+            );
+
+        const blob = new Blob(
+            [jsonData],
+            {
+                type: "application/json"
+            }
+        );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const a =
+            document.createElement("a");
+
+        a.href = url;
+
+        a.download =
+            "G_THE_GENIUS_Questions.json";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
+
+        URL.revokeObjectURL(url);
+
+        alert("✅ Questions Exported Successfully");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Export Error:",
+            error
+        );
+
+        alert("❌ Export Failed");
+
+    }
+
+}
+
+
+
+// =========================
+// EXPORT BUTTON
+// =========================
+
+const exportBtn =
+document.getElementById("exportBtn");
+
+if (exportBtn) {
+
+    exportBtn.addEventListener(
+        "click",
+        exportQuestions
+    );
+
+}
+
+console.log("✅ Export System Ready");
+// =========================
+// PART 5A-1
+// ADMIN DASHBOARD STATS
+// =========================
+
+
+async function loadAdminStats(){
+
+    try {
+
+
+        const snapshot = await getDocs(
+            collection(db,"questions")
+        );
+
+
+        let total = 0;
+
+
+        let stats = {
+
+            "Indian Polity":0,
+            "Indian History":0,
+            "General Science":0,
+            "Tamil Nadu GK":0,
+            "Current Affairs":0,
+            "Geography":0,
+            "Economics":0,
+            "Computer Science":0,
+            "Aptitude":0,
+            "Reasoning":0,
+            "Tamil":0,
+            "English":0
+
+        };
+
+
+
+        snapshot.forEach((doc)=>{
+
+
+            const data = doc.data();
+
+
+            total++;
+
+
+            if(stats[data.subject] !== undefined){
+
+                stats[data.subject]++;
+
+            }
+
+
+        });
+
+
+
+        // TOTAL QUESTIONS
+
+        const totalBox =
+        document.getElementById(
+            "totalQuestions"
+        );
+
+
+        if(totalBox){
+
+            totalBox.innerHTML = total;
+
+        }
+
+
+
+
+        // SUBJECT COUNTS
+
+
+        const countMap = {
+
+
+            polityCount:
+            "Indian Polity",
+
+
+            historyCount:
+            "Indian History",
+
+
+            scienceCount:
+            "General Science",
+
+
+            tnCount:
+            "Tamil Nadu GK"
+
+
+        };
+
+
+
+        Object.keys(countMap)
+        .forEach(id=>{
+
+
+            const box =
+            document.getElementById(id);
+
+
+
+            if(box){
+
+                box.innerHTML =
+                stats[countMap[id]] || 0;
+
+            }
+
+
+        });
+
+
+
+        console.log(
+            "✅ Dashboard Stats Updated"
+        );
+
+
+    }
+
+
+    catch(error){
+
+
+        console.error(
+            "Stats Error:",
+            error
+        );
+
+
+    }
+
+
+}
+
+// =========================
+// PART 5A-2
+// ADMIN SECURITY SYSTEM
+// =========================
+
+
+import {
+
+onAuthStateChanged,
+signOut
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+// =========================
+// ADMIN EMAIL LIST
+// =========================
+
+
+const adminEmails = [
+
+    "gthegenius7@gmail.com"
+
+];
+
+
+
+
+
+// =========================
+// CHECK ADMIN LOGIN
+// =========================
+
+
+onAuthStateChanged(
+auth,
+(user)=>{
+
+
+    if(!user){
+
+
+        alert(
+            "⚠️ Admin Login Required"
+        );
+
+
+        window.location.href =
+        "login.html";
+
+
+        return;
+
+
+    }
+
+
+
+
+
+    if(
+        !adminEmails.includes(
+            user.email
+        )
+    ){
+
+
+        alert(
+            "❌ Access Denied"
+        );
+
+
+        window.location.href =
+        "dashboard.html";
+
+
+        return;
+
+
+    }
+
+
+
+
+
+    const adminName =
+    document.getElementById(
+        "adminName"
+    );
+
+
+    if(adminName){
+
+        adminName.innerHTML =
+        user.email;
+
+    }
+
+
+
+
+
+    const status =
+    document.getElementById(
+        "adminStatus"
+    );
+
+
+    if(status){
+
+        status.innerHTML =
+        "🟢 Online";
+
+    }
+
+
+
+
+
+    console.log(
+        "✅ Admin Verified"
+    );
+
+
+});
+
+
+
+
+
+
+// =========================
+// LOGOUT
+// =========================
+
+
+const logoutBtn =
+document.getElementById(
+    "adminLogoutBtn"
+);
+
+
+
+if(logoutBtn){
+
+
+    logoutBtn.addEventListener(
+        "click",
+        async()=>{
+
+
+            try{
+
+
+                await signOut(auth);
+
+
+                window.location.href =
+                "login.html";
+
+
+            }
+
+
+            catch(error){
+
+
+                console.error(
+                    "Logout Error",
+                    error
+                );
+
+
+            }
+
+
+        }
+    );
+
+
+}
+
+
+console.log(
+"✅ Admin Security Ready"
+);
+
+// =========================
+// PART 5A-3
+// FINAL INITIALIZATION
+// =========================
+
+
+
+window.addEventListener(
+"load",
+async()=>{
+
+
+    try{
+
+
+        // Load Questions
+
+        await loadQuestions();
+
+
+
+        // Load Dashboard Stats
+
+        await loadAdminStats();
+
+
+
+        // Load Upload History
+
+        await loadUploadHistory();
+
+
+
+        console.log(
+            "🚀 G THE GENIUS ADMIN PANEL READY"
+        );
+
+
+    }
+
+
+    catch(error){
+
+
+        console.error(
+            "Admin Start Error:",
+            error
+        );
+
+
+    }
+
+
+
+});
+
+
+
+
+
+
+// =========================
+// GLOBAL ERROR HANDLER
+// =========================
+
+
+window.addEventListener(
+"error",
+(event)=>{
+
+
+    console.error(
+        "Admin JS Error:",
+        event.message
+    );
+
+
+});
+
+
+
+
+
+console.log(
+"✅ Final Admin Controller Loaded"
+);
+
+
