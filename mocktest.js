@@ -14,8 +14,12 @@ import {
 
 import {
     collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    getDocs,
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 // ================= GLOBAL VARIABLES =================
@@ -681,14 +685,11 @@ submitBtn.addEventListener("click", () => {
     );
 
 
-    if (confirmSubmit) {
+if (confirmSubmit) {
 
-        submitTest();
-      await prepareFinalResult();
+    await submitTest();
 
-window.location.href = "result.html";
-
-    }
+}
 
 
 });
@@ -699,8 +700,7 @@ window.location.href = "result.html";
 // FINAL SUBMIT FUNCTION
 // ==========================================================
 
-function submitTest() {
-
+async function submitTest() {
 
     clearInterval(timerInterval);
 
@@ -837,15 +837,14 @@ function submitTest() {
 
     // Clear temporary progress
 
-    clearTestData();
+    await prepareFinalResult();
 
+await saveResultToFirebase();
 
+clearTestData();
 
-    // Redirect Result
-
-    window.location.href =
-        "result.html";
-
+window.location.href =
+"result.html";
 
 }
 
@@ -871,6 +870,82 @@ function normalizeAnswer(answer){
         .trim()
 
         .toLowerCase();
+
+}
+
+function normalizeAnswer(answer){
+
+
+    if(!answer)
+        return "";
+
+
+    return answer
+
+        .toString()
+
+        .trim()
+
+        .toLowerCase();
+
+}
+
+
+
+// ⬇️ இதற்கு கீழே Part 7 code add செய்யவும்
+
+
+async function prepareFinalResult(){
+
+
+    const data = {
+
+        attemptId:
+        currentUser.uid +
+        "_" +
+        testType +
+        "_" +
+        Date.now(),
+
+
+        uid:
+        currentUser.uid,
+
+
+        email:
+        currentUser.email,
+
+
+        testType:
+        testType,
+
+
+        totalQuestions:
+        questions.length,
+
+
+        questions:
+        questions,
+
+
+        selectedAnswers:
+        selectedAnswers,
+
+
+        createdAt:
+        new Date()
+
+    };
+
+
+    localStorage.setItem(
+
+        "finalResultData",
+
+        JSON.stringify(data)
+
+    );
+
 
 }
 // ==========================================================
@@ -1111,12 +1186,7 @@ async function saveResultToFirebase() {
 // FIRESTORE + JSON SUPPORT
 // ==========================================================
 
-async function loadQuestions() {
 
-    try {
-
-
-        let allQuestions = [];
 
 
 
