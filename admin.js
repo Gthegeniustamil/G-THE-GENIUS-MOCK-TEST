@@ -12,11 +12,8 @@ import {
 
 collection,
 addDoc,
-serverTimestamp,
 getDocs,
-deleteDoc,
-doc,
-updateDoc
+serverTimestamp
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -24,42 +21,307 @@ updateDoc
 
 
 // =========================
-// BULK PASTE UPLOAD
-// DUPLICATE CHECK
+// SUBJECT → TOPIC SYSTEM
 // =========================
 
 
-const bulkUploadBtn = 
-document.getElementById("bulkUploadBtn");
+const topics = {
+
+
+"Indian Polity":[
+
+"Constitution",
+"Preamble",
+"Citizenship",
+"Fundamental Rights",
+"Fundamental Duties",
+"DPSP",
+"Parliament",
+"President",
+"Prime Minister",
+"Governor",
+"Supreme Court",
+"High Court",
+"Emergency",
+"Amendments",
+"Important Articles"
+
+],
 
 
 
-if(bulkUploadBtn){
+"Indian History":[
+
+"Ancient India",
+"Medieval India",
+"Modern India",
+"Freedom Struggle",
+"Governor Generals",
+"Viceroys",
+"INC",
+"Important Movements",
+"Important Personalities"
+
+],
 
 
-bulkUploadBtn.onclick = async ()=>{
+
+"Geography":[
+
+"Indian Geography",
+"World Geography",
+"Tamil Nadu Geography",
+"Climate",
+"Rivers",
+"Mountains",
+"Soil",
+"Agriculture",
+"Minerals"
+
+],
+
+
+
+"General Science":[
+
+"Physics",
+"Chemistry",
+"Biology",
+"Human Body",
+"Diseases",
+"Environment",
+"Science Technology"
+
+],
+
+
+
+"Tamil Nadu GK":[
+
+"History",
+"Geography",
+"Districts",
+"Schemes",
+"Culture",
+"Administration"
+
+],
+
+
+
+"Current Affairs":[
+
+"National",
+"International",
+"Sports",
+"Awards",
+"Appointments",
+"Science",
+"Defence"
+
+],
+
+
+
+"Aptitude":[
+
+"Percentage",
+"Ratio",
+"Average",
+"Profit Loss",
+"Time Work",
+"Time Distance",
+"Simple Interest"
+
+],
+
+
+
+"Reasoning":[
+
+"Analogy",
+"Coding Decoding",
+"Blood Relation",
+"Direction",
+"Series",
+"Puzzle"
+
+],
+
+
+
+"Tamil":[
+
+"இலக்கணம்",
+"இலக்கியம்",
+"சங்க இலக்கியம்",
+"செய்யுள்",
+"உரைநடை"
+
+],
+
+
+
+"English":[
+
+"Grammar",
+"Vocabulary",
+"Tenses",
+"Synonyms",
+"Antonyms"
+
+]
+
+
+};
+
+
+
+
+
+
+// =========================
+// LOAD TOPICS
+// =========================
+
+
+const subjectSelect =
+
+document.getElementById(
+"bulkSubject"
+);
+
+
+
+const topicSelect =
+
+document.getElementById(
+"bulkTopic"
+);
+
+
+
+
+if(subjectSelect){
+
+
+
+subjectSelect.onchange = ()=>{
 
 
 let subject =
-document.getElementById("bulkSubject").value;
+subjectSelect.value;
+
+
+
+topicSelect.innerHTML =
+
+`
+<option value="">
+Select Topic
+</option>
+`;
+
+
+
+if(topics[subject]){
+
+
+topics[subject].forEach(topic=>{
+
+
+let option =
+document.createElement(
+"option"
+);
+
+
+
+option.value = topic;
+
+option.textContent = topic;
+
+
+
+topicSelect.appendChild(
+option
+);
+
+
+
+});
+
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// BULK UPLOAD
+// =========================
+
+
+const uploadBtn =
+
+document.getElementById(
+"bulkUploadBtn"
+);
+
+
+
+
+if(uploadBtn){
+
+
+
+uploadBtn.onclick = async()=>{
+
+
+
+let subject =
+
+document.getElementById(
+"bulkSubject"
+).value;
 
 
 
 let topic =
-document.getElementById("bulkTopic").value;
+
+document.getElementById(
+"bulkTopic"
+).value;
 
 
 
 let text =
-document.getElementById("bulkText").value.trim();
+
+document.getElementById(
+"bulkText"
+).value.trim();
 
 
 
 
 
-if(!text){
+if(!subject || !topic){
 
-alert("Paste Questions First");
+alert(
+"Select Subject and Topic"
+);
 
 return;
 
@@ -67,23 +329,75 @@ return;
 
 
 
-let total = 0;
-let added = 0;
-let skipped = 0;
-let failed = 0;
 
+
+if(!text){
+
+alert(
+"Paste JSON First"
+);
+
+return;
+
+}
+
+
+
+
+
+let questions;
 
 
 
 try{
 
 
+questions = JSON.parse(text);
 
-// Existing Questions
+
+}
+
+catch(error){
+
+
+alert(
+"Invalid JSON Format"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+let total =
+questions.length;
+
+
+let added = 0;
+
+let duplicate = 0;
+
+let failed = 0;
+
+
+
+
+
+// Existing Question Check
+
 
 const snap = await getDocs(
 
-collection(db,"questions")
+collection(
+db,
+"questions"
+)
 
 );
 
@@ -93,17 +407,17 @@ let existing = [];
 
 
 
-snap.forEach(item=>{
+snap.forEach(doc=>{
 
 
-let data = item.data();
+let data = doc.data();
 
 
 existing.push(
 
 data.question
+?.toLowerCase()
 .trim()
-.toLowerCase()
 
 );
 
@@ -113,183 +427,48 @@ data.question
 
 
 
-// Split Questions
-
-let questionBlocks =
-
-text.split(/\n\s*\n/);
 
 
 
-total = questionBlocks.length;
+for(let q of questions){
 
-
-
-
-
-for(let block of questionBlocks){
 
 
 try{
 
 
-let lines = block.split("\n");
 
+let questionText =
 
-let question="";
-let options=[];
-let answer=0;
-let explanation="";
+q.question
+.toLowerCase()
+.trim();
 
 
 
 
-lines.forEach(line=>{
 
+if(existing.includes(questionText)){
 
-line=line.trim();
 
-
-
-if(line.match(/^\d+\./)){
-
-
-question =
-
-line.replace(/^\d+\./,"").trim();
-
-
-}
-
-
-
-else if(line.startsWith("A)")){
-
-
-options[0]=
-
-line.replace("A)","").trim();
-
-
-}
-
-
-
-else if(line.startsWith("B)")){
-
-
-options[1]=
-
-line.replace("B)","").trim();
-
-
-}
-
-
-
-else if(line.startsWith("C)")){
-
-
-options[2]=
-
-line.replace("C)","").trim();
-
-
-}
-
-
-
-else if(line.startsWith("D)")){
-
-
-options[3]=
-
-line.replace("D)","").trim();
-
-
-}
-
-
-
-else if(line.startsWith("Answer:")){
-
-
-let ans =
-
-line.replace("Answer:","").trim();
-
-
-answer =
-
-ans.charCodeAt(0)-65;
-
-
-}
-
-
-
-else if(line.startsWith("Explanation:")){
-
-
-explanation =
-
-line.replace("Explanation:","").trim();
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-if(!question){
-
-failed++;
+duplicate++;
 
 continue;
 
-}
-
-
-
-
-
-
-// Duplicate Check
-
-
-if(
-
-existing.includes(
-
-question.toLowerCase()
-
-)
-
-){
-
-
-skipped++;
-
-continue;
 
 }
 
 
 
 
-
-// Firebase Add
 
 
 await addDoc(
 
-collection(db,"questions"),
+collection(
+db,
+"questions"
+),
 
 {
 
@@ -298,27 +477,36 @@ subject:subject,
 
 topic:topic,
 
-question:question,
 
-options:options,
+question:q.question,
 
-answer:answer,
 
-explanation:explanation,
+options:q.options,
 
-createdAt:serverTimestamp()
+
+answer:q.answer,
+
+
+explanation:q.explanation || "",
+
+
+
+createdAt:
+
+serverTimestamp()
 
 
 }
+
 
 );
 
 
 
+
+
 existing.push(
-
-question.toLowerCase()
-
+questionText
 );
 
 
@@ -328,6 +516,7 @@ added++;
 
 
 }
+
 
 
 catch(error){
@@ -346,6 +535,8 @@ failed++;
 
 
 
+
+// REPORT
 
 
 document.getElementById(
@@ -362,7 +553,7 @@ document.getElementById(
 
 document.getElementById(
 "skippedCount"
-).innerHTML = skipped;
+).innerHTML = duplicate;
 
 
 
@@ -375,13 +566,14 @@ document.getElementById(
 
 
 
+
 alert(
 
 `Upload Completed
 
 ✅ Added : ${added}
 
-⚠️ Skipped : ${skipped}
+⚠️ Duplicate : ${duplicate}
 
 ❌ Failed : ${failed}`
 
@@ -391,37 +583,10 @@ alert(
 
 
 
+
 document.getElementById(
 "bulkText"
 ).value="";
-
-
-
-
-}
-
-
-
-catch(error){
-
-
-console.log(
-
-"Bulk Upload Error",
-
-error
-
-);
-
-
-
-alert(
-"Upload Failed"
-);
-
-
-
-}
 
 
 
@@ -434,17 +599,31 @@ alert(
 
 
 
-console.log(
-"✅ Bulk Paste Upload Ready"
-);
 
+console.log(
+"✅ Admin Bulk Upload Part 1 Ready"
+);
 // =========================
-// QUESTION MANAGEMENT
+// G THE GENIUS ADMIN JS
+// FINAL VERSION
 // PART 2
+// QUESTION MANAGEMENT
 // =========================
+
+
+import {
+
+collection,
+getDocs,
+deleteDoc,
+doc
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 
 let allQuestions = [];
+
 
 
 
@@ -453,7 +632,7 @@ let allQuestions = [];
 // =========================
 
 
-async function loadQuestionsAdmin(){
+async function loadQuestions(){
 
 
 const list =
@@ -468,7 +647,8 @@ if(!list) return;
 
 
 
-list.innerHTML = "Loading Questions...";
+list.innerHTML =
+"Loading Questions...";
 
 
 
@@ -477,7 +657,10 @@ try{
 
 const snap = await getDocs(
 
-collection(db,"questions")
+collection(
+db,
+"questions"
+)
 
 );
 
@@ -492,13 +675,10 @@ snap.forEach(item=>{
 
 allQuestions.push({
 
-
 id:item.id,
-
 
 ...item.data()
 
-
 });
 
 
@@ -508,13 +688,9 @@ id:item.id,
 
 
 
-displayQuestions(allQuestions);
-
-
-
-// Stats Load
-
-loadAdminStats();
+displayQuestions(
+allQuestions
+);
 
 
 
@@ -526,11 +702,8 @@ catch(error){
 
 
 console.log(
-
-"Load Question Error",
-
+"Question Load Error",
 error
-
 );
 
 
@@ -544,7 +717,6 @@ list.innerHTML =
 
 
 }
-
 
 
 
@@ -573,13 +745,13 @@ if(!list) return;
 
 
 
-
 list.innerHTML="";
 
 
 
 
 data.forEach(q=>{
+
 
 
 let div =
@@ -596,66 +768,64 @@ div.className =
 
 
 
+div.innerHTML = `
 
-div.innerHTML =
-
-
-`
 
 <h3>
+
 ${q.question}
+
 </h3>
 
 
+
 <p>
+
 📚 Subject :
-${q.subject}
+
+${q.subject || "-"}
+
 </p>
 
 
+
 <p>
+
 📌 Topic :
-${q.topic}
-</p>
 
-
-<p>
-
-A) ${q.options[0]}
-
-<br>
-
-B) ${q.options[1]}
-
-<br>
-
-C) ${q.options[2]}
-
-<br>
-
-D) ${q.options[3]}
+${q.topic || "-"}
 
 </p>
 
 
+
 <p>
+
+A) ${q.options?.[0] || ""}
+
+<br>
+
+B) ${q.options?.[1] || ""}
+
+<br>
+
+C) ${q.options?.[2] || ""}
+
+<br>
+
+D) ${q.options?.[3] || ""}
+
+</p>
+
+
+
+<p>
+
 ✅ Answer :
+
 ${q.answer}
+
 </p>
-
-
-
-<button
-
-class="edit-btn"
-
-onclick="editQuestion('${q.id}')"
-
->
-
-✏️ Edit
-
-</button>
 
 
 
@@ -670,6 +840,7 @@ onclick="deleteQuestion('${q.id}')"
 🗑 Delete
 
 </button>
+
 
 
 `;
@@ -692,7 +863,6 @@ list.appendChild(div);
 
 
 
-
 // =========================
 // DELETE QUESTION
 // =========================
@@ -702,7 +872,7 @@ window.deleteQuestion = async function(id){
 
 
 
-let ok = confirm(
+let confirmDelete = confirm(
 
 "Delete this question?"
 
@@ -710,7 +880,10 @@ let ok = confirm(
 
 
 
-if(!ok) return;
+if(!confirmDelete)
+
+return;
+
 
 
 
@@ -734,29 +907,30 @@ id
 
 
 alert(
-
 "✅ Deleted Successfully"
-
 );
 
 
 
-loadQuestionsAdmin();
+loadQuestions();
 
 
 
 }
 
 
+
 catch(error){
 
 
 console.log(
-
 "Delete Error",
-
 error
+);
 
+
+alert(
+"Delete Failed"
 );
 
 
@@ -773,9 +947,8 @@ error
 
 
 
-
 // =========================
-// SEARCH
+// SEARCH QUESTION
 // =========================
 
 
@@ -794,7 +967,8 @@ if(searchBtn){
 searchBtn.onclick = ()=>{
 
 
-let text =
+
+let value =
 
 document.getElementById(
 "searchQuestion"
@@ -812,15 +986,17 @@ allQuestions.filter(q=>
 
 q.question
 .toLowerCase()
-.includes(text)
+.includes(value)
+
 
 
 );
 
 
 
-
-displayQuestions(result);
+displayQuestions(
+result
+);
 
 
 
@@ -838,7 +1014,7 @@ displayQuestions(result);
 
 
 // =========================
-// SUBJECT TOPIC FILTER
+// SUBJECT FILTER
 // =========================
 
 
@@ -877,6 +1053,7 @@ if(filterSubject){
 filterSubject.onchange = ()=>{
 
 
+
 let subject =
 
 filterSubject.value;
@@ -884,12 +1061,14 @@ filterSubject.value;
 
 
 
-let topics=[];
+let topicArray=[];
+
 
 
 
 
 allQuestions.forEach(q=>{
+
 
 
 if(
@@ -906,12 +1085,14 @@ q.subject===subject
 
 if(
 
-!topics.includes(q.topic)
+!topicArray.includes(q.topic)
 
 ){
 
 
-topics.push(q.topic);
+topicArray.push(
+q.topic
+);
 
 
 }
@@ -928,9 +1109,8 @@ topics.push(q.topic);
 
 
 
-filterTopic.innerHTML =
 
-`
+filterTopic.innerHTML = `
 
 <option value="all">
 
@@ -945,13 +1125,10 @@ All Topics
 
 
 
-topics.forEach(t=>{
+topicArray.forEach(t=>{
 
 
-filterTopic.innerHTML +=
-
-
-`
+filterTopic.innerHTML += `
 
 <option value="${t}">
 
@@ -959,12 +1136,11 @@ ${t}
 
 </option>
 
-
 `;
 
 
-
 });
+
 
 
 
@@ -981,11 +1157,17 @@ ${t}
 
 
 
+// =========================
+// APPLY FILTER
+// =========================
+
+
 if(filterBtn){
 
 
 
 filterBtn.onclick = ()=>{
+
 
 
 let subject =
@@ -1009,7 +1191,7 @@ allQuestions.filter(q=>{
 
 
 
-let s =
+let subjectMatch =
 
 subject==="all"
 
@@ -1020,7 +1202,7 @@ q.subject===subject;
 
 
 
-let t =
+let topicMatch =
 
 topic==="all"
 
@@ -1030,7 +1212,8 @@ q.topic===topic;
 
 
 
-return s && t;
+
+return subjectMatch && topicMatch;
 
 
 
@@ -1040,7 +1223,10 @@ return s && t;
 
 
 
-displayQuestions(result);
+
+displayQuestions(
+result
+);
 
 
 
@@ -1056,26 +1242,30 @@ displayQuestions(result);
 
 
 
-
 // =========================
-// START ADMIN
+// START
 // =========================
 
 
-loadQuestionsAdmin();
+loadQuestions();
 
 
 
 console.log(
-
 "✅ Question Management Ready"
-
 );
+
+// =========================
+// G THE GENIUS ADMIN JS
+// FINAL VERSION
+// PART 3
+// DASHBOARD STATS
+// =========================
+
 
 
 // =========================
-// ADMIN DASHBOARD STATS
-// PART 3
+// LOAD ADMIN STATS
 // =========================
 
 
@@ -1087,7 +1277,10 @@ try{
 
 const snap = await getDocs(
 
-collection(db,"questions")
+collection(
+db,
+"questions"
+)
 
 );
 
@@ -1095,13 +1288,34 @@ collection(db,"questions")
 
 let total = 0;
 
-let polity = 0;
 
-let history = 0;
+let counts = {
 
-let science = 0;
+"Indian Polity":0,
 
-let tamilnadu = 0;
+"Indian History":0,
+
+"Geography":0,
+
+"General Science":0,
+
+"Tamil Nadu GK":0,
+
+"Current Affairs":0,
+
+"Economics":0,
+
+"Computer Science":0,
+
+"Aptitude":0,
+
+"Reasoning":0,
+
+"Tamil":0,
+
+"English":0
+
+};
 
 
 
@@ -1113,38 +1327,19 @@ snap.forEach(item=>{
 let data = item.data();
 
 
+
 total++;
 
 
 
 
-if(data.subject==="Indian Polity"){
-
-polity++;
-
-}
+if(
+counts.hasOwnProperty(data.subject)
+){
 
 
+counts[data.subject]++;
 
-if(data.subject==="Indian History"){
-
-history++;
-
-}
-
-
-
-if(data.subject==="General Science"){
-
-science++;
-
-}
-
-
-
-if(data.subject==="Tamil Nadu GK"){
-
-tamilnadu++;
 
 }
 
@@ -1157,8 +1352,16 @@ tamilnadu++;
 
 
 
+
+// TOTAL QUESTIONS
+
+
 let totalBox =
-document.getElementById("totalQuestions");
+
+document.getElementById(
+"totalQuestions"
+);
+
 
 
 if(totalBox)
@@ -1168,55 +1371,73 @@ totalBox.innerHTML = total;
 
 
 
-let polityBox =
-document.getElementById("polityCount");
-
-
-if(polityBox)
-
-polityBox.innerHTML = polity;
 
 
 
-
-
-let historyBox =
-document.getElementById("historyCount");
-
-
-if(historyBox)
-
-historyBox.innerHTML = history;
+// SUBJECT COUNTS
 
 
 
+let map = {
 
 
-let scienceBox =
-document.getElementById("scienceCount");
+"polityCount":
+"Indian Polity",
 
 
-if(scienceBox)
+"historyCount":
+"Indian History",
 
-scienceBox.innerHTML = science;
+
+"scienceCount":
+"General Science",
+
+
+"tnCount":
+"Tamil Nadu GK"
+
+
+};
 
 
 
 
 
-let tnBox =
-document.getElementById("tnCount");
 
 
-if(tnBox)
+Object.keys(map).forEach(id=>{
 
-tnBox.innerHTML = tamilnadu;
+
+let box =
+
+document.getElementById(
+id
+);
+
+
+
+if(box){
+
+
+box.innerHTML =
+
+counts[map[id]] || 0;
+
+
+}
+
+
+
+});
+
+
+
 
 
 
 
 console.log(
-"✅ Stats Updated"
+"✅ Admin Stats Updated"
 );
 
 
@@ -1228,8 +1449,11 @@ catch(error){
 
 
 console.log(
+
 "Stats Error",
+
 error
+
 );
 
 
@@ -1239,6 +1463,7 @@ error
 
 
 }
+
 
 
 
@@ -1248,99 +1473,285 @@ error
 
 
 // =========================
-// EDIT QUESTION
+// UPLOAD DATE FORMAT
 // =========================
 
 
-let editQuestionId = null;
+function formatDate(timestamp){
+
+
+if(!timestamp)
+
+return "-";
+
+
+
+try{
+
+
+return timestamp
+.toDate()
+.toLocaleString(
+"en-IN",
+{
+
+timeZone:
+"Asia/Kolkata",
+
+day:
+"2-digit",
+
+month:
+"2-digit",
+
+year:
+"numeric",
+
+hour:
+"2-digit",
+
+minute:
+"2-digit"
+
+}
+
+);
+
+
+
+}
+
+catch(error){
+
+
+return "-";
+
+
+}
+
+
+
+}
 
 
 
 
-window.editQuestion = function(id){
 
 
 
-let q = allQuestions.find(
 
-item=>item.id===id
+
+// =========================
+// SAFE ELEMENT CHECK
+// =========================
+
+
+function setText(id,value){
+
+
+let el =
+
+document.getElementById(id);
+
+
+
+if(el)
+
+el.innerHTML=value;
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// ADMIN READY
+// =========================
+
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+
+loadQuestions();
+
+
+loadAdminStats();
+
+
+console.log(
+
+"🚀 G THE GENIUS ADMIN PANEL READY"
+
+);
+
+
+
+}
+
+);
+
+// =========================
+// G THE GENIUS ADMIN JS
+// FINAL VERSION
+// PART 4
+// JSON FILE PREVIEW SYSTEM
+// =========================
+
+
+
+const jsonFile =
+
+document.getElementById(
+"jsonFile"
+);
+
+
+
+const previewBox =
+
+document.getElementById(
+"questionCount"
+);
+
+
+
+let previewQuestions = [];
+
+
+
+
+
+// =========================
+// JSON FILE CHANGE
+// =========================
+
+
+if(jsonFile){
+
+
+jsonFile.onchange = (event)=>{
+
+
+let file =
+
+event.target.files[0];
+
+
+
+if(!file)
+
+return;
+
+
+
+
+let reader =
+
+new FileReader();
+
+
+
+
+
+reader.onload = (e)=>{
+
+
+try{
+
+
+let data =
+
+JSON.parse(
+e.target.result
+);
+
+
+
+
+
+if(!Array.isArray(data)){
+
+
+alert(
+"JSON Format Wrong"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+previewQuestions = data;
+
+
+
+
+
+
+if(previewBox){
+
+
+previewBox.innerHTML =
+
+data.length;
+
+
+}
+
+
+
+
+
+alert(
+
+`Preview Ready
+
+Total Questions : ${data.length}`
 
 );
 
 
 
 
-if(!q) return;
 
 
 
-editQuestionId=id;
+console.log(
+data
+);
 
-
-
-// If old edit form exists
-
-if(document.getElementById("subject")){
-
-
-document.getElementById("subject").value=q.subject;
-
-document.getElementById("topic").value=q.topic;
-
-document.getElementById("question").value=q.question;
-
-
-document.getElementById("optionA").value=q.options[0];
-
-document.getElementById("optionB").value=q.options[1];
-
-document.getElementById("optionC").value=q.options[2];
-
-document.getElementById("optionD").value=q.options[3];
-
-
-document.getElementById("answer").value=q.answer;
-
-
-document.getElementById("explanation").value=q.explanation;
 
 
 }
 
 
 
-if(document.getElementById("updateQuestionBtn")){
+catch(error){
 
 
-document.getElementById(
-"updateQuestionBtn"
-).style.display="block";
+alert(
+"Invalid JSON File"
+);
+
 
 
 }
-
-
-
-if(document.getElementById("addQuestionBtn")){
-
-
-document.getElementById(
-"addQuestionBtn"
-).style.display="none";
-
-
-}
-
-
-
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
 
 
 
@@ -1350,37 +1761,507 @@ behavior:"smooth"
 
 
 
+reader.readAsText(file);
+
+
+
+};
+
+
+
+}
+
+
+
+
 
 
 
 
 
 // =========================
-// UPDATE QUESTION
+// JSON VALIDATION
 // =========================
 
 
-const updateBtn =
+function validateQuestion(q){
+
+
+
+if(!q.question)
+
+return false;
+
+
+
+if(!q.options)
+
+return false;
+
+
+
+if(q.options.length !==4)
+
+return false;
+
+
+
+if(q.answer===undefined)
+
+return false;
+
+
+
+return true;
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// PREVIEW DISPLAY
+// =========================
+
+
+function showPreview(){
+
+
+
+const box =
 
 document.getElementById(
-"updateQuestionBtn"
+"previewList"
+);
+
+
+
+if(!box)
+
+return;
+
+
+
+box.innerHTML="";
+
+
+
+
+
+previewQuestions.forEach((q,index)=>{
+
+
+
+let div =
+
+document.createElement(
+"div"
+);
+
+
+
+div.className =
+"preview-item";
+
+
+
+
+
+div.innerHTML = `
+
+
+<h4>
+
+${index+1}. ${q.question}
+
+</h4>
+
+
+
+<p>
+
+A) ${q.options[0]}
+
+<br>
+
+B) ${q.options[1]}
+
+<br>
+
+C) ${q.options[2]}
+
+<br>
+
+D) ${q.options[3]}
+
+</p>
+
+
+
+<p>
+
+Answer :
+
+${q.answer}
+
+</p>
+
+
+`;
+
+
+
+box.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// PREVIEW BUTTON
+// =========================
+
+
+const previewBtn =
+
+document.getElementById(
+"previewBtn"
 );
 
 
 
 
-if(updateBtn){
+
+if(previewBtn){
 
 
 
-updateBtn.onclick = async ()=>{
+previewBtn.onclick = ()=>{
 
 
 
-if(!editQuestionId)
+if(
+previewQuestions.length===0
+){
+
+
+alert(
+"Upload JSON First"
+);
+
 
 return;
 
+
+}
+
+
+
+showPreview();
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// CHECK VALID QUESTIONS
+// =========================
+
+
+function checkQuestions(){
+
+
+
+let valid=0;
+
+let invalid=0;
+
+
+
+
+
+previewQuestions.forEach(q=>{
+
+
+
+if(
+validateQuestion(q)
+){
+
+
+valid++;
+
+
+}
+
+else{
+
+
+invalid++;
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+alert(
+
+`Validation Report
+
+✅ Valid : ${valid}
+
+❌ Invalid : ${invalid}`
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+const validateBtn =
+
+document.getElementById(
+"validateBtn"
+);
+
+
+
+
+if(validateBtn){
+
+
+
+validateBtn.onclick = ()=>{
+
+
+checkQuestions();
+
+
+};
+
+
+
+}
+
+
+
+
+console.log(
+"✅ JSON Preview System Ready"
+);
+
+// =========================
+// G THE GENIUS ADMIN JS
+// FINAL VERSION
+// PART 5
+// FIRESTORE JSON UPLOAD
+// =========================
+
+
+
+import {
+
+addDoc,
+collection,
+serverTimestamp
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+// =========================
+// GENERATE IDS
+// =========================
+
+
+function generateId(prefix){
+
+
+return (
+
+prefix +
+
+"-" +
+
+Date.now()
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// JSON UPLOAD BUTTON
+// =========================
+
+
+const jsonUploadBtn =
+
+document.getElementById(
+"bulkUploadBtn"
+);
+
+
+
+
+
+
+if(jsonUploadBtn){
+
+
+
+jsonUploadBtn.onclick = async()=>{
+
+
+
+let subject =
+
+document.getElementById(
+"bulkSubject"
+).value;
+
+
+
+let topic =
+
+document.getElementById(
+"bulkTopic"
+).value;
+
+
+
+
+
+
+if(!subject || !topic){
+
+
+alert(
+"Select Subject and Topic"
+);
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+if(
+previewQuestions.length===0
+){
+
+
+alert(
+"Load JSON File First"
+);
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+let uploadId =
+
+generateId(
+"GTG-UP"
+);
+
+
+
+
+
+
+let added = 0;
+
+let failed = 0;
+
+let skipped = 0;
+
+
+
+
+
+
+
+for(
+let i=0;
+i<previewQuestions.length;
+i++
+){
+
+
+
+let q =
+
+previewQuestions[i];
 
 
 
@@ -1390,72 +2271,407 @@ try{
 
 
 
-await updateDoc(
+if(
+!validateQuestion(q)
+){
 
-doc(
 
+failed++;
+
+continue;
+
+
+}
+
+
+
+
+
+
+let questionId =
+
+generateId(
+"GTG-Q"
+);
+
+
+
+
+
+
+
+await addDoc(
+
+collection(
 db,
-
-"questions",
-
-editQuestionId
-
+"questions"
 ),
 
 {
 
 
+questionId:
+
+
+questionId,
+
+
+
+uploadId:
+
+
+uploadId,
+
+
+
 subject:
 
-document.getElementById("subject").value,
+
+subject,
 
 
 
 topic:
 
-document.getElementById("topic").value,
+
+topic,
 
 
 
 question:
 
-document.getElementById("question").value,
+
+q.question,
 
 
 
-options:[
+options:
 
 
-document.getElementById("optionA").value,
-
-document.getElementById("optionB").value,
-
-document.getElementById("optionC").value,
-
-document.getElementById("optionD").value
-
-
-],
+q.options,
 
 
 
 answer:
 
-Number(
 
-document.getElementById("answer").value
-
-),
+q.answer,
 
 
 
 explanation:
 
-document.getElementById("explanation").value,
+
+q.explanation || "",
 
 
 
-updatedAt:
+createdAt:
+
+
+serverTimestamp()
+
+
+}
+
+
+);
+
+
+
+
+
+added++;
+
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+failed++;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+// REPORT UPDATE
+
+
+
+document.getElementById(
+"bulkTotal"
+).innerHTML =
+
+previewQuestions.length;
+
+
+
+document.getElementById(
+"addedCount"
+).innerHTML =
+
+added;
+
+
+
+document.getElementById(
+"failedCount"
+).innerHTML =
+
+failed;
+
+
+
+
+
+alert(
+
+`Upload Completed
+
+Upload ID:
+${uploadId}
+
+✅ Added:
+${added}
+
+❌ Failed:
+${failed}`
+
+);
+
+
+
+
+
+
+
+// CLEAR
+
+
+previewQuestions=[];
+
+
+
+document.getElementById(
+"jsonFile"
+).value="";
+
+
+
+if(document.getElementById(
+"questionCount"
+)){
+
+
+document.getElementById(
+"questionCount"
+).innerHTML="0";
+
+
+}
+
+
+
+};
+
+
+
+
+}
+
+
+
+
+
+
+
+
+console.log(
+"✅ JSON Firestore Upload Ready"
+);
+
+// =========================
+// G THE GENIUS ADMIN JS
+// FINAL VERSION
+// PART 6
+// ADVANCED DUPLICATE + UPLOAD HISTORY
+// =========================
+
+
+
+import {
+
+query,
+where
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+
+// =========================
+// CLEAN TEXT
+// =========================
+
+
+function cleanText(text){
+
+
+return text
+
+.toLowerCase()
+
+.trim()
+
+.replace(/\s+/g," ");
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// CHECK DUPLICATE QUESTION
+// =========================
+
+
+async function checkDuplicate(question){
+
+
+
+let q = query(
+
+collection(
+db,
+"questions"
+),
+
+where(
+
+"question",
+
+"==",
+
+question
+
+)
+
+);
+
+
+
+
+
+let snap =
+
+await getDocs(q);
+
+
+
+
+
+return !snap.empty;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// UPLOAD HISTORY SAVE
+// =========================
+
+
+async function saveUploadHistory(data){
+
+
+
+try{
+
+
+await addDoc(
+
+collection(
+db,
+"uploadHistory"
+),
+
+{
+
+
+uploadId:
+
+data.uploadId,
+
+
+
+subject:
+
+data.subject,
+
+
+
+topic:
+
+data.topic,
+
+
+
+total:
+
+data.total,
+
+
+
+added:
+
+data.added,
+
+
+
+duplicate:
+
+data.duplicate,
+
+
+
+failed:
+
+data.failed,
+
+
+
+uploadedDate:
 
 serverTimestamp()
 
@@ -1469,12 +2685,84 @@ serverTimestamp()
 
 
 
+console.log(
+"Upload History Saved"
+);
 
 
 
-alert(
+}
 
-"✅ Question Updated"
+
+catch(error){
+
+
+console.log(
+"History Save Error",
+error
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// GET UPLOAD HISTORY
+// =========================
+
+
+async function loadUploadHistory(){
+
+
+
+const box =
+
+document.getElementById(
+"uploadHistory"
+);
+
+
+
+if(!box)
+
+return;
+
+
+
+
+
+box.innerHTML =
+"Loading...";
+
+
+
+
+
+
+try{
+
+
+
+const snap =
+
+await getDocs(
+
+collection(
+db,
+"uploadHistory"
+)
 
 );
 
@@ -1482,37 +2770,110 @@ alert(
 
 
 
-
-editQuestionId=null;
-
-
-
-if(document.getElementById("updateQuestionBtn")){
-
-
-document.getElementById(
-"updateQuestionBtn"
-).style.display="none";
-
-
-}
-
-
-
-if(document.getElementById("addQuestionBtn")){
-
-
-document.getElementById(
-"addQuestionBtn"
-).style.display="block";
-
-
-}
+box.innerHTML="";
 
 
 
 
-loadQuestionsAdmin();
+
+snap.forEach(item=>{
+
+
+
+let data =
+item.data();
+
+
+
+
+
+let div =
+
+document.createElement(
+"div"
+);
+
+
+
+
+
+div.className =
+"history-card";
+
+
+
+
+
+div.innerHTML = `
+
+
+<h3>
+
+📂 ${data.uploadId}
+
+</h3>
+
+
+<p>
+
+📚 ${data.subject}
+
+</p>
+
+
+<p>
+
+📌 ${data.topic}
+
+</p>
+
+
+<p>
+
+Total :
+${data.total}
+
+</p>
+
+
+<p>
+
+✅ Added :
+${data.added}
+
+</p>
+
+
+<p>
+
+⚠️ Duplicate :
+${data.duplicate}
+
+</p>
+
+
+<p>
+
+❌ Failed :
+${data.failed}
+
+</p>
+
+
+
+`;
+
+
+
+
+
+box.appendChild(div);
+
+
+
+
+});
+
 
 
 
@@ -1524,17 +2885,381 @@ catch(error){
 
 
 console.log(
-
-"Update Error",
-
+"History Load Error",
 error
+);
+
+
+
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+// =========================
+// EXPORT QUESTIONS JSON
+// =========================
+
+
+async function exportQuestions(){
+
+
+
+const snap =
+
+await getDocs(
+
+collection(
+db,
+"questions"
+)
 
 );
 
 
 
+let data=[];
+
+
+
+
+snap.forEach(item=>{
+
+
+data.push(item.data());
+
+
+});
+
+
+
+
+
+let blob =
+
+new Blob(
+
+[
+
+JSON.stringify(
+data,
+null,
+2
+)
+
+],
+
+{
+
+type:
+"application/json"
+
+}
+
+);
+
+
+
+
+
+let url =
+
+URL.createObjectURL(blob);
+
+
+
+
+
+let a =
+
+document.createElement(
+"a"
+);
+
+
+
+a.href=url;
+
+
+
+a.download=
+
+"G_THE_GENIUS_questions.json";
+
+
+
+a.click();
+
+
+
+
+
+URL.revokeObjectURL(url);
+
+
+
+}
+
+
+
+
+
+const exportBtn =
+
+document.getElementById(
+"exportBtn"
+);
+
+
+
+if(exportBtn){
+
+
+exportBtn.onclick = ()=>{
+
+
+exportQuestions();
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+console.log(
+"✅ Advanced Duplicate + Upload History Ready"
+);
+
+// =========================
+// G THE GENIUS ADMIN JS
+// FINAL VERSION
+// PART 7
+// ADMIN SECURITY + FINAL
+// =========================
+
+
+import { auth } from "./firebase-config.js";
+
+
+import {
+
+onAuthStateChanged,
+signOut
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+
+
+// =========================
+// ADMIN EMAIL LIST
+// =========================
+
+
+const adminEmails = [
+
+
+"gthegenius7@gmail.com"
+
+
+];
+
+
+
+
+
+
+
+
+
+// =========================
+// ADMIN SECURITY CHECK
+// =========================
+
+
+onAuthStateChanged(
+auth,
+(user)=>{
+
+
+
+if(!user){
+
+
 alert(
-"❌ Update Failed"
+"Admin Login Required"
+);
+
+
+
+window.location.href =
+"login.html";
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+if(
+!adminEmails.includes(
+user.email
+)
+
+){
+
+
+
+alert(
+"Access Denied"
+);
+
+
+
+window.location.href =
+"dashboard.html";
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+// ADMIN DETAILS
+
+
+
+let nameBox =
+
+document.getElementById(
+"adminName"
+);
+
+
+
+if(nameBox)
+
+nameBox.innerHTML =
+
+user.email;
+
+
+
+
+
+
+
+let statusBox =
+
+document.getElementById(
+"adminStatus"
+);
+
+
+
+if(statusBox)
+
+statusBox.innerHTML =
+
+"🟢 Online";
+
+
+
+
+
+console.log(
+"✅ Admin Verified"
+);
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// =========================
+// LOGOUT
+// =========================
+
+
+const logoutBtn =
+
+document.getElementById(
+"adminLogoutBtn"
+);
+
+
+
+
+
+if(logoutBtn){
+
+
+
+logoutBtn.onclick = async()=>{
+
+
+try{
+
+
+await signOut(auth);
+
+
+
+window.location.href =
+"login.html";
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+"Logout Error",
+error
 );
 
 
@@ -1557,63 +3282,52 @@ alert(
 
 
 
-
 // =========================
-// CLEAR FORM
+// GLOBAL ERROR HANDLER
 // =========================
 
 
-function clearQuestionForm(){
+window.onerror = function(
 
+message,
 
+source,
 
-let ids=[
+line
 
-"topic",
-
-"question",
-
-"optionA",
-
-"optionB",
-
-"optionC",
-
-"optionD",
-
-"explanation"
-
-];
-
-
-
-
-ids.forEach(id=>{
-
-
-let el=document.getElementById(id);
-
-
-if(el)
-
-el.value="";
-
-
-});
-
-
-
-}
-
-
-
-
-
-
+){
 
 
 console.log(
 
-"✅ G THE GENIUS ADMIN FINAL READY"
+"Admin Error:",
+
+message,
+
+"Line:",
+
+line
+
+);
+
+
+};
+
+
+
+
+
+
+
+
+
+// =========================
+// FINAL READY
+// =========================
+
+
+console.log(
+
+"🚀 G THE GENIUS ADMIN PANEL FINAL READY"
 
 );
