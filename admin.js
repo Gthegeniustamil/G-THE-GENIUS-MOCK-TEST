@@ -1,40 +1,53 @@
-// =========================
+// ===================================
 // G THE GENIUS ADMIN JS
-// FULL IMPORTS
-// =========================
+// PART 8 - 2
+// FINAL FIREBASE IMPORT SETUP
+// ===================================
 
 
 import { db, auth } from "./firebase-config.js";
 
 
-// FIRESTORE
 
 import {
 
-    collection,
-    addDoc,
-    getDocs,
-    deleteDoc,
-    doc,
-    serverTimestamp,
-    query,
-    where
+collection,
+addDoc,
+getDocs,
+getDoc,
+doc,
+deleteDoc,
+updateDoc,
+serverTimestamp,
+query,
+where
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
-// AUTH
+
 
 import {
 
-    onAuthStateChanged,
-    signOut
+onAuthStateChanged,
+signOut
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+}
 
-let allQuestions = [];
-let previewQuestions = [];
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+console.log(
+"🔥 Firebase Import Connected"
+);
 
 // =========================
 // SUBJECT TOPICS
