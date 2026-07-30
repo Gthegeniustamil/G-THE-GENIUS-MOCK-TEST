@@ -400,134 +400,36 @@ const topics = {
 };
 
 
-
-let subject = bulkSubject.value;
-
-
-bulkTopic.innerHTML =
-`
-<option>
-Select Topic
-</option>
-`;
-
-
-
-if(topics[subject]){
-
-
-topics[subject].forEach(t=>{
-
-
-bulkTopic.innerHTML +=
-`
-<option value="${t}">
-${t}
-</option>
-`;
-
-
-
-});
-
-
-}
-
-
-};
-
-
-}
-
-
-
-
-
-
-
-
-
 // =========================
 // LOAD TOPICS
 // =========================
+const bulkSubject = document.getElementById("bulkSubject");
+const bulkTopic = document.getElementById("bulkTopic");
 
+if (bulkSubject && bulkTopic) {
 
-const subjectSelect =
+    bulkSubject.addEventListener("change", function () {
 
-document.getElementById(
-"bulkSubject"
-);
+        bulkTopic.innerHTML = `<option value="">Select Topic</option>`;
 
+        const selected = this.value;
 
+        if (topics[selected]) {
 
-const topicSelect =
+            topics[selected].forEach(topic => {
 
-document.getElementById(
-"bulkTopic"
-);
+                bulkTopic.innerHTML += `
+                <option value="${topic}">
+                    ${topic}
+                </option>`;
+            });
 
+        }
 
-
-
-if(subjectSelect){
-
-
-
-subjectSelect.onchange = ()=>{
-
-
-let subject =
-subjectSelect.value;
-
-
-
-topicSelect.innerHTML =
-
-`
-<option value="">
-Select Topic
-</option>
-`;
-
-
-
-if(topics[subject]){
-
-
-topics[subject].forEach(topic=>{
-
-
-let option =
-document.createElement(
-"option"
-);
-
-
-
-option.value = topic;
-
-option.textContent = topic;
-
-
-
-topicSelect.appendChild(
-option
-);
-
-
-
-});
-
+    });
 
 }
 
-
-
-};
-
-
-
-}
 
 
 // =========================
@@ -2506,25 +2408,6 @@ Date.now()
 // =========================
 // JSON UPLOAD BUTTON
 // =========================
-
-
-const jsonUploadBtn =
-
-document.getElementById(
-"bulkUploadBtn"
-);
-
-
-
-
-
-
-if(jsonUploadBtn){
-
-
-
-jsonUploadBtn.onclick = async()=>{
-
 
 
 let subject =
