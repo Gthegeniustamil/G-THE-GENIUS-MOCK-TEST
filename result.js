@@ -40,33 +40,11 @@ async function loadResult(){
     try{
 
         const q = query(
-
-            collection(db,"results"),
-
-            where("studentId","==",auth.currentUser.uid),
-
-            orderBy("timestamp","desc"),
-
-            limit(1)
-
-        );
-
-        const snap = await getDocs(q);
-
-        if(snap.empty){
-
-            alert("No Result Found");
-            return;
-
-        }
-
-        snap.forEach(doc=>{
-
-            displayResult(doc.data());
-
-        });
-
-    }
+    collection(db,"results"),
+    where("studentId","==",auth.currentUser.uid)
+);
+     
+        
 
     catch(error){
 
@@ -77,6 +55,24 @@ async function loadResult(){
     }
 
 }
+const snap = await getDocs(q);
+
+if(snap.empty){
+
+    alert("No Result Found");
+    return;
+
+}
+
+let latest = null;
+
+snap.forEach(doc => {
+
+    latest = doc.data();
+
+});
+
+displayResult(latest);
 
 // =========================
 // DISPLAY RESULT
