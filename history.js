@@ -194,12 +194,11 @@ const snap = await getDocs(q);
 
     catch(error){
 
-console.error(
-"History Error:",
-error
-);
+    console.error("History Error:", error);
 
-alert(error.message);
+    alert(
+        "History Error: " + error.message
+    );
 
     }
 
