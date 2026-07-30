@@ -166,11 +166,8 @@ first?.studentName || "-";
 
 
 
-document.getElementById(
-"firstScore"
-).innerHTML =
-
-(first?.percentage || 0)+"%";
+document.getElementById("firstScore").innerHTML =
+data.score + "/" + data.total;
 
 
 
@@ -185,12 +182,8 @@ second?.studentName || "-";
 
 
 
-document.getElementById(
-"secondScore"
-).innerHTML =
-
-(second?.percentage || 0)+"%";
-
+document.getElementById("secondScore").innerHTML =
+second.score + "/" + second.total;
 
 
 
@@ -204,12 +197,8 @@ third?.studentName || "-";
 
 
 
-document.getElementById(
-"thirdScore"
-).innerHTML =
-
-(third?.percentage || 0)+"%";
-
+document.getElementById("thirdScore").innerHTML =
+third.score + "/" + third.total;
 
 
 }
