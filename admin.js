@@ -399,16 +399,6 @@ const topics = {
 
 };
 
-const bulkSubject =
-document.getElementById("bulkSubject");
-
-const bulkTopic =
-document.getElementById("bulkTopic");
-
-
-if(bulkSubject && bulkTopic){
-
-bulkSubject.onchange = ()=>{
 
 
 let subject = bulkSubject.value;
