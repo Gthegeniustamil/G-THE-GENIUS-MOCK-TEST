@@ -164,219 +164,6 @@ Tamil Nadu GK
 
 
 
-</section>
-
-
-
-
-
-
-
-
-
-<!-- QUESTION -->
-
-
-<label>
-
-Question
-
-</label>
-
-
-
-<textarea
-
-id="question"
-
-placeholder="Enter Question"
-
-></textarea>
-
-
-
-
-
-
-
-
-<!-- OPTIONS -->
-
-
-<label>
-
-Option A
-
-</label>
-
-
-<input
-
-type="text"
-
-id="optionA"
-
-placeholder="Option A"
-
->
-
-
-
-
-<label>
-
-Option B
-
-</label>
-
-
-<input
-
-type="text"
-
-id="optionB"
-
-placeholder="Option B"
-
->
-
-
-
-
-<label>
-
-Option C
-
-</label>
-
-
-<input
-
-type="text"
-
-id="optionC"
-
-placeholder="Option C"
-
->
-
-
-
-
-<label>
-
-Option D
-
-</label>
-
-
-<input
-
-type="text"
-
-id="optionD"
-
-placeholder="Option D"
-
->
-
-
-
-
-
-
-
-
-<!-- ANSWER -->
-
-
-<label>
-
-Correct Answer
-
-</label>
-
-
-<select id="answer">
-
-
-<option value="0">
-
-Option A
-
-</option>
-
-
-
-<option value="1">
-
-Option B
-
-</option>
-
-
-
-<option value="2">
-
-Option C
-
-</option>
-
-
-
-<option value="3">
-
-Option D
-
-</option>
-
-
-</select>
-
-
-
-
-
-
-<!-- EXPLANATION -->
-
-
-<label>
-
-Explanation
-
-</label>
-
-
-
-<textarea
-
-id="explanation"
-
-placeholder="Answer Explanation"
-
-></textarea>
-
-
-
-
-
-<button id="addQuestionBtn">
-
-
-Add Question
-
-
-</button>
-
-
-
-<button id="updateQuestionBtn" style="display:none;">
-
-💾 Update Question
-
-</button>
-
 
 </section>
 
@@ -393,34 +180,62 @@ Add Question
 <!-- =========================
 BULK UPLOAD SECTION
 ========================= -->
-<section class="bulk-card">
-
-<h2>
-📂 Bulk Question Upload
-</h2>
-
-
-<label>
-Subject
-</label>
+<label>Subject</label>
 
 <select id="bulkSubject">
 
-<option>Indian Polity</option>
-<option>Indian History</option>
-<option>Geography</option>
-<option>General Science</option>
-<option>Tamil Nadu GK</option>
-<option>Current Affairs</option>
-<option>Economics</option>
-<option>Physics</option>
-<option>Chemistry</option>
-<option>Biology</option>
-<option>Computer Science</option>
-<option>Aptitude</option>
-<option>Reasoning</option>
-<option>Tamil</option>
-<option>English</option>
+<option value="">Select Subject</option>
+
+<option value="Indian Polity">Indian Polity</option>
+<option value="Indian History">Indian History</option>
+<option value="World History">World History</option>
+<option value="Freedom Struggle">Freedom Struggle</option>
+<option value="Tamil Nadu History">Tamil Nadu History</option>
+
+<option value="Geography">Geography</option>
+<option value="General Science">General Science</option>
+<option value="Physics">Physics</option>
+<option value="Chemistry">Chemistry</option>
+<option value="Biology">Biology</option>
+
+<option value="Economics">Economics</option>
+<option value="Computer Science">Computer Science</option>
+
+<option value="Current Affairs">Current Affairs</option>
+
+<option value="Environment">Environment</option>
+
+<option value="Art and Culture">Art and Culture</option>
+
+<option value="Sports">Sports</option>
+
+<option value="Books and Authors">Books and Authors</option>
+
+<option value="Awards and Honours">Awards and Honours</option>
+
+<option value="Important Days">Important Days</option>
+
+<option value="Tamil Nadu GK">Tamil Nadu GK</option>
+
+<option value="English">English</option>
+
+<option value="Tamil">Tamil</option>
+
+<option value="Aptitude">Aptitude</option>
+
+<option value="Reasoning">Reasoning</option>
+
+<option value="Previous Year Questions">Previous Year Questions</option>
+
+<option value="Model Questions">Model Questions</option>
+
+</select>
+
+<label>Topic</label>
+
+<select id="bulkTopic">
+
+<option value="">Select Topic</option>
 
 </select>
 
@@ -502,65 +317,86 @@ Total :
 
 
 </section>
+<label>Subject</label>
 
+<select id="filterSubject">
 
-<!-- SUBJECT FILTER -->
+<option value="all">All Subjects</option>
 
+<option value="Indian Polity">Indian Polity</option>
 
-<label>
+<option value="Indian Constitution">Indian Constitution</option>
 
-Subject
+<option value="Indian History">Indian History</option>
 
-</label>
+<option value="World History">World History</option>
 
+<option value="Freedom Struggle">Freedom Struggle</option>
 
-<select id="bulkSubject">
+<option value="Tamil Nadu History">Tamil Nadu History</option>
 
+<option value="Geography">Geography</option>
 
-<option value="Indian Polity">
+<option value="Indian Geography">Indian Geography</option>
 
-Indian Polity
+<option value="World Geography">World Geography</option>
 
-</option>
+<option value="Tamil Nadu Geography">Tamil Nadu Geography</option>
 
+<option value="General Science">General Science</option>
 
-<option value="Indian History">
+<option value="Physics">Physics</option>
 
-Indian History
+<option value="Chemistry">Chemistry</option>
 
-</option>
+<option value="Biology">Biology</option>
 
+<option value="Botany">Botany</option>
 
-<option value="Geography">
+<option value="Zoology">Zoology</option>
 
-Geography
+<option value="Environment">Environment</option>
 
-</option>
+<option value="Science & Technology">Science & Technology</option>
 
+<option value="Economics">Economics</option>
 
-<option value="General Science">
+<option value="Computer Science">Computer Science</option>
 
-General Science
+<option value="Current Affairs">Current Affairs</option>
 
-</option>
+<option value="Tamil Nadu GK">Tamil Nadu GK</option>
 
+<option value="Art & Culture">Art & Culture</option>
 
-<option value="Tamil Nadu GK">
+<option value="Sports">Sports</option>
 
-Tamil Nadu GK
+<option value="Awards & Honours">Awards & Honours</option>
 
-</option>
+<option value="Books & Authors">Books & Authors</option>
 
+<option value="Important Days">Important Days</option>
 
-<option value="Current Affairs">
+<option value="English">English</option>
 
-Current Affairs
+<option value="Tamil">Tamil</option>
 
-</option>
+<option value="Aptitude">Aptitude</option>
 
+<option value="Reasoning">Reasoning</option>
 
+<option value="Mental Ability">Mental Ability</option>
+
+<option value="Previous Year Questions">Previous Year Questions</option>
+
+<option value="Model Questions">Model Questions</option>
+
+<option value="Mixed Questions">Mixed Questions</option>
 
 </select>
+
+
+
 
 
 
@@ -571,24 +407,13 @@ Current Affairs
 <!-- TOPIC -->
 
 
-<label>
+<label>Topic</label>
 
-Topic
+<select id="filterTopic">
 
-</label>
+<option value="all">All Topics</option>
 
-
-<input
-
-type="text"
-
-id="bulkTopic"
-
-placeholder="Example: Parliament"
-
->
-
-
+</select>
 
 
 
