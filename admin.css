@@ -1,44 +1,35 @@
 /* =========================
-G THE GENIUS ADMIN CSS
-PART 1
+G THE GENIUS ADMIN PANEL
+ADMIN.CSS
+PART 6A-1
+BASE + HEADER
 ========================= */
 
 
 *{
-
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
-
 
 
 body{
 
-background:
+    background:
+    linear-gradient(
+        135deg,
+        #081229,
+        #162b55
+    );
 
-linear-gradient(
-180deg,
-#081229,
-#102451
-);
+    color:white;
 
+    min-height:100vh;
 
-color:white;
-
-
-min-height:100vh;
-
-
-padding-bottom:50px;
-
+    padding:20px;
 
 }
-
-
-
 
 
 
@@ -49,37 +40,28 @@ ADMIN HEADER
 
 .admin-header{
 
+    display:flex;
 
-display:flex;
+    align-items:center;
 
+    gap:20px;
 
-align-items:center;
+    padding:20px;
 
+    background:
+    rgba(255,255,255,0.08);
 
-gap:15px;
+    backdrop-filter:
+    blur(15px);
 
+    border-radius:20px;
 
-padding:20px;
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
 
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-bottom:
-
-1px solid rgba(255,215,0,.3);
-
-
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.3);
 
 }
 
@@ -87,30 +69,16 @@ border-bottom:
 
 .admin-logo{
 
+    width:90px;
 
-width:70px;
+    height:90px;
 
+    border-radius:50%;
 
-height:70px;
+    object-fit:cover;
 
-
-border-radius:50%;
-
-
-object-fit:cover;
-
-
-
-border:
-
-3px solid #FFD700;
-
-
-background:white;
-
-
-padding:2px;
-
+    border:
+    3px solid #ffd700;
 
 }
 
@@ -118,12 +86,9 @@ padding:2px;
 
 .admin-header h2{
 
+    color:#ffd700;
 
-color:#FFD700;
-
-
-font-size:24px;
-
+    font-size:28px;
 
 }
 
@@ -131,897 +96,35 @@ font-size:24px;
 
 .admin-header p{
 
+    color:#ddd;
 
-color:#ddd;
-
-
-font-size:13px;
-
+    margin-top:5px;
 
 }
 
 
 
+#adminName{
 
+    color:white;
 
-
-
-
-/* =========================
-ADMIN CARD
-========================= */
-
-
-.admin-card,
-.bulk-card,
-.manage-card{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-border-radius:28px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-box-shadow:
-
-0 0 20px rgba(255,215,0,.08);
-
-
+    margin-top:8px;
 
 }
 
-
-
-.admin-card h2,
-.bulk-card h2,
-.manage-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-FORM ELEMENTS
-========================= */
-
-
-label{
-
-
-display:block;
-
-
-margin-top:15px;
-
-
-margin-bottom:8px;
-
-
-color:#FFD700;
-
-
-font-size:14px;
-
-
-}
-
-
-
-input,
-select,
-textarea{
-
-
-width:100%;
-
-
-padding:14px;
-
-
-border-radius:18px;
-
-
-
-background:
-
-rgba(255,255,255,.1);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-color:white;
-
-
-outline:none;
-
-
-font-size:15px;
-
-
-}
-
-
-
-select option{
-
-
-background:#081229;
-
-
-color:white;
-
-
-}
-
-
-
-textarea{
-
-
-height:120px;
-
-
-resize:none;
-
-
-}
-
-
-
-
-
-
-input::placeholder,
-textarea::placeholder{
-
-
-color:#bbb;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-ADD BUTTON
-========================= */
-
-
-#addQuestionBtn,
-#bulkUploadBtn{
-
-
-width:100%;
-
-
-margin-top:25px;
-
-
-padding:16px;
-
-
-border:none;
-
-
-border-radius:22px;
-
-
-
-background:#FFD700;
-
-
-
-color:#081229;
-
-
-
-font-weight:bold;
-
-
-font-size:16px;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-#addQuestionBtn:hover,
-#bulkUploadBtn:hover{
-
-
-transform:scale(1.03);
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-BULK UPLOAD
-========================= */
-
-
-.bulk-card p{
-
-
-color:#ddd;
-
-
-font-size:14px;
-
-
-margin-bottom:15px;
-
-
-}
-
-
-
-
-#jsonFile{
-
-
-padding:12px;
-
-
-}
-
-
-
-
-
-.preview-box{
-
-
-margin-top:20px;
-
-
-padding:18px;
-
-
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,215,0,.12);
-
-
-
-}
-
-
-
-.preview-box h3{
-
-
-color:#FFD700;
-
-
-}
-
-
-
-.preview-box span{
-
-
-color:#FFD700;
-
-
-font-weight:bold;
-
-
-}
-
-/* =========================
-QUESTION MANAGEMENT
-========================= */
-
-
-.search-box{
-
-
-display:flex;
-
-
-gap:10px;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-.search-box input{
-
-
-flex:1;
-
-
-}
-
-
-
-#searchBtn{
-
-
-padding:14px 20px;
-
-
-border:none;
-
-
-border-radius:18px;
-
-
-
-background:#FFD700;
-
-
-color:#081229;
-
-
-font-weight:bold;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-QUESTION LIST
-========================= */
-
-
-#questionList{
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-gap:15px;
-
-
-}
-
-
-
-
-.question-item{
-
-
-padding:20px;
-
-
-border-radius:22px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.question-item h3{
-
-
-color:#FFD700;
-
-
-font-size:17px;
-
-
-margin-bottom:10px;
-
-
-}
-
-
-
-.question-item p{
-
-
-color:#ddd;
-
-
-font-size:14px;
-
-
-line-height:1.5;
-
-
-}
-
-
-
-.question-item span{
-
-
-color:#FFD700;
-
-
-}
-
-
-
-
-
-/* =========================
-DELETE BUTTON
-========================= */
-
-
-.delete-btn{
-
-
-margin-top:15px;
-
-
-padding:12px 20px;
-
-
-border:none;
-
-
-border-radius:18px;
-
-
-
-background:#ff4444;
-
-
-color:white;
-
-
-font-weight:bold;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-.delete-btn:hover{
-
-
-transform:scale(1.05);
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-ADMIN FOOTER
-========================= */
-
-
-.admin-footer{
-
-
-margin:25px 20px;
-
-
-padding:25px;
-
-
-text-align:center;
-
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.admin-footer h3{
-
-
-color:#FFD700;
-
-
-}
-
-
-
-.admin-footer p{
-
-
-color:#aaa;
-
-
-margin-top:10px;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-LOADING MESSAGE
-========================= */
-
-
-.loading{
-
-
-text-align:center;
-
-
-padding:20px;
-
-
-color:#FFD700;
-
-
-font-size:16px;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-SUCCESS MESSAGE
-========================= */
-
-
-.success-msg{
-
-
-margin-top:15px;
-
-
-padding:15px;
-
-
-border-radius:18px;
-
-
-
-background:#0b8f3c;
-
-
-color:white;
-
-
-text-align:center;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-ERROR MESSAGE
-========================= */
-
-
-.error-msg{
-
-
-margin-top:15px;
-
-
-padding:15px;
-
-
-border-radius:18px;
-
-
-
-background:#a32020;
-
-
-color:white;
-
-
-text-align:center;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-MOBILE RESPONSIVE
-========================= */
-
-
-@media(max-width:600px){
-
-
-
-.admin-header h2{
-
-
-font-size:20px;
-
-
-}
-
-
-
-.admin-card,
-.bulk-card,
-.manage-card{
-
-
-margin:15px;
-
-
-padding:20px;
-
-
-}
-
-
-
-.search-box{
-
-
-flex-direction:column;
-
-
-}
-
-
-
-#searchBtn{
-
-
-width:100%;
-
-
-}
-
-
-
-.question-item h3{
-
-
-font-size:15px;
-
-
-}
-
-
-
-}
-
-/* =========================
-ADMIN HEADER UPDATE
-========================= */
-
-
-.admin-header{
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-justify-content:space-between;
-
-padding:20px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-border-bottom:
-
-1px solid rgba(255,215,0,.3);
-
-
-}
-
-
-
-.admin-header div{
-
-flex:1;
-
-}
-
-
-
-.admin-header h2{
-
-color:#FFD700;
-
-font-size:24px;
-
-}
-
-
-
-.admin-header h4{
-
-margin-top:8px;
-
-color:white;
-
-font-size:16px;
-
-}
-
-
-
-.admin-header p{
-
-color:#ddd;
-
-font-size:13px;
-
-margin:5px 0;
-
-}
-
-
-
-
-
-/* =========================
-ADMIN STATUS
-========================= */
 
 
 #adminStatus{
 
-display:inline-block;
+    display:inline-block;
 
-margin-top:8px;
+    margin-top:8px;
 
-padding:6px 12px;
+    color:#00ff88;
 
-
-border-radius:15px;
-
-
-background:
-
-rgba(0,255,100,.15);
-
-
-color:#00ff66;
-
-
-font-size:12px;
-
-
-font-weight:bold;
-
+    font-weight:bold;
 
 }
-
-
 
 
 
@@ -1034,131 +137,51 @@ LOGOUT BUTTON
 
 #adminLogoutBtn{
 
+    margin-left:auto;
 
-padding:12px 18px;
+    padding:12px 22px;
 
+    border:none;
 
-border:none;
+    border-radius:12px;
 
+    background:
+    #ff4757;
 
-border-radius:20px;
+    color:white;
 
+    cursor:pointer;
 
+    font-size:15px;
 
-background:#ff4444;
-
-
-
-color:white;
-
-
-font-weight:bold;
-
-
-font-size:14px;
-
-
-cursor:pointer;
-
-
+    font-weight:bold;
 
 }
+
 
 
 #adminLogoutBtn:hover{
 
-
-transform:scale(1.05);
-
-
-background:#ff2222;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-MOBILE HEADER
-========================= */
-
-
-@media(max-width:600px){
-
-
-.admin-header{
-
-
-flex-wrap:wrap;
-
-
-}
-
-
-
-.admin-logo{
-
-
-width:60px;
-
-height:60px;
-
-
-}
-
-
-
-.admin-header h2{
-
-
-font-size:20px;
-
-
-}
-
-
-
-#adminLogoutBtn{
-
-
-width:100%;
-
-
-margin-top:10px;
-
-
-}
-
-
+    transform:scale(1.05);
 
 }
 
 /* =========================
+PART 6A-2
 ADMIN STATS CARDS
 ========================= */
 
 
 .admin-stats{
 
-margin:20px;
+    display:grid;
 
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
 
-display:grid;
+    gap:20px;
 
-
-grid-template-columns:
-
-repeat(5,1fr);
-
-
-
-gap:15px;
-
+    margin-top:25px;
 
 }
 
@@ -1167,37 +190,28 @@ gap:15px;
 
 .stat-card{
 
+    background:
+    rgba(255,255,255,0.10);
 
-padding:20px 10px;
+    backdrop-filter:
+    blur(15px);
 
+    padding:25px;
 
-text-align:center;
+    border-radius:18px;
 
+    text-align:center;
 
-border-radius:25px;
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
 
+    box-shadow:
+    0 8px 25px
+    rgba(0,0,0,0.25);
 
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-box-shadow:
-
-0 0 20px rgba(255,215,0,.08);
-
-
-
-transition:.3s;
-
+    transition:
+    0.3s;
 
 }
 
@@ -1205,9 +219,8 @@ transition:.3s;
 
 .stat-card:hover{
 
-
-transform:translateY(-5px);
-
+    transform:
+    translateY(-8px);
 
 }
 
@@ -1215,15 +228,11 @@ transform:translateY(-5px);
 
 .stat-card h2{
 
+    color:#ffd700;
 
-font-size:30px;
+    font-size:35px;
 
-
-color:#FFD700;
-
-
-margin-bottom:10px;
-
+    margin-bottom:10px;
 
 }
 
@@ -1231,218 +240,194 @@ margin-bottom:10px;
 
 .stat-card p{
 
+    color:#ffffff;
 
-color:#ddd;
-
-
-font-size:13px;
-
+    font-size:16px;
 
 }
-
-
-
 
 
 
 
 
 /* =========================
-MOBILE RESPONSIVE
+SECTION COMMON DESIGN
 ========================= */
 
 
-@media(max-width:900px){
+.bulk-card,
+.manage-card,
+.history-card,
+.export-card{
 
+    margin-top:30px;
 
-.admin-stats{
+    padding:25px;
 
+    background:
 
-grid-template-columns:
+    rgba(255,255,255,0.08);
 
-repeat(3,1fr);
+    backdrop-filter:
+    blur(15px);
 
+    border-radius:20px;
 
-}
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
 
-
-}
-
-
-
-
-@media(max-width:600px){
-
-
-.admin-stats{
-
-
-grid-template-columns:
-
-repeat(2,1fr);
-
+    box-shadow:
+    0 10px 30px
+    rgba(0,0,0,0.25);
 
 }
 
 
 
-.stat-card h2{
+.bulk-card h2,
+.manage-card h2,
+.history-card h2,
+.export-card h2{
 
+    color:#ffd700;
 
-font-size:24px;
-
-
-}
-
-
-
-}
-
-
-/* =========================
-QUESTION FILTER SECTION
-========================= */
-
-
-.filter-box{
-
-
-display:flex;
-
-
-gap:12px;
-
-
-margin-bottom:20px;
-
-
-flex-wrap:wrap;
-
+    margin-bottom:20px;
 
 }
 
-
-
-.filter-box select{
-
-
-flex:1;
-
-
-min-width:150px;
-
-
-padding:14px;
-
-
-border-radius:18px;
+// ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 3
+// QUESTION SEARCH + FILTER SYSTEM
+// ===============================
 
 
 
-background:
-
-rgba(255,255,255,.1);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
+// ===============================
+// DISPLAY QUESTIONS
+// ===============================
 
 
-
-color:white;
-
-
-outline:none;
+function displayQuestions(data){
 
 
-font-size:14px;
+const list = document.getElementById(
+"questionList"
+);
+
+
+
+if(!list) return;
+
+
+
+list.innerHTML = "";
+
+
+
+if(data.length === 0){
+
+
+list.innerHTML = 
+`
+<p>
+No Questions Found
+</p>
+`;
+
+return;
 
 
 }
 
 
 
-.filter-box select option{
-
-
-background:#081229;
-
-
-color:white;
-
-
-}
+data.forEach(q=>{
 
 
 
+let div = document.createElement(
+"div"
+);
 
 
 
-/* FILTER BUTTON */
-
-
-#filterBtn{
-
-
-padding:14px 25px;
-
-
-border:none;
-
-
-border-radius:20px;
+div.className =
+"question-item";
 
 
 
-background:#FFD700;
+div.innerHTML =
+
+`
+
+<h3>
+${q.question}
+</h3>
+
+
+<p>
+📚 Subject :
+${q.subject || "-"}
+</p>
+
+
+<p>
+📌 Topic :
+${q.topic || "-"}
+</p>
+
+
+<p>
+
+A) ${q.options?.[0] || ""}
+
+<br>
+
+B) ${q.options?.[1] || ""}
+
+<br>
+
+C) ${q.options?.[2] || ""}
+
+<br>
+
+D) ${q.options?.[3] || ""}
+
+</p>
+
+
+<p>
+✅ Answer :
+${q.answer}
+</p>
+
+
+<p>
+💡 Explanation :
+${q.explanation || "-"}
+</p>
+
+
+<button 
+class="delete-btn"
+onclick="deleteQuestion('${q.id}')">
+
+🗑 Delete
+
+</button>
+
+
+`;
 
 
 
-color:#081229;
-
-
-font-weight:bold;
-
-
-font-size:14px;
-
-
-cursor:pointer;
-
-
-}
+list.appendChild(div);
 
 
 
-#filterBtn:hover{
-
-
-transform:scale(1.05);
-
-
-}
-
-
-
-
-
-
-
-
-/* FILTER ACTIVE EFFECT */
-
-
-.filter-box select:focus{
-
-
-border-color:#FFD700;
-
-
-box-shadow:
-
-0 0 10px rgba(255,215,0,.4);
+});
 
 
 }
@@ -1454,89 +439,54 @@ box-shadow:
 
 
 
-/* MOBILE */
+
+// ===============================
+// SEARCH QUESTION
+// ===============================
 
 
-@media(max-width:600px){
-
-
-.filter-box{
-
-
-flex-direction:column;
-
-
-}
+const searchBtn = document.getElementById(
+"searchBtn"
+);
 
 
 
-.filter-box select,
-
-
-#filterBtn{
-
-
-width:100%;
-
-
-}
-
-
-}
-/* =========================
-EDIT UPDATE BUTTON
-========================= */
-
-
-#updateQuestionBtn{
-
-
-width:100%;
-
-
-margin-top:15px;
-
-
-padding:16px;
-
-
-border:none;
-
-
-border-radius:22px;
+if(searchBtn){
 
 
 
-background:#00c853;
+searchBtn.onclick = ()=>{
 
 
 
-color:white;
-
-
-font-weight:bold;
-
-
-font-size:16px;
-
-
-cursor:pointer;
-
-
-transition:.3s;
-
-
-}
+let text = document.getElementById(
+"searchQuestion"
+).value
+.toLowerCase()
+.trim();
 
 
 
-#updateQuestionBtn:hover{
+
+let result = allQuestions.filter(q=>
 
 
-transform:scale(1.03);
+
+q.question
+.toLowerCase()
+.includes(text)
 
 
-background:#00a844;
+
+);
+
+
+
+displayQuestions(result);
+
+
+
+};
 
 
 }
@@ -1548,15 +498,117 @@ background:#00a844;
 
 
 
-/* =========================
-EDIT MODE TITLE
-========================= */
+
+// ===============================
+// SUBJECT FILTER
+// ===============================
 
 
-.edit-mode{
+const filterSubject = document.getElementById(
+"filterSubject"
+);
 
 
-color:#00ff66 !important;
+const filterTopic = document.getElementById(
+"filterTopic"
+);
+
+
+
+if(filterSubject){
+
+
+
+filterSubject.onchange = ()=>{
+
+
+
+let subject =
+filterSubject.value;
+
+
+
+let topicsList=[];
+
+
+
+allQuestions.forEach(q=>{
+
+
+
+if(
+
+subject==="all"
+
+||
+
+q.subject===subject
+
+){
+
+
+
+if(
+q.topic &&
+!topicsList.includes(q.topic)
+){
+
+
+topicsList.push(q.topic);
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+filterTopic.innerHTML =
+
+`
+
+<option value="all">
+All Topics
+</option>
+
+`;
+
+
+
+
+
+
+topicsList.forEach(t=>{
+
+
+
+filterTopic.innerHTML +=
+
+`
+
+<option value="${t}">
+${t}
+</option>
+
+`;
+
+
+
+});
+
+
+
+};
+
 
 
 }
@@ -1568,23 +620,514 @@ color:#00ff66 !important;
 
 
 
-/* =========================
-EDIT QUESTION CARD
-========================= */
+
+// ===============================
+// APPLY FILTER
+// ===============================
 
 
-.edit-active{
-
-
-border:
-
-1px solid #00ff66 !important;
+const filterBtn = document.getElementById(
+"filterBtn"
+);
 
 
 
-box-shadow:
+if(filterBtn){
 
-0 0 20px rgba(0,255,100,.2);
+
+
+filterBtn.onclick = ()=>{
+
+
+
+let subject =
+filterSubject.value;
+
+
+
+let topic =
+filterTopic.value;
+
+
+
+
+
+let result = allQuestions.filter(q=>{
+
+
+
+let subjectMatch =
+
+subject==="all"
+
+||
+
+q.subject===subject;
+
+
+
+
+
+let topicMatch =
+
+topic==="all"
+
+||
+
+q.topic===topic;
+
+
+
+
+
+
+return subjectMatch && topicMatch;
+
+
+
+});
+
+
+
+
+
+
+displayQuestions(result);
+
+
+
+};
+
+
+// ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 4
+// DELETE + EDIT QUESTION SYSTEM
+// ===============================
+
+
+
+// ===============================
+// DELETE QUESTION
+// ===============================
+
+
+window.deleteQuestion = async function(id){
+
+
+
+let confirmDelete = confirm(
+"இந்த Question Delete செய்யலாமா?"
+);
+
+
+
+if(!confirmDelete)
+
+return;
+
+
+
+try{
+
+
+await deleteDoc(
+
+doc(
+db,
+"questions",
+id
+
+)
+
+);
+
+
+
+alert(
+"✅ Question Deleted"
+);
+
+
+
+loadQuestions();
+
+
+
+loadAdminStats();
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"Delete Error",
+error
+);
+
+
+
+alert(
+"❌ Delete Failed"
+);
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// EDIT QUESTION
+// ===============================
+
+
+window.editQuestion = function(id){
+
+
+
+let q = allQuestions.find(
+
+item => item.id === id
+
+);
+
+
+
+if(!q)
+
+return;
+
+
+
+
+
+document.getElementById(
+"editQuestion"
+).value = q.question;
+
+
+
+document.getElementById(
+"editOption1"
+).value = q.options[0];
+
+
+
+document.getElementById(
+"editOption2"
+).value = q.options[1];
+
+
+
+document.getElementById(
+"editOption3"
+).value = q.options[2];
+
+
+
+document.getElementById(
+"editOption4"
+).value = q.options[3];
+
+
+
+document.getElementById(
+"editAnswer"
+).value = q.answer;
+
+
+
+document.getElementById(
+"editId"
+).value = id;
+
+
+
+
+
+document.getElementById(
+"editBox"
+).style.display =
+"block";
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// UPDATE QUESTION
+// ===============================
+
+
+const updateBtn = document.getElementById(
+"updateQuestionBtn"
+);
+
+
+
+if(updateBtn){
+
+
+
+updateBtn.onclick = async()=>{
+
+
+
+let id = document.getElementById(
+"editId"
+).value;
+
+
+
+try{
+
+
+
+await updateDoc(
+
+doc(
+db,
+"questions",
+id
+),
+
+{
+
+
+question:
+
+document.getElementById(
+"editQuestion"
+).value,
+
+
+
+options:[
+
+
+document.getElementById(
+"editOption1"
+).value,
+
+
+document.getElementById(
+"editOption2"
+).value,
+
+
+document.getElementById(
+"editOption3"
+).value,
+
+
+document.getElementById(
+"editOption4"
+).value
+
+
+],
+
+
+
+answer:
+
+Number(
+
+document.getElementById(
+"editAnswer"
+).value
+
+),
+
+
+
+updatedAt:
+
+serverTimestamp()
+
+
+
+}
+
+);
+
+
+
+alert(
+"✅ Question Updated"
+);
+
+
+
+document.getElementById(
+"editBox"
+).style.display =
+"none";
+
+
+
+loadQuestions();
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.log(
+"Update Error",
+error
+);
+
+
+
+alert(
+"❌ Update Failed"
+);
+
+
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-4 Edit Delete Ready"
+);
+
+  // ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 5
+// UPLOAD HISTORY + EXPORT JSON
+// ===============================
+
+
+
+// ===============================
+// SAVE UPLOAD HISTORY
+// ===============================
+
+
+async function saveUploadHistory(data){
+
+
+try{
+
+
+await addDoc(
+
+collection(
+db,
+"uploadHistory"
+),
+
+{
+
+
+uploadId:
+
+data.uploadId,
+
+
+subject:
+
+data.subject,
+
+
+topic:
+
+data.topic,
+
+
+total:
+
+data.total,
+
+
+added:
+
+data.added,
+
+
+duplicate:
+
+data.duplicate || 0,
+
+
+failed:
+
+data.failed,
+
+
+uploadedAt:
+
+serverTimestamp()
+
+
+
+}
+
+);
+
+
+
+console.log(
+"✅ Upload History Saved"
+);
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"History Save Error",
+error
+);
+
+
+}
+
 
 
 }
@@ -1596,73 +1139,64 @@ box-shadow:
 
 
 
-/* =========================
-QUESTION ACTION BUTTONS
-========================= */
+
+// ===============================
+// LOAD UPLOAD HISTORY
+// ===============================
 
 
-.action-buttons{
-
-
-display:flex;
-
-
-gap:10px;
-
-
-margin-top:15px;
-
-
-}
+async function loadUploadHistory(){
 
 
 
-.edit-btn{
-
-
-flex:1;
-
-
-padding:12px;
-
-
-border:none;
-
-
-border-radius:18px;
+const box = document.getElementById(
+"uploadHistory"
+);
 
 
 
-background:#2196f3;
+if(!box)
 
-
-color:white;
-
-
-font-weight:bold;
-
-
-cursor:pointer;
-
-
-}
+return;
 
 
 
-.edit-btn:hover{
 
-
-transform:scale(1.05);
-
-
-}
+box.innerHTML =
+"Loading...";
 
 
 
-.delete-btn{
 
 
-flex:1;
+try{
+
+
+const snap = await getDocs(
+
+collection(
+db,
+"uploadHistory"
+)
+
+);
+
+
+
+box.innerHTML="";
+
+
+
+
+
+if(snap.empty){
+
+
+box.innerHTML =
+"No Upload History";
+
+
+return;
 
 
 }
@@ -1671,16 +1205,92 @@ flex:1;
 
 
 
+snap.forEach(item=>{
 
 
 
-@media(max-width:600px){
+let data = item.data();
 
 
-.action-buttons{
 
 
-flex-direction:column;
+let div = document.createElement(
+"div"
+);
+
+
+
+div.className =
+"history-item";
+
+
+
+div.innerHTML =
+
+`
+
+<h3>
+📂 ${data.uploadId}
+</h3>
+
+
+<p>
+📚 Subject :
+${data.subject}
+</p>
+
+
+<p>
+📌 Topic :
+${data.topic}
+</p>
+
+
+<p>
+Total :
+${data.total}
+</p>
+
+
+<p>
+✅ Added :
+${data.added}
+</p>
+
+
+<p>
+⚠️ Duplicate :
+${data.duplicate}
+</p>
+
+
+<p>
+❌ Failed :
+${data.failed}
+</p>
+
+
+`;
+
+
+
+box.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"History Error",
+error
+);
 
 
 }
@@ -1688,3 +1298,680 @@ flex-direction:column;
 
 
 }
+
+
+
+
+
+
+
+
+
+// ===============================
+// EXPORT QUESTION JSON
+// ===============================
+
+
+async function exportQuestions(){
+
+
+
+try{
+
+
+const snap = await getDocs(
+
+collection(
+db,
+"questions"
+)
+
+);
+
+
+
+
+let questions=[];
+
+
+
+snap.forEach(item=>{
+
+
+questions.push(
+
+item.data()
+
+);
+
+
+});
+
+
+
+
+
+
+
+let blob = new Blob(
+
+[
+
+JSON.stringify(
+questions,
+null,
+2
+)
+
+],
+
+{
+
+type:
+"application/json"
+
+}
+
+);
+
+
+
+
+
+
+let url = URL.createObjectURL(
+blob
+);
+
+
+
+
+
+let a = document.createElement(
+"a"
+);
+
+
+
+a.href=url;
+
+
+
+a.download =
+"G_THE_GENIUS_questions.json";
+
+
+
+a.click();
+
+
+
+
+
+URL.revokeObjectURL(
+url
+);
+
+
+
+alert(
+"✅ JSON Backup Downloaded"
+);
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+"Export Error",
+error
+);
+
+
+
+alert(
+"❌ Export Failed"
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// EXPORT BUTTON
+// ===============================
+
+
+const exportBtn = document.getElementById(
+"exportBtn"
+);
+
+
+
+if(exportBtn){
+
+
+
+exportBtn.onclick = ()=>{
+
+
+exportQuestions();
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// LOAD HISTORY START
+// ===============================
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+loadUploadHistory();
+
+
+
+}
+);
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-5 Upload History Ready"
+);
+
+  // ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 6
+// ADMIN SECURITY + LOGOUT
+// ===============================
+
+
+
+// ===============================
+// ADMIN EMAIL LIST
+// ===============================
+
+
+const adminEmails = [
+
+
+"gthegenius7@gmail.com"
+
+
+];
+
+
+
+
+
+
+
+
+
+// ===============================
+// CHECK ADMIN LOGIN
+// ===============================
+
+
+onAuthStateChanged(
+
+auth,
+
+(user)=>{
+
+
+
+if(!user){
+
+
+alert(
+"⚠️ Admin Login Required"
+);
+
+
+
+window.location.href =
+"login.html";
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+if(
+!adminEmails.includes(
+user.email
+)
+
+){
+
+
+
+alert(
+"❌ Access Denied"
+);
+
+
+
+window.location.href =
+"dashboard.html";
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+
+// ADMIN NAME
+
+
+const adminName = document.getElementById(
+"adminName"
+);
+
+
+
+if(adminName){
+
+
+adminName.innerHTML =
+user.email;
+
+
+}
+
+
+
+
+
+
+
+
+// STATUS
+
+
+const adminStatus = document.getElementById(
+"adminStatus"
+);
+
+
+
+if(adminStatus){
+
+
+adminStatus.innerHTML =
+"🟢 Online";
+
+
+}
+
+
+
+
+
+console.log(
+"✅ Admin Verified"
+);
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// ===============================
+// ADMIN LOGOUT
+// ===============================
+
+
+const logoutBtn = document.getElementById(
+"adminLogoutBtn"
+);
+
+
+
+if(logoutBtn){
+
+
+
+logoutBtn.onclick = async()=>{
+
+
+
+try{
+
+
+await signOut(auth);
+
+
+
+alert(
+"✅ Logout Successful"
+);
+
+
+
+window.location.href =
+"login.html";
+
+
+
+}
+
+
+catch(error){
+
+
+console.log(
+"Logout Error",
+error
+);
+
+
+
+}
+
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-6 Admin Security Ready"
+);
+
+
+}
+
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-3 Question Filter Ready"
+);
+
+ // ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 7
+// FINAL ERROR CHECK SYSTEM
+// ===============================
+
+
+
+// ===============================
+// SAFE ELEMENT FUNCTION
+// ===============================
+
+
+function getElement(id){
+
+
+const el = document.getElementById(id);
+
+
+
+if(!el){
+
+
+console.log(
+"⚠️ Missing Element :",
+id
+);
+
+
+
+return null;
+
+
+}
+
+
+
+return el;
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// FIREBASE CONNECTION CHECK
+// ===============================
+
+
+async function checkFirebase(){
+
+
+try{
+
+
+const snap = await getDocs(
+
+collection(
+db,
+"questions"
+)
+
+);
+
+
+
+console.log(
+
+"🔥 Firebase Connected"
+
+);
+
+
+
+console.log(
+
+"Total Questions :",
+
+snap.size
+
+);
+
+
+
+}
+
+
+catch(error){
+
+
+
+console.log(
+
+"❌ Firebase Connection Error",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// GLOBAL ERROR HANDLER
+// ===============================
+
+
+window.onerror = function(
+
+message,
+
+source,
+
+line
+
+){
+
+
+
+console.log(
+
+"Admin JS Error:",
+
+message,
+
+"Line:",
+
+line
+
+);
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// AUTO START CHECK
+// ===============================
+
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+
+
+checkFirebase();
+
+
+
+console.log(
+
+"🚀 G THE GENIUS ADMIN PANEL READY"
+
+);
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// ===============================
+// FINAL MESSAGE
+// ===============================
+
+
+console.log(
+
+"✅ Part 6A-7 Error Check Completed"
+
+);
+
+  
