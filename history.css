@@ -1,1 +1,424 @@
+/* =========================
+G THE GENIUS HISTORY CSS
+========================= */
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:linear-gradient(180deg,#081229,#102451);
+
+color:#fff;
+
+min-height:100vh;
+
+padding-bottom:90px;
+
+}
+
+/* =========================
+HEADER
+========================= */
+
+.history-header{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:18px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+border-bottom:1px solid rgba(255,215,0,.3);
+
+}
+
+.history-logo{
+
+width:55px;
+
+height:55px;
+
+border-radius:50%;
+
+border:3px solid #FFD700;
+
+background:#fff;
+
+padding:2px;
+
+object-fit:cover;
+
+}
+
+.history-header h2{
+
+color:#FFD700;
+
+font-size:20px;
+
+}
+
+.history-header p{
+
+font-size:13px;
+
+color:#ddd;
+
+}
+
+/* =========================
+STUDENT CARD
+========================= */
+
+.student-card{
+
+margin:20px;
+
+padding:22px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,215,0,.25);
+
+text-align:center;
+
+}
+
+.student-card h2{
+
+color:#FFD700;
+
+margin-bottom:10px;
+
+}
+
+.student-card p{
+
+margin-top:8px;
+
+color:#ddd;
+
+}
+
+/* =========================
+SUMMARY
+========================= */
+
+.summary-card{
+
+margin:20px;
+
+padding:20px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,215,0,.25);
+
+}
+
+.summary-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:12px;
+
+}
+
+.summary-grid div{
+
+padding:18px;
+
+border-radius:18px;
+
+text-align:center;
+
+background:rgba(255,215,0,.12);
+
+}
+
+.summary-grid h2{
+
+color:#FFD700;
+
+font-size:24px;
+
+margin-bottom:8px;
+
+}
+
+.summary-grid p{
+
+color:#ddd;
+
+font-size:14px;
+
+}
+
+/* =========================
+HISTORY CARD
+========================= */
+
+.history-card{
+
+margin:20px;
+
+padding:20px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,215,0,.25);
+
+}
+
+.history-card h2{
+
+color:#FFD700;
+
+margin-bottom:15px;
+
+}
+
+/* =========================
+TEST ITEM
+========================= */
+
+.history-item{
+
+padding:18px;
+
+margin-bottom:15px;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,215,0,.20);
+
+transition:.3s;
+
+}
+
+.history-item:hover{
+
+transform:translateY(-3px);
+
+background:rgba(255,215,0,.10);
+
+}
+
+.history-item h3{
+
+color:#FFD700;
+
+margin-bottom:10px;
+
+font-size:18px;
+
+}
+
+.history-item p{
+
+margin:6px 0;
+
+font-size:14px;
+
+color:#eee;
+
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.history-btn{
+
+margin-top:12px;
+
+padding:12px;
+
+width:100%;
+
+border:none;
+
+border-radius:14px;
+
+background:#FFD700;
+
+color:#081229;
+
+font-weight:bold;
+
+font-size:15px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.history-btn:hover{
+
+transform:scale(1.02);
+
+}
+
+/* =========================
+LOADING
+========================= */
+
+.loading{
+
+text-align:center;
+
+padding:20px;
+
+color:#FFD700;
+
+font-size:16px;
+
+}
+
+/* =========================
+BOTTOM NAV
+========================= */
+
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+height:70px;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+background:rgba(8,18,41,.95);
+
+backdrop-filter:blur(15px);
+
+border-top:1px solid rgba(255,215,0,.3);
+
+z-index:999;
+
+}
+
+.bottom-nav a{
+
+text-decoration:none;
+
+color:#fff;
+
+font-size:12px;
+
+text-align:center;
+
+}
+
+.bottom-nav a:hover{
+
+color:#FFD700;
+
+}
+
+/* =========================
+FOOTER
+========================= */
+
+.footer{
+
+margin:20px 20px 100px;
+
+padding:20px;
+
+border-radius:22px;
+
+text-align:center;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,215,0,.25);
+
+}
+
+.footer h3{
+
+color:#FFD700;
+
+margin-bottom:10px;
+
+}
+
+.footer a{
+
+display:block;
+
+margin:8px 0;
+
+text-decoration:none;
+
+color:#fff;
+
+}
+
+.footer p{
+
+margin-top:15px;
+
+font-size:12px;
+
+color:#aaa;
+
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:600px){
+
+.summary-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+.summary-grid h2{
+
+font-size:20px;
+
+}
+
+.history-item{
+
+padding:15px;
+
+}
+
+}
