@@ -12,8 +12,7 @@ import {
 collection,
 query,
 where,
-getDocs,
-orderBy
+getDocs
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -45,8 +44,6 @@ auth.onAuthStateChanged(async(user)=>{
 
 
 
-
-
 // =========================
 // LOAD PERFORMANCE
 // =========================
@@ -63,30 +60,31 @@ const user = auth.currentUser;
 
 
 document.getElementById("studentName").innerHTML =
-
 localStorage.getItem("studentName") || "Student";
 
 
-
 document.getElementById("studentDistrict").innerHTML =
-
 localStorage.getItem("district") || "-";
 
 
-
 document.getElementById("studentExam").innerHTML =
-
 localStorage.getItem("examGoal") || "TNUSRB";
 
 
+
+
 const q = query(
+
 collection(db,"results"),
+
 where(
 "studentId",
 "==",
 user.uid
 )
+
 );
+
 
 
 const snap = await getDocs(q);
@@ -103,7 +101,6 @@ document.getElementById("recentTests").innerHTML =
 
 return;
 
-
 }
 
 
@@ -114,17 +111,14 @@ let totalMarks = 0;
 
 let bestScore = 0;
 
-
 let daily = 0;
 
 let weekly = 0;
 
 let monthly = 0;
 
-
 let recentData = [];
 
-  
 // =========================
 // READ RESULT DATA
 // PART 2
@@ -375,17 +369,12 @@ date = "Recent Test";
 
 catch(error){
 
+console.error(
+"Performance Error:",
+error
+);
 
-    console.error(
-        "Performance Error:",
-        error
-    );
-
-
-    alert(
-        "Performance Loading Failed"
-    );
-
+alert(error.message);
 
 }
 
