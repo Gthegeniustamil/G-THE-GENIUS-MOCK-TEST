@@ -2483,20 +2483,6 @@ console.log(
 // =========================
 
 
-
-import {
-
-addDoc,
-collection,
-serverTimestamp
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-
 // =========================
 // GENERATE IDS
 // =========================
