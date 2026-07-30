@@ -9,7 +9,6 @@ import {
     collection,
     query,
     where,
-    orderBy,
     getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -49,15 +48,18 @@ async function loadHistory(){
 
         const q = query(
 
-            collection(db,"results"),
+    collection(db,"results"),
 
-            where("studentId","==",auth.currentUser.uid),
+    where(
+        "studentId",
+        "==",
+        auth.currentUser.uid
+    )
 
-            orderBy("timestamp","desc")
+);
 
-        );
 
-        const snap = await getDocs(q);
+const snap = await getDocs(q);
 
         if(snap.empty){
 
@@ -192,9 +194,12 @@ async function loadHistory(){
 
     catch(error){
 
-        console.error(error);
+console.error(
+"History Error:",
+error
+);
 
-        alert("History Loading Failed");
+alert(error.message);
 
     }
 
