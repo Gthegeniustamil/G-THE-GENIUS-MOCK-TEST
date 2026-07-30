@@ -2159,3 +2159,1980 @@ console.log(
 );
 
 
+/* =========================
+G THE GENIUS ADMIN PANEL
+ADMIN.CSS
+PART 6A-1
+BASE + HEADER
+========================= */
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+
+body{
+
+    background:
+    linear-gradient(
+        135deg,
+        #081229,
+        #162b55
+    );
+
+    color:white;
+
+    min-height:100vh;
+
+    padding:20px;
+
+}
+
+
+
+/* =========================
+ADMIN HEADER
+========================= */
+
+
+.admin-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:20px;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    backdrop-filter:
+    blur(15px);
+
+    border-radius:20px;
+
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.3);
+
+}
+
+
+
+.admin-logo{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:
+    3px solid #ffd700;
+
+}
+
+
+
+.admin-header h2{
+
+    color:#ffd700;
+
+    font-size:28px;
+
+}
+
+
+
+.admin-header p{
+
+    color:#ddd;
+
+    margin-top:5px;
+
+}
+
+
+
+#adminName{
+
+    color:white;
+
+    margin-top:8px;
+
+}
+
+
+
+#adminStatus{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    color:#00ff88;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* =========================
+LOGOUT BUTTON
+========================= */
+
+
+#adminLogoutBtn{
+
+    margin-left:auto;
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+    #ff4757;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+}
+
+
+
+#adminLogoutBtn:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* =========================
+PART 6A-2
+ADMIN STATS CARDS
+========================= */
+
+
+.admin-stats{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+
+    margin-top:25px;
+
+}
+
+
+
+
+.stat-card{
+
+    background:
+    rgba(255,255,255,0.10);
+
+    backdrop-filter:
+    blur(15px);
+
+    padding:25px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
+
+    box-shadow:
+    0 8px 25px
+    rgba(0,0,0,0.25);
+
+    transition:
+    0.3s;
+
+}
+
+
+
+.stat-card:hover{
+
+    transform:
+    translateY(-8px);
+
+}
+
+
+
+.stat-card h2{
+
+    color:#ffd700;
+
+    font-size:35px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.stat-card p{
+
+    color:#ffffff;
+
+    font-size:16px;
+
+}
+
+
+
+
+
+/* =========================
+SECTION COMMON DESIGN
+========================= */
+
+
+.bulk-card,
+.manage-card,
+.history-card,
+.export-card{
+
+    margin-top:30px;
+
+    padding:25px;
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+    backdrop-filter:
+    blur(15px);
+
+    border-radius:20px;
+
+    border:
+    1px solid
+    rgba(255,255,255,0.15);
+
+    box-shadow:
+    0 10px 30px
+    rgba(0,0,0,0.25);
+
+}
+
+
+
+.bulk-card h2,
+.manage-card h2,
+.history-card h2,
+.export-card h2{
+
+    color:#ffd700;
+
+    margin-bottom:20px;
+
+}
+
+// ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 3
+// QUESTION SEARCH + FILTER SYSTEM
+// ===============================
+
+
+
+// ===============================
+// DISPLAY QUESTIONS
+// ===============================
+
+
+function displayQuestions(data){
+
+
+const list = document.getElementById(
+"questionList"
+);
+
+
+
+if(!list) return;
+
+
+
+list.innerHTML = "";
+
+
+
+if(data.length === 0){
+
+
+list.innerHTML = 
+`
+<p>
+No Questions Found
+</p>
+`;
+
+return;
+
+
+}
+
+
+
+data.forEach(q=>{
+
+
+
+let div = document.createElement(
+"div"
+);
+
+
+
+div.className =
+"question-item";
+
+
+
+div.innerHTML =
+
+`
+
+<h3>
+${q.question}
+</h3>
+
+
+<p>
+📚 Subject :
+${q.subject || "-"}
+</p>
+
+
+<p>
+📌 Topic :
+${q.topic || "-"}
+</p>
+
+
+<p>
+
+A) ${q.options?.[0] || ""}
+
+<br>
+
+B) ${q.options?.[1] || ""}
+
+<br>
+
+C) ${q.options?.[2] || ""}
+
+<br>
+
+D) ${q.options?.[3] || ""}
+
+</p>
+
+
+<p>
+✅ Answer :
+${q.answer}
+</p>
+
+
+<p>
+💡 Explanation :
+${q.explanation || "-"}
+</p>
+
+
+<button 
+class="delete-btn"
+onclick="deleteQuestion('${q.id}')">
+
+🗑 Delete
+
+</button>
+
+
+`;
+
+
+
+list.appendChild(div);
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// SEARCH QUESTION
+// ===============================
+
+
+const searchBtn = document.getElementById(
+"searchBtn"
+);
+
+
+
+if(searchBtn){
+
+
+
+searchBtn.onclick = ()=>{
+
+
+
+let text = document.getElementById(
+"searchQuestion"
+).value
+.toLowerCase()
+.trim();
+
+
+
+
+let result = allQuestions.filter(q=>
+
+
+
+q.question
+.toLowerCase()
+.includes(text)
+
+
+
+);
+
+
+
+displayQuestions(result);
+
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// SUBJECT FILTER
+// ===============================
+
+
+const filterSubject = document.getElementById(
+"filterSubject"
+);
+
+
+const filterTopic = document.getElementById(
+"filterTopic"
+);
+
+
+
+if(filterSubject){
+
+
+
+filterSubject.onchange = ()=>{
+
+
+
+let subject =
+filterSubject.value;
+
+
+
+let topicsList=[];
+
+
+
+allQuestions.forEach(q=>{
+
+
+
+if(
+
+subject==="all"
+
+||
+
+q.subject===subject
+
+){
+
+
+
+if(
+q.topic &&
+!topicsList.includes(q.topic)
+){
+
+
+topicsList.push(q.topic);
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+filterTopic.innerHTML =
+
+`
+
+<option value="all">
+All Topics
+</option>
+
+`;
+
+
+
+
+
+
+topicsList.forEach(t=>{
+
+
+
+filterTopic.innerHTML +=
+
+`
+
+<option value="${t}">
+${t}
+</option>
+
+`;
+
+
+
+});
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// APPLY FILTER
+// ===============================
+
+
+const filterBtn = document.getElementById(
+"filterBtn"
+);
+
+
+
+if(filterBtn){
+
+
+
+filterBtn.onclick = ()=>{
+
+
+
+let subject =
+filterSubject.value;
+
+
+
+let topic =
+filterTopic.value;
+
+
+
+
+
+let result = allQuestions.filter(q=>{
+
+
+
+let subjectMatch =
+
+subject==="all"
+
+||
+
+q.subject===subject;
+
+
+
+
+
+let topicMatch =
+
+topic==="all"
+
+||
+
+q.topic===topic;
+
+
+
+
+
+
+return subjectMatch && topicMatch;
+
+
+
+});
+
+
+
+
+
+
+displayQuestions(result);
+
+
+
+};
+
+
+// ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 4
+// DELETE + EDIT QUESTION SYSTEM
+// ===============================
+
+
+
+// ===============================
+// DELETE QUESTION
+// ===============================
+
+
+window.deleteQuestion = async function(id){
+
+
+
+let confirmDelete = confirm(
+"இந்த Question Delete செய்யலாமா?"
+);
+
+
+
+if(!confirmDelete)
+
+return;
+
+
+
+try{
+
+
+await deleteDoc(
+
+doc(
+db,
+"questions",
+id
+
+)
+
+);
+
+
+
+alert(
+"✅ Question Deleted"
+);
+
+
+
+loadQuestions();
+
+
+
+loadAdminStats();
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"Delete Error",
+error
+);
+
+
+
+alert(
+"❌ Delete Failed"
+);
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// EDIT QUESTION
+// ===============================
+
+
+window.editQuestion = function(id){
+
+
+
+let q = allQuestions.find(
+
+item => item.id === id
+
+);
+
+
+
+if(!q)
+
+return;
+
+
+
+
+
+document.getElementById(
+"editQuestion"
+).value = q.question;
+
+
+
+document.getElementById(
+"editOption1"
+).value = q.options[0];
+
+
+
+document.getElementById(
+"editOption2"
+).value = q.options[1];
+
+
+
+document.getElementById(
+"editOption3"
+).value = q.options[2];
+
+
+
+document.getElementById(
+"editOption4"
+).value = q.options[3];
+
+
+
+document.getElementById(
+"editAnswer"
+).value = q.answer;
+
+
+
+document.getElementById(
+"editId"
+).value = id;
+
+
+
+
+
+document.getElementById(
+"editBox"
+).style.display =
+"block";
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// UPDATE QUESTION
+// ===============================
+
+
+const updateBtn = document.getElementById(
+"updateQuestionBtn"
+);
+
+
+
+if(updateBtn){
+
+
+
+updateBtn.onclick = async()=>{
+
+
+
+let id = document.getElementById(
+"editId"
+).value;
+
+
+
+try{
+
+
+
+await updateDoc(
+
+doc(
+db,
+"questions",
+id
+),
+
+{
+
+
+question:
+
+document.getElementById(
+"editQuestion"
+).value,
+
+
+
+options:[
+
+
+document.getElementById(
+"editOption1"
+).value,
+
+
+document.getElementById(
+"editOption2"
+).value,
+
+
+document.getElementById(
+"editOption3"
+).value,
+
+
+document.getElementById(
+"editOption4"
+).value
+
+
+],
+
+
+
+answer:
+
+Number(
+
+document.getElementById(
+"editAnswer"
+).value
+
+),
+
+
+
+updatedAt:
+
+serverTimestamp()
+
+
+
+}
+
+);
+
+
+
+alert(
+"✅ Question Updated"
+);
+
+
+
+document.getElementById(
+"editBox"
+).style.display =
+"none";
+
+
+
+loadQuestions();
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.log(
+"Update Error",
+error
+);
+
+
+
+alert(
+"❌ Update Failed"
+);
+
+
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-4 Edit Delete Ready"
+);
+
+  // ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 5
+// UPLOAD HISTORY + EXPORT JSON
+// ===============================
+
+
+
+// ===============================
+// SAVE UPLOAD HISTORY
+// ===============================
+
+
+async function saveUploadHistory(data){
+
+
+try{
+
+
+await addDoc(
+
+collection(
+db,
+"uploadHistory"
+),
+
+{
+
+
+uploadId:
+
+data.uploadId,
+
+
+subject:
+
+data.subject,
+
+
+topic:
+
+data.topic,
+
+
+total:
+
+data.total,
+
+
+added:
+
+data.added,
+
+
+duplicate:
+
+data.duplicate || 0,
+
+
+failed:
+
+data.failed,
+
+
+uploadedAt:
+
+serverTimestamp()
+
+
+
+}
+
+);
+
+
+
+console.log(
+"✅ Upload History Saved"
+);
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"History Save Error",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// LOAD UPLOAD HISTORY
+// ===============================
+
+
+async function loadUploadHistory(){
+
+
+
+const box = document.getElementById(
+"uploadHistory"
+);
+
+
+
+if(!box)
+
+return;
+
+
+
+
+box.innerHTML =
+"Loading...";
+
+
+
+
+
+try{
+
+
+const snap = await getDocs(
+
+collection(
+db,
+"uploadHistory"
+)
+
+);
+
+
+
+box.innerHTML="";
+
+
+
+
+
+if(snap.empty){
+
+
+box.innerHTML =
+"No Upload History";
+
+
+return;
+
+
+}
+
+
+
+
+
+snap.forEach(item=>{
+
+
+
+let data = item.data();
+
+
+
+
+let div = document.createElement(
+"div"
+);
+
+
+
+div.className =
+"history-item";
+
+
+
+div.innerHTML =
+
+`
+
+<h3>
+📂 ${data.uploadId}
+</h3>
+
+
+<p>
+📚 Subject :
+${data.subject}
+</p>
+
+
+<p>
+📌 Topic :
+${data.topic}
+</p>
+
+
+<p>
+Total :
+${data.total}
+</p>
+
+
+<p>
+✅ Added :
+${data.added}
+</p>
+
+
+<p>
+⚠️ Duplicate :
+${data.duplicate}
+</p>
+
+
+<p>
+❌ Failed :
+${data.failed}
+</p>
+
+
+`;
+
+
+
+box.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"History Error",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// EXPORT QUESTION JSON
+// ===============================
+
+
+async function exportQuestions(){
+
+
+
+try{
+
+
+const snap = await getDocs(
+
+collection(
+db,
+"questions"
+)
+
+);
+
+
+
+
+let questions=[];
+
+
+
+snap.forEach(item=>{
+
+
+questions.push(
+
+item.data()
+
+);
+
+
+});
+
+
+
+
+
+
+
+let blob = new Blob(
+
+[
+
+JSON.stringify(
+questions,
+null,
+2
+)
+
+],
+
+{
+
+type:
+"application/json"
+
+}
+
+);
+
+
+
+
+
+
+let url = URL.createObjectURL(
+blob
+);
+
+
+
+
+
+let a = document.createElement(
+"a"
+);
+
+
+
+a.href=url;
+
+
+
+a.download =
+"G_THE_GENIUS_questions.json";
+
+
+
+a.click();
+
+
+
+
+
+URL.revokeObjectURL(
+url
+);
+
+
+
+alert(
+"✅ JSON Backup Downloaded"
+);
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+"Export Error",
+error
+);
+
+
+
+alert(
+"❌ Export Failed"
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// EXPORT BUTTON
+// ===============================
+
+
+const exportBtn = document.getElementById(
+"exportBtn"
+);
+
+
+
+if(exportBtn){
+
+
+
+exportBtn.onclick = ()=>{
+
+
+exportQuestions();
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// LOAD HISTORY START
+// ===============================
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+loadUploadHistory();
+
+
+
+}
+);
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-5 Upload History Ready"
+);
+
+  // ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 6
+// ADMIN SECURITY + LOGOUT
+// ===============================
+
+
+
+// ===============================
+// ADMIN EMAIL LIST
+// ===============================
+
+
+const adminEmails = [
+
+
+"gthegenius7@gmail.com"
+
+
+];
+
+
+
+
+
+
+
+
+
+// ===============================
+// CHECK ADMIN LOGIN
+// ===============================
+
+
+onAuthStateChanged(
+
+auth,
+
+(user)=>{
+
+
+
+if(!user){
+
+
+alert(
+"⚠️ Admin Login Required"
+);
+
+
+
+window.location.href =
+"login.html";
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+if(
+!adminEmails.includes(
+user.email
+)
+
+){
+
+
+
+alert(
+"❌ Access Denied"
+);
+
+
+
+window.location.href =
+"dashboard.html";
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+
+// ADMIN NAME
+
+
+const adminName = document.getElementById(
+"adminName"
+);
+
+
+
+if(adminName){
+
+
+adminName.innerHTML =
+user.email;
+
+
+}
+
+
+
+
+
+
+
+
+// STATUS
+
+
+const adminStatus = document.getElementById(
+"adminStatus"
+);
+
+
+
+if(adminStatus){
+
+
+adminStatus.innerHTML =
+"🟢 Online";
+
+
+}
+
+
+
+
+
+console.log(
+"✅ Admin Verified"
+);
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// ===============================
+// ADMIN LOGOUT
+// ===============================
+
+
+const logoutBtn = document.getElementById(
+"adminLogoutBtn"
+);
+
+
+
+if(logoutBtn){
+
+
+
+logoutBtn.onclick = async()=>{
+
+
+
+try{
+
+
+await signOut(auth);
+
+
+
+alert(
+"✅ Logout Successful"
+);
+
+
+
+window.location.href =
+"login.html";
+
+
+
+}
+
+
+catch(error){
+
+
+console.log(
+"Logout Error",
+error
+);
+
+
+
+}
+
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-6 Admin Security Ready"
+);
+
+
+}
+
+
+
+
+
+
+
+console.log(
+"✅ Part 6A-3 Question Filter Ready"
+);
+
+ // ===============================
+// G THE GENIUS ADMIN JS
+// PART 6A - 7
+// FINAL ERROR CHECK SYSTEM
+// ===============================
+
+
+
+// ===============================
+// SAFE ELEMENT FUNCTION
+// ===============================
+
+
+function getElement(id){
+
+
+const el = document.getElementById(id);
+
+
+
+if(!el){
+
+
+console.log(
+"⚠️ Missing Element :",
+id
+);
+
+
+
+return null;
+
+
+}
+
+
+
+return el;
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// FIREBASE CONNECTION CHECK
+// ===============================
+
+
+async function checkFirebase(){
+
+
+try{
+
+
+const snap = await getDocs(
+
+collection(
+db,
+"questions"
+)
+
+);
+
+
+
+console.log(
+
+"🔥 Firebase Connected"
+
+);
+
+
+
+console.log(
+
+"Total Questions :",
+
+snap.size
+
+);
+
+
+
+}
+
+
+catch(error){
+
+
+
+console.log(
+
+"❌ Firebase Connection Error",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// GLOBAL ERROR HANDLER
+// ===============================
+
+
+window.onerror = function(
+
+message,
+
+source,
+
+line
+
+){
+
+
+
+console.log(
+
+"Admin JS Error:",
+
+message,
+
+"Line:",
+
+line
+
+);
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// ===============================
+// AUTO START CHECK
+// ===============================
+
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+
+
+checkFirebase();
+
+
+
+console.log(
+
+"🚀 G THE GENIUS ADMIN PANEL READY"
+
+);
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// ===============================
+// FINAL MESSAGE
+// ===============================
+
+
+console.log(
+
+"✅ Part 6A-7 Error Check Completed"
+
+);
+
+  
