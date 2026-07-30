@@ -14,61 +14,80 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // =========================
-// AUTH
+// AUTH CHECK
 // =========================
 
 auth.onAuthStateChanged(async(user)=>{
 
     if(!user){
 
-        window.location.href="login.html";
+        window.location.href = "login.html";
         return;
 
     }
 
+    // History page-லிருந்து வந்த Result
+    const savedResult =
+    localStorage.getItem("lastResult");
+
+    if(savedResult){
+
+        const data =
+        JSON.parse(savedResult);
+
+        displayResult(data);
+
+        localStorage.removeItem("lastResult");
+
+        return;
+
+    }
+
+    // Latest Result Load
     await loadResult();
 
 });
 
 // =========================
-// LOAD RESULT
+// LOAD LATEST RESULT
 // =========================
 
 async function loadResult(){
 
     try{
 
-        const localData =
-        JSON.parse(
-            localStorage.getItem("lastResult")
-        );
-
-        if(localData){
-
-            displayResult(localData);
-
-        }
-
         const q = query(
 
             collection(db,"results"),
 
-            where("studentId","==",auth.currentUser.uid),
+            where(
+                "studentId",
+                "==",
+                auth.currentUser.uid
+            ),
 
-            orderBy("timestamp","desc")
+            orderBy(
+                "timestamp",
+                "desc"
+            )
 
         );
 
-        const snap = await getDocs(q);
+        const snap =
+        await getDocs(q);
 
-        if(!snap.empty){
+        if(snap.empty){
 
-            const latest =
-            snap.docs[0].data();
+            alert("No Result Found");
 
-            displayResult(latest);
+            return;
 
         }
+
+        const latest =
+        snap.docs[0].data();
+
+        displayResult(latest);
 
     }
 
@@ -89,57 +108,54 @@ async function loadResult(){
 function displayResult(data){
 
     document.getElementById("score").innerHTML =
-    data.score ?? 0;
+    data.score || 0;
 
     document.getElementById("total").innerHTML =
-    data.total ?? 0;
-
-    document.getElementById("correctCount").innerHTML =
-    data.correct ?? 0;
-
-    document.getElementById("wrongCount").innerHTML =
-    data.wrong ?? 0;
-
-    document.getElementById("skipCount").innerHTML =
-    data.skipped ?? 0;
+    data.total || 0;
 
     document.getElementById("examName").innerHTML =
     data.examType || "TNUSRB";
 
     // Test Type
-    let title = "Daily Mock Test";
+    let type = "Mock Test";
 
-    if(data.testType==="daily"){
+    if(data.testType === "daily"){
 
-        title="Daily Mock Test";
-
-    }
-
-    else if(data.testType==="weekly"){
-
-        title="Weekly Mock Test";
+        type = "🟢 Daily Mock Test";
 
     }
+    else if(data.testType === "weekly"){
 
-    else if(data.testType==="monthly"){
+        type = "🟡 Weekly Mock Test";
 
-        title="Monthly Grand Test";
+    }
+    else if(data.testType === "monthly"){
+
+        type = "🔴 Monthly Grand Test";
 
     }
 
     document.getElementById("testType").innerHTML =
-    title;
+    type;
 
-    // Hide Percentage
+    // Correct / Wrong / Skipped
+    document.getElementById("correctCount").innerHTML =
+    data.correct || 0;
+
+    document.getElementById("wrongCount").innerHTML =
+    data.wrong || 0;
+
+    document.getElementById("skipCount").innerHTML =
+    data.skipped || 0;
+
+    // Percentage
     const percentage =
-    document.getElementById("percentage");
+    Math.round(((data.score || 0) / (data.total || 1)) * 100);
 
-    if(percentage){
+    document.getElementById("percentage").innerHTML =
+    percentage + "%";
 
-        percentage.parentElement.style.display="none";
-
-    }
-
+    // Rank Load
     calculateRank();
 
 }
@@ -166,6 +182,7 @@ async function calculateRank(){
         let districtRank = 1;
 
         const currentUser = auth.currentUser;
+
         const myDistrict =
         localStorage.getItem("district") || "-";
 
@@ -211,10 +228,7 @@ async function calculateRank(){
 
     catch(error){
 
-        console.error("Rank Error :",error);
-
-        document.getElementById("rank").innerHTML = "-";
-        document.getElementById("districtRank").innerHTML = "-";
+        console.error("Rank Error:", error);
 
     }
 
@@ -224,14 +238,18 @@ async function calculateRank(){
 // SHARE RESULT
 // =========================
 
-const shareBtn = document.getElementById("shareResult");
+const shareBtn =
+document.getElementById("shareResult");
 
 if(shareBtn){
 
     shareBtn.onclick = async()=>{
 
         const text =
-`🏆 G THE GENIUS MOCK TEST RESULT
+
+`🏆 G THE GENIUS MOCK TEST
+
+📝 ${document.getElementById("testType").innerHTML}
 
 🎯 Marks : ${document.getElementById("score").innerHTML}/${document.getElementById("total").innerHTML}
 
@@ -241,9 +259,7 @@ if(shareBtn){
 
 ⏭ Skipped : ${document.getElementById("skipCount").innerHTML}
 
-📚 Test : ${document.getElementById("testType").innerHTML}
-
-🚀 G THE GENIUS`;
+🏆 Overall Rank : #${document.getElementById("rank").innerHTML}`;
 
         if(navigator.share){
 
@@ -261,7 +277,7 @@ if(shareBtn){
 
             await navigator.clipboard.writeText(text);
 
-            alert("Result Copied");
+            alert("Result Copied Successfully");
 
         }
 
@@ -276,18 +292,44 @@ if(shareBtn){
 const retryBtn =
 document.getElementById("retryTest");
 
+
 if(retryBtn){
 
     retryBtn.onclick = ()=>{
 
-        window.location.href="dashboard.html";
+        window.location.href =
+        "dashboard.html";
 
     };
 
 }
 
+
 // =========================
-// FINAL READY
+// UPDATE XP SYSTEM
 // =========================
 
-console.log("✅ RESULT PAGE READY");
+function updateXP(){
+
+    let xp =
+    Number(localStorage.getItem("xp")) || 0;
+
+
+    xp += 10;
+
+
+    localStorage.setItem(
+        "xp",
+        xp
+    );
+
+}
+
+
+// =========================
+// PAGE READY
+// =========================
+
+console.log(
+"✅ G THE GENIUS RESULT PAGE READY"
+);
