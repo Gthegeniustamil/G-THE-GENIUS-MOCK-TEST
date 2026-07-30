@@ -1,3575 +1,666 @@
 // =========================
 // G THE GENIUS ADMIN JS
-// FINAL VERSION
-// PART 1
+// PART 1A-1
+// Imports + Topic System
 // =========================
 
-
-import { db } from "./firebase-config.js";
-
+import { db, auth } from "./firebase-config.js";
 
 import {
-
-collection,
-addDoc,
-getDocs,
-serverTimestamp
-
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp,
+  deleteDoc,
+  doc,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+let allQuestions = [];
+let previewQuestions = [];
+
 // =========================
-// G THE GENIUS SUBJECT TOPICS
-// MATCH WITH HTML
+// SUBJECT TOPICS
 // =========================
 
 const topics = {
 
-
-"Indian Polity":[
-"Constitution",
-"Preamble",
-"Citizenship",
-"Fundamental Rights",
-"Fundamental Duties",
-"DPSP",
-"Parliament",
-"President",
-"Vice President",
-"Prime Minister",
-"Governor",
-"Chief Minister",
-"Supreme Court",
-"High Court",
-"Election Commission",
-"Emergency",
-"Constitutional Bodies",
-"Important Articles",
-"Amendments"
-],
-
-
-"Indian Constitution":[
-"Making of Constitution",
-"Constituent Assembly",
-"Features of Constitution",
-"Schedules",
-"Articles",
-"Amendments",
-"Committees"
-],
-
-
-"Indian History":[
-"Ancient India",
-"Indus Valley Civilization",
-"Vedic Period",
-"Mauryan Empire",
-"Gupta Empire",
-"Medieval India",
-"Mughal Empire",
-"Modern India"
-],
-
-
-"World History":[
-"World War I",
-"World War II",
-"French Revolution",
-"Industrial Revolution",
-"World Leaders",
-"Important Events"
-],
-
-
-"Freedom Struggle":[
-"1857 Revolt",
-"Indian National Congress",
-"Moderates",
-"Extremists",
-"Gandhian Era",
-"Non Cooperation Movement",
-"Civil Disobedience Movement",
-"Quit India Movement"
-],
-
-
-"Tamil Nadu History":[
-"Sangam Age",
-"Chera Dynasty",
-"Chola Dynasty",
-"Pandya Dynasty",
-"Pallava Dynasty",
-"Freedom Fighters",
-"Social Reformers"
-],
-
-
-"Geography":[
-"Earth",
-"Climate",
-"Rivers",
-"Mountains",
-"Soil",
-"Agriculture",
-"Minerals",
-"Natural Resources"
-],
-
-
-"Indian Geography":[
-"States",
-"Rivers",
-"Climate",
-"Soil",
-"Agriculture",
-"Industries",
-"Resources"
-],
-
-
-"World Geography":[
-"Continents",
-"Oceans",
-"Countries",
-"Mountains",
-"Deserts",
-"Climate"
-],
-
-
-"Tamil Nadu Geography":[
-"Districts",
-"Rivers",
-"Soil",
-"Agriculture",
-"Industries",
-"Resources"
-],
-
-
-"General Science":[
-"Physics",
-"Chemistry",
-"Biology",
-"Human Body",
-"Diseases",
-"Environment",
-"Science Technology"
-],
-
-
-"Physics":[
-"Motion",
-"Force",
-"Work",
-"Energy",
-"Heat",
-"Light",
-"Electricity",
-"Magnetism"
-],
-
-
-"Chemistry":[
-"Atom",
-"Elements",
-"Compounds",
-"Acids",
-"Bases",
-"Salts",
-"Periodic Table"
-],
-
-
-"Biology":[
-"Cell",
-"Human Body",
-"Genetics",
-"Nutrition",
-"Plants",
-"Animals",
-"Diseases"
-],
-
-
-"Botany":[
-"Plant Cell",
-"Photosynthesis",
-"Plant Hormones",
-"Plant Diseases",
-"Classification"
-],
-
-
-"Zoology":[
-"Animal Kingdom",
-"Human Anatomy",
-"Animal Diseases",
-"Classification"
-],
-
-
-"Environment":[
-"Ecology",
-"Biodiversity",
-"Pollution",
-"Climate Change",
-"Conservation"
-],
-
-
-"Science & Technology":[
-"ISRO",
-"Space Technology",
-"Inventions",
-"AI Technology",
-"Latest Technology"
-],
-
-
-"Economics":[
-"Basic Economics",
-"Money",
-"Banking",
-"Inflation",
-"Market"
-],
-
-
-"Indian Economy":[
-"GDP",
-"Budget",
-"Tax",
-"Banking",
-"Planning",
-"Finance Commission"
-],
-
-
-"Tamil Nadu Economy":[
-"Industries",
-"Agriculture",
-"Government Schemes",
-"Economy Development"
-],
-
-
-"Current Affairs":[
-"National",
-"International",
-"Sports",
-"Awards",
-"Appointments",
-"Defence",
-"Government Schemes"
-],
-
-
-"Tamil Nadu GK":[
-"Districts",
-"Temples",
-"Rivers",
-"Government Schemes",
-"Important Places",
-"Personalities"
-],
-
-
-"Computer Science":[
-"Computer Basics",
-"Hardware",
-"Software",
-"Operating System",
-"Internet",
-"Cyber Security"
-],
-
-
-"Aptitude":[
-"Number System",
-"Percentage",
-"Ratio",
-"Average",
-"Profit and Loss",
-"Time and Work",
-"Time and Distance"
-],
-
-
-"Reasoning":[
-"Analogy",
-"Coding Decoding",
-"Blood Relation",
-"Direction Test",
-"Series",
-"Puzzle"
-],
-
-
-"Tamil":[
-"தமிழ் இலக்கணம்",
-"தமிழ் இலக்கியம்",
-"சங்க இலக்கியம்",
-"காப்பியங்கள்",
-"சிற்றிலக்கியம்"
-],
-
-
-"English":[
-"Grammar",
-"Vocabulary",
-"Tenses",
-"Synonyms",
-"Antonyms",
-"Comprehension"
-],
-
-
-"Sports":[
-"Cricket",
-"Football",
-"Olympics",
-"Players",
-"Tournaments"
-],
-
-
-"Awards and Honours":[
-"National Awards",
-"International Awards",
-"Padma Awards",
-"Nobel Prize"
-],
-
-
-"Books and Authors":[
-"Books",
-"Authors",
-"Literature",
-"Famous Writers"
-],
-
-
-"Important Days":[
-"National Days",
-"International Days",
-"Important Dates"
-],
-
-
-"Art and Culture":[
-"Dance",
-"Music",
-"Festivals",
-"Architecture",
-"Traditional Arts"
-],
-
-
-"Defence":[
-"Army",
-"Navy",
-"Air Force",
-"Missiles",
-"Military Exercises"
-],
-
-
-"Space Technology":[
-"ISRO",
-"Satellites",
-"Space Missions",
-"Rockets"
-],
-
-
-"Previous Year Questions":[
-"TNUSRB Previous Questions",
-"TNPSC Previous Questions",
-"SSC Previous Questions"
-],
-
-
-"Model Questions":[
-"Practice Set",
-"Mock Test",
-"Grand Test"
-]
-
+  "Indian Polity": [
+    "Constitution",
+    "Preamble",
+    "Citizenship",
+    "Fundamental Rights",
+    "Fundamental Duties",
+    "Directive Principles",
+    "Parliament",
+    "Lok Sabha",
+    "Rajya Sabha",
+    "President",
+    "Vice President",
+    "Prime Minister",
+    "Council of Ministers",
+    "Governor",
+    "Chief Minister",
+    "Supreme Court",
+    "High Court",
+    "Election Commission",
+    "Finance Commission",
+    "CAG",
+    "Attorney General",
+    "Emergency Provisions",
+    "Constitutional Bodies",
+    "Non Constitutional Bodies",
+    "Local Government",
+    "Panchayati Raj",
+    "Municipal Administration",
+    "Schedules",
+    "Important Articles",
+    "Constitution Amendments"
+  ]
 
 };
 
+// =========================
+// SUBJECT → TOPIC LOADER
+// =========================
 
-// =========================
-// LOAD TOPICS
-// =========================
 const bulkSubject = document.getElementById("bulkSubject");
 const bulkTopic = document.getElementById("bulkTopic");
 
 if (bulkSubject && bulkTopic) {
 
-    bulkSubject.addEventListener("change", function () {
+  bulkSubject.addEventListener("change", function () {
 
-        bulkTopic.innerHTML = `<option value="">Select Topic</option>`;
+    bulkTopic.innerHTML =
+      `<option value="">Select Topic</option>`;
 
-        const selected = this.value;
+    const selectedSubject = this.value;
 
-        if (topics[selected]) {
+    if (topics[selectedSubject]) {
 
-            topics[selected].forEach(topic => {
+      topics[selectedSubject].forEach(topic => {
 
-                bulkTopic.innerHTML += `
-                <option value="${topic}">
-                    ${topic}
-                </option>`;
-            });
+        const option = document.createElement("option");
 
-        }
+        option.value = topic;
+        option.textContent = topic;
 
-    });
+        bulkTopic.appendChild(option);
 
-}
-
-
-
-// =========================
-// BULK UPLOAD FINAL SYSTEM
-// FILE + COPY PASTE
-// =========================
-
-
-const bulkUploadBtn = 
-document.getElementById("bulkUploadBtn");
-
-
-
-if(bulkUploadBtn){
-
-
-bulkUploadBtn.onclick = async()=>{
-
-
-let subject = 
-document.getElementById("bulkSubject").value;
-
-
-let topic =
-document.getElementById("bulkTopic").value;
-
-
-
-let pasteData =
-document.getElementById("bulkText")?.value.trim();
-
-
-
-let questions = [];
-
-
-
-
-
-// =========================
-// GET JSON FILE
-// =========================
-
-
-let fileInput =
-document.getElementById("jsonFile");
-
-
-
-
-
-if(fileInput && fileInput.files.length > 0){
-
-
-let file =
-fileInput.files[0];
-
-
-
-let text =
-await file.text();
-
-
-
-try{
-
-
-questions =
-JSON.parse(text);
-
-
-}
-
-catch(error){
-
-
-alert("Invalid JSON File");
-
-return;
-
-
-}
-
-
-
-}
-
-
-
-
-
-// =========================
-// GET COPY PASTE
-// =========================
-
-
-else if(pasteData){
-
-
-
-try{
-
-
-questions =
-JSON.parse(pasteData);
-
-
-}
-
-catch(error){
-
-
-alert("Invalid JSON Paste Format");
-
-return;
-
-
-}
-
-
-
-}
-
-
-
-
-else{
-
-
-alert(
-"Upload JSON File or Paste Questions"
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-if(!subject || !topic){
-
-
-alert(
-"Select Subject and Topic"
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-let total =
-questions.length;
-
-
-let added = 0;
-
-let duplicate = 0;
-
-let failed = 0;
-
-
-
-
-
-// =========================
-// EXISTING QUESTIONS
-// =========================
-
-
-const snap = await getDocs(
-
-collection(
-db,
-"questions"
-)
-
-);
-
-
-
-let existing=[];
-
-
-
-
-snap.forEach(doc=>{
-
-
-let data =
-doc.data();
-
-
-
-existing.push(
-
-data.question
-?.toLowerCase()
-.trim()
-
-);
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// =========================
-// UPLOAD LOOP
-// =========================
-
-
-for(let q of questions){
-
-
-
-try{
-
-
-if(
-!q.question ||
-!q.options ||
-q.options.length!==4
-){
-
-
-failed++;
-
-continue;
-
-
-}
-
-
-
-
-
-let cleanQuestion =
-
-q.question
-.toLowerCase()
-.trim();
-
-
-
-
-
-if(
-existing.includes(cleanQuestion)
-){
-
-
-duplicate++;
-
-continue;
-
-
-}
-
-
-
-
-
-
-
-
-await addDoc(
-
-collection(
-db,
-"questions"
-),
-
-{
-
-
-questionId:
-
-"GTG-Q-"+Date.now(),
-
-
-
-subject:
-
-subject,
-
-
-
-topic:
-
-topic,
-
-
-
-question:
-
-q.question,
-
-
-
-options:
-
-q.options,
-
-
-
-answer:
-
-Number(q.answer),
-
-
-
-explanation:
-
-q.explanation || "",
-
-
-
-createdAt:
-
-serverTimestamp()
-
-
-
-}
-
-
-);
-
-
-
-
-
-existing.push(
-cleanQuestion
-);
-
-
-
-added++;
-
-
-
-
-}
-
-catch(error){
-
-
-failed++;
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// REPORT
-// =========================
-
-
-
-if(document.getElementById("bulkTotal"))
-
-document.getElementById("bulkTotal").innerHTML =
-total;
-
-
-
-if(document.getElementById("addedCount"))
-
-document.getElementById("addedCount").innerHTML =
-added;
-
-
-
-if(document.getElementById("skippedCount"))
-
-document.getElementById("skippedCount").innerHTML =
-duplicate;
-
-
-
-if(document.getElementById("failedCount"))
-
-document.getElementById("failedCount").innerHTML =
-failed;
-
-
-
-
-
-
-alert(
-
-`Upload Completed
-
-✅ Added : ${added}
-
-⚠️ Duplicate : ${duplicate}
-
-❌ Failed : ${failed}`
-
-);
-
-
-
-
-
-// CLEAR
-
-
-if(document.getElementById("bulkText"))
-
-document.getElementById("bulkText").value="";
-
-
-if(fileInput)
-
-fileInput.value="";
-
-
-
-};
-
-
-
-}
-
-
-console.log(
-"✅ Final Bulk Upload Ready"
-);
-
-
-
-
-
-
-
-
-
-
-
-// =========================
-// LOAD QUESTIONS
-// =========================
-
-
-async function loadQuestions(){
-
-
-const list =
-
-document.getElementById(
-"questionList"
-);
-
-
-
-if(!list) return;
-
-
-
-list.innerHTML =
-"Loading Questions...";
-
-
-
-try{
-
-
-const snap = await getDocs(
-
-collection(
-db,
-"questions"
-)
-
-);
-
-
-
-allQuestions=[];
-
-
-
-snap.forEach(item=>{
-
-
-allQuestions.push({
-
-id:item.id,
-
-...item.data()
-
-});
-
-
-});
-
-
-
-
-
-displayQuestions(
-allQuestions
-);
-
-
-
-}
-
-
-
-catch(error){
-
-
-console.log(
-"Question Load Error",
-error
-);
-
-
-
-list.innerHTML =
-"Error Loading Questions";
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// DISPLAY QUESTIONS
-// =========================
-
-
-function displayQuestions(data){
-
-
-
-const list =
-
-document.getElementById(
-"questionList"
-);
-
-
-
-if(!list) return;
-
-
-
-list.innerHTML="";
-
-
-
-
-data.forEach(q=>{
-
-
-
-let div =
-
-document.createElement(
-"div"
-);
-
-
-
-div.className =
-"question-item";
-
-
-
-
-div.innerHTML = `
-
-
-<h3>
-
-${q.question}
-
-</h3>
-
-
-
-<p>
-
-📚 Subject :
-
-${q.subject || "-"}
-
-</p>
-
-
-
-<p>
-
-📌 Topic :
-
-${q.topic || "-"}
-
-</p>
-
-
-
-<p>
-
-A) ${q.options?.[0] || ""}
-
-<br>
-
-B) ${q.options?.[1] || ""}
-
-<br>
-
-C) ${q.options?.[2] || ""}
-
-<br>
-
-D) ${q.options?.[3] || ""}
-
-</p>
-
-
-
-<p>
-
-✅ Answer :
-
-${q.answer}
-
-</p>
-
-
-
-<button
-
-class="delete-btn"
-
-onclick="deleteQuestion('${q.id}')"
-
->
-
-🗑 Delete
-
-</button>
-
-
-
-`;
-
-
-
-list.appendChild(div);
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// DELETE QUESTION
-// =========================
-
-
-window.deleteQuestion = async function(id){
-
-
-
-let confirmDelete = confirm(
-
-"Delete this question?"
-
-);
-
-
-
-if(!confirmDelete)
-
-return;
-
-
-
-
-try{
-
-
-await deleteDoc(
-
-doc(
-
-db,
-
-"questions",
-
-id
-
-)
-
-);
-
-
-
-alert(
-"✅ Deleted Successfully"
-);
-
-
-
-loadQuestions();
-
-
-
-}
-
-
-
-catch(error){
-
-
-console.log(
-"Delete Error",
-error
-);
-
-
-alert(
-"Delete Failed"
-);
-
-
-
-}
-
-
-
-};
-
-
-
-
-
-
-
-// =========================
-// SEARCH QUESTION
-// =========================
-
-
-const searchBtn =
-
-document.getElementById(
-"searchBtn"
-);
-
-
-
-if(searchBtn){
-
-
-
-searchBtn.onclick = ()=>{
-
-
-
-let value =
-
-document.getElementById(
-"searchQuestion"
-)
-.value
-.toLowerCase();
-
-
-
-
-let result =
-
-allQuestions.filter(q=>
-
-
-q.question
-.toLowerCase()
-.includes(value)
-
-
-
-);
-
-
-
-displayQuestions(
-result
-);
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// SUBJECT FILTER
-// =========================
-
-
-const filterSubject =
-
-document.getElementById(
-"filterSubject"
-);
-
-
-
-const filterTopic =
-
-document.getElementById(
-"filterTopic"
-);
-
-
-
-const filterBtn =
-
-document.getElementById(
-"filterBtn"
-);
-
-
-
-
-
-
-
-if(filterSubject){
-
-
-
-filterSubject.onchange = ()=>{
-
-
-
-let subject =
-
-filterSubject.value;
-
-
-
-
-let topicArray=[];
-
-
-
-
-
-allQuestions.forEach(q=>{
-
-
-
-if(
-
-subject==="all"
-
-||
-
-q.subject===subject
-
-){
-
-
-
-if(
-
-!topicArray.includes(q.topic)
-
-){
-
-
-topicArray.push(
-q.topic
-);
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-filterTopic.innerHTML = `
-
-<option value="all">
-
-All Topics
-
-</option>
-
-`;
-
-
-
-
-
-
-topicArray.forEach(t=>{
-
-
-filterTopic.innerHTML += `
-
-<option value="${t}">
-
-${t}
-
-</option>
-
-`;
-
-
-});
-
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// APPLY FILTER
-// =========================
-
-
-if(filterBtn){
-
-
-
-filterBtn.onclick = ()=>{
-
-
-
-let subject =
-
-filterSubject.value;
-
-
-
-let topic =
-
-filterTopic.value;
-
-
-
-
-
-
-let result =
-
-allQuestions.filter(q=>{
-
-
-
-let subjectMatch =
-
-subject==="all"
-
-||
-
-q.subject===subject;
-
-
-
-
-let topicMatch =
-
-topic==="all"
-
-||
-
-q.topic===topic;
-
-
-
-
-return subjectMatch && topicMatch;
-
-
-
-});
-
-
-
-
-
-
-displayQuestions(
-result
-);
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// START
-// =========================
-
-
-loadQuestions();
-
-
-
-console.log(
-"✅ Question Management Ready"
-);
-
-// =========================
-// G THE GENIUS ADMIN JS
-// FINAL VERSION
-// PART 3
-// DASHBOARD STATS
-// =========================
-
-
-
-// =========================
-// LOAD ADMIN STATS
-// =========================
-
-
-async function loadAdminStats(){
-
-
-try{
-
-
-const snap = await getDocs(
-
-collection(
-db,
-"questions"
-)
-
-);
-
-
-
-let total = 0;
-
-
-let counts = {
-
-"Indian Polity":0,
-
-"Indian History":0,
-
-"Geography":0,
-
-"General Science":0,
-
-"Tamil Nadu GK":0,
-
-"Current Affairs":0,
-
-"Economics":0,
-
-"Computer Science":0,
-
-"Aptitude":0,
-
-"Reasoning":0,
-
-"Tamil":0,
-
-"English":0
-
-};
-
-
-
-
-
-snap.forEach(item=>{
-
-
-let data = item.data();
-
-
-
-total++;
-
-
-
-
-if(
-counts.hasOwnProperty(data.subject)
-){
-
-
-counts[data.subject]++;
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-// TOTAL QUESTIONS
-
-
-let totalBox =
-
-document.getElementById(
-"totalQuestions"
-);
-
-
-
-if(totalBox)
-
-totalBox.innerHTML = total;
-
-
-
-
-
-
-
-// SUBJECT COUNTS
-
-
-
-let map = {
-
-
-"polityCount":
-"Indian Polity",
-
-
-"historyCount":
-"Indian History",
-
-
-"scienceCount":
-"General Science",
-
-
-"tnCount":
-"Tamil Nadu GK"
-
-
-};
-
-
-
-
-
-
-
-Object.keys(map).forEach(id=>{
-
-
-let box =
-
-document.getElementById(
-id
-);
-
-
-
-if(box){
-
-
-box.innerHTML =
-
-counts[map[id]] || 0;
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-console.log(
-"✅ Admin Stats Updated"
-);
-
-
-
-}
-
-
-catch(error){
-
-
-console.log(
-
-"Stats Error",
-
-error
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// UPLOAD DATE FORMAT
-// =========================
-
-
-function formatDate(timestamp){
-
-
-if(!timestamp)
-
-return "-";
-
-
-
-try{
-
-
-return timestamp
-.toDate()
-.toLocaleString(
-"en-IN",
-{
-
-timeZone:
-"Asia/Kolkata",
-
-day:
-"2-digit",
-
-month:
-"2-digit",
-
-year:
-"numeric",
-
-hour:
-"2-digit",
-
-minute:
-"2-digit"
-
-}
-
-);
-
-
-
-}
-
-catch(error){
-
-
-return "-";
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// SAFE ELEMENT CHECK
-// =========================
-
-
-function setText(id,value){
-
-
-let el =
-
-document.getElementById(id);
-
-
-
-if(el)
-
-el.innerHTML=value;
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// ADMIN READY
-// =========================
-
-
-window.addEventListener(
-
-"load",
-
-()=>{
-
-
-loadQuestions();
-
-
-loadAdminStats();
-
-
-console.log(
-
-"🚀 G THE GENIUS ADMIN PANEL READY"
-
-);
-
-
-
-}
-
-);
-
-// =========================
-// G THE GENIUS ADMIN JS
-// FINAL VERSION
-// PART 4
-// JSON FILE PREVIEW SYSTEM
-// =========================
-
-
-
-const jsonFile =
-
-document.getElementById(
-"jsonFile"
-);
-
-
-
-const previewBox =
-
-document.getElementById(
-"questionCount"
-);
-
-
-
-let previewQuestions = [];
-
-
-
-
-
-// =========================
-// JSON FILE CHANGE
-// =========================
-
-
-if(jsonFile){
-
-
-jsonFile.onchange = (event)=>{
-
-
-let file =
-
-event.target.files[0];
-
-
-
-if(!file)
-
-return;
-
-
-
-
-let reader =
-
-new FileReader();
-
-
-
-
-
-reader.onload = (e)=>{
-
-
-try{
-
-
-let data =
-
-JSON.parse(
-e.target.result
-);
-
-
-
-
-
-if(!Array.isArray(data)){
-
-
-alert(
-"JSON Format Wrong"
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-previewQuestions = data;
-
-
-
-
-
-
-if(previewBox){
-
-
-previewBox.innerHTML =
-
-data.length;
-
-
-}
-
-
-
-
-
-alert(
-
-`Preview Ready
-
-Total Questions : ${data.length}`
-
-);
-
-
-
-
-
-
-
-console.log(
-data
-);
-
-
-
-}
-
-
-
-catch(error){
-
-
-alert(
-"Invalid JSON File"
-);
-
-
-
-}
-
-
-
-};
-
-
-
-
-
-reader.readAsText(file);
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// JSON VALIDATION
-// =========================
-
-
-function validateQuestion(q){
-
-
-
-if(!q.question)
-
-return false;
-
-
-
-if(!q.options)
-
-return false;
-
-
-
-if(q.options.length !==4)
-
-return false;
-
-
-
-if(q.answer===undefined)
-
-return false;
-
-
-
-return true;
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// PREVIEW DISPLAY
-// =========================
-
-
-function showPreview(){
-
-
-
-const box =
-
-document.getElementById(
-"previewList"
-);
-
-
-
-if(!box)
-
-return;
-
-
-
-box.innerHTML="";
-
-
-
-
-
-previewQuestions.forEach((q,index)=>{
-
-
-
-let div =
-
-document.createElement(
-"div"
-);
-
-
-
-div.className =
-"preview-item";
-
-
-
-
-
-div.innerHTML = `
-
-
-<h4>
-
-${index+1}. ${q.question}
-
-</h4>
-
-
-
-<p>
-
-A) ${q.options[0]}
-
-<br>
-
-B) ${q.options[1]}
-
-<br>
-
-C) ${q.options[2]}
-
-<br>
-
-D) ${q.options[3]}
-
-</p>
-
-
-
-<p>
-
-Answer :
-
-${q.answer}
-
-</p>
-
-
-`;
-
-
-
-box.appendChild(div);
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// PREVIEW BUTTON
-// =========================
-
-
-const previewBtn =
-
-document.getElementById(
-"previewBtn"
-);
-
-
-
-
-
-if(previewBtn){
-
-
-
-previewBtn.onclick = ()=>{
-
-
-
-if(
-previewQuestions.length===0
-){
-
-
-alert(
-"Upload JSON First"
-);
-
-
-return;
-
-
-}
-
-
-
-showPreview();
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// CHECK VALID QUESTIONS
-// =========================
-
-
-function checkQuestions(){
-
-
-
-let valid=0;
-
-let invalid=0;
-
-
-
-
-
-previewQuestions.forEach(q=>{
-
-
-
-if(
-validateQuestion(q)
-){
-
-
-valid++;
-
-
-}
-
-else{
-
-
-invalid++;
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-alert(
-
-`Validation Report
-
-✅ Valid : ${valid}
-
-❌ Invalid : ${invalid}`
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-const validateBtn =
-
-document.getElementById(
-"validateBtn"
-);
-
-
-
-
-if(validateBtn){
-
-
-
-validateBtn.onclick = ()=>{
-
-
-checkQuestions();
-
-
-};
-
-
-
-}
-
-
-
-
-console.log(
-"✅ JSON Preview System Ready"
-);
-
-// =========================
-// G THE GENIUS ADMIN JS
-// FINAL VERSION
-// PART 5
-// FIRESTORE JSON UPLOAD
-// =========================
-
-
-// =========================
-// GENERATE IDS
-// =========================
-
-
-function generateId(prefix){
-
-
-return (
-
-prefix +
-
-"-" +
-
-Date.now()
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// JSON UPLOAD BUTTON
-// =========================
-
-
-let subject =
-
-document.getElementById(
-"bulkSubject"
-).value;
-
-
-
-let topic =
-
-document.getElementById(
-"bulkTopic"
-).value;
-
-
-
-
-
-
-if(!subject || !topic){
-
-
-alert(
-"Select Subject and Topic"
-);
-
-
-
-return;
-
-
-}
-
-
-
-
-
-
-if(
-previewQuestions.length===0
-){
-
-
-alert(
-"Load JSON File First"
-);
-
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-let uploadId =
-
-generateId(
-"GTG-UP"
-);
-
-
-
-
-
-
-let added = 0;
-
-let failed = 0;
-
-let skipped = 0;
-
-
-
-
-
-
-
-for(
-let i=0;
-i<previewQuestions.length;
-i++
-){
-
-
-
-let q =
-
-previewQuestions[i];
-
-
-
-
-
-try{
-
-
-
-if(
-!validateQuestion(q)
-){
-
-
-failed++;
-
-continue;
-
-
-}
-
-
-
-
-
-
-let questionId =
-
-generateId(
-"GTG-Q"
-);
-
-
-
-
-
-
-
-await addDoc(
-
-collection(
-db,
-"questions"
-),
-
-{
-
-
-questionId:
-
-
-questionId,
-
-
-
-uploadId:
-
-
-uploadId,
-
-
-
-subject:
-
-
-subject,
-
-
-
-topic:
-
-
-topic,
-
-
-
-question:
-
-
-q.question,
-
-
-
-options:
-
-
-q.options,
-
-
-
-answer:
-
-
-q.answer,
-
-
-
-explanation:
-
-
-q.explanation || "",
-
-
-
-createdAt:
-
-
-serverTimestamp()
-
-
-}
-
-
-);
-
-
-
-
-
-added++;
-
-
-
-
-
-}
-
-
-
-catch(error){
-
-
-failed++;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-// REPORT UPDATE
-
-
-
-document.getElementById(
-"bulkTotal"
-).innerHTML =
-
-previewQuestions.length;
-
-
-
-document.getElementById(
-"addedCount"
-).innerHTML =
-
-added;
-
-
-
-document.getElementById(
-"failedCount"
-).innerHTML =
-
-failed;
-
-
-
-
-
-alert(
-
-`Upload Completed
-
-Upload ID:
-${uploadId}
-
-✅ Added:
-${added}
-
-❌ Failed:
-${failed}`
-
-);
-
-
-
-
-
-
-
-// CLEAR
-
-
-previewQuestions=[];
-
-
-
-document.getElementById(
-"jsonFile"
-).value="";
-
-
-
-if(document.getElementById(
-"questionCount"
-)){
-
-
-document.getElementById(
-"questionCount"
-).innerHTML="0";
-
-
-}
-
-
-
-};
-
-
-
-
-}
-
-
-
-
-
-
-
-
-console.log(
-"✅ JSON Firestore Upload Ready"
-);
-
-// =========================
-// G THE GENIUS ADMIN JS
-// FINAL VERSION
-// PART 6
-// ADVANCED DUPLICATE + UPLOAD HISTORY
-// =========================
-
-
-
-import {
-
-query,
-where
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-
-
-// =========================
-// CLEAN TEXT
-// =========================
-
-
-function cleanText(text){
-
-
-return text
-
-.toLowerCase()
-
-.trim()
-
-.replace(/\s+/g," ");
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// CHECK DUPLICATE QUESTION
-// =========================
-
-
-async function checkDuplicate(question){
-
-
-
-let q = query(
-
-collection(
-db,
-"questions"
-),
-
-where(
-
-"question",
-
-"==",
-
-question
-
-)
-
-);
-
-
-
-
-
-let snap =
-
-await getDocs(q);
-
-
-
-
-
-return !snap.empty;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// UPLOAD HISTORY SAVE
-// =========================
-
-
-async function saveUploadHistory(data){
-
-
-
-try{
-
-
-await addDoc(
-
-collection(
-db,
-"uploadHistory"
-),
-
-{
-
-
-uploadId:
-
-data.uploadId,
-
-
-
-subject:
-
-data.subject,
-
-
-
-topic:
-
-data.topic,
-
-
-
-total:
-
-data.total,
-
-
-
-added:
-
-data.added,
-
-
-
-duplicate:
-
-data.duplicate,
-
-
-
-failed:
-
-data.failed,
-
-
-
-uploadedDate:
-
-serverTimestamp()
-
-
-
-}
-
-
-
-);
-
+      });
 
+    }
 
-console.log(
-"Upload History Saved"
-);
+  });
 
-
-
-}
-
-
-catch(error){
-
-
-console.log(
-"History Save Error",
-error
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// GET UPLOAD HISTORY
-// =========================
-
-
-async function loadUploadHistory(){
-
-
-
-const box =
-
-document.getElementById(
-"uploadHistory"
-);
-
-
-
-if(!box)
-
-return;
-
-
-
-
-
-box.innerHTML =
-"Loading...";
-
-
-
-
-
-
-try{
-
-
-
-const snap =
-
-await getDocs(
-
-collection(
-db,
-"uploadHistory"
-)
-
-);
-
-
-
-
-
-box.innerHTML="";
-
-
-
-
-
-snap.forEach(item=>{
-
-
-
-let data =
-item.data();
-
-
-
-
-
-let div =
-
-document.createElement(
-"div"
-);
-
-
-
-
-
-div.className =
-"history-card";
-
-
-
-
-
-div.innerHTML = `
-
-
-<h3>
-
-📂 ${data.uploadId}
-
-</h3>
-
-
-<p>
-
-📚 ${data.subject}
-
-</p>
-
-
-<p>
-
-📌 ${data.topic}
-
-</p>
-
-
-<p>
-
-Total :
-${data.total}
-
-</p>
-
-
-<p>
-
-✅ Added :
-${data.added}
-
-</p>
-
-
-<p>
-
-⚠️ Duplicate :
-${data.duplicate}
-
-</p>
-
-
-<p>
-
-❌ Failed :
-${data.failed}
-
-</p>
-
-
-
-`;
-
-
-
-
-
-box.appendChild(div);
-
-
-
-
-});
-
-
-
-
-}
-
-
-
-catch(error){
-
-
-console.log(
-"History Load Error",
-error
-);
-
-
-
-}
-
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// EXPORT QUESTIONS JSON
-// =========================
-
-
-async function exportQuestions(){
-
-
-
-const snap =
-
-await getDocs(
-
-collection(
-db,
-"questions"
-)
-
-);
-
-
-
-let data=[];
-
-
-
-
-snap.forEach(item=>{
-
-
-data.push(item.data());
-
-
-});
-
-
-
-
-
-let blob =
-
-new Blob(
-
-[
-
-JSON.stringify(
-data,
-null,
-2
-)
-
-],
-
-{
-
-type:
-"application/json"
-
-}
-
-);
-
-
-
-
-
-let url =
-
-URL.createObjectURL(blob);
-
-
-
-
-
-let a =
-
-document.createElement(
-"a"
-);
-
-
-
-a.href=url;
-
-
-
-a.download=
-
-"G_THE_GENIUS_questions.json";
-
-
-
-a.click();
-
-
-
-
-
-URL.revokeObjectURL(url);
-
-
-
-}
-
-
-
-
-
-const exportBtn =
-
-document.getElementById(
-"exportBtn"
-);
-
-
-
-if(exportBtn){
-
-
-exportBtn.onclick = ()=>{
-
-
-exportQuestions();
-
-
-};
-
-
 }
-
-
-
-
-
-
-
-console.log(
-"✅ Advanced Duplicate + Upload History Ready"
-);
-
-// =========================
-// G THE GENIUS ADMIN JS
-// FINAL VERSION
-// PART 7
-// ADMIN SECURITY + FINAL
-// =========================
-
-
-import { auth } from "./firebase-config.js";
-
-
-import {
-
-onAuthStateChanged,
-signOut
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 
+console.log("✅ Part 1A-1 Loaded");
 
-
-
-
-
 // =========================
-// ADMIN EMAIL LIST
+// PART 1A-2
+// MORE SUBJECT TOPICS
 // =========================
-
-
-const adminEmails = [
-
-
-"gthegenius7@gmail.com"
-
 
+topics["Indian Constitution"] = [
+  "Making of Constitution",
+  "Constituent Assembly",
+  "Drafting Committee",
+  "Salient Features",
+  "Schedules",
+  "Articles",
+  "Citizenship",
+  "Fundamental Rights",
+  "Fundamental Duties",
+  "Directive Principles",
+  "Union Government",
+  "State Government",
+  "Judiciary",
+  "Emergency",
+  "Constitutional Amendments"
 ];
 
+topics["Indian History"] = [
+  "Prehistoric Period",
+  "Indus Valley Civilization",
+  "Vedic Age",
+  "Mahajanapadas",
+  "Jainism",
+  "Buddhism",
+  "Mauryan Empire",
+  "Gupta Empire",
+  "Delhi Sultanate",
+  "Mughal Empire",
+  "Marathas",
+  "European Arrival",
+  "British Rule",
+  "Governor Generals",
+  "Viceroys"
+];
 
+topics["World History"] = [
+  "French Revolution",
+  "American Revolution",
+  "Industrial Revolution",
+  "Russian Revolution",
+  "Renaissance",
+  "Reformation",
+  "World War I",
+  "World War II",
+  "United Nations",
+  "Cold War",
+  "Nazism",
+  "Fascism",
+  "Important Treaties",
+  "World Leaders",
+  "International Organizations"
+];
 
+topics["Freedom Struggle"] = [
+  "1857 Revolt",
+  "INC Formation",
+  "Moderates",
+  "Extremists",
+  "Partition of Bengal",
+  "Swadeshi Movement",
+  "Home Rule Movement",
+  "Non Cooperation Movement",
+  "Civil Disobedience Movement",
+  "Quit India Movement",
+  "Revolutionary Movement",
+  "Subash Chandra Bose",
+  "INA",
+  "Cabinet Mission",
+  "Indian Independence"
+];
 
+topics["Tamil Nadu History"] = [
+  "Sangam Age",
+  "Kalabhras",
+  "Pallavas",
+  "Pandyas",
+  "Cholas",
+  "Cheras",
+  "Nayaks",
+  "Marathas",
+  "Poligars",
+  "Freedom Fighters",
+  "Social Reformers",
+  "Tamil Culture",
+  "Temple Architecture",
+  "Literature",
+  "Important Kings"
+];
 
-
-
-
+console.log("✅ Part 1A-2 Loaded");
 
 // =========================
-// ADMIN SECURITY CHECK
+// PART 1A-3
+// GEOGRAPHY + SCIENCE TOPICS
 // =========================
 
-
-onAuthStateChanged(
-auth,
-(user)=>{
-
-
-
-if(!user){
-
-
-alert(
-"Admin Login Required"
-);
-
-
-
-window.location.href =
-"login.html";
-
-
-
-return;
-
-
-}
-
-
-
-
-
-
-if(
-!adminEmails.includes(
-user.email
-)
-
-){
-
-
-
-alert(
-"Access Denied"
-);
-
-
-
-window.location.href =
-"dashboard.html";
-
-
-
-return;
-
-
-
-}
-
-
-
-
-
-
-
-// ADMIN DETAILS
-
-
-
-let nameBox =
-
-document.getElementById(
-"adminName"
-);
-
-
-
-if(nameBox)
-
-nameBox.innerHTML =
-
-user.email;
-
-
-
-
-
-
-
-let statusBox =
-
-document.getElementById(
-"adminStatus"
-);
-
-
-
-if(statusBox)
-
-statusBox.innerHTML =
-
-"🟢 Online";
-
-
-
-
-
-console.log(
-"✅ Admin Verified"
-);
-
-
-
-}
-
-);
-
-
-
-
-
-
-
-
+topics["Geography"] = [
+  "Earth",
+  "Solar System",
+  "Latitude & Longitude",
+  "Climate",
+  "Rivers",
+  "Mountains",
+  "Plateaus",
+  "Deserts",
+  "Soil",
+  "Agriculture",
+  "Minerals",
+  "Natural Resources",
+  "Forests",
+  "Environment",
+  "Map Based Questions"
+];
+
+topics["Indian Geography"] = [
+  "Physical Features",
+  "States & Capitals",
+  "Rivers",
+  "Dams",
+  "Mountains",
+  "Climate",
+  "Monsoon",
+  "Soil",
+  "Agriculture",
+  "National Parks",
+  "Wildlife Sanctuaries",
+  "Minerals",
+  "Industries",
+  "Transport",
+  "Important Places"
+];
+
+topics["World Geography"] = [
+  "Continents",
+  "Countries",
+  "Capitals",
+  "Oceans",
+  "Seas",
+  "Rivers",
+  "Mountains",
+  "Deserts",
+  "Volcanoes",
+  "Earthquakes",
+  "Climate",
+  "Time Zones",
+  "Natural Resources",
+  "Important Straits",
+  "World Maps"
+];
+
+topics["Tamil Nadu Geography"] = [
+  "Districts",
+  "Rivers",
+  "Dams",
+  "Mountains",
+  "Climate",
+  "Soil",
+  "Agriculture",
+  "Industries",
+  "National Parks",
+  "Wildlife Sanctuaries",
+  "Transport",
+  "Tourist Places",
+  "Resources",
+  "Power Projects",
+  "Important Places"
+];
+
+topics["General Science"] = [
+  "Physics",
+  "Chemistry",
+  "Biology",
+  "Human Body",
+  "Diseases",
+  "Nutrition",
+  "Environment",
+  "Science & Technology",
+  "Inventions",
+  "Scientists",
+  "Units & Measurements",
+  "Everyday Science",
+  "Space Science",
+  "Medical Science",
+  "Latest Science"
+];
+
+topics["Physics"] = [
+  "Motion",
+  "Force",
+  "Work",
+  "Power",
+  "Energy",
+  "Gravitation",
+  "Heat",
+  "Light",
+  "Sound",
+  "Electricity",
+  "Magnetism",
+  "Modern Physics",
+  "Units",
+  "Laws of Motion",
+  "Waves"
+];
+
+topics["Chemistry"] = [
+  "Matter",
+  "Atom",
+  "Molecule",
+  "Elements",
+  "Compounds",
+  "Mixtures",
+  "Periodic Table",
+  "Chemical Bonding",
+  "Acids",
+  "Bases",
+  "Salts",
+  "Metals",
+  "Non-Metals",
+  "Chemical Reactions",
+  "Organic Chemistry"
+];
+
+topics["Biology"] = [
+  "Cell",
+  "Tissues",
+  "Human Body",
+  "Digestive System",
+  "Respiratory System",
+  "Circulatory System",
+  "Nervous System",
+  "Plant Kingdom",
+  "Animal Kingdom",
+  "Genetics",
+  "Evolution",
+  "Nutrition",
+  "Diseases",
+  "Vaccines",
+  "Biotechnology"
+];
+
+console.log("✅ Part 1A-3 Loaded");
 
 // =========================
-// LOGOUT
+// PART 1A-5
+// ECONOMICS + CURRENT AFFAIRS + COMPUTER
 // =========================
 
+topics["Economics"] = [
+    "Basic Economics",
+    "Micro Economics",
+    "Macro Economics",
+    "Demand",
+    "Supply",
+    "Production",
+    "Consumption",
+    "Market",
+    "Inflation",
+    "Deflation",
+    "National Income",
+    "Economic Development",
+    "Poverty",
+    "Unemployment",
+    "Five Year Plans"
+];
 
-const logoutBtn =
+topics["Indian Economy"] = [
+    "GDP",
+    "GNP",
+    "National Income",
+    "NITI Aayog",
+    "Planning Commission",
+    "Union Budget",
+    "Taxation",
+    "GST",
+    "Banking",
+    "RBI",
+    "SEBI",
+    "Finance Commission",
+    "Economic Survey",
+    "Public Finance",
+    "Government Schemes"
+];
 
-document.getElementById(
-"adminLogoutBtn"
-);
+topics["Tamil Nadu Economy"] = [
+    "Agriculture",
+    "Industries",
+    "Textile Industry",
+    "MSME",
+    "Tourism",
+    "Government Schemes",
+    "Economic Growth",
+    "Employment",
+    "Co-operative Societies",
+    "Rural Development"
+];
 
+topics["Current Affairs"] = [
+    "National",
+    "Tamil Nadu",
+    "International",
+    "Economy",
+    "Science & Technology",
+    "Sports",
+    "Awards",
+    "Appointments",
+    "Books & Authors",
+    "Important Days",
+    "Government Schemes",
+    "Defence",
+    "Environment",
+    "Space",
+    "Obituaries"
+];
 
+topics["Tamil Nadu GK"] = [
+    "Districts",
+    "Rivers",
+    "Dams",
+    "Temples",
+    "Festivals",
+    "Freedom Fighters",
+    "Chief Ministers",
+    "Governors",
+    "Government Schemes",
+    "Tourist Places",
+    "Industries",
+    "Important Personalities",
+    "Awards",
+    "Culture",
+    "Current Affairs"
+];
 
+topics["Computer Science"] = [
+    "Computer Basics",
+    "Hardware",
+    "Software",
+    "Operating System",
+    "MS Office",
+    "Internet",
+    "Email",
+    "Networking",
+    "Cyber Security",
+    "Memory",
+    "Input Devices",
+    "Output Devices",
+    "Programming Basics",
+    "Database",
+    "Artificial Intelligence"
+];
 
+topics["Aptitude"] = [
+    "Number System",
+    "Percentage",
+    "Ratio & Proportion",
+    "Average",
+    "Profit & Loss",
+    "Simple Interest",
+    "Compound Interest",
+    "Time & Work",
+    "Time & Distance",
+    "Boat & Stream",
+    "Age Problems",
+    "Mixture",
+    "Partnership",
+    "HCF & LCM",
+    "Simplification"
+];
 
-if(logoutBtn){
+topics["Reasoning"] = [
+    "Analogy",
+    "Classification",
+    "Coding-Decoding",
+    "Blood Relation",
+    "Direction Sense",
+    "Ranking",
+    "Number Series",
+    "Alphabet Series",
+    "Puzzle",
+    "Syllogism",
+    "Statement & Conclusion",
+    "Clock",
+    "Calendar",
+    "Mirror Image",
+    "Paper Folding"
+];
 
-
-
-logoutBtn.onclick = async()=>{
-
-
-try{
-
-
-await signOut(auth);
-
-
-
-window.location.href =
-"login.html";
-
-
-
-}
-
-
-
-catch(error){
-
-
-console.log(
-"Logout Error",
-error
-);
-
-
-
-}
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-
+console.log("✅ PART 1A-5 Loaded");
 // =========================
-// GLOBAL ERROR HANDLER
+// PART 1A-6
+// LANGUAGE + GK + FINAL SUBJECTS
 // =========================
 
+topics["Tamil"] = [
+    "தமிழ் இலக்கணம்",
+    "பெயர்ச்சொல்",
+    "வினைச்சொல்",
+    "இடைச்சொல்",
+    "உரிச்சொல்",
+    "சங்க இலக்கியம்",
+    "ஐம்பெரும் காப்பியங்கள்",
+    "ஐஞ்சிறு காப்பியங்கள்",
+    "திருக்குறள்",
+    "நன்னூல்",
+    "பழமொழிகள்",
+    "இலக்கிய ஆசிரியர்கள்",
+    "தமிழ் எழுத்துக்கள்",
+    "புணர்ச்சி",
+    "வினா விடை"
+];
 
-window.onerror = function(
+topics["English"] = [
+    "Grammar",
+    "Parts of Speech",
+    "Tenses",
+    "Articles",
+    "Prepositions",
+    "Voice",
+    "Narration",
+    "Synonyms",
+    "Antonyms",
+    "One Word Substitution",
+    "Idioms & Phrases",
+    "Vocabulary",
+    "Comprehension",
+    "Error Spotting",
+    "Sentence Improvement"
+];
 
-message,
+topics["Sports"] = [
+    "Olympics",
+    "Asian Games",
+    "Commonwealth Games",
+    "Cricket",
+    "Football",
+    "Hockey",
+    "Tennis",
+    "Chess",
+    "Badminton",
+    "Athletics",
+    "World Cup",
+    "Indian Players",
+    "Sports Awards",
+    "Sports Personalities",
+    "Recent Sports"
+];
 
-source,
+topics["Awards and Honours"] = [
+    "Bharat Ratna",
+    "Padma Awards",
+    "Gallantry Awards",
+    "Nobel Prize",
+    "Oscar Awards",
+    "Booker Prize",
+    "Jnanpith Award",
+    "Dadasaheb Phalke Award",
+    "Arjuna Award",
+    "Khel Ratna"
+];
 
-line
+topics["Books and Authors"] = [
+    "Indian Authors",
+    "Tamil Authors",
+    "Famous Books",
+    "Autobiographies",
+    "Biographies",
+    "Recent Books",
+    "Literature",
+    "Novels",
+    "Poets",
+    "Classical Works"
+];
 
-){
+topics["Important Days"] = [
+    "National Days",
+    "International Days",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
 
+topics["Art and Culture"] = [
+    "Dance",
+    "Music",
+    "Drama",
+    "Painting",
+    "Architecture",
+    "Festivals",
+    "UNESCO Heritage",
+    "Temple Art",
+    "Folk Arts",
+    "Classical Arts"
+];
 
-console.log(
+topics["Defence"] = [
+    "Indian Army",
+    "Indian Navy",
+    "Indian Air Force",
+    "Missiles",
+    "Military Exercises",
+    "Defence Organisations",
+    "DRDO",
+    "BSF",
+    "CRPF",
+    "Defence Current Affairs"
+];
 
-"Admin Error:",
+topics["Space Technology"] = [
+    "ISRO",
+    "NASA",
+    "Satellites",
+    "Launch Vehicles",
+    "Space Missions",
+    "Chandrayaan",
+    "Mangalyaan",
+    "Gaganyaan",
+    "Space Stations",
+    "Recent Space News"
+];
 
-message,
+topics["Previous Year Questions"] = [
+    "TNUSRB PYQ",
+    "TNPSC PYQ",
+    "SSC PYQ",
+    "RRB PYQ",
+    "UPSC PYQ",
+    "Police Constable PYQ",
+    "SI PYQ",
+    "Forest PYQ",
+    "Group 2 PYQ",
+    "Group 4 PYQ"
+];
 
-"Line:",
+topics["Model Questions"] = [
+    "Practice Set 1",
+    "Practice Set 2",
+    "Practice Set 3",
+    "Mock Test",
+    "Grand Test",
+    "Easy Level",
+    "Medium Level",
+    "Hard Level",
+    "Mixed Questions",
+    "Revision Test"
+];
 
-line
-
-);
-
-
-};
-
-
-
-
-
-
-
-
-
-// =========================
-// FINAL READY
-// =========================
-
-
-console.log(
-
-"🚀 G THE GENIUS ADMIN PANEL FINAL READY"
-
-);
+console.log("✅ PART 1A-6 Loaded");
