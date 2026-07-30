@@ -4,119 +4,53 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-<title>
-G THE GENIUS Result
-</title>
-
+<title>G THE GENIUS Result</title>
 
 <link rel="stylesheet" href="result.css">
 
-
 </head>
-
 
 <body>
 
-
-
-<!-- HEADER -->
-
-
 <header class="result-header">
 
-
-<img 
+<img
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="result-logo"
->
-
+class="result-logo">
 
 <div>
 
-<h2>
-G THE GENIUS
-</h2>
+<h2>G THE GENIUS</h2>
 
-
-<p>
-Mock Test Result
-</p>
-
+<p>Mock Test Result</p>
 
 </div>
-
 
 </header>
 
-
-
-
-
-
-
-<!-- RESULT CARD -->
-
-
 <section class="result-card">
 
-
-
-<h2>
-🎉 Test Completed
-</h2>
-
-
-
+<h2>🎉 Test Completed</h2>
 
 <div class="score-circle">
 
+<h1>
 
-<h1 id="percentage">
+<span id="score">0</span>
 
-0%
+/
+
+<span id="total">0</span>
 
 </h1>
 
-
-<p>
-Score
-</p>
-
+<p>Marks</p>
 
 </div>
 
-
-
-
-
 <div class="score-details">
-
-
-<p>
-
-🎯 Marks :
-
-<span id="score">
-
-0
-
-</span>
-
-/ 
-
-<span id="total">
-
-0
-
-</span>
-
-</p>
-
-
 
 <p>
 
@@ -130,8 +64,6 @@ Daily Mock Test
 
 </p>
 
-
-
 <p>
 
 📚 Exam :
@@ -144,302 +76,115 @@ TNUSRB
 
 </p>
 
-
-
 </div>
 
-
-
 </section>
-
-
-
-<!-- =========================
-ANSWER ANALYSIS
-========================= -->
-
 
 <section class="analysis-card">
 
-
-<h2>
-📊 Answer Analysis
-</h2>
-
-
+<h2>📊 Answer Analysis</h2>
 
 <div class="analysis-grid">
 
-
 <div class="correct-box">
 
+<h2 id="correctCount">0</h2>
 
-<h2 id="correctCount">
-
-0
-
-</h2>
-
-
-<p>
-
-✅ Correct
-
-</p>
-
+<p>✅ Correct</p>
 
 </div>
-
-
-
-
 
 <div class="wrong-box">
 
+<h2 id="wrongCount">0</h2>
 
-<h2 id="wrongCount">
-
-0
-
-</h2>
-
-
-<p>
-
-❌ Wrong
-
-</p>
-
+<p>❌ Wrong</p>
 
 </div>
-
-
-
-
 
 <div class="skip-box">
 
+<h2 id="skipCount">0</h2>
 
-<h2 id="skipCount">
-
-0
-
-</h2>
-
-
-<p>
-
-⏭ Skipped
-
-</p>
-
+<p>⏭ Skipped</p>
 
 </div>
 
-
-
 </div>
-
 
 </section>
-
-
-
-
-
-
-
-
-<!-- =========================
-RANK CARD
-========================= -->
-
 
 <section class="rank-card">
 
-
-<h2>
-
-🏆 Your Ranking
-
-</h2>
-
-
+<h2>🏆 Your Ranking</h2>
 
 <div class="rank-number">
 
-
 #
 
-<span id="rank">
-
-0
-
-</span>
-
+<span id="rank">0</span>
 
 </div>
 
-
-
-
 <p>
 
-📍 District Rank:
+📍 District Rank :
 
 #
 
-<span id="districtRank">
-
-0
-
-</span>
+<span id="districtRank">0</span>
 
 </p>
 
-
-
 </section>
-
-
-
-
-
-
-
-
-<!-- =========================
-ACTION BUTTONS
-========================= -->
-
 
 <section class="action-section">
 
-
-<button id="shareResult"
-class="share-btn">
-
+<button id="shareResult" class="share-btn">
 
 📤 Share Result
 
-
 </button>
 
-
-
-
-
-<button id="retryTest"
-class="retry-btn">
-
+<button id="retryTest" class="retry-btn">
 
 🔄 Try Again
 
-
 </button>
-
 
 </section>
 
-
-
-
-
-
-
-
-<!-- =========================
-BOTTOM NAV
-========================= -->
-
-
 <nav class="bottom-nav">
-
 
 <a href="dashboard.html">
 
-
-🏠
-
-<br>
-
-Home
-
+🏠<br>Home
 
 </a>
-
-
-
 
 <a href="practice.html">
 
-
-📚
-
-<br>
-
-Practice
-
+📚<br>Practice
 
 </a>
-
-
-
 
 <a href="leaderboard.html">
 
-
-🏆
-
-<br>
-
-Leaderboard
-
+🏆<br>Leaderboard
 
 </a>
-
-
-
 
 <a href="profile.html">
 
-
-👤
-
-<br>
-
-Profile
-
+👤<br>Profile
 
 </a>
 
-
-
 </nav>
-
-
-
-
-
-
-
-
-<!-- =========================
-FOOTER
-========================= -->
-
 
 <footer class="footer">
 
-
-<h3>
-
-G THE GENIUS
-
-</h3>
-
-
-
+<h3>G THE GENIUS</h3>
 
 <a href="https://youtube.com/@gthegeniustamil">
 
@@ -447,17 +192,11 @@ G THE GENIUS
 
 </a>
 
-
-
-
 <a href="https://t.me/gthegenius">
 
 📢 Telegram
 
 </a>
-
-
-
 
 <a href="mailto:gthegenius7@gmail.com">
 
@@ -465,26 +204,16 @@ G THE GENIUS
 
 </a>
 
-
-
 <p>
 
-© 2026 G THE GENIUS.
-All Rights Reserved.
+© 2026 G THE GENIUS. All Rights Reserved.
 
 </p>
 
-
-
 </footer>
-  
-
-
 
 <script type="module" src="result.js"></script>
-
 
 </body>
 
 </html>
-
