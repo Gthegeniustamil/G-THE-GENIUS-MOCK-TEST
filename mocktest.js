@@ -1,7 +1,6 @@
 // ===================================
 // G THE GENIUS MOCK TEST ENGINE
-// PART 1
-// TEST TYPE + QUESTION LOADING
+// FINAL VERSION
 // ===================================
 
 
@@ -11,7 +10,8 @@ import { db } from "./firebase-config.js";
 import {
 
 collection,
-getDocs
+getDocs,
+addDoc
 
 }
 from
@@ -31,34 +31,27 @@ new URLSearchParams(window.location.search)
 .get("type");
 
 
-
 let totalQuestions = 10;
 
 let timeLimit = 5 * 60;
 
 
 
-if(testType=="weekly"){
-
+if(testType==="weekly"){
 
 totalQuestions = 25;
-
 timeLimit = 10 * 60;
 
-
 }
 
 
-
-else if(testType=="monthly"){
-
+else if(testType==="monthly"){
 
 totalQuestions = 100;
-
 timeLimit = 60 * 60;
 
-
 }
+
 
 
 
@@ -75,6 +68,8 @@ let currentQuestion=0;
 
 let selectedAnswers=[];
 
+let timerInterval;
+
 
 
 
@@ -82,20 +77,71 @@ let selectedAnswers=[];
 
 
 // ===================================
-// RANDOM SHUFFLE
+// ELEMENTS
+// ===================================
+
+
+const questionNumber =
+document.getElementById("questionNumber");
+
+
+const questionText =
+document.getElementById("questionText");
+
+
+const optionsBox =
+document.getElementById("optionsBox");
+
+
+const nextBtn =
+document.getElementById("nextBtn");
+
+
+const prevBtn =
+document.getElementById("prevBtn");
+
+
+const timer =
+document.getElementById("timer");
+
+
+const questionPalette =
+document.getElementById("questionPalette");
+
+
+const totalCount =
+document.getElementById("totalCount");
+
+
+const answeredCount =
+document.getElementById("answeredCount");
+
+
+const remainingCount =
+document.getElementById("remainingCount");
+
+
+const testProgress =
+document.getElementById("testProgress");
+
+
+
+
+
+
+
+// ===================================
+// SHUFFLE
 // ===================================
 
 
 function shuffle(array){
 
-
 return array.sort(
 ()=>Math.random()-0.5
 );
 
-
 }
-
 
 
 
@@ -116,11 +162,8 @@ try{
 
 let snap =
 await getDocs(
-
 collection(db,"questions")
-
 );
-
 
 
 
@@ -146,17 +189,10 @@ id:doc.id,
 
 
 
-// MIX ALL SUBJECTS
-
-
 allQuestions =
 shuffle(allQuestions);
 
 
-
-
-
-// TAKE REQUIRED COUNT
 
 
 questions =
@@ -164,7 +200,6 @@ allQuestions.slice(
 0,
 totalQuestions
 );
-
 
 
 
@@ -178,78 +213,30 @@ questions.length
 
 
 
-console.log(
-"Loaded Questions:",
-questions
-);
-
-
-
+createPalette();
 
 
 showQuestion();
 
 
+startTimer();
+
 
 
 }
-
 
 
 catch(error){
 
-
 console.log(
-"Question Loading Error",
+"Loading Error",
 error
 );
 
+}
 
 }
 
-
-
-}
-
-
-
-
-
-
-
-// ===================================
-// START
-// ===================================
-
-
-loadQuestions();
-
-// ===================================
-// PART 2
-// QUESTION DISPLAY SYSTEM
-// ===================================
-
-
-
-const questionNumber =
-document.getElementById("questionNumber");
-
-
-const questionText =
-document.getElementById("questionText");
-
-
-const optionsBox =
-document.getElementById("optionsBox");
-
-
-
-const nextBtn =
-document.getElementById("nextBtn");
-
-
-const prevBtn =
-document.getElementById("prevBtn");
 
 
 
@@ -275,11 +262,10 @@ questions[currentQuestion];
 
 
 
-
 questionNumber.innerHTML =
 
 `
-Question ${currentQuestion + 1}
+Question ${currentQuestion+1}
 /
 ${questions.length}
 `;
@@ -288,8 +274,6 @@ ${questions.length}
 
 questionText.innerHTML =
 q.question;
-
-
 
 
 
@@ -317,15 +301,18 @@ option;
 
 
 
+
 if(
 selectedAnswers[currentQuestion]
-==
-option
+===option
 ){
 
-btn.classList.add("selected");
+btn.classList.add(
+"selected"
+);
 
 }
+
 
 
 
@@ -337,11 +324,14 @@ selectedAnswers[currentQuestion]
 option;
 
 
-
 showQuestion();
 
 
+updatePalette();
+
+
 };
+
 
 
 
@@ -356,11 +346,9 @@ optionsBox.appendChild(btn);
 
 
 
-// BUTTON CONTROL
-
-
 prevBtn.style.display =
-currentQuestion==0
+
+currentQuestion===0
 ?
 "none"
 :
@@ -370,13 +358,15 @@ currentQuestion==0
 
 
 
+
 if(
-currentQuestion ==
-questions.length-1
+currentQuestion===questions.length-1
 ){
 
+
 nextBtn.innerHTML =
-"Submit Test";
+"✅ Submit Test";
+
 
 }
 
@@ -384,10 +374,14 @@ else{
 
 
 nextBtn.innerHTML =
-"Next";
+"Next ➡";
+
 
 }
 
+
+
+updatePalette();
 
 
 }
@@ -401,7 +395,7 @@ nextBtn.innerHTML =
 
 
 // ===================================
-// NEXT BUTTON
+// NEXT
 // ===================================
 
 
@@ -437,9 +431,8 @@ submitTest();
 
 
 
-
 // ===================================
-// PREVIOUS BUTTON
+// PREVIOUS
 // ===================================
 
 
@@ -458,46 +451,23 @@ showQuestion();
 
 }
 
-
 };
 
-// ===================================
-// PART 3
-// TIMER + RESULT SYSTEM
-// ===================================
-
-
-
-import {
-
-addDoc
-
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-
-const timer =
-document.getElementById("timer");
-
-
-
-let timerInterval;
 
 
 
 
 
 // ===================================
-// START TIMER
+// TIMER
 // ===================================
 
 
 function startTimer(){
-
 
 
 let time =
@@ -509,27 +479,23 @@ timerInterval =
 setInterval(()=>{
 
 
-
-let minutes =
+let min =
 Math.floor(time/60);
 
 
-
-let seconds =
+let sec =
 time%60;
-
 
 
 
 timer.innerHTML =
 
 `
-⏰ 
-${String(minutes).padStart(2,"0")}
+⏰
+${String(min).padStart(2,"0")}
 :
-${String(seconds).padStart(2,"0")}
+${String(sec).padStart(2,"0")}
 `;
-
 
 
 
@@ -544,7 +510,6 @@ submitTest();
 
 
 }
-
 
 
 
@@ -564,24 +529,6 @@ time--;
 
 
 
-// ===================================
-// CALL TIMER AFTER QUESTIONS LOAD
-// ===================================
-
-
-// loadQuestions() function உள்ளே
-
-// showQuestion();
-
-// கீழே add பண்ணவும்
-
-
-startTimer();
-
-
-
-
-
 
 
 // ===================================
@@ -592,10 +539,7 @@ startTimer();
 async function submitTest(){
 
 
-
 clearInterval(timerInterval);
-
-
 
 
 
@@ -603,15 +547,12 @@ let score=0;
 
 
 
-
-
 questions.forEach((q,index)=>{
-
 
 
 if(
 selectedAnswers[index]
-==
+===
 q.answer
 ){
 
@@ -629,7 +570,6 @@ score++;
 
 
 
-
 let percentage =
 Math.round(
 
@@ -641,19 +581,23 @@ Math.round(
 
 
 
+localStorage.setItem(
+
+"testQuestions",
+
+JSON.stringify(questions)
+
+);
 
 
-let studentName =
-localStorage.getItem("studentName")
-||
-"Guest";
 
+localStorage.setItem(
 
+"selectedAnswers",
 
-let district =
-localStorage.getItem("district")
-||
-"Unknown";
+JSON.stringify(selectedAnswers)
+
+);
 
 
 
@@ -668,9 +612,20 @@ collection(db,"results"),
 {
 
 
-studentName,
+studentName:
 
-district,
+localStorage.getItem("studentName")
+||
+"Guest",
+
+
+
+district:
+
+localStorage.getItem("district")
+||
+"Unknown",
+
 
 
 testType,
@@ -720,45 +675,23 @@ ${percentage}%
 
 
 
-
-window.location.href =
+window.location.href=
 "result.html";
-
 
 
 }
 
-// ===================================
-// PART 4
-// QUESTION PALETTE SYSTEM
-// ===================================
 
 
-const questionPalette =
-document.getElementById("questionPalette");
 
 
-const totalCount =
-document.getElementById("totalCount");
-
-
-const answeredCount =
-document.getElementById("answeredCount");
-
-
-const remainingCount =
-document.getElementById("remainingCount");
-
-
-const testProgress =
-document.getElementById("testProgress");
 
 
 
 
 
 // ===================================
-// CREATE PALETTE
+// QUESTION PALETTE
 // ===================================
 
 
@@ -766,7 +699,6 @@ function createPalette(){
 
 
 questionPalette.innerHTML="";
-
 
 
 totalCount.innerHTML =
@@ -782,14 +714,13 @@ document.createElement("button");
 
 
 
-btn.innerHTML =
-index+1;
-
-
-
 btn.className =
 "palette-btn";
 
+
+
+btn.innerHTML =
+index+1;
 
 
 
@@ -802,11 +733,7 @@ currentQuestion=index;
 showQuestion();
 
 
-updatePalette();
-
-
 };
-
 
 
 
@@ -816,9 +743,6 @@ questionPalette.appendChild(btn);
 
 });
 
-
-
-updatePalette();
 
 
 }
@@ -835,6 +759,7 @@ updatePalette();
 
 
 function updatePalette(){
+
 
 
 let buttons =
@@ -858,11 +783,7 @@ btn.classList.remove(
 
 
 
-
-
-if(
-selectedAnswers[index]
-){
+if(selectedAnswers[index]){
 
 
 btn.classList.add(
@@ -877,11 +798,7 @@ answered++;
 
 
 
-
-
-if(
-index==currentQuestion
-){
+if(index===currentQuestion){
 
 
 btn.classList.add(
@@ -893,9 +810,7 @@ btn.classList.add(
 
 
 
-
 });
-
 
 
 
@@ -908,12 +823,7 @@ answered;
 
 
 remainingCount.innerHTML =
-
-questions.length - answered;
-
-
-
-
+questions.length-answered;
 
 
 
@@ -939,19 +849,9 @@ percent+"%";
 
 
 
-// showQuestion() function கடைசியில் add
+// ===================================
+// START
+// ===================================
 
 
-updatePalette();
-
-
-
-
-
-
-// loadQuestions() உள்ளே add
-
-
-createPalette();
-
-
+loadQuestions();
