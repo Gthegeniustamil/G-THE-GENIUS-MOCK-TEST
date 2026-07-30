@@ -124,7 +124,36 @@ error
 }
 
 
+// =========================
+// GET TOTAL MARKS
+// =========================
 
+function getTotal(data){
+
+    if(data.total){
+
+        return data.total;
+
+    }
+
+
+    if(data.testType === "Weekly Mock Test" || data.testType==="weekly"){
+
+        return 25;
+
+    }
+
+
+    if(data.testType === "Monthly Grand Test" || data.testType==="monthly"){
+
+        return 100;
+
+    }
+
+
+    return 10;
+
+}
 
 
 
@@ -167,7 +196,7 @@ first?.studentName || "-";
 
 
 document.getElementById("firstScore").innerHTML =
-first.score + "/" + first.total;
+first.score + "/" + (first.total || 10);
 
 
 
@@ -183,7 +212,7 @@ second?.studentName || "-";
 
 
 document.getElementById("secondScore").innerHTML =
-second.score + "/" + second.total;
+second.score + "/" + (second.total || 10);
 
 
 
@@ -198,8 +227,7 @@ third?.studentName || "-";
 
 
 document.getElementById("thirdScore").innerHTML =
-third.score + "/" + third.total;
-
+third.score + "/" + (third.total || 10);
 
 }
 
@@ -292,7 +320,7 @@ ${student.district || "-"}
 
 <span class="score">
 
-${student.score || 0}/${student.total || 0}
+${student.score || 0}/${getTotal(student)}
 
 </span>
 
