@@ -48,7 +48,7 @@ db,
 ),
 
 orderBy(
-"percentage",
+"score",
 "desc"
 )
 
@@ -167,7 +167,7 @@ first?.studentName || "-";
 
 
 document.getElementById("firstScore").innerHTML =
-data.score + "/" + data.total;
+first.score + "/" + first.total;
 
 
 
@@ -255,9 +255,8 @@ div.className =
 
 
 let badge =
-
 getBadge(
-student.percentage
+student.score
 );
 
 
@@ -291,10 +290,9 @@ ${student.district || "-"}
 </span>
 
 
-
 <span class="score">
 
-${student.percentage || 0}%
+${student.score || 0}/${student.total || 0}
 
 </span>
 
@@ -334,8 +332,9 @@ list.appendChild(div);
 // =========================
 
 
-function getBadge(score){
 
+
+function getBadge(score){
 
 
 if(score>=90)
@@ -343,17 +342,14 @@ if(score>=90)
 return "🏆 Master";
 
 
-
 if(score>=75)
 
 return "🥇 Pro";
 
 
-
 if(score>=50)
 
 return "🥈 Rising";
-
 
 
 return "⭐ Starter";
@@ -598,17 +594,12 @@ overallRank = index+1;
 
 
 if(
-
-item.percentage > bestScore
-
+item.score > bestScore
 ){
 
-
-bestScore = item.percentage;
-
+bestScore = item.score;
 
 }
-
 
 
 }
@@ -717,7 +708,7 @@ districtRank || "-";
 let scoreElement =
 
 document.getElementById(
-"myPercentage"
+"myBestScore"
 );
 
 
@@ -725,13 +716,8 @@ document.getElementById(
 if(scoreElement)
 
 scoreElement.innerHTML =
-
-bestScore+"%";
-
-
-
+bestScore;
 }
-
 
 
 
