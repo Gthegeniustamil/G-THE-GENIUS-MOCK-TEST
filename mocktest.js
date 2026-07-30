@@ -6,10 +6,10 @@
 import { db, auth } from "./firebase-config.js";
 
 import {
-  collection,
-  getDocs,
-  addDoc,
-  serverTimestamp
+    collection,
+    getDocs,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // =========================
@@ -20,6 +20,7 @@ let testQuestions = [];
 let currentIndex = 0;
 let selectedAnswers = [];
 let timer = null;
+let submitted = false;
 
 let testType = "daily";
 let totalQuestions = 10;
@@ -33,23 +34,39 @@ const params = new URLSearchParams(window.location.search);
 
 testType = params.get("type") || "daily";
 
+let testTitle = "Daily Mock Test";
+
 switch(testType){
 
     case "daily":
         totalQuestions = 10;
         timeLimit = 5 * 60;
+        testTitle = "Daily Mock Test";
         break;
 
     case "weekly":
         totalQuestions = 25;
         timeLimit = 10 * 60;
+        testTitle = "Weekly Mock Test";
         break;
 
     case "monthly":
         totalQuestions = 100;
         timeLimit = 60 * 60;
+        testTitle = "Monthly Grand Test";
         break;
+
 }
+
+// =========================
+// UPDATE PAGE
+// =========================
+
+document.getElementById("testTitle").innerHTML = testTitle;
+document.getElementById("testType").innerHTML = testTitle;
+
+document.getElementById("totalMarks").innerHTML = totalQuestions;
+document.getElementById("timeLimit").innerHTML = Math.floor(timeLimit/60);
 
 // =========================
 // AUTH CHECK
@@ -64,6 +81,7 @@ auth.onAuthStateChanged(async(user)=>{
         window.location.href="login.html";
 
         return;
+
     }
 
     await loadMockQuestions();
@@ -86,20 +104,18 @@ async function loadMockQuestions(){
 
             const data = doc.data();
 
-            const options = Array.isArray(data.options)
-            ? data.options
-            : [
-                data.option1 || "",
-                data.option2 || "",
-                data.option3 || "",
-                data.option4 || ""
-            ];
-
             testQuestions.push({
 
-                question : data.question || "",
+                question : data.question,
 
-                options : options,
+                options : Array.isArray(data.options)
+                    ? data.options
+                    : [
+                        data.option1,
+                        data.option2,
+                        data.option3,
+                        data.option4
+                    ],
 
                 answer : Number(
                     data.answer ??
@@ -107,14 +123,11 @@ async function loadMockQuestions(){
                     0
                 ),
 
-                explanation :
-                data.explanation || "",
+                explanation : data.explanation || "",
 
-                subject :
-                data.subject || "",
+                subject : data.subject || "",
 
-                topic :
-                data.topic || ""
+                topic : data.topic || ""
 
             });
 
@@ -128,11 +141,7 @@ async function loadMockQuestions(){
 
         }
 
-        // Shuffle
-
         testQuestions.sort(()=>Math.random()-0.5);
-
-        // Limit
 
         testQuestions =
         testQuestions.slice(0,totalQuestions);
@@ -155,7 +164,7 @@ async function loadMockQuestions(){
 
         console.error(error);
 
-        alert("Question Load Error");
+        alert(error.message);
 
     }
 
@@ -182,7 +191,8 @@ function showQuestion(){
 
     buttons.forEach((btn,index)=>{
 
-        btn.innerHTML = q.options[index] || "";
+        btn.innerHTML =
+        q.options[index] || "";
 
         btn.classList.remove("selected");
 
@@ -192,7 +202,7 @@ function showQuestion(){
 
         }
 
-        btn.onclick = ()=>{
+        btn.onclick=()=>{
 
             selectAnswer(index);
 
@@ -215,7 +225,11 @@ function selectAnswer(index){
     selectedAnswers[currentIndex]=index;
 
     document.querySelectorAll(".option")
-    .forEach(btn=>btn.classList.remove("selected"));
+    .forEach(btn=>{
+
+        btn.classList.remove("selected");
+
+    });
 
     document.querySelectorAll(".option")[index]
     .classList.add("selected");
@@ -225,15 +239,13 @@ function selectAnswer(index){
 }
 
 // =========================
-// QUESTION PALETTE
+// CREATE PALETTE
 // =========================
 
 function createPalette(){
 
     const box =
     document.getElementById("questionPalette");
-
-    if(!box) return;
 
     box.innerHTML="";
 
@@ -271,8 +283,10 @@ function updatePalette(){
 
     buttons.forEach((btn,index)=>{
 
-        btn.classList.remove("active");
-        btn.classList.remove("answered");
+        btn.classList.remove(
+            "active",
+            "answered"
+        );
 
         if(index===currentIndex){
 
@@ -291,15 +305,18 @@ function updatePalette(){
 }
 
 // =========================
-// PROGRESS BAR
+// UPDATE PROGRESS
 // =========================
 
 function updateProgress(){
 
     const percent =
-    ((currentIndex+1)/testQuestions.length)*100;
+    ((currentIndex+1)/
+    testQuestions.length)*100;
 
-    document.getElementById("testProgress").style.width =
+    document.getElementById(
+    "testProgress"
+    ).style.width =
     percent + "%";
 
 }
@@ -308,9 +325,14 @@ function updateProgress(){
 // NEXT BUTTON
 // =========================
 
-document.getElementById("nextBtn").onclick = ()=>{
+document.getElementById(
+"nextBtn"
+).onclick=()=>{
 
-    if(currentIndex < testQuestions.length-1){
+    if(
+        currentIndex <
+        testQuestions.length-1
+    ){
 
         currentIndex++;
 
@@ -324,7 +346,9 @@ document.getElementById("nextBtn").onclick = ()=>{
 // PREVIOUS BUTTON
 // =========================
 
-document.getElementById("previousBtn").onclick = ()=>{
+document.getElementById(
+"previousBtn"
+).onclick=()=>{
 
     if(currentIndex>0){
 
@@ -335,6 +359,7 @@ document.getElementById("previousBtn").onclick = ()=>{
     }
 
 };
+
 // =========================
 // TIMER
 // =========================
@@ -351,7 +376,7 @@ function startTimer(){
 
         updateTimer(seconds);
 
-        if(seconds <= 0){
+        if(seconds<=0){
 
             clearInterval(timer);
 
@@ -367,9 +392,9 @@ function startTimer(){
 
 function updateTimer(seconds){
 
-    let min = Math.floor(seconds / 60);
+    let min = Math.floor(seconds/60);
 
-    let sec = seconds % 60;
+    let sec = seconds%60;
 
     document.getElementById("timer").innerHTML =
     "⏰ " +
@@ -391,13 +416,13 @@ function calculateResult(){
 
     testQuestions.forEach((q,index)=>{
 
-        if(selectedAnswers[index] === null){
+        if(selectedAnswers[index]===null){
 
             skipped++;
 
         }
 
-        else if(selectedAnswers[index] == q.answer){
+        else if(selectedAnswers[index]===q.answer){
 
             correct++;
 
@@ -411,89 +436,93 @@ function calculateResult(){
 
     });
 
-    return {
+    return{
 
-        score: correct,
-        correct: correct,
-        wrong: wrong,
-        skipped: skipped
+        score:correct,
+        correct:correct,
+        wrong:wrong,
+        skipped:skipped
 
     };
 
 }
 
 // =========================
-// SUBMIT BUTTON
+// SUBMIT CONFIRM
 // =========================
 
-document.getElementById("submitBtn").onclick = ()=>{
+document.getElementById("submitBtn").onclick=()=>{
 
-    document.getElementById("submitConfirm").style.display="block";
-
-};
-
-document.getElementById("cancelSubmit").onclick = ()=>{
-
-    document.getElementById("submitConfirm").style.display="none";
+    document.getElementById(
+    "submitConfirm"
+    ).style.display="block";
 
 };
 
-document.getElementById("confirmSubmit").onclick = async ()=>{
+document.getElementById("cancelSubmit").onclick=()=>{
 
-    document.getElementById("submitConfirm").style.display="none";
-
-    await submitTest();
+    document.getElementById(
+    "submitConfirm"
+    ).style.display="none";
 
 };
+
+document.getElementById("confirmSubmit").onclick=()=>{
+
+    submitTest();
+
+};
+
 // =========================
-// SAVE RESULT FIREBASE
+// SAVE RESULT
 // =========================
 
 async function saveResult(result){
 
     const user = auth.currentUser;
 
-    if(!user){
+    if(!user) return;
 
-        alert("User Not Logged In");
+    await addDoc(
 
-        return;
-    }
+        collection(db,"results"),
 
-    await addDoc(collection(db,"results"),{
+        {
 
-        studentId : user.uid,
+            studentId:user.uid,
 
-        studentName :
-        localStorage.getItem("studentName") || "Student",
+            studentName:
+            localStorage.getItem("studentName") || "Student",
 
-        district :
-        localStorage.getItem("district") || "-",
+            district:
+            localStorage.getItem("district") || "-",
 
-        examType :
-        localStorage.getItem("examGoal") || "TNUSRB",
+            examType:
+            localStorage.getItem("examGoal") || "TNUSRB",
 
-        testType : testType,
+            testType:testType,
 
-        score : result.score,
+            score:result.score,
 
-        total : testQuestions.length,
+            total:testQuestions.length,
 
-        correct : result.correct,
+            correct:result.correct,
 
-        wrong : result.wrong,
+            wrong:result.wrong,
 
-        skipped : result.skipped,
+            skipped:result.skipped,
 
-        answers : selectedAnswers,
+            answers:selectedAnswers,
 
-        questions : testQuestions,
+            questions:testQuestions,
 
-        timestamp : serverTimestamp()
+            timestamp:serverTimestamp()
 
-    });
+        }
 
-}
+    );
+
+  }
 
 // =========================
 // SAVE RESULT LOCAL
@@ -501,28 +530,31 @@ async function saveResult(result){
 
 function saveResultLocal(result){
 
-    localStorage.setItem("lastResult",JSON.stringify({
+    localStorage.setItem(
+        "lastResult",
+        JSON.stringify({
 
-        score : result.score,
+            score:result.score,
 
-        total : testQuestions.length,
+            total:testQuestions.length,
 
-        correct : result.correct,
+            correct:result.correct,
 
-        wrong : result.wrong,
+            wrong:result.wrong,
 
-        skipped : result.skipped,
+            skipped:result.skipped,
 
-        answers : selectedAnswers,
+            answers:selectedAnswers,
 
-        questions : testQuestions,
+            questions:testQuestions,
 
-        testType : testType,
+            testType:testType,
 
-        examType :
-        localStorage.getItem("examGoal") || "TNUSRB"
+            examType:
+            localStorage.getItem("examGoal") || "TNUSRB"
 
-    }));
+        })
+    );
 
 }
 
@@ -530,17 +562,17 @@ function saveResultLocal(result){
 // SUBMIT TEST
 // =========================
 
-let submitted = false;
-
 async function submitTest(){
 
     if(submitted) return;
 
     submitted = true;
 
-    try{
+    clearInterval(timer);
 
-        clearInterval(timer);
+    document.getElementById("submitConfirm").style.display="none";
+
+    try{
 
         const result = calculateResult();
 
@@ -564,16 +596,16 @@ async function submitTest(){
 
         console.error(error);
 
-        submitted = false;
-
         alert("❌ Result Save Failed");
+
+        submitted = false;
 
     }
 
 }
 
 // =========================
-// PREVENT EXIT
+// PREVENT PAGE EXIT
 // =========================
 
 window.onbeforeunload = function(){
