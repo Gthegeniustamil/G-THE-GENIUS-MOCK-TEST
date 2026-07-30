@@ -17,19 +17,15 @@ serverTimestamp
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-
-
 // =========================
-// SUBJECT → TOPIC SYSTEM
+// G THE GENIUS SUBJECT TOPICS
+// MATCH WITH HTML
 // =========================
-
 
 const topics = {
 
 
 "Indian Polity":[
-
 "Constitution",
 "Preamble",
 "Citizenship",
@@ -38,52 +34,120 @@ const topics = {
 "DPSP",
 "Parliament",
 "President",
+"Vice President",
 "Prime Minister",
 "Governor",
+"Chief Minister",
 "Supreme Court",
 "High Court",
+"Election Commission",
 "Emergency",
-"Amendments",
-"Important Articles"
-
+"Constitutional Bodies",
+"Important Articles",
+"Amendments"
 ],
 
+
+"Indian Constitution":[
+"Making of Constitution",
+"Constituent Assembly",
+"Features of Constitution",
+"Schedules",
+"Articles",
+"Amendments",
+"Committees"
+],
 
 
 "Indian History":[
-
 "Ancient India",
+"Indus Valley Civilization",
+"Vedic Period",
+"Mauryan Empire",
+"Gupta Empire",
 "Medieval India",
-"Modern India",
-"Freedom Struggle",
-"Governor Generals",
-"Viceroys",
-"INC",
-"Important Movements",
-"Important Personalities"
-
+"Mughal Empire",
+"Modern India"
 ],
 
 
+"World History":[
+"World War I",
+"World War II",
+"French Revolution",
+"Industrial Revolution",
+"World Leaders",
+"Important Events"
+],
+
+
+"Freedom Struggle":[
+"1857 Revolt",
+"Indian National Congress",
+"Moderates",
+"Extremists",
+"Gandhian Era",
+"Non Cooperation Movement",
+"Civil Disobedience Movement",
+"Quit India Movement"
+],
+
+
+"Tamil Nadu History":[
+"Sangam Age",
+"Chera Dynasty",
+"Chola Dynasty",
+"Pandya Dynasty",
+"Pallava Dynasty",
+"Freedom Fighters",
+"Social Reformers"
+],
+
 
 "Geography":[
-
-"Indian Geography",
-"World Geography",
-"Tamil Nadu Geography",
+"Earth",
 "Climate",
 "Rivers",
 "Mountains",
 "Soil",
 "Agriculture",
-"Minerals"
-
+"Minerals",
+"Natural Resources"
 ],
 
 
+"Indian Geography":[
+"States",
+"Rivers",
+"Climate",
+"Soil",
+"Agriculture",
+"Industries",
+"Resources"
+],
+
+
+"World Geography":[
+"Continents",
+"Oceans",
+"Countries",
+"Mountains",
+"Deserts",
+"Climate"
+],
+
+
+"Tamil Nadu Geography":[
+"Districts",
+"Rivers",
+"Soil",
+"Agriculture",
+"Industries",
+"Resources"
+],
+
 
 "General Science":[
-
 "Physics",
 "Chemistry",
 "Biology",
@@ -91,89 +155,302 @@ const topics = {
 "Diseases",
 "Environment",
 "Science Technology"
-
 ],
 
 
-
-"Tamil Nadu GK":[
-
-"History",
-"Geography",
-"Districts",
-"Schemes",
-"Culture",
-"Administration"
-
+"Physics":[
+"Motion",
+"Force",
+"Work",
+"Energy",
+"Heat",
+"Light",
+"Electricity",
+"Magnetism"
 ],
 
+
+"Chemistry":[
+"Atom",
+"Elements",
+"Compounds",
+"Acids",
+"Bases",
+"Salts",
+"Periodic Table"
+],
+
+
+"Biology":[
+"Cell",
+"Human Body",
+"Genetics",
+"Nutrition",
+"Plants",
+"Animals",
+"Diseases"
+],
+
+
+"Botany":[
+"Plant Cell",
+"Photosynthesis",
+"Plant Hormones",
+"Plant Diseases",
+"Classification"
+],
+
+
+"Zoology":[
+"Animal Kingdom",
+"Human Anatomy",
+"Animal Diseases",
+"Classification"
+],
+
+
+"Environment":[
+"Ecology",
+"Biodiversity",
+"Pollution",
+"Climate Change",
+"Conservation"
+],
+
+
+"Science & Technology":[
+"ISRO",
+"Space Technology",
+"Inventions",
+"AI Technology",
+"Latest Technology"
+],
+
+
+"Economics":[
+"Basic Economics",
+"Money",
+"Banking",
+"Inflation",
+"Market"
+],
+
+
+"Indian Economy":[
+"GDP",
+"Budget",
+"Tax",
+"Banking",
+"Planning",
+"Finance Commission"
+],
+
+
+"Tamil Nadu Economy":[
+"Industries",
+"Agriculture",
+"Government Schemes",
+"Economy Development"
+],
 
 
 "Current Affairs":[
-
 "National",
 "International",
 "Sports",
 "Awards",
 "Appointments",
-"Science",
-"Defence"
-
+"Defence",
+"Government Schemes"
 ],
 
+
+"Tamil Nadu GK":[
+"Districts",
+"Temples",
+"Rivers",
+"Government Schemes",
+"Important Places",
+"Personalities"
+],
+
+
+"Computer Science":[
+"Computer Basics",
+"Hardware",
+"Software",
+"Operating System",
+"Internet",
+"Cyber Security"
+],
 
 
 "Aptitude":[
-
+"Number System",
 "Percentage",
 "Ratio",
 "Average",
-"Profit Loss",
-"Time Work",
-"Time Distance",
-"Simple Interest"
-
+"Profit and Loss",
+"Time and Work",
+"Time and Distance"
 ],
-
 
 
 "Reasoning":[
-
 "Analogy",
 "Coding Decoding",
 "Blood Relation",
-"Direction",
+"Direction Test",
 "Series",
 "Puzzle"
-
 ],
-
 
 
 "Tamil":[
-
-"இலக்கணம்",
-"இலக்கியம்",
+"தமிழ் இலக்கணம்",
+"தமிழ் இலக்கியம்",
 "சங்க இலக்கியம்",
-"செய்யுள்",
-"உரைநடை"
-
+"காப்பியங்கள்",
+"சிற்றிலக்கியம்"
 ],
 
 
-
 "English":[
-
 "Grammar",
 "Vocabulary",
 "Tenses",
 "Synonyms",
-"Antonyms"
+"Antonyms",
+"Comprehension"
+],
 
+
+"Sports":[
+"Cricket",
+"Football",
+"Olympics",
+"Players",
+"Tournaments"
+],
+
+
+"Awards and Honours":[
+"National Awards",
+"International Awards",
+"Padma Awards",
+"Nobel Prize"
+],
+
+
+"Books and Authors":[
+"Books",
+"Authors",
+"Literature",
+"Famous Writers"
+],
+
+
+"Important Days":[
+"National Days",
+"International Days",
+"Important Dates"
+],
+
+
+"Art and Culture":[
+"Dance",
+"Music",
+"Festivals",
+"Architecture",
+"Traditional Arts"
+],
+
+
+"Defence":[
+"Army",
+"Navy",
+"Air Force",
+"Missiles",
+"Military Exercises"
+],
+
+
+"Space Technology":[
+"ISRO",
+"Satellites",
+"Space Missions",
+"Rockets"
+],
+
+
+"Previous Year Questions":[
+"TNUSRB Previous Questions",
+"TNPSC Previous Questions",
+"SSC Previous Questions"
+],
+
+
+"Model Questions":[
+"Practice Set",
+"Mock Test",
+"Grand Test"
 ]
 
 
 };
+
+const bulkSubject =
+document.getElementById("bulkSubject");
+
+const bulkTopic =
+document.getElementById("bulkTopic");
+
+
+if(bulkSubject && bulkTopic){
+
+bulkSubject.onchange = ()=>{
+
+
+let subject = bulkSubject.value;
+
+
+bulkTopic.innerHTML =
+`
+<option>
+Select Topic
+</option>
+`;
+
+
+
+if(topics[subject]){
+
+
+topics[subject].forEach(t=>{
+
+
+bulkTopic.innerHTML +=
+`
+<option value="${t}">
+${t}
+</option>
+`;
+
+
+
+});
+
+
+}
+
+
+};
+
+
+}
+
+
+
 
 
 
