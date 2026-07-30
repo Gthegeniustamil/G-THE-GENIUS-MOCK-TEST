@@ -263,96 +263,73 @@ option
 }
 
 
-
-
-
-
-
-
 // =========================
-// BULK UPLOAD
+// BULK UPLOAD FINAL SYSTEM
+// FILE + COPY PASTE
 // =========================
 
 
-const uploadBtn =
-
-document.getElementById(
-"bulkUploadBtn"
-);
+const bulkUploadBtn = 
+document.getElementById("bulkUploadBtn");
 
 
 
-
-if(uploadBtn){
-
+if(bulkUploadBtn){
 
 
-uploadBtn.onclick = async()=>{
+bulkUploadBtn.onclick = async()=>{
 
 
-
-let subject =
-
-document.getElementById(
-"bulkSubject"
-).value;
-
+let subject = 
+document.getElementById("bulkSubject").value;
 
 
 let topic =
+document.getElementById("bulkTopic").value;
 
-document.getElementById(
-"bulkTopic"
-).value;
+
+
+let pasteData =
+document.getElementById("bulkText")?.value.trim();
+
+
+
+let questions = [];
+
+
+
+
+
+// =========================
+// GET JSON FILE
+// =========================
+
+
+let fileInput =
+document.getElementById("jsonFile");
+
+
+
+
+
+if(fileInput && fileInput.files.length > 0){
+
+
+let file =
+fileInput.files[0];
 
 
 
 let text =
-
-document.getElementById(
-"bulkText"
-).value.trim();
-
-
-
-
-
-if(!subject || !topic){
-
-alert(
-"Select Subject and Topic"
-);
-
-return;
-
-}
-
-
-
-
-
-if(!text){
-
-alert(
-"Paste JSON First"
-);
-
-return;
-
-}
-
-
-
-
-
-let questions;
+await file.text();
 
 
 
 try{
 
 
-questions = JSON.parse(text);
+questions =
+JSON.parse(text);
 
 
 }
@@ -360,8 +337,61 @@ questions = JSON.parse(text);
 catch(error){
 
 
+alert("Invalid JSON File");
+
+return;
+
+
+}
+
+
+
+}
+
+
+
+
+
+// =========================
+// GET COPY PASTE
+// =========================
+
+
+else if(pasteData){
+
+
+
+try{
+
+
+questions =
+JSON.parse(pasteData);
+
+
+}
+
+catch(error){
+
+
+alert("Invalid JSON Paste Format");
+
+return;
+
+
+}
+
+
+
+}
+
+
+
+
+else{
+
+
 alert(
-"Invalid JSON Format"
+"Upload JSON File or Paste Questions"
 );
 
 
@@ -369,6 +399,26 @@ return;
 
 
 }
+
+
+
+
+
+
+
+if(!subject || !topic){
+
+
+alert(
+"Select Subject and Topic"
+);
+
+
+return;
+
+
+}
+
 
 
 
@@ -389,7 +439,9 @@ let failed = 0;
 
 
 
-// Existing Question Check
+// =========================
+// EXISTING QUESTIONS
+// =========================
 
 
 const snap = await getDocs(
@@ -403,14 +455,17 @@ db,
 
 
 
-let existing = [];
+let existing=[];
+
 
 
 
 snap.forEach(doc=>{
 
 
-let data = doc.data();
+let data =
+doc.data();
+
 
 
 existing.push(
@@ -422,12 +477,20 @@ data.question
 );
 
 
+
 });
 
 
 
 
 
+
+
+
+
+// =========================
+// UPLOAD LOOP
+// =========================
 
 
 for(let q of questions){
@@ -437,8 +500,25 @@ for(let q of questions){
 try{
 
 
+if(
+!q.question ||
+!q.options ||
+q.options.length!==4
+){
 
-let questionText =
+
+failed++;
+
+continue;
+
+
+}
+
+
+
+
+
+let cleanQuestion =
 
 q.question
 .toLowerCase()
@@ -448,7 +528,9 @@ q.question
 
 
 
-if(existing.includes(questionText)){
+if(
+existing.includes(cleanQuestion)
+){
 
 
 duplicate++;
@@ -457,6 +539,8 @@ continue;
 
 
 }
+
+
 
 
 
@@ -473,27 +557,52 @@ db,
 {
 
 
-subject:subject,
+questionId:
 
-topic:topic,
-
-
-question:q.question,
+"GTG-Q-"+Date.now(),
 
 
-options:q.options,
+
+subject:
+
+subject,
 
 
-answer:q.answer,
+
+topic:
+
+topic,
 
 
-explanation:q.explanation || "",
+
+question:
+
+q.question,
+
+
+
+options:
+
+q.options,
+
+
+
+answer:
+
+Number(q.answer),
+
+
+
+explanation:
+
+q.explanation || "",
 
 
 
 createdAt:
 
 serverTimestamp()
+
 
 
 }
@@ -506,7 +615,7 @@ serverTimestamp()
 
 
 existing.push(
-questionText
+cleanQuestion
 );
 
 
@@ -515,9 +624,8 @@ added++;
 
 
 
+
 }
-
-
 
 catch(error){
 
@@ -528,7 +636,6 @@ failed++;
 }
 
 
-
 }
 
 
@@ -536,31 +643,39 @@ failed++;
 
 
 
+
+
+// =========================
 // REPORT
-
-
-document.getElementById(
-"bulkTotal"
-).innerHTML = total;
+// =========================
 
 
 
-document.getElementById(
-"addedCount"
-).innerHTML = added;
+if(document.getElementById("bulkTotal"))
+
+document.getElementById("bulkTotal").innerHTML =
+total;
 
 
 
-document.getElementById(
-"skippedCount"
-).innerHTML = duplicate;
+if(document.getElementById("addedCount"))
+
+document.getElementById("addedCount").innerHTML =
+added;
 
 
 
-document.getElementById(
-"failedCount"
-).innerHTML = failed;
+if(document.getElementById("skippedCount"))
 
+document.getElementById("skippedCount").innerHTML =
+duplicate;
+
+
+
+if(document.getElementById("failedCount"))
+
+document.getElementById("failedCount").innerHTML =
+failed;
 
 
 
@@ -583,10 +698,17 @@ alert(
 
 
 
+// CLEAR
 
-document.getElementById(
-"bulkText"
-).value="";
+
+if(document.getElementById("bulkText"))
+
+document.getElementById("bulkText").value="";
+
+
+if(fileInput)
+
+fileInput.value="";
 
 
 
@@ -597,32 +719,16 @@ document.getElementById(
 }
 
 
-
-
-
 console.log(
-"✅ Admin Bulk Upload Part 1 Ready"
+"✅ Final Bulk Upload Ready"
 );
-// =========================
-// G THE GENIUS ADMIN JS
-// FINAL VERSION
-// PART 2
-// QUESTION MANAGEMENT
-// =========================
-
-
-import {
-
-collection,
-getDocs,
-deleteDoc,
-doc
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
-let allQuestions = [];
+
+
+
+
 
 
 
