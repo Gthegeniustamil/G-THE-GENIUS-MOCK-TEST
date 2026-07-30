@@ -3,624 +3,266 @@
 // PART 1
 // =========================
 
-
 import { db, auth } from "./firebase-config.js";
 
-
 import {
-
-collection,
-query,
-where,
-orderBy,
-limit,
-getDocs
-
+    collection,
+    query,
+    where,
+    orderBy,
+    limit,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
 
 // =========================
 // LOAD RESULT
 // =========================
 
+auth.onAuthStateChanged(async(user)=>{
 
-async function loadResult(){
+    if(!user){
 
+        window.location.href="login.html";
+        return;
 
-const user =
+    }
 
-auth.currentUser;
-
-
-
-if(!user){
-
-console.log(
-"User Not Login"
-);
-
-return;
-
-}
-
-
-
-
-
-try{
-
-
-const q = query(
-
-collection(db,"results"),
-
-where(
-"studentId",
-"==",
-user.uid
-),
-
-orderBy(
-"timestamp",
-"desc"
-),
-
-limit(1)
-
-);
-
-
-
-
-
-const snap =
-
-await getDocs(q);
-
-
-
-
-
-snap.forEach(doc=>{
-
-
-let data = doc.data();
-
-
-
-
-displayResult(data);
-
-
+    await loadResult();
 
 });
 
+// =========================
+// LOAD LATEST RESULT
+// =========================
 
+async function loadResult(){
 
+    try{
 
+        const q = query(
+
+            collection(db,"results"),
+
+            where("studentId","==",auth.currentUser.uid),
+
+            orderBy("timestamp","desc"),
+
+            limit(1)
+
+        );
+
+        const snap = await getDocs(q);
+
+        if(snap.empty){
+
+            alert("No Result Found");
+            return;
+
+        }
+
+        snap.forEach(doc=>{
+
+            displayResult(doc.data());
+
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("Result Loading Failed");
+
+    }
 
 }
-
-catch(error){
-
-
-console.log(
-"Result Error",
-error
-);
-
-
-
-}
-
-
-}
-
-
-
-
-
-
-
 
 // =========================
 // DISPLAY RESULT
 // =========================
 
-
 function displayResult(data){
 
+    // Marks
+    document.getElementById("score").innerHTML =
+    data.score ?? 0;
 
+    document.getElementById("total").innerHTML =
+    data.total ?? 0;
 
-document.getElementById(
-"score"
-).innerHTML =
+    // Test Type
+    document.getElementById("testType").innerHTML =
+    data.testType ?? "-";
 
-data.score;
+    // Exam Name
+    document.getElementById("examName").innerHTML =
+    data.examType ?? "TNUSRB";
 
+    // Correct
+    document.getElementById("correctCount").innerHTML =
+    data.correct ?? 0;
 
+    // Wrong
+    document.getElementById("wrongCount").innerHTML =
+    data.wrong ?? 0;
 
+    // Skipped
+    document.getElementById("skipCount").innerHTML =
+    data.skipped ?? 0;
 
+    // Percentage element இருந்தால் hide
+    const percentage =
+    document.getElementById("percentage");
 
-document.getElementById(
-"total"
-).innerHTML =
+    if(percentage){
 
-data.total;
+        percentage.parentElement.style.display="none";
 
+    }
 
-
-
-document.getElementById(
-"testType"
-).innerHTML =
-
-data.testType;
-
-
-
-document.getElementById(
-"examName"
-).innerHTML =
-
-data.examType;
-
-
-
-
-
-calculateAnalysis(data);
-
-
-
-
+    calculateRank();
 
 }
 
-
-
-
-
-
-
 // =========================
-// ANSWER ANALYSIS
+// CALCULATE RANK
 // =========================
-
-
-function calculateAnalysis(data){
-
-document.getElementById(
-"correctCount"
-).innerHTML =
-data.correct || 0;
-
-document.getElementById(
-"wrongCount"
-).innerHTML =
-data.wrong || 0;
-
-document.getElementById(
-"skipCount"
-).innerHTML =
-data.skipped || 0;
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// PAGE LOAD
-// =========================
-
-
-auth.onAuthStateChanged(
-
-(user)=>{
-
-
-if(user){
-
-
-loadResult();
-
-
-}
-
-
-
-});
-
-// =========================
-// RANK SYSTEM
-// =========================
-
 
 async function calculateRank(){
 
+    try{
 
-const rankQuery =
+        const q = query(
 
-query(
+            collection(db,"results"),
 
-collection(db,"results"),
+            orderBy("score","desc")
 
-orderBy(
-"score",
-"desc"
-)
+        );
 
-);
+        const snap = await getDocs(q);
 
+        let overallRank = 1;
+        let districtRank = 1;
 
+        const currentUser = auth.currentUser;
+        const myDistrict =
+        localStorage.getItem("district");
 
+        for(const doc of snap.docs){
 
-const snap =
+            const data = doc.data();
 
-await getDocs(rankQuery);
+            if(data.studentId === currentUser.uid){
 
+                document.getElementById("rank").innerHTML =
+                overallRank;
 
+                break;
 
-let rank = 1;
+            }
 
+            overallRank++;
 
-let districtRank = 1;
+        }
 
+        for(const doc of snap.docs){
 
+            const data = doc.data();
 
-let currentUser =
+            if(data.district === myDistrict){
 
-auth.currentUser;
+                if(data.studentId === currentUser.uid){
 
+                    document.getElementById("districtRank").innerHTML =
+                    districtRank;
 
+                    break;
 
-let myDistrict =
+                }
 
-localStorage.getItem(
-"district"
-);
+                districtRank++;
 
+            }
 
+        }
 
+    }
 
+    catch(error){
 
-for(let doc of snap.docs){
+        console.error(error);
 
-
-let data = doc.data();
-
-
-
-
-
-if(
-data.studentId === currentUser.uid
-){
-
-
-document.getElementById(
-"rank"
-).innerHTML =
-
-rank;
-
-
+    }
 
 }
-
-else{
-
-
-rank++;
-
-
-}
-
-
-
-
-
-if(
-data.district === myDistrict
-){
-
-
-
-if(
-data.studentId === currentUser.uid
-){
-
-
-document.getElementById(
-"districtRank"
-).innerHTML =
-
-districtRank;
-
-
-
-}
-
-
-districtRank++;
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
 
 // =========================
 // SHARE RESULT
 // =========================
 
-
 const shareBtn =
-
-document.getElementById(
-"shareResult"
-);
-
-
+document.getElementById("shareResult");
 
 if(shareBtn){
 
+    shareBtn.onclick = async()=>{
 
-
-shareBtn.onclick = async()=>{
-
-
-
-let text =
-
-
-`🏆 G THE GENIUS MOCK TEST RESULT
-
-🎯 Score : ${document.getElementById("score").innerHTML}/${document.getElementById("total").innerHTML}
-
+        const text =
+`🏆 G THE GENIUS MOCK TEST
 
 🎯 Marks : ${document.getElementById("score").innerHTML}/${document.getElementById("total").innerHTML}
 
-🚀 Prepare More With G THE GENIUS`;
+✅ Correct : ${document.getElementById("correctCount").innerHTML}
 
+❌ Wrong : ${document.getElementById("wrongCount").innerHTML}
 
+⏭ Skipped : ${document.getElementById("skipCount").innerHTML}`;
 
+        if(navigator.share){
 
+            await navigator.share({
 
+                title:"G THE GENIUS",
 
-if(
-navigator.share
-){
+                text:text
 
+            });
 
+        }
 
-await navigator.share({
+        else{
 
-title:
-"G THE GENIUS Result",
+            await navigator.clipboard.writeText(text);
 
-text:text
+            alert("Result Copied");
 
+        }
 
-});
-
-
-
-}
-
-else{
-
-
-navigator.clipboard.writeText(
-text
-);
-
-
-
-alert(
-"Result Copied"
-);
-
-
+    };
 
 }
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
 
 // =========================
-// RETRY TEST
+// RETRY BUTTON
 // =========================
-
 
 const retryBtn =
-
-document.getElementById(
-"retryTest"
-);
-
-
+document.getElementById("retryTest");
 
 if(retryBtn){
 
+    retryBtn.onclick = ()=>{
 
+        window.location.href="dashboard.html";
 
-retryBtn.onclick = ()=>{
-
-
-window.location.href =
-"dashboard.html";
-
-
-
-};
-
-
+    };
 
 }
 
-
-
-
-
-
-
-
 // =========================
-// PROFILE XP UPDATE
+// FINAL READY
 // =========================
 
-
-function updateProfileXP(){
-
-
-
-let xp =
-
-Number(
-
-localStorage.getItem(
-"xp"
-
-)
-
-)||0;
-
-
-
-
-let oldLevel =
-
-Math.floor(
-xp/100
-)+1;
-
-
-
-
-xp += 20;
-
-
-
-localStorage.setItem(
-"xp",
-xp
-);
-
-
-
-
-let newLevel =
-
-Math.floor(
-xp/100
-)+1;
-
-
-
-
-
-if(
-newLevel > oldLevel
-){
-
-
-localStorage.setItem(
-
-"levelUp",
-
-"true"
-
-);
-
-
-
-}
-
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// LOAD RANK AFTER RESULT
-// =========================
-
-
-const oldDisplayResult =
-
-displayResult;
-
-
-
-displayResult = function(data){
-
-
-
-oldDisplayResult(data);
-
-
-
-setTimeout(()=>{
-
-
-calculateRank();
-
-
-updateProfileXP();
-
-
-
-},1000);
-
-
-
-};
-
-
-
-
-
-
-console.log(
-
-"✅ G THE GENIUS RESULT READY"
-
-);
+console.log("✅ RESULT PAGE READY");
