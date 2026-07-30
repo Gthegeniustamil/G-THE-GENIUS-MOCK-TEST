@@ -79,26 +79,14 @@ document.getElementById("studentExam").innerHTML =
 localStorage.getItem("examGoal") || "TNUSRB";
 
 
-
-
-
 const q = query(
-
 collection(db,"results"),
-
 where(
 "studentId",
 "==",
 user.uid
-),
-
-orderBy(
-"timestamp",
-"desc"
 )
-
 );
-
 
 
 const snap = await getDocs(q);
@@ -303,16 +291,18 @@ function displayRecentTests(dataList){
 
 
 
-        if(data.timestamp){
+        if(data.timestamp && data.timestamp.toDate){
 
+date =
+data.timestamp.toDate()
+.toLocaleDateString();
 
-            date =
-            data.timestamp
-            .toDate()
-            .toLocaleDateString();
+}
+else{
 
+date = "Recent Test";
 
-        }
+}
 
 
 
