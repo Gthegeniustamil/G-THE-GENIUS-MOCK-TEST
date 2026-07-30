@@ -7,7 +7,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>
 G THE GENIUS Admin Panel
 </title>
@@ -22,8 +21,6 @@ G THE GENIUS Admin Panel
 <body>
 
 
-
-
 <!-- =========================
 ADMIN HEADER
 ========================= -->
@@ -33,29 +30,19 @@ ADMIN HEADER
 
 
 <img
-
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
 class="admin-logo"
-
-
 >
-
 
 
 <div>
 
 <h2>
-
 G THE GENIUS
-
 </h2>
 
-
 <p>
-
 Admin Question Panel
-
 </p>
 
 
@@ -76,13 +63,19 @@ Checking...
 
 </div>
 
+
+
 <button id="adminLogoutBtn">
 
 🚪 Logout
 
 </button>
-  
+
+
 </header>
+
+
+
 
 
 
@@ -90,6 +83,7 @@ Checking...
 <!-- =========================
 ADMIN STATS
 ========================= -->
+
 
 <section class="admin-stats">
 
@@ -164,7 +158,6 @@ Tamil Nadu GK
 
 
 
-
 </section>
 
 
@@ -173,71 +166,128 @@ Tamil Nadu GK
 
 
 
-<script type="module" src="admin-security.js"></script>
-
-<script type="module" src="admin.js"></script>
 
 <!-- =========================
-BULK UPLOAD SECTION
+BULK UPLOAD
 ========================= -->
-<label>Subject</label>
+
+
+<section class="bulk-card">
+
+
+<h2>
+📂 Bulk Question Upload
+</h2>
+
+
+
+
+<label>
+Subject
+</label>
+
+
 
 <select id="bulkSubject">
 
-<option value="">Select Subject</option>
 
-<option value="Indian Polity">Indian Polity</option>
-<option value="Indian History">Indian History</option>
-<option value="World History">World History</option>
-<option value="Freedom Struggle">Freedom Struggle</option>
-<option value="Tamil Nadu History">Tamil Nadu History</option>
+<option value="">
+Select Subject
+</option>
 
-<option value="Geography">Geography</option>
-<option value="General Science">General Science</option>
-<option value="Physics">Physics</option>
-<option value="Chemistry">Chemistry</option>
-<option value="Biology">Biology</option>
 
-<option value="Economics">Economics</option>
-<option value="Computer Science">Computer Science</option>
+<option>Indian Polity</option>
 
-<option value="Current Affairs">Current Affairs</option>
+<option>Indian Constitution</option>
 
-<option value="Environment">Environment</option>
+<option>Indian History</option>
 
-<option value="Art and Culture">Art and Culture</option>
+<option>World History</option>
 
-<option value="Sports">Sports</option>
+<option>Freedom Struggle</option>
 
-<option value="Books and Authors">Books and Authors</option>
+<option>Tamil Nadu History</option>
 
-<option value="Awards and Honours">Awards and Honours</option>
 
-<option value="Important Days">Important Days</option>
+<option>Geography</option>
 
-<option value="Tamil Nadu GK">Tamil Nadu GK</option>
+<option>Indian Geography</option>
 
-<option value="English">English</option>
+<option>World Geography</option>
 
-<option value="Tamil">Tamil</option>
+<option>Tamil Nadu Geography</option>
 
-<option value="Aptitude">Aptitude</option>
 
-<option value="Reasoning">Reasoning</option>
+<option>General Science</option>
 
-<option value="Previous Year Questions">Previous Year Questions</option>
+<option>Physics</option>
 
-<option value="Model Questions">Model Questions</option>
+<option>Chemistry</option>
+
+<option>Biology</option>
+
+<option>Botany</option>
+
+<option>Zoology</option>
+
+<option>Environment</option>
+
+<option>Science & Technology</option>
+
+
+<option>Economics</option>
+
+<option>Indian Economy</option>
+
+<option>Tamil Nadu Economy</option>
+
+
+<option>Current Affairs</option>
+
+<option>Tamil Nadu GK</option>
+
+
+<option>Computer Science</option>
+
+
+<option>Aptitude</option>
+
+
+<option>Reasoning</option>
+
+
+<option>Tamil</option>
+
+
+<option>English</option>
+
+
+<option>Sports</option>
+
+<option>Awards and Honours</option>
+
+<option>Books and Authors</option>
+
+<option>Important Days</option>
+
+<option>Art and Culture</option>
+
+<option>Defence</option>
+
+<option>Space Technology</option>
+
+
+<option>Previous Year Questions</option>
+
+<option>Model Questions</option>
+
 
 </select>
 
-<label>Topic</label>
 
-<select id="bulkTopic">
 
-<option value="">Select Topic</option>
 
-</select>
+
 
 
 
@@ -245,153 +295,15 @@ BULK UPLOAD SECTION
 Topic
 </label>
 
-<input
 
-id="bulkTopic"
 
-placeholder="Example: Fundamental Rights"
+<select id="bulkTopic">
 
->
 
+<option value="">
+Select Topic
+</option>
 
-
-
-<label>
-Paste Questions
-</label>
-
-
-<textarea
-
-id="bulkText"
-
-placeholder="Paste questions here..."
-
-></textarea>
-
-
-
-
-
-<button id="bulkUploadBtn">
-
-🚀 Upload Questions
-
-</button>
-
-
-
-
-<div class="upload-report">
-
-<h3>
-📊 Upload Report
-</h3>
-
-
-<p>
-Total :
-<span id="bulkTotal">0</span>
-</p>
-
-
-<p>
-✅ Added :
-<span id="addedCount">0</span>
-</p>
-
-
-<p>
-⚠️ Skipped :
-<span id="skippedCount">0</span>
-</p>
-
-
-<p>
-❌ Failed :
-<span id="failedCount">0</span>
-</p>
-
-
-</div>
-
-
-</section>
-<label>Subject</label>
-
-<select id="filterSubject">
-
-<option value="all">All Subjects</option>
-
-<option value="Indian Polity">Indian Polity</option>
-
-<option value="Indian Constitution">Indian Constitution</option>
-
-<option value="Indian History">Indian History</option>
-
-<option value="World History">World History</option>
-
-<option value="Freedom Struggle">Freedom Struggle</option>
-
-<option value="Tamil Nadu History">Tamil Nadu History</option>
-
-<option value="Geography">Geography</option>
-
-<option value="Indian Geography">Indian Geography</option>
-
-<option value="World Geography">World Geography</option>
-
-<option value="Tamil Nadu Geography">Tamil Nadu Geography</option>
-
-<option value="General Science">General Science</option>
-
-<option value="Physics">Physics</option>
-
-<option value="Chemistry">Chemistry</option>
-
-<option value="Biology">Biology</option>
-
-<option value="Botany">Botany</option>
-
-<option value="Zoology">Zoology</option>
-
-<option value="Environment">Environment</option>
-
-<option value="Science & Technology">Science & Technology</option>
-
-<option value="Economics">Economics</option>
-
-<option value="Computer Science">Computer Science</option>
-
-<option value="Current Affairs">Current Affairs</option>
-
-<option value="Tamil Nadu GK">Tamil Nadu GK</option>
-
-<option value="Art & Culture">Art & Culture</option>
-
-<option value="Sports">Sports</option>
-
-<option value="Awards & Honours">Awards & Honours</option>
-
-<option value="Books & Authors">Books & Authors</option>
-
-<option value="Important Days">Important Days</option>
-
-<option value="English">English</option>
-
-<option value="Tamil">Tamil</option>
-
-<option value="Aptitude">Aptitude</option>
-
-<option value="Reasoning">Reasoning</option>
-
-<option value="Mental Ability">Mental Ability</option>
-
-<option value="Previous Year Questions">Previous Year Questions</option>
-
-<option value="Model Questions">Model Questions</option>
-
-<option value="Mixed Questions">Mixed Questions</option>
 
 </select>
 
@@ -402,33 +314,9 @@ Total :
 
 
 
-
-
-<!-- TOPIC -->
-
-
-<label>Topic</label>
-
-<select id="filterTopic">
-
-<option value="all">All Topics</option>
-
-</select>
-
-
-
-
-
-
-<!-- JSON FILE -->
-
-
 <label>
-
 Upload JSON File
-
 </label>
-
 
 
 <input
@@ -447,17 +335,11 @@ accept=".json"
 
 
 
-
-<!-- PREVIEW -->
-
-
 <div class="preview-box">
 
 
 <h3>
-
 📊 Preview
-
 </h3>
 
 
@@ -472,7 +354,34 @@ Total Questions :
 
 </span>
 
+
 </p>
+
+
+
+
+<button id="previewBtn">
+
+👁 Preview
+
+</button>
+
+
+
+
+<button id="validateBtn">
+
+🔍 Validate
+
+</button>
+
+
+
+
+
+<div id="previewList">
+
+</div>
 
 
 
@@ -484,16 +393,77 @@ Total Questions :
 
 
 
-
-<!-- UPLOAD BUTTON -->
-
-
 <button id="bulkUploadBtn">
-
 
 🚀 Upload Questions
 
 </button>
+
+
+
+
+
+
+
+<div class="upload-report">
+
+
+<h3>
+📊 Upload Report
+</h3>
+
+
+
+<p>
+
+Total :
+
+<span id="bulkTotal">
+0
+</span>
+
+</p>
+
+
+
+<p>
+
+✅ Added :
+
+<span id="addedCount">
+0
+</span>
+
+</p>
+
+
+
+<p>
+
+⚠️ Duplicate :
+
+<span id="skippedCount">
+0
+</span>
+
+</p>
+
+
+
+<p>
+
+❌ Failed :
+
+<span id="failedCount">
+0
+</span>
+
+</p>
+
+
+
+</div>
+
 
 
 
@@ -504,9 +474,12 @@ Total Questions :
 
 
 
+<script type="module" src="admin.js"></script>
 
 
+</body>
 
+</html>
 <!-- =========================
 QUESTION MANAGEMENT
 ========================= -->
@@ -516,57 +489,82 @@ QUESTION MANAGEMENT
 
 
 <h2>
-
 📝 Question Management
-
 </h2>
 
-<!-- FILTER SECTION -->
+
+
+
+
+<!-- FILTER -->
+
 
 <div class="filter-box">
 
 
+
 <select id="filterSubject">
 
+
 <option value="all">
+
 All Subjects
+
 </option>
 
-<option value="Indian Polity">
+
+<option>
 Indian Polity
 </option>
 
-<option value="Indian History">
+
+<option>
 Indian History
 </option>
 
-<option value="Geography">
+
+<option>
 Geography
 </option>
 
-<option value="General Science">
+
+<option>
 General Science
 </option>
 
-<option value="Tamil Nadu GK">
+
+<option>
 Tamil Nadu GK
 </option>
 
-<option value="Current Affairs">
+
+<option>
 Current Affairs
 </option>
 
+
 </select>
+
+
+
 
 
 
 <select id="filterTopic">
 
+
 <option value="all">
+
 All Topics
+
 </option>
 
+
 </select>
+
+
+
+
 
 
 <button id="filterBtn">
@@ -576,8 +574,17 @@ All Topics
 </button>
 
 
+
 </div>
 
+
+
+
+
+
+
+
+<!-- SEARCH -->
 
 
 <div class="search-box">
@@ -602,7 +609,6 @@ placeholder="Search Question"
 </button>
 
 
-
 </div>
 
 
@@ -610,15 +616,104 @@ placeholder="Search Question"
 
 
 
+
+
+
+<!-- QUESTION LIST -->
 
 
 <div id="questionList">
 
 
-<!-- Questions Display Here -->
+<p>
+
+Loading Questions...
+
+</p>
 
 
 </div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+UPLOAD HISTORY
+========================= -->
+
+
+<section class="history-card">
+
+
+<h2>
+
+📂 Upload History
+
+</h2>
+
+
+
+<div id="uploadHistory">
+
+
+<p>
+
+No Upload History
+
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+EXPORT
+========================= -->
+
+
+<section class="export-card">
+
+
+<h2>
+
+📥 Question Backup
+
+</h2>
+
+
+<p>
+
+Download complete question bank JSON file
+
+</p>
+
+
+
+<button id="exportBtn">
+
+⬇️ Export JSON
+
+</button>
 
 
 
@@ -650,14 +745,21 @@ G THE GENIUS ADMIN
 
 <p>
 
-Manage Your Exam Question Bank
+Government Exam Question Bank Management
 
 </p>
 
 
+
 </footer>
-  
+
+
+
+
+
+
+
 </body>
 
-
 </html>
+
