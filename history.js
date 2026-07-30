@@ -6,10 +6,13 @@
 import { auth, db } from "./firebase-config.js";
 
 import {
-    collection,
-    query,
-    where,
-    getDocs
+
+collection,
+query,
+where,
+getDocs,
+orderBy
+
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // =========================
@@ -54,6 +57,11 @@ async function loadHistory(){
         "studentId",
         "==",
         auth.currentUser.uid
+    ),
+
+    orderBy(
+        "timestamp",
+        "desc"
     )
 
 );
