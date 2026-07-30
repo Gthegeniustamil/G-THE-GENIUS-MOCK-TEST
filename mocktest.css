@@ -1,15 +1,13 @@
-/* =========================
+/* ===================================
 G THE GENIUS MOCK TEST CSS
-PART 1
-========================= */
+=================================== */
 
 
 *{
 
-margin:0;
-padding:0;
 box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+
+font-family:'Segoe UI',sans-serif;
 
 }
 
@@ -17,162 +15,96 @@ font-family:'Poppins',sans-serif;
 
 body{
 
-background:
+margin:0;
 
-linear-gradient(
-180deg,
-#081229,
-#102451
-);
-
-
-color:white;
+padding:20px;
 
 min-height:100vh;
 
-padding-bottom:90px;
-
-}
-
-
-
-
-/* =========================
-HEADER
-========================= */
-
-
-.test-header{
-
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-padding:15px;
-
-
 background:
+linear-gradient(135deg,#050b18,#09265a);
 
-rgba(255,255,255,.08);
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-border-bottom:
-
-1px solid rgba(255,215,0,.3);
-
+color:white;
 
 }
 
 
 
-.test-logo{
+
+.container{
+
+max-width:800px;
+
+margin:auto;
+
+}
 
 
-width:55px;
 
 
-height:55px;
+/* HEADER */
 
+
+.header{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+
+
+.logo{
+
+width:90px;
+
+height:90px;
 
 border-radius:50%;
 
-
 object-fit:cover;
 
-
-border:
-
-3px solid #FFD700;
-
-
-background:white;
-
-
-padding:2px;
-
+border:3px solid #FFD700;
 
 }
 
 
 
-.test-header h2{
-
+.header h2{
 
 color:#FFD700;
 
+font-size:28px;
 
-font-size:20px;
-
-
-}
-
-
-
-.test-header p{
-
-
-color:#ddd;
-
-
-font-size:13px;
-
+margin:10px;
 
 }
 
 
 
 
-
-/* =========================
-TIMER
-========================= */
+/* TIMER */
 
 
 #timer{
 
+display:inline-block;
 
-margin-left:auto;
+background:#101c3a;
 
+border:2px solid #FFD700;
 
-padding:12px 18px;
+padding:10px 25px;
 
-
-border-radius:18px;
-
-
-
-background:
-
-rgba(255,215,0,.15);
-
-
-
-border:
-
-1px solid #FFD700;
-
-
+border-radius:30px;
 
 color:#FFD700;
 
-
-
-font-size:18px;
-
-
+font-size:20px;
 
 font-weight:bold;
 
-
-
 }
 
 
@@ -180,574 +112,56 @@ font-weight:bold;
 
 
 
-/* =========================
-STUDENT INFO
-========================= */
+/* STATUS */
 
 
-.student-test-info{
-
-
-margin:20px;
-
-
-padding:20px;
-
-
-
-border-radius:22px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.student-test-info h3{
-
-
-color:#FFD700;
-
-
-margin-bottom:10px;
-
-
-}
-
-
-
-.student-test-info p{
-
-
-color:#ddd;
-
-
-}
-
-
-
-
-
-/* =========================
-QUESTION AREA
-========================= */
-
-
-.question-area{
-
-
-margin:20px;
-
-
-}
-
-
-
-
-
-.question-top{
-
-
-padding:15px;
-
-
-border-radius:18px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-color:#FFD700;
-
-
-}
-
-
-
-
-
-
-/* =========================
-QUESTION CARD
-========================= */
-
-
-.question-card{
-
-
-margin-top:20px;
-
-
-padding:25px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.question-card h2{
-
-
-font-size:18px;
-
-
-line-height:1.6;
-
-
-}
-
-
-
-
-
-/* =========================
-OPTIONS
-========================= */
-
-
-.options{
-
+.status-card{
 
 display:flex;
 
-
-flex-direction:column;
-
-
-gap:12px;
-
-
-margin-top:20px;
-
-
-}
-
-
-
-.option{
-
-
-width:100%;
-
-
-padding:16px;
-
-
-border-radius:18px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-color:white;
-
-
-
-font-size:16px;
-
-
-
-text-align:left;
-
-
-
-cursor:pointer;
-
-
-
-transition:.3s;
-
-
-
-}
-
-
-
-.option:hover{
-
-
-background:
-
-rgba(255,215,0,.2);
-
-
-
-transform:
-
-translateX(5px);
-
-
-}
-
-
-
-.option.selected{
-
-
-background:#FFD700;
-
-
-color:#081229;
-
-
-}
-
-
-
-
-
-
-/* =========================
-NAVIGATION
-========================= */
-
-
-.navigation{
-
-
-display:flex;
-
-
-gap:15px;
-
-
-margin:20px;
-
-
-}
-
-
-
-.navigation button{
-
-
-flex:1;
-
-
-padding:15px;
-
-
-border-radius:18px;
-
-
-border:none;
-
-
-background:
-
-rgba(255,255,255,.1);
-
-
-
-color:white;
-
-
-font-size:15px;
-
-
-cursor:pointer;
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-}
-
-
-
-.navigation button:hover{
-
-
-background:#FFD700;
-
-
-color:#081229;
-
-
-}
-
-
-
-
-
-
-/* =========================
-SUBMIT BUTTON
-========================= */
-
-
-.submit-btn{
-
-
-display:block;
-
-
-width:
-
-calc(100% - 40px);
-
-
-
-margin:20px auto;
-
-
-padding:16px;
-
-
-border:none;
-
-
-border-radius:20px;
-
-
-
-background:#FFD700;
-
-
-
-color:#081229;
-
-
-
-font-size:17px;
-
-
-
-font-weight:bold;
-
-
-
-}
-
-/* =========================
-QUESTION PALETTE
-========================= */
-
-
-.palette-card{
-
-
-margin:20px;
-
-
-padding:20px;
-
-
-border-radius:22px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.palette-card h3{
-
-
-color:#FFD700;
-
-
-margin-bottom:15px;
-
-
-}
-
-
-
-.question-palette{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-repeat(5,1fr);
-
-
+justify-content:space-around;
 
 gap:10px;
 
+background:rgba(255,255,255,.08);
 
-}
+padding:15px;
 
+border-radius:15px;
 
+margin-bottom:15px;
 
-.question-palette button{
-
-
-height:40px;
-
-
-border-radius:12px;
-
-
-border:none;
-
-
-background:
-
-rgba(255,255,255,.15);
-
-
-
-color:white;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-.question-palette button.active{
-
-
-background:#FFD700;
-
-
-color:#081229;
-
-
-}
-
-
-
-.question-palette button.answered{
-
-
-background:#00a86b;
-
+font-weight:bold;
 
 }
 
 
 
 
-
-
-/* =========================
-PROGRESS BAR
-========================= */
-
-
-.progress-card{
-
-
-margin:20px;
-
-
-padding:20px;
-
-
-border-radius:22px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.progress-card p{
-
+.status-card span{
 
 color:#FFD700;
 
-
-margin-bottom:10px;
-
-
 }
 
 
 
-.progress-bar{
 
+
+/* PROGRESS */
+
+
+.progress{
 
 height:12px;
 
-
 background:#222;
-
 
 border-radius:20px;
 
-
 overflow:hidden;
 
+margin-bottom:20px;
 
 }
 
@@ -755,21 +169,13 @@ overflow:hidden;
 
 #testProgress{
 
-
 height:100%;
-
 
 width:0%;
 
-
 background:#FFD700;
 
-
-border-radius:20px;
-
-
 transition:.4s;
-
 
 }
 
@@ -777,239 +183,179 @@ transition:.4s;
 
 
 
-/* =========================
-ATTEMPT CARD
-========================= */
+/* QUESTION */
 
 
-.attempt-card{
-
-
-margin:20px;
-
-
-padding:20px;
-
-
-border-radius:22px;
-
-
+.question-card{
 
 background:
 
 rgba(255,255,255,.08);
 
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.attempt-card h3{
-
-
-color:#FFD700;
-
-
-margin-bottom:15px;
-
-
-}
-
-
-
-.attempt-grid{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-repeat(3,1fr);
-
-
-
-gap:12px;
-
-
-}
-
-
-
-.attempt-grid div{
-
-
-padding:15px;
-
-
-text-align:center;
-
-
-border-radius:18px;
-
-
-
-background:
-
-rgba(255,215,0,.12);
-
-
-
-}
-
-
-
-.attempt-grid h2{
-
-
-color:#FFD700;
-
-
-}
-
-
-
-
-
-/* =========================
-SUBMIT CONFIRM
-========================= */
-
-
-.submit-confirm{
-
-
-position:fixed;
-
-
-top:50%;
-
-
-left:50%;
-
-
-transform:
-
-translate(-50%,-50%);
-
-
-
-width:85%;
-
+backdrop-filter:blur(15px);
 
 padding:25px;
 
+border-radius:20px;
 
-
-border-radius:25px;
-
-
-
-background:#081229;
-
-
-
-border:
-
-2px solid #FFD700;
-
-
-
-display:none;
-
-
-text-align:center;
-
-
-z-index:1000;
-
+border:1px solid rgba(255,215,0,.3);
 
 }
 
 
 
-.submit-confirm h3{
 
+#questionNumber{
 
 color:#FFD700;
 
+font-weight:bold;
 
 margin-bottom:15px;
 
+}
+
+
+
+#questionText{
+
+font-size:20px;
+
+line-height:1.5;
 
 }
 
 
 
-.submit-confirm p{
 
 
-color:#ddd;
 
 
-margin-bottom:20px;
+/* OPTIONS */
 
+
+#optionsBox{
+
+margin-top:20px;
 
 }
 
 
 
-.submit-confirm button{
-
+.option-btn{
 
 width:100%;
 
+padding:15px;
 
-padding:14px;
+margin:8px 0;
 
-
-margin-top:10px;
-
-
-border-radius:15px;
-
+border-radius:12px;
 
 border:none;
 
+background:#101c3a;
 
-font-size:15px;
+color:white;
 
+text-align:left;
+
+font-size:16px;
 
 cursor:pointer;
 
+transition:.3s;
 
 }
 
 
 
-#confirmSubmit{
-
+.option-btn:hover{
 
 background:#FFD700;
 
-
-color:#081229;
-
+color:#000;
 
 }
 
 
 
-#cancelSubmit{
+.option-btn.selected{
 
+background:#FFD700;
+
+color:#000;
+
+font-weight:bold;
+
+}
+
+
+
+
+
+
+
+/* PALETTE */
+
+
+.palette-card{
+
+margin-top:20px;
+
+background:rgba(255,255,255,.08);
+
+padding:20px;
+
+border-radius:15px;
+
+}
+
+
+
+#questionPalette{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:10px;
+
+}
+
+
+
+.palette-btn{
+
+padding:10px;
+
+border:none;
+
+border-radius:8px;
 
 background:#333;
 
-
 color:white;
 
+cursor:pointer;
+
+}
+
+
+
+.palette-btn.active{
+
+background:#FFD700;
+
+color:#000;
+
+}
+
+
+
+.palette-btn.answered{
+
+background:#00c853;
 
 }
 
@@ -1019,177 +365,92 @@ color:white;
 
 
 
-/* =========================
-BOTTOM NAV
-========================= */
+/* BUTTONS */
 
 
-.bottom-nav{
-
-
-position:fixed;
-
-
-bottom:0;
-
-
-left:0;
-
-
-width:100%;
-
-
-height:70px;
-
+.button-area{
 
 display:flex;
 
+gap:15px;
 
-justify-content:space-around;
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(8,18,41,.95);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-top:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-z-index:999;
-
-
+margin-top:20px;
 
 }
 
 
 
-.bottom-nav a{
+.button-area button{
 
+flex:1;
 
-text-decoration:none;
+padding:15px;
 
+border:none;
 
-color:white;
+border-radius:30px;
 
+font-size:16px;
 
-text-align:center;
+font-weight:bold;
 
+cursor:pointer;
 
-font-size:12px;
+background:#FFD700;
 
-
-}
-
-
-
-.bottom-nav a.active{
-
-
-color:#FFD700;
-
+color:#000;
 
 }
 
 
 
 
-
-
-/* =========================
-FOOTER
-========================= */
+/* FOOTER */
 
 
 .footer{
 
-
-margin:25px 20px 100px;
-
+margin-top:30px;
 
 padding:20px;
 
-
-
 text-align:center;
 
+background:rgba(255,255,255,.08);
 
-border-radius:22px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
+border-radius:15px;
 
 }
 
 
 
-.footer h3{
+.social-links{
 
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+}
+
+
+
+.social-links a{
 
 color:#FFD700;
 
+background:#101c3a;
 
-}
+padding:10px 15px;
 
-
-
-.footer a{
-
-
-display:block;
-
-
-margin:8px;
-
-
-color:white;
-
+border-radius:20px;
 
 text-decoration:none;
 
-
-font-size:14px;
-
-
-}
-
-
-
-.footer p{
-
-
-font-size:12px;
-
-
-color:#aaa;
-
-
-margin-top:15px;
-
+font-weight:bold;
 
 }
 
@@ -1198,60 +459,46 @@ margin-top:15px;
 
 
 
-
-/* =========================
-MOBILE RESPONSIVE
-========================= */
+/* MOBILE */
 
 
 @media(max-width:600px){
 
 
-.question-palette{
-
-
-grid-template-columns:
-
-repeat(5,1fr);
-
-
-}
-
-
-
-.question-palette button{
-
-
-height:35px;
-
-
-font-size:12px;
-
-
-}
-
-
-
-.attempt-grid{
-
-
-grid-template-columns:
-
-repeat(3,1fr);
-
-
-}
-
-
-
-#timer{
-
-
-font-size:15px;
-
+body{
 
 padding:10px;
 
+}
+
+
+#questionPalette{
+
+grid-template-columns:repeat(5,1fr);
+
+}
+
+
+
+.question-card{
+
+padding:18px;
+
+}
+
+
+
+#questionText{
+
+font-size:17px;
+
+}
+
+
+
+.status-card{
+
+font-size:13px;
 
 }
 
