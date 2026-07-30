@@ -1,25 +1,36 @@
 // =========================
 // G THE GENIUS ADMIN JS
-// PART 1A-1
-// Imports + Topic System
+// FULL IMPORTS
 // =========================
+
 
 import { db, auth } from "./firebase-config.js";
 
-import {
-  collection,
-  addDoc,
-  getDocs,
-  serverTimestamp,
-  deleteDoc,
-  doc,
-  query,
-  where
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// FIRESTORE
 
 import {
-  onAuthStateChanged,
-  signOut
+
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    serverTimestamp,
+    query,
+    where
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+// AUTH
+
+import {
+
+    onAuthStateChanged,
+    signOut
+
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 let allQuestions = [];
