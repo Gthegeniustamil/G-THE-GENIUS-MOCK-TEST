@@ -103,14 +103,36 @@ const snap = await getDocs(q);
 
             let testDate = "-";
 
-            if(data.timestamp){
+if(data.timestamp){
 
-                testDate =
-                data.timestamp
-                .toDate()
-                .toLocaleString();
+    const dateObj = data.timestamp.toDate();
 
-            }
+
+    const date =
+    dateObj.toLocaleDateString("en-IN",{
+
+        timeZone:"Asia/Kolkata"
+
+    });
+
+
+    const time =
+    dateObj.toLocaleTimeString("en-IN",{
+
+        timeZone:"Asia/Kolkata",
+
+        hour:"2-digit",
+
+        minute:"2-digit",
+
+        hour12:true
+
+    });
+
+
+    testDate = date + " | " + time;
+
+}
 
             const card =
             document.createElement("div");
