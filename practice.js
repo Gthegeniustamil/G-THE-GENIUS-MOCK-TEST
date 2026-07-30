@@ -1,10 +1,12 @@
-// =========================
-// G THE GENIUS PRACTICE JS
-// PART 1
-// =========================
+// ===================================
+// G THE GENIUS PRACTICE SYSTEM
+// FINAL VERSION
+// ===================================
 
 
 import { db } from "./firebase-config.js";
+
+import { subjectTopics } from "./subjects.js";
 
 
 import {
@@ -12,23 +14,150 @@ import {
 collection,
 getDocs
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+// =========================
+// VARIABLES
+// =========================
+
+
+let questions=[];
+
+let practiceQuestions=[];
+
+let currentIndex=0;
+
+let score=0;
+
+let correct=0;
+
+let wrong=0;
+
+
+
+
+// =========================
+// ELEMENTS
+// =========================
+
+
+const subjectSelect =
+document.getElementById("subject");
+
+
+const topicSelect =
+document.getElementById("topic");
+
+
+const startBtn =
+document.getElementById("startPractice");
 
 
 
 
 
-let questions = [];
+// =========================
+// LOAD SUBJECTS
+// =========================
 
-let practiceQuestions = [];
 
-let currentIndex = 0;
+function loadSubjects(){
 
-let score = 0;
 
-let correct = 0;
+if(!subjectSelect)
+return;
 
-let wrong = 0;
+
+
+subjectSelect.innerHTML="";
+
+
+
+Object.keys(subjectTopics)
+.forEach(sub=>{
+
+
+let option =
+document.createElement("option");
+
+
+option.value=sub;
+
+option.textContent=sub;
+
+
+subjectSelect.appendChild(option);
+
+
+});
+
+
+
+loadTopics();
+
+
+}
+
+
+
+
+
+
+// =========================
+// LOAD TOPICS
+// =========================
+
+
+function loadTopics(){
+
+
+if(!topicSelect)
+return;
+
+
+topicSelect.innerHTML="";
+
+
+
+let selected =
+subjectSelect.value;
+
+
+
+subjectTopics[selected]
+.forEach(topic=>{
+
+
+let option =
+document.createElement("option");
+
+
+option.value=topic;
+
+option.textContent=topic;
+
+
+topicSelect.appendChild(option);
+
+
+});
+
+
+
+}
+
+
+
+
+subjectSelect?.addEventListener(
+"change",
+loadTopics
+);
 
 
 
@@ -45,20 +174,13 @@ let wrong = 0;
 async function loadQuestions(){
 
 
-
 try{
 
 
-const snap = await getDocs(
-
-collection(
-db,
-"questions"
-)
-
+let snap =
+await getDocs(
+collection(db,"questions")
 );
-
-
 
 
 
@@ -82,37 +204,25 @@ id:doc.id,
 
 
 
-
 console.log(
-
 "Questions Loaded",
-
 questions.length
-
 );
 
 
 
 }
-
-
 
 catch(error){
 
 
-
 console.log(
-
 "Question Load Error",
-
 error
-
 );
 
 
-
 }
-
 
 
 }
@@ -129,55 +239,62 @@ error
 // =========================
 
 
-const startBtn =
-
-document.getElementById(
-"startPractice"
-);
-
-
-
 if(startBtn){
 
 
-
-startBtn.onclick = ()=>{
-
+startBtn.onclick=()=>{
 
 
-let category =
-
-document.getElementById(
-"categorySelect"
-).value;
+let subject =
+subjectSelect.value;
 
 
+
+let topic =
+topicSelect.value;
 
 
 
 
-if(category==="all"){
 
+if(subject==="All Mixed"){
+
+
+practiceQuestions =
+[...questions];
+
+
+}
+
+
+
+else if(topic==="All Topics"){
 
 
 practiceQuestions =
 
-[...questions];
+questions.filter(q=>
+
+q.subject===subject
+
+);
 
 
 
 }
+
+
 
 else{
 
 
 practiceQuestions =
 
-questions.filter(
+questions.filter(q=>
 
-q=>
-
-q.category === category
+q.subject===subject
+&&
+q.topic===topic
 
 );
 
@@ -216,13 +333,7 @@ showQuestion();
 
 };
 
-
-
 }
-
-
-
-
 
 
 
@@ -235,37 +346,22 @@ showQuestion();
 function showQuestion(){
 
 
-
 if(
-
 currentIndex >= practiceQuestions.length
-
 ){
 
 
-
-alert(
-
-"Practice Completed 🎉"
-
-);
-
+practiceComplete();
 
 
 return;
-
 
 }
 
 
 
-
-
-
 let q =
-
 practiceQuestions[currentIndex];
-
 
 
 
@@ -273,21 +369,20 @@ practiceQuestions[currentIndex];
 
 document.getElementById(
 "questionNumber"
-).innerHTML =
+).innerHTML=
 
-currentIndex+1;
-
-
-
+`
+${currentIndex+1}
+/
+${practiceQuestions.length}
+`;
 
 
 
 document.getElementById(
 "questionText"
 ).innerHTML =
-
 q.question;
-
 
 
 
@@ -299,21 +394,22 @@ for(let i=0;i<4;i++){
 
 
 let btn =
-
 document.getElementById(
 "option"+i
 );
 
 
 
-btn.innerHTML =
+if(btn){
 
+
+
+btn.innerHTML =
 q.options[i];
 
 
 
 btn.className =
-
 "option-btn";
 
 
@@ -322,30 +418,30 @@ btn.disabled=false;
 
 
 
-btn.onclick = ()=>{
+btn.onclick=()=>{
 
 
 checkAnswer(
-
 i,
-
-q.answer
-
+q.answer,
+q
 );
 
 
 };
 
 
+}
+
 
 }
 
 
+updateProgress();
 
 
 
 }
-
 
 
 
@@ -354,22 +450,21 @@ q.answer
 
 
 // =========================
-// ANSWER CHECK
+// CHECK ANSWER
 // =========================
 
 
-function checkAnswer(selected,answer){
-
+function checkAnswer(
+selected,
+answer,
+q
+){
 
 
 let buttons =
-
 document.querySelectorAll(
 ".option-btn"
 );
-
-
-
 
 
 
@@ -385,22 +480,22 @@ btn.disabled=true;
 
 
 
-if(selected == answer){
-
+if(
+buttons[selected].innerHTML
+===
+answer
+){
 
 
 score++;
 
-
 correct++;
-
 
 
 buttons[selected]
 .classList.add(
 "correct"
 );
-
 
 
 }
@@ -411,7 +506,6 @@ else{
 wrong++;
 
 
-
 buttons[selected]
 .classList.add(
 "wrong"
@@ -419,101 +513,35 @@ buttons[selected]
 
 
 
-buttons[answer]
-.classList.add(
+buttons.forEach(btn=>{
+
+
+if(btn.innerHTML===answer){
+
+
+btn.classList.add(
 "correct"
 );
 
 
+}
+
+
+});
+
+
 
 }
 
 
+
+showExplanation(
+q.explanation
+);
 
 
 
 updateScore();
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// UPDATE SCORE
-// =========================
-
-
-function updateScore(){
-
-
-
-document.getElementById(
-"practiceScore"
-).innerHTML =
-
-score;
-
-
-
-
-document.getElementById(
-"correctCount"
-).innerHTML =
-
-correct;
-
-
-
-
-document.getElementById(
-"wrongCount"
-).innerHTML =
-
-wrong;
-
-
-
-
-
-
-let total =
-
-correct+wrong;
-
-
-
-let accuracy =
-
-total ?
-
-Math.round(
-
-(correct/total)*100
-
-)
-
-:
-
-0;
-
-
-
-
-
-
-document.getElementById(
-"accuracy"
-).innerHTML =
-
-accuracy+"%";
-
 
 
 }
@@ -531,30 +559,79 @@ accuracy+"%";
 
 
 const nextBtn =
-
 document.getElementById(
 "nextQuestion"
 );
 
 
 
-if(nextBtn){
-
-
-
-nextBtn.onclick = ()=>{
-
+nextBtn?.addEventListener(
+"click",
+()=>{
 
 
 currentIndex++;
 
-
 showQuestion();
 
 
+}
+);
 
-};
 
+
+
+
+
+
+
+// =========================
+// SCORE UPDATE
+// =========================
+
+
+function updateScore(){
+
+
+
+document.getElementById(
+"practiceScore"
+).innerHTML=score;
+
+
+
+document.getElementById(
+"correctCount"
+).innerHTML=correct;
+
+
+
+document.getElementById(
+"wrongCount"
+).innerHTML=wrong;
+
+
+
+let total =
+correct+wrong;
+
+
+
+let accuracy =
+total ?
+
+Math.round(
+(correct/total)*100
+)
+:
+0;
+
+
+
+document.getElementById(
+"accuracy"
+).innerHTML=
+accuracy+"%";
 
 
 }
@@ -565,19 +642,8 @@ showQuestion();
 
 
 
-
-loadQuestions();
-
-
-
-console.log(
-
-"✅ Practice JS Loaded"
-
-);
-
 // =========================
-// EXPLANATION SYSTEM
+// EXPLANATION
 // =========================
 
 
@@ -585,27 +651,30 @@ function showExplanation(text){
 
 
 let box =
-
 document.getElementById(
 "explanationBox"
 );
 
 
 
-if(!box) return;
-
+if(!box)
+return;
 
 
 
 box.style.display="block";
 
 
+box.innerHTML=
 
-box.innerHTML =
+`
+💡 Explanation :
 
-"💡 Explanation : <br>" +
+<br>
 
-(text || "No explanation available");
+${text || "No Explanation"}
+
+`;
 
 
 
@@ -617,32 +686,15 @@ box.innerHTML =
 
 
 
-
 // =========================
-// UPDATE PROGRESS
+// PROGRESS
 // =========================
 
 
 function updateProgress(){
 
 
-
-let total =
-
-practiceQuestions.length;
-
-
-
-let progress =
-
-((currentIndex+1)/total)*100;
-
-
-
-
-
 let bar =
-
 document.getElementById(
 "practiceProgress"
 );
@@ -652,18 +704,26 @@ document.getElementById(
 if(bar){
 
 
+let percent =
+
+(
+(currentIndex+1)
+/
+practiceQuestions.length
+)
+*100;
+
+
 
 bar.style.width =
-
-progress+"%";
-
-
-}
-
+percent+"%";
 
 
 }
 
+
+
+}
 
 
 
@@ -672,57 +732,28 @@ progress+"%";
 
 
 // =========================
-// XP ADD SYSTEM
+// XP SYSTEM
 // =========================
 
 
-function addPracticeXP(){
-
+function addXP(){
 
 
 let xp =
-
 Number(
-
-localStorage.getItem(
-"xp"
-
-)
-
+localStorage.getItem("xp")
 )||0;
 
 
 
-
-
-
-let newXP =
-
-xp + (correct * 5);
-
-
-
+xp += correct*5;
 
 
 
 localStorage.setItem(
-
 "xp",
-
-newXP
-
+xp
 );
-
-
-
-console.log(
-
-"XP Added",
-
-newXP
-
-);
-
 
 
 }
@@ -733,45 +764,30 @@ newXP
 
 
 
-
 // =========================
-// SAVE PRACTICE DATA
+// SAVE HISTORY
 // =========================
 
 
-function savePractice(){
+function saveHistory(){
 
 
-
-let data = {
+let data={
 
 
 date:
+new Date()
+.toLocaleDateString(),
 
-new Date().toLocaleDateString(),
 
-
-correct:
-
+score,
 
 correct,
 
-
-wrong:
-
-
-wrong,
-
-
-score:
-
-
-score
-
+wrong
 
 
 };
-
 
 
 
@@ -782,19 +798,13 @@ JSON.parse(
 
 localStorage.getItem(
 "practiceHistory"
-
 )
 
 )||[];
 
 
 
-
-
-
 history.push(data);
-
-
 
 
 
@@ -818,38 +828,34 @@ JSON.stringify(history)
 
 
 // =========================
-// COMPLETE SUMMARY
+// COMPLETE
 // =========================
 
 
 function practiceComplete(){
 
 
-
-addPracticeXP();
-
+addXP();
 
 
-savePractice();
-
-
+saveHistory();
 
 
 
 alert(
 
-"🎉 Practice Completed\n\n"+
+`
+🎉 Practice Completed
 
-"Correct : "+correct+
+Correct : ${correct}
 
-"\nWrong : "+wrong+
+Wrong : ${wrong}
 
-"\nScore : "+score
+Score : ${score}
+
+`
 
 );
-
-
-
 
 
 }
@@ -859,101 +865,15 @@ alert(
 
 
 // =========================
-// OVERRIDE NEXT BUTTON
+// INIT
 // =========================
 
 
-const oldShowQuestion =
+loadSubjects();
 
-showQuestion;
-
-
-
-showQuestion = function(){
-
-
-
-if(
-
-currentIndex >= practiceQuestions.length
-
-){
-
-
-
-practiceComplete();
-
-
-return;
-
-
-}
-
-
-
-
-
-oldShowQuestion();
-
-
-
-updateProgress();
-
-
-
-
-
-let q =
-
-practiceQuestions[currentIndex];
-
-
-
-
-showExplanation(
-
-q.explanation
-
-);
-
-
-
-};
-
-
-
-
-
-
-
-
-// =========================
-// INITIAL LOAD
-// =========================
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-updateScore();
-
-
-
-}
-
-);
-
-
-
-
+loadQuestions();
 
 
 console.log(
-
-"✅ Practice Final Integration Ready"
-
+"✅ Practice Final Ready"
 );
