@@ -10,12 +10,11 @@ import {
     query,
     where,
     orderBy,
-    limit,
     getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // =========================
-// LOAD RESULT
+// AUTH
 // =========================
 
 auth.onAuthStateChanged(async(user)=>{
@@ -32,19 +31,46 @@ auth.onAuthStateChanged(async(user)=>{
 });
 
 // =========================
-// LOAD LATEST RESULT
+// LOAD RESULT
 // =========================
 
 async function loadResult(){
 
     try{
 
+        const localData =
+        JSON.parse(
+            localStorage.getItem("lastResult")
+        );
+
+        if(localData){
+
+            displayResult(localData);
+
+        }
+
         const q = query(
-    collection(db,"results"),
-    where("studentId","==",auth.currentUser.uid)
-);
-     
-        
+
+            collection(db,"results"),
+
+            where("studentId","==",auth.currentUser.uid),
+
+            orderBy("timestamp","desc")
+
+        );
+
+        const snap = await getDocs(q);
+
+        if(!snap.empty){
+
+            const latest =
+            snap.docs[0].data();
+
+            displayResult(latest);
+
+        }
+
+    }
 
     catch(error){
 
@@ -55,24 +81,6 @@ async function loadResult(){
     }
 
 }
-const snap = await getDocs(q);
-
-if(snap.empty){
-
-    alert("No Result Found");
-    return;
-
-}
-
-let latest = null;
-
-snap.forEach(doc => {
-
-    latest = doc.data();
-
-});
-
-displayResult(latest);
 
 // =========================
 // DISPLAY RESULT
@@ -80,34 +88,49 @@ displayResult(latest);
 
 function displayResult(data){
 
-    // Marks
     document.getElementById("score").innerHTML =
     data.score ?? 0;
 
     document.getElementById("total").innerHTML =
     data.total ?? 0;
 
-    // Test Type
-    document.getElementById("testType").innerHTML =
-    data.testType ?? "-";
-
-    // Exam Name
-    document.getElementById("examName").innerHTML =
-    data.examType ?? "TNUSRB";
-
-    // Correct
     document.getElementById("correctCount").innerHTML =
     data.correct ?? 0;
 
-    // Wrong
     document.getElementById("wrongCount").innerHTML =
     data.wrong ?? 0;
 
-    // Skipped
     document.getElementById("skipCount").innerHTML =
     data.skipped ?? 0;
 
-    // Percentage element இருந்தால் hide
+    document.getElementById("examName").innerHTML =
+    data.examType || "TNUSRB";
+
+    // Test Type
+    let title = "Daily Mock Test";
+
+    if(data.testType==="daily"){
+
+        title="Daily Mock Test";
+
+    }
+
+    else if(data.testType==="weekly"){
+
+        title="Weekly Mock Test";
+
+    }
+
+    else if(data.testType==="monthly"){
+
+        title="Monthly Grand Test";
+
+    }
+
+    document.getElementById("testType").innerHTML =
+    title;
+
+    // Hide Percentage
     const percentage =
     document.getElementById("percentage");
 
@@ -144,7 +167,7 @@ async function calculateRank(){
 
         const currentUser = auth.currentUser;
         const myDistrict =
-        localStorage.getItem("district");
+        localStorage.getItem("district") || "-";
 
         for(const doc of snap.docs){
 
@@ -188,7 +211,10 @@ async function calculateRank(){
 
     catch(error){
 
-        console.error(error);
+        console.error("Rank Error :",error);
+
+        document.getElementById("rank").innerHTML = "-";
+        document.getElementById("districtRank").innerHTML = "-";
 
     }
 
@@ -198,15 +224,14 @@ async function calculateRank(){
 // SHARE RESULT
 // =========================
 
-const shareBtn =
-document.getElementById("shareResult");
+const shareBtn = document.getElementById("shareResult");
 
 if(shareBtn){
 
     shareBtn.onclick = async()=>{
 
         const text =
-`🏆 G THE GENIUS MOCK TEST
+`🏆 G THE GENIUS MOCK TEST RESULT
 
 🎯 Marks : ${document.getElementById("score").innerHTML}/${document.getElementById("total").innerHTML}
 
@@ -214,7 +239,11 @@ if(shareBtn){
 
 ❌ Wrong : ${document.getElementById("wrongCount").innerHTML}
 
-⏭ Skipped : ${document.getElementById("skipCount").innerHTML}`;
+⏭ Skipped : ${document.getElementById("skipCount").innerHTML}
+
+📚 Test : ${document.getElementById("testType").innerHTML}
+
+🚀 G THE GENIUS`;
 
         if(navigator.share){
 
