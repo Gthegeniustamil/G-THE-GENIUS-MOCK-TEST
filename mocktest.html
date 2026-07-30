@@ -4,12 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-G THE GENIUS Mock Test
-</title>
+<title>G THE GENIUS Mock Test</title>
 
 
 <link rel="stylesheet" href="mocktest.css">
@@ -20,31 +17,19 @@ G THE GENIUS Mock Test
 <body>
 
 
-<header class="test-header">
+<div class="container">
 
 
-<img 
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="test-logo"
->
+<!-- HEADER -->
 
+<div class="header">
 
-<div>
+<img src="assets/logo.png" class="logo">
+
 
 <h2>
-G THE GENIUS
+🚔 G THE GENIUS
 </h2>
-
-
-<p id="testTitle">
-
-Mock Test
-
-</p>
-
-
-</div>
-
 
 
 <div id="timer">
@@ -54,76 +39,46 @@ Mock Test
 </div>
 
 
-</header>
+</div>
 
 
 
 
 
+<!-- STATUS -->
 
 
-<section class="student-test-info">
+<div class="status-card">
 
 
-<h3>
+<div>
 
-🎯 <span id="examName">
-
-TNUSRB
-
+Total:
+<span id="totalCount">
+0
 </span>
 
-</h3>
+</div>
 
 
+<div>
 
-<p>
-
-Test Type:
-
-<span id="testType">
-
-Daily Mock Test
-
+Answered:
+<span id="answeredCount">
+0
 </span>
 
-</p>
+</div>
 
 
-</section>
+<div>
 
-
-
-
-
-
-
-<section class="question-area">
-
-
-<div class="question-top">
-
-
-<p>
-
-Question 
-
-<span id="currentQuestion">
-
-1
-
+Remaining:
+<span id="remainingCount">
+0
 </span>
 
-/
-
-<span id="totalQuestions">
-
-10
-
-</span>
-
-
-</p>
+</div>
 
 
 
@@ -132,16 +87,51 @@ Question
 
 
 
+
+<!-- PROGRESS -->
+
+
+<div class="progress">
+
+<div id="testProgress">
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<!-- QUESTION BOX -->
 
 
 <div class="question-card">
 
 
-<h2 id="questionText">
+<div id="questionNumber">
+
+Question 1/10
+
+</div>
+
+
+
+<h3 id="questionText">
 
 Loading Question...
 
-</h2>
+</h3>
+
+
+
+<div id="optionsBox">
+
+
+</div>
+
 
 
 </div>
@@ -152,60 +142,41 @@ Loading Question...
 
 
 
-<div class="options">
+<!-- PALETTE -->
 
 
-<button class="option"
-id="option0">
-
-A
-
-</button>
+<div class="palette-card">
 
 
-<button class="option"
-id="option1">
-
-B
-
-</button>
+<h3>
+Question Palette
+</h3>
 
 
-<button class="option"
-id="option2">
+<div id="questionPalette">
 
-C
-
-</button>
-
-
-<button class="option"
-id="option3">
-
-D
-
-</button>
+</div>
 
 
 </div>
 
 
 
-</section>
 
 
 
 
+<!-- BUTTONS -->
 
-<div class="navigation">
+
+<div class="button-area">
 
 
-<button id="previousBtn">
+<button id="prevBtn">
 
 ⬅ Previous
 
 </button>
-
 
 
 <button id="nextBtn">
@@ -215,349 +186,16 @@ Next ➡
 </button>
 
 
-</div>
-
-
-
-
-
-<button id="submitBtn"
-class="submit-btn">
-
-
-Submit Test
-
-</button>
-
-
-<!-- =========================
-QUESTION PALETTE
-========================= -->
-
-
-<section class="palette-card">
-
-
-<h3>
-
-📌 Question Palette
-
-</h3>
-
-
-
-<div id="questionPalette"
-class="question-palette">
-
 
 </div>
 
 
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-PROGRESS
-========================= -->
-
-
-<section class="progress-card">
-
-
-<p>
-
-Test Progress
-
-</p>
-
-
-
-<div class="progress-bar">
-
-
-<div id="testProgress">
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-ATTEMPT INFO
-========================= -->
-
-
-<section class="attempt-card">
-
-
-<h3>
-
-📊 Test Details
-
-</h3>
-
-
-
-<div class="attempt-grid">
-
-
-<div>
-
-<h2 id="attemptNumber">
-
-1
-
-</h2>
-
-<p>
-
-Attempt
-
-</p>
-
-</div>
-
-
-
-
-<div>
-
-<h2 id="totalMarks">
-
-10
-
-</h2>
-
-<p>
-
-Marks
-
-</p>
-
-</div>
-
-
-
-
-<div>
-
-<h2 id="timeLimit">
-
-5
-
-</h2>
-
-<p>
-
-Minutes
-
-</p>
-
-</div>
 
 
 
 </div>
 
 
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-SUBMIT CONFIRM BOX
-========================= -->
-
-
-<div id="submitConfirm"
-class="submit-confirm">
-
-
-
-<h3>
-
-⚠️ Submit Test?
-
-</h3>
-
-
-
-<p>
-
-Once submitted, you cannot change answers.
-
-</p>
-
-
-
-<button id="confirmSubmit">
-
-Yes Submit
-
-</button>
-
-
-
-<button id="cancelSubmit">
-
-Continue Test
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- =========================
-BOTTOM NAV
-========================= -->
-
-
-<nav class="bottom-nav">
-
-
-<a href="dashboard.html">
-
-🏠
-
-<br>
-
-Home
-
-</a>
-
-
-
-
-<a href="practice.html">
-
-📚
-
-<br>
-
-Practice
-
-</a>
-
-
-
-
-<a href="leaderboard.html">
-
-🏆
-
-<br>
-
-Leaderboard
-
-</a>
-
-
-
-
-<a href="profile.html">
-
-👤
-
-<br>
-
-Profile
-
-</a>
-
-
-
-</nav>
-
-
-
-
-
-
-
-
-<!-- =========================
-FOOTER
-========================= -->
-
-
-<footer class="footer">
-
-
-<h3>
-
-G THE GENIUS
-
-</h3>
-
-
-
-<a href="https://youtube.com/@gthegeniustamil">
-
-▶ YouTube Channel
-
-</a>
-
-
-
-
-<a href="https://t.me/gthegenius">
-
-📢 Telegram
-
-</a>
-
-
-
-
-<a href="mailto:gthegenius7@gmail.com">
-
-📧 Email
-
-</a>
-
-
-
-
-<p>
-
-© 2026 G THE GENIUS.
-All Rights Reserved.
-
-</p>
-
-
-
-</footer>
 
 
 
