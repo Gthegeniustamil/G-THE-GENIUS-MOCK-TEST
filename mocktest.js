@@ -819,91 +819,113 @@ submitTest();
 
 }
 
-
-
-
-
-
-
-
-
-
 // ==========================================
-// SCORE CALCULATION FINAL
+// RESULT CALCULATION v6.0
+// PART 1
 // ==========================================
 
+function normalizeAnswer(answer, options = []) {
 
-function calculateResult(){
+    if (answer === null || answer === undefined) return "";
 
+    // String
+    if (typeof answer === "string") {
 
-let correct = 0;
+        const value = answer.trim();
 
-let wrong = 0;
+        // A/B/C/D
+        const map = {
+            "A": 0,
+            "B": 1,
+            "C": 2,
+            "D": 3
+        };
 
-let unanswered = 0;
+        if (map[value.toUpperCase()] !== undefined) {
+            return String(options[map[value.toUpperCase()]] || "").trim();
+        }
 
+        return value.toLowerCase();
+    }
 
+    // Number (0,1,2,3)
+    if (typeof answer === "number") {
+        return String(options[answer] || "").trim().toLowerCase();
+    }
 
-questions.forEach((q,index)=>{
-
-
-let userAnswer =
-selectedAnswers[index];
-
-
-
-if(!userAnswer){
-
-
-unanswered++;
-
-
-}
-
-else if(
-
-userAnswer.trim()
-
-===
-
-q.answer.trim()
-
-){
-
-
-correct++;
-
-
-}
-
-else{
-
-
-wrong++;
-
-
+    return String(answer).trim().toLowerCase();
 }
 
 
 
-});
+function calculateResult() {
 
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
 
+    let review = [];
 
+    questions.forEach((q, index) => {
 
+        const userAnswer =
+            selectedAnswers[index];
 
-return {
+        const correctAnswer =
+            normalizeAnswer(q.answer, q.options);
 
-correct,
+        const selected =
+            normalizeAnswer(userAnswer, q.options);
 
-wrong,
+        if (!userAnswer) {
 
-unanswered
+            unanswered++;
 
-};
+        } else if (selected === correctAnswer) {
 
+            correct++;
+
+        } else {
+
+            wrong++;
+
+        }
+
+        review.push({
+
+            question: q.question,
+
+            options: q.options,
+
+            yourAnswer: userAnswer || "Not Answered",
+
+            correctAnswer: correctAnswer,
+
+            explanation: q.explanation || "No Explanation Available",
+
+            status:
+                selected === correctAnswer
+                    ? "Correct"
+                    : (!userAnswer
+                        ? "Unanswered"
+                        : "Wrong")
+
+        });
+
+    });
+
+    return {
+
+        correct,
+        wrong,
+        unanswered,
+        review
+
+    };
 
 }
+
+
 
 
 
@@ -1049,20 +1071,49 @@ async function submitTest(){
     try{
 
         let resultData = calculateResult();
+await saveResult(resultData);
 
-        await saveResult(resultData);
+// ==========================================
+// SAVE RESULT LOCAL STORAGE
+// ==========================================
 
-        localStorage.setItem("lastScore", resultData.correct);
-        localStorage.setItem("lastCorrect", resultData.correct);
-        localStorage.setItem("lastWrong", resultData.wrong);
-        localStorage.setItem("lastUnanswered", resultData.unanswered);
+localStorage.setItem(
+    "lastScore",
+    resultData.correct
+);
 
-        localStorage.setItem(
-            "lastPercentage",
-            ((resultData.correct / questions.length) * 100).toFixed(2)
-        );
+localStorage.setItem(
+    "lastCorrect",
+    resultData.correct
+);
 
-        window.location.href = "result.html";
+localStorage.setItem(
+    "lastWrong",
+    resultData.wrong
+);
+
+localStorage.setItem(
+    "lastUnanswered",
+    resultData.unanswered
+);
+
+localStorage.setItem(
+    "lastTotal",
+    questions.length
+);
+
+localStorage.setItem(
+    "lastPercentage",
+    ((resultData.correct / questions.length) * 100).toFixed(2)
+);
+
+// Full Review Data
+
+localStorage.setItem(
+    "lastReview",
+    JSON.stringify(resultData.review)
+);
+        
 
     }catch(error){
 
