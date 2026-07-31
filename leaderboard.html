@@ -9,622 +9,321 @@
 
 
 <title>
-G THE GENIUS Leaderboard
+Leaderboard | G THE GENIUS
 </title>
 
 
-<link rel="stylesheet" href="leaderboard.css">
+<meta name="theme-color" content="#081229">
+
+
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+
+<link rel="stylesheet"
+href="css/leaderboard.css">
+
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 
 </head>
+
 
 
 <body>
 
 
 
-<!-- =========================
-HEADER
-========================= -->
-
-
 <header class="leader-header">
 
 
-<img 
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="leader-logo"
->
-
-
-
-<div>
-
-<h2>
-G THE GENIUS
-</h2>
-
-
-<p>
-🏆 Leaderboard
-</p>
-
-
-</div>
-
-
-</header>
-
-
-
-
-
-
-
-
-<!-- =========================
-TITLE
-========================= -->
-
-
-<section class="leader-title">
-
-
-<h1>
-
-🏆 Top Performers
-
-</h1>
-
-
-
-<p>
-
-Overall & District Ranking
-
-</p>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-FILTER
-========================= -->
-
-
-<section class="filter-card">
-
-
-<select id="testFilter">
-
-
-<option value="all">
-
-All Tests
-
-</option>
-
-
-<option value="daily">
-
-Daily Mock Test
-
-</option>
-
-
-
-<option value="weekly">
-
-Weekly Mock Test
-
-</option>
-
-
-
-<option value="monthly">
-
-Monthly Grand Test
-
-</option>
-
-
-</select>
-
-
-
-
-
-<select id="rankFilter">
-
-
-<option value="overall">
-
-Overall Rank
-
-</option>
-
-
-
-<option value="district">
-
-District Rank
-
-</option>
-
-
-
-</select>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-TOP 3
-========================= -->
-
-
-<section class="top-three">
-
-
-<div class="rank-box second">
-
-
-<h2>
-🥈
-</h2>
-
-
-<h3 id="secondName">
-
--
-
-</h3>
-
-
-<p id="secondScore">
-
-0/0
-
-</p>
-
-
-</div>
-
-
-
-
-
-<div class="rank-box first">
-
-
-<h2>
-🥇
-</h2>
-
-
-<h3 id="firstName">
-
--
-
-</h3>
-
-
-<p id="firstScore">
-
-0/0
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div class="rank-box third">
-
-
-<h2>
-🥉
-</h2>
-
-
-<h3 id="thirdName">
-
--
-
-</h3>
-
-
-<p id="thirdScore">
-
-0/0
-
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-LEADERBOARD TABLE
-========================= -->
-
-
-<section class="leader-card">
-
-
-<h2>
-
-📊 Ranking List
-
-</h2>
-
-
-
-
-<div class="table-header">
-
-
-<span>
-Rank
-</span>
-
-
-<span>
-Student
-</span>
-
-
-<span>
-Score
-</span>
-
-
-<span>
-Badge
-</span>
-
-
-</div>
-
-
-
-
-
-<div id="leaderList">
-
-
-<!-- Data Load Firebase -->
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<script type="module" src="leaderboard.js"></script>
-<!-- =========================
-MY RANK CARD
-========================= -->
-
-
-<section class="my-rank-card">
-
-
-<h2>
-
-👤 My Performance
-
-</h2>
-
-
-
-<div class="my-rank-grid">
-
-
-<div>
-
-
-<h1 id="myRank">
-
--
-
-</h1>
-
-
-<p>
-
-Overall Rank
-
-</p>
-
-
-</div>
-
-
-
-
-<div>
-
-
-<h1 id="myDistrictRank">
-
--
-
-</h1>
-
-
-<p>
-
-District Rank
-
-</p>
-
-
-</div>
-
-
-
-
-<div>
-
-
-<h1 id="myBestScore">
-
-0/0
-
-</h1>
-
-
-<p>
-
-Best Marks
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-MY BADGES
-========================= -->
-
-
-<section class="badge-card">
-
-
-<h2>
-
-🏅 My Badges
-
-</h2>
-
-
-
-
-<div id="badgeList">
-
-
-<span>
-
-No Badge
-
-</span>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-BOTTOM NAVIGATION
-========================= -->
-
-
-<nav class="bottom-nav">
-
-
-<a href="dashboard.html">
-
-
-🏠
-
-<br>
-
-Home
-
-
-</a>
-
-
-
-
-<a href="practice.html">
-
-
-📚
-
-<br>
-
-Practice
-
-
-</a>
-
-
-
-
-<a href="leaderboard.html">
-
-
-🏆
-
-<br>
-
-Rank
-
-
-</a>
-
-
-
-
-<a href="profile.html">
-
-
-👤
-
-<br>
-
-Profile
-
-
-</a>
-
-
-
-</nav>
-
-
-
-
-
-
-
-
-<!-- =========================
-FOOTER
-========================= -->
-
-
-<footer class="footer">
+<div class="brand">
 
 
 <img
 
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 
-class="footer-logo"
+class="logo">
 
 
->
+<div>
 
-
-
-<h3>
+<h2>
 
 G THE GENIUS
 
-</h3>
-
-
-
-<p>
-
-All Government Exam Mock Test Platform
-
-</p>
-
-
-
-
-<a href="https://youtube.com/@gthegeniustamil">
-
-▶ YouTube Channel
-
-</a>
-
-
-
-
-<a href="https://t.me/gthegenius">
-
-📢 Telegram Channel
-
-</a>
-
-
-
-
-<a href="mailto:gthegenius7@gmail.com">
-
-📧 Email
-
-</a>
-
-
+</h2>
 
 
 <p>
 
-© 2026 G THE GENIUS.
-All Rights Reserved.
+Student Ranking
 
 </p>
 
+
+</div>
+
+
+</div>
+
+
+
+<button onclick="goDashboard()">
+
+⬅ Dashboard
+
+</button>
+
+
+</header>
+
+  <main class="leader-container">
+
+
+
+<section class="leader-card">
+
+
+<h1>
+
+🏆 Overall Ranking
+
+</h1>
+
+
+
+<div class="table-container">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+
+Rank
+
+</th>
+
+
+<th>
+
+Name
+
+</th>
+
+
+<th>
+
+District
+
+</th>
+
+
+<th>
+
+Test
+
+</th>
+
+
+<th>
+
+Score
+
+</th>
+
+
+<th>
+
+%
+
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody id="leaderboardData">
+
+
+<tr>
+
+<td colspan="6">
+
+Loading...
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+
+
+</table>
+
+
+</div>
+
+
+</section>
+
+    <section class="top-students">
+
+
+<h2>
+
+🥇 Top Performers
+
+</h2>
+
+
+
+<div id="topStudents">
+
+
+<!-- Top 3 Students Load Here -->
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+<section class="district-ranking">
+
+
+<h2>
+
+📍 District Ranking
+
+</h2>
+
+
+<select id="districtFilter">
+
+
+<option value="All">
+
+All District
+
+</option>
+
+
+<option>
+
+Ariyalur
+
+</option>
+
+
+<option>
+
+Chennai
+
+</option>
+
+
+<option>
+
+Coimbatore
+
+</option>
+
+
+<option>
+
+Madurai
+
+</option>
+
+
+<option>
+
+Salem
+
+</option>
+
+
+<option>
+
+Tiruppur
+
+</option>
+
+
+</select>
+
+
+
+</section>
+
+
+
+
+
+</main>
+
+
+
+
+<footer class="leader-footer">
+
+
+<p>
+
+© 2026 G THE GENIUS
+
+</p>
+
+
+<p>
+
+Government Exam Mock Test Portal
+
+</p>
 
 
 </footer>
 
-</body>
 
+
+
+<script type="module" src="js/leaderboard.js"></script>
+
+
+
+<script>
+
+function goDashboard(){
+
+window.location.href="dashboard.html";
+
+}
+
+</script>
+
+
+
+</body>
 
 </html>
