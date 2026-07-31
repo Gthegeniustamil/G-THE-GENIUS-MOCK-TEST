@@ -1,149 +1,461 @@
-/* =====================================
-G THE GENIUS LOGIN APP STYLE
-===================================== */
+/* ==========================================
+   G THE GENIUS
+   PREMIUM MOBILE APP UI
+   STYLE.CSS - PART 1
+========================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
+:root{
+
+    --bg:#050B1F;
+    --card:#0E1835;
+    --card2:#14244D;
+    --gold:#FFD700;
+    --gold2:#FFB300;
+    --white:#ffffff;
+    --gray:#cfd3dc;
+    --border:rgba(255,255,255,.08);
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
 
 body{
 
-min-height:100vh;
+    background:linear-gradient(180deg,#050B1F,#081229);
 
-background:#020817;
+    color:var(--white);
 
-display:flex;
+    min-height:100vh;
 
-justify-content:center;
-
-align-items:center;
-
-color:white;
+    overflow-x:hidden;
 
 }
 
 
 
-
+/* =========================
+   MOBILE APP
+========================= */
 
 .mobile-app{
 
-width:100%;
+    width:100%;
 
-max-width:430px;
+    max-width:430px;
 
-min-height:100vh;
+    min-height:100vh;
 
-background:linear-gradient(
-180deg,
-#081229,
-#050B1F
-);
+    margin:auto;
 
-padding:35px 20px;
-
-text-align:center;
+    padding:25px 18px 100px;
 
 }
 
 
 
-
-
-/* LOGO */
-
+/* =========================
+   LOGO
+========================= */
 
 .app-logo{
 
-width:120px;
+    width:110px;
 
-height:120px;
+    height:110px;
 
-margin:auto;
+    margin:10px auto;
 
-border-radius:50%;
+    border-radius:50%;
 
-padding:5px;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
 
-background:linear-gradient(
-135deg,
-#FFD700,
-#FF9800
-);
+    padding:5px;
 
-box-shadow:
-0 0 35px rgba(255,215,0,.45);
+    box-shadow:0 15px 35px rgba(255,215,0,.30);
 
 }
-
-
 
 .app-logo img{
 
-width:100%;
+    width:100%;
 
-height:100%;
+    height:100%;
 
-border-radius:50%;
+    border-radius:50%;
 
-object-fit:cover;
+    object-fit:cover;
 
 }
 
 
 
-
+/* =========================
+   TITLE
+========================= */
 
 .mobile-app h1{
 
-margin-top:20px;
+    text-align:center;
 
-font-size:30px;
+    color:var(--gold);
 
-font-weight:800;
+    font-size:30px;
 
-color:#FFD700;
+    font-weight:800;
+
+    margin-top:18px;
 
 }
-
-
-
 
 .tagline{
 
-color:#ccc;
+    text-align:center;
 
-font-size:14px;
+    color:var(--gray);
 
-margin-top:8px;
+    margin-top:8px;
+
+    font-size:14px;
+
+    line-height:1.5;
 
 }
 
 
 
+/* =========================
+   GLASS CARD
+========================= */
+
+.login-card,
+.register-card,
+.card,
+.glass-card{
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:28px;
+
+    padding:25px;
+
+    margin-top:28px;
+
+    backdrop-filter:blur(16px);
+
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+
+}
+
+.login-card h2,
+.register-card h2{
+
+    text-align:center;
+
+    color:var(--gold);
+
+    margin-bottom:10px;
+
+}
+
+.login-card p,
+.register-card p{
+
+    text-align:center;
+
+    color:#d4d4d4;
+
+    font-size:14px;
+
+    margin-bottom:20px;
+
+}
+/* ==========================================
+   G THE GENIUS
+   STYLE.CSS - PART 2
+   INPUTS + BUTTONS
+========================================== */
 
 
-/* LOGIN CARD */
+/* INPUT BOX */
+
+.input-group{
+
+    margin-bottom:18px;
+
+}
+
+.input-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#FFD700;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.login-card input,
+.register-card input,
+.login-card select,
+.register-card select,
+input,
+select{
+
+    width:100%;
+
+    height:55px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:18px;
+
+    padding:0 18px;
+
+    background:#ffffff;
+
+    color:#081229;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
 
 
-.login-card{
 
-margin-top:35px;
+input:focus,
+select:focus{
 
-padding:25px;
+    border:2px solid #FFD700;
 
-border-radius:30px;
+    box-shadow:0 0 15px rgba(255,215,0,.35);
+
+}
+
+
+
+/* BUTTON */
+
+button{
+
+    width:100%;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:linear-gradient(135deg,#FFD700,#FFB300);
+
+    color:#081229;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    margin-top:10px;
+
+}
+
+
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 25px rgba(255,215,0,.35);
+
+}
+
+
+
+button:active{
+
+    transform:scale(.98);
+
+}
+
+
+
+/* LOGIN BUTTON */
+
+#loginBtn,
+#registerBtn{
+
+    width:100%;
+
+}
+
+
+
+/* LINKS */
+
+.register-text,
+.login-text{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:#ddd;
+
+    font-size:14px;
+
+}
+
+
+
+.register-text a,
+.login-text a{
+
+    color:#FFD700;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+}
+
+
+
+.register-text a:hover,
+.login-text a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+
+/* CHECKBOX */
+
+.checkbox-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin:15px 0;
+
+    color:#ddd;
+
+    font-size:14px;
+
+}
+
+
+
+.checkbox-row input{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+
+
+/* DIVIDER */
+
+.divider{
+
+    text-align:center;
+
+    margin:20px 0;
+
+    color:#999;
+
+    position:relative;
+
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:50%;
+
+    width:35%;
+
+    height:1px;
+
+    background:rgba(255,255,255,.15);
+
+}
+
+.divider::before{
+
+    left:0;
+
+}
+
+.divider::after{
+
+    right:0;
+
+  }
+
+/* ==========================================
+   G THE GENIUS
+   STYLE.CSS - PART 3
+   DASHBOARD
+========================================== */
+
+
+/* WELCOME CARD */
+
+.student-card{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+margin-top:25px;
+
+padding:20px;
 
 background:rgba(255,255,255,.08);
 
-border:1px solid rgba(255,215,0,.25);
+border:1px solid rgba(255,215,0,.18);
 
-box-shadow:0 15px 40px rgba(0,0,0,.4);
+border-radius:25px;
 
 backdrop-filter:blur(15px);
 
@@ -151,129 +463,430 @@ backdrop-filter:blur(15px);
 
 
 
-.login-card h2{
+.student-avatar{
 
-color:white;
+width:70px;
 
-font-size:22px;
+height:70px;
 
-}
+border-radius:50%;
 
+display:flex;
 
+align-items:center;
 
-.login-card p{
+justify-content:center;
 
-color:#ccc;
+background:linear-gradient(135deg,#FFD700,#FFB300);
 
-font-size:13px;
-
-margin:8px 0 20px;
-
-}
-
-
-
-
-
-/* INPUT */
-
-
-.login-card input{
-
-width:100%;
-
-height:50px;
-
-margin:10px 0;
-
-padding:0 18px;
-
-border:none;
-
-outline:none;
-
-border-radius:25px;
-
-background:#ffffff;
-
-color:#000;
-
-font-size:14px;
-
-}
-
-
-
-
-
-/* BUTTON */
-
-
-#loginBtn{
-
-width:100%;
-
-height:50px;
-
-margin-top:20px;
-
-border:none;
-
-border-radius:30px;
-
-background:linear-gradient(
-135deg,
-#FFD700,
-#FFB300
-);
+font-size:32px;
 
 color:#081229;
 
-font-size:16px;
-
-font-weight:800;
-
-cursor:pointer;
-
-box-shadow:
-0 8px 20px rgba(255,215,0,.35);
+font-weight:bold;
 
 }
 
 
 
+.student-details{
 
-
-#loginBtn:active{
-
-transform:scale(.97);
+flex:1;
 
 }
 
 
 
+.student-details h2{
 
+font-size:20px;
 
-/* REGISTER */
-
-
-.register-text{
-
-margin-top:20px;
-
-font-size:14px;
+color:#fff;
 
 }
 
 
 
-.register-text a{
+.student-details span{
 
 color:#FFD700;
 
-font-weight:700;
+}
+
+
+
+.student-details p{
+
+margin-top:5px;
+
+font-size:14px;
+
+color:#ccc;
+
+}
+
+
+
+
+/* LEVEL CARD */
+
+.level-card{
+
+margin-top:20px;
+
+padding:20px;
+
+border-radius:25px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,215,0,.18);
+
+}
+
+
+
+.level-top{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-bottom:15px;
+
+}
+
+
+
+.level-top h3{
+
+color:#FFD700;
+
+}
+
+
+
+.progress-box{
+
+height:12px;
+
+background:#16254f;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+
+
+#xpProgress{
+
+height:100%;
+
+width:0%;
+
+background:linear-gradient(90deg,#FFD700,#FFA500);
+
+border-radius:20px;
+
+transition:.5s;
+
+}
+
+
+
+
+/* MOTIVATION */
+
+.motivation-card{
+
+margin-top:22px;
+
+padding:25px;
+
+text-align:center;
+
+border-radius:25px;
+
+background:linear-gradient(135deg,#14244D,#0B1635);
+
+border:1px solid rgba(255,215,0,.20);
+
+}
+
+
+
+.motivation-icon{
+
+font-size:38px;
+
+margin-bottom:12px;
+
+}
+
+
+
+.motivation-card h3{
+
+color:#FFD700;
+
+margin-bottom:10px;
+
+}
+
+
+
+.motivation-card p{
+
+font-size:16px;
+
+line-height:1.7;
+
+color:#fff;
+
+}
+
+
+
+.motivation-card span{
+
+display:block;
+
+margin-top:15px;
+
+color:#aaa;
+
+}
+
+
+
+
+/* TEST SECTION */
+
+.test-section{
+
+margin-top:30px;
+
+}
+
+
+
+.test-section h2{
+
+color:#FFD700;
+
+margin-bottom:18px;
+
+}
+
+
+
+.test-container{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+
+
+.test-card{
+
+padding:22px;
+
+border-radius:25px;
+
+text-align:center;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+
+
+.test-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#FFD700;
+
+}
+
+
+
+.test-icon{
+
+font-size:36px;
+
+margin-bottom:12px;
+
+}
+
+
+
+.test-card h3{
+
+color:#FFD700;
+
+margin-bottom:10px;
+
+}
+
+
+
+.test-card p{
+
+color:#ddd;
+
+font-size:14px;
+
+margin:6px 0;
+
+}
+
+
+
+.test-card button{
+
+margin-top:15px;
+
+}
+/* ==========================================
+   G THE GENIUS
+   STYLE.CSS - PART 4
+   QUICK MENU + SOCIAL + FOOTER
+========================================== */
+
+
+/* QUICK MENU */
+
+.quick-section{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:15px;
+
+margin-top:30px;
+
+}
+
+
+
+.quick-card{
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:25px;
+
+padding:25px 15px;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:.3s;
+
+backdrop-filter:blur(15px);
+
+}
+
+
+
+.quick-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#FFD700;
+
+box-shadow:0 10px 30px rgba(255,215,0,.20);
+
+}
+
+
+
+.quick-card h3{
+
+font-size:35px;
+
+margin-bottom:10px;
+
+}
+
+
+
+.quick-card p{
+
+color:#FFD700;
+
+font-weight:600;
+
+}
+
+
+
+
+
+/* SOCIAL */
+
+.social-links{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+margin-top:25px;
+
+}
+
+
+
+.social-links a{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:55px;
+
+background:rgba(255,255,255,.08);
+
+border-radius:18px;
+
+color:white;
 
 text-decoration:none;
+
+font-weight:600;
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+
+
+.social-links a:hover{
+
+background:#FFD700;
+
+color:#081229;
 
 }
 
@@ -283,30 +896,175 @@ text-decoration:none;
 
 /* FOOTER */
 
-
 .app-footer{
 
-margin-top:40px;
+margin-top:35px;
 
-color:#aaa;
+text-align:center;
 
-font-size:12px;
+padding:20px;
 
-line-height:2;
+border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+.app-footer img{
+
+width:70px;
+
+height:70px;
+
+border-radius:50%;
+
+margin:auto;
+
+margin-bottom:15px;
+
+border:3px solid #FFD700;
+
+}
+
+
+
+.app-footer h3{
+
+color:#FFD700;
+
+margin-bottom:10px;
+
+}
+
+
+
+.app-footer p{
+
+color:#bbb;
+
+font-size:13px;
+
+line-height:1.8;
 
 }
 
 
 
 
-/* MOBILE */
 
-@media(max-width:430px){
+/* BOTTOM NAVIGATION */
+
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:100%;
+
+max-width:430px;
+
+height:70px;
+
+background:#0E1835;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+z-index:999;
+
+}
+
+
+
+.bottom-nav a{
+
+text-decoration:none;
+
+color:#ccc;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+font-size:22px;
+
+transition:.3s;
+
+}
+
+
+
+.bottom-nav span{
+
+font-size:11px;
+
+margin-top:4px;
+
+}
+
+
+
+.bottom-nav a:hover{
+
+color:#FFD700;
+
+}
+
+
+
+
+
+/* RESPONSIVE */
+
+@media(max-width:480px){
 
 .mobile-app{
 
-border-radius:0;
+padding:20px 15px 90px;
 
 }
 
+
+
+.quick-section{
+
+grid-template-columns:1fr;
+
 }
+
+
+
+.student-card{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+
+
+.level-top{
+
+flex-direction:column;
+
+gap:10px;
+
+text-align:center;
+
+}
+
+  }
+  
