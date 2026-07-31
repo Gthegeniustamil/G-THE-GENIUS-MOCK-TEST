@@ -1,7 +1,8 @@
-// =========================
-// G THE GENIUS DASHBOARD JS
+// =====================================
+// G THE GENIUS
+// DASHBOARD JS
 // PART 1
-// =========================
+// =====================================
 
 
 import { auth, db } from "./firebase-config.js";
@@ -9,43 +10,86 @@ import { auth, db } from "./firebase-config.js";
 
 import {
 
+onAuthStateChanged,
+signOut
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+
 doc,
 getDoc
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-// =========================
-// LOAD STUDENT DATA
-// =========================
+// =====================================
+// DOM ELEMENTS
+// =====================================
 
 
-async function loadStudentData(){
+const studentName =
+document.getElementById("studentName");
+
+
+const profileName =
+document.getElementById("profileName");
+
+
+const profileDistrict =
+document.getElementById("profileDistrict");
+
+
+const xpText =
+document.getElementById("xp");
+
+
+const levelText =
+document.getElementById("level");
+
+
+const testsText =
+document.getElementById("testsAttempted");
+
+
+const scoreText =
+document.getElementById("totalScore");
+
+
+const xpProgress =
+document.getElementById("xpProgress");
 
 
 
-const user =
 
-auth.currentUser;
+// =====================================
+// AUTH CHECK + LOAD PROFILE
+// =====================================
 
+
+onAuthStateChanged(auth, async(user)=>{
 
 
 if(!user){
 
 
-console.log(
-"User Not Login"
-);
-
+window.location.href="login.html";
 
 return;
 
 
 }
-
-
 
 
 
@@ -58,7 +102,7 @@ doc(
 
 db,
 
-"users",
+"students",
 
 user.uid
 
@@ -66,79 +110,50 @@ user.uid
 
 
 
-
-
-const snap =
+const userSnap =
 
 await getDoc(userRef);
 
 
 
-
-
-if(
-snap.exists()
-){
+if(userSnap.exists()){
 
 
 
-let data = snap.data();
+const data = userSnap.data();
 
 
 
+studentName.innerHTML =
+data.name;
 
 
-document.getElementById(
-"studentName"
-).innerHTML =
-
-data.name || "Student";
+profileName.innerHTML =
+data.name;
 
 
+profileDistrict.innerHTML =
+"📍 "+data.district;
 
 
-
-document.getElementById(
-"studentDistrict"
-).innerHTML =
-
-data.district || "-";
+xpText.innerHTML =
+data.xp || 0;
 
 
+levelText.innerHTML =
+data.level || 1;
 
 
-
-localStorage.setItem(
-
-"studentName",
-
-data.name || "Student"
-
-);
+testsText.innerHTML =
+data.testsAttempted || 0;
 
 
-
-
-
-localStorage.setItem(
-
-"district",
-
-data.district || "-"
-
-);
+scoreText.innerHTML =
+data.totalScore || 0;
 
 
 
 }
-
-
-
-
-
-
-loadXP();
-
 
 
 }
@@ -149,128 +164,9 @@ catch(error){
 
 
 console.log(
-
-"Dashboard Error",
-
+"Dashboard Load Error:",
 error
-
 );
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// XP LEVEL SYSTEM
-// =========================
-
-
-function loadXP(){
-
-
-
-let xp =
-
-Number(
-
-localStorage.getItem(
-"xp"
-
-)
-
-)||0;
-
-
-
-
-
-
-let level =
-
-Math.floor(
-xp / 100
-)+1;
-
-
-
-
-
-
-let levelXP =
-
-xp % 100;
-
-
-
-
-
-
-document.getElementById(
-"userXP"
-).innerHTML =
-
-xp;
-
-
-
-
-
-document.getElementById(
-"userLevel"
-).innerHTML =
-
-level;
-
-
-
-
-
-
-document.getElementById(
-"xpProgress"
-).style.width =
-
-levelXP+"%";
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =========================
-// AUTH CHECK
-// =========================
-
-
-auth.onAuthStateChanged(
-
-(user)=>{
-
-
-
-if(user){
-
-
-loadStudentData();
 
 
 }
@@ -279,88 +175,65 @@ loadStudentData();
 
 });
 
+// =====================================
+// DASHBOARD JS
+// PART 2
+// =====================================
 
 
 
+// =====================================
+// XP PROGRESS BAR
+// =====================================
 
 
-console.log(
-
-"✅ G THE GENIUS DASHBOARD READY"
-
-);
-
-// =========================
-// TEST ACCESS CHECK
-// =========================
+function updateXPProgress(xp){
 
 
-function checkTestStatus(){
+let currentXP = xp || 0;
 
 
-
-let attempts =
-
-JSON.parse(
-
-localStorage.getItem(
-"mockAttempts"
-
-)
-
-)|| {};
+let nextLevelXP = 100;
 
 
 
-let today =
+let percentage =
 
-new Date()
-.toLocaleDateString();
-
+(currentXP / nextLevelXP) * 100;
 
 
 
+if(percentage > 100){
 
-
-// DAILY STATUS
-
-
-let dailyBtn =
-
-document.querySelector(
-".daily button"
-);
-
-
-
-if(dailyBtn){
-
-
-
-if(
-
-attempts.dailyDate === today
-
-&&
-
-attempts.daily >= 5
-
-){
-
-
-
-dailyBtn.innerHTML =
-
-"Completed ✅";
-
-
-
-dailyBtn.disabled = true;
-
-
+percentage = 100;
 
 }
 
+
+
+if(xpProgress){
+
+xpProgress.style.width =
+
+percentage + "%";
+
+}
+
+
+
+const progressText =
+
+document.getElementById("progressText");
+
+
+
+if(progressText){
+
+progressText.innerHTML =
+
+currentXP + " / " + nextLevelXP + " XP";
+
+}
 
 
 }
@@ -368,206 +241,48 @@ dailyBtn.disabled = true;
 
 
 
+// =====================================
+// START MOCK TEST
+// =====================================
+
+
+window.startTest = function(type){
 
 
 
-
-// WEEKLY STATUS
-
-
-let weeklyBtn =
-
-document.querySelector(
-".weekly button"
-);
+if(type==="daily"){
 
 
+window.location.href=
 
-if(weeklyBtn){
-
-
-
-if(
-
-attempts.weekly >= 3
-
-){
-
-
-
-weeklyBtn.innerHTML =
-
-"Completed ✅";
-
-
-
-weeklyBtn.disabled = true;
-
+"mocktest.html?type=daily";
 
 
 }
 
 
 
-}
+else if(type==="weekly"){
 
 
+window.location.href=
 
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// LOGOUT
-// =========================
-
-
-function logoutUser(){
-
-
-
-auth.signOut()
-
-.then(()=>{
-
-
-localStorage.clear();
-
-
-
-window.location.href =
-
-"index.html";
-
-
-
-})
-
-.catch(error=>{
-
-
-console.log(
-"Logout Error",
-error
-);
-
-
-
-});
+"mocktest.html?type=weekly";
 
 
 }
 
 
 
+else if(type==="monthly"){
 
 
+window.location.href=
 
-
-
-// =========================
-// PROFILE SYNC
-// =========================
-
-
-function syncProfile(){
-
-
-
-let name =
-
-localStorage.getItem(
-"studentName"
-);
-
-
-
-let district =
-
-localStorage.getItem(
-"district"
-);
-
-
-
-
-
-if(name){
-
-
-document.getElementById(
-"studentName"
-).innerHTML =
-
-name;
-
+"mocktest.html?type=monthly";
 
 
 }
-
-
-
-
-
-if(district){
-
-
-
-document.getElementById(
-"studentDistrict"
-).innerHTML =
-
-district;
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// START DASHBOARD
-// =========================
-
-
-const oldLoadStudentData =
-
-loadStudentData;
-
-
-
-loadStudentData = async function(){
-
-
-
-await oldLoadStudentData();
-
-
-
-checkTestStatus();
-
-
-
-syncProfile();
 
 
 
@@ -576,12 +291,224 @@ syncProfile();
 
 
 
+// =====================================
+// LOGOUT
+// =====================================
 
 
+const logoutBtn =
+
+document.getElementById("logoutBtn");
+
+
+
+if(logoutBtn){
+
+
+logoutBtn.addEventListener("click",async()=>{
+
+
+try{
+
+
+await signOut(auth);
+
+
+window.location.href="login.html";
+
+
+}
+
+
+catch(error){
+
+
+alert(
+
+"Logout Failed"
+
+);
+
+
+}
+
+
+
+});
+
+
+}
+
+// =====================================
+// DASHBOARD JS
+// PART 3 FINAL
+// =====================================
+
+
+
+// =====================================
+// LEVEL SYSTEM
+// =====================================
+
+
+function calculateLevel(xp){
+
+
+let level =
+
+Math.floor(xp / 100) + 1;
+
+
+return level;
+
+
+}
+
+
+
+
+// =====================================
+// UPDATE LEVEL DISPLAY
+// =====================================
+
+
+async function updateStudentLevel(user){
+
+
+try{
+
+
+const userRef =
+
+doc(
+
+db,
+
+"students",
+
+user.uid
+
+);
+
+
+
+const userSnap =
+
+await getDoc(userRef);
+
+
+
+if(userSnap.exists()){
+
+
+const data = userSnap.data();
+
+
+const currentXP =
+
+data.xp || 0;
+
+
+
+const newLevel =
+
+calculateLevel(currentXP);
+
+
+
+if(levelText){
+
+levelText.innerHTML =
+
+newLevel;
+
+}
+
+
+
+updateXPProgress(currentXP);
+
+
+
+}
+
+
+
+}
+
+
+catch(error){
 
 
 console.log(
 
-"✅ Dashboard Final Integration Completed"
+"Level Update Error",
+
+error
+
+);
+
+
+}
+
+
+
+}
+
+
+
+
+// =====================================
+// PROFILE BUTTON
+// =====================================
+
+
+const profileBtn =
+
+document.querySelector(
+
+".menu-card:nth-child(2)"
+
+);
+
+
+
+if(profileBtn){
+
+
+profileBtn.addEventListener("click",()=>{
+
+
+window.location.href="profile.html";
+
+
+});
+
+
+}
+
+
+
+
+// =====================================
+// PAGE READY
+// =====================================
+
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+
+console.log(
+
+"Dashboard Loaded Successfully"
+
+);
+
+
+}
 
 );
