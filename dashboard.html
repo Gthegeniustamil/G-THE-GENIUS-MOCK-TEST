@@ -1,85 +1,161 @@
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
+// DASHBOARD HTML
+// PART 1 / 5
+// ==========================================
+
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 
 <head>
 
+
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 
 
 <title>
-G THE GENIUS Dashboard
+
+Dashboard | G THE GENIUS
+
 </title>
 
 
-<meta name="theme-color" content="#050B1F">
 
+
+<meta name="theme-color"
+content="#081229">
+
+
+
+
+
+<!-- Logo -->
 
 <link rel="icon"
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 
-<link rel="stylesheet" href="css/style.css">
 
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Dashboard CSS -->
+
+<link rel="stylesheet"
+href="dashboard.css">
+
+
+
 
 
 </head>
 
 
+
+
 <body>
 
 
-<div class="app-container">
+
+<div class="dashboard-container">
 
 
 
-<!-- HEADER -->
 
 
-<header class="app-header">
+
+<!-- HEADER START -->
+
+
+<header class="dashboard-header">
+
 
 
 <div class="logo-box">
 
 
 <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS">
+
+alt="G THE GENIUS Logo"
+
+class="dashboard-logo">
 
 
 </div>
 
 
+
+
+
+
+<div class="dashboard-brand">
+
+
 <h1>
+
 G THE GENIUS
+
 </h1>
 
 
+
 <p>
-Government Exam Mock Test Portal
+
+Government Exam Mock Test
+
 </p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="profile-icon">
+
+
+<a href="profile.html">
+
+👤
+
+</a>
+
+
+</div>
+
 
 
 </header>
 
-  
-<!-- STUDENT PROFILE CARD -->
 
 
-<section class="student-card">
-
-
-<div class="student-avatar">
-
-👤
-
-</div>
+<!-- HEADER END -->
 
 
 
-<div class="student-details">
+
+
+
+
+<!-- WELCOME CARD START -->
+
+
+<section class="welcome-section">
+
+
+<div class="welcome-card">
+
 
 
 <h2>
@@ -92,152 +168,127 @@ Student
 
 </span>
 
+👋
+
 </h2>
 
-
-<p id="studentDistrict">
-
-📍 District
-
-</p>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- LEVEL CARD -->
-
-
-<section class="level-card">
-
-
-<div class="level-top">
-
-
-<h3>
-
-⭐ Level
-
-<span id="userLevel">
-
-1
-
-</span>
-
-</h3>
 
 
 
 <p>
 
-XP :
-
-<span id="userXP">
-
-0
-
-</span>
+Ready to improve your exam rank today?
 
 </p>
 
 
-</div>
+
+
+<div class="student-info">
 
 
 
-
-<div class="progress-box">
-
-
-<div id="xpProgress">
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- DAILY MOTIVATION -->
-
-
-<section class="motivation-card">
-
-
-<div class="motivation-icon">
-
-🌟
-
-</div>
-
-
-<h3>
-
-Daily Motivation
-
-</h3>
-
-
-
-<p id="dailyQuote">
-
-Loading...
-
-</p>
-
-
+<div>
 
 <span>
 
-- G THE GENIUS
+District
 
 </span>
 
 
+<strong id="studentDistrict">
+
+-
+
+</strong>
+
+
+</div>
+
+
+
+
+
+<div>
+
+<span>
+
+Tests
+
+</span>
+
+
+<strong id="testCount">
+
+0
+
+</strong>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
 </section>
 
- 
-<!-- MOCK TEST SECTION -->
+
+<!-- WELCOME CARD END -->
+
+  // ==========================================
+// DASHBOARD HTML
+// PART 2 / 5
+// ==========================================
 
 
-<section class="test-section">
+
+
+
+<!-- MOCK TEST SECTION START -->
+
+
+<section class="mock-section">
+
 
 
 <h2>
 
-📝 Mock Tests
+Mock Tests
 
 </h2>
 
 
 
-<div class="test-container">
+
+
+<div class="test-grid">
 
 
 
-<!-- DAILY -->
 
 
-<div class="test-card daily-card">
+
+<!-- DAILY TEST -->
 
 
-<div class="test-icon">
+<div class="dashboard-test-card daily">
 
-🟢
+
+<div class="test-badge">
+
+🟢 Daily
 
 </div>
+
 
 
 <h3>
@@ -245,6 +296,7 @@ Loading...
 Daily Mock Test
 
 </h3>
+
 
 
 <p>
@@ -256,36 +308,48 @@ Daily Mock Test
 
 <p>
 
-⏱ 5 Minutes
+Daily Practice Test
 
 </p>
 
 
 
-<button onclick="startTest('daily')">
 
-START NOW
 
-</button>
+<a href="mocktest.html?type=daily"
 
+class="start-btn">
+
+
+Start Test
+
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- WEEKLY TEST -->
+
+
+<div class="dashboard-test-card weekly">
+
+
+<div class="test-badge">
+
+🟡 Weekly
 
 </div>
 
-
-
-
-
-<!-- WEEKLY -->
-
-
-<div class="test-card weekly-card">
-
-
-<div class="test-icon">
-
-🟡
-
-</div>
 
 
 <h3>
@@ -293,6 +357,7 @@ START NOW
 Weekly Mock Test
 
 </h3>
+
 
 
 <p>
@@ -304,37 +369,48 @@ Weekly Mock Test
 
 <p>
 
-⏱ 10 Minutes
+Weekly Challenge
 
 </p>
 
 
 
-<button onclick="startTest('weekly')">
 
-START NOW
 
-</button>
+<a href="mocktest.html?type=weekly"
 
+class="start-btn">
+
+
+Start Test
+
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MONTHLY TEST -->
+
+
+<div class="dashboard-test-card monthly">
+
+
+<div class="test-badge">
+
+🔴 Monthly
 
 </div>
 
-
-
-
-
-
-<!-- MONTHLY -->
-
-
-<div class="test-card monthly-card">
-
-
-<div class="test-icon">
-
-🔴
-
-</div>
 
 
 <h3>
@@ -342,6 +418,7 @@ START NOW
 Monthly Grand Test
 
 </h3>
+
 
 
 <p>
@@ -353,20 +430,31 @@ Monthly Grand Test
 
 <p>
 
-⏱ 60 Minutes
+Grand Competition
 
 </p>
 
 
 
-<button onclick="startTest('monthly')">
 
-START NOW
 
-</button>
+<a href="mocktest.html?type=monthly"
+
+class="start-btn">
+
+
+Start Test
+
+
+</a>
+
 
 
 </div>
+
+
+
+
 
 
 
@@ -376,31 +464,417 @@ START NOW
 </section>
 
 
+<!-- MOCK TEST SECTION END -->
 
 
 
-<!-- QUICK MENU -->
 
 
-<section class="quick-section">
 
 
-<div class="quick-card"
-onclick="location.href='leaderboard.html'">
+
+<!-- SUBJECT TEST SECTION START -->
+
+
+<section class="subject-section">
+
+
+
+<h2>
+
+Subject Wise Test
+
+</h2>
+
+
+
+
+
+<div class="subject-grid">
+
+
+
+
+
+
+<div class="subject-box">
+
+
+<span>
+
+🏛️
+
+</span>
 
 
 <h3>
+
+Indian Polity
+
+</h3>
+
+
+
+<a href="mocktest.html?subject=polity">
+
+Practice
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="subject-box">
+
+
+<span>
+
+📜
+
+</span>
+
+
+<h3>
+
+History
+
+</h3>
+
+
+
+<a href="mocktest.html?subject=history">
+
+Practice
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="subject-box">
+
+
+<span>
+
+🌍
+
+</span>
+
+
+<h3>
+
+Geography
+
+</h3>
+
+
+
+<a href="mocktest.html?subject=geography">
+
+Practice
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="subject-box">
+
+
+<span>
+
+🔬
+
+</span>
+
+
+<h3>
+
+Science
+
+</h3>
+
+
+
+<a href="mocktest.html?subject=science">
+
+Practice
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+<!-- SUBJECT TEST SECTION END -->
+
+  // ==========================================
+// DASHBOARD HTML
+// PART 3 / 5
+// ==========================================
+
+
+
+
+
+
+<!-- TOPIC TEST SECTION START -->
+
+
+<section class="topic-section">
+
+
+
+<h2>
+
+Topic Wise Test
+
+</h2>
+
+
+
+
+
+<div class="topic-grid">
+
+
+
+
+
+
+
+<div class="topic-card">
+
+
+<h3>
+
+📚 Indian Constitution
+
+</h3>
+
+
+
+<p>
+
+Fundamental Rights, Articles, Amendments
+
+</p>
+
+
+
+<a href="mocktest.html?topic=constitution">
+
+Start
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="topic-card">
+
+
+<h3>
+
+⚔️ Indian History
+
+</h3>
+
+
+
+<p>
+
+Ancient, Medieval, Modern History
+
+</p>
+
+
+
+<a href="mocktest.html?topic=history">
+
+Start
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="topic-card">
+
+
+<h3>
+
+🗺️ Tamil Nadu GK
+
+</h3>
+
+
+
+<p>
+
+TN History, Culture, Schemes
+
+</p>
+
+
+
+<a href="mocktest.html?topic=tngk">
+
+Start
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="topic-card">
+
+
+<h3>
+
+⚖️ Current Affairs
+
+</h3>
+
+
+
+<p>
+
+Latest Government Updates
+
+</p>
+
+
+
+<a href="mocktest.html?topic=current">
+
+Start
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+<!-- TOPIC TEST SECTION END -->
+
+
+
+
+
+
+
+
+
+<!-- QUICK MENU SECTION START -->
+
+
+<section class="quick-menu-section">
+
+
+
+<h2>
+
+Quick Access
+
+</h2>
+
+
+
+
+
+
+<div class="quick-grid">
+
+
+
+
+
+
+
+<div class="quick-card">
+
+
+<a href="leaderboard.html">
+
 
 🏆
 
-</h3>
+<br>
 
-
-<p>
 
 Leaderboard
 
-</p>
+
+</a>
 
 
 </div>
@@ -408,22 +882,86 @@ Leaderboard
 
 
 
-<div class="quick-card"
-onclick="location.href='profile.html'">
 
 
-<h3>
+
+
+<div class="quick-card">
+
+
+<a href="history.html">
+
+
+📜
+
+<br>
+
+
+History
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="quick-card">
+
+
+<a href="profile.html">
+
 
 👤
 
-</h3>
+<br>
 
-
-<p>
 
 Profile
 
-</p>
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="quick-card">
+
+
+<a href="admin.html">
+
+
+⚙️
+
+<br>
+
+
+Admin
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+
 
 
 </div>
@@ -432,15 +970,276 @@ Profile
 
 </section>
 
-  
-<!-- FOOTER CONTACT -->
+
+
+<!-- QUICK MENU SECTION END -->
+
+  // ==========================================
+// DASHBOARD HTML
+// PART 4 / 5
+// ==========================================
+
+
+
+
+
+
+<!-- PERFORMANCE SECTION START -->
+
+
+<section class="performance-section">
+
+
+
+<h2>
+
+Your Performance
+
+</h2>
+
+
+
+
+
+
+
+<div class="performance-card">
+
+
+
+
+
+
+<div class="performance-item">
+
+
+<span>
+
+🏆 Rank
+
+</span>
+
+
+
+<strong id="studentRank">
+
+-
+
+</strong>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="performance-item">
+
+
+<span>
+
+⭐ Total Marks
+
+</span>
+
+
+
+<strong id="totalMarks">
+
+0
+
+</strong>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="performance-item">
+
+
+<span>
+
+📝 Tests Completed
+
+</span>
+
+
+
+<strong id="completedTests">
+
+0
+
+</strong>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+<!-- PERFORMANCE SECTION END -->
+
+
+
+
+
+
+
+
+<!-- MOTIVATION CARD START -->
+
+
+<section class="motivation-section">
+
+
+
+<div class="motivation-card">
+
+
+
+<h2>
+
+🔥 Keep Learning!
+
+</h2>
+
+
+
+<p>
+
+Every mock test brings you one step closer
+to your Government Job dream.
+
+</p>
+
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- MOTIVATION CARD END -->
+
+
+
+
+
+
+
+
+<!-- SOCIAL SECTION START -->
+
+
+<section class="dashboard-social">
+
+
+
+<h2>
+
+Connect With Us
+
+</h2>
+
+
+
+
+
+<div class="social-menu">
+
+
+
+
+
+<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+
+target="_blank">
+
+▶ YouTube
+
+</a>
+
+
+
+
+
+
+
+<a href="https://t.me/gthegenius"
+
+target="_blank">
+
+✈ Telegram
+
+</a>
+
+
+
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+✉ Email
+
+</a>
+
+
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+<!-- SOCIAL SECTION END -->
+
+  // ==========================================
+// DASHBOARD HTML
+// PART 5 / 5
+// FINAL
+// ==========================================
+
+
+
+
+
+<!-- FOOTER START -->
 
 
 <footer class="app-footer">
 
-
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS">
 
 
 <h3>
@@ -450,38 +1249,46 @@ G THE GENIUS
 </h3>
 
 
+
 <p>
 
-All Government Exam Mock Test Portal
+ALL GOVERNMENT EXAM MOCK TEST
 
 </p>
 
 
 
-<div class="social-links">
+
+<div class="footer-links">
 
 
-<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
-target="_blank">
+<a href="dashboard.html">
 
-▶️ YouTube
-
-</a>
-
-
-
-<a href="https://t.me/gthegenius"
-target="_blank">
-
-📢 Telegram
+Home
 
 </a>
 
 
 
-<a href="mailto:gthegenius7@gmail.com">
+<a href="leaderboard.html">
 
-✉️ Email
+Leaderboard
+
+</a>
+
+
+
+<a href="profile.html">
+
+Profile
+
+</a>
+
+
+
+<a href="history.html">
+
+History
 
 </a>
 
@@ -490,9 +1297,13 @@ target="_blank">
 </div>
 
 
+
+
+
 <p class="copyright">
 
-© 2026 G THE GENIUS
+© 2026 G THE GENIUS.
+All Rights Reserved.
 
 </p>
 
@@ -502,94 +1313,32 @@ target="_blank">
 
 
 
-
-
-</div>
-
-
-
-<!-- BOTTOM NAVIGATION -->
-
-
-<nav class="bottom-nav">
-
-
-<a href="dashboard.html">
-
-🏠
-
-<span>
-Home
-</span>
-
-</a>
-
-
-
-<a href="mocktest.html?type=daily">
-
-📝
-
-<span>
-Test
-</span>
-
-</a>
-
-
-
-<a href="leaderboard.html">
-
-🏆
-
-<span>
-Rank
-</span>
-
-</a>
-
-
-
-<a href="profile.html">
-
-👤
-
-<span>
-Profile
-</span>
-
-</a>
-
-
-
-</nav>
+<!-- FOOTER END -->
 
 
 
 
 
-<script type="module" src="js/dashboard.js"></script>
 
 
 
-<script>
+<!-- DASHBOARD SCRIPT -->
 
 
-function startTest(type){
+<script type="module"
 
-
-window.location.href=
-
-"mocktest.html?type="+type;
-
-
-}
-
+src="dashboard.js">
 
 </script>
 
 
 
+
+
+
+
+
 </body>
 
-  </html>
+
+</html>
