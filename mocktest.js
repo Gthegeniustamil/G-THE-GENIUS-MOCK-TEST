@@ -1106,7 +1106,10 @@ localStorage.setItem(
     "lastPercentage",
     ((resultData.correct / questions.length) * 100).toFixed(2)
 );
-
+localStorage.setItem(
+    "lastReview",
+    JSON.stringify(resultData.review)
+);
 // Full Review Data
 
 localStorage.setItem(
