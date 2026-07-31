@@ -966,7 +966,6 @@ testType,
 
 
 score:
-score:
 resultData.correct,
 
 
@@ -1066,42 +1065,21 @@ await saveResult(resultData);
 
 
 
-
-
 localStorage.setItem(
-
 "lastScore",
-
-score
-
+resultData.correct
 );
-
-
-
 
 
 localStorage.setItem(
-
 "lastPercentage",
-
 (
-
-score /
-
+resultData.correct /
 questions.length
-
 *
-
 100
-
 ).toFixed(2)
-
 );
-
-
-
-
-
 
 
 window.location.href =
