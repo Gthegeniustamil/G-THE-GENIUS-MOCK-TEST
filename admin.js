@@ -1,339 +1,580 @@
+
 // ==========================================
 // G THE GENIUS MOCK TEST PORTAL v5.0
-// ADMIN JS
+// ADMIN BULK UPLOAD JS
 // PART 1 / 5
-// AUTH + INITIAL SETUP
 // ==========================================
 
 
-import { auth, db } from "./firebase-config.js";
+import "./subjects-data.js";
 
 
-import {
 
-onAuthStateChanged,
-signOut
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+// Elements
+
+
+const categorySelect =
+document.getElementById("categorySelect");
+
+
+const subjectSelect =
+document.getElementById("subjectSelect");
+
+
+const topicSelect =
+document.getElementById("topicSelect");
+
+
+
+
+
+// ==========================================
+// CATEGORY CHANGE
+// ==========================================
+
+
+categorySelect.addEventListener(
+"change",
+()=>{
+
+
+let category =
+categorySelect.value;
+
+
+
+subjectSelect.innerHTML =
+`
+<option value="">
+Select Subject
+</option>
+`;
+
+
+
+topicSelect.innerHTML =
+`
+<option value="">
+Select Topic
+</option>
+`;
+
+
+
+
+
+if(!category)
+
+return;
+
+
+
+
+let data =
+learningData[category];
+
+
+
+
+
+// Tamil / Physical / Psychology
+
+
+if(data.topics){
+
+
+
+data.topics.forEach(topic=>{
+
+
+let option =
+document.createElement("option");
+
+
+option.value = topic;
+
+
+option.textContent = topic;
+
+
+topicSelect.appendChild(option);
+
+
+});
+
+
+
+}
+
+
+
+
+
+// General Subjects
+
+
+else if(data.subjects){
+
+
+
+Object.keys(data.subjects)
+.forEach(key=>{
+
+
+
+let subject =
+data.subjects[key];
+
+
+
+let option =
+document.createElement("option");
+
+
+option.value = key;
+
+
+option.textContent =
+subject.title;
+
+
+
+subjectSelect.appendChild(option);
+
+
+
+});
+
+
+
+}
+
+
+});
+
+
+// ==========================================
+// SUBJECT CHANGE
+// PART 2 / 5
+// ==========================================
+
+
+
+subjectSelect.addEventListener(
+"change",
+()=>{
+
+
+let category =
+categorySelect.value;
+
+
+
+let subject =
+subjectSelect.value;
+
+
+
+topicSelect.innerHTML =
+`
+<option value="">
+Select Topic
+</option>
+`;
+
+
+
+if(!category || !subject)
+
+return;
+
+
+
+
+
+let data =
+learningData[category];
+
+
+
+
+
+// General Subjects Topic Load
+
+
+if(data.subjects && data.subjects[subject]){
+
+
+let topics =
+data.subjects[subject].topics;
+
+
+
+
+topics.forEach(topic=>{
+
+
+let option =
+document.createElement("option");
+
+
+option.value = topic;
+
+
+option.textContent = topic;
+
+
+topicSelect.appendChild(option);
+
+
+
+});
+
+
+}
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+// ==========================================
+// TOPIC SELECT STATUS
+// ==========================================
+
+
+
+topicSelect.addEventListener(
+"change",
+()=>{
+
+
+let topic =
+topicSelect.value;
+
+
+
+let display =
+document.getElementById(
+"selectedTopicName"
+);
+
+
+
+if(display){
+
+
+display.innerText =
+topic || "-";
+
+
+}
+
+
+
+});
+
+
+// ==========================================
+// JSON PARSE + QUESTION PREVIEW
+// PART 3 / 5
+// ==========================================
+
+
+
+const bulkInput = 
+document.getElementById(
+"bulkQuestionsInput"
+);
+
+
+
+const previewBox =
+document.getElementById(
+"questionPreview"
+);
+
+
+
+const uploadStatus =
+document.getElementById(
+"uploadStatus"
+);
+
+
+
+
+
+// ==========================================
+// SHOW PREVIEW
+// ==========================================
+
+
+function previewQuestions(){
+
+
+try{
+
+
+let questions =
+JSON.parse(
+bulkInput.value
+);
+
+
+
+
+
+if(!Array.isArray(questions)){
+
+
+throw new Error(
+"JSON must be Array"
+);
+
+
+}
+
+
+
+
+
+
+previewBox.innerHTML="";
+
+
+
+
+
+questions.forEach(
+(q,index)=>{
+
+
+let div =
+document.createElement("div");
+
+
+
+div.style.marginBottom="15px";
+
+
+
+div.innerHTML = `
+
+<strong>
+
+${index+1}. ${q.question}
+
+</strong>
+
+
+<br>
+
+
+Subject:
+${q.subject || "-"}
+
+
+<br>
+
+
+Topic:
+${q.topic || "-"}
+
+
+`;
+
+
+
+previewBox.appendChild(div);
+
+
+
+});
+
+
+
+
+
+
+uploadStatus.innerText =
+
+"✅ Preview Loaded : "
++ questions.length
++ " Questions";
+
+
+
+
+}
+
+catch(error){
+
+
+
+previewBox.innerHTML =
+"❌ Invalid JSON Format";
+
+
+
+uploadStatus.innerText =
+"Please check JSON format";
+
+
+}
+
+
+
+}
+
+
+
+
+
+// Preview while typing
+
+
+if(bulkInput){
+
+
+bulkInput.addEventListener(
+"change",
+previewQuestions
+);
+
+
+}
+
+
+// ==========================================
+// DUPLICATE CHECK SYSTEM
+// PART 4 / 5
+// ==========================================
+
 
 
 import {
 
 collection,
-getDocs,
-addDoc,
-doc,
-deleteDoc,
-updateDoc,
-getDoc,
-query,
-orderBy,
-serverTimestamp
+getDocs
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
+import {
 
-// ==========================================
-// HTML ELEMENTS
-// ==========================================
+db
 
+} from "./firebase-config.js";
 
-const adminName =
-document.getElementById("adminName");
 
 
-const adminEmail =
-document.getElementById("adminEmail");
 
 
-const totalStudents =
-document.getElementById("totalStudents");
 
+const duplicateBtn =
+document.getElementById(
+"checkDuplicateBtn"
+);
 
-const totalQuestions =
-document.getElementById("totalQuestions");
 
 
-const totalTests =
-document.getElementById("totalTests");
 
 
-const totalResults =
-document.getElementById("totalResults");
 
+let duplicateQuestions = [];
 
-const logoutBtn =
-document.getElementById("logoutBtn");
 
 
 
-const questionList =
-document.getElementById("questionList");
 
 
-const searchQuestion =
-document.getElementById("searchQuestion");
 
-
-const subjectFilter =
-document.getElementById("subjectFilter");
-
-
-
-
-// ==========================================
-// GLOBAL VARIABLES
-// ==========================================
-
-
-let adminUser = null;
-
-let questionsData = [];
-// ==========================================
-// ADMIN JS
-// PART 2 / 5
-// AUTH CHECK + DASHBOARD STATS
-// ==========================================
-
-
-
-
-
-// ===============================
-// ADMIN AUTH CHECK
-// ===============================
-
-
-onAuthStateChanged(auth, async(user)=>{
-
-
-    if(!user){
-
-
-        window.location.href = "login.html";
-
-        return;
-
-
-    }
-
-
-    adminUser = user;
-
-
-
-    adminName.textContent =
-
-    user.displayName || "Admin";
-
-
-
-    adminEmail.textContent =
-
-    user.email || "-";
-
-
-
-    await loadDashboardStats();
-
-
-    await loadQuestions();
-
-
-});
-
-
-
-
-
-
-// ===============================
-// LOAD DASHBOARD STATISTICS
-// ===============================
-
-
-async function loadDashboardStats(){
+duplicateBtn.addEventListener(
+"click",
+async()=>{
 
 
 try{
 
 
-// STUDENTS COUNT
-
-const studentsSnap = await getDocs(
-
-collection(db,"students")
-
+let newQuestions =
+JSON.parse(
+bulkInput.value
 );
 
 
-totalStudents.textContent =
-
-studentsSnap.size;
 
 
 
-
-
-// QUESTIONS COUNT
-
-const questionsSnap = await getDocs(
-
+let snapshot =
+await getDocs(
 collection(db,"questions")
-
 );
 
 
-totalQuestions.textContent =
-
-questionsSnap.size;
 
 
 
+let existingQuestions =
+[];
 
 
-// RESULTS COUNT
 
-const resultsSnap = await getDocs(
 
-collection(db,"results")
 
+snapshot.forEach(doc=>{
+
+
+let data =
+doc.data();
+
+
+existingQuestions.push(
+data.question
 );
 
-
-totalResults.textContent =
-
-resultsSnap.size;
-
-
-
-
-
-// TEST COUNT
-
-let testCount = 0;
-
-
-resultsSnap.forEach(()=>{
-
-    testCount++;
 
 });
 
 
-totalTests.textContent =
-
-testCount;
-
-
-
-}
-catch(error){
-
-
-console.error(
-
-"Dashboard Stats Error:",
-
-error
-
-);
-
-
-}
-
-
-  }
-// ==========================================
-// ADMIN JS
-// PART 3 / 5
-// ADD QUESTION + BULK UPLOAD
-// DUPLICATE CHECK
-// ==========================================
 
 
 
 
-
-// ==========================================
-// HTML ELEMENTS
-// ==========================================
-
-
-const uploadQuestionsBtn =
-
-document.getElementById("uploadQuestionsBtn");
-
-
-const bulkQuestionInput =
-
-document.getElementById("bulkQuestionInput");
-
-
-const uploadStatus =
-
-document.getElementById("uploadStatus");
-
-
-
-const saveQuestionBtn =
-
-document.getElementById("saveQuestionBtn");
+duplicateQuestions=[];
 
 
 
 
 
 
-// ===============================
-// DUPLICATE CHECK
-// ===============================
-
-
-async function checkDuplicateQuestion(questionData){
-
-
-const snapshot = await getDocs(
-
-collection(db,"questions")
-
-);
-
-
-
-let duplicate = false;
-
-
-
-snapshot.forEach((doc)=>{
-
-
-const oldQuestion = doc.data();
+newQuestions.forEach(q=>{
 
 
 
 if(
-
-oldQuestion.question
-?.trim()
-.toLowerCase()
-
-===
-
-questionData.question
-?.trim()
-.toLowerCase()
-
-&&
-
-oldQuestion.subject === questionData.subject
+existingQuestions.includes(
+q.question
+)
 
 ){
 
 
-duplicate = true;
+duplicateQuestions.push(
+q.question
+);
 
 
 }
@@ -344,95 +585,108 @@ duplicate = true;
 
 
 
-return duplicate;
+
+
+
+
+if(duplicateQuestions.length){
+
+
+uploadStatus.innerText =
+
+"⚠️ Duplicate Found : "
++
+duplicateQuestions.length
++
+" Questions";
+
+
+}
+
+else{
+
+
+uploadStatus.innerText =
+
+"✅ No Duplicate Found. Ready Upload";
 
 
 }
 
 
 
+}
+
+catch(error){
+
+
+console.error(error);
+
+
+uploadStatus.innerText =
+"❌ Duplicate Check Error";
+
+
+}
 
 
 
-// ===============================
-// ADD SINGLE QUESTION
-// ===============================
+});
 
 
-saveQuestionBtn.addEventListener(
+// ==========================================
+// FIRESTORE BULK UPLOAD
+// PART 5 / 5 FINAL
+// ==========================================
 
+
+import {
+
+addDoc,
+
+collection,
+
+serverTimestamp
+
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+const uploadBtn =
+document.getElementById(
+"uploadBulkBtn"
+);
+
+
+
+
+
+
+
+uploadBtn.addEventListener(
 "click",
-
 async()=>{
 
 
-const questionData = {
+try{
 
 
-question:
-
-document.getElementById("questionText").value,
-
-
-options:[
-
-
-document.getElementById("option1").value,
-
-
-document.getElementById("option2").value,
-
-
-document.getElementById("option3").value,
-
-
-document.getElementById("option4").value
-
-
-],
-
-
-answer:
-
-document.getElementById("correctAnswer").value,
-
-
-subject:
-
-document.getElementById("questionSubject").value,
-
-
-topic:
-
-document.getElementById("questionTopic").value,
-
-
-createdAt:
-
-serverTimestamp()
-
-
-};
-
-
-
-
-const exists = await checkDuplicateQuestion(
-
-questionData
-
+let questions =
+JSON.parse(
+bulkInput.value
 );
 
 
 
-if(exists){
+
+if(!questions.length){
 
 
-alert(
-
-"Duplicate Question Found!"
-
-);
+uploadStatus.innerText =
+"❌ No Questions Found";
 
 
 return;
@@ -444,116 +698,39 @@ return;
 
 
 
-await addDoc(
 
-collection(db,"questions"),
+let uploaded = 0;
 
-questionData
+let skipped = 0;
 
-);
 
 
 
-alert(
 
-"Question Added Successfully"
 
-);
+// Existing duplicate list
 
+let duplicateList =
+duplicateQuestions;
 
-await loadDashboardStats();
 
 
-await loadQuestions();
 
 
 
-});
+for(let q of questions){
 
-// ==========================================
-// ADMIN JS
-// PART 4 / 5
-// BULK UPLOAD + QUESTION MANAGEMENT
-// ==========================================
 
 
+if(
+duplicateList.includes(
+q.question
+)
 
+){
 
 
-// ===============================
-// BULK QUESTION UPLOAD
-// ===============================
-
-
-uploadQuestionsBtn.addEventListener(
-
-"click",
-
-async()=>{
-
-
-try{
-
-
-const jsonText =
-
-bulkQuestionInput.value.trim();
-
-
-
-if(!jsonText){
-
-
-alert(
-
-"Paste Questions JSON"
-
-);
-
-
-return;
-
-
-}
-
-
-
-const questions =
-
-JSON.parse(jsonText);
-
-
-
-let added = 0;
-
-let duplicate = 0;
-
-let error = 0;
-
-
-
-
-for(const questionData of questions){
-
-
-
-try{
-
-
-
-const exists = await checkDuplicateQuestion(
-
-questionData
-
-);
-
-
-
-if(exists){
-
-
-duplicate++;
-
+skipped++;
 
 continue;
 
@@ -562,15 +739,43 @@ continue;
 
 
 
+
+
 await addDoc(
 
-collection(db,"questions"),
+collection(
+db,
+"questions"
+),
 
 {
 
-...questionData,
 
-createdAt:serverTimestamp()
+question:q.question,
+
+
+options:q.options,
+
+
+answer:q.answer,
+
+
+
+subject:
+q.subject ||
+subjectSelect.value,
+
+
+
+topic:
+q.topic ||
+topicSelect.value,
+
+
+
+createdAt:
+serverTimestamp()
+
 
 }
 
@@ -578,20 +783,7 @@ createdAt:serverTimestamp()
 
 
 
-added++;
-
-
-
-}
-
-catch(e){
-
-
-error++;
-
-
-}
-
+uploaded++;
 
 
 }
@@ -600,509 +792,53 @@ error++;
 
 
 
-uploadStatus.innerHTML = `
-
-✅ Added : ${added}<br>
-
-♻️ Duplicate : ${duplicate}<br>
-
-❌ Error : ${error}
-
-`;
 
 
 
-bulkQuestionInput.value = "";
+uploadStatus.innerText =
+
+"✅ Uploaded : "
++ uploaded
++
+" | Skipped Duplicate : "
++ skipped;
 
 
 
-await loadDashboardStats();
 
-await loadQuestions();
+
+
+
+// Clear After Upload
+
+
+bulkInput.value="";
+
+
+previewBox.innerHTML =
+"Upload Completed";
+
+
 
 
 
 }
 
 catch(error){
-
-
-uploadStatus.textContent =
-
-"Invalid JSON Format";
 
 
 console.error(error);
 
 
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-// ===============================
-// LOAD QUESTIONS
-// ===============================
-
-
-async function loadQuestions(){
-
-
-
-try{
-
-
-const snapshot = await getDocs(
-
-query(
-
-collection(db,"questions"),
-
-orderBy("createdAt","desc")
-
-)
-
-);
-
-
-
-questionsData = [];
-
-
-
-snapshot.forEach((doc)=>{
-
-
-questionsData.push({
-
-
-id:doc.id,
-
-...doc.data()
-
-
-});
-
-
-
-});
-
-
-
-displayQuestions(questionsData);
-
-
-
-}
-
-catch(error){
-
-
-console.error(
-
-"Question Load Error",
-
-error
-
-);
+uploadStatus.innerText =
+"❌ Upload Failed";
 
 
 }
 
 
 
-  }
-
-// ==========================================
-// ADMIN JS
-// PART 5 / 5
-// SEARCH + EDIT + DELETE + LOGOUT
-// ==========================================
-
-
-
-
-
-// ===============================
-// DISPLAY QUESTIONS
-// ===============================
-
-
-function displayQuestions(data){
-
-
-questionList.innerHTML = "";
-
-
-
-if(data.length === 0){
-
-
-questionList.innerHTML = `
-
-<p style="text-align:center">
-
-No Questions Found
-
-</p>
-
-`;
-
-return;
-
-
-}
-
-
-
-data.forEach(item=>{
-
-
-
-questionList.innerHTML += `
-
-
-<div class="question-item">
-
-
-<h3>
-
-${item.question}
-
-</h3>
-
-
-<p>
-
-Subject: ${item.subject || "-"}
-
-</p>
-
-
-<p>
-
-Topic: ${item.topic || "-"}
-
-</p>
-
-
-
-<div class="question-actions">
-
-
-<button
-
-class="edit-btn"
-
-onclick="editQuestion('${item.id}')">
-
-✏️ Edit
-
-</button>
-
-
-
-<button
-
-class="delete-btn"
-
-onclick="deleteQuestion('${item.id}')">
-
-🗑 Delete
-
-</button>
-
-
-
-</div>
-
-
-</div>
-
-
-`;
-
-
-
 });
-
-
-}
-
-
-
-
-
-
-
-// ===============================
-// SEARCH QUESTION
-// ===============================
-
-
-searchQuestion.addEventListener(
-
-"input",
-
-()=>{
-
-
-const keyword =
-
-searchQuestion.value
-.toLowerCase();
-
-
-
-const filtered = questionsData.filter(item=>
-
-
-item.question
-
-.toLowerCase()
-
-.includes(keyword)
-
-
-
-);
-
-
-
-displayQuestions(filtered);
-
-
-
-});
-
-
-
-
-
-
-
-// ===============================
-// SUBJECT FILTER
-// ===============================
-
-
-subjectFilter.addEventListener(
-
-"change",
-
-()=>{
-
-
-const subject =
-
-subjectFilter.value;
-
-
-
-if(subject==="all"){
-
-
-displayQuestions(questionsData);
-
-
-return;
-
-
-}
-
-
-
-const filtered =
-
-questionsData.filter(item=>
-
-item.subject === subject
-
-);
-
-
-
-displayQuestions(filtered);
-
-
-
-});
-
-
-
-
-
-
-
-
-// ===============================
-// DELETE QUESTION
-// ===============================
-
-
-window.deleteQuestion = async(id)=>{
-
-
-const confirmDelete = confirm(
-
-"Delete this question?"
-
-);
-
-
-
-if(!confirmDelete)
-
-return;
-
-
-
-await deleteDoc(
-
-doc(db,"questions",id)
-
-);
-
-
-
-alert(
-
-"Question Deleted"
-
-);
-
-
-
-await loadDashboardStats();
-
-await loadQuestions();
-
-
-
-};
-
-
-
-
-
-
-
-
-// ===============================
-// EDIT QUESTION
-// ===============================
-
-
-window.editQuestion = async(id)=>{
-
-
-const questionRef =
-
-doc(db,"questions",id);
-
-
-
-const snapshot = await getDoc(
-
-questionRef
-
-);
-
-
-
-const data = snapshot.data();
-
-
-
-const newQuestion = prompt(
-
-"Edit Question",
-
-data.question
-
-);
-
-
-
-if(!newQuestion)
-
-return;
-
-
-
-await updateDoc(
-
-questionRef,
-
-{
-
-question:newQuestion
-
-}
-
-);
-
-
-
-alert(
-
-"Question Updated"
-
-);
-
-
-
-await loadQuestions();
-
-
-
-};
-
-
-
-
-
-
-
-
-// ===============================
-// LOGOUT
-// ===============================
-
-
-logoutBtn.addEventListener(
-
-"click",
-
-async()=>{
-
-
-await signOut(auth);
-
-
-localStorage.clear();
-
-
-sessionStorage.clear();
-
-
-
-window.location.href =
-
-"login.html";
-
-
-
-});
-
 
 
 
@@ -1111,7 +847,5 @@ window.location.href =
 
 
 console.log(
-
-"G THE GENIUS Admin JS Loaded Successfully"
-
+"G THE GENIUS BULK UPLOAD SYSTEM READY"
 );
