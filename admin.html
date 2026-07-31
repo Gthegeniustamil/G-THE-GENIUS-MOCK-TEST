@@ -1,319 +1,10 @@
-<!-- ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-ADMIN PANEL HTML
-PART 1 / 5
-========================================== -->
 
-<!DOCTYPE html>
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
+// ADMIN BULK UPLOAD HTML
+// PART 1 / 5
+// ==========================================
 
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-
-Admin Panel | G THE GENIUS
-
-</title>
-
-<meta name="theme-color"
-content="#081229">
-
-
-<link rel="icon"
-href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
-
-
-<link rel="stylesheet"
-href="admin.css">
-
-
-</head>
-
-
-<body>
-
-
-<div class="admin-container">
-
-
-
-<!-- HEADER START -->
-
-
-<header class="admin-header">
-
-
-<div class="logo-box">
-
-
-<img
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="admin-logo"
-alt="G THE GENIUS">
-
-
-</div>
-
-
-
-<div class="admin-title">
-
-
-<h1>
-
-G THE GENIUS
-
-</h1>
-
-
-<p>
-
-Admin Control Panel
-
-</p>
-
-
-</div>
-
-
-</header>
-
-
-<!-- HEADER END -->
-
-
-
-
-
-<!-- ADMIN PROFILE -->
-
-
-<section class="admin-profile-section">
-
-
-<div class="admin-profile-card">
-
-
-<div class="admin-avatar">
-
-👨‍💼
-
-</div>
-
-
-<h2 id="adminName">
-
-Loading...
-
-</h2>
-
-
-<p id="adminEmail">
-
-Loading...
-
-</p>
-
-
-<span class="admin-badge">
-
-🔐 Admin Access
-
-</span>
-
-
-</div>
-
-
-</section>
-
- /* ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-ADMIN PANEL HTML
-PART 2 / 5
-========================================== */
-
-
-
-<!-- ADMIN STATISTICS -->
-
-<section class="admin-stats-section">
-
-
-<div class="admin-stats-grid">
-
-
-
-<div class="admin-stat-card">
-
-<h3>
-
-👥 Students
-
-</h3>
-
-<strong id="totalStudents">
-
-0
-
-</strong>
-
-</div>
-
-
-
-
-<div class="admin-stat-card">
-
-<h3>
-
-📚 Questions
-
-</h3>
-
-<strong id="totalQuestions">
-
-0
-
-</strong>
-
-</div>
-
-
-
-
-<div class="admin-stat-card">
-
-<h3>
-
-📝 Tests
-
-</h3>
-
-<strong id="totalTests">
-
-0
-
-</strong>
-
-</div>
-
-
-
-
-<div class="admin-stat-card">
-
-<h3>
-
-🏆 Results
-
-</h3>
-
-<strong id="totalResults">
-
-0
-
-</strong>
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- QUICK ACTIONS -->
-
-
-<section class="admin-actions-section">
-
-
-<div class="admin-actions-card">
-
-
-<h2>
-
-⚡ Quick Actions
-
-</h2>
-
-
-
-<div class="admin-actions-grid">
-
-
-
-<button
-id="addQuestionBtn"
-class="admin-action-btn">
-
-➕ Add Question
-
-</button>
-
-
-
-<button
-id="bulkUploadBtn"
-class="admin-action-btn">
-
-📤 Bulk Upload
-
-</button>
-
-
-
-<button
-id="manageQuestionBtn"
-class="admin-action-btn">
-
-📚 Manage Questions
-
-</button>
-
-
-
-<button
-id="viewResultsBtn"
-class="admin-action-btn">
-
-📊 View Results
-
-</button>
-
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-   /* ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-ADMIN PANEL HTML
-PART 3 / 5
-BULK UPLOAD SECTION
-========================================== */
-
-
-
-
-
-<!-- BULK UPLOAD -->
 
 <section class="bulk-upload-section">
 
@@ -321,68 +12,237 @@ BULK UPLOAD SECTION
 <div class="bulk-upload-card">
 
 
+
 <h2>
 
-📤 Bulk Question Upload
+📤 Bulk Upload Questions
 
 </h2>
 
 
+<p>
 
-<p class="upload-info">
-
-Paste JSON Questions Below.
-Duplicate Questions Will Be Skipped Automatically.
+Subject & Topic Based Question Upload
 
 </p>
 
 
 
 
+
+<!-- CATEGORY SELECT -->
+
+
+<label>
+
+Select Category
+
+</label>
+
+
+<select id="categorySelect">
+
+
+<option value="">
+
+Select Category
+
+</option>
+
+
+<option value="tamil">
+
+📖 தமிழ்
+
+</option>
+
+
+<option value="physical">
+
+🏃 Physical Tips
+
+</option>
+
+
+<option value="psychology">
+
+🧠 Psychology
+
+</option>
+
+
+<option value="general">
+
+📚 General Subjects
+
+</option>
+
+
+</select>
+
+
+
+
+
+<!-- SUBJECT SELECT -->
+
+
+<label>
+
+Select Subject
+
+</label>
+
+
+<select id="subjectSelect">
+
+
+<option value="">
+
+Select Subject
+
+</option>
+
+
+</select>
+
+
+
+
+
+<!-- TOPIC SELECT -->
+
+
+<label>
+
+Select Topic
+
+</label>
+
+
+<select id="topicSelect">
+
+
+<option value="">
+
+Select Topic
+
+</option>
+
+
+</select>
+
+
+
+</div>
+
+
+</section>
+
+
+// ==========================================
+// BULK QUESTION INPUT AREA
+// PART 2 / 5
+// ==========================================
+
+
+
+<!-- QUESTION JSON BOX -->
+
+
+<div class="json-upload-area">
+
+
+
+<label>
+
+Paste Questions JSON
+
+</label>
+
+
+
 <textarea
 
-id="bulkQuestionInput"
+id="bulkQuestionsInput"
 
 placeholder='
-
 [
  {
-  "question":"India Capital?",
+  "question":"Question Text",
   "options":[
-    "Delhi",
-    "Mumbai",
-    "Chennai",
-    "Kolkata"
+   "Option 1",
+   "Option 2",
+   "Option 3",
+   "Option 4"
   ],
-  "answer":"Delhi",
-  "subject":"GK",
-  "topic":"Indian Polity"
+  "answer":"Correct Answer",
+  "subject":"Indian Polity",
+  "topic":"Constitution Basics"
  }
 ]
-
-'
-
-></textarea>
+'>
 
 
+</textarea>
+
+
+
+
+<p class="format-note">
+
+Format:
+question + options + answer + subject + topic
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- BUTTON AREA -->
+
+
+<div class="upload-buttons">
 
 
 
 <button
 
-id="uploadQuestionsBtn"
+id="checkDuplicateBtn">
 
-class="upload-btn">
-
-🚀 Upload Questions
+🔍 Check Duplicate
 
 </button>
 
 
 
 
+<button
 
-<!-- UPLOAD RESULT -->
+id="uploadBulkBtn">
+
+📤 Upload Questions
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- STATUS -->
 
 
 <div
@@ -395,308 +255,363 @@ class="upload-status">
 </div>
 
 
+// ==========================================
+// ADMIN INFO + UPLOAD DETAILS
+// PART 3 / 5
+// ==========================================
+
+
+
+<!-- QUESTION COUNT CARD -->
+
+
+<div class="admin-info-grid">
+
+
+
+
+
+<div class="admin-info-card">
+
+
+<div class="info-icon">
+
+📊
 
 </div>
 
 
-</section>
+<h3>
+
+Total Questions
+
+</h3>
+
+
+<p id="totalQuestionCount">
+
+0
+
+</p>
+
+
+</div>
 
 
 
-/* ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-ADMIN PANEL HTML
-PART 4 / 5
-QUESTION MANAGEMENT
-========================================== */
 
 
 
 
 
-<!-- QUESTION MANAGEMENT -->
-
-<section class="question-management-section">
+<div class="admin-info-card">
 
 
-<div class="question-management-card">
+<div class="info-icon">
+
+📚
+
+</div>
+
+
+<h3>
+
+Selected Topic
+
+</h3>
+
+
+<p id="selectedTopicName">
+
+-
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="admin-info-card">
+
+
+<div class="info-icon">
+
+✅
+
+</div>
+
+
+<h3>
+
+Upload Status
+
+</h3>
+
+
+<p id="currentUploadStatus">
+
+Ready
+
+</p>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- UPLOAD RULES -->
+
+
+<div class="upload-guide-card">
+
+
+
+<h3>
+
+📌 Bulk Upload Guide
+
+</h3>
+
+
+
+<ul>
+
+
+<li>
+
+ஒரே JSON format-ல் பல கேள்விகள் upload செய்யலாம்
+
+</li>
+
+
+<li>
+
+Subject & Topic சரியாக select செய்ய வேண்டும்
+
+</li>
+
+
+<li>
+
+Duplicate questions automatic check செய்யப்படும்
+
+</li>
+
+
+<li>
+
+Upload ஆன பிறகு Student Practice Test-ல் வரும்
+
+</li>
+
+
+</ul>
+
+
+
+</div>
+
+
+// ==========================================
+// QUESTION PREVIEW + UPLOAD HISTORY
+// PART 4 / 5
+// ==========================================
+
+
+
+
+
+<!-- QUESTION PREVIEW -->
+
+
+<div class="preview-section">
+
 
 
 <h2>
 
-📚 Question Management
+👁️ Question Preview
 
 </h2>
 
 
 
-<!-- SEARCH -->
+
+<div id="questionPreview"
+
+class="question-preview">
 
 
-<input
-
-type="text"
-
-id="searchQuestion"
-
-placeholder="🔍 Search Question...">
+No Questions Loaded
 
 
+</div>
 
-
-
-<!-- FILTER -->
-
-
-<select id="subjectFilter">
-
-
-<option value="all">
-
-All Subjects
-
-</option>
-
-
-<option value="GK">
-
-General Knowledge
-
-</option>
-
-
-<option value="History">
-
-History
-
-</option>
-
-
-<option value="Polity">
-
-Indian Polity
-
-</option>
-
-
-<option value="Geography">
-
-Geography
-
-</option>
-
-
-<option value="Science">
-
-Science
-
-</option>
-
-
-</select>
-
-
-
-
-
-<!-- QUESTION LIST -->
-
-
-<div
-
-id="questionList"
-
-class="question-list">
-
-
-
-<!-- Dynamic Questions Load Here -->
 
 
 
 </div>
 
 
-</div>
-
-
-</section>
 
 
 
 
 
-<!-- RESULT ANALYTICS -->
+
+<!-- UPLOAD HISTORY -->
 
 
-<section class="analytics-section">
+<div class="history-section">
 
-
-<div class="analytics-card">
 
 
 <h2>
 
-📊 Result Analytics
+📜 Upload History
 
 </h2>
 
 
 
-<div class="analytics-grid">
+
+<div class="history-table-wrapper">
+
+
+<table class="upload-table">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+
+Date
+
+</th>
+
+
+<th>
+
+Subject
+
+</th>
+
+
+<th>
+
+Topic
+
+</th>
+
+
+<th>
+
+Count
+
+</th>
+
+
+<th>
+
+Status
+
+</th>
+
+
+</tr>
+
+
+</thead>
 
 
 
-<div class="analytics-item">
+<tbody id="uploadHistoryBody">
 
-<span>
 
-Highest Score
+<tr>
 
-</span>
+<td colspan="5">
 
-<strong id="highestResult">
+No Upload History
 
-0
+</td>
 
-</strong>
+
+</tr>
+
+
+</tbody>
+
+
+
+</table>
+
+
+</div>
+
 
 </div>
 
 
 
 
-<div class="analytics-item">
-
-<span>
-
-Average Score
-
-</span>
-
-<strong id="averageResult">
-
-0
-
-</strong>
-
-</div>
 
 
 
 
-<div class="analytics-item">
-
-<span>
-
-Active Students
-
-</span>
-
-<strong id="activeStudents">
-
-0
-
-</strong>
-
-</div>
+<!-- CLEAR AREA -->
 
 
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-/* ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-ADMIN PANEL HTML
-PART 5 / 5
-FINAL
-========================================== */
-
-
-
-
-
-<!-- ADMIN SETTINGS -->
-
-<section class="admin-settings-section">
-
-
-<div class="admin-settings-card">
-
-
-<h2>
-
-⚙️ Admin Settings
-
-</h2>
-
-
-
-<div class="settings-grid">
-
-
-<a href="dashboard.html"
-class="settings-btn">
-
-🏠 Dashboard
-
-</a>
-
-
-
-<a href="leaderboard.html"
-class="settings-btn">
-
-🏆 Leaderboard
-
-</a>
-
-
-
-<a href="profile.html"
-class="settings-btn">
-
-👤 Profile
-
-</a>
+<div class="admin-action-area">
 
 
 
 <button
-id="logoutBtn"
-class="settings-btn logout">
 
-🚪 Logout
+id="clearPreviewBtn">
+
+
+🗑️ Clear Preview
+
 
 </button>
 
 
 
-</div>
-
 
 </div>
 
 
-</section>
+// ==========================================
+// ADMIN FOOTER + SCRIPT CONNECTION
+// PART 5 / 5 FINAL
+// ==========================================
 
 
 
+<!-- ADMIN FOOTER -->
 
 
-
-
-<!-- FOOTER -->
-
-
-<footer class="app-footer">
+<footer class="admin-footer">
 
 
 <h3>
@@ -708,48 +623,13 @@ G THE GENIUS
 
 <p>
 
-ALL GOVERNMENT EXAM MOCK TEST
+Admin Bulk Question Management
 
 </p>
 
 
 
-<div class="footer-links">
-
-
-<a href="dashboard.html">
-
-Home
-
-</a>
-
-
-<a href="mocktest.html?type=daily">
-
-Mock Test
-
-</a>
-
-
-<a href="leaderboard.html">
-
-Leaderboard
-
-</a>
-
-
-<a href="profile.html">
-
-Profile
-
-</a>
-
-
-</div>
-
-
-
-<p class="copyright">
+<p>
 
 © 2026 G THE GENIUS. All Rights Reserved.
 
@@ -762,24 +642,19 @@ Profile
 
 
 
-</div>
 
 
+<!-- SCRIPTS -->
 
 
-<!-- ADMIN JS -->
+<script type="module" src="subjects-data.js"></script>
 
-<script
 
-type="module"
-
-src="admin.js">
-
-</script>
+<script type="module" src="admin.js"></script>
 
 
 
 </body>
 
 
-</html>    
+</html>
