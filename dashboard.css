@@ -1538,3 +1538,129 @@ body{
 
 
 /* END DASHBOARD CSS v5.0 */
+
+/* ==========================================
+G THE GENIUS DASHBOARD TEXT FIX
+========================================== */
+
+
+body{
+
+    background:#081229;
+    color:#ffffff;
+
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    color:#ffffff;
+
+}
+
+
+p,
+span,
+label{
+
+    color:#d8def0;
+
+}
+
+
+/* Dashboard Cards */
+
+.dashboard-card,
+.test-card,
+.subject-card,
+.topic-card,
+.performance-card,
+.quick-card{
+
+    background:rgba(255,255,255,0.08);
+
+    color:#ffffff;
+
+}
+
+
+
+/* Card Titles */
+
+.dashboard-card h3,
+.test-card h3,
+.subject-card h3,
+.topic-card h3{
+
+    color:#ffd86b;
+
+}
+
+
+
+/* Description Text */
+
+.test-card p,
+.subject-card p,
+.topic-card p{
+
+    color:#ffffff;
+
+}
+
+
+
+/* Numbers */
+
+.stat-number,
+.score,
+.rank{
+
+    color:#f5c542;
+
+}
+
+
+
+/* Buttons */
+
+button,
+.start-btn,
+.practice-btn{
+
+    color:#081229;
+
+    background:#f5c542;
+
+    font-weight:700;
+
+}
+
+
+
+/* Footer */
+
+footer,
+footer p,
+footer a{
+
+    color:#ffffff;
+
+}
+
+
+
+/* Quick Access */
+
+.quick-card a{
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+}
