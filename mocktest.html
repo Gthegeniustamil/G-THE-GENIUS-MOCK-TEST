@@ -4,32 +4,63 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS Mock Test</title>
+
+<title>
+Mock Test | G THE GENIUS
+</title>
 
 
-<link rel="stylesheet" href="mocktest.css">
+<meta name="theme-color" content="#081229">
+
+
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+
+<link rel="stylesheet"
+href="css/mocktest.css">
+
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
 
 </head>
+
 
 
 <body>
 
 
-<div class="container">
+<header class="test-header">
 
 
-<!-- HEADER -->
+<div class="brand">
 
-<div class="header">
 
-<img src="assets/logo.png" class="logo">
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="logo">
 
 
 <h2>
-🚔 G THE GENIUS
+
+G THE GENIUS
+
 </h2>
+
+
+</div>
+
 
 
 <div id="timer">
@@ -39,164 +70,176 @@
 </div>
 
 
-</div>
+</header>
 
 
 
 
-
-<!-- STATUS -->
-
-
-<div class="status-card">
+<main class="test-container">
 
 
-<div>
 
-Total:
-<span id="totalCount">
-0
+<section class="test-info">
+
+
+<h2 id="testTitle">
+
+Daily Mock Test
+
+</h2>
+
+
+<p>
+
+Question:
+
+<span id="questionNumber">
+
+1
+
 </span>
 
-</div>
+/
 
+<span id="totalQuestions">
 
-<div>
+10
 
-Answered:
-<span id="answeredCount">
-0
 </span>
 
-</div>
+</p>
 
 
-<div>
+</section>
 
-Remaining:
-<span id="remainingCount">
-0
-</span>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<!-- PROGRESS -->
-
-
-<div class="progress">
-
-<div id="testProgress">
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-<!-- QUESTION BOX -->
-
-
-<div class="question-card">
-
-
-<div id="questionNumber">
-
-Question 1/10
-
-</div>
-
+<section class="question-card">
 
 
 <h3 id="questionText">
 
-Loading Question...
+Question Loading...
 
 </h3>
 
 
 
-<div id="optionsBox">
+<div id="optionsContainer">
+
+
+<!-- Options will load here -->
 
 
 </div>
 
 
 
-</div>
+</section>
 
 
 
 
 
+<section class="navigation">
 
 
-<!-- PALETTE -->
+<button id="previousBtn">
+
+⬅ Previous
+
+</button>
 
 
-<div class="palette-card">
+
+<button id="nextBtn">
+
+Next ➡
+
+</button>
+
+
+</section>
+
+
+
+
+
+<section class="question-palette">
 
 
 <h3>
+
 Question Palette
+
 </h3>
 
 
-<div id="questionPalette">
-
-</div>
+<div id="palette">
 
 
-</div>
-
-
-
-
-
-
-
-<!-- BUTTONS -->
-
-
-<div class="button-area">
-
-    <button id="prevBtn">
-        ⬅ Previous
-    </button>
-
-    <button id="submitBtn">
-        ✅ Submit Test
-    </button>
-
-    <button id="nextBtn">
-        Next ➡
-    </button>
-
-</div>
-
-
+<!-- Question numbers load here -->
 
 
 </div>
 
 
+</section>
 
 
 
-<script type="module" src="mocktest.js"></script>
+
+
+<section class="submit-section">
+
+
+<button id="submitBtn">
+
+Submit Test
+
+</button>
+
+
+</section>
+
+<section class="result-message">
+
+
+<p id="testMessage"></p>
+
+
+</section>
+
+
+
+
+<footer class="test-footer">
+
+
+<p>
+
+© 2026 G THE GENIUS
+
+</p>
+
+
+<p>
+
+All Government Exam Mock Test Portal
+
+</p>
+
+
+</footer>
+
+
+
+
+<script type="module" src="js/mocktest.js"></script>
+
 
 
 </body>
 
-</html>
+    </html>
+
+
+    
