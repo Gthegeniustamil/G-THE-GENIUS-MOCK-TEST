@@ -1,7 +1,8 @@
-// =========================
-// G THE GENIUS LEADERBOARD JS
+// =====================================
+// G THE GENIUS
+// LEADERBOARD JS
 // PART 1
-// =========================
+// =====================================
 
 
 import { db } from "./firebase-config.js";
@@ -10,93 +11,89 @@ import { db } from "./firebase-config.js";
 import {
 
 collection,
-getDocs,
-query,
-orderBy
+getDocs
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
 
+from
 
-
-
-
-let allResults = [];
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
+// =====================================
+// DOM
+// =====================================
 
 
-// =========================
-// LOAD LEADERBOARD
-// =========================
+const leaderboardData =
+
+document.getElementById("leaderboardData");
+
+
+const topStudents =
+
+document.getElementById("topStudents");
+
+
+
+
+
+// =====================================
+// LOAD RESULTS
+// =====================================
 
 
 async function loadLeaderboard(){
 
 
-
 try{
-
-
-
-const q = query(
-
-collection(
-db,
-"results"
-),
-
-orderBy(
-"score",
-"desc"
-)
-
-);
-
-
-
 
 
 const snap =
 
-await getDocs(q);
+await getDocs(
 
+collection(db,"results")
 
-
-
-
-allResults=[];
-
-
-
-
-
-snap.forEach(doc=>{
-
-
-allResults.push({
-
-id:doc.id,
-
-...doc.data()
-
-});
-
-
-});
-
-
-
-
-
-
-displayTopThree();
-
-
-displayLeaderboard(
-allResults
 );
+
+
+
+let results=[];
+
+
+
+snap.forEach((doc)=>{
+
+
+results.push(doc.data());
+
+
+});
+
+
+
+
+// SORT BY PERCENTAGE
+
+
+results.sort((a,b)=>{
+
+
+return b.percentage - a.percentage;
+
+
+});
+
+
+
+displayLeaderboard(results);
+
+
+
+displayTopStudents(results);
 
 
 
@@ -116,118 +113,8 @@ error
 );
 
 
-
 }
 
-
-
-}
-
-
-// =========================
-// GET TOTAL MARKS
-// =========================
-
-function getTotal(data){
-
-    if(data.total){
-
-        return data.total;
-
-    }
-
-
-    if(data.testType === "Weekly Mock Test" || data.testType==="weekly"){
-
-        return 25;
-
-    }
-
-
-    if(data.testType === "Monthly Grand Test" || data.testType==="monthly"){
-
-        return 100;
-
-    }
-
-
-    return 10;
-
-}
-
-
-
-
-// =========================
-// TOP 3 DISPLAY
-// =========================
-
-
-function displayTopThree(){
-
-
-
-if(
-allResults.length===0
-) return;
-
-
-
-
-let first =
-allResults[0];
-
-let second =
-allResults[1];
-
-let third =
-allResults[2];
-
-
-
-
-
-document.getElementById(
-"firstName"
-).innerHTML =
-
-first?.studentName || "-";
-
-
-
-document.getElementById("firstScore").innerHTML =
-first.score + "/" + (first.total || 10);
-
-
-
-
-
-
-document.getElementById(
-"secondName"
-).innerHTML =
-
-second?.studentName || "-";
-
-
-
-document.getElementById("secondScore").innerHTML =
-second.score + "/" + (second.total || 10);
-
-
-
-
-
-document.getElementById(
-"thirdName"
-).innerHTML =
-
-third?.studentName || "-";
-
-
-
-document.getElementById("thirdScore").innerHTML =
-third.score + "/" + (third.total || 10);
 
 }
 
@@ -235,111 +122,193 @@ third.score + "/" + (third.total || 10);
 
 
 
-
-
-
-// =========================
-// DISPLAY LIST
-// =========================
+// =====================================
+// DISPLAY TABLE
+// =====================================
 
 
 function displayLeaderboard(data){
 
 
 
-const list =
-
-document.getElementById(
-"leaderList"
-);
+leaderboardData.innerHTML="";
 
 
 
-list.innerHTML="";
+data.forEach((student,index)=>{
 
 
 
+const row =
 
-
-data.forEach(
-(student,index)=>{
-
-
-
-let div =
-
-document.createElement(
-"div"
-);
+document.createElement("tr");
 
 
 
-div.className =
-"rank-row";
+row.innerHTML = `
+
+<td>
+
+${index+1}
+
+</td>
 
 
+<td>
+
+${student.name || "Student"}
+
+</td>
 
 
-
-
-let badge =
-getBadge(
-student.score
-);
-
-
-
-
-
-
-div.innerHTML = `
-
-
-<span class="rank">
-
-#${index+1}
-
-</span>
-
-
-
-<span>
-
-${student.studentName || "Student"}
-
-<br>
-
-<small>
+<td>
 
 ${student.district || "-"}
 
-</small>
-
-</span>
+</td>
 
 
-<span class="score">
+<td>
 
-${student.score || 0}/${getTotal(student)}
+${student.testType || "-"}
 
-</span>
+</td>
+
+
+<td>
+
+${student.score || 0}
+
+</td>
+
+
+<td>
+
+${student.percentage || 0}%
+
+</td>
+
+`;
 
 
 
-<span>
+leaderboardData.appendChild(row);
 
-${badge}
 
-</span>
+
+});
+
+
+}
+
+
+
+
+
+// START
+
+loadLeaderboard();
+// =====================================
+// G THE GENIUS
+// LEADERBOARD JS
+// PART 2 FINAL
+// =====================================
+
+
+
+// =====================================
+// TOP STUDENTS
+// =====================================
+
+
+function displayTopStudents(data){
+
+
+if(!topStudents) return;
+
+
+
+topStudents.innerHTML="";
+
+
+
+const top = data.slice(0,3);
+
+
+
+top.forEach((student,index)=>{
+
+
+const card =
+
+document.createElement("div");
+
+
+
+card.className="top-card";
+
+
+
+let medal="🥉";
+
+
+if(index===0){
+
+medal="🥇";
+
+}
+
+else if(index===1){
+
+medal="🥈";
+
+}
+
+
+
+card.innerHTML = `
+
+
+<h2>
+
+${medal}
+
+</h2>
+
+
+<h3>
+
+${student.name || "Student"}
+
+</h3>
+
+
+<p>
+
+${student.district || "-"}
+
+</p>
+
+
+<p>
+
+Score : ${student.score || 0}
+
+</p>
+
+
+<p>
+
+${student.percentage || 0}%
+
+</p>
 
 
 `;
 
 
 
-
-
-list.appendChild(div);
+topStudents.appendChild(card);
 
 
 
@@ -353,552 +322,106 @@ list.appendChild(div);
 
 
 
-
-
-// =========================
-// BADGE SYSTEM
-// =========================
-
-
-
-
-function getBadge(score){
-
-
-if(score>=90)
-
-return "🏆 Master";
-
-
-if(score>=75)
-
-return "🥇 Pro";
-
-
-if(score>=50)
-
-return "🥈 Rising";
-
-
-return "⭐ Starter";
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// START
-// =========================
-
-
-loadLeaderboard();
-
-
-
-console.log(
-
-"✅ G THE GENIUS LEADERBOARD READY"
-
-);
-
-// =========================
-// FILTER SYSTEM
-// =========================
-
-
-const testFilter =
-
-document.getElementById(
-"testFilter"
-);
-
-
-
-const rankFilter =
-
-document.getElementById(
-"rankFilter"
-);
-
-
-
-
-
-if(testFilter){
-
-
-testFilter.onchange = ()=>{
-
-
-applyFilter();
-
-
-};
-
-
-}
-
-
-
-
-
-
-if(rankFilter){
-
-
-rankFilter.onchange = ()=>{
-
-
-applyFilter();
-
-
-};
-
-
-}
-
-
-
-
-
-
-
-
-function applyFilter(){
-
-
-
-let data = [...allResults];
-
-
-
-
-
-
-// TEST TYPE FILTER
-
-
-let type =
-
-testFilter?.value || "all";
-
-
-
-
-if(type !== "all"){
-
-
-
-data = data.filter(
-
-item =>
-
-item.testType === type
-
-);
-
-
-}
-
-
-
-
-
-
-
+// =====================================
 // DISTRICT FILTER
+// =====================================
 
 
-let rankType =
+const districtFilter =
 
-rankFilter?.value || "overall";
-
-
-
-
-if(rankType==="district"){
+document.getElementById("districtFilter");
 
 
 
-let district =
+if(districtFilter){
 
-localStorage.getItem(
-"district"
+
+districtFilter.addEventListener(
+
+"change",
+
+async()=>{
+
+
+const selected =
+
+districtFilter.value;
+
+
+
+const snap =
+
+await getDocs(
+
+collection(db,"results")
+
 );
 
 
 
-data = data.filter(
+let data=[];
 
-item =>
 
-item.district === district
 
-);
+snap.forEach((doc)=>{
 
+
+const item = doc.data();
+
+
+
+if(
+
+selected==="All" ||
+
+item.district===selected
+
+){
+
+
+data.push(item);
 
 
 }
 
 
+
+});
+
+
+
+data.sort((a,b)=>
+
+
+b.percentage-a.percentage
+
+
+);
 
 
 
 displayLeaderboard(data);
 
 
+displayTopStudents(data);
+
+
 
 }
 
 
-
-
-
-
-
-
-// =========================
-// MY RANK
-// =========================
-
-
-function showMyRank(){
-
-
-
-let userName =
-
-localStorage.getItem(
-"studentName"
 );
 
 
-
-let district =
-
-localStorage.getItem(
-"district"
-);
-
-
-
-
-
-let overallRank = 0;
-
-let districtRank = 0;
-
-
-
-let bestScore = 0;
-
-
-
-
-
-
-
-allResults.forEach(
-
-(item,index)=>{
-
-
-
-if(
-
-item.studentName === userName
-
-){
-
-
-
-overallRank = index+1;
-
-
-
-if(
-item.score > bestScore
-){
-
-bestScore = item.score;
-
 }
-
-
-}
-
-
-
-
-
-
-
-});
-
-
-
-
-
-
-
-
-let dRank = 1;
-
-
-
-allResults.forEach(
-
-(item)=>{
-
-
-
-if(
-
-item.district === district
-
-){
-
-
-
-if(
-
-item.studentName === userName
-
-){
-
-
-districtRank = dRank;
-
-
-}
-
-
-
-dRank++;
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-
-let rankElement =
-
-document.getElementById(
-"myRank"
-);
-
-
-
-if(rankElement)
-
-rankElement.innerHTML =
-
-overallRank || "-";
-
-
-
-
-
-
-let districtElement =
-
-document.getElementById(
-"myDistrictRank"
-);
-
-
-
-if(districtElement)
-
-districtElement.innerHTML =
-
-districtRank || "-";
-
-
-
-
-
-
-let scoreElement =
-
-document.getElementById(
-"myBestScore"
-);
-
-
-
-if(scoreElement)
-
-scoreElement.innerHTML =
-bestScore;
-}
-
-
-
-
-
-
-
-// =========================
-// LOAD BADGES
-// =========================
-
-
-function loadBadges(){
-
-
-
-let badges =
-
-JSON.parse(
-
-localStorage.getItem(
-"badges"
-
-)
-
-)||[];
-
-
-
-
-
-let box =
-
-document.getElementById(
-"badgeList"
-);
-
-
-
-
-
-if(!box) return;
-
-
-
-
-
-box.innerHTML="";
-
-
-
-
-
-if(
-badges.length===0
-){
-
-
-box.innerHTML =
-
-"<span>No Badge</span>";
-
-
-return;
-
-
-}
-
-
-
-
-
-badges.forEach(
-
-badge=>{
-
-
-
-let span =
-
-document.createElement(
-"span"
-);
-
-
-
-span.className =
-"badge-item";
-
-
-
-span.innerHTML =
-
-"🏅 "+badge;
-
-
-
-box.appendChild(span);
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// UPDATE AFTER LOAD
-// =========================
-
-
-const oldLoadLeaderboard =
-
-loadLeaderboard;
-
-
-
-loadLeaderboard = async function(){
-
-
-
-await oldLoadLeaderboard();
-
-
-
-showMyRank();
-
-
-
-loadBadges();
-
-
-
-};
-
-
-
-
 
 
 
 
 console.log(
 
-"✅ Leaderboard Final Ready"
+"G THE GENIUS LEADERBOARD LOADED"
 
 );
+
 
