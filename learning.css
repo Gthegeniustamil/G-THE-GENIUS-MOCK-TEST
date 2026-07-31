@@ -1,1 +1,1161 @@
+/* ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+LEARNING CSS
+PART 1 / 5
+========================================== */
+
+
+
+/* PAGE BACKGROUND */
+
+
+body{
+
+    background:#081229;
+
+    color:#ffffff;
+
+    font-family:Arial, sans-serif;
+
+}
+
+
+
+
+
+/* MAIN CONTAINER */
+
+
+.learning-container{
+
+    width:100%;
+
+    min-height:100vh;
+
+    padding-bottom:90px;
+
+}
+
+
+
+
+
+
+/* HEADER */
+
+
+.learning-header{
+
+    text-align:center;
+
+    padding:25px 15px;
+
+}
+
+
+
+.logo-img{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid #f5c542;
+
+}
+
+
+
+
+.learning-header h1{
+
+    color:#ffd86b;
+
+    font-size:28px;
+
+    margin:15px 0 5px;
+
+}
+
+
+
+.learning-header p{
+
+    color:#e8ecff;
+
+    font-size:15px;
+
+}
+
+
+
+
+
+
+/* BACK BUTTON */
+
+
+.back-area{
+
+    padding:10px 20px;
+
+}
+
+
+
+.back-area a{
+
+    display:inline-block;
+
+    padding:10px 18px;
+
+    border-radius:20px;
+
+    background:#f5c542;
+
+    color:#081229;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+}
+
+
+
+
+
+
+/* PAGE TITLE */
+
+
+.learning-title{
+
+    text-align:center;
+
+    padding:10px 20px;
+
+}
+
+
+
+.learning-title h2{
+
+    color:#ffd86b;
+
+    font-size:25px;
+
+}
+
+
+
+.learning-title p{
+
+    color:#e8ecff;
+
+}
+/* ==========================================
+LEARNING CATEGORY CARDS
+PART 2 / 5
+========================================== */
+
+
+
+
+
+.category-section{
+
+    padding:20px;
+
+}
+
+
+
+
+
+.category-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:20px;
+
+}
+
+
+
+
+
+
+
+.category-card{
+
+    background:
+
+    linear-gradient(
+
+    145deg,
+
+    rgba(255,255,255,0.12),
+
+    rgba(255,255,255,0.04)
+
+    );
+
+
+    border:1px solid rgba(245,197,66,0.5);
+
+
+    border-radius:30px;
+
+
+    padding:25px 20px;
+
+
+    text-align:center;
+
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,0.35);
+
+
+    transition:.4s;
+
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+.category-card:hover{
+
+
+    transform:translateY(-8px);
+
+
+    border-color:#ffd86b;
+
+
+}
+
+
+
+
+
+
+
+.category-icon{
+
+
+    width:90px;
+
+
+    height:90px;
+
+
+    margin:auto;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    font-size:50px;
+
+
+    border-radius:50%;
+
+
+    background:
+
+    rgba(245,197,66,0.15);
+
+
+    border:3px solid #f5c542;
+
+
+    margin-bottom:18px;
+
+
+}
+
+
+
+
+
+
+
+
+.category-card h3{
+
+
+    color:#ffd86b;
+
+
+    font-size:24px;
+
+
+    margin:10px 0;
+
+
+}
+
+
+
+
+
+
+
+.category-card p{
+
+
+    color:#e8ecff;
+
+
+    font-size:14px;
+
+
+    line-height:1.6;
+
+
+}
+
+
+
+
+
+
+
+.category-card button{
+
+
+    margin-top:18px;
+
+
+    padding:12px 28px;
+
+
+    border:none;
+
+
+    border-radius:30px;
+
+
+    background:#f5c542;
+
+
+    color:#081229;
+
+
+    font-weight:800;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+
+
+
+.category-card button:hover{
+
+
+    background:#ffd86b;
+
+
+}
+
+
+
+
+
+@media(min-width:600px){
+
+
+.category-grid{
+
+
+    grid-template-columns:repeat(2,1fr);
+
+
+}
+
+
+}
+/* ==========================================
+SUBJECT + TOPIC + STUDY AREA DESIGN
+PART 3 / 5
+========================================== */
+
+
+
+
+
+.content-area{
+
+    padding:20px;
+
+}
+
+
+
+
+
+
+.hidden{
+
+    display:none;
+
+}
+
+
+
+
+
+
+
+.content-area h2{
+
+    text-align:center;
+
+    color:#ffd86b;
+
+    font-size:24px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+
+
+
+/* SUBJECT LIST */
+
+
+.subject-list{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+}
+
+
+
+
+
+
+
+.subject-card{
+
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+
+    border:1px solid rgba(245,197,66,0.5);
+
+
+    border-radius:22px;
+
+
+    padding:18px;
+
+
+    color:#ffffff;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+
+.subject-card:hover{
+
+
+    transform:translateX(8px);
+
+
+    border-color:#ffd86b;
+
+
+}
+
+
+
+
+
+
+
+.subject-card h3{
+
+
+    color:#ffd86b;
+
+
+    margin:0;
+
+
+}
+
+
+
+
+
+.subject-card p{
+
+
+    color:#e8ecff;
+
+
+    margin-top:8px;
+
+
+}
+
+
+
+
+
+
+
+
+/* TOPIC LIST */
+
+
+.topic-list{
+
+
+    display:grid;
+
+
+    grid-template-columns:1fr;
+
+
+    gap:12px;
+
+
+}
+
+
+
+
+
+
+
+.topic-card{
+
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+
+    border-left:4px solid #f5c542;
+
+
+    border-radius:18px;
+
+
+    padding:16px;
+
+
+    color:#ffffff;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+
+.topic-card:hover{
+
+
+    background:
+
+    rgba(245,197,66,0.15);
+
+
+}
+
+
+
+
+
+
+
+.topic-card h3{
+
+
+    color:#ffffff;
+
+
+    font-size:17px;
+
+
+}
+
+
+
+
+
+
+
+/* STUDY CARD */
+
+
+.study-card{
+
+
+    background:
+
+    linear-gradient(
+
+    145deg,
+
+    rgba(255,255,255,0.12),
+
+    rgba(255,255,255,0.05)
+
+    );
+
+
+    border:1px solid #f5c542;
+
+
+    border-radius:28px;
+
+
+    padding:25px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+
+
+.study-icon{
+
+
+    font-size:55px;
+
+
+    margin-bottom:15px;
+
+
+}
+
+
+
+
+
+
+
+.study-card h3{
+
+
+    color:#ffd86b;
+
+
+}
+
+
+
+
+
+
+
+.study-card p{
+
+
+    color:#e8ecff;
+
+
+    line-height:1.6;
+
+
+}
+
+
+
+
+
+.study-buttons{
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+    justify-content:center;
+
+
+    margin-top:20px;
+
+
+}
+
+
+
+
+
+.study-buttons button{
+
+
+    padding:12px 20px;
+
+
+    border-radius:25px;
+
+
+    border:none;
+
+
+    background:#f5c542;
+
+
+    color:#081229;
+
+
+    font-weight:800;
+
+
+}
+
+/* ==========================================
+FOOTER + BOTTOM NAV DESIGN
+PART 4 / 5
+========================================== */
+
+
+
+
+
+.learning-footer{
+
+    margin-top:30px;
+
+    padding:25px 20px;
+
+    text-align:center;
+
+    background:
+
+    rgba(255,255,255,0.06);
+
+
+    border-top:1px solid rgba(245,197,66,0.4);
+
+}
+
+
+
+
+
+.learning-footer h3{
+
+    color:#ffd86b;
+
+    font-size:22px;
+
+}
+
+
+
+
+
+.learning-footer p{
+
+    color:#e8ecff;
+
+}
+
+
+
+
+
+.footer-links{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin:20px 0;
+
+}
+
+
+
+
+
+.footer-links a{
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+    padding:10px 16px;
+
+    border-radius:20px;
+
+    background:rgba(245,197,66,0.15);
+
+    border:1px solid rgba(245,197,66,0.5);
+
+}
+
+
+
+
+
+.copyright{
+
+    font-size:13px;
+
+    color:#bfc7e8 !important;
+
+}
+
+
+
+
+
+
+
+/* BOTTOM NAVIGATION */
+
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+
+    display:flex;
+
+    justify-content:space-around;
+
+
+    padding:12px 5px;
+
+
+    background:#081229;
+
+
+    border-top:1px solid #f5c542;
+
+
+    z-index:1000;
+
+}
+
+
+
+
+
+.bottom-nav a{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+
+    gap:4px;
+
+
+    color:#ffffff;
+
+
+    text-decoration:none;
+
+
+    font-size:13px;
+
+}
+
+
+
+
+
+.bottom-nav a:hover{
+
+    color:#ffd86b;
+
+}
+
+
+
+
+
+.bottom-nav span{
+
+    color:#ffffff;
+
+}
+/* ==========================================
+RESPONSIVE + FINAL POLISH
+PART 5 / 5 FINAL
+========================================== */
+
+
+
+
+
+@media(max-width:420px){
+
+
+.learning-header h1{
+
+    font-size:24px;
+
+}
+
+
+
+.learning-title h2{
+
+    font-size:22px;
+
+}
+
+
+
+.category-card{
+
+    padding:20px 15px;
+
+}
+
+
+
+.category-icon{
+
+    width:75px;
+
+    height:75px;
+
+    font-size:40px;
+
+}
+
+
+
+.category-card h3{
+
+    font-size:21px;
+
+}
+
+
+
+.category-card p{
+
+    font-size:13px;
+
+}
+
+
+
+.study-buttons{
+
+    flex-direction:column;
+
+}
+
+
+
+.study-buttons button{
+
+    width:100%;
+
+}
+
+
+
+.footer-links{
+
+    flex-direction:column;
+
+}
+
+
+
+.footer-links a{
+
+    width:80%;
+
+    margin:auto;
+
+}
+
+
+
+}
+
+
+
+
+
+/* CARD ANIMATION */
+
+
+@keyframes fadeIn{
+
+
+from{
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+}
+
+
+to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+}
+
+
+
+.category-card,
+.subject-card,
+.topic-card,
+.study-card{
+
+
+    animation:fadeIn .5s ease;
+
+
+}
+
+
+
+
+
+
+/* LINK RESET */
+
+
+a{
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+
+
+
+
+
+/* SMOOTH SCROLL */
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+
+
+
+
+/* FINAL TEXT FIX */
+
+
+.learning-container *{
+
+
+    opacity:1 !important;
+
+
+}
+
+
+.learning-container h1,
+.learning-container h2,
+.learning-container h3{
+
+
+    color:#ffd86b !important;
+
+
+}
+
+
+
+.learning-container p,
+.learning-container span{
+
+
+    color:#e8ecff !important;
+
+
+}
+
+
 
