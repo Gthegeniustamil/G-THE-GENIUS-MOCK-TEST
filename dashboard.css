@@ -1789,3 +1789,72 @@ color:#081229 !important;
 font-weight:700;
 
 }
+/* =====================================
+CONNECT WITH US COLORS
+===================================== */
+
+
+.social-btn{
+
+    display:block;
+
+    padding:15px;
+
+    margin:12px 0;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+
+/* YOUTUBE */
+
+.youtube{
+
+    background:#FF0000 !important;
+
+    color:#ffffff !important;
+
+}
+
+
+
+/* TELEGRAM */
+
+.telegram{
+
+    background:#229ED9 !important;
+
+    color:#ffffff !important;
+
+}
+
+
+
+/* EMAIL */
+
+.email{
+
+    background:#ffffff !important;
+
+    color:#081229 !important;
+
+    border:1px solid #ddd;
+
+}
+
+
+
+.social-btn:hover{
+
+    transform:translateY(-3px);
+
+}
