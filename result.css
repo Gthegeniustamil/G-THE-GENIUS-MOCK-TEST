@@ -1198,7 +1198,32 @@ a:active{
 }
 
 
+/* RESULT TEXT VISIBILITY FINAL FIX */
 
+body{
+    background:#081229;
+    color:#ffffff;
+}
+
+
+.result-card h1,
+.result-card h2,
+.result-card h3{
+    color:#ffd86b !important;
+}
+
+
+.result-card p,
+.result-card span,
+.result-card div{
+    color:#ffffff !important;
+}
+
+
+.score-box{
+    color:#ffd86b !important;
+    background:#101d3d;
+}
 
 
 
