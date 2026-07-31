@@ -1,95 +1,217 @@
+
 // ==========================================
 // G THE GENIUS MOCK TEST PORTAL v5.0
 // RESULT JS
-// PART 1 / 4
+// PART 1 / 5
 // ==========================================
 
 
-
-import {
-
-auth,
-db
-
-} from "./firebase-config.js";
-
-
-
-
-
-
-import {
-
-onAuthStateChanged
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
-
+import { db, auth } from "./firebase-config.js";
 
 
 import {
 
 collection,
-query,
-where,
-orderBy,
-limit,
-getDocs
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+addDoc,
 
+serverTimestamp
 
+} from
 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 
 
-// ===============================
-// URL DATA
-// ===============================
+// GET LAST RESULT DATA
+
+
+let score =
+Number(
+localStorage.getItem("lastScore")
+) || 0;
 
 
 
-const urlParams =
+
+let percentage =
+localStorage.getItem(
+"lastPercentage"
+) || 0;
+
+
+
+
+
+
+// STUDENT DATA
+
+
+let studentName =
+localStorage.getItem(
+"studentName"
+) || "Student";
+
+
+
+let district =
+localStorage.getItem(
+"district"
+) || "-";
+
+
+
+
+
+
+
+// RESULT ELEMENTS
+
+
+const scoreBox =
+document.getElementById(
+"score"
+);
+
+
+
+const percentageBox =
+document.getElementById(
+"percentage"
+);
+
+
+
+
+
+
+if(scoreBox){
+
+scoreBox.innerText =
+score;
+
+}
+
+
+
+if(percentageBox){
+
+percentageBox.innerText =
+percentage + "%";
+
+}
+
+// ==========================================
+// SAVE RESULT TO FIRESTORE
+// PART 2 / 5
+// ==========================================
+
+
+
+const testType =
 
 new URLSearchParams(
 
 window.location.search
 
+).get("type")
+
+|| "Practice";
+
+
+
+
+
+
+
+async function saveResult(){
+
+
+
+try{
+
+
+
+await addDoc(
+
+collection(
+db,
+"results"
+),
+
+{
+
+
+studentName: studentName,
+
+
+district: district,
+
+
+
+testType: testType,
+
+
+
+score: score,
+
+
+
+percentage: Number(
+percentage
+),
+
+
+
+createdAt:
+serverTimestamp()
+
+
+
+}
+
+
+
 );
 
 
 
 
 
+console.log(
 
-const marksFromURL =
+"✅ Result Saved"
 
-Number(
-
-urlParams.get("marks")
-
-) || 0;
+);
 
 
 
 
 
+}
 
-const totalFromURL =
-
-Number(
-
-urlParams.get("total")
-
-) || 0;
+catch(error){
 
 
 
+console.error(
+
+"Result Save Error",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
 
 
 
@@ -97,510 +219,491 @@ urlParams.get("total")
 
 
 
-
-// ===============================
-// HTML ELEMENTS
-// ===============================
+// Auto Save
 
 
-
-const marksDisplay =
-
-document.getElementById("marks");
+saveResult();
 
 
-
-const totalQuestions =
-
-document.getElementById("totalQuestions");
-
-
-
-const rankDisplay =
-
-document.getElementById("rank");
+// ==========================================
+// PERFORMANCE ANALYSIS
+// PART 3 / 5
+// ==========================================
 
 
 
 const resultMessage =
-
-document.getElementById("resultMessage");
-
-
-
-
-
-
-
-
-
-
-
-// ===============================
-// INITIAL MARK DISPLAY
-// ===============================
-
-
-
-if(marksDisplay){
-
-
-marksDisplay.innerHTML =
-
-marksFromURL;
-
-
-}
-
-
-
-
-
-if(totalQuestions){
-
-
-totalQuestions.innerHTML =
-
-totalFromURL;
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// ===============================
-// AUTH CHECK
-// ===============================
-
-
-
-onAuthStateChanged(auth, async(user)=>{
-
-
-
-if(!user){
-
-
-window.location.href="login.html";
-
-
-return;
-
-
-}
-
-
-
-
-
-
-await loadRank(user.uid);
-
-
-
-
-});
-
-// ==========================================
-// RESULT JS
-// PART 2 / 4
-// RANK + SCORE DETAILS
-// ==========================================
-
-
-
-
-
-
-// ===============================
-// LOAD RANK
-// ===============================
-
-
-async function loadRank(uid){
-
-try{
-
-const resultsRef = collection(db,"results");
-
-
-
-// Highest marks first
-
-const q = query(
-
-resultsRef,
-
-orderBy("marks","desc"),
-
-limit(1000)
-
+document.getElementById(
+"resultMessage"
 );
 
 
 
-const snapshot = await getDocs(q);
 
-let rank = 1;
-let found = false;
+function getPerformanceMessage(){
 
 
 
-snapshot.forEach((doc)=>{
-
-const data = doc.data();
-
-if(!found && data.uid === uid && data.marks === marksFromURL){
-
-found = true;
-
-}else if(!found){
-
-rank++;
-
-}
-
-});
+let msg = "";
 
 
 
-if(rankDisplay){
 
-rankDisplay.textContent = found ? rank : "-";
+
+if(percentage >= 90){
+
+
+msg =
+"🏆 Excellent! Top Rank Preparation";
+
 
 }
 
 
 
-// ===============================
-// CORRECT / WRONG
-// ===============================
-
-const correctAnswers =
-document.getElementById("correctAnswers");
-
-const wrongAnswers =
-document.getElementById("wrongAnswers");
+else if(percentage >= 75){
 
 
+msg =
+"⭐ Very Good! Keep Practicing";
 
-if(correctAnswers){
-
-correctAnswers.textContent = marksFromURL;
 
 }
 
 
 
-if(wrongAnswers){
+else if(percentage >= 50){
 
-wrongAnswers.textContent =
-Math.max(0,totalFromURL - marksFromURL);
+
+msg =
+"🔥 Good Effort! Improve More";
+
 
 }
 
 
 
-// ===============================
-// RESULT MESSAGE
-// ===============================
+else{
+
+
+msg =
+"📚 Need More Practice. Never Give Up";
+
+
+}
+
+
+
+
+return msg;
+
+
+
+}
+
+
+
+
+
+
 
 if(resultMessage){
 
-if(marksFromURL === totalFromURL){
 
-resultMessage.textContent =
-"🏆 Outstanding Performance!";
+resultMessage.innerText =
+getPerformanceMessage();
 
-}
-else if(marksFromURL >= Math.ceil(totalFromURL * 0.8)){
-
-resultMessage.textContent =
-"🌟 Excellent! Keep it up!";
-
-}
-else if(marksFromURL >= Math.ceil(totalFromURL * 0.6)){
-
-resultMessage.textContent =
-"👍 Good Job! Practice More.";
-
-}
-else{
-
-resultMessage.textContent =
-"📚 Keep Practicing. Success is Near!";
 
 }
 
-}
 
-}catch(error){
 
-console.error("Result Load Error:",error);
 
-}
 
-}
+
 
 // ==========================================
-// RESULT JS
-// PART 3 / 4
-// STUDENT STATS UPDATE
+// RESULT SUMMARY
+// ==========================================
+
+
+
+const studentNameBox =
+document.getElementById(
+"studentName"
+);
+
+
+
+const districtBox =
+document.getElementById(
+"district"
+);
+
+
+
+
+
+
+if(studentNameBox){
+
+
+studentNameBox.innerText =
+studentName;
+
+
+}
+
+
+
+
+
+if(districtBox){
+
+
+districtBox.innerText =
+district;
+
+
+}
+
+
+// ==========================================
+// RANK + SHARE SYSTEM
+// PART 4 / 5
 // ==========================================
 
 
 
 import {
 
-doc,
-getDoc,
-updateDoc,
-increment
+getDocs
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from
 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 
-// ===============================
-// UPDATE STUDENT STATISTICS
-// ===============================
 
 
-async function updateStudentStats(uid){
+// ==========================================
+// CALCULATE TEMP RANK
+// ==========================================
+
+
+async function calculateRank(){
+
 
 try{
 
-const studentRef = doc(db,"students",uid);
 
-const studentSnap = await getDoc(studentRef);
+let snapshot =
+
+await getDocs(
+
+collection(
+db,
+"results"
+)
+
+);
 
 
 
-if(studentSnap.exists()){
-
-const studentData = studentSnap.data();
 
 
+let students = [];
 
-// Update student totals
 
-await updateDoc(studentRef,{
 
-totalMarks: increment(marksFromURL),
 
-testsCompleted: increment(1),
 
-lastMarks: marksFromURL,
+snapshot.forEach(doc=>{
 
-lastTestDate: new Date(),
 
-lastUpdated: new Date()
+students.push(
+doc.data()
+);
+
 
 });
 
 
 
-console.log("Student statistics updated.");
+
+
+
+students.sort(
+
+(a,b)=>
+
+Number(b.percentage)
+
+-
+
+Number(a.percentage)
+
+);
+
+
+
+
+
+
+
+let rank =
+
+students.findIndex(
+
+(s)=>
+
+s.studentName === studentName
+
+&&
+
+Number(s.percentage)
+
+===
+
+Number(percentage)
+
+)
+
++1;
+
+
+
+
+
+
+
+const rankBox =
+
+document.getElementById(
+"rank"
+);
+
+
+
+
+
+
+if(rankBox){
+
+
+rankBox.innerText =
+
+rank;
+
 
 }
 
-}catch(error){
+
+
+}
+
+catch(error){
+
 
 console.error(
-
-"Student Update Error:",
-
+"Rank Error",
 error
-
 );
+
 
 }
 
+
+
 }
 
 
 
 
 
-
-// ===============================
-// CALL UPDATE
-// ===============================
-
-
-onAuthStateChanged(auth, async(user)=>{
-
-if(user){
-
-await updateStudentStats(user.uid);
-
-}
-
-});
+calculateRank();
 
 
 
 
 
 
-// ===============================
-// SAVE LAST RESULT
-// ===============================
 
-
-localStorage.setItem(
-
-"lastMarks",
-
-marksFromURL
-
-);
-
-localStorage.setItem(
-
-"lastTotal",
-
-totalFromURL
-
-);
 
 // ==========================================
-// RESULT JS
-// PART 4 / 4
-// FINAL
+// SHARE RESULT
 // ==========================================
 
 
 
+const shareBtn =
 
-
-// ===============================
-// ACTION BUTTONS
-// ===============================
-
-const dashboardBtn =
-document.querySelector(
-'a[href="dashboard.html"]'
-);
-
-const leaderboardBtn =
-document.querySelector(
-'a[href="leaderboard.html"]'
-);
-
-const historyBtn =
-document.querySelector(
-'a[href="history.html"]'
+document.getElementById(
+"shareBtn"
 );
 
 
 
 
 
-if(dashboardBtn){
+if(shareBtn){
 
-dashboardBtn.addEventListener("click",(e)=>{
 
-e.preventDefault();
+shareBtn.onclick = ()=>{
 
-window.location.href = "dashboard.html";
+
+let text =
+
+`
+G THE GENIUS Mock Test Result
+
+👤 Name: ${studentName}
+
+🏆 Score: ${score}
+
+⭐ Percentage: ${percentage}%
+
+`;
+
+
+if(
+navigator.share
+){
+
+
+navigator.share({
+
+title:
+"G THE GENIUS Result",
+
+text:text
+
 
 });
+
+
+}
+
+else{
+
+
+alert(text);
+
 
 }
 
 
 
-if(leaderboardBtn){
+};
 
-leaderboardBtn.addEventListener("click",(e)=>{
-
-e.preventDefault();
-
-window.location.href = "leaderboard.html";
-
-});
 
 }
 
 
+// ==========================================
+// RESULT HISTORY SAVE
+// PART 5 / 5 FINAL
+// ==========================================
 
-if(historyBtn){
 
-historyBtn.addEventListener("click",(e)=>{
 
-e.preventDefault();
 
-window.location.href = "history.html";
+
+function saveLocalHistory(){
+
+
+
+let history =
+
+JSON.parse(
+
+localStorage.getItem(
+"testHistory"
+)
+
+)
+
+|| [];
+
+
+
+
+
+
+history.push({
+
+name: studentName,
+
+score: score,
+
+percentage: percentage,
+
+testType: testType,
+
+date:
+
+new Date().toLocaleDateString()
+
 
 });
 
-}
 
 
 
 
-
-
-// ===============================
-// SAVE LAST PAGE
-// ===============================
 
 localStorage.setItem(
 
-"lastPage",
+"testHistory",
 
-"result"
+JSON.stringify(history)
 
 );
 
 
 
-
-
-
-// ===============================
-// CLEAR TEMP TEST DATA
-// ===============================
-
-localStorage.removeItem("selectedAnswers");
-localStorage.removeItem("currentQuestion");
-localStorage.removeItem("timeLeft");
+}
 
 
 
 
 
 
-// ===============================
-// PAGE READY
-// ===============================
 
-window.addEventListener("load",()=>{
+saveLocalHistory();
+
+
+
+
+
+
+
+// ==========================================
+// RESULT PAGE READY
+// ==========================================
+
+
 
 console.log(
-"G THE GENIUS Result Page Loaded Successfully"
+
+`
+================================
+
+G THE GENIUS RESULT SYSTEM READY ✅
+
+Student:
+${studentName}
+
+Score:
+${score}
+
+Percentage:
+${percentage}%
+
+================================
+`
+
 );
-
-});
-
-
-
-
-
-
-// ===============================
-// END OF RESULT JS
-// ===============================
-
