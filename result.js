@@ -43,15 +43,13 @@ localStorage.getItem(
 ) || 0;
 
 let correct =
-Number(
-localStorage.getItem("lastCorrect")
-) || 0;
-
+Number(localStorage.getItem("lastCorrect")) || 0;
 
 let wrong =
-Number(
-localStorage.getItem("lastWrong")
-) || 0;
+Number(localStorage.getItem("lastWrong")) || 0;
+
+let total =
+correct + wrong;
 
 
 let unanswered =
@@ -118,7 +116,26 @@ percentageBox.innerText =
 percentage + "%";
 
 }
+const correctBox =
+document.getElementById("correct");
 
+if(correctBox){
+    correctBox.innerText = correct;
+}
+
+const wrongBox =
+document.getElementById("wrong");
+
+if(wrongBox){
+    wrongBox.innerText = wrong;
+}
+
+const totalBox =
+document.getElementById("totalQuestions");
+
+if(totalBox){
+    totalBox.innerText = total;
+}
 // ==========================================
 // SAVE RESULT TO FIRESTORE
 // PART 2 / 5
