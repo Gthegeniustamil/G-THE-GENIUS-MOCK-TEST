@@ -4,310 +4,122 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS Admin Panel</title>
 
+<title>
+Admin Panel | G THE GENIUS
+</title>
 
-<style>
 
-*{
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+<meta name="theme-color" content="#081229">
 
 
-body{
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
-    margin:0;
-    min-height:100vh;
-    background:
-    linear-gradient(135deg,#050b18,#081d45);
 
-    color:white;
-    padding:20px;
+<link rel="stylesheet"
+href="css/admin.css">
 
-}
 
+<link rel="stylesheet"
+href="css/style.css">
 
 
-.admin-container{
-
-    max-width:750px;
-    margin:auto;
-
-}
-
-
-
-.header{
-
-    text-align:center;
-    margin-bottom:20px;
-
-}
-
-
-.logo{
-
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    object-fit:cover;
-
-    border:3px solid #FFD700;
-
-}
-
-
-
-.header h1{
-
-    color:#FFD700;
-    margin:10px 0 5px;
-    font-size:28px;
-
-}
-
-
-.badge{
-
-    display:inline-block;
-    background:#FFD700;
-    color:#000;
-    padding:6px 15px;
-
-    border-radius:20px;
-    font-weight:bold;
-    font-size:14px;
-
-}
-
-
-
-/* CARD */
-
-
-.card{
-
-    background:
-    rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(15px);
-
-    border:1px solid rgba(255,215,0,0.3);
-
-    border-radius:20px;
-
-    padding:25px;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,0.4);
-
-}
-
-
-
-/* INPUT AREA */
-
-
-label{
-
-    display:block;
-
-    margin-top:18px;
-
-    margin-bottom:8px;
-
-    font-weight:600;
-
-    color:#FFD700;
-
-}
-
-
-
-select,
-textarea{
-
-
-    width:100%;
-
-    padding:14px;
-
-    border-radius:12px;
-
-    border:none;
-
-    outline:none;
-
-    background:#101c3a;
-
-    color:white;
-
-    font-size:15px;
-
-}
-
-
-
-select:focus,
-textarea:focus{
-
-    border:1px solid #FFD700;
-
-}
-
-
-
-textarea{
-
-    height:260px;
-
-    resize:none;
-
-}
-
-
-
-/* BUTTON */
-
-
-.upload-btn{
-
-
-    width:100%;
-
-    margin-top:25px;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:30px;
-
-
-    background:
-    linear-gradient(90deg,#FFD700,#ffae00);
-
-
-    color:#000;
-
-    font-size:17px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-
-    transition:.3s;
-
-}
-
-
-
-.upload-btn:hover{
-
-    transform:scale(1.03);
-
-}
-
-
-
-/* PROGRESS */
-
-
-.progress-card{
-
-    margin-top:25px;
-
-    background:#050b18;
-
-    padding:18px;
-
-    border-radius:15px;
-
-}
-
-
-
-.progress-title{
-
-    color:#FFD700;
-
-    margin-bottom:10px;
-
-}
-
-
-
-.progress{
-
-    height:22px;
-
-    background:#222;
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-}
-
-
-
-.progress-bar{
-
-    width:0%;
-
-    height:100%;
-
-    background:#00ff88;
-
-    transition:.5s;
-
-}
-
-
-
-.result-box{
-
-    margin-top:15px;
-
-    line-height:1.8;
-
-    font-size:15px;
-
-}
-
-
-
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 
 </head>
 
 
+
 <body>
 
 
-
-<div class="admin-container">
-
-
-<div class="header">
+<header class="admin-header">
 
 
-<img src="assets/logo.png" class="logo">
+<div class="brand">
+
+
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="logo">
+
+
+<div>
+
+<h2>
+
+G THE GENIUS
+
+</h2>
+
+
+<p>
+
+Admin Panel
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<button id="logoutBtn">
+
+Logout
+
+</button>
+
+
+</header>
+
+
+
+
+
+<main class="admin-container">
+
+
+<section class="admin-card">
 
 
 <h1>
-🚔 G THE GENIUS
+
+➕ Add Question
+
 </h1>
+<form id="questionForm">
 
 
-<span class="badge">
-ADMIN PANEL
-</span>
+
+<div class="input-group">
+
+
+<label>
+
+Question
+
+</label>
+
+
+<textarea
+
+id="question"
+
+placeholder="Enter Question"
+
+required></textarea>
 
 
 </div>
@@ -316,190 +128,337 @@ ADMIN PANEL
 
 
 
-<div class="card">
-
+<div class="input-group">
 
 
 <label>
-📚 Select Subject
+
+Option A
+
 </label>
 
 
-<select id="subject">
+<input
+
+type="text"
+
+id="optionA"
+
+placeholder="Enter Option A"
+
+required>
+
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+
+<label>
+
+Option B
+
+</label>
+
+
+<input
+
+type="text"
+
+id="optionB"
+
+placeholder="Enter Option B"
+
+required>
+
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+
+<label>
+
+Option C
+
+</label>
+
+
+<input
+
+type="text"
+
+id="optionC"
+
+placeholder="Enter Option C"
+
+required>
+
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+
+<label>
+
+Option D
+
+</label>
+
+
+<input
+
+type="text"
+
+id="optionD"
+
+placeholder="Enter Option D"
+
+required>
+
+
+    </div>
+
+    <div class="input-group">
+
+
+<label>
+
+Correct Answer
+
+</label>
+
+
+<select id="correctAnswer" required>
+
 
 <option value="">
-📚 Select Subject
+
+Select Correct Option
+
 </option>
 
-<option>General Knowledge</option>
 
-<option>Tamil Nadu GK</option>
+<option value="0">
 
-<option>Indian Polity</option>
+Option A
 
-<option>Indian History</option>
+</option>
 
-<option>World History</option>
 
-<option>Indian Geography</option>
+<option value="1">
 
-<option>World Geography</option>
+Option B
 
-<option>Indian Economy</option>
+</option>
 
-<option>Science</option>
 
-<option>Physics</option>
+<option value="2">
 
-<option>Chemistry</option>
+Option C
 
-<option>Biology</option>
+</option>
 
-<option>Environment & Ecology</option>
 
-<option>Computer Knowledge</option>
+<option value="3">
 
-<option>Current Affairs</option>
+Option D
 
-<option>Sports</option>
+</option>
 
-<option>Awards & Honours</option>
-
-<option>Books & Authors</option>
-
-<option>Important Days</option>
-
-<option>Tamil Language</option>
-
-<option>English Language</option>
-
-<option>Aptitude</option>
-
-<option>Reasoning</option>
-
-<option>Data Interpretation</option>
-
-<option>Logical Reasoning</option>
-
-<option>Law & Police</option>
-
-<option>TNUSRB Special</option>
-
-<option>Government Schemes</option>
-
-<option>Banking Awareness</option>
-
-<option>Defence</option>
-
-<option>Space Science</option>
-
-<option>Agriculture</option>
-
-<option>Health & Nutrition</option>
-
-<option>Constitutional Bodies</option>
-
-<option>International Organizations</option>
-
-<option>Miscellaneous</option>
 
 </select>
 
 
+</div>
 
 
+
+
+
+<div class="input-group">
 
 
 <label>
-📌 Select Topic
+
+Exam Category
+
 </label>
 
 
-<select id="topic">
+<select id="category" required>
+
+
+<option value="">
+
+Select Category
+
+</option>
 
 
 <option>
-Choose Topic
+
+TNUSRB
+
+</option>
+
+
+<option>
+
+TNPSC
+
+</option>
+
+
+<option>
+
+General Knowledge
+
+</option>
+
+
+<option>
+
+Current Affairs
+
 </option>
 
 
 </select>
 
 
+</div>
 
 
+
+
+
+<div class="input-group">
 
 
 <label>
-📝 Bulk Questions JSON
+
+Explanation
+
 </label>
 
 
-<textarea 
-id="bulkQuestions"
-placeholder="Paste 25 / 50 / 100 Questions JSON here...">
-</textarea>
+<textarea
+
+id="explanation"
+
+placeholder="Enter Answer Explanation"
+
+></textarea>
+
+
+</div>
 
 
 
 
 
+<button type="submit" id="addQuestionBtn">
 
-<button class="upload-btn" id="uploadBtn">
-
-🚀 UPLOAD QUESTIONS
+➕ Add Question
 
 </button>
 
 
 
+</form>
 
 
 
-<div class="progress-card">
+</section>
+
+ <section class="bulk-section">
 
 
-<div class="progress-title">
+<h2>
 
-📊 Upload Progress
+📂 Bulk Question Upload
 
-</div>
-
-
-<div class="progress">
-
-<div class="progress-bar" id="progressBar">
-
-</div>
-
-</div>
+</h2>
 
 
 
-<div class="result-box" id="result">
+<textarea
 
-Waiting for upload...
+id="bulkQuestions"
 
-</div>
+placeholder='Paste JSON Questions Here'>
 
-
-
-</div>
+</textarea>
 
 
 
-</div>
+<button id="bulkUploadBtn">
+
+⬆ Upload Bulk Questions
+
+</button>
 
 
 
-</div>
+<p id="adminMessage"></p>
 
 
 
-<script type="module" src="admin.js"></script>
+</section>
+
+
+
+
+
+</main>
+
+
+
+
+
+<footer class="admin-footer">
+
+
+<p>
+
+© 2026 G THE GENIUS
+
+</p>
+
+
+<p>
+
+Admin Question Management System
+
+</p>
+
+
+</footer>
+
+
+
+
+
+<script type="module" src="js/admin.js"></script>
+
 
 
 </body>
 
+    </html>
 
-</html>
+    
