@@ -1,328 +1,730 @@
+<!-- ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+LEADERBOARD HTML
+PART 1 / 5
+========================================== -->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>
 Leaderboard | G THE GENIUS
 </title>
 
-
-<meta name="theme-color" content="#081229">
-
+<meta name="theme-color"
+content="#081229">
 
 <link rel="icon"
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
-
 <link rel="stylesheet"
-href="css/leaderboard.css">
-
-
-<link rel="stylesheet"
-href="css/style.css">
-
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
-
+href="leaderboard.css">
 
 </head>
 
-
-
 <body>
 
+<div class="leaderboard-container">
 
+<!-- HEADER START -->
 
-<header class="leader-header">
+<header class="leaderboard-header">
 
-
-<div class="brand">
-
+<div class="logo-box">
 
 <img
-
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="logo">
-
-
-<div>
-
-<h2>
-
-G THE GENIUS
-
-</h2>
-
-
-<p>
-
-Student Ranking
-
-</p>
-
+alt="G THE GENIUS Logo"
+class="leaderboard-logo">
 
 </div>
 
-
-</div>
-
-
-
-<button onclick="goDashboard()">
-
-⬅ Dashboard
-
-</button>
-
-
-</header>
-
-  <main class="leader-container">
-
-
-
-<section class="leader-card">
-
+<div class="leaderboard-title">
 
 <h1>
 
-🏆 Overall Ranking
+G THE GENIUS
 
 </h1>
 
+<p>
 
+Top Rank Leaderboard
 
-<div class="table-container">
+</p>
 
+</div>
 
-<table>
+</header>
 
-
-<thead>
-
-<tr>
-
-<th>
-
-Rank
-
-</th>
-
-
-<th>
-
-Name
-
-</th>
-
-
-<th>
-
-District
-
-</th>
-
-
-<th>
-
-Test
-
-</th>
-
-
-<th>
-
-Score
-
-</th>
-
-
-<th>
-
-%
-
-</th>
-
-</tr>
-
-</thead>
+<!-- HEADER END -->
 
 
 
-<tbody id="leaderboardData">
+<!-- TOP 3 PODIUM START -->
 
+<section class="podium-section">
 
-<tr>
+<h2>
 
-<td colspan="6">
+🏆 TOP 3 RANK HOLDERS
+
+</h2>
+
+<div class="podium-container">
+
+<!-- 2nd Rank -->
+
+<div class="podium-card second">
+
+<div class="podium-position">
+
+🥈
+
+</div>
+
+<h3 id="secondName">
 
 Loading...
 
-</td>
+</h3>
 
-</tr>
+<p id="secondMarks">
 
+0 Marks
 
-</tbody>
-
-
-
-</table>
-
+</p>
 
 </div>
 
+<!-- 1st Rank -->
 
-</section>
+<div class="podium-card first">
 
-    <section class="top-students">
+<div class="podium-position">
 
-
-<h2>
-
-🥇 Top Performers
-
-</h2>
-
-
-
-<div id="topStudents">
-
-
-<!-- Top 3 Students Load Here -->
-
+🥇
 
 </div>
 
+<h3 id="firstName">
 
+Loading...
+
+</h3>
+
+<p id="firstMarks">
+
+0 Marks
+
+</p>
+
+</div>
+
+<!-- 3rd Rank -->
+
+<div class="podium-card third">
+
+<div class="podium-position">
+
+🥉
+
+</div>
+
+<h3 id="thirdName">
+
+Loading...
+
+</h3>
+
+<p id="thirdMarks">
+
+0 Marks
+
+</p>
+
+</div>
+
+</div>
 
 </section>
 
+  // ==========================================
+// LEADERBOARD HTML
+// PART 2 / 5
+// ==========================================
 
 
 
-<section class="district-ranking">
 
 
-<h2>
 
-📍 District Ranking
-
-</h2>
+<!-- FILTER SECTION START -->
 
 
-<select id="districtFilter">
+<section class="filter-section">
 
 
-<option value="All">
-
-All District
-
-</option>
 
 
-<option>
-
-Ariyalur
-
-</option>
+<div class="filter-card">
 
 
-<option>
-
-Chennai
-
-</option>
 
 
-<option>
+<h3>
 
-Coimbatore
+📊 Leaderboard Filter
 
-</option>
+</h3>
 
 
-<option>
 
-Madurai
+
+
+
+<select id="testFilter">
+
+<option value="all">
+
+All Tests
 
 </option>
 
+<option value="daily">
 
-<option>
-
-Salem
-
-</option>
-
-
-<option>
-
-Tiruppur
+Daily Mock Test
 
 </option>
 
+<option value="weekly">
+
+Weekly Mock Test
+
+</option>
+
+<option value="monthly">
+
+Monthly Grand Test
+
+</option>
+
+<option value="subject">
+
+Subject-wise Test
+
+</option>
+
+<option value="topic">
+
+Topic-wise Test
+
+</option>
 
 </select>
 
 
 
+
+
+
+
+<input
+type="text"
+
+id="searchStudent"
+
+placeholder="🔍 Search Student Name">
+
+
+
+
+<button
+id="refreshLeaderboard"
+
+class="refresh-btn">
+
+🔄 Refresh Leaderboard
+
+</button>
+
+
+
+
+
+</div>
+
+
+
+
+</section>
+
+
+
+<!-- FILTER SECTION END -->
+
+
+
+
+
+
+
+
+
+
+<!-- LEADERBOARD TABLE START -->
+
+
+<section class="leaderboard-section">
+
+
+
+
+<h2>
+
+🏆 Overall Rankings
+
+</h2>
+
+
+
+
+
+
+<div class="leaderboard-table">
+
+
+
+
+
+<div class="leaderboard-head">
+
+<span>Rank</span>
+
+<span>Name</span>
+
+<span>Marks</span>
+
+</div>
+
+
+
+
+
+
+<div
+id="leaderboardList"
+
+class="leaderboard-list">
+
+
+
+
+<!-- Leaderboard rows will be loaded from leaderboard.js -->
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+</section>
+
+<!-- LEADERBOARD SECTION END -->
+// ==========================================
+// LEADERBOARD HTML
+// PART 3 / 5
+// ==========================================
+
+
+
+
+
+
+<!-- CURRENT STUDENT SECTION -->
+
+
+<section class="student-rank-section">
+
+<div class="student-rank-card">
+
+<h2>
+
+🎯 Your Position
+
+</h2>
+
+<div class="student-rank-grid">
+
+<div class="student-rank-item">
+
+<span>
+
+Current Rank
+
+</span>
+
+<strong id="myRank">
+
+-
+
+</strong>
+
+</div>
+
+<div class="student-rank-item">
+
+<span>
+
+Your Marks
+
+</span>
+
+<strong id="myMarks">
+
+0
+
+</strong>
+
+</div>
+
+<div class="student-rank-item">
+
+<span>
+
+Tests Completed
+
+</span>
+
+<strong id="myTests">
+
+0
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
 
 
 
 
-</main>
+
+
+
+<!-- LEADERBOARD SUMMARY -->
+
+
+<section class="summary-section">
+
+<div class="summary-grid">
+
+<div class="summary-card">
+
+<h3>
+
+👨‍🎓 Students
+
+</h3>
+
+<strong id="totalStudents">
+
+0
+
+</strong>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+📝 Tests
+
+</h3>
+
+<strong id="totalTests">
+
+0
+
+</strong>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+🏅 Top Marks
+
+</h3>
+
+<strong id="highestMarks">
+
+0
+
+</strong>
+
+</div>
+
+</div>
+
+</section>
 
 
 
 
-<footer class="leader-footer">
 
+
+
+
+<!-- QUICK NAVIGATION -->
+
+
+<section class="leaderboard-nav">
+
+<a href="dashboard.html"
+class="leader-btn">
+
+🏠 Dashboard
+
+</a>
+
+<a href="history.html"
+class="leader-btn">
+
+📜 History
+
+</a>
+
+<a href="profile.html"
+class="leader-btn">
+
+👤 Profile
+
+</a>
+
+</section>
+
+  
+// ==========================================
+// LEADERBOARD HTML
+// PART 4 / 5
+// ==========================================
+
+
+
+
+
+
+<!-- ACHIEVEMENT SECTION -->
+
+
+<section class="achievement-section">
+
+<div class="achievement-card">
+
+<h2>
+
+🌟 Keep Climbing the Leaderboard
+
+</h2>
 
 <p>
 
-© 2026 G THE GENIUS
+Practice daily, improve your marks, and secure the top rank in the next mock test.
+
+</p>
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+
+<!-- SOCIAL SECTION -->
+
+
+<section class="social-section">
+
+<div class="social-card">
+
+<h3>
+
+Follow G THE GENIUS
+
+</h3>
+
+<div class="social-buttons">
+
+<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank">
+
+▶ YouTube
+
+</a>
+
+<a href="https://t.me/gthegenius"
+target="_blank">
+
+✈ Telegram
+
+</a>
+
+<a href="mailto:gthegenius7@gmail.com">
+
+✉ Email
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+
+<!-- INFO CARD -->
+
+
+<section class="info-section">
+
+<div class="info-card">
+
+<h3>
+
+ℹ Leaderboard Information
+
+</h3>
+
+<ul>
+
+<li>🏆 Ranking is based on Marks.</li>
+
+<li>📈 Higher marks receive higher ranks.</li>
+
+<li>⏱ Earlier submission is used to break ties.</li>
+
+<li>🔄 Rankings update automatically after every completed test.</li>
+
+</ul>
+
+</div>
+
+</section>
+
+  <!-- ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+LEADERBOARD HTML
+PART 5 / 5
+FINAL
+========================================== -->
+
+
+
+<!-- FOOTER START -->
+
+<footer class="app-footer">
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+<p>
+
+ALL GOVERNMENT EXAM MOCK TEST
 
 </p>
 
 
-<p>
 
-Government Exam Mock Test Portal
+<div class="footer-links">
+
+<a href="dashboard.html">
+
+Home
+
+</a>
+
+<a href="mocktest.html">
+
+Mock Test
+
+</a>
+
+<a href="history.html">
+
+History
+
+</a>
+
+<a href="profile.html">
+
+Profile
+
+</a>
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 G THE GENIUS. All Rights Reserved.
 
 </p>
-
 
 </footer>
 
+<!-- FOOTER END -->
 
 
 
-<script type="module" src="js/leaderboard.js"></script>
 
 
+<!-- LEADERBOARD JS -->
 
-<script>
-
-function goDashboard(){
-
-window.location.href="dashboard.html";
-
-}
+<script
+type="module"
+src="leaderboard.js">
 
 </script>
 
-
+</div>
 
 </body>
 
