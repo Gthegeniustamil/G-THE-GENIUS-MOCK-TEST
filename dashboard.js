@@ -72,7 +72,7 @@ document.getElementById("xpProgress");
 // ===============================
 
 
-const ADMIN_UID = "YOUR_ADMIN_UID";
+const ADMIN_UID = "Mh7hnDPtKBMW7LQHKsOxm7c5GFg2";
 
 
 
