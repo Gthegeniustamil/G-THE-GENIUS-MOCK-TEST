@@ -1,919 +1,51 @@
-/* ===========================================================
-   G THE GENIUS MOCK TEST PORTAL
-   STYLE.CSS
-   PART 1
-   =========================================================== */
+/* =====================================
+G THE GENIUS LOGIN APP STYLE
+===================================== */
 
-
-/* ===========================
-   GOOGLE FONT
-=========================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-
-/* ===========================
-   RESET
-=========================== */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-
-html{
-
-    scroll-behavior:smooth;
-
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 
 body{
 
-    font-family:'Poppins',sans-serif;
+min-height:100vh;
 
-    background:#081229;
+background:#020817;
 
-    color:#fff;
+display:flex;
 
-    min-height:100vh;
+justify-content:center;
 
-    overflow-x:hidden;
+align-items:center;
 
-}
-
-
-
-/* ===========================
-   ROOT COLORS
-=========================== */
-
-:root{
-
-    --primary:#0B1635;
-
-    --secondary:#12214D;
-
-    --gold:#FFD700;
-
-    --gold2:#FFC107;
-
-    --white:#ffffff;
-
-    --gray:#cfcfcf;
-
-    --success:#2ecc71;
-
-    --danger:#ff4d4d;
-
-    --card:rgba(255,255,255,.08);
+color:white;
 
 }
 
 
 
-/* ===========================
-   LINKS
-=========================== */
 
-a{
 
-    text-decoration:none;
-
-    color:inherit;
-
-}
-
-
-
-/* ===========================
-   IMAGES
-=========================== */
-
-img{
-
-    max-width:100%;
-
-    display:block;
-
-}
-
-
-
-/* ===========================
-   MAIN APP
-=========================== */
-
-#app{
-
-    width:100%;
-
-    max-width:500px;
-
-    margin:auto;
-
-    padding-bottom:100px;
-
-}
-
-
-
-/* ===========================
-   SPLASH SCREEN
-=========================== */
-
-#splashScreen{
-
-    position:fixed;
-
-    inset:0;
-
-    background:#081229;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:9999;
-
-}
-
-
-
-.splash-content{
-
-    text-align:center;
-
-}
-
-
-
-.splash-logo{
-
-    width:130px;
-
-    height:130px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    background:#fff;
-
-    padding:6px;
-
-    border:4px solid var(--gold);
-
-    margin:auto;
-
-}
-
-
-
-.splash-content h1{
-
-    margin-top:20px;
-
-    color:var(--gold);
-
-    font-size:30px;
-
-}
-
-
-
-.splash-content p{
-
-    margin-top:8px;
-
-    color:#ddd;
-
-}
-
-
-
-/* ===========================
-   LOADER
-=========================== */
-
-.loader{
-
-    width:45px;
-
-    height:45px;
-
-    border:4px solid #ffffff22;
-
-    border-top:4px solid var(--gold);
-
-    border-radius:50%;
-
-    margin:30px auto;
-
-    animation:spin 1s linear infinite;
-
-}
-
-
-
-@keyframes spin{
-
-    100%{
-
-        transform:rotate(360deg);
-
-    }
-
-}
-
-
-
-/* ===========================
-   HEADER
-=========================== */
-
-.top-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:18px;
-
-}
-
-
-
-.logo-area{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-
-
-.header-logo{
-
-    width:60px;
-
-    height:60px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    background:#fff;
-
-    border:3px solid var(--gold);
-
-}
-
-
-
-.logo-area h2{
-
-    color:var(--gold);
-
-    font-size:22px;
-
-}
-
-
-
-.logo-area p{
-
-    color:#ddd;
-
-    font-size:12px;
-
-}
-
-
-
-.menu-btn{
-
-    width:48px;
-
-    height:48px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    border-radius:12px;
-
-    background:var(--card);
-
-    font-size:24px;
-
-    cursor:pointer;
-
-}
-
-/* ===========================================================
-   HOME BANNER
-=========================================================== */
-
-.home-banner{
-
-    margin:18px;
-
-    padding:30px 20px;
-
-    text-align:center;
-
-    border-radius:22px;
-
-    background:linear-gradient(135deg,#12214D,#081229);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-
-}
-
-.home-banner h1{
-
-    font-size:32px;
-
-    color:var(--gold);
-
-    line-height:1.4;
-
-}
-
-.home-banner p{
-
-    margin-top:12px;
-
-    color:#d8d8d8;
-
-    font-size:15px;
-
-    line-height:1.6;
-
-}
-
-
-
-/* ===========================================================
-   START BUTTON
-=========================================================== */
-
-.start-btn{
-
-    display:inline-block;
-
-    margin-top:25px;
-
-    padding:15px 35px;
-
-    border-radius:50px;
-
-    background:linear-gradient(135deg,var(--gold),var(--gold2));
-
-    color:#081229;
-
-    font-weight:700;
-
-    font-size:16px;
-
-    transition:.3s;
-
-}
-
-.start-btn:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:0 8px 20px rgba(255,215,0,.35);
-
-}
-
-
-
-/* ===========================================================
-   SECTION TITLE
-=========================================================== */
-
-section h2{
-
-    margin:20px 18px 15px;
-
-    color:var(--gold);
-
-    font-size:22px;
-
-    font-weight:700;
-
-}
-
-
-
-/* ===========================================================
-   QUICK ACTION GRID
-=========================================================== */
-
-.quick-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:15px;
-
-    padding:0 18px;
-
-}
-
-
-
-/* ===========================================================
-   QUICK CARD
-=========================================================== */
-
-.quick-card{
-
-    background:var(--card);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:18px;
-
-    padding:20px;
-
-    text-align:center;
-
-    transition:.3s;
-
-    backdrop-filter:blur(10px);
-
-}
-
-.quick-card:hover{
-
-    transform:translateY(-5px);
-
-    border-color:var(--gold);
-
-}
-
-.quick-icon{
-
-    font-size:34px;
-
-    margin-bottom:10px;
-
-}
-
-.quick-card h3{
-
-    color:var(--gold);
-
-    font-size:18px;
-
-}
-
-.quick-card p{
-
-    color:#d9d9d9;
-
-    font-size:13px;
-
-    margin-top:6px;
-
-}
-
-
-
-/* ===========================================================
-   COMMON CARD STYLE
-=========================================================== */
-
-.card{
-
-    background:var(--card);
-
-    border-radius:18px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    padding:18px;
-
-    margin:18px;
-
-}
-
-
-
-/* ===========================================================
-   RESPONSIVE
-=========================================================== */
-
-@media(max-width:480px){
-
-.home-banner h1{
-
-font-size:26px;
-
-}
-
-.quick-grid{
-
-grid-template-columns:1fr 1fr;
-
-}
-
-.quick-card{
-
-padding:16px;
-
-}
-
-}
-/* ===========================================================
-   SUBJECT GRID
-=========================================================== */
-
-.subject-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:15px;
-
-    padding:0 18px;
-
-}
-
-.subject-card{
-
-    background:var(--card);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:18px;
-
-    padding:20px 12px;
-
-    text-align:center;
-
-    transition:.3s;
-
-    backdrop-filter:blur(10px);
-
-}
-
-.subject-card:hover{
-
-    transform:translateY(-5px);
-
-    border-color:var(--gold);
-
-}
-
-.subject-card{
-
-    font-size:34px;
-
-}
-
-.subject-card span{
-
-    display:block;
-
-    margin-top:12px;
-
-    color:#fff;
-
-    font-size:15px;
-
-    font-weight:600;
-
-}
-
-
-
-/* ===========================================================
-   NOTICE
-=========================================================== */
-
-.notice-card{
-
-    margin:18px;
-
-    background:rgba(255,215,0,.12);
-
-    border:1px solid rgba(255,215,0,.35);
-
-    border-radius:18px;
-
-    padding:20px;
-
-    color:#fff;
-
-    line-height:1.8;
-
-}
-
-
-
-/* ===========================================================
-   SOCIAL
-=========================================================== */
-
-.social-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:15px;
-
-    padding:0 18px;
-
-}
-
-.social-card{
-
-    background:var(--card);
-
-    border-radius:18px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    text-align:center;
-
-    padding:18px;
-
-    transition:.3s;
-
-    font-size:30px;
-
-}
-
-.social-card:hover{
-
-    transform:translateY(-4px);
-
-}
-
-.social-card span{
-
-    display:block;
-
-    margin-top:10px;
-
-    font-size:13px;
-
-    color:#fff;
-
-}
-
-.youtube{
-
-    border-color:#ff0000;
-
-}
-
-.telegram{
-
-    border-color:#00bfff;
-
-}
-
-.email{
-
-    border-color:#00cc66;
-
-}
-
-
-
-/* ===========================================================
-   INFORMATION
-=========================================================== */
-
-.info-section{
-
-    margin:20px 18px;
-
-}
-
-.info-item{
-
-    display:block;
-
-    background:var(--card);
-
-    margin-bottom:12px;
-
-    padding:16px;
-
-    border-radius:15px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:.3s;
-
-}
-
-.info-item:hover{
-
-    border-color:var(--gold);
-
-    padding-left:22px;
-
-}
-
-
-
-/* ===========================================================
-   FOOTER
-=========================================================== */
-
-.footer{
-
-    margin:30px 18px 120px;
-
-    text-align:center;
-
-    color:#ddd;
-
-}
-
-.footer-logo{
-
-    width:85px;
-
-    height:85px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    background:#fff;
-
-    border:3px solid var(--gold);
-
-    margin:0 auto 15px;
-
-}
-
-.footer h3{
-
-    color:var(--gold);
-
-    margin-bottom:8px;
-
-}
-
-.footer p{
-
-    margin-top:6px;
-
-    font-size:13px;
-
-}
-
-
-
-/* ===========================================================
-   BOTTOM NAVIGATION
-=========================================================== */
-
-.bottom-nav{
-
-    position:fixed;
-
-    left:0;
-
-    right:0;
-
-    bottom:0;
-
-    max-width:500px;
-
-    margin:auto;
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-    background:#10204b;
-
-    border-top:1px solid rgba(255,255,255,.08);
-
-    padding:12px 0;
-
-    z-index:999;
-
-}
-
-.bottom-nav a{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:6px;
-
-    color:#fff;
-
-    font-size:22px;
-
-}
-
-.bottom-nav span{
-
-    font-size:11px;
-
-}
-
-.bottom-nav a:hover{
-
-    color:var(--gold);
-
-}
-
-
-
-/* ===========================================================
-   SCROLLBAR
-=========================================================== */
-
-::-webkit-scrollbar{
-
-    width:6px;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-    background:var(--gold);
-
-    border-radius:10px;
-
-}
-
-
-
-/* ===========================================================
-   MOBILE
-=========================================================== */
-
-@media(max-width:480px){
-
-.subject-grid{
-
-grid-template-columns:1fr 1fr;
-
-}
-
-.social-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.bottom-nav{
+.mobile-app{
 
 width:100%;
 
-}
+max-width:430px;
 
-  }
-/* =====================================
-G THE GENIUS LOGIN PAGE
-===================================== */
+min-height:100vh;
 
+background:linear-gradient(
+180deg,
+#081229,
+#050B1F
+);
 
-.login-app{
-
-width:100%;
-
-max-width:420px;
-
-margin:auto;
-
-padding:25px;
+padding:35px 20px;
 
 text-align:center;
 
@@ -921,7 +53,12 @@ text-align:center;
 
 
 
-.login-logo{
+
+
+/* LOGO */
+
+
+.app-logo{
 
 width:120px;
 
@@ -933,13 +70,20 @@ border-radius:50%;
 
 padding:5px;
 
-background:#FFD700;
+background:linear-gradient(
+135deg,
+#FFD700,
+#FF9800
+);
+
+box-shadow:
+0 0 35px rgba(255,215,0,.45);
 
 }
 
 
 
-.login-logo img{
+.app-logo img{
 
 width:100%;
 
@@ -953,21 +97,43 @@ object-fit:cover;
 
 
 
-.login-app h1{
 
-color:#FFD700;
+
+.mobile-app h1{
+
+margin-top:20px;
 
 font-size:30px;
 
-margin-top:15px;
+font-weight:800;
+
+color:#FFD700;
 
 }
 
 
 
+
+.tagline{
+
+color:#ccc;
+
+font-size:14px;
+
+margin-top:8px;
+
+}
+
+
+
+
+
+/* LOGIN CARD */
+
+
 .login-card{
 
-margin-top:25px;
+margin-top:35px;
 
 padding:25px;
 
@@ -975,62 +141,172 @@ border-radius:30px;
 
 background:rgba(255,255,255,.08);
 
-border:1px solid rgba(255,215,0,.2);
+border:1px solid rgba(255,215,0,.25);
+
+box-shadow:0 15px 40px rgba(0,0,0,.4);
+
+backdrop-filter:blur(15px);
 
 }
 
 
 
-.input-box input{
+.login-card h2{
+
+color:white;
+
+font-size:22px;
+
+}
+
+
+
+.login-card p{
+
+color:#ccc;
+
+font-size:13px;
+
+margin:8px 0 20px;
+
+}
+
+
+
+
+
+/* INPUT */
+
+
+.login-card input{
 
 width:100%;
 
-padding:15px;
+height:50px;
 
 margin:10px 0;
 
-border-radius:20px;
+padding:0 18px;
 
 border:none;
 
 outline:none;
 
-background:#fff;
+border-radius:25px;
+
+background:#ffffff;
 
 color:#000;
 
+font-size:14px;
+
 }
 
+
+
+
+
+/* BUTTON */
 
 
 #loginBtn{
 
 width:100%;
 
-padding:15px;
+height:50px;
 
-margin-top:15px;
+margin-top:20px;
 
 border:none;
 
 border-radius:30px;
 
-background:#FFD700;
+background:linear-gradient(
+135deg,
+#FFD700,
+#FFB300
+);
 
-color:#050B1F;
-
-font-weight:700;
+color:#081229;
 
 font-size:16px;
+
+font-weight:800;
+
+cursor:pointer;
+
+box-shadow:
+0 8px 20px rgba(255,215,0,.35);
 
 }
 
 
 
-.register-link a{
+
+
+#loginBtn:active{
+
+transform:scale(.97);
+
+}
+
+
+
+
+
+/* REGISTER */
+
+
+.register-text{
+
+margin-top:20px;
+
+font-size:14px;
+
+}
+
+
+
+.register-text a{
 
 color:#FFD700;
 
+font-weight:700;
+
 text-decoration:none;
+
+}
+
+
+
+
+
+/* FOOTER */
+
+
+.app-footer{
+
+margin-top:40px;
+
+color:#aaa;
+
+font-size:12px;
+
+line-height:2;
+
+}
+
+
+
+
+/* MOBILE */
+
+@media(max-width:430px){
+
+.mobile-app{
+
+border-radius:0;
+
+}
 
 }
