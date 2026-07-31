@@ -1,1964 +1,728 @@
-// ==========================================================
-// G THE GENIUS MOCK TEST PORTAL
-// MOCKTEST.JS v5.0
+// =====================================
+// G THE GENIUS
+// MOCK TEST JS
 // PART 1
-// ==========================================================
+// =====================================
 
-// ================= IMPORTS =================
 
-import { auth, db } from "./firebase-config.js";
+import { db, auth } from "./firebase-config.js";
+
 
 import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+collection,
+getDocs
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 import {
-    collection,
-    getDocs,
-    doc,
-    getDoc,
-    setDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+onAuthStateChanged
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-// ================= GLOBAL VARIABLES =================
-
-let currentUser = null;
-
-let questions = [];
-let selectedAnswers = [];
-
-let currentQuestion = 0;
-
-let totalQuestions = 10;
-
-let testType = "daily";
-
-let timeLimit = 300;
-let timeLeft = 300;
-let timerInterval = null;
 
 
-// ================= DOM =================
+// =====================================
+// DOM
+// =====================================
 
-const timerEl = document.getElementById("timer");
 
-const questionNumberEl =
-document.getElementById("questionNumber");
-
-const questionTextEl =
+const questionText =
 document.getElementById("questionText");
 
-const optionsBox =
-document.getElementById("optionsBox");
 
-const palette =
-document.getElementById("questionPalette");
+const optionsContainer =
+document.getElementById("optionsContainer");
 
-const progressBar =
-document.getElementById("testProgress");
 
-const totalCount =
-document.getElementById("totalCount");
+const questionNumber =
+document.getElementById("questionNumber");
 
-const answeredCount =
-document.getElementById("answeredCount");
 
-const remainingCount =
-document.getElementById("remainingCount");
+const totalQuestions =
+document.getElementById("totalQuestions");
 
-const prevBtn =
-document.getElementById("prevBtn");
+
+const testTitle =
+document.getElementById("testTitle");
+
+
+
+const timer =
+document.getElementById("timer");
+
+
+
+
+
+// =====================================
+// TEST SETTINGS
+// =====================================
+
+
+let testType =
+new URLSearchParams(window.location.search)
+.get("type") || "daily";
+
+
+
+let totalQuestionCount = 10;
+
+let timeLimit = 5 * 60;
+
+
+
+if(testType==="weekly"){
+
+
+totalQuestionCount=25;
+
+timeLimit=10*60;
+
+
+testTitle.innerHTML=
+"🟡 Weekly Mock Test";
+
+
+}
+
+
+
+if(testType==="monthly"){
+
+
+totalQuestionCount=100;
+
+timeLimit=60*60;
+
+
+testTitle.innerHTML=
+"🔴 Monthly Grand Test";
+
+
+}
+
+
+
+
+totalQuestions.innerHTML =
+totalQuestionCount;
+
+
+
+
+// =====================================
+// VARIABLES
+// =====================================
+
+
+let questions=[];
+
+let currentIndex=0;
+
+let selectedAnswers=[];
+
+let timeLeft=timeLimit;
+
+let timerInterval;
+
+
+
+
+
+// =====================================
+// AUTH CHECK
+// =====================================
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+if(!user){
+
+
+window.location.href="login.html";
+
+
+}
+
+
+});
+
+
+
+
+
+// =====================================
+// LOAD QUESTIONS
+// =====================================
+
+
+async function loadQuestions(){
+
+
+try{
+
+
+const snap =
+
+await getDocs(
+
+collection(db,"questions")
+
+);
+
+
+
+let allQuestions=[];
+
+
+
+snap.forEach((doc)=>{
+
+
+allQuestions.push(doc.data());
+
+
+});
+
+
+
+questions =
+
+allQuestions
+
+.sort(()=>Math.random()-0.5)
+
+.slice(0,totalQuestionCount);
+
+
+
+selectedAnswers =
+
+new Array(
+
+questions.length
+
+).fill(null);
+
+
+
+showQuestion();
+
+
+
+startTimer();
+
+
+
+}
+
+
+catch(error){
+
+
+console.log(
+
+"Question Load Error",
+
+error
+
+);
+
+
+}
+
+
+}
+
+
+
+
+
+// START
+
+loadQuestions();
+
+// =====================================
+// MOCK TEST JS
+// PART 2
+// =====================================
+
+
+
+// =====================================
+// SHOW QUESTION
+// =====================================
+
+
+function showQuestion(){
+
+
+if(!questions.length) return;
+
+
+
+const q =
+
+questions[currentIndex];
+
+
+
+questionNumber.innerHTML =
+
+currentIndex + 1;
+
+
+
+questionText.innerHTML =
+
+q.question;
+
+
+
+optionsContainer.innerHTML="";
+
+
+
+
+q.options.forEach((option,index)=>{
+
+
+
+const btn =
+
+document.createElement("button");
+
+
+
+btn.className="option-btn";
+
+
+btn.innerHTML =
+
+option;
+
+
+
+if(selectedAnswers[currentIndex]===index){
+
+
+btn.classList.add("selected");
+
+
+}
+
+
+
+btn.onclick=()=>{
+
+
+selectAnswer(index);
+
+
+};
+
+
+
+optionsContainer.appendChild(btn);
+
+
+
+});
+
+
+
+updatePalette();
+
+
+}
+
+
+
+
+
+// =====================================
+// SELECT ANSWER
+// =====================================
+
+
+function selectAnswer(index){
+
+
+selectedAnswers[currentIndex]=index;
+
+
+showQuestion();
+
+
+}
+
+
+
+
+// =====================================
+// BUTTONS
+// =====================================
+
 
 const nextBtn =
+
 document.getElementById("nextBtn");
 
+
+const previousBtn =
+
+document.getElementById("previousBtn");
+
+
+
+
+nextBtn.onclick=()=>{
+
+
+if(currentIndex < questions.length-1){
+
+
+currentIndex++;
+
+
+showQuestion();
+
+
+}
+
+
+};
+
+
+
+previousBtn.onclick=()=>{
+
+
+if(currentIndex>0){
+
+
+currentIndex--;
+
+
+showQuestion();
+
+
+}
+
+
+};
+
+
+
+
+
+// =====================================
+// QUESTION PALETTE
+// =====================================
+
+
+const palette =
+
+document.getElementById("palette");
+
+
+
+function updatePalette(){
+
+
+palette.innerHTML="";
+
+
+
+questions.forEach((q,index)=>{
+
+
+const btn =
+
+document.createElement("button");
+
+
+
+btn.className="palette-btn";
+
+
+btn.innerHTML=index+1;
+
+
+
+
+if(index===currentIndex){
+
+
+btn.classList.add("active");
+
+
+}
+
+
+
+if(selectedAnswers[index]!==null){
+
+
+btn.classList.add("answered");
+
+
+}
+
+
+
+btn.onclick=()=>{
+
+
+currentIndex=index;
+
+
+showQuestion();
+
+
+};
+
+
+
+palette.appendChild(btn);
+
+
+
+});
+
+
+    }
+
+// =====================================
+// MOCK TEST JS
+// PART 3 FINAL
+// =====================================
+
+
+
+// =====================================
+// TIMER
+// =====================================
+
+
+function startTimer(){
+
+
+timerInterval = setInterval(()=>{
+
+
+let minutes =
+
+Math.floor(timeLeft / 60);
+
+
+
+let seconds =
+
+timeLeft % 60;
+
+
+
+timer.innerHTML =
+
+"⏰ " +
+
+String(minutes).padStart(2,"0")
+
++
+
+":"
+
++
+
+String(seconds).padStart(2,"0");
+
+
+
+
+if(timeLeft <= 60){
+
+
+timer.classList.add("timer-warning");
+
+
+}
+
+
+
+if(timeLeft <= 0){
+
+
+clearInterval(timerInterval);
+
+
+submitTest();
+
+
+}
+
+
+
+timeLeft--;
+
+
+
+},1000);
+
+
+}
+
+
+
+
+// =====================================
+// SUBMIT TEST
+// =====================================
+
+
 const submitBtn =
+
 document.getElementById("submitBtn");
 
 
-// ================= AUTH =================
 
-onAuthStateChanged(auth, async (user) => {
+if(submitBtn){
 
-    if (!user) {
 
-        window.location.href = "login.html";
-        return;
+submitBtn.onclick=()=>{
 
-    }
 
-    currentUser = user;
+let confirmSubmit =
 
-    await initializeTest();
+confirm(
 
-});
+"Are you sure you want to submit?"
 
+);
 
-// ================= INITIALIZE =================
 
-async function initializeTest() {
 
-    const params =
-        new URLSearchParams(window.location.search);
+if(confirmSubmit){
 
-    testType =
-        params.get("type") || "daily";
 
-    switch (testType) {
+submitTest();
 
-        case "daily":
-            totalQuestions = 10;
-            timeLimit = 300;
-            break;
-
-        case "weekly":
-            totalQuestions = 25;
-            timeLimit = 600;
-            break;
-
-        case "monthly":
-            totalQuestions = 100;
-            timeLimit = 3600;
-            break;
-
-    }
-
-    timeLeft = timeLimit;
-
-    totalCount.textContent = totalQuestions;
-
-    selectedAnswers =
-        new Array(totalQuestions).fill(null);
-
-    await loadQuestions();
-
-}
-
-
-// ================= LOAD QUESTIONS =================
-
-async function loadQuestions() {
-
-    try {
-
-        const snapshot =
-            await getDocs(collection(db, "questions"));
-
-        let allQuestions = [];
-
-        snapshot.forEach(doc => {
-
-            const q = doc.data();
-
-            allQuestions.push(normalizeQuestion(q));
-
-        });
-
-        shuffle(allQuestions);
-
-        questions =
-            allQuestions.slice(0, totalQuestions);
-
-        localStorage.setItem(
-            "questions",
-            JSON.stringify(questions)
-        );
-
-        createPalette();
-
-        showQuestion();
-
-        startTimer();
-
-    }
-
-    catch (err) {
-
-        console.error(err);
-
-        alert("Unable to load questions.");
-
-    }
-
-}
-
-
-// ================= SUPPORT ALL JSON FORMATS =================
-
-function normalizeQuestion(q) {
-
-    return {
-
-        question:
-
-            q.question ||
-            q.questionText ||
-            q.title ||
-            "",
-
-        options:
-
-            q.options ||
-
-            [
-
-                q.option1 || q.A,
-
-                q.option2 || q.B,
-
-                q.option3 || q.C,
-
-                q.option4 || q.D
-
-            ],
-
-        answer:
-
-            q.answer ||
-            q.correctAnswer ||
-            q.correctOption ||
-            "",
-
-        explanation:
-
-            q.explanation ||
-            ""
-
-    };
-
-}
-
-
-// ================= SHUFFLE =================
-
-function shuffle(arr) {
-
-    for (let i = arr.length - 1; i > 0; i--) {
-
-        const j =
-            Math.floor(Math.random() * (i + 1));
-
-        [arr[i], arr[j]] =
-        [arr[j], arr[i]];
-
-    }
-
-      }
-
-// ==========================================================
-// SHOW QUESTION
-// ==========================================================
-
-function showQuestion() {
-
-    if (!questions.length) return;
-
-    const q = questions[currentQuestion];
-
-    questionNumberEl.textContent =
-        `Question ${currentQuestion + 1} / ${questions.length}`;
-
-    questionTextEl.textContent = q.question;
-
-    optionsBox.innerHTML = "";
-
-    q.options.forEach((option, index) => {
-
-        const optionDiv =
-            document.createElement("div");
-
-        optionDiv.className = "option";
-
-        if (selectedAnswers[currentQuestion] === option) {
-
-            optionDiv.classList.add("selected");
-
-        }
-
-        optionDiv.innerHTML = `
-
-            <label class="option-item">
-
-                <input
-                    type="radio"
-                    name="answer"
-                    value="${option}"
-                    ${selectedAnswers[currentQuestion] === option ? "checked" : ""}
-                >
-
-                <span>${option}</span>
-
-            </label>
-
-        `;
-
-        optionDiv.onclick = () => {
-
-            selectAnswer(option);
-
-        };
-
-        optionsBox.appendChild(optionDiv);
-
-    });
-
-    updateButtons();
-
-    updatePalette();
-
-    updateStatus();
 
 }
 
 
 
-// ==========================================================
-// SELECT ANSWER
-// ==========================================================
+};
 
-function selectAnswer(answer) {
-
-    selectedAnswers[currentQuestion] = answer;
-
-    localStorage.setItem(
-        "selectedAnswers",
-        JSON.stringify(selectedAnswers)
-    );
-
-    showQuestion();
 
 }
 
 
 
-// ==========================================================
-// BUTTON STATUS
-// ==========================================================
 
-function updateButtons() {
 
-    prevBtn.disabled =
-        currentQuestion === 0;
+async function submitTest(){
 
-    nextBtn.disabled =
-        currentQuestion ===
-        questions.length - 1;
+
+clearInterval(timerInterval);
+
+
+
+let correct = 0;
+
+
+
+questions.forEach((q,index)=>{
+
+
+if(
+
+selectedAnswers[index] === q.correctAnswer
+
+){
+
+
+correct++;
+
 
 }
 
-
-
-// ==========================================================
-// NEXT BUTTON
-// ==========================================================
-
-nextBtn.addEventListener("click", () => {
-
-    if (currentQuestion <
-        questions.length - 1) {
-
-        currentQuestion++;
-
-        showQuestion();
-
-    }
-
-});
-
-
-
-// ==========================================================
-// PREVIOUS BUTTON
-// ==========================================================
-
-prevBtn.addEventListener("click", () => {
-
-    if (currentQuestion > 0) {
-
-        currentQuestion--;
-
-        showQuestion();
-
-    }
-
-});
-
-
-
-// ==========================================================
-// QUESTION PALETTE
-// ==========================================================
-
-function createPalette() {
-
-    palette.innerHTML = "";
-
-    for (let i = 0; i < totalQuestions; i++) {
-
-        const btn =
-            document.createElement("button");
-
-        btn.className = "palette-btn";
-
-        btn.textContent = i + 1;
-
-        btn.onclick = () => {
-
-            currentQuestion = i;
-
-            showQuestion();
-
-        };
-
-        palette.appendChild(btn);
-
-    }
-
-}
-
-
-
-// ==========================================================
-// UPDATE PALETTE
-// ==========================================================
-
-function updatePalette() {
-
-    const buttons =
-        palette.querySelectorAll(".palette-btn");
-
-    buttons.forEach((btn, index) => {
-
-        btn.classList.remove(
-            "current",
-            "answered"
-        );
-
-        if (index === currentQuestion) {
-
-            btn.classList.add("current");
-
-        }
-
-        if (selectedAnswers[index] !== null) {
-
-            btn.classList.add("answered");
-
-        }
-
-    });
-
-}
-
-
-
-// ==========================================================
-// UPDATE STATUS
-// ==========================================================
-
-function updateStatus() {
-
-    const answered =
-        selectedAnswers.filter(
-            answer => answer !== null
-        ).length;
-
-    answeredCount.textContent =
-        answered;
-
-    remainingCount.textContent =
-        totalQuestions - answered;
-
-    const percent =
-        (answered / totalQuestions) * 100;
-
-    progressBar.style.width =
-        percent + "%";
-
-                      }
-
-// ==========================================================
-// TIMER SYSTEM
-// ==========================================================
-
-function startTimer() {
-
-    clearInterval(timerInterval);
-
-    updateTimerDisplay();
-
-    timerInterval = setInterval(() => {
-
-        timeLeft--;
-
-        updateTimerDisplay();
-
-
-        if (timeLeft <= 0) {
-
-            clearInterval(timerInterval);
-
-            alert("Time Finished!");
-
-            submitTest();
-
-        }
-
-
-    }, 1000);
-
-}
-
-
-
-// ==========================================================
-// TIMER DISPLAY
-// ==========================================================
-
-function updateTimerDisplay() {
-
-    const minutes =
-        Math.floor(timeLeft / 60);
-
-    const seconds =
-        timeLeft % 60;
-
-
-    timerEl.textContent =
-
-        `⏰ ${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
-
-}
-
-
-
-// ==========================================================
-// AUTO SAVE PROGRESS
-// ==========================================================
-
-function saveProgress() {
-
-    const data = {
-
-        questions,
-
-        selectedAnswers,
-
-        currentQuestion,
-
-        testType,
-
-        timeLeft
-
-    };
-
-
-    localStorage.setItem(
-
-        "mockTestProgress",
-
-        JSON.stringify(data)
-
-    );
-
-}
-
-
-
-// ==========================================================
-// LOAD SAVED PROGRESS
-// ==========================================================
-
-function loadProgress() {
-
-    const saved =
-
-        localStorage.getItem(
-            "mockTestProgress"
-        );
-
-
-    if (!saved) return false;
-
-
-    try {
-
-        const data =
-            JSON.parse(saved);
-
-
-        if (
-            data.testType !== testType
-        ) {
-
-            return false;
-
-        }
-
-
-        selectedAnswers =
-            data.selectedAnswers ||
-            selectedAnswers;
-
-
-        currentQuestion =
-            data.currentQuestion || 0;
-
-
-        timeLeft =
-            data.timeLeft || timeLeft;
-
-
-        return true;
-
-
-    }
-
-    catch(error) {
-
-        console.log(
-            "Progress Error",
-            error
-        );
-
-        return false;
-
-    }
-
-}
-
-
-
-// ==========================================================
-// AUTO SAVE EVERY 5 SECOND
-// ==========================================================
-
-setInterval(() => {
-
-    if (questions.length > 0) {
-
-        saveProgress();
-
-    }
-
-},5000);
-
-
-
-// ==========================================================
-// CLEAR OLD DATA AFTER FINAL SUBMIT
-// ==========================================================
-
-function clearTestData(){
-
-    localStorage.removeItem(
-        "mockTestProgress"
-    );
-
-    localStorage.removeItem(
-        "selectedAnswers"
-    );
-
-}
-
-
-
-// ==========================================================
-// RESTORE WHEN PAGE LOAD
-// ==========================================================
-
-// loadQuestions() முடிந்த பிறகு
-// Part 1-ல் questions set ஆன இடத்தில்
-// இதை அடுத்த Part-ல் integrate செய்வோம்.
-
-// ==========================================================
-// SUBMIT BUTTON EVENT
-// ==========================================================
-
-submitBtn.addEventListener("click", () => {
-
-
-    const confirmSubmit = confirm(
-        "Are you sure you want to submit?"
-    );
-
-
-if (confirmSubmit) {
-
-    await submitTest();
-
-}
 
 
 });
 
 
 
-// ==========================================================
-// FINAL SUBMIT FUNCTION
-// ==========================================================
+let score = correct;
 
-async function submitTest() {
 
-    clearInterval(timerInterval);
+let percentage =
 
+Math.round(
 
+(score / questions.length) * 100
 
-    let correct = 0;
+);
 
-    let wrong = 0;
 
-    let skipped = 0;
 
 
 
-    // ==========================================
-    // SCORE CALCULATION
-    // ==========================================
+const user = auth.currentUser;
 
-    questions.forEach((question, index) => {
 
 
-        const userAnswer =
-            selectedAnswers[index];
+if(user){
 
 
 
-        // SKIPPED
+await saveResult(
 
-        if (
-            userAnswer === null ||
-            userAnswer === undefined ||
-            userAnswer === ""
-        ) {
+user,
 
-            skipped++;
+score,
 
-            return;
+percentage
 
-        }
+);
 
 
 
-        // CORRECT
+}
 
-        if (
-            normalizeAnswer(userAnswer)
-            ===
-            normalizeAnswer(question.answer)
-        ) {
 
 
-            correct++;
 
-
-        }
-
-        // WRONG
-
-        else {
-
-
-            wrong++;
-
-
-        }
-
-
-    });
-
-
-
-    // IMPORTANT
-    // Score = Correct only
-
-    const score = correct;
-
-
-
-    const percentage =
-
-        Number(
-            (
-                (score / questions.length)
-                *
-                100
-            )
-            .toFixed(2)
-        );
-
-
-
-    // ==========================================
-    // SAVE RESULT DATA
-    // ==========================================
-
-
-    localStorage.setItem(
-
-        "resultData",
-
-        JSON.stringify({
-
-            testType,
-
-            totalQuestions:
-                questions.length,
-
-
-            score,
-
-
-            correct,
-
-
-            wrong,
-
-
-            skipped,
-
-
-            percentage,
-
-
-            questions,
-
-
-            selectedAnswers
-
-
-        })
-
-    );
-
-
-
-    // Clear temporary progress
-
-    await prepareFinalResult();
-
-await saveResultToFirebase();
-
-clearTestData();
 
 window.location.href =
-"result.html";
 
-}
+"result.html?score="
 
++
 
+score
 
++
 
-// ==========================================================
-// ANSWER NORMALIZER
-// ==========================================================
+"&total="
 
-function normalizeAnswer(answer){
++
 
+questions.length;
 
-    if(!answer)
-        return "";
-
-
-
-    return answer
-
-        .toString()
-
-        .trim()
-
-        .toLowerCase();
-
-}
-
-function normalizeAnswer(answer){
-
-
-    if(!answer)
-        return "";
-
-
-    return answer
-
-        .toString()
-
-        .trim()
-
-        .toLowerCase();
-
-}
-
-
-
-// ⬇️ இதற்கு கீழே Part 7 code add செய்யவும்
-
-
-async function prepareFinalResult(){
-
-
-    const data = {
-
-        attemptId:
-        currentUser.uid +
-        "_" +
-        testType +
-        "_" +
-        Date.now(),
-
-
-        uid:
-        currentUser.uid,
-
-
-        email:
-        currentUser.email,
-
-
-        testType:
-        testType,
-
-
-        totalQuestions:
-        questions.length,
-
-
-        questions:
-        questions,
-
-
-        selectedAnswers:
-        selectedAnswers,
-
-
-        createdAt:
-        new Date()
-
-    };
-
-
-    localStorage.setItem(
-
-        "finalResultData",
-
-        JSON.stringify(data)
-
-    );
-
-
-}
-// ==========================================================
-// SAVE RESULT TO FIREBASE
-// ==========================================================
-
-async function saveResultToFirebase() {
-
-
-    try {
-
-
-        const resultData =
-
-            JSON.parse(
-                localStorage.getItem("resultData")
-            );
-
-
-        if(!resultData)
-            return;
-
-
-
-        const userRef =
-
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            );
-
-
-
-        const userSnap =
-            await getDoc(userRef);
-
-
-
-        let oldXP = 0;
-
-        let studentName =
-            currentUser.displayName ||
-            "Student";
-
-
-
-        if(userSnap.exists()){
-
-
-            const data =
-                userSnap.data();
-
-
-            oldXP =
-                data.xp || 0;
-
-
-            studentName =
-                data.name ||
-                studentName;
-
-
-        }
-
-
-
-        // XP Calculation
-
-        const earnedXP =
-            (resultData.correct * 10) + 5;
-
-
-
-        const totalXP =
-            oldXP + earnedXP;
-
-
-
-        const level =
-            Math.floor(
-                totalXP / 50
-            ) + 1;
-
-
-
-        // Update User XP
-
-
-        await setDoc(
-
-            userRef,
-
-            {
-
-                name:
-                    studentName,
-
-
-                email:
-                    currentUser.email,
-
-
-                xp:
-                    totalXP,
-
-
-                level:
-                    level,
-
-
-                updatedAt:
-                    serverTimestamp()
-
-            },
-
-
-            {
-                merge:true
-            }
-
-        );
-
-
-
-
-
-        // Save Result Document
-
-
-        const resultRef =
-
-            doc(
-                collection(db,"results")
-            );
-
-
-
-        await setDoc(
-
-            resultRef,
-
-            {
-
-
-                uid:
-                    currentUser.uid,
-
-
-                name:
-                    studentName,
-
-
-                email:
-                    currentUser.email,
-
-
-                testType:
-                    resultData.testType,
-
-
-                totalQuestions:
-                    resultData.totalQuestions,
-
-
-                score:
-                    resultData.score,
-
-
-                correct:
-                    resultData.correct,
-
-
-                wrong:
-                    resultData.wrong,
-
-
-                skipped:
-                    resultData.skipped,
-
-
-                percentage:
-                    resultData.percentage,
-
-
-                xpEarned:
-                    earnedXP,
-
-
-                level:
-                    level,
-
-
-                district:
-                    localStorage.getItem("district")
-                    || "",
-
-
-                answers:
-                    resultData.selectedAnswers,
-
-
-                createdAt:
-                    serverTimestamp()
-
-
-            }
-
-
-        );
-
-
-
-        console.log(
-            "Result Saved Successfully"
-        );
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-            "Result Save Error:",
-            error
-        );
-
-
-    }
-
-
-}
-
-// ==========================================================
-// ADVANCED QUESTION LOADING
-// FIRESTORE + JSON SUPPORT
-// ==========================================================
-
-
-
-
-
-        // =====================================
-        // 1. TRY FIRESTORE FIRST
-        // =====================================
-
-
-        try {
-
-
-            const snapshot =
-
-                await getDocs(
-                    collection(db,"questions")
-                );
-
-
-
-            snapshot.forEach(doc => {
-
-
-                allQuestions.push(
-
-                    normalizeQuestion(
-                        doc.data()
-                    )
-
-                );
-
-
-            });
-
-
-        }
-
-        catch(error){
-
-            console.log(
-                "Firestore load failed"
-            );
-
-        }
-
-
-
-
-
-        // =====================================
-        // 2. IF FIRESTORE EMPTY LOAD JSON
-        // =====================================
-
-
-        if(allQuestions.length === 0){
-
-
-            const response =
-
-                await fetch(
-                    "questions.json"
-                );
-
-
-            const jsonData =
-                await response.json();
-
-
-
-            jsonData.forEach(q => {
-
-
-                allQuestions.push(
-
-                    normalizeQuestion(q)
-
-                );
-
-
-            });
-
-
-        }
-
-
-
-
-
-        // =====================================
-        // REMOVE INVALID QUESTIONS
-        // =====================================
-
-
-        allQuestions =
-
-            allQuestions.filter(q =>
-
-                q.question &&
-                q.options &&
-                q.options.length > 0 &&
-                q.answer
-
-            );
-
-
-
-
-
-
-        // =====================================
-        // RANDOM QUESTIONS
-        // =====================================
-
-
-        shuffle(allQuestions);
-
-
-
-        questions =
-
-            allQuestions.slice(
-                0,
-                totalQuestions
-            );
-
-
-
-
-        // =====================================
-        // RESTORE OLD TEST
-        // =====================================
-
-
-        const restored =
-            loadProgress();
-
-
-
-        if(!restored){
-
-
-            selectedAnswers =
-
-                new Array(
-                    questions.length
-                )
-                .fill(null);
-
-
-            currentQuestion = 0;
-
-
-        }
-
-
-
-
-
-
-        localStorage.setItem(
-
-            "questions",
-
-            JSON.stringify(
-                questions
-            )
-
-        );
-
-
-
-
-        localStorage.setItem(
-
-            "selectedAnswers",
-
-            JSON.stringify(
-                selectedAnswers
-            )
-
-        );
-
-
-
-
-
-        createPalette();
-
-
-        showQuestion();
-
-
-        startTimer();
-
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-            "Question Loading Error:",
-            error
-        );
-
-
-        alert(
-            "Questions not available"
-        );
-
-
-    }
-
-}
-
-
-
-
-
-// ==========================================================
-// REMOVE DUPLICATE QUESTIONS
-// ==========================================================
-
-function removeDuplicateQuestions(list){
-
-
-    const seen = new Set();
-
-
-
-    return list.filter(q => {
-
-
-        if(seen.has(q.question)){
-
-
-            return false;
-
-
-        }
-
-
-        seen.add(q.question);
-
-
-        return true;
-
-
-    });
-
-
-    }
-
-// ==========================================================
-// G THE GENIUS MOCK TEST PORTAL
-// MOCKTEST.JS v5.0 FINAL
-// PART 7
-// ATTEMPT & RESULT DATA PREPARE
-// ==========================================================
-
-
-// ==========================================================
-// CREATE UNIQUE ATTEMPT ID
-// ==========================================================
-
-function createAttemptId(){
-
-    return `${currentUser.uid}_${testType}_${Date.now()}`;
-
-}
-
-
-
-// ==========================================================
-// COUNT PREVIOUS ATTEMPTS
-// ==========================================================
-
-async function getUserAttemptNumber(){
-
-    try{
-
-        const snapshot = await getDocs(
-            collection(db,"results")
-        );
-
-
-        let count = 0;
-
-
-        snapshot.forEach(docSnap=>{
-
-            const data =
-            docSnap.data();
-
-
-            if(
-                data.uid === currentUser.uid &&
-                data.testType === testType
-            ){
-
-                count++;
-
-            }
-
-
-        });
-
-
-        return count + 1;
-
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Attempt Count Error:",
-            error
-        );
-
-
-        return 1;
-
-    }
-
-}
-
-
-
-
-// ==========================================================
-// PREPARE FINAL RESULT DATA
-// ==========================================================
-
-async function prepareFinalResult(){
-
-
-    const data = {
-
-        attemptId:
-        createAttemptId(),
-
-
-        attemptNumber:
-        await getUserAttemptNumber(),
-
-
-
-        uid:
-        currentUser.uid,
-
-
-        email:
-        currentUser.email,
-
-
-
-        testType:
-        testType,
-
-
-
-        totalQuestions:
-        questions.length,
-
-
-
-        questions:
-        questions,
-
-
-
-        selectedAnswers:
-        selectedAnswers,
-
-
-        submittedAt:
-        new Date()
-
-    };
-
-
-
-    localStorage.setItem(
-
-        "finalResultData",
-
-        JSON.stringify(data)
-
-    );
-
-
-      }
-// ==========================================================
-// G THE GENIUS MOCK TEST PORTAL
-// MOCKTEST.JS v5.0 FINAL
-// PART 8
-// FIRESTORE RESULT SAVE + XP SYSTEM
-// ==========================================================
-
-
-
-// ==========================================================
-// SAVE RESULT TO FIRESTORE
-// ==========================================================
-
-async function saveFinalResult(){
-
-
-    try{
-
-
-        const resultData =
-
-        JSON.parse(
-
-            localStorage.getItem(
-                "finalResultData"
-            )
-
-        );
-
-
-
-        if(!resultData){
-
-            console.log(
-                "No Result Data"
-            );
-
-            return;
-
-        }
-
-
-
-
-        // ==========================
-        // GET USER PROFILE
-        // ==========================
-
-
-        const userRef =
-
-        doc(
-
-            db,
-
-            "users",
-
-            currentUser.uid
-
-        );
-
-
-
-        const userSnap =
-
-        await getDoc(userRef);
-
-
-
-        let oldXP = 0;
-
-
-
-        let name =
-        currentUser.displayName ||
-        "Student";
-
-
-
-        if(userSnap.exists()){
-
-
-            const userData =
-            userSnap.data();
-
-
-
-            oldXP =
-            userData.xp || 0;
-
-
-
-            name =
-            userData.name || name;
-
-
-        }
-
-
-
-
-
-        // ==========================
-        // XP CALCULATION
-        // ==========================
-
-
-        const result =
-        JSON.parse(
-
-            localStorage.getItem(
-                "resultData"
-            )
-
-        );
-
-
-
-        const earnedXP =
-
-        (result.correct * 10) + 5;
-
-
-
-        const totalXP =
-
-        oldXP + earnedXP;
-
-
-
-        const level =
-
-        Math.floor(
-            totalXP / 50
-        ) + 1;
-
-
-
-
-        // ==========================
-        // UPDATE USER XP
-        // ==========================
-
-
-        await setDoc(
-
-            userRef,
-
-
-            {
-
-                name:name,
-
-                email:
-                currentUser.email,
-
-
-                xp:
-                totalXP,
-
-
-                level:
-                level,
-
-
-                updatedAt:
-                serverTimestamp()
-
-
-            },
-
-
-            {
-                merge:true
-            }
-
-        );
-
-
-
-
-
-        // ==========================
-        // SAVE RESULT
-        // ==========================
-
-
-        const resultRef =
-
-        doc(
-            collection(db,"results")
-        );
-
-
-
-        await setDoc(
-
-            resultRef,
-
-
-            {
-
-
-                attemptId:
-                resultData.attemptId,
-
-
-                attemptNumber:
-                resultData.attemptNumber,
-
-
-                uid:
-                currentUser.uid,
-
-
-                name:name,
-
-
-                email:
-                currentUser.email,
-
-
-                testType:
-                result.testType,
-
-
-                totalQuestions:
-                result.totalQuestions,
-
-
-                score:
-                result.score,
-
-
-                correct:
-                result.correct,
-
-
-                wrong:
-                result.wrong,
-
-
-                skipped:
-                result.skipped,
-
-
-                percentage:
-                result.percentage,
-
-
-                xpEarned:
-                earnedXP,
-
-
-                totalXP:
-                totalXP,
-
-
-                level:
-                level,
-
-
-                district:
-                localStorage.getItem(
-                    "district"
-                ) || "",
-
-
-
-                answers:
-                result.selectedAnswers,
-
-
-                createdAt:
-                serverTimestamp()
-
-
-            }
-
-        );
-
-
-
-        console.log(
-            "Result Saved Successfully"
-        );
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-
-            "Firebase Save Error:",
-
-            error
-
-        );
-
-
-    }
-
-
-          }
-
-// ==========================================================
-// G THE GENIUS MOCK TEST PORTAL
-// MOCKTEST.JS v5.0 FINAL
-// PART 9
-// FINAL CONNECTION
-// ==========================================================
-
-
-
-// ==========================================================
-// RESTORE TEST ON REFRESH
-// ==========================================================
-
-function restoreTest(){
-
-
-    const saved =
-
-    localStorage.getItem(
-        "mockTestProgress"
-    );
-
-
-
-    if(!saved)
-        return;
-
-
-
-    try{
-
-
-        const data =
-        JSON.parse(saved);
-
-
-
-        if(
-            data.testType === testType
-        ){
-
-
-            currentQuestion =
-            data.currentQuestion || 0;
-
-
-
-            selectedAnswers =
-            data.selectedAnswers ||
-            selectedAnswers;
-
-
-
-            timeLeft =
-            data.timeLeft ||
-            timeLeft;
-
-
-        }
-
-
-    }
-
-    catch(error){
-
-        console.log(
-            "Restore Failed"
-        );
-
-    }
 
 
 }
@@ -1966,153 +730,67 @@ function restoreTest(){
 
 
 
-// ==========================================================
-// SAVE BEFORE EXIT
-// ==========================================================
-
-window.addEventListener(
-
-"beforeunload",
-
-()=>{
+// =====================================
+// SAVE RESULT FIRESTORE
+// =====================================
 
 
-    if(
-        questions.length > 0
-    ){
+async function saveResult(user,score,percentage){
 
 
-        localStorage.setItem(
-
-            "mockTestProgress",
+try{
 
 
-            JSON.stringify({
+await addDoc(
 
-                currentQuestion,
+collection(db,"results"),
 
-                selectedAnswers,
-
-                timeLeft,
-
-                testType
+{
 
 
-            })
-
-        );
+uid:user.uid,
 
 
-    }
+score:score,
+
+
+percentage:percentage,
+
+
+testType:testType,
+
+
+totalQuestions:questions.length,
+
+
+createdAt:new Date()
+
 
 
 }
+
 
 );
 
 
 
-
-
-// ==========================================================
-// FINAL CLEANUP
-// ==========================================================
-
-function finishTestCleanup(){
-
-
-    localStorage.removeItem(
-        "mockTestProgress"
-    );
-
-
-    localStorage.removeItem(
-        "selectedAnswers"
-    );
-
-
 }
 
 
-
-// ==========================================================
-// GLOBAL ERROR HANDLER
-// ==========================================================
-
-window.addEventListener(
-
-"error",
-
-(event)=>{
+catch(error){
 
 
-    console.error(
+console.log(
 
-        "Mock Test Error:",
+"Result Save Error",
 
-        event.error
-
-    );
-
-
-}
+error
 
 );
 
 
-
-
-
-// ==========================================================
-// FINAL START
-// ==========================================================
-
-async function startMockTest(){
-
-
-    try{
-
-
-        await initializeTest();
-
-
-        restoreTest();
-
-
-        showQuestion();
-
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-
-            "Start Test Error:",
-
-            error
-
-        );
-
-
-        alert(
-            "Test Loading Failed"
-        );
-
-
-    }
-
-
 }
 
 
+           }
 
-
-// ==========================================================
-// START APPLICATION
-// ==========================================================
-
-startMockTest();
