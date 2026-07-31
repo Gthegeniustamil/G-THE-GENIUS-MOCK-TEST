@@ -1042,40 +1042,37 @@ error
 // ==========================================
 // SUBMIT TEST
 // ==========================================
-
-
-
 async function submitTest(){
 
     clearInterval(timer);
 
-    let resultData = calculateResult();
+    try{
 
-    console.log("Result Data:", resultData);
+        let resultData = calculateResult();
 
-    await saveResult(resultData);
+        await saveResult(resultData);
 
-    localStorage.setItem("lastScore", resultData.correct);
+        localStorage.setItem("lastScore", resultData.correct);
+        localStorage.setItem("lastCorrect", resultData.correct);
+        localStorage.setItem("lastWrong", resultData.wrong);
+        localStorage.setItem("lastUnanswered", resultData.unanswered);
 
-    localStorage.setItem(
-        "lastPercentage",
-        ((resultData.correct / questions.length) * 100).toFixed(2)
-    );
+        localStorage.setItem(
+            "lastPercentage",
+            ((resultData.correct / questions.length) * 100).toFixed(2)
+        );
 
-    localStorage.setItem("lastCorrect", resultData.correct);
-    localStorage.setItem("lastWrong", resultData.wrong);
-    localStorage.setItem("lastUnanswered", resultData.unanswered);
+        window.location.href = "result.html";
 
-    window.location.href = "result.html";
+    }catch(error){
+
+        console.error("Submit Error:", error);
+
+        alert(error.message);
+
+    }
 
 }
-
-
-// ==========================================
-// FINAL TEST START SYSTEM
-// PART 5 / 5 FINAL
-// ==========================================
-
 
 
 
