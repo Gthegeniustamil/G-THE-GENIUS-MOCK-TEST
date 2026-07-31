@@ -1,125 +1,333 @@
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
+// RESULT HTML
+// PART 1 / 4
+// ==========================================
+
+
+
 <!DOCTYPE html>
+
 <html lang="en">
+
+
 
 <head>
 
+
+
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+
+
 
 
 <title>
+
 Result | G THE GENIUS
+
 </title>
 
 
-<meta name="theme-color" content="#081229">
+
+
+
+<meta name="theme-color"
+content="#081229">
+
+
+
+
+
+<!-- Logo -->
 
 
 <link rel="icon"
+
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 
 
+
+
+
+
+<!-- CSS -->
+
+
 <link rel="stylesheet"
-href="css/style.css">
+
+href="result.css">
 
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+
 
 
 </head>
 
 
 
+
+
+
+
 <body>
+
+
+
+
+
+<div class="result-container">
+
+
+
+
+
+
+
+
+<!-- HEADER START -->
 
 
 <header class="result-header">
 
 
-<div class="brand">
 
 
-<img
 
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="logo">
+<div class="logo-box">
 
 
-<h2>
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 
-G THE GENIUS
+alt="G THE GENIUS Logo"
 
-</h2>
+class="result-logo">
 
 
 </div>
+
+
+
+
+
+
+<div class="result-title">
+
+
+<h1>
+
+G THE GENIUS
+
+</h1>
+
+
+
+<p>
+
+Test Result
+
+</p>
+
+
+
+</div>
+
+
+
+
 
 
 </header>
 
 
 
-
-<main class="result-container">
-
+<!-- HEADER END -->
 
 
-<section class="result-card">
 
 
-<h1>
+
+
+
+
+
+<!-- RESULT HERO CARD -->
+
+
+<section class="result-hero">
+
+
+
+<div class="result-card">
+
+
+
+
+
+<h2>
 
 🎉 Test Completed
 
-</h1>
+</h2>
+
+
 
 
 <p>
 
-Your Result
+Your Performance Summary
 
 </p>
 
 
-<div class="score-circle">
 
 
-<span id="score">
-
-0
-
-</span>
 
 
-/
+<div class="marks-display">
 
-<span id="total">
+
+<span id="marks">
 
 0
 
 </span>
+
+
+
+<small>
+
+Marks
+
+</small>
+
 
 
 </div>
 
 
-<h2 id="percentage">
 
-0%
 
-</h2>
+
+
+
+</div>
+
 
 
 </section>
 
-  <section class="result-stats">
+ // ==========================================
+// RESULT HTML
+// PART 2 / 4
+// ==========================================
 
 
-<div class="result-box">
+
+
+
+
+
+<!-- RANK SECTION START -->
+
+
+<section class="rank-section">
+
+
+
+
+
+<div class="rank-card">
+
+
+
+
+
+<h3>
+
+🏆 Your Rank
+
+</h3>
+
+
+
+
+
+
+<div class="rank-number">
+
+
+#
+
+<span id="rank">
+
+-
+
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+<p>
+
+Based on your marks
+
+</p>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+<!-- RANK SECTION END -->
+
+
+
+
+
+
+
+
+
+<!-- SCORE DETAILS START -->
+
+
+<section class="score-section">
+
+
+
+
+
+<div class="score-grid">
+
+
+
+
+
+
+<div class="score-box">
+
 
 
 <h3>
@@ -129,11 +337,13 @@ Your Result
 </h3>
 
 
-<p id="correct">
+
+<strong id="correctAnswers">
 
 0
 
-</p>
+</strong>
+
 
 
 </div>
@@ -141,7 +351,12 @@ Your Result
 
 
 
-<div class="result-box">
+
+
+
+
+<div class="score-box">
+
 
 
 <h3>
@@ -151,11 +366,13 @@ Your Result
 </h3>
 
 
-<p id="wrong">
+
+<strong id="wrongAnswers">
 
 0
 
-</p>
+</strong>
+
 
 
 </div>
@@ -163,21 +380,35 @@ Your Result
 
 
 
-<div class="result-box">
+
+
+
+
+<div class="score-box">
+
 
 
 <h3>
 
-⭐ XP Earned
+📝 Total
 
 </h3>
 
 
-<p id="earnedXP">
+
+<strong id="totalQuestions">
 
 0
 
-</p>
+</strong>
+
+
+
+</div>
+
+
+
+
 
 
 </div>
@@ -188,79 +419,369 @@ Your Result
 
 
 
+<!-- SCORE DETAILS END -->
 
 
-<section class="result-message">
 
 
-<h2 id="resultText">
 
-Keep Practicing!
+
+
+
+
+<!-- MESSAGE CARD -->
+
+
+<section class="result-message-section">
+
+
+
+<div class="message-card">
+
+
+
+<h2 id="resultMessage">
+
+Keep Practicing 🔥
 
 </h2>
 
 
+
+
 <p>
 
-Every Test Makes You Better 🚀
+Every test improves your preparation.
 
 </p>
 
 
+
+</div>
+
+
+
 </section>
 
+  // ==========================================
+// RESULT HTML
+// PART 3 / 4
+// ==========================================
 
 
 
 
-<section class="result-actions">
 
 
-<button onclick="location.href='dashboard.html'">
+
+<!-- ACTION SECTION START -->
+
+
+<section class="action-section">
+
+
+
+
+
+
+<a href="dashboard.html"
+
+class="action-btn primary">
+
 
 🏠 Dashboard
 
-</button>
+
+</a>
 
 
 
-<button onclick="history.back()">
 
-🔄 Retry Test
 
-</button>
+
+
+
+<a href="leaderboard.html"
+
+class="action-btn">
+
+
+🏆 Leaderboard
+
+
+</a>
+
+
+
+
+
+
+
+
+<a href="history.html"
+
+class="action-btn">
+
+
+📜 History
+
+
+</a>
+
+
+
+
+
 
 
 </section>
 
-<footer class="result-footer">
+
+
+<!-- ACTION SECTION END -->
+
+
+
+
+
+
+
+
+
+<!-- SHARE RESULT SECTION -->
+
+
+<section class="share-section">
+
+
+
+<div class="share-card">
+
+
+
+<h3>
+
+Share Your Achievement
+
+</h3>
+
+
 
 
 <p>
 
-© 2026 G THE GENIUS
+Keep learning and improve your rank.
 
 </p>
+
+
+
+
+
+
+
+<div class="share-buttons">
+
+
+
+
+
+
+<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+
+target="_blank">
+
+
+▶ YouTube
+
+
+</a>
+
+
+
+
+
+
+
+<a href="https://t.me/gthegenius"
+
+target="_blank">
+
+
+✈ Telegram
+
+
+</a>
+
+
+
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+
+✉ Email
+
+
+</a>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+</section>
+
+ // ==========================================
+// RESULT HTML
+// PART 4 / 4
+// FINAL
+// ==========================================
+
+
+
+
+
+
+
+<!-- FOOTER START -->
+
+
+<footer class="app-footer">
+
+
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+
+
 
 
 <p>
 
-All Government Exam Mock Test Portal
+ALL GOVERNMENT EXAM MOCK TEST
 
 </p>
+
+
+
+
+
+
+<div class="footer-links">
+
+
+
+<a href="dashboard.html">
+
+Home
+
+</a>
+
+
+
+
+<a href="leaderboard.html">
+
+Leaderboard
+
+</a>
+
+
+
+
+<a href="profile.html">
+
+Profile
+
+</a>
+
+
+
+<a href="history.html">
+
+History
+
+</a>
+
+
+
+
+</div>
+
+
+
+
+
+
+<p class="copyright">
+
+
+© 2026 G THE GENIUS.
+All Rights Reserved.
+
+
+</p>
+
+
+
 
 
 </footer>
 
 
 
+<!-- FOOTER END -->
 
-<script type="module" src="js/result.js"></script>
+
+
+
+
+
+
+
+
+<!-- RESULT JS -->
+
+
+<script type="module"
+
+src="result.js">
+
+</script>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
 
 
 
 </body>
 
-  </html>
 
-  
+</html> 
