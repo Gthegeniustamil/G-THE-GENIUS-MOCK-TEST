@@ -1,31 +1,109 @@
-/* =====================================
-G THE GENIUS
-RESULT CSS
-PART 1
-===================================== */
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
+// RESULT CSS
+// PART 1 / 4
+// ==========================================
 
 
-/* GLOBAL */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+
+
+
+
+:root{
+
+
+    --bg:#081229;
+
+    --card:rgba(255,255,255,0.08);
+
+    --gold:#f5c542;
+
+    --gold-light:#ffd86b;
+
+    --white:#ffffff;
+
+    --text:#d8def0;
+
+    --border:rgba(255,255,255,0.15);
+
+
+}
+
+
+
+
+
+
 
 *{
 
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
 
 }
+
+
+
+
+
 
 
 body{
 
-background:#081229;
 
-color:white;
+    background:
 
-min-height:100vh;
+    linear-gradient(
+
+    135deg,
+
+    #081229,
+
+    #101d3a
+
+    );
+
+
+    color:var(--white);
+
+    min-height:100vh;
+
 
 }
+
+
+
+
+
+
+
+.result-container{
+
+
+    max-width:480px;
+
+    margin:auto;
+
+    min-height:100vh;
+
+
+}
+
+
+
+
+
+
 
 
 
@@ -34,63 +112,19 @@ min-height:100vh;
 
 .result-header{
 
-padding:15px 25px;
 
-background:rgba(255,255,255,0.05);
+    display:flex;
 
-border-bottom:1px solid rgba(255,255,255,0.1);
+    align-items:center;
 
-}
+    gap:15px;
 
+    padding:18px;
 
+    background:rgba(8,18,41,0.9);
 
-.brand{
+    border-bottom:1px solid var(--border);
 
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-}
-
-
-
-.logo{
-
-width:55px;
-
-height:55px;
-
-border-radius:50%;
-
-object-fit:contain;
-
-}
-
-
-
-.brand h2{
-
-color:#FFD700;
-
-font-size:20px;
-
-}
-
-
-
-
-/* RESULT CONTAINER */
-
-
-.result-container{
-
-max-width:700px;
-
-margin:auto;
-
-padding:25px;
 
 }
 
@@ -98,142 +132,150 @@ padding:25px;
 
 
 
-/* RESULT CARD */
+
+
+
+.logo-box{
+
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    border:3px solid var(--gold);
+
+
+}
+
+
+
+
+
+
+
+.result-logo{
+
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+
+}
+
+
+
+
+
+
+
+.result-title h1{
+
+
+    color:var(--gold);
+
+    font-size:22px;
+
+    font-weight:700;
+
+
+}
+
+
+
+
+
+
+
+.result-title p{
+
+
+    color:var(--text);
+
+    font-size:12px;
+
+
+}
+
+
+
+
+
+
+
+
+/* HERO CARD */
+
+
+.result-hero{
+
+
+    padding:20px;
+
+
+}
+
+
+
+
+
 
 
 .result-card{
 
-background:rgba(255,255,255,0.06);
 
-padding:35px;
+    background:var(--card);
 
-border-radius:25px;
+    border:1px solid var(--border);
 
-text-align:center;
+    border-radius:30px;
 
-border:1px solid rgba(255,215,0,0.3);
+    padding:30px 20px;
+
+    text-align:center;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+
+
+}
+
+
+
+
+
+
+
+.result-card h2{
+
+
+    color:var(--gold-light);
+
+    font-size:24px;
+
 
 }
 
 
 
-.result-card h1{
 
-color:#FFD700;
-
-margin-bottom:10px;
-
-}
 
 
 
 .result-card p{
 
-color:#ccc;
 
-}
+    color:var(--text);
 
+    font-size:14px;
 
+    margin-top:8px;
 
-
-/* SCORE CIRCLE */
-
-
-.score-circle{
-
-width:160px;
-
-height:160px;
-
-border-radius:50%;
-
-margin:25px auto;
-
-background:#FFD700;
-
-color:#081229;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:35px;
-
-font-weight:800;
-
-}
-
-
-
-#percentage{
-
-color:#00ff99;
-
-font-size:30px;
-
-}
-
-/* =====================================
-G THE GENIUS
-RESULT CSS
-PART 2 FINAL
-===================================== */
-
-
-/* RESULT STATS */
-
-
-.result-stats{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:15px;
-
-margin-top:25px;
-
-}
-
-
-
-.result-box{
-
-background:rgba(255,255,255,0.06);
-
-padding:20px;
-
-border-radius:20px;
-
-text-align:center;
-
-border:1px solid rgba(255,215,0,0.2);
-
-}
-
-
-
-.result-box h3{
-
-color:#ccc;
-
-font-size:15px;
-
-}
-
-
-
-.result-box p{
-
-color:#FFD700;
-
-font-size:28px;
-
-font-weight:700;
-
-margin-top:10px;
 
 }
 
@@ -241,68 +283,617 @@ margin-top:10px;
 
 
 
-/* MESSAGE */
 
 
-.result-message{
+.marks-display{
 
-text-align:center;
 
-margin-top:30px;
+    margin:25px auto 0;
 
-background:rgba(255,255,255,0.06);
+    width:150px;
 
-padding:20px;
+    height:150px;
 
-border-radius:20px;
+    border-radius:50%;
+
+    border:5px solid var(--gold);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(245,197,66,0.12);
+
 
 }
 
 
 
-.result-message h2{
 
-color:#FFD700;
+
+
+
+.marks-display span{
+
+
+    font-size:45px;
+
+    font-weight:800;
+
+    color:var(--gold);
+
 
 }
 
 
 
 
-/* ACTION BUTTONS */
 
 
-.result-actions{
 
-display:flex;
+.marks-display small{
 
-gap:20px;
 
-justify-content:center;
+    color:var(--text);
 
-margin-top:30px;
+    font-size:14px;
+
+
+}
+
+// ==========================================
+// RESULT CSS
+// RANK + SCORE DESIGN
+// PART 2 / 4
+// ==========================================
+
+
+
+
+
+
+/* RANK SECTION */
+
+
+.rank-section{
+
+
+    padding:0 20px 20px;
+
 
 }
 
 
 
-.result-actions button{
 
-padding:13px 30px;
 
-border:none;
 
-border-radius:30px;
 
-background:#FFD700;
+.rank-card{
 
-color:#081229;
 
-font-weight:700;
+    background:
 
-cursor:pointer;
+    linear-gradient(
+
+    135deg,
+
+    rgba(245,197,66,0.18),
+
+    rgba(255,255,255,0.05)
+
+    );
+
+
+    border:1px solid var(--gold);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+
 
 }
+
+
+
+
+
+
+
+.rank-card h3{
+
+
+    color:var(--gold-light);
+
+    font-size:20px;
+
+
+}
+
+
+
+
+
+
+
+.rank-number{
+
+
+    margin:15px 0;
+
+    font-size:35px;
+
+    font-weight:800;
+
+    color:var(--gold);
+
+
+}
+
+
+
+
+
+
+
+.rank-number span{
+
+
+    color:var(--white);
+
+
+}
+
+
+
+
+
+
+
+.rank-card p{
+
+
+    color:var(--text);
+
+    font-size:13px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* SCORE SECTION */
+
+
+.score-section{
+
+
+    padding:20px;
+
+
+}
+
+
+
+
+
+
+
+.score-grid{
+
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+
+
+}
+
+
+
+
+
+
+
+.score-box{
+
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:18px 8px;
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+
+
+.score-box h3{
+
+
+    font-size:12px;
+
+    color:var(--text);
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+
+
+
+
+.score-box strong{
+
+
+    color:var(--gold);
+
+    font-size:25px;
+
+
+}
+
+
+
+
+
+
+
+/* RESULT MESSAGE */
+
+
+.result-message-section{
+
+
+    padding:20px;
+
+
+}
+
+
+
+
+
+
+
+.message-card{
+
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+
+
+.message-card h2{
+
+
+    color:var(--gold-light);
+
+    font-size:20px;
+
+
+}
+
+
+
+
+
+
+
+.message-card p{
+
+
+    color:var(--text);
+
+    font-size:14px;
+
+    margin-top:10px;
+
+
+  }
+
+// ==========================================
+// RESULT CSS
+// ACTION + SOCIAL DESIGN
+// PART 3 / 4
+// ==========================================
+
+
+
+
+
+
+/* ACTION SECTION */
+
+
+.action-section{
+
+
+    padding:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+
+}
+
+
+
+
+
+
+
+.action-btn{
+
+
+    display:block;
+
+    width:100%;
+
+    padding:15px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    color:var(--white);
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid var(--border);
+
+    font-weight:600;
+
+    transition:0.3s;
+
+
+}
+
+
+
+
+
+
+
+.action-btn.primary{
+
+
+    background:var(--gold);
+
+    color:#081229;
+
+}
+
+
+
+
+
+
+
+.action-btn:hover{
+
+
+    transform:translateY(-3px);
+
+}
+
+
+
+
+
+
+
+
+
+/* SHARE SECTION */
+
+
+.share-section{
+
+
+    padding:20px;
+
+
+}
+
+
+
+
+
+
+
+.share-card{
+
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+
+
+.share-card h3{
+
+
+    color:var(--gold-light);
+
+    font-size:20px;
+
+
+}
+
+
+
+
+
+
+
+.share-card p{
+
+
+    color:var(--text);
+
+    font-size:13px;
+
+    margin:10px 0 20px;
+
+
+}
+
+
+
+
+
+
+
+
+/* SOCIAL BUTTONS */
+
+
+.share-buttons{
+
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+
+}
+
+
+
+
+
+
+
+.share-buttons a{
+
+
+    padding:13px;
+
+    border-radius:30px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+
+.share-buttons a:nth-child(1){
+
+
+    background:#ff0000;
+
+
+}
+
+
+
+
+
+
+
+.share-buttons a:nth-child(2){
+
+
+    background:#229ED9;
+
+
+}
+
+
+
+
+
+
+
+.share-buttons a:nth-child(3){
+
+
+    background:#f5c542;
+
+    color:#081229;
+
+
+}
+
+// ==========================================
+// RESULT CSS
+// FOOTER + RESPONSIVE
+// PART 4 / 4
+// FINAL
+// ==========================================
+
 
 
 
@@ -311,17 +902,22 @@ cursor:pointer;
 /* FOOTER */
 
 
-.result-footer{
+/* Logo Removed - Header Only Logo */
 
-text-align:center;
 
-padding:25px;
+.app-footer{
 
-margin-top:30px;
 
-color:#aaa;
+    margin-top:30px;
 
-font-size:13px;
+    padding:30px 20px;
+
+    text-align:center;
+
+    background:rgba(0,0,0,0.25);
+
+    border-top:1px solid var(--border);
+
 
 }
 
@@ -329,15 +925,234 @@ font-size:13px;
 
 
 
-/* MOBILE */
 
 
-@media(max-width:768px){
+.app-footer h3{
+
+
+    color:var(--gold);
+
+    font-size:22px;
+
+
+}
+
+
+
+
+
+
+
+.app-footer p{
+
+
+    color:var(--text);
+
+    font-size:13px;
+
+    margin-top:8px;
+
+
+}
+
+
+
+
+
+
+
+.footer-links{
+
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin:18px 0;
+
+
+}
+
+
+
+
+
+
+
+.footer-links a{
+
+
+    color:var(--white);
+
+    text-decoration:none;
+
+    font-size:13px;
+
+
+}
+
+
+
+
+
+
+
+.footer-links a:hover{
+
+
+    color:var(--gold);
+
+
+}
+
+
+
+
+
+
+
+.copyright{
+
+
+    opacity:0.8;
+
+    font-size:12px !important;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* RESPONSIVE MOBILE */
+
+
+@media(max-width:360px){
+
 
 
 .result-container{
 
-padding:15px;
+    width:100%;
+
+}
+
+
+
+.result-header{
+
+    padding:15px;
+
+}
+
+
+
+.logo-box{
+
+    width:55px;
+
+    height:55px;
+
+}
+
+
+
+.result-title h1{
+
+    font-size:18px;
+
+}
+
+
+
+.marks-display{
+
+    width:130px;
+
+    height:130px;
+
+}
+
+
+
+.marks-display span{
+
+    font-size:38px;
+
+}
+
+
+
+.score-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* TABLET */
+
+
+@media(min-width:601px){
+
+
+
+.result-container{
+
+    max-width:700px;
+
+}
+
+
+
+.score-grid{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* DESKTOP */
+
+
+@media(min-width:1024px){
+
+
+
+.result-container{
+
+    max-width:850px;
 
 }
 
@@ -345,47 +1160,48 @@ padding:15px;
 
 .result-card{
 
-padding:25px;
+    padding:40px;
 
 }
 
 
 
-.score-circle{
+}
 
-width:130px;
 
-height:130px;
 
-font-size:28px;
+
+
+
+
+
+/* TOUCH EFFECT */
+
+
+button,
+a{
+
+
+    -webkit-tap-highlight-color:transparent;
+
 
 }
 
 
 
-.result-stats{
+a:active{
 
-grid-template-columns:1fr;
+
+    transform:scale(0.96);
+
 
 }
 
 
 
-.result-actions{
-
-flex-direction:column;
-
-}
 
 
 
-.result-actions button{
-
-width:100%;
-
-}
 
 
-
-  }
-
+/* RESULT CSS v5.0 COMPLETE */
