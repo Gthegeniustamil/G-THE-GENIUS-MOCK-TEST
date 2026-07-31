@@ -1,8 +1,11 @@
-/* =========================
-G THE GENIUS RESULT CSS
+/* =====================================
+G THE GENIUS
+RESULT CSS
 PART 1
-========================= */
+===================================== */
 
+
+/* GLOBAL */
 
 *{
 
@@ -14,982 +17,335 @@ font-family:'Poppins',sans-serif;
 }
 
 
-
 body{
 
-
-background:
-
-linear-gradient(
-180deg,
-#081229,
-#102451
-);
-
+background:#081229;
 
 color:white;
 
-
 min-height:100vh;
-
-
-padding-bottom:90px;
-
 
 }
 
 
 
-
-
-/* =========================
-HEADER
-========================= */
+/* HEADER */
 
 
 .result-header{
 
+padding:15px 25px;
+
+background:rgba(255,255,255,0.05);
+
+border-bottom:1px solid rgba(255,255,255,0.1);
+
+}
+
+
+
+.brand{
 
 display:flex;
 
-
 align-items:center;
 
-
-gap:15px;
-
-
-padding:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-bottom:
-
-1px solid rgba(255,215,0,.3);
-
-
+gap:12px;
 
 }
 
 
 
-.result-logo{
+.logo{
 
+width:55px;
 
-width:65px;
-
-
-height:65px;
-
-
+height:55px;
 
 border-radius:50%;
 
-
-
-object-fit:cover;
-
-
-
-border:
-
-3px solid #FFD700;
-
-
-
-background:white;
-
-
-
-padding:2px;
-
-
+object-fit:contain;
 
 }
 
 
 
-.result-header h2{
-
+.brand h2{
 
 color:#FFD700;
 
-
-font-size:22px;
-
-
-}
-
-
-
-.result-header p{
-
-
-color:#ddd;
-
-
-font-size:13px;
-
+font-size:20px;
 
 }
 
 
 
 
+/* RESULT CONTAINER */
 
-/* =========================
-RESULT CARD
-========================= */
+
+.result-container{
+
+max-width:700px;
+
+margin:auto;
+
+padding:25px;
+
+}
+
+
+
+
+
+/* RESULT CARD */
 
 
 .result-card{
 
+background:rgba(255,255,255,0.06);
 
-margin:20px;
+padding:35px;
 
-
-padding:30px;
-
-
+border-radius:25px;
 
 text-align:center;
 
-
-
-border-radius:30px;
-
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-rgba(255,215,0,.20),
-
-rgba(255,255,255,.08)
-
-);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-
-box-shadow:
-
-0 0 25px rgba(255,215,0,.15);
-
-
+border:1px solid rgba(255,215,0,0.3);
 
 }
 
 
 
-.result-card h2{
-
+.result-card h1{
 
 color:#FFD700;
 
+margin-bottom:10px;
+
+}
 
 
-margin-bottom:25px;
 
+.result-card p{
 
+color:#ccc;
 
 }
 
 
 
 
-
-
-/* =========================
-SCORE CIRCLE
-========================= */
+/* SCORE CIRCLE */
 
 
 .score-circle{
 
+width:160px;
 
-width:170px;
-
-
-height:170px;
-
-
-
-margin:auto;
-
-
+height:160px;
 
 border-radius:50%;
 
-
-
-display:flex;
-
-
-
-flex-direction:column;
-
-
-
-justify-content:center;
-
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(255,215,0,.15);
-
-
-
-border:
-
-5px solid #FFD700;
-
-
-
-}
-
-
-
-.score-circle h1{
-
-
-font-size:45px;
-
-
-color:#FFD700;
-
-
-}
-
-
-
-.score-circle p{
-
-
-color:#ddd;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-SCORE DETAILS
-========================= */
-
-
-.score-details{
-
-
-margin-top:25px;
-
-
-
-padding:20px;
-
-
-
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-}
-
-
-
-.score-details p{
-
-
-margin:10px 0;
-
-
-
-color:#ddd;
-
-
-}
-
-
-
-.score-details span{
-
-
-color:#FFD700;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-
-/* =========================
-ANALYSIS CARD BASE
-========================= */
-
-
-.analysis-card{
-
-
-margin:20px;
-
-
-padding:22px;
-
-
-border-radius:25px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.analysis-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-/* =========================
-ANALYSIS GRID
-========================= */
-
-
-.analysis-grid{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-
-repeat(3,1fr);
-
-
-
-gap:12px;
-
-
-}
-
-
-
-.analysis-grid div{
-
-
-padding:20px 10px;
-
-
-
-text-align:center;
-
-
-
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-}
-
-
-
-.analysis-grid h2{
-
-
-font-size:28px;
-
-
-}
-
-
-
-.analysis-grid p{
-
-
-font-size:13px;
-
-
-margin-top:8px;
-
-
-}
-
-
-
-/* CORRECT */
-
-
-.correct-box{
-
-
-border:
-
-1px solid #00ff7f;
-
-
-}
-
-
-
-.correct-box h2{
-
-
-color:#00ff7f;
-
-
-}
-
-
-
-
-/* WRONG */
-
-
-.wrong-box{
-
-
-border:
-
-1px solid #ff4444;
-
-
-}
-
-
-
-.wrong-box h2{
-
-
-color:#ff4444;
-
-
-}
-
-
-
-
-
-/* SKIP */
-
-
-.skip-box{
-
-
-border:
-
-1px solid #FFD700;
-
-
-}
-
-
-
-.skip-box h2{
-
-
-color:#FFD700;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-RANK CARD
-========================= */
-
-
-.rank-card{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-text-align:center;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-}
-
-
-
-.rank-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-.rank-number{
-
-
-font-size:55px;
-
-
-font-weight:bold;
-
-
-
-color:#FFD700;
-
-
-}
-
-
-
-.rank-card p{
-
-
-margin-top:15px;
-
-
-
-color:#ddd;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-ACTION BUTTONS
-========================= */
-
-
-.action-section{
-
-
-margin:20px;
-
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-gap:15px;
-
-
-}
-
-
-
-
-.share-btn,
-
-
-.retry-btn{
-
-
-width:100%;
-
-
-padding:16px;
-
-
-
-border:none;
-
-
-
-border-radius:20px;
-
-
-
-font-size:16px;
-
-
-
-font-weight:bold;
-
-
-
-cursor:pointer;
-
-
-
-}
-
-
-
-.share-btn{
-
+margin:25px auto;
 
 background:#FFD700;
 
-
 color:#081229;
-
-
-}
-
-
-
-
-.retry-btn{
-
-
-background:
-
-rgba(255,255,255,.15);
-
-
-
-color:white;
-
-
-
-border:
-
-1px solid #FFD700;
-
-
-
-}
-
-
-
-.share-btn:hover,
-
-.retry-btn:hover{
-
-
-transform:
-
-scale(1.03);
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-BOTTOM NAVIGATION
-========================= */
-
-
-.bottom-nav{
-
-
-position:fixed;
-
-
-bottom:0;
-
-
-left:0;
-
-
-width:100%;
-
-
-height:70px;
-
-
 
 display:flex;
 
-
-justify-content:space-around;
-
-
-
 align-items:center;
 
+justify-content:center;
 
+font-size:35px;
 
-background:
-
-rgba(8,18,41,.95);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-top:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-z-index:999;
-
-
+font-weight:800;
 
 }
 
 
 
-.bottom-nav a{
+#percentage{
+
+color:#00ff99;
+
+font-size:30px;
+
+}
+
+/* =====================================
+G THE GENIUS
+RESULT CSS
+PART 2 FINAL
+===================================== */
 
 
-text-decoration:none;
+/* RESULT STATS */
 
 
+.result-stats{
 
-color:white;
+display:grid;
 
+grid-template-columns:repeat(3,1fr);
 
+gap:15px;
 
-font-size:12px;
-
-
-
-text-align:center;
-
-
+margin-top:25px;
 
 }
 
 
 
-.bottom-nav a.active{
+.result-box{
 
-
-color:#FFD700;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-FOOTER
-========================= */
-
-
-.footer{
-
-
-margin:25px 20px 100px;
-
-
+background:rgba(255,255,255,0.06);
 
 padding:20px;
 
-
+border-radius:20px;
 
 text-align:center;
 
-
-
-border-radius:22px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
+border:1px solid rgba(255,215,0,0.2);
 
 }
 
 
 
-.footer h3{
+.result-box h3{
 
+color:#ccc;
+
+font-size:15px;
+
+}
+
+
+
+.result-box p{
 
 color:#FFD700;
 
+font-size:28px;
+
+font-weight:700;
+
+margin-top:10px;
 
 }
 
 
 
-.footer a{
 
 
-display:block;
+/* MESSAGE */
 
 
+.result-message{
 
-margin:8px;
+text-align:center;
 
+margin-top:30px;
 
+background:rgba(255,255,255,0.06);
 
-color:white;
+padding:20px;
 
-
-
-text-decoration:none;
-
-
-
-font-size:14px;
-
-
+border-radius:20px;
 
 }
 
 
 
-.footer p{
+.result-message h2{
+
+color:#FFD700;
+
+}
 
 
-margin-top:15px;
+
+
+/* ACTION BUTTONS */
+
+
+.result-actions{
+
+display:flex;
+
+gap:20px;
+
+justify-content:center;
+
+margin-top:30px;
+
+}
 
 
 
-font-size:12px;
+.result-actions button{
+
+padding:13px 30px;
+
+border:none;
+
+border-radius:30px;
+
+background:#FFD700;
+
+color:#081229;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
 
 
+
+
+
+/* FOOTER */
+
+
+.result-footer{
+
+text-align:center;
+
+padding:25px;
+
+margin-top:30px;
 
 color:#aaa;
 
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-MOBILE RESPONSIVE
-========================= */
-
-
-@media(max-width:600px){
-
-
-
-.analysis-grid{
-
-
-grid-template-columns:
-
-repeat(3,1fr);
-
-
+font-size:13px;
 
 }
 
 
 
-.analysis-grid h2{
 
 
-font-size:22px;
+/* MOBILE */
 
+
+@media(max-width:768px){
+
+
+.result-container{
+
+padding:15px;
+
+}
+
+
+
+.result-card{
+
+padding:25px;
 
 }
 
@@ -997,35 +353,39 @@ font-size:22px;
 
 .score-circle{
 
+width:130px;
 
-width:140px;
+height:130px;
 
-
-height:140px;
-
-
-}
-
-
-
-.score-circle h1{
-
-
-font-size:35px;
-
+font-size:28px;
 
 }
 
 
 
-.rank-number{
+.result-stats{
 
-
-font-size:45px;
-
+grid-template-columns:1fr;
 
 }
 
 
 
+.result-actions{
+
+flex-direction:column;
+
 }
+
+
+
+.result-actions button{
+
+width:100%;
+
+}
+
+
+
+  }
+
