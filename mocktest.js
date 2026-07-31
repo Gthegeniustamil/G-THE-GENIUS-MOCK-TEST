@@ -977,6 +977,95 @@ startTest();
 );
 
 
+// ==========================================
+// MOCK TEST UI FINAL FIX
+// ==========================================
+
+
+// HIDE LOADING AFTER QUESTIONS LOAD
+
+
+function hideLoading(){
+
+
+const loading =
+document.getElementById(
+"loading"
+);
+
+
+if(loading){
+
+loading.style.display="none";
+
+}
+
+
+}
+
+
+
+
+
+
+// SUBMIT BUTTON
+
+
+const submitBtn =
+document.getElementById(
+"submitBtn"
+);
+
+
+
+if(submitBtn){
+
+
+submitBtn.onclick = ()=>{
+
+
+if(confirm(
+"Are you sure you want to submit?"
+)){
+
+
+submitTest();
+
+
+}
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+// UPDATE START TEST
+
+
+const oldStartTest =
+startTest;
+
+
+
+startTest = async function(){
+
+
+
+await oldStartTest();
+
+
+
+hideLoading();
+
+
+};
 
 
 
