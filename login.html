@@ -1,49 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
 
+
 <meta charset="UTF-8">
+
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
+
+
 <title>
-
 Login | G THE GENIUS
-
 </title>
+
+
+
 
 <meta name="theme-color"
 content="#081229">
 
+
+
+<meta name="description"
+content="Login to G THE GENIUS Mock Test Portal">
+
+
+
+
+
+
+<!-- Logo -->
+
 <link rel="icon"
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
+
+
+
+
+<!-- Main CSS -->
+
 <link rel="stylesheet"
-href="css/auth.css">
+href="style.css">
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+
+
+
+<style>
+
+
+.login-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+}
+
+
+
+
+
+.login-card{
+
+
+    width:100%;
+
+    max-width:420px;
+
+
+    background:rgba(255,255,255,0.08);
+
+
+    border:1px solid rgba(255,255,255,0.15);
+
+
+    border-radius:25px;
+
+
+    padding:30px 20px;
+
+
+    backdrop-filter:blur(15px);
+
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+
+
+
+}
+
+
+
+
+
+
+.login-logo{
+
+
+    width:90px;
+
+
+    height:90px;
+
+
+    border-radius:50%;
+
+
+    object-fit:cover;
+
+
+    display:block;
+
+
+    margin:auto;
+
+
+    border:3px solid #f5c542;
+
+
+}
+
+
+
+
+
+
+.login-card h1{
+
+
+    text-align:center;
+
+
+    color:#f5c542;
+
+
+    margin-top:15px;
+
+
+    font-size:26px;
+
+
+}
+
+
+
+
+.login-card p{
+
+
+    text-align:center;
+
+
+    color:#d8def0;
+
+
+    font-size:13px;
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+
+
+
+
+.login-input{
+
+
+    margin-bottom:15px;
+
+
+}
+
+ 
+.login-input label{
+
+
+    display:block;
+
+
+    color:white;
+
+
+    font-size:13px;
+
+
+    margin-bottom:6px;
+
+
+}
+
+
+
+
+
+.login-input input{
+
+
+    width:100%;
+
+
+    padding:13px;
+
+
+    border-radius:15px;
+
+
+    border:1px solid rgba(255,255,255,0.2);
+
+
+    background:rgba(255,255,255,0.1);
+
+
+    color:white;
+
+
+    outline:none;
+
+
+
+}
+
+
+
+
+
+
+.login-btn{
+
+
+    width:100%;
+
+
+    padding:14px;
+
+
+    border:none;
+
+
+    border-radius:30px;
+
+
+    background:#f5c542;
+
+
+    color:#081229;
+
+
+    font-size:16px;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    margin-top:10px;
+
+
+    transition:0.3s;
+
+
+
+}
+
+
+
+.login-btn:hover{
+
+
+    transform:translateY(-2px);
+
+
+}
+
+
+
+
+
+#loginMessage{
+
+
+    text-align:center;
+
+
+    margin-top:15px;
+
+
+    color:#ffd86b;
+
+
+    font-size:13px;
+
+
+}
+
+
+
+
+
+
+
+.forgot-link{
+
+
+    text-align:right;
+
+
+    margin-top:10px;
+
+
+}
+
+
+
+.forgot-link a{
+
+
+    color:#f5c542;
+
+
+    font-size:13px;
+
+
+    text-decoration:none;
+
+
+}
+
+
+
+
+
+
+
+.register-link{
+
+
+    text-align:center;
+
+
+    margin-top:20px;
+
+
+    color:#d8def0;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+.register-link a{
+
+
+    color:#f5c542;
+
+
+    text-decoration:none;
+
+
+    font-weight:600;
+
+
+}
+
+
+
+</style>
+
 
 </head>
+
+
+
+
 
 <body>
 
 
 
-<!-- ========================= -->
-<!-- LOGIN CONTAINER -->
-<!-- ========================= -->
-
-<div class="login-container">
+<div class="login-page">
 
 
 
@@ -51,19 +408,27 @@ rel="stylesheet">
 
 
 
-<img
 
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 
-class="logo"
 
-alt="Logo">
+<!-- LOGO -->
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+alt="G THE GENIUS Logo"
+
+class="login-logo">
+
+
+
+
 
 
 
 <h1>
 
-G THE GENIUS
+Welcome Back
 
 </h1>
 
@@ -71,9 +436,14 @@ G THE GENIUS
 
 <p>
 
-Government Exam Portal
+Login to Continue Your Exam Preparation
 
 </p>
+
+
+
+
+
 
 
 
@@ -81,7 +451,11 @@ Government Exam Portal
 
 
 
-<div class="input-group">
+
+
+
+<div class="login-input">
+
 
 <label>
 
@@ -89,21 +463,26 @@ Email Address
 
 </label>
 
-<input
 
-type="email"
+<input type="email"
 
 id="email"
 
-placeholder="Enter Email"
+placeholder="Enter your email"
 
 required>
+
 
 </div>
 
 
 
-<div class="input-group">
+
+
+
+
+<div class="login-input">
+
 
 <label>
 
@@ -111,109 +490,43 @@ Password
 
 </label>
 
-<input
 
-type="password"
+
+<input type="password"
 
 id="password"
 
-placeholder="Enter Password"
+placeholder="Enter your password"
 
 required>
 
-</div>
-
-  <!-- ========================================= -->
-<!-- SHOW PASSWORD -->
-<!-- ========================================= -->
-
-<div class="show-password">
-
-<input
-
-type="checkbox"
-
-id="showPassword">
-
-<label for="showPassword">
-
-Show Password
-
-</label>
 
 </div>
 
-
-
-<!-- ========================================= -->
-<!-- REMEMBER + FORGOT -->
-<!-- ========================================= -->
-
-<div class="login-options">
-
-<label>
-
-<input
-
-type="checkbox"
-
-id="rememberMe">
-
-Remember Me
-
-</label>
-
-<a href="forgot-password.html">
-
-Forgot Password?
-
-</a>
-
-</div>
+  
 
 
 
-<!-- ========================================= -->
-<!-- LOGIN BUTTON -->
-<!-- ========================================= -->
-
-<button
-
-type="submit"
-
-id="loginBtn"
+<button type="submit"
 
 class="login-btn">
 
-🔐 Login
+
+Login
+
 
 </button>
 
 
 
-<!-- ========================================= -->
-<!-- REGISTER -->
-<!-- ========================================= -->
 
-<div class="register-area">
 
-<p>
 
-Don't have an account?
 
-</p>
+<p id="loginMessage"></p>
 
-<a
 
-href="register.html"
 
-class="register-btn">
-
-Create New Account
-
-</a>
-
-</div>
 
 
 
@@ -221,150 +534,130 @@ Create New Account
 
 
 
-</div>
+
+
+
+
+
+<div class="forgot-link">
+
+
+<a href="#"
+
+id="forgotPassword">
+
+
+Forgot Password?
+
+
+</a>
+
 
 </div>
 
-  <!-- ========================================= -->
-<!-- SOCIAL LINKS -->
-<!-- ========================================= -->
 
-<div class="social-section">
+
+
+
+
+
+
+
+<div class="register-link">
+
+
+Don't have an account?
+
+
+<a href="register.html">
+
+Register Now
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- FOOTER -->
+
+
+<footer class="app-footer">
+
 
 <h3>
 
-Connect With Us
+G THE GENIUS
 
 </h3>
 
-<div class="social-buttons">
 
-<a
-
-href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
-
-target="_blank"
-
-class="social-btn youtube">
-
-▶️ YouTube
-
-</a>
-
-
-<a
-
-href="https://t.me/gthegenius"
-
-target="_blank"
-
-class="social-btn telegram">
-
-📢 Telegram
-
-</a>
-
-
-<a
-
-href="mailto:gthegenius7@gmail.com"
-
-class="social-btn email">
-
-📧 Email
-
-</a>
-
-</div>
-
-</div>
-
-
-
-<!-- ========================================= -->
-<!-- QUICK LINKS -->
-<!-- ========================================= -->
-
-<div class="quick-links">
-
-<a href="about.html">
-
-About Us
-
-</a>
-
-|
-
-<a href="contact.html">
-
-Contact Us
-
-</a>
-
-|
-
-<a href="privacy.html">
-
-Privacy Policy
-
-</a>
-
-|
-
-<a href="disclaimer.html">
-
-Disclaimer
-
-</a>
-
-</div>
-
-
-
-<!-- ========================================= -->
-<!-- COPYRIGHT -->
-<!-- ========================================= -->
-
-<footer class="login-footer">
-
-<img
-
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="footer-logo"
-
-alt="Logo">
 
 <p>
 
-© <span id="copyrightYear"></span>
-
-G THE GENIUS
+ALL GOVERNMENT EXAM MOCK TEST
 
 </p>
 
-<p>
 
-All Rights Reserved
+
+
+<p class="copyright">
+
+
+© 2026 G THE GENIUS.
+All Rights Reserved.
+
 
 </p>
+
+
 
 </footer>
 
 
 
+
+
+
+
+
+
+<!-- LOGIN JS -->
+
+
 <script type="module"
 
-src="js/auth.js">
+src="login.js">
 
 </script>
 
-<script type="module"
 
-src="js/common.js">
 
-</script>
+
+
+
 
 </body>
+
 
 </html>
