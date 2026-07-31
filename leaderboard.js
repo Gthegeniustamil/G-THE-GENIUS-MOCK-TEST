@@ -1,320 +1,445 @@
-// =====================================
-// G THE GENIUS
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
 // LEADERBOARD JS
-// PART 1
-// =====================================
-
-
-import { db } from "./firebase-config.js";
-
+// PART 1 / 5
+// ==========================================
 
 import {
+    auth,
+    db
+} from "./firebase-config.js";
 
-collection,
-getDocs
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    collection,
+    query,
+    orderBy,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+// ===============================
+// HTML ELEMENTS
+// ===============================
+
+const leaderboardList =
+document.getElementById("leaderboardList");
+
+const testFilter =
+document.getElementById("testFilter");
+
+const searchStudent =
+document.getElementById("searchStudent");
+
+const refreshLeaderboard =
+document.getElementById("refreshLeaderboard");
+
+
+
+// PODIUM
+
+const firstName =
+document.getElementById("firstName");
+
+const firstMarks =
+document.getElementById("firstMarks");
+
+const secondName =
+document.getElementById("secondName");
+
+const secondMarks =
+document.getElementById("secondMarks");
+
+const thirdName =
+document.getElementById("thirdName");
+
+const thirdMarks =
+document.getElementById("thirdMarks");
+
+
+
+// STUDENT INFO
+
+const myRank =
+document.getElementById("myRank");
+
+const myMarks =
+document.getElementById("myMarks");
+
+const myTests =
+document.getElementById("myTests");
+
+
+
+// SUMMARY
+
+const totalStudents =
+document.getElementById("totalStudents");
+
+const totalTests =
+document.getElementById("totalTests");
+
+const highestMarks =
+document.getElementById("highestMarks");
+
+
+
+// ===============================
+// GLOBAL VARIABLES
+// ===============================
+
+let leaderboardData = [];
+
+let currentUser = null;
+
+// ==========================================
+// LEADERBOARD JS
+// PART 2 / 5
+// AUTH + LOAD LEADERBOARD
+// ==========================================
+
+
+
+
+
+// ===============================
+// AUTH CHECK
+// ===============================
+
+onAuthStateChanged(auth, async(user)=>{
+
+if(!user){
+
+window.location.href = "login.html";
+
+return;
 
 }
 
-from
+currentUser = user;
 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+await loadLeaderboard();
 
-
-
-
-// =====================================
-// DOM
-// =====================================
-
-
-const leaderboardData =
-
-document.getElementById("leaderboardData");
-
-
-const topStudents =
-
-document.getElementById("topStudents");
+});
 
 
 
 
 
-// =====================================
-// LOAD RESULTS
-// =====================================
 
+// ===============================
+// LOAD LEADERBOARD
+// ===============================
 
 async function loadLeaderboard(){
 
-
 try{
 
+const q = query(
 
-const snap =
+collection(db,"results"),
 
-await getDocs(
-
-collection(db,"results")
+orderBy("marks","desc")
 
 );
 
+const snapshot = await getDocs(q);
 
+leaderboardData = [];
 
-let results=[];
+snapshot.forEach((doc)=>{
 
+leaderboardData.push({
 
+id:doc.id,
 
-snap.forEach((doc)=>{
+...doc.data()
 
-
-results.push(doc.data());
-
+});
 
 });
 
 
 
+// Apply current filter
 
-// SORT BY PERCENTAGE
-
-
-results.sort((a,b)=>{
-
-
-return b.percentage - a.percentage;
-
-
-});
-
-
-
-displayLeaderboard(results);
-
-
-
-displayTopStudents(results);
-
-
+applyFilter();
 
 }
-
-
-
 catch(error){
 
+console.error(
 
-console.log(
-
-"Leaderboard Error",
+"Leaderboard Load Error:",
 
 error
 
 );
 
+}
 
 }
 
 
+
+
+
+
+// ===============================
+// TOP 3 PODIUM
+// ===============================
+
+function loadPodium(data){
+
+const topThree = data.slice(0,3);
+
+
+
+if(topThree[0]){
+
+firstName.textContent =
+topThree[0].name || "Student";
+
+firstMarks.textContent =
+`${topThree[0].marks} Marks`;
+
+}
+
+
+
+if(topThree[1]){
+
+secondName.textContent =
+topThree[1].name || "Student";
+
+secondMarks.textContent =
+`${topThree[1].marks} Marks`;
+
+}
+
+
+
+if(topThree[2]){
+
+thirdName.textContent =
+topThree[2].name || "Student";
+
+thirdMarks.textContent =
+`${topThree[2].marks} Marks`;
+
+}
+
+
+
+// Summary
+
+totalTests.textContent = data.length;
+
+highestMarks.textContent =
+data.length ? data[0].marks : 0;
+
+const uniqueStudents =
+
+new Set(data.map(item=>item.uid));
+
+totalStudents.textContent =
+uniqueStudents.size;
+
+}
+// ==========================================
+// LEADERBOARD JS
+// PART 3 / 5
+// FILTER + SEARCH + LIST
+// ==========================================
+
+
+
+
+
+// ===============================
+// APPLY FILTER
+// ===============================
+
+function applyFilter(){
+
+let filteredData = [...leaderboardData];
+
+
+
+// Test Type Filter
+
+const selectedFilter = testFilter.value;
+
+if(selectedFilter !== "all"){
+
+filteredData = filteredData.filter(item=>{
+
+if(selectedFilter === "subject"){
+
+return item.subject &&
+item.subject !== "";
+
+}
+
+if(selectedFilter === "topic"){
+
+return item.topic &&
+item.topic !== "";
+
+}
+
+return item.testType === selectedFilter;
+
+});
+
+}
+
+
+
+// Search Filter
+
+const keyword =
+
+searchStudent.value
+.trim()
+.toLowerCase();
+
+if(keyword){
+
+filteredData = filteredData.filter(item=>
+
+(item.name || "")
+.toLowerCase()
+.includes(keyword)
+
+);
+
+}
+
+
+
+// Reload UI
+
+loadPodium(filteredData);
+
+renderLeaderboard(filteredData);
+
+updateMyRank(filteredData);
+
 }
 
 
 
 
 
-// =====================================
-// DISPLAY TABLE
-// =====================================
 
+// ===============================
+// RENDER LEADERBOARD
+// ===============================
 
-function displayLeaderboard(data){
+function renderLeaderboard(data){
 
-
-
-leaderboardData.innerHTML="";
+leaderboardList.innerHTML = "";
 
 
 
-data.forEach((student,index)=>{
-
-
+data.forEach((item,index)=>{
 
 const row =
+document.createElement("div");
 
-document.createElement("tr");
-
-
+row.className =
+"leaderboard-row";
 
 row.innerHTML = `
 
-<td>
+<span class="rank">
+#${index+1}
+</span>
 
-${index+1}
+<span class="student-name">
+${item.name || "Student"}
+</span>
 
-</td>
-
-
-<td>
-
-${student.name || "Student"}
-
-</td>
-
-
-<td>
-
-${student.district || "-"}
-
-</td>
-
-
-<td>
-
-${student.testType || "-"}
-
-</td>
-
-
-<td>
-
-${student.score || 0}
-
-</td>
-
-
-<td>
-
-${student.percentage || 0}%
-
-</td>
+<span class="student-marks">
+${item.marks}
+</span>
 
 `;
 
-
-
-leaderboardData.appendChild(row);
-
-
+leaderboardList.appendChild(row);
 
 });
 
-
 }
 
-
-
-
-
-// START
-
-loadLeaderboard();
-// =====================================
-// G THE GENIUS
+// ==========================================
 // LEADERBOARD JS
-// PART 2 FINAL
-// =====================================
+// PART 4 / 5
+// MY RANK + EVENTS
+// ==========================================
 
 
 
-// =====================================
-// TOP STUDENTS
-// =====================================
 
 
-function displayTopStudents(data){
+// ===============================
+// CURRENT STUDENT RANK
+// ===============================
 
+function updateMyRank(data){
 
-if(!topStudents) return;
+if(!currentUser) return;
 
+const index = data.findIndex(item=>
 
+item.uid === currentUser.uid
 
-topStudents.innerHTML="";
+);
 
+if(index === -1){
 
+myRank.textContent = "-";
+myMarks.textContent = "0";
+myTests.textContent = "0";
 
-const top = data.slice(0,3);
-
-
-
-top.forEach((student,index)=>{
-
-
-const card =
-
-document.createElement("div");
-
-
-
-card.className="top-card";
-
-
-
-let medal="🥉";
-
-
-if(index===0){
-
-medal="🥇";
-
-}
-
-else if(index===1){
-
-medal="🥈";
+return;
 
 }
 
 
 
-card.innerHTML = `
+// Student Results
 
+const myResults = data.filter(item=>
 
-<h2>
+item.uid === currentUser.uid
 
-${medal}
-
-</h2>
-
-
-<h3>
-
-${student.name || "Student"}
-
-</h3>
-
-
-<p>
-
-${student.district || "-"}
-
-</p>
-
-
-<p>
-
-Score : ${student.score || 0}
-
-</p>
-
-
-<p>
-
-${student.percentage || 0}%
-
-</p>
-
-
-`;
+);
 
 
 
-topStudents.appendChild(card);
+// Best Marks
+
+const bestMarks = Math.max(
+
+...myResults.map(item=>item.marks)
+
+);
 
 
 
-});
+// UI Update
 
+myRank.textContent = index + 1;
 
+myMarks.textContent = bestMarks;
+
+myTests.textContent = myResults.length;
 
 }
 
@@ -322,106 +447,219 @@ topStudents.appendChild(card);
 
 
 
-// =====================================
-// DISTRICT FILTER
-// =====================================
 
+// ===============================
+// REFRESH BUTTON
+// ===============================
 
-const districtFilter =
+refreshLeaderboard.addEventListener(
 
-document.getElementById("districtFilter");
-
-
-
-if(districtFilter){
-
-
-districtFilter.addEventListener(
-
-"change",
+"click",
 
 async()=>{
 
+await loadLeaderboard();
 
-const selected =
-
-districtFilter.value;
-
-
-
-const snap =
-
-await getDocs(
-
-collection(db,"results")
+}
 
 );
 
 
 
-let data=[];
 
 
 
-snap.forEach((doc)=>{
+// ===============================
+// SEARCH EVENT
+// ===============================
+
+searchStudent.addEventListener(
+
+"input",
+
+()=>{
+
+applyFilter();
+
+}
+
+);
 
 
-const item = doc.data();
 
 
 
-if(
 
-selected==="All" ||
+// ===============================
+// FILTER EVENT
+// ===============================
 
-item.district===selected
+testFilter.addEventListener(
 
-){
+"change",
+
+()=>{
+
+applyFilter();
+
+}
+
+);
+
+// ==========================================
+// LEADERBOARD JS
+// PART 5 / 5
+// FINAL
+// ==========================================
 
 
-data.push(item);
 
+
+
+// ===============================
+// EMPTY STATE
+// ===============================
+
+function showEmptyState(){
+
+leaderboardList.innerHTML = `
+
+<div class="leaderboard-empty">
+
+<h3>No Results Found</h3>
+
+<p>No leaderboard data is available.</p>
+
+</div>
+
+`;
 
 }
 
 
+
+
+
+// ===============================
+// UPDATE UI
+// ===============================
+
+function updateLeaderboardUI(data){
+
+if(data.length === 0){
+
+showEmptyState();
+
+return;
+
+}
+
+loadPodium(data);
+
+renderLeaderboard(data);
+
+updateMyRank(data);
+
+}
+
+
+
+
+
+// ===============================
+// SAFE FILTER
+// ===============================
+
+const oldApplyFilter = applyFilter;
+
+applyFilter = function(){
+
+let filteredData = [...leaderboardData];
+
+
+
+// Test Filter
+
+const selected = testFilter.value;
+
+if(selected !== "all"){
+
+if(selected === "subject"){
+
+filteredData = filteredData.filter(item=>item.subject);
+
+}
+else if(selected === "topic"){
+
+filteredData = filteredData.filter(item=>item.topic);
+
+}
+else{
+
+filteredData = filteredData.filter(
+
+item=>item.testType === selected
+
+);
+
+}
+
+}
+
+
+
+// Search
+
+const keyword =
+
+searchStudent.value
+.trim()
+.toLowerCase();
+
+if(keyword){
+
+filteredData = filteredData.filter(item=>
+
+(item.name || "")
+.toLowerCase()
+.includes(keyword)
+
+);
+
+}
+
+
+
+updateLeaderboardUI(filteredData);
+
+};
+
+
+
+
+
+
+// ===============================
+// PAGE READY
+// ===============================
+
+window.addEventListener("load",()=>{
+
+console.log(
+
+"G THE GENIUS Leaderboard Loaded Successfully"
+
+);
 
 });
 
 
 
-data.sort((a,b)=>
-
-
-b.percentage-a.percentage
-
-
-);
 
 
 
-displayLeaderboard(data);
-
-
-displayTopStudents(data);
-
-
-
-}
-
-
-);
-
-
-}
-
-
-
-
-console.log(
-
-"G THE GENIUS LEADERBOARD LOADED"
-
-);
+// ===============================
+// END OF FILE
+// ===============================
 
 
