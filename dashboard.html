@@ -7,12 +7,13 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>
 G THE GENIUS Dashboard
 </title>
 
 
-<meta name="theme-color" content="#081229">
+<meta name="theme-color" content="#050B1F">
 
 
 <link rel="icon"
@@ -22,68 +23,66 @@ href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 <link rel="stylesheet" href="css/dashboard.css">
 
 
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 
 </head>
 
-  <body>
+
+<body>
+
+
+<div class="app-container">
+
+
+
+<!-- HEADER -->
 
 
 <header class="app-header">
 
 
-<div class="app-logo">
+<div class="logo-box">
 
-<img 
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS Logo">
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS">
+
 
 </div>
 
 
-
-<div class="app-title">
-
-<h2>
+<h1>
 G THE GENIUS
-</h2>
+</h1>
 
 
 <p>
-Government Exam Portal
+Government Exam Mock Test Portal
 </p>
-
-
-</div>
 
 
 </header>
 
+  
+<!-- STUDENT PROFILE CARD -->
 
 
-  <main class="dashboard-container">
+<section class="student-card">
 
 
-
-<section class="welcome-card">
-
-
-<div class="profile-circle">
-
+<div class="student-avatar">
 
 👤
-
 
 </div>
 
 
 
-<div class="student-info">
+<div class="student-details">
 
 
-<h1>
+<h2>
 
 Welcome,
 
@@ -93,7 +92,7 @@ Student
 
 </span>
 
-</h1>
+</h2>
 
 
 <p id="studentDistrict">
@@ -103,8 +102,8 @@ Student
 </p>
 
 
-</div>
 
+</div>
 
 
 </section>
@@ -113,10 +112,13 @@ Student
 
 
 
+<!-- LEVEL CARD -->
+
+
 <section class="level-card">
 
 
-<div class="level-title">
+<div class="level-top">
 
 
 <h3>
@@ -130,6 +132,7 @@ Student
 </span>
 
 </h3>
+
 
 
 <p>
@@ -150,7 +153,7 @@ XP :
 
 
 
-<div class="xp-bar">
+<div class="progress-box">
 
 
 <div id="xpProgress">
@@ -161,21 +164,31 @@ XP :
 </div>
 
 
-
 </section>
 
 
 
 
 
+<!-- DAILY MOTIVATION -->
+
+
 <section class="motivation-card">
+
+
+<div class="motivation-icon">
+
+🌟
+
+</div>
 
 
 <h3>
 
-🌟 Daily Motivation
+Daily Motivation
 
 </h3>
+
 
 
 <p id="dailyQuote">
@@ -183,6 +196,7 @@ XP :
 Loading...
 
 </p>
+
 
 
 <span>
@@ -194,7 +208,11 @@ Loading...
 
 </section>
 
-    <section class="test-section">
+ 
+<!-- MOCK TEST SECTION -->
+
+
+<section class="test-section">
 
 
 <h2>
@@ -205,17 +223,26 @@ Loading...
 
 
 
-
-<div class="test-grid">
-
+<div class="test-container">
 
 
-<div class="test-card daily">
+
+<!-- DAILY -->
+
+
+<div class="test-card daily-card">
+
+
+<div class="test-icon">
+
+🟢
+
+</div>
 
 
 <h3>
 
-🟢 Daily Mock Test
+Daily Mock Test
 
 </h3>
 
@@ -234,11 +261,10 @@ Loading...
 </p>
 
 
-<button 
-type="button"
-onclick="startTest('daily')">
 
-Start Test
+<button onclick="startTest('daily')">
+
+START NOW
 
 </button>
 
@@ -249,12 +275,22 @@ Start Test
 
 
 
-<div class="test-card weekly">
+<!-- WEEKLY -->
+
+
+<div class="test-card weekly-card">
+
+
+<div class="test-icon">
+
+🟡
+
+</div>
 
 
 <h3>
 
-🟡 Weekly Mock Test
+Weekly Mock Test
 
 </h3>
 
@@ -273,11 +309,10 @@ Start Test
 </p>
 
 
-<button 
-type="button"
-onclick="startTest('weekly')">
 
-Start Test
+<button onclick="startTest('weekly')">
+
+START NOW
 
 </button>
 
@@ -288,12 +323,23 @@ Start Test
 
 
 
-<div class="test-card monthly">
+
+<!-- MONTHLY -->
+
+
+<div class="test-card monthly-card">
+
+
+<div class="test-icon">
+
+🔴
+
+</div>
 
 
 <h3>
 
-🔴 Monthly Grand Test
+Monthly Grand Test
 
 </h3>
 
@@ -312,11 +358,10 @@ Start Test
 </p>
 
 
-<button 
-type="button"
-onclick="startTest('monthly')">
 
-Start Test
+<button onclick="startTest('monthly')">
+
+START NOW
 
 </button>
 
@@ -328,12 +373,19 @@ Start Test
 </div>
 
 
-  </section>
-
-    <section class="quick-menu">
+</section>
 
 
-<div class="menu-card"
+
+
+
+<!-- QUICK MENU -->
+
+
+<section class="quick-section">
+
+
+<div class="quick-card"
 onclick="location.href='leaderboard.html'">
 
 
@@ -356,8 +408,7 @@ Leaderboard
 
 
 
-
-<div class="menu-card"
+<div class="quick-card"
 onclick="location.href='profile.html'">
 
 
@@ -379,42 +430,85 @@ Profile
 
 
 
+</section>
+
+  
+<!-- FOOTER CONTACT -->
 
 
-<div class="menu-card"
-id="adminLink"
-style="display:none;"
-onclick="location.href='admin.html'">
+<footer class="app-footer">
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS">
 
 
 <h3>
 
-⚙️
+G THE GENIUS
 
 </h3>
 
 
 <p>
 
-Admin
+All Government Exam Mock Test Portal
 
 </p>
+
+
+
+<div class="social-links">
+
+
+<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank">
+
+▶️ YouTube
+
+</a>
+
+
+
+<a href="https://t.me/gthegenius"
+target="_blank">
+
+📢 Telegram
+
+</a>
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+✉️ Email
+
+</a>
+
+
+
+</div>
+
+
+<p class="copyright">
+
+© 2026 G THE GENIUS
+
+</p>
+
+
+
+</footer>
+
+
+
 
 
 </div>
 
 
 
-</section>
-
-
-
-
-
-</main>
-
-
-
+<!-- BOTTOM NAVIGATION -->
 
 
 <nav class="bottom-nav">
@@ -425,9 +519,7 @@ Admin
 🏠
 
 <span>
-
 Home
-
 </span>
 
 </a>
@@ -439,9 +531,7 @@ Home
 📝
 
 <span>
-
 Test
-
 </span>
 
 </a>
@@ -453,9 +543,7 @@ Test
 🏆
 
 <span>
-
 Rank
-
 </span>
 
 </a>
@@ -467,12 +555,11 @@ Rank
 👤
 
 <span>
-
 Profile
-
 </span>
 
 </a>
+
 
 
 </nav>
@@ -505,4 +592,4 @@ window.location.href=
 
 </body>
 
-</html>
+  </html>
