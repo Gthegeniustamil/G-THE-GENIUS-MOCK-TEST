@@ -512,3 +512,34 @@ console.log(
 }
 
 );
+// ===============================
+// DAILY MOTIVATION QUOTES
+// ===============================
+
+const quotes = [
+
+"வெற்றி என்பது முயற்சியை ஒருபோதும் கைவிடாதவர்களுக்கு மட்டுமே கிடைக்கும்.",
+
+"இன்று படிக்கும் ஒரு மணி நேரம் நாளைய வெற்றியை உருவாக்கும்.",
+
+"தோல்வி என்பது முடிவு அல்ல, மீண்டும் முயற்சி செய்யும் வாய்ப்பு.",
+
+"கனவு காணுங்கள், திட்டமிடுங்கள், தினமும் உழையுங்கள்.",
+
+"ஒவ்வொரு Mock Test-மும் உங்களை Selection-க்கு அருகில் கொண்டு செல்லும்."
+
+];
+
+
+const quoteBox = document.getElementById("dailyQuote");
+
+
+if(quoteBox){
+
+let today = new Date().getDate();
+
+let quoteIndex = today % quotes.length;
+
+quoteBox.innerHTML = quotes[quoteIndex];
+
+}
