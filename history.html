@@ -1,178 +1,630 @@
+<!-- ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+HISTORY HTML
+PART 1 / 5
+========================================== -->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS - Test History</title>
+<title>
 
-<link rel="stylesheet" href="history.css">
+Test History | G THE GENIUS
+
+</title>
+
+<meta name="theme-color"
+content="#081229">
+
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+<link rel="stylesheet"
+href="history.css">
 
 </head>
 
 <body>
 
-<!-- =========================
-HEADER
-========================= -->
+<div class="history-container">
+
+<!-- HEADER START -->
 
 <header class="history-header">
 
+<div class="logo-box">
+
 <img
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo"
 class="history-logo">
 
-<div>
+</div>
 
-<h2>G THE GENIUS</h2>
+<div class="history-title">
 
-<p>Mock Test History</p>
+<h1>
+
+G THE GENIUS
+
+</h1>
+
+<p>
+
+Student Test History
+
+</p>
 
 </div>
 
 </header>
 
-<!-- =========================
-STUDENT INFO
-========================= -->
+<!-- HEADER END -->
 
-<section class="student-card">
 
-<h2 id="studentName">Student</h2>
+
+
+
+<!-- PROFILE SUMMARY -->
+
+<section class="history-profile-section">
+
+<div class="history-profile-card">
+
+<div class="history-avatar">
+
+👤
+
+</div>
+
+<h2 id="studentName">
+
+Loading...
+
+</h2>
+
+<p id="studentEmail">
+
+Loading...
+
+</p>
+
+<span class="history-badge">
+
+📜 Test History
+
+</span>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+HISTORY HTML
+PART 2 / 5
+========================================== -->
+
+
+
+<!-- HISTORY STATISTICS -->
+
+<section class="history-stats-section">
+
+<div class="history-stats-grid">
+
+<div class="history-stat-card">
+
+<h3>
+
+📝 Total Tests
+
+</h3>
+
+<strong id="totalTests">
+
+0
+
+</strong>
+
+</div>
+
+<div class="history-stat-card">
+
+<h3>
+
+🏆 Best Marks
+
+</h3>
+
+<strong id="bestMarks">
+
+0
+
+</strong>
+
+</div>
+
+<div class="history-stat-card">
+
+<h3>
+
+📊 Average
+
+</h3>
+
+<strong id="averageMarks">
+
+0
+
+</strong>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- FILTER SECTION -->
+
+<section class="history-filter-section">
+
+<div class="history-filter-card">
+
+<h2>
+
+🔍 Search & Filter
+
+</h2>
+
+<input
+type="text"
+id="searchHistory"
+placeholder="Search Test Name...">
+
+<select id="historyFilter">
+
+<option value="all">
+
+All Tests
+
+</option>
+
+<option value="daily">
+
+Daily Mock Test
+
+</option>
+
+<option value="weekly">
+
+Weekly Mock Test
+
+</option>
+
+<option value="monthly">
+
+Monthly Grand Test
+
+</option>
+
+<option value="subject">
+
+Subject-wise Test
+
+</option>
+
+<option value="topic">
+
+Topic-wise Test
+
+</option>
+
+</select>
+
+<button
+id="refreshHistory"
+class="refresh-btn">
+
+🔄 Refresh History
+
+</button>
+
+</div>
+
+</section>
+
+ <!-- ==========================================
+HISTORY HTML
+PART 3 / 5
+========================================== -->
+
+
+
+<!-- TEST HISTORY LIST -->
+
+<section class="history-list-section">
+
+<h2>
+
+📜 Test History
+
+</h2>
+
+<div
+id="historyList"
+class="history-list">
+
+<!-- History items will be loaded here by history.js -->
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- HISTORY CARD TEMPLATE (Dynamic) -->
+
+<!-- Example Structure:
+
+<div class="history-card">
+
+<div class="history-top">
+
+<span class="test-type">
+
+📝 Daily Mock Test
+
+</span>
+
+<span class="test-date">
+
+31/07/2026 • 10:30 AM
+
+</span>
+
+</div>
+
+<div class="history-body">
+
+<h3>
+
+TNUSRB Mock Test
+
+</h3>
+
+<div class="history-details">
+
+<div>
+
+<strong>Marks</strong>
+
+<p>92 / 100</p>
+
+</div>
+
+<div>
+
+<strong>Percentage</strong>
+
+<p>92%</p>
+
+</div>
+
+<div>
+
+<strong>Rank</strong>
+
+<p>#5</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+-->
+
+
+
+<!-- EMPTY STATE -->
+
+<div
+id="emptyHistory"
+class="empty-history"
+style="display:none;">
+
+<h3>
+
+📭 No Test History Found
+
+</h3>
 
 <p>
-📍 <span id="studentDistrict">-</span>
-</p>
 
-<p>
-📚 <span id="studentExam">TNUSRB</span>
-</p>
-
-</section>
-
-<!-- =========================
-SUMMARY CARD
-========================= -->
-
-<section class="summary-card">
-
-<div class="summary-grid">
-
-<div>
-<h2 id="totalTests">0</h2>
-<p>Tests</p>
-</div>
-
-<div>
-<h2 id="totalMarks">0</h2>
-<p>Total Marks</p>
-</div>
-
-<div>
-<h2 id="bestScore">0</h2>
-<p>Best Score</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- =========================
-TEST HISTORY
-========================= -->
-
-<section class="history-card">
-
-<h2>📜 Test History</h2>
-
-<div id="historyList">
-
-<p class="loading">
-
-Loading Test History...
+Complete a mock test to see your history here.
 
 </p>
 
 </div>
 
+  <!-- ==========================================
+HISTORY HTML
+PART 4 / 5
+========================================== -->
+
+
+
+<!-- PERFORMANCE SUMMARY -->
+
+<section class="performance-summary-section">
+
+<div class="performance-summary-card">
+
+<h2>
+
+📈 Performance Summary
+
+</h2>
+
+<div class="performance-summary-grid">
+
+<div class="summary-item">
+
+<span>🔥 Latest Score</span>
+
+<strong id="latestScore">
+
+0
+
+</strong>
+
+</div>
+
+<div class="summary-item">
+
+<span>⭐ Highest Score</span>
+
+<strong id="highestScore">
+
+0
+
+</strong>
+
+</div>
+
+<div class="summary-item">
+
+<span>🎯 Success Rate</span>
+
+<strong id="successRate">
+
+0%
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- =========================
-BOTTOM NAV
-========================= -->
 
-<nav class="bottom-nav">
 
-<a href="dashboard.html">
 
-🏠<br>
-Home
 
-</a>
+<!-- QUICK NAVIGATION -->
 
-<a href="practice.html">
+<section class="quick-nav-section">
 
-📚<br>
-Practice
+<div class="quick-nav-card">
 
-</a>
+<h2>
 
-<a href="leaderboard.html">
+⚡ Quick Navigation
 
-🏆<br>
-Leaderboard
+</h2>
+
+<div class="quick-nav-grid">
+
+<a href="dashboard.html" class="quick-btn">
+
+🏠 Dashboard
 
 </a>
 
-<a href="profile.html">
+<a href="mocktest.html?type=daily" class="quick-btn">
 
-👤<br>
-Profile
+📝 Daily Test
 
 </a>
 
-</nav>
+<a href="leaderboard.html" class="quick-btn">
 
-<!-- =========================
-FOOTER
-========================= -->
+🏆 Leaderboard
 
-<footer class="footer">
+</a>
 
-<h3>G THE GENIUS</h3>
+<a href="profile.html" class="quick-btn">
 
-<a href="https://youtube.com/@gthegeniustamil">
+👤 Profile
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- SOCIAL LINKS -->
+
+<section class="social-section">
+
+<div class="social-card">
+
+<h2>
+
+🌐 Connect With Us
+
+</h2>
+
+<div class="social-links">
+
+<a
+href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank"
+class="social-btn youtube">
 
 ▶ YouTube
 
 </a>
 
-<a href="https://t.me/gthegenius">
+<a
+href="https://t.me/gthegenius"
+target="_blank"
+class="social-btn telegram">
 
-📢 Telegram
+✈ Telegram
+
+</a>
+
+<a
+href="mailto:gthegenius7@gmail.com"
+class="social-btn email">
+
+✉ Email
 
 </a>
 
-<a href="mailto:gthegenius7@gmail.com">
+</div>
 
-📧 Email
+</div>
 
-</a>
+</section>
+
+
+
+
+
+<!-- MOTIVATION -->
+
+<section class="motivation-section">
+
+<div class="motivation-card">
+
+<h2>
+
+💡 Keep Practicing
+
+</h2>
 
 <p>
 
-© 2026 G THE GENIUS.
-All Rights Reserved.
+Every mock test improves your confidence and increases your chances of success in the TNUSRB examination.
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+HISTORY HTML
+PART 5 / 5
+FINAL
+========================================== -->
+
+
+
+<!-- FOOTER START -->
+
+<footer class="app-footer">
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+<p>
+
+ALL GOVERNMENT EXAM MOCK TEST
+
+</p>
+
+<div class="footer-links">
+
+<a href="dashboard.html">
+
+🏠 Home
+
+</a>
+
+<a href="mocktest.html?type=daily">
+
+📝 Mock Test
+
+</a>
+
+<a href="leaderboard.html">
+
+🏆 Leaderboard
+
+</a>
+
+<a href="profile.html">
+
+👤 Profile
+
+</a>
+
+</div>
+
+<p class="copyright">
+
+© 2026 G THE GENIUS. All Rights Reserved.
 
 </p>
 
 </footer>
 
-<script type="module" src="history.js"></script>
+<!-- FOOTER END -->
+
+
+
+</div>
+
+<!-- HISTORY JS -->
+
+<script
+type="module"
+src="history.js">
+
+</script>
 
 </body>
 
-</html>
+</html>  
