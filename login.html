@@ -4,94 +4,366 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G THE GENIUS - Login</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+<title>
+
+Login | G THE GENIUS
+
+</title>
+
+<meta name="theme-color"
+content="#081229">
+
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+<link rel="stylesheet"
+href="css/auth.css">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 </head>
-
 
 <body>
 
 
-<div class="login-box">
 
+<!-- ========================= -->
+<!-- LOGIN CONTAINER -->
+<!-- ========================= -->
 
-<div class="logo-area">
-
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="login-logo">
-
-</div>
+<div class="login-container">
 
 
 
-<h1>🛡️ G THE GENIUS</h1>
+<div class="login-card">
 
-<p class="tagline">
-TNUSRB MOCK TEST APP
+
+
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="logo"
+
+alt="Logo">
+
+
+
+<h1>
+
+G THE GENIUS
+
+</h1>
+
+
+
+<p>
+
+Government Exam Portal
+
 </p>
 
 
 
+<form id="loginForm">
 
-<div class="input-box">
+
+
+<div class="input-group">
+
+<label>
+
+Email Address
+
+</label>
 
 <input
+
 type="email"
+
 id="email"
-placeholder="📧 Enter Email">
+
+placeholder="Enter Email"
+
+required>
 
 </div>
 
 
 
+<div class="input-group">
 
-<div class="input-box">
+<label>
+
+Password
+
+</label>
 
 <input
+
 type="password"
+
 id="password"
-placeholder="🔒 Enter Password">
+
+placeholder="Enter Password"
+
+required>
+
+</div>
+
+  <!-- ========================================= -->
+<!-- SHOW PASSWORD -->
+<!-- ========================================= -->
+
+<div class="show-password">
+
+<input
+
+type="checkbox"
+
+id="showPassword">
+
+<label for="showPassword">
+
+Show Password
+
+</label>
 
 </div>
 
 
 
+<!-- ========================================= -->
+<!-- REMEMBER + FORGOT -->
+<!-- ========================================= -->
 
-<button id="loginBtn">
+<div class="login-options">
 
-🔑 LOGIN
+<label>
+
+<input
+
+type="checkbox"
+
+id="rememberMe">
+
+Remember Me
+
+</label>
+
+<a href="forgot-password.html">
+
+Forgot Password?
+
+</a>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- LOGIN BUTTON -->
+<!-- ========================================= -->
+
+<button
+
+type="submit"
+
+id="loginBtn"
+
+class="login-btn">
+
+🔐 Login
 
 </button>
 
 
 
+<!-- ========================================= -->
+<!-- REGISTER -->
+<!-- ========================================= -->
 
-<button onclick="location.href='register.html'">
+<div class="register-area">
 
-🆕 CREATE ACCOUNT
+<p>
 
-</button>
-
-
-
-<p class="bottom-text">
-
-🚔 Prepare • Practice • Achieve
+Don't have an account?
 
 </p>
 
+<a
 
+href="register.html"
+
+class="register-btn">
+
+Create New Account
+
+</a>
 
 </div>
 
 
 
-<script type="module" src="login.js"></script>
+</form>
 
+
+
+</div>
+
+</div>
+
+  <!-- ========================================= -->
+<!-- SOCIAL LINKS -->
+<!-- ========================================= -->
+
+<div class="social-section">
+
+<h3>
+
+Connect With Us
+
+</h3>
+
+<div class="social-buttons">
+
+<a
+
+href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+
+target="_blank"
+
+class="social-btn youtube">
+
+▶️ YouTube
+
+</a>
+
+
+<a
+
+href="https://t.me/gthegenius"
+
+target="_blank"
+
+class="social-btn telegram">
+
+📢 Telegram
+
+</a>
+
+
+<a
+
+href="mailto:gthegenius7@gmail.com"
+
+class="social-btn email">
+
+📧 Email
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- QUICK LINKS -->
+<!-- ========================================= -->
+
+<div class="quick-links">
+
+<a href="about.html">
+
+About Us
+
+</a>
+
+|
+
+<a href="contact.html">
+
+Contact Us
+
+</a>
+
+|
+
+<a href="privacy.html">
+
+Privacy Policy
+
+</a>
+
+|
+
+<a href="disclaimer.html">
+
+Disclaimer
+
+</a>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- COPYRIGHT -->
+<!-- ========================================= -->
+
+<footer class="login-footer">
+
+<img
+
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+
+class="footer-logo"
+
+alt="Logo">
+
+<p>
+
+© <span id="copyrightYear"></span>
+
+G THE GENIUS
+
+</p>
+
+<p>
+
+All Rights Reserved
+
+</p>
+
+</footer>
+
+
+
+<script type="module"
+
+src="js/auth.js">
+
+</script>
+
+<script type="module"
+
+src="js/common.js">
+
+</script>
 
 </body>
 
