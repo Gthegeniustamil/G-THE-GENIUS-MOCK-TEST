@@ -829,38 +829,57 @@ submitTest();
 
 
 // ==========================================
-// SCORE CALCULATION
+// SCORE CALCULATION FINAL
 // ==========================================
 
 
-
-function calculateScore(){
-
+function calculateResult(){
 
 
-let score = 0;
+let correct = 0;
 
+let wrong = 0;
 
-
+let unanswered = 0;
 
 
 
 questions.forEach((q,index)=>{
 
 
+let userAnswer =
+selectedAnswers[index];
 
-if(
 
-selectedAnswers[index]
+
+if(!userAnswer){
+
+
+unanswered++;
+
+
+}
+
+else if(
+
+userAnswer.trim()
 
 ===
 
-q.answer
+q.answer.trim()
 
 ){
 
 
-score++;
+correct++;
+
+
+}
+
+else{
+
+
+wrong++;
 
 
 }
@@ -873,12 +892,19 @@ score++;
 
 
 
+return {
 
-return score;
+correct,
 
+wrong,
+
+unanswered
+
+};
 
 
 }
+
 
 
 
@@ -894,8 +920,7 @@ return score;
 
 
 
-async function saveResult(score){
-
+async function saveResult(resultData){
 
 
 try{
@@ -941,31 +966,33 @@ testType,
 
 
 score:
+score:
+resultData.correct,
 
-score,
 
+correct:
+resultData.correct,
+
+
+wrong:
+resultData.wrong,
+
+
+unanswered:
+resultData.unanswered,
 
 
 totalQuestions:
-
 questions.length,
 
 
-
 percentage:
-
 (
-
-score /
-
+resultData.correct /
 questions.length
-
 *
-
 100
-
 ).toFixed(2),
-
 
 
 createdAt:
@@ -1029,15 +1056,12 @@ clearInterval(timer);
 
 
 
-let score =
+let resultData =
 
-calculateScore();
-
-
+calculateResult();
 
 
-
-await saveResult(score);
+await saveResult(resultData);
 
 
 
