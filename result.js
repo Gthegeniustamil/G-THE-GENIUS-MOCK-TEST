@@ -771,6 +771,79 @@ ${item.status}
 
 }
 
+// ==========================================
+// QUESTION REVIEW FINAL
+// ==========================================
+
+const reviewContainer =
+document.getElementById("reviewContainer");
+
+const reviewData =
+JSON.parse(
+localStorage.getItem("lastReview")
+) || [];
+
+if(reviewContainer){
+
+reviewContainer.innerHTML = "";
+
+reviewData.forEach((item,index)=>{
+
+let statusClass = "unanswered";
+
+if(item.status === "Correct"){
+
+statusClass = "correct-answer";
+
+}
+
+else if(item.status === "Wrong"){
+
+statusClass = "wrong-answer";
+
+}
+
+reviewContainer.innerHTML += `
+
+<div class="review-card">
+
+<h3>Question ${index+1}</h3>
+
+<p><b>Question :</b><br>
+${item.question}
+</p>
+
+<p>
+<b>Your Answer :</b>
+<span class="${statusClass}">
+${item.yourAnswer}
+</span>
+</p>
+
+<p>
+<b>Correct Answer :</b>
+<span class="correct-answer">
+${item.correctAnswer}
+</span>
+</p>
+
+<p>
+<b>Explanation :</b><br>
+${item.explanation}
+</p>
+
+<p class="${statusClass}">
+${item.status}
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
 console.log(
 
 `
