@@ -64,6 +64,9 @@ document.getElementById("logoutBtn");
 // =====================================
 
 
+const ADMIN_UID = "YOUR_ADMIN_FIREBASE_UID";
+
+
 onAuthStateChanged(auth,(user)=>{
 
 
@@ -72,14 +75,30 @@ if(!user){
 
 window.location.href="login.html";
 
+return;
+
+
+}
+
+
+
+if(user.uid !== ADMIN_UID){
+
+
+alert("❌ Access Denied");
+
+
+window.location.href="dashboard.html";
+
+
+return;
+
 
 }
 
 
 
 });
-
-
 
 
 
