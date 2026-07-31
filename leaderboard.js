@@ -175,7 +175,94 @@ error
 
 
 }
+// ==========================================
+// LOAD TAMIL NADU DISTRICTS
+// ==========================================
 
+
+const tamilNaduDistricts = [
+
+"Ariyalur",
+"Chengalpattu",
+"Chennai",
+"Coimbatore",
+"Cuddalore",
+"Dharmapuri",
+"Dindigul",
+"Erode",
+"Kallakurichi",
+"Kancheepuram",
+"Kanniyakumari",
+"Karur",
+"Krishnagiri",
+"Madurai",
+"Mayiladuthurai",
+"Nagapattinam",
+"Namakkal",
+"Perambalur",
+"Pudukkottai",
+"Ramanathapuram",
+"Ranipet",
+"Salem",
+"Sivaganga",
+"Tenkasi",
+"Thanjavur",
+"Theni",
+"Thoothukudi",
+"Tiruchirappalli",
+"Tirunelveli",
+"Tirupathur",
+"Tiruppur",
+"Tiruvallur",
+"Tiruvannamalai",
+"Tiruvarur",
+"Vellore",
+"Viluppuram",
+"Virudhunagar"
+
+];
+
+
+
+
+
+const districtFilter =
+document.getElementById(
+"districtFilter"
+);
+
+
+
+
+
+if(districtFilter){
+
+
+tamilNaduDistricts.forEach(
+(district)=>{
+
+
+let option =
+document.createElement("option");
+
+
+option.value =
+district;
+
+
+option.textContent =
+district;
+
+
+
+districtFilter.appendChild(option);
+
+
+
+});
+
+
+}
 // ==========================================
 // DISPLAY LEADERBOARD TABLE
 // PART 2 / 5
