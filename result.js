@@ -1,45 +1,60 @@
-// =====================================
-// G THE GENIUS
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
 // RESULT JS
-// PART 1
-// =====================================
+// PART 1 / 4
+// ==========================================
 
-
-import { auth, db } from "./firebase-config.js";
 
 
 import {
 
-doc,
-getDoc,
-updateDoc
+auth,
+db
 
-}
+} from "./firebase-config.js";
 
-from
 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
 
 
 import {
 
 onAuthStateChanged
 
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
 
-// =====================================
-// GET RESULT DATA
-// =====================================
 
 
-const params =
+import {
+
+collection,
+query,
+where,
+orderBy,
+limit,
+getDocs
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+
+
+
+// ===============================
+// URL DATA
+// ===============================
+
+
+
+const urlParams =
 
 new URLSearchParams(
 
@@ -49,390 +64,543 @@ window.location.search
 
 
 
-const score =
+
+
+
+const marksFromURL =
 
 Number(
 
-params.get("score")
+urlParams.get("marks")
 
-)||0;
+) || 0;
 
 
 
-const total =
+
+
+
+const totalFromURL =
 
 Number(
 
-params.get("total")
+urlParams.get("total")
 
-)||0;
-
-
-
-
-const percentage =
-
-total
-
-?
-
-Math.round(
-
-(score / total) * 100
-
-)
-
-:
-
-0;
+) || 0;
 
 
 
 
 
-// =====================================
-// DOM
-// =====================================
-
-
-const scoreText =
-
-document.getElementById("score");
-
-
-const totalText =
-
-document.getElementById("total");
-
-
-const percentageText =
-
-document.getElementById("percentage");
-
-
-const correctText =
-
-document.getElementById("correct");
-
-
-const wrongText =
-
-document.getElementById("wrong");
 
 
 
 
 
-// DISPLAY RESULT
 
-
-scoreText.innerHTML = score;
-
-
-totalText.innerHTML = total;
-
-
-percentageText.innerHTML =
-
-percentage + "%";
+// ===============================
+// HTML ELEMENTS
+// ===============================
 
 
 
-correctText.innerHTML = score;
+const marksDisplay =
 
-
-wrongText.innerHTML =
-
-total - score;
+document.getElementById("marks");
 
 
 
+const totalQuestions =
+
+document.getElementById("totalQuestions");
 
 
-// =====================================
-// UPDATE STUDENT XP
-// =====================================
+
+const rankDisplay =
+
+document.getElementById("rank");
 
 
-onAuthStateChanged(auth,async(user)=>{
+
+const resultMessage =
+
+document.getElementById("resultMessage");
 
 
-if(!user) return;
 
 
+
+
+
+
+
+
+
+// ===============================
+// INITIAL MARK DISPLAY
+// ===============================
+
+
+
+if(marksDisplay){
+
+
+marksDisplay.innerHTML =
+
+marksFromURL;
+
+
+}
+
+
+
+
+
+if(totalQuestions){
+
+
+totalQuestions.innerHTML =
+
+totalFromURL;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// AUTH CHECK
+// ===============================
+
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+
+
+if(!user){
+
+
+window.location.href="login.html";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+await loadRank(user.uid);
+
+
+
+
+});
+
+// ==========================================
+// RESULT JS
+// PART 2 / 4
+// RANK + SCORE DETAILS
+// ==========================================
+
+
+
+
+
+
+// ===============================
+// LOAD RANK
+// ===============================
+
+
+async function loadRank(uid){
 
 try{
 
-
-const userRef =
-
-doc(
-
-db,
-
-"students",
-
-user.uid
-
-);
+const resultsRef = collection(db,"results");
 
 
 
-const snap =
+// Highest marks first
 
-await getDoc(userRef);
+const q = query(
 
+resultsRef,
 
+orderBy("marks","desc"),
 
-if(snap.exists()){
-
-
-const data = snap.data();
-
-
-
-let oldXP =
-
-data.xp || 0;
-
-
-
-let earnedXP = score * 5;
-
-
-
-await updateDoc(
-
-userRef,
-
-{
-
-
-xp:
-
-oldXP + earnedXP
-
-
-
-}
+limit(1000)
 
 );
 
 
 
-const xpBox =
+const snapshot = await getDocs(q);
 
-document.getElementById("earnedXP");
-
-
-
-if(xpBox){
+let rank = 1;
+let found = false;
 
 
-xpBox.innerHTML =
 
-earnedXP;
+snapshot.forEach((doc)=>{
 
+const data = doc.data();
+
+if(!found && data.uid === uid && data.marks === marksFromURL){
+
+found = true;
+
+}else if(!found){
+
+rank++;
+
+}
+
+});
+
+
+
+if(rankDisplay){
+
+rankDisplay.textContent = found ? rank : "-";
 
 }
 
 
 
+// ===============================
+// CORRECT / WRONG
+// ===============================
+
+const correctAnswers =
+document.getElementById("correctAnswers");
+
+const wrongAnswers =
+document.getElementById("wrongAnswers");
+
+
+
+if(correctAnswers){
+
+correctAnswers.textContent = marksFromURL;
+
 }
 
 
 
+if(wrongAnswers){
+
+wrongAnswers.textContent =
+Math.max(0,totalFromURL - marksFromURL);
+
 }
 
-catch(error){
 
 
-console.log(
+// ===============================
+// RESULT MESSAGE
+// ===============================
 
-"XP Update Error",
+if(resultMessage){
+
+if(marksFromURL === totalFromURL){
+
+resultMessage.textContent =
+"🏆 Outstanding Performance!";
+
+}
+else if(marksFromURL >= Math.ceil(totalFromURL * 0.8)){
+
+resultMessage.textContent =
+"🌟 Excellent! Keep it up!";
+
+}
+else if(marksFromURL >= Math.ceil(totalFromURL * 0.6)){
+
+resultMessage.textContent =
+"👍 Good Job! Practice More.";
+
+}
+else{
+
+resultMessage.textContent =
+"📚 Keep Practicing. Success is Near!";
+
+}
+
+}
+
+}catch(error){
+
+console.error("Result Load Error:",error);
+
+}
+
+}
+
+// ==========================================
+// RESULT JS
+// PART 3 / 4
+// STUDENT STATS UPDATE
+// ==========================================
+
+
+
+import {
+
+doc,
+getDoc,
+updateDoc,
+increment
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+// ===============================
+// UPDATE STUDENT STATISTICS
+// ===============================
+
+
+async function updateStudentStats(uid){
+
+try{
+
+const studentRef = doc(db,"students",uid);
+
+const studentSnap = await getDoc(studentRef);
+
+
+
+if(studentSnap.exists()){
+
+const studentData = studentSnap.data();
+
+
+
+// Update student totals
+
+await updateDoc(studentRef,{
+
+totalMarks: increment(marksFromURL),
+
+testsCompleted: increment(1),
+
+lastMarks: marksFromURL,
+
+lastTestDate: new Date(),
+
+lastUpdated: new Date()
+
+});
+
+
+
+console.log("Student statistics updated.");
+
+}
+
+}catch(error){
+
+console.error(
+
+"Student Update Error:",
 
 error
 
 );
 
+}
 
 }
 
 
 
+
+
+
+// ===============================
+// CALL UPDATE
+// ===============================
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+if(user){
+
+await updateStudentStats(user.uid);
+
+}
+
 });
 
-// =====================================
-// G THE GENIUS
+
+
+
+
+
+// ===============================
+// SAVE LAST RESULT
+// ===============================
+
+
+localStorage.setItem(
+
+"lastMarks",
+
+marksFromURL
+
+);
+
+localStorage.setItem(
+
+"lastTotal",
+
+totalFromURL
+
+);
+
+// ==========================================
 // RESULT JS
-// PART 2 FINAL
-// =====================================
-
-
-
-// =====================================
-// PERFORMANCE MESSAGE
-// =====================================
-
-
-const resultText =
-
-document.getElementById("resultText");
-
-
-
-if(resultText){
-
-
-if(percentage >= 90){
-
-
-resultText.innerHTML =
-
-"🏆 Excellent Performance!";
-
-
-}
-
-
-else if(percentage >= 70){
-
-
-resultText.innerHTML =
-
-"🔥 Great Job! Keep Going";
-
-
-}
-
-
-else if(percentage >= 50){
-
-
-resultText.innerHTML =
-
-"👍 Good Attempt. Practice More";
-
-
-}
-
-
-else{
-
-
-resultText.innerHTML =
-
-"📚 Need More Practice";
-
-
-}
-
-
-
-}
+// PART 4 / 4
+// FINAL
+// ==========================================
 
 
 
 
 
-// =====================================
-// UPDATE LEVEL
-// =====================================
+// ===============================
+// ACTION BUTTONS
+// ===============================
 
+const dashboardBtn =
+document.querySelector(
+'a[href="dashboard.html"]'
+);
 
-async function updateLevel(){
+const leaderboardBtn =
+document.querySelector(
+'a[href="leaderboard.html"]'
+);
 
-
-const user = auth.currentUser;
-
-
-
-if(!user) return;
-
-
-
-const userRef =
-
-doc(
-
-db,
-
-"students",
-
-user.uid
-
+const historyBtn =
+document.querySelector(
+'a[href="history.html"]'
 );
 
 
 
-const snap =
-
-await getDoc(userRef);
 
 
+if(dashboardBtn){
 
-if(snap.exists()){
+dashboardBtn.addEventListener("click",(e)=>{
 
+e.preventDefault();
 
-const data = snap.data();
-
-
-
-const xp =
-
-data.xp || 0;
-
-
-
-const level =
-
-Math.floor(xp / 100) + 1;
-
-
-
-await updateDoc(
-
-userRef,
-
-{
-
-
-level:level
-
-
-}
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-onAuthStateChanged(auth,()=>{
-
-
-updateLevel();
-
+window.location.href = "dashboard.html";
 
 });
 
+}
+
+
+
+if(leaderboardBtn){
+
+leaderboardBtn.addEventListener("click",(e)=>{
+
+e.preventDefault();
+
+window.location.href = "leaderboard.html";
+
+});
+
+}
+
+
+
+if(historyBtn){
+
+historyBtn.addEventListener("click",(e)=>{
+
+e.preventDefault();
+
+window.location.href = "history.html";
+
+});
+
+}
 
 
 
 
-// =====================================
+
+
+// ===============================
+// SAVE LAST PAGE
+// ===============================
+
+localStorage.setItem(
+
+"lastPage",
+
+"result"
+
+);
+
+
+
+
+
+
+// ===============================
+// CLEAR TEMP TEST DATA
+// ===============================
+
+localStorage.removeItem("selectedAnswers");
+localStorage.removeItem("currentQuestion");
+localStorage.removeItem("timeLeft");
+
+
+
+
+
+
+// ===============================
 // PAGE READY
-// =====================================
+// ===============================
 
+window.addEventListener("load",()=>{
 
 console.log(
-
-"G THE GENIUS RESULT LOADED"
-
+"G THE GENIUS Result Page Loaded Successfully"
 );
+
+});
+
+
+
+
+
+
+// ===============================
+// END OF RESULT JS
+// ===============================
+
