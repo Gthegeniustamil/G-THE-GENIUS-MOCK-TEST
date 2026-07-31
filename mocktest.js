@@ -1072,7 +1072,7 @@ async function submitTest(){
 
         let resultData = calculateResult();
 await saveResult(resultData);
-
+alert("saveResult completed");
 // ==========================================
 // SAVE RESULT LOCAL STORAGE
 // ==========================================
