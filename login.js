@@ -50,7 +50,7 @@ let user = result.user;
 
 let userData =
 await getDoc(
-doc(db,"users",user.uid)
+doc(db,"students",user.uid)
 );
 
 
