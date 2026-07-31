@@ -1,6 +1,6 @@
 // =====================================
 // G THE GENIUS
-// DASHBOARD JS
+// PREMIUM DASHBOARD JS
 // PART 1
 // =====================================
 
@@ -35,7 +35,7 @@ from
 
 
 // ===============================
-// DOM
+// DOM ELEMENTS
 // ===============================
 
 
@@ -79,7 +79,7 @@ const ADMIN_UID = "YOUR_ADMIN_UID";
 
 
 // ===============================
-// LOAD USER
+// LOAD STUDENT DATA
 // ===============================
 
 
@@ -98,69 +98,86 @@ return;
 
 
 
-const userRef =
-
-doc(db,"students",user.uid);
+try{
 
 
+const userDoc =
 
-const snap =
+await getDoc(
 
-await getDoc(userRef);
+doc(db,"students",user.uid)
 
-
-
-if(snap.exists()){
-
-
-const data=snap.data();
+);
 
 
 
-if(studentName)
-
-studentName.innerHTML=data.name;
+if(userDoc.exists()){
 
 
-
-if(studentDistrict)
-
-studentDistrict.innerHTML=
-"📍 "+data.district;
+const data=userDoc.data();
 
 
 
-let xp=data.xp || 0;
+if(studentName){
+
+studentName.innerHTML =
+data.name || "Student";
+
+}
 
 
 
-let level=Math.floor(xp/50)+1;
+if(studentDistrict){
+
+studentDistrict.innerHTML =
+"📍 "+(data.district || "District");
+
+}
 
 
 
-if(userXP)
+
+let xp = data.xp || 0;
+
+
+
+let level =
+
+Math.floor(xp / 50)+1;
+
+
+
+if(userXP){
 
 userXP.innerHTML=xp;
 
+}
 
 
-if(userLevel)
+
+if(userLevel){
 
 userLevel.innerHTML=level;
 
-
-
-let progress=
-
-(xp%50)/50*100;
+}
 
 
 
-if(xpProgress)
+
+
+let progress =
+
+(xp % 50)/50*100;
+
+
+
+if(xpProgress){
 
 xpProgress.style.width=
 
 progress+"%";
+
+}
 
 
 
@@ -168,11 +185,22 @@ progress+"%";
 
 
 
+}
+
+catch(error){
+
+
+console.log(error);
+
+
+}
+
+
 });
 
 // =====================================
 // G THE GENIUS
-// DASHBOARD JS
+// PREMIUM DASHBOARD JS
 // PART 2 FINAL
 // =====================================
 
@@ -183,25 +211,22 @@ progress+"%";
 // ===============================
 
 
-const quotes = [
+const motivationList = [
 
 
-"வெற்றி என்பது தினசரி செய்யும் சிறிய முயற்சிகளின் பலன்.",
+"வெற்றி என்பது தினமும் செய்யும் சிறிய முயற்சிகளின் முடிவு.",
 
 
-"இன்று படிக்கும் நேரம் நாளைய வெற்றியை உருவாக்கும்.",
+"இன்று படிக்கும் ஒவ்வொரு நிமிடமும் நாளைய வெற்றியை உருவாக்கும்.",
 
 
-"தோல்வியை பயப்படாதீர்கள், முயற்சியை மட்டும் நிறுத்தாதீர்கள்.",
+"முயற்சி செய்பவர்களுக்கு மட்டுமே வெற்றி கிடைக்கும்.",
 
 
-"உங்கள் இலக்கு Selection என்றால் உங்கள் முயற்சி தினமும் தொடர வேண்டும்.",
+"Mock Test எழுதுங்கள்... உங்கள் Selection கனவை நெருங்குங்கள்.",
 
 
-"ஒவ்வொரு Mock Test-மும் உங்கள் வெற்றிக்கான ஒரு படி.",
-
-
-"கனவு + உழைப்பு = வெற்றி."
+"கடின உழைப்பு + சரியான பயிற்சி = அரசு வேலை."
 
 
 ];
@@ -217,12 +242,12 @@ document.getElementById("dailyQuote");
 if(quoteBox){
 
 
-const today = new Date().getDate();
+let day = new Date().getDate();
 
 
 quoteBox.innerHTML =
 
-quotes[today % quotes.length];
+motivationList[day % motivationList.length];
 
 
 }
@@ -232,7 +257,7 @@ quotes[today % quotes.length];
 
 
 // ===============================
-// ADMIN LINK CONTROL
+// ADMIN SECURITY
 // ===============================
 
 
@@ -275,11 +300,11 @@ adminLink.style.display="none";
 
 
 // ===============================
-// TEST START
+// START TEST
 // ===============================
 
 
-window.startTest=function(type){
+window.startTest = function(type){
 
 
 window.location.href =
@@ -293,9 +318,13 @@ window.location.href =
 
 
 
+// ===============================
+// APP READY
+// ===============================
+
+
 console.log(
 
-"G THE GENIUS DASHBOARD LOADED"
+"G THE GENIUS PREMIUM DASHBOARD READY"
 
 );
-
