@@ -1,8 +1,9 @@
-// =====================================
-// G THE GENIUS
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
 // ADMIN JS
-// PART 1
-// =====================================
+// PART 1 / 5
+// AUTH + INITIAL SETUP
+// ==========================================
 
 
 import { auth, db } from "./firebase-config.js";
@@ -13,85 +14,326 @@ import {
 onAuthStateChanged,
 signOut
 
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 import {
 
 collection,
+getDocs,
 addDoc,
+doc,
+deleteDoc,
+updateDoc,
+getDoc,
+query,
+orderBy,
 serverTimestamp
 
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-
-// =====================================
-// DOM
-// =====================================
-
-
-const questionForm =
-
-document.getElementById("questionForm");
+// ==========================================
+// HTML ELEMENTS
+// ==========================================
 
 
-const message =
+const adminName =
+document.getElementById("adminName");
 
-document.getElementById("adminMessage");
+
+const adminEmail =
+document.getElementById("adminEmail");
+
+
+const totalStudents =
+document.getElementById("totalStudents");
+
+
+const totalQuestions =
+document.getElementById("totalQuestions");
+
+
+const totalTests =
+document.getElementById("totalTests");
+
+
+const totalResults =
+document.getElementById("totalResults");
 
 
 const logoutBtn =
-
 document.getElementById("logoutBtn");
 
 
 
+const questionList =
+document.getElementById("questionList");
 
 
-// =====================================
+const searchQuestion =
+document.getElementById("searchQuestion");
+
+
+const subjectFilter =
+document.getElementById("subjectFilter");
+
+
+
+
+// ==========================================
+// GLOBAL VARIABLES
+// ==========================================
+
+
+let adminUser = null;
+
+let questionsData = [];
+// ==========================================
+// ADMIN JS
+// PART 2 / 5
+// AUTH CHECK + DASHBOARD STATS
+// ==========================================
+
+
+
+
+
+// ===============================
 // ADMIN AUTH CHECK
-// =====================================
+// ===============================
 
 
-const ADMIN_UID = "YOUR_ADMIN_FIREBASE_UID";
+onAuthStateChanged(auth, async(user)=>{
 
 
-onAuthStateChanged(auth,(user)=>{
+    if(!user){
 
 
-if(!user){
+        window.location.href = "login.html";
+
+        return;
 
 
-window.location.href="login.html";
+    }
 
-return;
+
+    adminUser = user;
+
+
+
+    adminName.textContent =
+
+    user.displayName || "Admin";
+
+
+
+    adminEmail.textContent =
+
+    user.email || "-";
+
+
+
+    await loadDashboardStats();
+
+
+    await loadQuestions();
+
+
+});
+
+
+
+
+
+
+// ===============================
+// LOAD DASHBOARD STATISTICS
+// ===============================
+
+
+async function loadDashboardStats(){
+
+
+try{
+
+
+// STUDENTS COUNT
+
+const studentsSnap = await getDocs(
+
+collection(db,"students")
+
+);
+
+
+totalStudents.textContent =
+
+studentsSnap.size;
+
+
+
+
+
+// QUESTIONS COUNT
+
+const questionsSnap = await getDocs(
+
+collection(db,"questions")
+
+);
+
+
+totalQuestions.textContent =
+
+questionsSnap.size;
+
+
+
+
+
+// RESULTS COUNT
+
+const resultsSnap = await getDocs(
+
+collection(db,"results")
+
+);
+
+
+totalResults.textContent =
+
+resultsSnap.size;
+
+
+
+
+
+// TEST COUNT
+
+let testCount = 0;
+
+
+resultsSnap.forEach(()=>{
+
+    testCount++;
+
+});
+
+
+totalTests.textContent =
+
+testCount;
+
+
+
+}
+catch(error){
+
+
+console.error(
+
+"Dashboard Stats Error:",
+
+error
+
+);
 
 
 }
 
 
+  }
+// ==========================================
+// ADMIN JS
+// PART 3 / 5
+// ADD QUESTION + BULK UPLOAD
+// DUPLICATE CHECK
+// ==========================================
 
-if(user.uid !== ADMIN_UID){
 
 
-alert("❌ Access Denied");
 
 
-window.location.href="dashboard.html";
+// ==========================================
+// HTML ELEMENTS
+// ==========================================
 
 
-return;
+const uploadQuestionsBtn =
+
+document.getElementById("uploadQuestionsBtn");
+
+
+const bulkQuestionInput =
+
+document.getElementById("bulkQuestionInput");
+
+
+const uploadStatus =
+
+document.getElementById("uploadStatus");
+
+
+
+const saveQuestionBtn =
+
+document.getElementById("saveQuestionBtn");
+
+
+
+
+
+
+// ===============================
+// DUPLICATE CHECK
+// ===============================
+
+
+async function checkDuplicateQuestion(questionData){
+
+
+const snapshot = await getDocs(
+
+collection(db,"questions")
+
+);
+
+
+
+let duplicate = false;
+
+
+
+snapshot.forEach((doc)=>{
+
+
+const oldQuestion = doc.data();
+
+
+
+if(
+
+oldQuestion.question
+?.trim()
+.toLowerCase()
+
+===
+
+questionData.question
+?.trim()
+.toLowerCase()
+
+&&
+
+oldQuestion.subject === questionData.subject
+
+){
+
+
+duplicate = true;
 
 
 }
@@ -102,188 +344,95 @@ return;
 
 
 
-// =====================================
-// ADD QUESTION
-// =====================================
-
-
-if(questionForm){
-
-
-
-questionForm.addEventListener(
-
-"submit",
-
-async(e)=>{
-
-
-e.preventDefault();
-
-
-
-
-const question =
-
-document.getElementById("question").value.trim();
-
-
-
-const options = [
-
-
-document.getElementById("optionA").value.trim(),
-
-
-document.getElementById("optionB").value.trim(),
-
-
-document.getElementById("optionC").value.trim(),
-
-
-document.getElementById("optionD").value.trim()
-
-
-];
-
-
-
-
-const correctAnswer =
-
-Number(
-
-document.getElementById("correctAnswer").value
-
-);
-
-
-
-const category =
-
-document.getElementById("category").value;
-
-
-
-const explanation =
-
-document.getElementById("explanation").value;
-
-
-
-
-
-try{
-
-
-
-await addDoc(
-
-collection(db,"questions"),
-
-{
-
-
-question:question,
-
-
-options:options,
-
-
-correctAnswer:correctAnswer,
-
-
-category:category,
-
-
-explanation:explanation,
-
-
-createdAt:serverTimestamp()
-
-
-
-}
-
-);
-
-
-
-message.innerHTML=
-
-"✅ Question Added Successfully";
-
-
-questionForm.reset();
-
+return duplicate;
 
 
 }
 
 
 
-catch(error){
-
-
-message.innerHTML=
-
-"❌ "+error.message;
 
 
 
-}
+// ===============================
+// ADD SINGLE QUESTION
+// ===============================
 
 
-
-}
-
-
-
-);
-
-}
-
-// =====================================
-// G THE GENIUS
-// ADMIN JS
-// PART 2 FINAL
-// =====================================
-
-
-
-// =====================================
-// BULK UPLOAD
-// =====================================
-
-
-const bulkBtn =
-
-document.getElementById("bulkUploadBtn");
-
-
-
-if(bulkBtn){
-
-
-bulkBtn.addEventListener(
+saveQuestionBtn.addEventListener(
 
 "click",
 
 async()=>{
 
 
-const bulkText =
-
-document.getElementById("bulkQuestions").value.trim();
+const questionData = {
 
 
+question:
 
-if(!bulkText){
+document.getElementById("questionText").value,
 
 
-message.innerHTML=
+options:[
 
-"❌ Paste JSON Questions";
+
+document.getElementById("option1").value,
+
+
+document.getElementById("option2").value,
+
+
+document.getElementById("option3").value,
+
+
+document.getElementById("option4").value
+
+
+],
+
+
+answer:
+
+document.getElementById("correctAnswer").value,
+
+
+subject:
+
+document.getElementById("questionSubject").value,
+
+
+topic:
+
+document.getElementById("questionTopic").value,
+
+
+createdAt:
+
+serverTimestamp()
+
+
+};
+
+
+
+
+const exists = await checkDuplicateQuestion(
+
+questionData
+
+);
+
+
+
+if(exists){
+
+
+alert(
+
+"Duplicate Question Found!"
+
+);
 
 
 return;
@@ -293,21 +442,123 @@ return;
 
 
 
+
+
+await addDoc(
+
+collection(db,"questions"),
+
+questionData
+
+);
+
+
+
+alert(
+
+"Question Added Successfully"
+
+);
+
+
+await loadDashboardStats();
+
+
+await loadQuestions();
+
+
+
+});
+
+// ==========================================
+// ADMIN JS
+// PART 4 / 5
+// BULK UPLOAD + QUESTION MANAGEMENT
+// ==========================================
+
+
+
+
+
+// ===============================
+// BULK QUESTION UPLOAD
+// ===============================
+
+
+uploadQuestionsBtn.addEventListener(
+
+"click",
+
+async()=>{
+
+
 try{
+
+
+const jsonText =
+
+bulkQuestionInput.value.trim();
+
+
+
+if(!jsonText){
+
+
+alert(
+
+"Paste Questions JSON"
+
+);
+
+
+return;
+
+
+}
 
 
 
 const questions =
 
-JSON.parse(bulkText);
+JSON.parse(jsonText);
 
 
 
-let count=0;
+let added = 0;
+
+let duplicate = 0;
+
+let error = 0;
 
 
 
-for(const item of questions){
+
+for(const questionData of questions){
+
+
+
+try{
+
+
+
+const exists = await checkDuplicateQuestion(
+
+questionData
+
+);
+
+
+
+if(exists){
+
+
+duplicate++;
+
+
+continue;
+
+
+}
 
 
 
@@ -317,25 +568,9 @@ collection(db,"questions"),
 
 {
 
-
-question:item.question,
-
-
-options:item.options,
-
-
-correctAnswer:Number(item.correctAnswer),
-
-
-category:item.category || "General Knowledge",
-
-
-explanation:item.explanation || "",
-
+...questionData,
 
 createdAt:serverTimestamp()
-
-
 
 }
 
@@ -343,7 +578,19 @@ createdAt:serverTimestamp()
 
 
 
-count++;
+added++;
+
+
+
+}
+
+catch(e){
+
+
+error++;
+
+
+}
 
 
 
@@ -352,42 +599,118 @@ count++;
 
 
 
-message.innerHTML=
 
-"✅ "+count+" Questions Uploaded Successfully";
+uploadStatus.innerHTML = `
+
+✅ Added : ${added}<br>
+
+♻️ Duplicate : ${duplicate}<br>
+
+❌ Error : ${error}
+
+`;
 
 
 
-document.getElementById(
+bulkQuestionInput.value = "";
 
-"bulkQuestions"
 
-).value="";
+
+await loadDashboardStats();
+
+await loadQuestions();
 
 
 
 }
-
-
 
 catch(error){
 
 
-message.innerHTML=
+uploadStatus.textContent =
 
-"❌ Invalid JSON Format";
-
-
-console.log(error);
+"Invalid JSON Format";
 
 
-}
+console.error(error);
 
 
 
 }
 
 
+
+});
+
+
+
+
+
+
+
+// ===============================
+// LOAD QUESTIONS
+// ===============================
+
+
+async function loadQuestions(){
+
+
+
+try{
+
+
+const snapshot = await getDocs(
+
+query(
+
+collection(db,"questions"),
+
+orderBy("createdAt","desc")
+
+)
+
+);
+
+
+
+questionsData = [];
+
+
+
+snapshot.forEach((doc)=>{
+
+
+questionsData.push({
+
+
+id:doc.id,
+
+...doc.data()
+
+
+});
+
+
+
+});
+
+
+
+displayQuestions(questionsData);
+
+
+
+}
+
+catch(error){
+
+
+console.error(
+
+"Question Load Error",
+
+error
 
 );
 
@@ -396,14 +719,363 @@ console.log(error);
 
 
 
+  }
+
+// ==========================================
+// ADMIN JS
+// PART 5 / 5
+// SEARCH + EDIT + DELETE + LOGOUT
+// ==========================================
 
 
-// =====================================
+
+
+
+// ===============================
+// DISPLAY QUESTIONS
+// ===============================
+
+
+function displayQuestions(data){
+
+
+questionList.innerHTML = "";
+
+
+
+if(data.length === 0){
+
+
+questionList.innerHTML = `
+
+<p style="text-align:center">
+
+No Questions Found
+
+</p>
+
+`;
+
+return;
+
+
+}
+
+
+
+data.forEach(item=>{
+
+
+
+questionList.innerHTML += `
+
+
+<div class="question-item">
+
+
+<h3>
+
+${item.question}
+
+</h3>
+
+
+<p>
+
+Subject: ${item.subject || "-"}
+
+</p>
+
+
+<p>
+
+Topic: ${item.topic || "-"}
+
+</p>
+
+
+
+<div class="question-actions">
+
+
+<button
+
+class="edit-btn"
+
+onclick="editQuestion('${item.id}')">
+
+✏️ Edit
+
+</button>
+
+
+
+<button
+
+class="delete-btn"
+
+onclick="deleteQuestion('${item.id}')">
+
+🗑 Delete
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+// ===============================
+// SEARCH QUESTION
+// ===============================
+
+
+searchQuestion.addEventListener(
+
+"input",
+
+()=>{
+
+
+const keyword =
+
+searchQuestion.value
+.toLowerCase();
+
+
+
+const filtered = questionsData.filter(item=>
+
+
+item.question
+
+.toLowerCase()
+
+.includes(keyword)
+
+
+
+);
+
+
+
+displayQuestions(filtered);
+
+
+
+});
+
+
+
+
+
+
+
+// ===============================
+// SUBJECT FILTER
+// ===============================
+
+
+subjectFilter.addEventListener(
+
+"change",
+
+()=>{
+
+
+const subject =
+
+subjectFilter.value;
+
+
+
+if(subject==="all"){
+
+
+displayQuestions(questionsData);
+
+
+return;
+
+
+}
+
+
+
+const filtered =
+
+questionsData.filter(item=>
+
+item.subject === subject
+
+);
+
+
+
+displayQuestions(filtered);
+
+
+
+});
+
+
+
+
+
+
+
+
+// ===============================
+// DELETE QUESTION
+// ===============================
+
+
+window.deleteQuestion = async(id)=>{
+
+
+const confirmDelete = confirm(
+
+"Delete this question?"
+
+);
+
+
+
+if(!confirmDelete)
+
+return;
+
+
+
+await deleteDoc(
+
+doc(db,"questions",id)
+
+);
+
+
+
+alert(
+
+"Question Deleted"
+
+);
+
+
+
+await loadDashboardStats();
+
+await loadQuestions();
+
+
+
+};
+
+
+
+
+
+
+
+
+// ===============================
+// EDIT QUESTION
+// ===============================
+
+
+window.editQuestion = async(id)=>{
+
+
+const questionRef =
+
+doc(db,"questions",id);
+
+
+
+const snapshot = await getDoc(
+
+questionRef
+
+);
+
+
+
+const data = snapshot.data();
+
+
+
+const newQuestion = prompt(
+
+"Edit Question",
+
+data.question
+
+);
+
+
+
+if(!newQuestion)
+
+return;
+
+
+
+await updateDoc(
+
+questionRef,
+
+{
+
+question:newQuestion
+
+}
+
+);
+
+
+
+alert(
+
+"Question Updated"
+
+);
+
+
+
+await loadQuestions();
+
+
+
+};
+
+
+
+
+
+
+
+
+// ===============================
 // LOGOUT
-// =====================================
-
-
-if(logoutBtn){
+// ===============================
 
 
 logoutBtn.addEventListener(
@@ -416,16 +1088,23 @@ async()=>{
 await signOut(auth);
 
 
-window.location.href="login.html";
+localStorage.clear();
 
 
-}
+sessionStorage.clear();
 
 
-);
+
+window.location.href =
+
+"login.html";
 
 
-}
+
+});
+
+
+
 
 
 
@@ -433,6 +1112,6 @@ window.location.href="login.html";
 
 console.log(
 
-"G THE GENIUS ADMIN LOADED"
+"G THE GENIUS Admin JS Loaded Successfully"
 
 );
