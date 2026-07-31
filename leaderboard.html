@@ -1,718 +1,693 @@
-<!-- ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-LEADERBOARD HTML
-PART 1 / 5
-========================================== -->
 
-<!DOCTYPE html>
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
+// LEADERBOARD JS
+// PART 1 / 5
+// ==========================================
 
-<html lang="en">
 
-<head>
 
-<meta charset="UTF-8">
+import { db } from "./firebase-config.js";
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
 
-<title>
-Leaderboard | G THE GENIUS
-</title>
 
-<meta name="theme-color"
-content="#081229">
+import {
 
-<link rel="icon"
-href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+collection,
 
-<link rel="stylesheet"
-href="leaderboard.css">
+getDocs,
 
-</head>
+query,
 
-<body>
+orderBy
 
-<div class="leaderboard-container">
+} from
 
-<!-- HEADER START -->
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<header class="leaderboard-header">
 
-<div class="logo-box">
 
-<img
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS Logo"
-class="leaderboard-logo">
 
-</div>
 
-<div class="leaderboard-title">
 
-<h1>
 
-G THE GENIUS
+// ELEMENTS
 
-</h1>
 
-<p>
 
-Top Rank Leaderboard
+const leaderboardBody =
 
-</p>
+document.getElementById(
+"leaderboardBody"
+);
 
-</div>
 
-</header>
 
-<!-- HEADER END -->
 
 
+const testFilter =
 
-<!-- TOP 3 PODIUM START -->
+document.getElementById(
+"testFilter"
+);
 
-<section class="podium-section">
 
-<h2>
 
-🏆 TOP 3 RANK HOLDERS
 
-</h2>
 
-<div class="podium-container">
 
-<!-- 2nd Rank -->
 
-<div class="podium-card second">
+let results = [];
 
-<div class="podium-position">
 
-🥈
 
-</div>
 
-<h3 id="secondName">
 
-Loading...
 
-</h3>
 
-<p id="secondMarks">
+// ==========================================
+// LOAD RESULTS
+// ==========================================
 
-0 Marks
 
-</p>
 
-</div>
+async function loadLeaderboard(){
 
-<!-- 1st Rank -->
 
-<div class="podium-card first">
 
-<div class="podium-position">
+try{
 
-🥇
 
-</div>
 
-<h3 id="firstName">
+let q =
 
-Loading...
+query(
 
-</h3>
+collection(
+db,
+"results"
+),
 
-<p id="firstMarks">
 
-0 Marks
+orderBy(
+"percentage",
+"desc"
+)
 
-</p>
+);
 
-</div>
 
-<!-- 3rd Rank -->
 
-<div class="podium-card third">
 
-<div class="podium-position">
 
-🥉
 
-</div>
 
-<h3 id="thirdName">
+let snapshot =
 
-Loading...
+await getDocs(q);
 
-</h3>
 
-<p id="thirdMarks">
 
-0 Marks
 
-</p>
 
-</div>
 
-</div>
+results = [];
 
-</section>
 
 
 
 
 
+snapshot.forEach(doc=>{
 
 
-<!-- FILTER SECTION START -->
+results.push({
 
+id:doc.id,
 
-<section class="filter-section">
+...doc.data()
 
+});
 
 
+});
 
-<div class="filter-card">
 
 
 
 
-<h3>
 
-📊 Leaderboard Filter
+console.log(
 
-</h3>
+"Leaderboard Loaded:",
 
+results.length
 
+);
 
 
 
 
-<select id="testFilter">
 
-<option value="all">
 
-All Tests
+displayLeaderboard(results);
 
-</option>
 
-<option value="daily">
 
-Daily Mock Test
 
-</option>
+}
 
-<option value="weekly">
+catch(error){
 
-Weekly Mock Test
 
-</option>
 
-<option value="monthly">
+console.error(
 
-Monthly Grand Test
+"Leaderboard Error",
 
-</option>
+error
 
-<option value="subject">
+);
 
-Subject-wise Test
 
-</option>
+}
 
-<option value="topic">
 
-Topic-wise Test
 
-</option>
+}
 
-</select>
+// ==========================================
+// DISPLAY LEADERBOARD TABLE
+// PART 2 / 5
+// ==========================================
 
 
 
+function displayLeaderboard(data){
 
 
 
+if(!leaderboardBody)
 
-<input
-type="text"
+return;
 
-id="searchStudent"
 
-placeholder="🔍 Search Student Name">
 
 
 
 
-<button
-id="refreshLeaderboard"
+leaderboardBody.innerHTML = "";
 
-class="refresh-btn">
 
-🔄 Refresh Leaderboard
 
-</button>
 
 
 
 
+data.forEach((student,index)=>{
 
-</div>
 
 
 
 
-</section>
+let row =
 
+document.createElement("tr");
 
 
-<!-- FILTER SECTION END -->
 
 
 
 
+row.innerHTML = `
 
 
+<td>
 
+${index + 1}
 
+</td>
 
 
-<!-- LEADERBOARD TABLE START -->
 
+<td>
 
-<section class="leaderboard-section">
+${student.studentName || "-"}
 
+</td>
 
 
 
-<h2>
+<td>
 
-🏆 Overall Rankings
+${student.district || "-"}
 
-</h2>
+</td>
 
 
 
+<td>
 
+${student.testType || "-"}
 
+</td>
 
-<div class="leaderboard-table">
 
 
+<td>
 
+${student.score || 0}
 
+</td>
 
-<div class="leaderboard-head">
 
-<span>Rank</span>
 
-<span>Name</span>
+<td>
 
-<span>Marks</span>
+${student.percentage || 0}%
 
-</div>
+</td>
 
 
 
+`;
 
 
 
-<div
-id="leaderboardList"
 
-class="leaderboard-list">
 
 
 
+leaderboardBody.appendChild(row);
 
-<!-- Leaderboard rows will be loaded from leaderboard.js -->
 
 
 
 
-</div>
+});
 
 
 
+}
 
+// ==========================================
+// FILTER SYSTEM
+// PART 3 / 5
+// ==========================================
 
-</div>
 
 
+const districtFilter =
 
+document.getElementById(
+"districtFilter"
+);
 
-</section>
 
-<!-- LEADERBOARD SECTION END -->
 
 
 
 
+function applyFilters(){
 
 
-<!-- CURRENT STUDENT SECTION -->
 
+let filtered = [...results];
 
-<section class="student-rank-section">
 
-<div class="student-rank-card">
 
-<h2>
 
-🎯 Your Position
 
-</h2>
 
-<div class="student-rank-grid">
 
-<div class="student-rank-item">
+// TEST TYPE FILTER
 
-<span>
 
-Current Rank
+if(
+testFilter &&
+testFilter.value !== ""
 
-</span>
+){
 
-<strong id="myRank">
 
--
 
-</strong>
+filtered =
 
-</div>
+filtered.filter(
 
-<div class="student-rank-item">
+(item)=>
 
-<span>
+item.testType ===
+testFilter.value
 
-Your Marks
 
-</span>
+);
 
-<strong id="myMarks">
 
-0
 
-</strong>
+}
 
-</div>
 
-<div class="student-rank-item">
 
-<span>
 
-Tests Completed
 
-</span>
 
-<strong id="myTests">
 
-0
 
-</strong>
+// DISTRICT FILTER
 
-</div>
 
-</div>
+if(
 
-</div>
+districtFilter &&
 
-</section>
+districtFilter.value !== ""
 
+){
 
 
 
+filtered =
 
+filtered.filter(
 
+(item)=>
 
+item.district ===
 
-<!-- LEADERBOARD SUMMARY -->
+districtFilter.value
 
 
-<section class="summary-section">
+);
 
-<div class="summary-grid">
 
-<div class="summary-card">
 
-<h3>
+}
 
-👨‍🎓 Students
 
-</h3>
 
-<strong id="totalStudents">
 
-0
 
-</strong>
 
-</div>
 
-<div class="summary-card">
+displayLeaderboard(filtered);
 
-<h3>
 
-📝 Tests
 
-</h3>
+}
 
-<strong id="totalTests">
 
-0
 
-</strong>
 
-</div>
 
-<div class="summary-card">
 
-<h3>
 
-🏅 Top Marks
 
-</h3>
+// TEST FILTER CHANGE
 
-<strong id="highestMarks">
 
-0
+if(testFilter){
 
-</strong>
 
-</div>
+testFilter.addEventListener(
 
-</div>
+"change",
 
-</section>
+applyFilters
 
+);
 
 
 
+}
 
 
 
 
-<!-- QUICK NAVIGATION -->
 
 
-<section class="leaderboard-nav">
 
-<a href="dashboard.html"
-class="leader-btn">
 
-🏠 Dashboard
+// DISTRICT FILTER CHANGE
 
-</a>
 
-<a href="history.html"
-class="leader-btn">
+if(districtFilter){
 
-📜 History
 
-</a>
+districtFilter.addEventListener(
 
-<a href="profile.html"
-class="leader-btn">
+"change",
 
-👤 Profile
+applyFilters
 
-</a>
+);
 
-</section>
 
-  
 
+}
 
 
+// ==========================================
+// TOP 3 + CURRENT STUDENT RANK
+// PART 4 / 5
+// ==========================================
 
 
-<!-- ACHIEVEMENT SECTION -->
 
 
-<section class="achievement-section">
 
-<div class="achievement-card">
+function highlightTopRank(){
 
-<h2>
 
-🌟 Keep Climbing the Leaderboard
 
-</h2>
+const rows =
 
-<p>
+document.querySelectorAll(
 
-Practice daily, improve your marks, and secure the top rank in the next mock test.
+"#leaderboardBody tr"
 
-</p>
+);
 
-</div>
 
-</section>
 
 
 
 
+rows.forEach((row,index)=>{
 
 
 
+if(index === 0){
 
-<!-- SOCIAL SECTION -->
 
+row.classList.add(
+"rank-gold"
+);
 
-<section class="social-section">
 
-<div class="social-card">
+}
 
-<h3>
 
-Follow G THE GENIUS
 
-</h3>
+else if(index === 1){
 
-<div class="social-buttons">
 
-<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
-target="_blank">
+row.classList.add(
+"rank-silver"
+);
 
-▶ YouTube
 
-</a>
+}
 
-<a href="https://t.me/gthegenius"
-target="_blank">
 
-✈ Telegram
 
-</a>
 
-<a href="mailto:gthegenius7@gmail.com">
+else if(index === 2){
 
-✉ Email
 
-</a>
+row.classList.add(
+"rank-bronze"
+);
 
-</div>
 
-</div>
+}
 
-</section>
 
 
+});
 
 
 
+}
 
 
 
-<!-- INFO CARD -->
 
 
-<section class="info-section">
 
-<div class="info-card">
 
-<h3>
+// ==========================================
+// CURRENT USER RANK
+// ==========================================
 
-ℹ Leaderboard Information
 
-</h3>
 
-<ul>
+function showMyRank(){
 
-<li>🏆 Ranking is based on Marks.</li>
 
-<li>📈 Higher marks receive higher ranks.</li>
 
-<li>⏱ Earlier submission is used to break ties.</li>
+let myName =
 
-<li>🔄 Rankings update automatically after every completed test.</li>
+localStorage.getItem(
+"studentName"
+);
 
-</ul>
 
-</div>
 
-</section>
 
-  <!-- ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-LEADERBOARD HTML
-PART 5 / 5
-FINAL
-========================================== -->
 
+let myRank =
 
+results.findIndex(
 
-<!-- FOOTER START -->
+(student)=>
 
-<footer class="app-footer">
+student.studentName === myName
 
-<h3>
+)
 
-G THE GENIUS
++1;
 
-</h3>
 
-<p>
 
-ALL GOVERNMENT EXAM MOCK TEST
 
-</p>
 
 
 
-<div class="footer-links">
+const myRankBox =
 
-<a href="dashboard.html">
+document.getElementById(
+"myRank"
+);
 
-Home
 
-</a>
 
-<a href="mocktest.html">
 
-Mock Test
 
-</a>
 
-<a href="history.html">
+if(myRankBox){
 
-History
 
-</a>
+myRankBox.innerText =
 
-<a href="profile.html">
+myRank > 0
 
-Profile
+?
 
-</a>
+"🏆 Rank : " + myRank
 
-</div>
+:
 
+"Rank Not Found";
 
 
-<p class="copyright">
+}
 
-© 2026 G THE GENIUS. All Rights Reserved.
 
-</p>
 
-</footer>
+}
 
-<!-- FOOTER END -->
 
 
 
 
 
-<!-- LEADERBOARD JS -->
 
-<script
-type="module"
-src="leaderboard.js">
+// UPDATE DISPLAY
 
-</script>
 
-</div>
+const oldDisplay =
+displayLeaderboard;
 
-</body>
 
-</html>
+
+displayLeaderboard = function(data){
+
+
+oldDisplay(data);
+
+
+highlightTopRank();
+
+
+showMyRank();
+
+
+};
+
+
+// ==========================================
+// FINAL LEADERBOARD INITIALIZATION
+// PART 5 / 5 FINAL
+// ==========================================
+
+
+
+
+
+// ==========================================
+// LOAD ON PAGE OPEN
+// ==========================================
+
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+
+loadLeaderboard();
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+// ==========================================
+// EXPORT FOR OTHER FILES
+// ==========================================
+
+
+window.loadLeaderboard =
+
+loadLeaderboard;
+
+
+
+
+
+
+console.log(
+
+`
+================================
+
+G THE GENIUS LEADERBOARD READY ✅
+
+Rank System
+District Filter
+Test Filter
+
+================================
+`
+
+);
+
