@@ -1,3 +1,7 @@
+console.log(
+"Learning Data:",
+window.learningData
+);
 // ==========================================
 // G THE GENIUS
 // ADMIN BULK UPLOAD JS
