@@ -1,66 +1,80 @@
+<!-- ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+ADMIN PANEL HTML
+PART 1 / 5
+========================================== -->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>
+
 Admin Panel | G THE GENIUS
+
 </title>
 
-
-<meta name="theme-color" content="#081229">
+<meta name="theme-color"
+content="#081229">
 
 
 <link rel="icon"
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 
-
 <link rel="stylesheet"
-href="css/style.css">
-
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+href="admin.css">
 
 
 </head>
 
 
-
 <body>
+
+
+<div class="admin-container">
+
+
+
+<!-- HEADER START -->
 
 
 <header class="admin-header">
 
 
-<div class="brand">
+<div class="logo-box">
 
 
 <img
-
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="admin-logo"
+alt="G THE GENIUS">
 
-class="logo">
+
+</div>
 
 
-<div>
 
-<h2>
+<div class="admin-title">
+
+
+<h1>
 
 G THE GENIUS
 
-</h2>
+</h1>
 
 
 <p>
 
-Admin Panel
+Admin Control Panel
 
 </p>
 
@@ -68,268 +82,531 @@ Admin Panel
 </div>
 
 
+</header>
+
+
+<!-- HEADER END -->
+
+
+
+
+
+<!-- ADMIN PROFILE -->
+
+
+<section class="admin-profile-section">
+
+
+<div class="admin-profile-card">
+
+
+<div class="admin-avatar">
+
+👨‍💼
+
+</div>
+
+
+<h2 id="adminName">
+
+Loading...
+
+</h2>
+
+
+<p id="adminEmail">
+
+Loading...
+
+</p>
+
+
+<span class="admin-badge">
+
+🔐 Admin Access
+
+</span>
+
+
+</div>
+
+
+</section>
+
+ /* ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+ADMIN PANEL HTML
+PART 2 / 5
+========================================== */
+
+
+
+<!-- ADMIN STATISTICS -->
+
+<section class="admin-stats-section">
+
+
+<div class="admin-stats-grid">
+
+
+
+<div class="admin-stat-card">
+
+<h3>
+
+👥 Students
+
+</h3>
+
+<strong id="totalStudents">
+
+0
+
+</strong>
+
 </div>
 
 
 
-<button id="logoutBtn">
 
-Logout
+<div class="admin-stat-card">
+
+<h3>
+
+📚 Questions
+
+</h3>
+
+<strong id="totalQuestions">
+
+0
+
+</strong>
+
+</div>
+
+
+
+
+<div class="admin-stat-card">
+
+<h3>
+
+📝 Tests
+
+</h3>
+
+<strong id="totalTests">
+
+0
+
+</strong>
+
+</div>
+
+
+
+
+<div class="admin-stat-card">
+
+<h3>
+
+🏆 Results
+
+</h3>
+
+<strong id="totalResults">
+
+0
+
+</strong>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- QUICK ACTIONS -->
+
+
+<section class="admin-actions-section">
+
+
+<div class="admin-actions-card">
+
+
+<h2>
+
+⚡ Quick Actions
+
+</h2>
+
+
+
+<div class="admin-actions-grid">
+
+
+
+<button
+id="addQuestionBtn"
+class="admin-action-btn">
+
+➕ Add Question
 
 </button>
 
 
-</header>
+
+<button
+id="bulkUploadBtn"
+class="admin-action-btn">
+
+📤 Bulk Upload
+
+</button>
+
+
+
+<button
+id="manageQuestionBtn"
+class="admin-action-btn">
+
+📚 Manage Questions
+
+</button>
+
+
+
+<button
+id="viewResultsBtn"
+class="admin-action-btn">
+
+📊 View Results
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+   /* ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+ADMIN PANEL HTML
+PART 3 / 5
+BULK UPLOAD SECTION
+========================================== */
 
 
 
 
 
-<main class="admin-container">
+<!-- BULK UPLOAD -->
+
+<section class="bulk-upload-section">
 
 
-<section class="admin-card">
+<div class="bulk-upload-card">
 
 
-<h1>
+<h2>
 
-➕ Add Question
+📤 Bulk Question Upload
 
-</h1>
-<form id="questionForm">
-
+</h2>
 
 
-<div class="input-group">
+
+<p class="upload-info">
+
+Paste JSON Questions Below.
+Duplicate Questions Will Be Skipped Automatically.
+
+</p>
 
 
-<label>
-
-Question
-
-</label>
 
 
 <textarea
 
-id="question"
+id="bulkQuestionInput"
 
-placeholder="Enter Question"
+placeholder='
 
-required></textarea>
+[
+ {
+  "question":"India Capital?",
+  "options":[
+    "Delhi",
+    "Mumbai",
+    "Chennai",
+    "Kolkata"
+  ],
+  "answer":"Delhi",
+  "subject":"GK",
+  "topic":"Indian Polity"
+ }
+]
+
+'
+
+></textarea>
+
+
+
+
+
+<button
+
+id="uploadQuestionsBtn"
+
+class="upload-btn">
+
+🚀 Upload Questions
+
+</button>
+
+
+
+
+
+<!-- UPLOAD RESULT -->
+
+
+<div
+
+id="uploadStatus"
+
+class="upload-status">
 
 
 </div>
 
 
 
+</div>
 
 
-<div class="input-group">
+</section>
 
 
-<label>
 
-Option A
 
-</label>
+
+<!-- ADD QUESTION FORM -->
+
+
+<section class="add-question-section">
+
+
+<div class="add-question-card">
+
+
+<h2>
+
+➕ Add Single Question
+
+</h2>
+
 
 
 <input
 
 type="text"
 
-id="optionA"
+id="questionText"
 
-placeholder="Enter Option A"
-
-required>
-
-
-</div>
+placeholder="Enter Question">
 
 
 
-
-
-<div class="input-group">
-
-
-<label>
-
-Option B
-
-</label>
 
 
 <input
 
 type="text"
 
-id="optionB"
+id="option1"
 
-placeholder="Enter Option B"
+placeholder="Option 1">
 
-required>
-
-
-</div>
-
-
-
-
-
-<div class="input-group">
-
-
-<label>
-
-Option C
-
-</label>
 
 
 <input
 
 type="text"
 
-id="optionC"
+id="option2"
 
-placeholder="Enter Option C"
+placeholder="Option 2">
 
-required>
-
-
-</div>
-
-
-
-
-
-<div class="input-group">
-
-
-<label>
-
-Option D
-
-</label>
 
 
 <input
 
 type="text"
 
-id="optionD"
+id="option3"
 
-placeholder="Enter Option D"
-
-required>
+placeholder="Option 3">
 
 
-    </div>
 
-    <div class="input-group">
+<input
 
+type="text"
 
-<label>
+id="option4"
 
-Correct Answer
-
-</label>
+placeholder="Option 4">
 
 
-<select id="correctAnswer" required>
+
+<input
+
+type="text"
+
+id="correctAnswer"
+
+placeholder="Correct Answer">
 
 
-<option value="">
 
-Select Correct Option
+<input
 
-</option>
+type="text"
 
+id="questionSubject"
 
-<option value="0">
-
-Option A
-
-</option>
+placeholder="Subject">
 
 
-<option value="1">
 
-Option B
+<input
 
-</option>
+type="text"
 
+id="questionTopic"
 
-<option value="2">
-
-Option C
-
-</option>
+placeholder="Topic">
 
 
-<option value="3">
 
-Option D
+<button
 
-</option>
+id="saveQuestionBtn"
 
+class="save-btn">
 
-</select>
+💾 Save Question
+
+</button>
+
 
 
 </div>
 
 
+</section>
+
+/* ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+ADMIN PANEL HTML
+PART 4 / 5
+QUESTION MANAGEMENT
+========================================== */
 
 
 
-<div class="input-group">
 
 
-<label>
+<!-- QUESTION MANAGEMENT -->
 
-Exam Category
-
-</label>
+<section class="question-management-section">
 
 
-<select id="category" required>
+<div class="question-management-card">
 
 
-<option value="">
+<h2>
 
-Select Category
+📚 Question Management
+
+</h2>
+
+
+
+<!-- SEARCH -->
+
+
+<input
+
+type="text"
+
+id="searchQuestion"
+
+placeholder="🔍 Search Question...">
+
+
+
+
+
+<!-- FILTER -->
+
+
+<select id="subjectFilter">
+
+
+<option value="all">
+
+All Subjects
 
 </option>
 
 
-<option>
-
-TNUSRB
-
-</option>
-
-
-<option>
-
-TNPSC
-
-</option>
-
-
-<option>
+<option value="GK">
 
 General Knowledge
 
 </option>
 
 
-<option>
+<option value="History">
 
-Current Affairs
+History
+
+</option>
+
+
+<option value="Polity">
+
+Indian Polity
+
+</option>
+
+
+<option value="Geography">
+
+Geography
+
+</option>
+
+
+<option value="Science">
+
+Science
 
 </option>
 
@@ -337,82 +614,193 @@ Current Affairs
 </select>
 
 
-</div>
 
 
 
+<!-- QUESTION LIST -->
 
 
-<div class="input-group">
+<div
+
+id="questionList"
+
+class="question-list">
 
 
-<label>
 
-Explanation
+<!-- Dynamic Questions Load Here -->
 
-</label>
-
-
-<textarea
-
-id="explanation"
-
-placeholder="Enter Answer Explanation"
-
-></textarea>
 
 
 </div>
 
 
-
-
-
-<button type="submit" id="addQuestionBtn">
-
-➕ Add Question
-
-</button>
-
-
-
-</form>
-
+</div>
 
 
 </section>
 
- <section class="bulk-section">
+
+
+
+
+<!-- RESULT ANALYTICS -->
+
+
+<section class="analytics-section">
+
+
+<div class="analytics-card">
 
 
 <h2>
 
-📂 Bulk Question Upload
+📊 Result Analytics
 
 </h2>
 
 
 
-<textarea
-
-id="bulkQuestions"
-
-placeholder='Paste JSON Questions Here'>
-
-</textarea>
+<div class="analytics-grid">
 
 
 
-<button id="bulkUploadBtn">
+<div class="analytics-item">
 
-⬆ Upload Bulk Questions
+<span>
+
+Highest Score
+
+</span>
+
+<strong id="highestResult">
+
+0
+
+</strong>
+
+</div>
+
+
+
+
+<div class="analytics-item">
+
+<span>
+
+Average Score
+
+</span>
+
+<strong id="averageResult">
+
+0
+
+</strong>
+
+</div>
+
+
+
+
+<div class="analytics-item">
+
+<span>
+
+Active Students
+
+</span>
+
+<strong id="activeStudents">
+
+0
+
+</strong>
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+/* ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+ADMIN PANEL HTML
+PART 5 / 5
+FINAL
+========================================== */
+
+
+
+
+
+<!-- ADMIN SETTINGS -->
+
+<section class="admin-settings-section">
+
+
+<div class="admin-settings-card">
+
+
+<h2>
+
+⚙️ Admin Settings
+
+</h2>
+
+
+
+<div class="settings-grid">
+
+
+<a href="dashboard.html"
+class="settings-btn">
+
+🏠 Dashboard
+
+</a>
+
+
+
+<a href="leaderboard.html"
+class="settings-btn">
+
+🏆 Leaderboard
+
+</a>
+
+
+
+<a href="profile.html"
+class="settings-btn">
+
+👤 Profile
+
+</a>
+
+
+
+<button
+id="logoutBtn"
+class="settings-btn logout">
+
+🚪 Logout
 
 </button>
 
 
 
-<p id="adminMessage"></p>
+</div>
 
+
+</div>
 
 
 </section>
@@ -421,25 +809,67 @@ placeholder='Paste JSON Questions Here'>
 
 
 
-</main>
 
 
+<!-- FOOTER -->
 
 
+<footer class="app-footer">
 
-<footer class="admin-footer">
+
+<h3>
+
+G THE GENIUS
+
+</h3>
 
 
 <p>
 
-© 2026 G THE GENIUS
+ALL GOVERNMENT EXAM MOCK TEST
 
 </p>
 
 
-<p>
 
-Admin Question Management System
+<div class="footer-links">
+
+
+<a href="dashboard.html">
+
+Home
+
+</a>
+
+
+<a href="mocktest.html?type=daily">
+
+Mock Test
+
+</a>
+
+
+<a href="leaderboard.html">
+
+Leaderboard
+
+</a>
+
+
+<a href="profile.html">
+
+Profile
+
+</a>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 G THE GENIUS. All Rights Reserved.
 
 </p>
 
@@ -450,12 +880,24 @@ Admin Question Management System
 
 
 
-<script type="module" src="js/admin.js"></script>
+</div>
+
+
+
+
+<!-- ADMIN JS -->
+
+<script
+
+type="module"
+
+src="admin.js">
+
+</script>
 
 
 
 </body>
 
-    </html>
 
-    
+</html>    
