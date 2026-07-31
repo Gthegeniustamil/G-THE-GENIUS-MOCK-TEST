@@ -42,7 +42,22 @@ localStorage.getItem(
 "lastPercentage"
 ) || 0;
 
+let correct =
+Number(
+localStorage.getItem("lastCorrect")
+) || 0;
 
+
+let wrong =
+Number(
+localStorage.getItem("lastWrong")
+) || 0;
+
+
+let unanswered =
+Number(
+localStorage.getItem("lastUnanswered")
+) || 0;
 
 
 
@@ -216,13 +231,6 @@ error
 
 
 
-
-
-
-// Auto Save
-
-
-saveResult();
 
 
 // ==========================================
