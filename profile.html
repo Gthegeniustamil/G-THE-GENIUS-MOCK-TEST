@@ -1,74 +1,61 @@
+<!-- ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+PROFILE HTML
+PART 1 / 5
+========================================== -->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>
-My Profile | G THE GENIUS
+
+Profile | G THE GENIUS
+
 </title>
 
-
-<meta name="theme-color" content="#081229">
-
+<meta name="theme-color"
+content="#081229">
 
 <link rel="icon"
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
-
-
-
 <link rel="stylesheet"
-href="css/style.css">
-
-
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
-
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
-
+href="profile.css">
 
 </head>
 
-
 <body>
 
+<div class="profile-container">
 
+<!-- HEADER START -->
 
 <header class="profile-header">
 
-
-<div class="brand">
-
+<div class="logo-box">
 
 <img
-
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo"
+class="profile-logo">
 
-class="logo"
+</div>
 
-alt="Logo">
+<div class="profile-title">
 
-
-<div>
-
-<h2>
+<h1>
 
 G THE GENIUS
 
-</h2>
-
+</h1>
 
 <p>
 
@@ -76,33 +63,21 @@ Student Profile
 
 </p>
 
-
 </div>
-
-
-</div>
-
-
-
-<button onclick="goDashboard()">
-
-⬅ Dashboard
-
-</button>
-
 
 </header>
 
+<!-- HEADER END -->
 
 
 
-<main class="profile-container">
 
 
+<!-- PROFILE CARD START -->
 
-<section class="profile-card">
+<section class="profile-section">
 
-
+<div class="profile-card">
 
 <div class="profile-avatar">
 
@@ -110,223 +85,546 @@ Student Profile
 
 </div>
 
+<h2 id="studentName">
 
-
-<h1 id="userName">
-
-Student Name
-
-</h1>
-
-
-<p id="userDistrict">
-
-📍 District
-
-</p>
-
-
-<p id="userEmail">
-
-📧 Email
-
-</p>
-
-
-
-  </section>
-
-  <section class="profile-stats">
-
-
-
-<div class="stat-card">
-
-
-<h3>
-
-⭐ XP
-
-</h3>
-
-
-<p id="userXP">
-
-0
-
-</p>
-
-
-</div>
-
-
-
-
-<div class="stat-card">
-
-
-<h3>
-
-🏆 Level
-
-</h3>
-
-
-<p id="userLevel">
-
-1
-
-</p>
-
-
-</div>
-
-
-
-
-<div class="stat-card">
-
-
-<h3>
-
-📝 Tests
-
-</h3>
-
-
-<p id="userTests">
-
-0
-
-</p>
-
-
-</div>
-
-
-
-
-<div class="stat-card">
-
-
-<h3>
-
-🎯 Score
-
-</h3>
-
-
-<p id="userScore">
-
-0
-
-</p>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-<section class="history-section">
-
-
-<h2>
-
-📊 Test History
+Loading...
 
 </h2>
 
+<p id="studentEmail">
 
-
-<div id="testHistory">
-
-
-<p>
-
-No Test Attempted Yet
+Loading...
 
 </p>
 
+<span class="profile-badge">
+
+🎓 Registered Student
+
+</span>
 
 </div>
 
+</section>
+<!-- ==========================================
+PROFILE HTML
+PART 2 / 5
+========================================== -->
 
+
+
+<!-- STUDENT INFORMATION -->
+
+<section class="student-info-section">
+
+<div class="student-info-card">
+
+<h2>
+
+👤 Student Information
+
+</h2>
+
+<div class="info-grid">
+
+<div class="info-item">
+
+<span>
+
+🆔 Student ID
+
+</span>
+
+<strong id="studentId">
+
+Loading...
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+📍 District
+
+</span>
+
+<strong id="studentDistrict">
+
+Loading...
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+📅 Joined Date
+
+</span>
+
+<strong id="joinedDate">
+
+Loading...
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+🏆 Best Marks
+
+</span>
+
+<strong id="bestMarks">
+
+0
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+📝 Tests Completed
+
+</span>
+
+<strong id="testsCompleted">
+
+0
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+⭐ Current Rank
+
+</span>
+
+<strong id="currentRank">
+
+-
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
 
 </section>
 
 
 
+<!-- PERFORMANCE SUMMARY -->
+
+<section class="performance-section">
+
+<div class="performance-card">
+
+<h2>
+
+📊 Performance Summary
+
+</h2>
+
+<div class="performance-grid">
+
+<div class="performance-item">
+
+<span>
+
+🎯 Total Marks
+
+</span>
+
+<strong id="totalMarks">
+
+0
+
+</strong>
+
+</div>
+
+<div class="performance-item">
+
+<span>
+
+🔥 Last Test Marks
+
+</span>
+
+<strong id="lastMarks">
+
+0
+
+</strong>
+
+</div>
+
+<div class="performance-item">
+
+<span>
+
+🏅 Highest Score
+
+</span>
+
+<strong id="highestScore">
+
+0
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+  <!-- ==========================================
+PROFILE HTML
+PART 3 / 5
+========================================== -->
 
 
-<section class="profile-actions">
+
+<!-- ACHIEVEMENTS SECTION -->
+
+<section class="achievement-section">
+
+<div class="achievement-card">
+
+<h2>
+
+🏅 Achievements
+
+</h2>
+
+<div class="achievement-grid">
+
+<div class="achievement-item">
+
+<div class="achievement-icon">
+
+🥇
+
+</div>
+
+<h3>
+
+Top Rank
+
+</h3>
+
+<p id="topRankAchievement">
+
+Not Yet
+
+</p>
+
+</div>
+
+<div class="achievement-item">
+
+<div class="achievement-icon">
+
+🔥
+
+</div>
+
+<h3>
+
+Test Streak
+
+</h3>
+
+<p id="testStreak">
+
+0 Days
+
+</p>
+
+</div>
+
+<div class="achievement-item">
+
+<div class="achievement-icon">
+
+⭐
+
+</div>
+
+<h3>
+
+Badges
+
+</h3>
+
+<p id="badgeCount">
+
+0 Earned
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 
-<button id="logoutBtn">
 
+<!-- QUICK ACTIONS -->
+
+<section class="quick-actions-section">
+
+<div class="quick-actions-card">
+
+<h2>
+
+⚡ Quick Actions
+
+</h2>
+
+<div class="quick-actions-grid">
+
+<a href="dashboard.html" class="quick-btn">
+
+🏠 Dashboard
+
+</a>
+
+<a href="history.html" class="quick-btn">
+
+📜 History
+
+</a>
+
+<a href="leaderboard.html" class="quick-btn">
+
+🏆 Leaderboard
+
+</a>
+
+<a href="mocktest.html?type=daily" class="quick-btn">
+
+📝 Daily Test
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+  <!-- ==========================================
+PROFILE HTML
+PART 4 / 5
+========================================== -->
+
+
+
+<!-- SOCIAL SECTION -->
+
+<section class="social-section">
+
+<div class="social-card">
+
+<h2>
+
+🌐 Connect With Us
+
+</h2>
+
+<div class="social-links">
+
+<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank"
+class="social-btn youtube">
+
+▶ YouTube
+
+</a>
+
+<a href="https://t.me/gthegenius"
+target="_blank"
+class="social-btn telegram">
+
+✈ Telegram
+
+</a>
+
+<a href="mailto:gthegenius7@gmail.com"
+class="social-btn email">
+
+✉ Email
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ACCOUNT SECTION -->
+
+<section class="account-section">
+
+<div class="account-card">
+
+<h2>
+
+⚙️ Account
+
+</h2>
+
+<div class="account-actions">
+
+<a href="register.html"
+class="account-btn">
+
+✏️ Update Profile
+
+</a>
+
+<a href="login.html"
+id="logoutBtn"
+class="account-btn logout">
 
 🚪 Logout
 
+</a>
 
-</button>
+</div>
 
+</div>
 
-
-  </section>
-
-</main>
-
+</section>
 
 
 
-<footer class="profile-footer">
+<!-- MOTIVATION CARD -->
 
+<section class="motivation-section">
+
+<div class="motivation-card">
+
+<h2>
+
+💡 Daily Motivation
+
+</h2>
 
 <p>
 
-© 2026 G THE GENIUS
+"Success comes from consistent practice. Complete mock tests every day and improve your rank!"
 
 </p>
 
+</div>
+
+</section>
+
+  
+<!-- ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+PROFILE HTML
+PART 5 / 5
+FINAL
+========================================== -->
+
+
+
+<!-- FOOTER START -->
+
+<footer class="app-footer">
+
+<h3>
+
+G THE GENIUS
+
+</h3>
 
 <p>
 
-All Government Exam Mock Test Portal
+ALL GOVERNMENT EXAM MOCK TEST
 
 </p>
 
+<div class="footer-links">
+
+<a href="dashboard.html">
+
+Home
+
+</a>
+
+<a href="mocktest.html?type=daily">
+
+Mock Test
+
+</a>
+
+<a href="leaderboard.html">
+
+Leaderboard
+
+</a>
+
+<a href="history.html">
+
+History
+
+</a>
+
+</div>
+
+<p class="copyright">
+
+© 2026 G THE GENIUS. All Rights Reserved.
+
+</p>
 
 </footer>
 
+<!-- FOOTER END -->
 
 
 
-<script type="module" src="js/profile.js"></script>
+</div>
 
+<!-- PROFILE JS -->
 
-
-<script>
-
-
-function goDashboard(){
-
-
-window.location.href="dashboard.html";
-
-
-}
-
+<script
+type="module"
+src="profile.js">
 
 </script>
 
-
-
 </body>
 
-</html>
-
+</html>  
