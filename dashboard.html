@@ -9,81 +9,99 @@
 
 
 <title>
-G THE GENIUS Dashboard
+Dashboard | G THE GENIUS
 </title>
 
 
-<link rel="stylesheet" href="dashboard.css">
+<meta name="theme-color" content="#081229">
+
+
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+
+<link rel="stylesheet"
+href="css/dashboard.css">
+
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 
 </head>
+
 
 
 <body>
 
 
 
-<!-- =========================
-HEADER
-========================= -->
-
-
 <header class="dashboard-header">
+
+
+<div class="brand">
 
 
 <img
 
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 
-class="dashboard-logo"
+class="logo"
 
-
->
-
+alt="G THE GENIUS">
 
 
 <div>
 
-
 <h2>
-
 G THE GENIUS
-
 </h2>
 
 
 <p>
-
-Government Exam Mock Test
-
+Government Exam Portal
 </p>
+
+</div>
 
 
 </div>
 
+
+<button id="logoutBtn">
+
+Logout
+
+</button>
 
 
 </header>
 
 
 
+<main class="dashboard-container">
 
-
-
-
-
-<!-- =========================
-WELCOME CARD
-========================= -->
 
 
 <section class="welcome-card">
 
 
+<h1>
 
-<h2>
-
-👋 Welcome
+Welcome,
 
 <span id="studentName">
 
@@ -91,242 +109,173 @@ Student
 
 </span>
 
-</h2>
+👋
 
+</h1>
 
 
 <p>
 
-📍 District :
-
-<span id="studentDistrict">
-
--
-
-</span>
+Prepare for your Government Exam Success
 
 </p>
 
 
+</section>
+
+<section class="profile-card">
 
 
-<div class="level-box">
+<div class="profile-header">
 
 
-<h3>
+<div class="profile-icon">
 
-Level
+👤
 
-<span id="userLevel">
+</div>
 
-1
 
-</span>
+<div>
 
-🏅
+<h3 id="profileName">
+
+Student Name
 
 </h3>
 
 
-<div class="xp-bar">
+<p id="profileDistrict">
 
+District
 
-<div id="xpProgress">
-
-</div>
-
+</p>
 
 </div>
 
 
+</div>
 
-<p>
 
-XP :
 
-<span id="userXP">
+<div class="stats-box">
+
+
+
+<div class="stat-item">
+
+<h4>
+
+⭐ XP
+
+</h4>
+
+
+<p id="xp">
 
 0
 
+</p>
+
+</div>
+
+
+
+<div class="stat-item">
+
+<h4>
+
+🏆 Level
+
+</h4>
+
+
+<p id="level">
+
+1
+
+</p>
+
+</div>
+
+
+
+<div class="stat-item">
+
+<h4>
+
+📝 Tests
+
+</h4>
+
+
+<p id="testsAttempted">
+
+0
+
+</p>
+
+</div>
+
+
+
+<div class="stat-item">
+
+<h4>
+
+🎯 Score
+
+</h4>
+
+
+<p id="totalScore">
+
+0
+
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="level-progress">
+
+
+<div class="progress-title">
+
+<span>
+
+Level Progress
+
 </span>
 
-</p>
 
+<span id="progressText">
+
+0 / 100 XP
+
+</span>
 
 
 </div>
 
 
 
-</section>
+<div class="progress-bar">
 
 
-<!-- =========================
-DAILY MOCK TEST
-========================= -->
+<div 
 
-<section class="test-card daily-card">
+id="xpProgress"
 
-
-<div class="test-badge">
-
-🟢 Daily
+class="progress-fill">
 
 </div>
-
-
-<h2>
-
-Daily Mock Test
-
-</h2>
-
-
-<p>
-
-📚 Questions : 10
-
-</p>
-
-
-<p>
-
-⏰ Time : 5 Minutes
-
-</p>
-
-
-<p>
-
-Practice daily and improve your score.
-
-</p>
-
-
-<a href="mocktest.html?type=daily"
-class="start-btn">
-
-🚀 Start Test
-
-</a>
-
-
-</section>
-
-
-
-
-
-<!-- =========================
-WEEKLY MOCK TEST
-========================= -->
-
-
-<section class="test-card weekly-card">
-
-
-<div class="test-badge">
-
-🟡 Weekly
-
-</div>
-
-
-<h2>
-
-Weekly Mock Test
-
-</h2>
-
-
-<p>
-
-📚 Questions : 25
-
-</p>
-
-
-<p>
-
-⏰ Time : 10 Minutes
-
-</p>
-
-
-<p>
-
-Weekly challenge with ranking.
-
-</p>
-
-
-<a href="mocktest.html?type=weekly"
-class="start-btn">
-
-🚀 Start Test
-
-</a>
-
-
-</section>
-
-
-<!-- =========================
-MONTHLY GRAND TEST
-========================= -->
-
-
-<section class="test-card monthly-card">
-
-
-<div class="test-badge">
-
-🔴 Monthly
-
-</div>
-
-
-<h2>
-
-Monthly Grand Test
-
-</h2>
-
-
-<p>
-
-📚 Questions : 100
-
-</p>
-
-
-<p>
-
-⏰ Time : 60 Minutes
-
-</p>
-
-
-<p>
-
-🏆 Grand Ranking Challenge
-
-</p>
-
-
-<a href="mocktest.html?type=monthly"
-class="start-btn">
-
-🚀 Start Test
-
-</a>
-
-
-</section>
-
-
-
-
 
 
 </div>
@@ -337,116 +286,50 @@ class="start-btn">
 
 </section>
 
-
-<!-- =========================
-MY PERFORMANCE
-========================= -->
-
-<section class="dashboard-card">
-
-<h2>
-📊 My Performance
-</h2>
-
-
-<p>
-View your test progress,
-best score and performance.
-</p>
-
-
-<a href="performance.html"
-class="dashboard-btn">
-
-Open Performance
-
-</a>
-
-
-</section>
-
-
-
-
-
-<!-- =========================
-TEST HISTORY
-========================= -->
-
-
-<section class="dashboard-card">
-
-
-<h2>
-📜 Test History
-</h2>
-
-
-<p>
-Check all your previous mock tests.
-</p>
-
-
-<a href="history.html"
-class="dashboard-btn">
-
-View History
-
-</a>
-
-
-</section>
-
-
-
-
-
-<script type="module" src="dashboard.js"></script>
-
-  <!-- =========================
-QUICK MENU
-========================= -->
-
-
-<section class="quick-section">
+<section class="test-section">
 
 
 <h2>
 
-⚡ Quick Access
+🚀 Start Your Mock Test
 
 </h2>
 
 
 
-
-<div class="quick-grid">
-
+<div class="test-grid">
 
 
-<div class="quick-card"
-onclick="location.href='practice.html'">
 
-
-<h2>
-
-📚
-
-</h2>
+<div class="test-card daily">
 
 
 <h3>
 
-Practice
+🟢 Daily Mock Test
 
 </h3>
 
 
 <p>
 
-Unlimited Questions
+10 Questions
 
 </p>
+
+
+<p>
+
+⏱ 5 Minutes
+
+</p>
+
+
+<button onclick="startTest('daily')">
+
+Start Test
+
+</button>
 
 
 </div>
@@ -454,265 +337,149 @@ Unlimited Questions
 
 
 
+<div class="test-card weekly">
+
+
+<h3>
+
+🟡 Weekly Mock Test
+
+</h3>
+
+
+<p>
+
+25 Questions
+
+</p>
+
+
+<p>
+
+⏱ 10 Minutes
+
+</p>
+
+
+<button onclick="startTest('weekly')">
+
+Start Test
+
+</button>
+
+
+</div>
 
 
 
-<div class="quick-card"
+
+<div class="test-card monthly">
+
+
+<h3>
+
+🔴 Monthly Grand Test
+
+</h3>
+
+
+<p>
+
+100 Questions
+
+</p>
+
+
+<p>
+
+⏱ 60 Minutes
+
+</p>
+
+
+<button onclick="startTest('monthly')">
+
+Start Test
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="menu-section">
+
+
+<div class="menu-card"
+
 onclick="location.href='leaderboard.html'">
 
 
-<h2>
-
 🏆
 
-</h2>
-
-
-<h3>
+<br>
 
 Leaderboard
 
-</h3>
-
-
-<p>
-
-Check Rank
-
-</p>
-
 
 </div>
 
 
 
 
+<div class="menu-card"
 
-
-
-
-<div class="quick-card"
 onclick="location.href='profile.html'">
 
 
-<h2>
-
 👤
 
-</h2>
+<br>
 
-
-<h3>
-
-Profile
-
-</h3>
-
-
-<p>
-
-My Progress
-
-</p>
+My Profile
 
 
 </div>
 
 
 
-</div>
-
-
 </section>
 
-
-
-
-
-
-
-
-<!-- =========================
-MOTIVATION CARD
-========================= -->
-
-
-<section class="motivation-card">
-
-
-<h2>
-
-🔥 Today's Motivation
-
-</h2>
-
+<footer class="dashboard-footer">
 
 
 <p>
 
-"Success comes from daily practice and consistency."
+© 2026 G THE GENIUS
 
 </p>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-BOTTOM NAVIGATION
-========================= -->
-
-
-<nav class="bottom-nav">
-
-
-<a href="dashboard.html">
-
-🏠
-
-<br>
-
-Home
-
-</a>
-
-
-
-
-<a href="practice.html">
-
-📚
-
-<br>
-
-Practice
-
-</a>
-
-
-
-
-<a href="leaderboard.html">
-
-🏆
-
-<br>
-
-Rank
-
-</a>
-
-
-
-
-<a href="profile.html">
-
-👤
-
-<br>
-
-Profile
-
-</a>
-
-
-
-</nav>
-
-
-
-
-
-
-
-
-<!-- =========================
-FOOTER
-========================= -->
-
-
-<footer class="footer">
-
-
-<img
-
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="footer-logo"
-
-
->
-
-
-
-
-<h3>
-
-G THE GENIUS
-
-</h3>
-
 
 
 <p>
 
-All Government Exam Mock Test Platform
+All Government Exam Mock Test Portal
 
 </p>
-
-
-
-
-
-<a href="https://youtube.com/@gthegeniustamil">
-
-▶ YouTube Channel
-
-</a>
-
-
-
-
-
-<a href="https://t.me/gthegenius">
-
-📢 Telegram Channel
-
-</a>
-
-
-
-
-
-<a href="mailto:gthegenius7@gmail.com">
-
-📧 Email
-
-</a>
-
-
-
-
-
-<p>
-
-© 2026 G THE GENIUS.
-All Rights Reserved.
-
-</p>
-
 
 
 </footer>
 
+
+
+
+<script type="module" src="js/dashboard.js"></script>
+
+
+
 </body>
 
-
-</html>
-
+  </html>  
