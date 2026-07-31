@@ -4,10 +4,12 @@
 // PART 1
 // ===========================================================
 
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 import {
 
 signInWithEmailAndPassword,
+
+createUserWithEmailAndPassword,
 
 onAuthStateChanged,
 
@@ -25,6 +27,19 @@ from
 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+
+doc,
+
+setDoc,
+
+serverTimestamp
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 // ===========================================================
@@ -452,4 +467,139 @@ window.onpopstate=function(){
 
 console.log("AUTH MODULE LOADED");
 
+// ===========================================================
+// REGISTER FUNCTION
+// ===========================================================
+
+
+const registerForm =
+document.getElementById("registerForm");
+
+
+if(registerForm){
+
+
+registerForm.addEventListener("submit",async(e)=>{
+
+
+e.preventDefault();
+
+
+
+const name =
+document.getElementById("name").value.trim();
+
+
+const district =
+document.getElementById("district").value;
+
+
+const regEmail =
+document.getElementById("email").value.trim();
+
+
+const regPassword =
+document.getElementById("password").value;
+
+
+const confirmPassword =
+document.getElementById("confirmPassword").value;
+
+
+const message =
+document.getElementById("registerMessage");
+
+
+
+if(regPassword !== confirmPassword){
+
+message.innerHTML="❌ Password mismatch";
+
+return;
+
+}
+
+
+
+try{
+
+
+const userCredential =
+
+await createUserWithEmailAndPassword(
+
+auth,
+
+regEmail,
+
+regPassword
+
+);
+
+
+
+const user =
+userCredential.user;
+
+
+
+await setDoc(
+
+doc(db,"students",user.uid),
+
+{
+
+uid:user.uid,
+
+name:name,
+
+district:district,
+
+email:regEmail,
+
+xp:0,
+
+level:1,
+
+testsAttempted:0,
+
+totalScore:0,
+
+joinedAt:serverTimestamp()
+
+}
+
+);
+
+
+
+message.innerHTML=
+
+"✅ Registration Successful";
+
+
+setTimeout(()=>{
+
+window.location.href="login.html";
+
+},2000);
+
+
+
+}
+
+
+catch(error){
+
+message.innerHTML=
+
+"❌ "+error.message;
+
+}
+
+
+});
+
+
+}
 
