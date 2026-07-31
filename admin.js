@@ -1,203 +1,76 @@
-// ===================================
-// G THE GENIUS ADMIN PANEL
-// BULK QUESTION UPLOAD SYSTEM
-// ===================================
+// =====================================
+// G THE GENIUS
+// ADMIN JS
+// PART 1
+// =====================================
 
 
-import { db } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
+
+
+import {
+
+onAuthStateChanged,
+signOut
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 import {
 
 collection,
 addDoc,
-getDocs,
-query,
-where
+serverTimestamp
 
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-// ===================================
-// SUBJECT - TOPIC LIST
-// ===================================
 
+// =====================================
+// DOM
+// =====================================
 
-const topics = {
 
-"Indian Polity":[
-"Constitution",
-"Fundamental Rights",
-"Fundamental Duties",
-"President",
-"Prime Minister",
-"Parliament",
-"Supreme Court"
-],
+const questionForm =
 
+document.getElementById("questionForm");
 
-"Science":[
-"Physics",
-"Chemistry",
-"Biology",
-"Human Body",
-"Environment"
-],
 
+const message =
 
-"History":[
-"Ancient History",
-"Medieval History",
-"Modern History",
-"Freedom Struggle"
-],
+document.getElementById("adminMessage");
 
 
-"Geography":[
-"Indian Geography",
-"World Geography",
-"Rivers",
-"Climate"
-],
+const logoutBtn =
 
+document.getElementById("logoutBtn");
 
-"General Knowledge":[
-"Indian GK",
-"World GK",
-"Books",
-"Awards",
-"Sports"
-],
 
 
-"Tamil Nadu GK":[
-"Tamil History",
-"Tamil Culture",
-"District Information",
-"Government Schemes"
-],
 
 
-"Aptitude":[
-"Number System",
-"Percentage",
-"Profit Loss",
-"Time Work"
-],
+// =====================================
+// ADMIN AUTH CHECK
+// =====================================
 
 
-"Reasoning":[
-"Analogy",
-"Coding Decoding",
-"Series",
-"Blood Relation"
-],
+onAuthStateChanged(auth,(user)=>{
 
 
-"Current Affairs":[
-"National News",
-"International News",
-"Tamil Nadu News"
-],
+if(!user){
 
 
-"TNUSRB Special":[
-"Police Act",
-"Criminal Law",
-"Police Administration"
-]
-
-};
-
-
-
-
-
-// ===================================
-// ELEMENTS
-// ===================================
-
-
-const subject =
-document.getElementById("subject");
-
-
-const topic =
-document.getElementById("topic");
-
-
-const uploadBtn =
-document.getElementById("uploadBtn");
-
-
-const bulkQuestions =
-document.getElementById("bulkQuestions");
-
-
-const progressBar =
-document.getElementById("progressBar");
-
-
-const result =
-document.getElementById("result");
-
-
-const questionCount =
-document.getElementById("questionCount");
-
-
-const sampleBtn =
-document.getElementById("sampleBtn");
-
-
-
-
-
-// ===================================
-// SUBJECT TO TOPIC LOAD
-// ===================================
-
-
-subject.addEventListener("change",()=>{
-
-
-topic.innerHTML =
-`
-<option>
-Select Topic
-</option>
-`;
-
-
-
-let list =
-topics[subject.value];
-
-
-
-if(list){
-
-
-list.forEach(t=>{
-
-
-let option =
-document.createElement("option");
-
-
-option.value=t;
-
-option.textContent=t;
-
-
-topic.appendChild(option);
-
-
-});
+window.location.href="login.html";
 
 
 }
@@ -210,456 +83,337 @@ topic.appendChild(option);
 
 
 
+// =====================================
+// ADD QUESTION
+// =====================================
 
-// ===================================
-// QUESTION COUNT
-// ===================================
 
+if(questionForm){
 
-async function loadQuestionCount(){
 
 
-try{
+questionForm.addEventListener(
 
+"submit",
 
-let snap =
-await getDocs(
-collection(db,"questions")
-);
+async(e)=>{
 
 
+e.preventDefault();
 
-questionCount.innerHTML =
 
-`
-<h2>${snap.size}</h2>
-Total Questions
-`;
 
 
+const question =
 
-}
+document.getElementById("question").value.trim();
 
-catch(e){
 
 
-questionCount.innerHTML =
-"Count Error";
+const options = [
 
 
-}
+document.getElementById("optionA").value.trim(),
 
 
-}
+document.getElementById("optionB").value.trim(),
 
 
+document.getElementById("optionC").value.trim(),
 
-loadQuestionCount();
 
+document.getElementById("optionD").value.trim()
 
-
-
-
-
-// ===================================
-// DUPLICATE CHECK
-// ===================================
-
-
-async function checkDuplicate(question){
-
-
-let q =
-query(
-
-collection(db,"questions"),
-
-where(
-"question",
-"==",
-question
-)
-
-);
-
-
-
-let snap =
-await getDocs(q);
-
-
-
-return !snap.empty;
-
-
-}
-
-
-
-
-
-
-
-// ===================================
-// UPLOAD HISTORY
-// ===================================
-
-
-async function saveUploadHistory(data){
-
-
-await addDoc(
-
-collection(db,"uploadHistory"),
-
-{
-
-
-...data,
-
-
-date:new Date()
-
-
-}
-
-
-);
-
-
-}
-
-
-
-
-
-
-
-
-// ===================================
-// BULK UPLOAD
-// ===================================
-
-
-uploadBtn.onclick = async ()=>{
-
-
-try{
-
-
-let data =
-JSON.parse(
-bulkQuestions.value
-);
-
-
-
-let added=0;
-
-let duplicate=0;
-
-let error=0;
-
-
-
-let total =
-data.length;
-
-
-
-for(let i=0;i<total;i++){
-
-
-
-try{
-
-
-let q =
-data[i];
-
-
-
-if(!q.question)
-{
-
-error++;
-
-continue;
-
-}
-
-
-
-
-let already =
-await checkDuplicate(
-q.question
-);
-
-
-
-
-if(already){
-
-
-duplicate++;
-
-
-}
-
-else{
-
-
-
-await addDoc(
-
-collection(db,"questions"),
-
-{
-
-
-subject:
-q.subject ||
-subject.value,
-
-
-topic:
-q.topic ||
-topic.value,
-
-
-question:
-q.question,
-
-
-options:
-q.options || [],
-
-
-answer:
-q.answer,
-
-
-explanation:
-q.explanation || "",
-
-
-createdAt:
-new Date()
-
-
-}
-
-
-);
-
-
-
-added++;
-
-
-}
-
-
-
-
-
-
-let percent =
-Math.round(
-((i+1)/total)*100
-);
-
-
-
-progressBar.style.width =
-percent+"%";
-
-
-
-result.innerHTML =
-
-`
-Uploading ${percent}%<br>
-
-✅ Added : ${added}<br>
-
-⚠ Duplicate : ${duplicate}<br>
-
-❌ Error : ${error}
-
-`;
-
-
-
-}
-
-
-
-catch(e){
-
-
-error++;
-
-
-}
-
-
-
-}
-
-
-
-
-
-await saveUploadHistory({
-
-subject:subject.value,
-
-topic:topic.value,
-
-added,
-
-duplicate,
-
-error
-
-});
-
-
-
-
-
-result.innerHTML =
-
-`
-🎉 Upload Completed
-
-<br><br>
-
-✅ Added : ${added}
-
-<br>
-
-⚠ Duplicate : ${duplicate}
-
-<br>
-
-❌ Error : ${error}
-
-`;
-
-
-
-loadQuestionCount();
-
-
-
-}
-
-
-
-catch(e){
-
-
-alert(
-"JSON Format Error"
-);
-
-
-console.log(e);
-
-
-}
-
-
-};
-
-
-
-
-
-
-
-// ===================================
-// SAMPLE JSON DOWNLOAD
-// ===================================
-
-
-if(sampleBtn){
-
-
-sampleBtn.onclick=()=>{
-
-
-let sample=[
-
-{
-
-subject:"Indian Polity",
-
-topic:"Fundamental Rights",
-
-question:"அடிப்படை உரிமைகள் எந்த பகுதியில் உள்ளது?",
-
-options:[
-
-"Part I",
-
-"Part II",
-
-"Part III",
-
-"Part IV"
-
-],
-
-
-answer:"Part III",
-
-explanation:
-"அடிப்படை உரிமைகள் Part IIIல் உள்ளது"
-
-
-}
 
 ];
 
 
 
-let blob =
-new Blob(
 
-[
-JSON.stringify(sample,null,2)
+const correctAnswer =
 
-],
+Number(
+
+document.getElementById("correctAnswer").value
+
+);
+
+
+
+const category =
+
+document.getElementById("category").value;
+
+
+
+const explanation =
+
+document.getElementById("explanation").value;
+
+
+
+
+
+try{
+
+
+
+await addDoc(
+
+collection(db,"questions"),
 
 {
-type:"application/json"
+
+
+question:question,
+
+
+options:options,
+
+
+correctAnswer:correctAnswer,
+
+
+category:category,
+
+
+explanation:explanation,
+
+
+createdAt:serverTimestamp()
+
+
+
 }
 
 );
 
 
 
-let link =
-document.createElement("a");
+message.innerHTML=
+
+"✅ Question Added Successfully";
 
 
-link.href =
-URL.createObjectURL(blob);
+questionForm.reset();
 
-
-link.download =
-"sample_questions.json";
-
-
-link.click();
-
-
-
-};
 
 
 }
+
+
+
+catch(error){
+
+
+message.innerHTML=
+
+"❌ "+error.message;
+
+
+
+}
+
+
+
+}
+
+
+
+);
+
+}
+
+// =====================================
+// G THE GENIUS
+// ADMIN JS
+// PART 2 FINAL
+// =====================================
+
+
+
+// =====================================
+// BULK UPLOAD
+// =====================================
+
+
+const bulkBtn =
+
+document.getElementById("bulkUploadBtn");
+
+
+
+if(bulkBtn){
+
+
+bulkBtn.addEventListener(
+
+"click",
+
+async()=>{
+
+
+const bulkText =
+
+document.getElementById("bulkQuestions").value.trim();
+
+
+
+if(!bulkText){
+
+
+message.innerHTML=
+
+"❌ Paste JSON Questions";
+
+
+return;
+
+
+}
+
+
+
+try{
+
+
+
+const questions =
+
+JSON.parse(bulkText);
+
+
+
+let count=0;
+
+
+
+for(const item of questions){
+
+
+
+await addDoc(
+
+collection(db,"questions"),
+
+{
+
+
+question:item.question,
+
+
+options:item.options,
+
+
+correctAnswer:Number(item.correctAnswer),
+
+
+category:item.category || "General Knowledge",
+
+
+explanation:item.explanation || "",
+
+
+createdAt:serverTimestamp()
+
+
+
+}
+
+);
+
+
+
+count++;
+
+
+
+}
+
+
+
+
+message.innerHTML=
+
+"✅ "+count+" Questions Uploaded Successfully";
+
+
+
+document.getElementById(
+
+"bulkQuestions"
+
+).value="";
+
+
+
+}
+
+
+
+catch(error){
+
+
+message.innerHTML=
+
+"❌ Invalid JSON Format";
+
+
+console.log(error);
+
+
+}
+
+
+
+}
+
+
+
+);
+
+
+}
+
+
+
+
+
+// =====================================
+// LOGOUT
+// =====================================
+
+
+if(logoutBtn){
+
+
+logoutBtn.addEventListener(
+
+"click",
+
+async()=>{
+
+
+await signOut(auth);
+
+
+window.location.href="login.html";
+
+
+}
+
+
+);
+
+
+}
+
+
+
+
+
+console.log(
+
+"G THE GENIUS ADMIN LOADED"
+
+);
