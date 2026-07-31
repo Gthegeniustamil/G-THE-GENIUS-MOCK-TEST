@@ -1,130 +1,107 @@
-/* =====================================
-G THE GENIUS
-PROFILE CSS
-PART 1
-===================================== */
+/* ==========================================
+   G THE GENIUS MOCK TEST PORTAL v5.0
+   PROFILE CSS
+   PART 1 / 5
+========================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
-/* GLOBAL */
+:root{
+
+    --bg:#081229;
+    --card:rgba(255,255,255,0.08);
+    --gold:#f5c542;
+    --gold-light:#ffd86b;
+    --white:#ffffff;
+    --text:#d8def0;
+    --border:rgba(255,255,255,0.15);
+
+}
 
 *{
 
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 
 }
-
 
 body{
 
-background:#081229;
+    background:linear-gradient(
+    135deg,
+    #081229,
+    #101d3a
+    );
 
-color:white;
-
-min-height:100vh;
+    color:var(--white);
+    min-height:100vh;
 
 }
+
+.profile-container{
+
+    max-width:480px;
+    margin:auto;
+    min-height:100vh;
+
+}
+
 
 
 /* HEADER */
 
-
 .profile-header{
 
-display:flex;
+    display:flex;
+    align-items:center;
+    gap:15px;
 
-justify-content:space-between;
+    padding:18px;
 
-align-items:center;
+    background:rgba(8,18,41,.92);
 
-padding:15px 25px;
+    border-bottom:1px solid var(--border);
 
-background:rgba(255,255,255,0.05);
-
-border-bottom:1px solid rgba(255,255,255,0.1);
-
-}
-
-
-
-.brand{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
+    position:sticky;
+    top:0;
+    z-index:100;
 
 }
 
+.logo-box{
 
+    width:65px;
+    height:65px;
 
-.logo{
+    border-radius:50%;
+    overflow:hidden;
 
-width:55px;
-
-height:55px;
-
-border-radius:50%;
-
-object-fit:contain;
+    border:3px solid var(--gold);
 
 }
 
+.profile-logo{
 
-
-.brand h2{
-
-color:#FFD700;
-
-font-size:20px;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 
 }
 
+.profile-title h1{
 
-.brand p{
-
-color:#ccc;
-
-font-size:12px;
-
-}
-
-
-
-.profile-header button{
-
-background:#FFD700;
-
-color:#081229;
-
-border:none;
-
-padding:10px 18px;
-
-border-radius:25px;
-
-font-weight:600;
-
-cursor:pointer;
+    color:var(--gold);
+    font-size:22px;
+    font-weight:800;
 
 }
 
+.profile-title p{
 
-
-
-/* PROFILE CONTAINER */
-
-
-.profile-container{
-
-max-width:900px;
-
-margin:auto;
-
-padding:25px;
+    color:var(--text);
+    font-size:12px;
 
 }
 
@@ -132,293 +109,928 @@ padding:25px;
 
 /* PROFILE CARD */
 
+.profile-section{
+
+    padding:20px;
+
+}
 
 .profile-card{
 
-text-align:center;
+    background:var(--card);
 
-background:rgba(255,255,255,0.06);
+    border:1px solid var(--border);
 
-padding:30px;
+    border-radius:28px;
 
-border-radius:25px;
+    padding:30px 20px;
 
-border:1px solid rgba(255,215,0,0.2);
+    text-align:center;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
 
 }
-
-
 
 .profile-avatar{
 
-width:100px;
+    width:90px;
+    height:90px;
 
-height:100px;
+    margin:auto;
 
-margin:auto;
+    border-radius:50%;
 
-border-radius:50%;
+    border:4px solid var(--gold);
 
-background:#FFD700;
+    background:rgba(245,197,66,.15);
 
-color:#081229;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:50px;
-
-margin-bottom:15px;
+    font-size:42px;
 
 }
 
+.profile-card h2{
 
+    margin-top:18px;
 
-.profile-card h1{
+    color:var(--gold-light);
 
-color:#FFD700;
-
-font-size:26px;
+    font-size:24px;
 
 }
-
-
 
 .profile-card p{
 
-color:#ccc;
+    color:var(--text);
 
-margin-top:8px;
+    margin-top:8px;
 
-}
-
-/* =====================================
-G THE GENIUS
-PROFILE CSS
-PART 2 FINAL
-===================================== */
-
-
-/* STATS SECTION */
-
-
-.profile-stats{
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:15px;
-
-margin-top:25px;
+    font-size:14px;
 
 }
 
+.profile-badge{
 
+    display:inline-block;
 
-.stat-card{
+    margin-top:18px;
 
-background:rgba(255,255,255,0.06);
+    padding:10px 18px;
 
-padding:20px;
+    border-radius:30px;
 
-border-radius:20px;
+    background:rgba(245,197,66,.15);
 
-text-align:center;
+    border:1px solid var(--gold);
 
-border:1px solid rgba(255,215,0,0.2);
+    color:var(--gold-light);
 
-}
+    font-size:13px;
 
-
-
-.stat-card h3{
-
-color:#ccc;
-
-font-size:15px;
-
-margin-bottom:10px;
+    font-weight:600;
 
 }
 
-
-
-.stat-card p{
-
-color:#FFD700;
-
-font-size:25px;
-
-font-weight:700;
-
-}
+/* ==========================================
+   PROFILE CSS
+   STUDENT INFO + PERFORMANCE
+   PART 2 / 5
+========================================== */
 
 
 
+/* STUDENT INFORMATION */
 
-/* HISTORY SECTION */
+.student-info-section{
 
-
-.history-section{
-
-margin-top:30px;
-
-background:rgba(255,255,255,0.06);
-
-padding:25px;
-
-border-radius:20px;
-
-border:1px solid rgba(255,255,255,0.1);
+    padding:20px;
 
 }
 
+.student-info-card{
 
+    background:var(--card);
 
-.history-section h2{
+    border:1px solid var(--border);
 
-color:#FFD700;
+    border-radius:25px;
 
-margin-bottom:15px;
+    padding:22px;
 
-}
-
-
-
-#testHistory{
-
-color:#ccc;
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
 
 }
 
+.student-info-card h2{
 
+    color:var(--gold-light);
 
+    text-align:center;
 
-/* ACTION BUTTON */
+    margin-bottom:20px;
 
+}
 
-.profile-actions{
+.info-grid{
 
-text-align:center;
+    display:grid;
 
-margin-top:30px;
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+
+}
+
+.info-item{
+
+    background:rgba(255,255,255,.06);
+
+    border-radius:18px;
+
+    padding:16px 12px;
+
+    text-align:center;
+
+}
+
+.info-item span{
+
+    display:block;
+
+    color:var(--text);
+
+    font-size:12px;
+
+    margin-bottom:8px;
+
+}
+
+.info-item strong{
+
+    color:var(--gold);
+
+    font-size:18px;
+
+    word-break:break-word;
 
 }
 
 
 
-#logoutBtn{
+/* PERFORMANCE */
 
-background:#ff4d4d;
+.performance-section{
 
-color:white;
+    padding:20px;
 
-border:none;
+}
 
-padding:12px 30px;
+.performance-card{
 
-border-radius:30px;
+    background:var(--card);
 
-font-weight:600;
+    border:1px solid var(--border);
 
-cursor:pointer;
+    border-radius:25px;
+
+    padding:22px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+
+}
+
+.performance-card h2{
+
+    color:var(--gold-light);
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.performance-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+
+}
+
+.performance-item{
+
+    background:rgba(255,255,255,.06);
+
+    border-radius:18px;
+
+    padding:16px 10px;
+
+    text-align:center;
+
+}
+
+.performance-item span{
+
+    display:block;
+
+    color:var(--text);
+
+    font-size:12px;
+
+    margin-bottom:8px;
+
+}
+
+.performance-item strong{
+
+    color:var(--gold);
+
+    font-size:22px;
+
+}
+
+/* ==========================================
+   PROFILE CSS
+   ACHIEVEMENTS + QUICK ACTIONS
+   PART 3 / 5
+========================================== */
+
+
+
+/* ACHIEVEMENTS */
+
+.achievement-section{
+
+    padding:20px;
+
+}
+
+.achievement-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:22px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+
+}
+
+.achievement-card h2{
+
+    text-align:center;
+
+    color:var(--gold-light);
+
+    margin-bottom:20px;
+
+}
+
+.achievement-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+
+}
+
+.achievement-item{
+
+    background:rgba(255,255,255,.06);
+
+    border-radius:20px;
+
+    padding:18px 10px;
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+.achievement-item:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.achievement-icon{
+
+    font-size:34px;
+
+    margin-bottom:10px;
+
+}
+
+.achievement-item h3{
+
+    color:var(--gold);
+
+    font-size:15px;
+
+    margin-bottom:8px;
+
+}
+
+.achievement-item p{
+
+    color:var(--text);
+
+    font-size:12px;
 
 }
 
 
+
+/* QUICK ACTIONS */
+
+.quick-actions-section{
+
+    padding:20px;
+
+}
+
+.quick-actions-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:22px;
+
+}
+
+.quick-actions-card h2{
+
+    text-align:center;
+
+    color:var(--gold-light);
+
+    margin-bottom:20px;
+
+}
+
+.quick-actions-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+
+}
+
+.quick-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-decoration:none;
+
+    background:var(--gold);
+
+    color:#081229;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.quick-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   PROFILE CSS
+   PART 4 / 5
+   SOCIAL + ACCOUNT + FOOTER
+========================================== */
+
+
+
+/* SOCIAL SECTION */
+
+.social-section{
+
+    padding:20px;
+
+}
+
+.social-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:22px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+
+}
+
+.social-card h2{
+
+    text-align:center;
+
+    color:var(--gold-light);
+
+    margin-bottom:20px;
+
+}
+
+.social-links{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.social-btn{
+
+    display:block;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.social-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.youtube{
+
+    background:#ff0000;
+
+    color:#fff;
+
+}
+
+.telegram{
+
+    background:#229ED9;
+
+    color:#fff;
+
+}
+
+.email{
+
+    background:var(--gold);
+
+    color:#081229;
+
+}
+
+
+
+/* ACCOUNT */
+
+.account-section{
+
+    padding:20px;
+
+}
+
+.account-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:22px;
+
+}
+
+.account-card h2{
+
+    text-align:center;
+
+    color:var(--gold-light);
+
+    margin-bottom:20px;
+
+}
+
+.account-actions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.account-btn{
+
+    display:block;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    background:var(--gold);
+
+    color:#081229;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.account-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.logout{
+
+    background:#d32f2f;
+
+    color:#fff;
+
+}
+
+
+
+/* MOTIVATION */
+
+.motivation-section{
+
+    padding:20px;
+
+}
+
+.motivation-card{
+
+    background:linear-gradient(
+        135deg,
+        rgba(245,197,66,.15),
+        rgba(255,255,255,.05)
+    );
+
+    border:1px solid var(--gold);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+}
+
+.motivation-card h2{
+
+    color:var(--gold-light);
+
+    margin-bottom:12px;
+
+}
+
+.motivation-card p{
+
+    color:var(--text);
+
+    line-height:1.8;
+
+}
 
 
 
 /* FOOTER */
 
+.app-footer{
 
-.profile-footer{
+    margin-top:30px;
 
-text-align:center;
+    padding:30px 20px;
 
-padding:25px;
+    text-align:center;
 
-color:#aaa;
+    border-top:1px solid var(--border);
 
-font-size:13px;
+    background:rgba(0,0,0,.20);
 
 }
 
+.footer-links{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:16px;
+
+    margin:20px 0;
+
+}
+
+.footer-links a{
+
+    color:var(--white);
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.footer-links a:hover{
+
+    color:var(--gold);
+
+}
+
+.copyright{
+
+    color:var(--text);
+
+    font-size:12px;
+
+}
+
+/* ==========================================
+   PROFILE CSS
+   PART 5 / 5
+   RESPONSIVE + FINAL
+========================================== */
 
 
 
+/* SMALL MOBILE */
 
-/* MOBILE RESPONSIVE */
-
-
-@media(max-width:768px){
-
+@media (max-width:360px){
 
 .profile-container{
 
-padding:15px;
+    width:100%;
 
 }
-
-
 
 .profile-header{
 
-padding:12px 15px;
+    padding:15px;
+
+}
+
+.logo-box{
+
+    width:55px;
+
+    height:55px;
+
+}
+
+.profile-title h1{
+
+    font-size:18px;
+
+}
+
+.info-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.performance-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.achievement-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.quick-actions-grid{
+
+    grid-template-columns:1fr;
+
+}
 
 }
 
 
 
-.brand h2{
+/* MOBILE */
 
-font-size:16px;
+@media (min-width:361px) and (max-width:600px){
+
+.profile-container{
+
+    max-width:480px;
+
+}
 
 }
 
 
 
-.logo{
+/* TABLET */
 
-width:45px;
+@media (min-width:601px){
 
-height:45px;
+.profile-container{
+
+    max-width:760px;
+
+}
+
+.info-grid{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.performance-grid{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.achievement-grid{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.quick-actions-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.social-links{
+
+    flex-direction:row;
+
+}
+
+.social-btn{
+
+    flex:1;
+
+}
 
 }
 
 
 
-.profile-stats{
+/* DESKTOP */
 
-grid-template-columns:repeat(2,1fr);
+@media (min-width:1024px){
+
+.profile-container{
+
+    max-width:1000px;
+
+}
+
+.profile-card{
+
+    max-width:700px;
+
+    margin:auto;
+
+}
+
+.student-info-card,
+.performance-card,
+.achievement-card,
+.quick-actions-card,
+.social-card,
+.account-card,
+.motivation-card{
+
+    max-width:900px;
+
+    margin:auto;
+
+}
 
 }
 
 
 
-.profile-card h1{
+/* TOUCH EFFECTS */
 
-font-size:22px;
+button,
+a{
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+button:active,
+a:active{
+
+    transform:scale(.97);
 
 }
 
 
-}
 
+/* IMAGE SETTINGS */
 
+img{
 
-@media(max-width:400px){
+    user-select:none;
 
-
-.profile-stats{
-
-grid-template-columns:1fr;
+    -webkit-user-drag:none;
 
 }
 
 
-  }
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--gold);
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#081229;
+
+}
+
+
+
+/* FINAL SETTINGS */
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    overflow-x:hidden;
+
+}
+
+/* PROFILE CSS v5.0 COMPLETE */
+
