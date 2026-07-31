@@ -393,3 +393,32 @@ Math.floor(Math.random()*quotes.length)
 
 
 document.getElementById("dailyQuote").innerText = quote;
+
+// ADMIN BUTTON VISIBILITY
+
+const adminAccess = document.getElementById("adminAccess");
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+if(!adminAccess) return;
+
+
+if(
+user &&
+user.email === "gthegenius7@gmail.com"
+){
+
+    adminAccess.style.display="flex";
+
+}
+
+else{
+
+    adminAccess.style.display="none";
+
+}
+
+
+});
