@@ -1,61 +1,42 @@
-/* ==========================================
-   G THE GENIUS MOCK TEST PORTAL v5.0
-   ADMIN CSS
-   PART 1 / 5
+   /* ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+ADMIN CSS
+PART 1 / 5
 ========================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-
-
-:root{
-
-    --bg:#081229;
-    --card:rgba(255,255,255,0.08);
-    --gold:#f5c542;
-    --gold-light:#ffd86b;
-    --white:#ffffff;
-    --text:#d8def0;
-    --border:rgba(255,255,255,0.15);
-
-}
-
-
-*{
-
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-
-}
 
 
 
 body{
 
-    background:linear-gradient(
-        135deg,
-        #081229,
-        #101d3a
-    );
+    background:#081229;
 
-    color:var(--white);
+    color:#ffffff;
 
-    min-height:100vh;
+    font-family:Arial,sans-serif;
 
 }
 
+
+
+
+/* MAIN ADMIN CONTAINER */
 
 
 .admin-container{
 
-    max-width:480px;
-
-    margin:auto;
+    width:100%;
 
     min-height:100vh;
 
+    padding:20px;
+
+    padding-bottom:80px;
+
 }
+
+
+
+
 
 
 
@@ -64,82 +45,7 @@ body{
 
 .admin-header{
 
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:18px;
-
-    background:rgba(8,18,41,.92);
-
-    border-bottom:1px solid var(--border);
-
-    position:sticky;
-
-    top:0;
-
-    z-index:100;
-
-}
-
-
-
-.logo-box{
-
-    width:65px;
-
-    height:65px;
-
-    border-radius:50%;
-
-    overflow:hidden;
-
-    border:3px solid var(--gold);
-
-}
-
-
-
-.admin-logo{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-}
-
-
-
-.admin-title h1{
-
-    color:var(--gold);
-
-    font-size:22px;
-
-    font-weight:800;
-
-}
-
-
-
-.admin-title p{
-
-    color:var(--text);
-
-    font-size:12px;
-
-}
-
-
-
-/* ADMIN PROFILE */
-
-
-.admin-profile-section{
+    text-align:center;
 
     padding:20px;
 
@@ -147,171 +53,20 @@ body{
 
 
 
-.admin-profile-card{
 
-    background:var(--card);
+.admin-header h1{
 
-    border:1px solid var(--border);
-
-    border-radius:28px;
-
-    padding:30px 20px;
-
-    text-align:center;
-
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
-
-}
-
-
-
-.admin-avatar{
-
-    width:90px;
-
-    height:90px;
-
-    margin:auto;
-
-    border-radius:50%;
-
-    border:4px solid var(--gold);
-
-    background:rgba(245,197,66,.15);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:42px;
-
-}
-
-
-
-.admin-profile-card h2{
-
-    margin-top:18px;
-
-    color:var(--gold-light);
-
-    font-size:24px;
-
-}
-
-
-
-.admin-profile-card p{
-
-    color:var(--text);
-
-    margin-top:8px;
-
-    font-size:14px;
-
-}
-
-
-
-.admin-badge{
-
-    display:inline-block;
-
-    margin-top:18px;
-
-    padding:10px 18px;
-
-    border-radius:30px;
-
-    background:rgba(245,197,66,.15);
-
-    border:1px solid var(--gold);
-
-    color:var(--gold-light);
-
-    font-size:13px;
-
-    font-weight:600;
-
-}
-/* ==========================================
-   ADMIN CSS
-   PART 2 / 5
-   STATISTICS + ACTIONS
-========================================== */
-
-
-
-/* ADMIN STATISTICS */
-
-.admin-stats-section{
-
-    padding:20px;
-
-}
-
-
-.admin-stats-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:14px;
-
-}
-
-
-
-.admin-stat-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:22px;
-
-    padding:20px 12px;
-
-    text-align:center;
-
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
-
-    transition:.3s;
-
-}
-
-
-
-.admin-stat-card:hover{
-
-    transform:translateY(-3px);
-
-}
-
-
-
-.admin-stat-card h3{
-
-    color:var(--text);
-
-    font-size:14px;
-
-    margin-bottom:10px;
-
-}
-
-
-
-.admin-stat-card strong{
-
-    color:var(--gold);
+    color:#ffd86b;
 
     font-size:28px;
 
-    font-weight:800;
+}
+
+
+
+.admin-header p{
+
+    color:#e8ecff;
 
 }
 
@@ -319,108 +74,14 @@ body{
 
 
 
-/* QUICK ACTIONS */
 
 
-.admin-actions-section{
+/* BULK UPLOAD CARD */
 
-    padding:20px;
-
-}
-
-
-
-.admin-actions-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:22px;
-
-}
-
-
-
-.admin-actions-card h2{
-
-    text-align:center;
-
-    color:var(--gold-light);
-
-    margin-bottom:20px;
-
-}
-
-
-
-.admin-actions-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:14px;
-
-}
-
-
-
-.admin-action-btn{
-
-    border:none;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    padding:16px 10px;
-
-    border-radius:18px;
-
-    font-size:14px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-
-
-.admin-action-btn:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:0 8px 20px rgba(245,197,66,.30);
-
-}
-
-
-
-.admin-action-btn:active{
-
-    transform:scale(.96);
-
-        }
-
-/* ==========================================
-   ADMIN CSS
-   PART 3 / 5
-   BULK UPLOAD + ADD QUESTION FORM
-========================================== */
-
-
-
-/* BULK UPLOAD */
 
 .bulk-upload-section{
 
-    padding:20px;
+    padding:10px;
 
 }
 
@@ -428,17 +89,39 @@ body{
 
 .bulk-upload-card{
 
-    background:var(--card);
 
-    border:1px solid var(--border);
+    background:
 
-    border-radius:25px;
+    linear-gradient(
 
-    padding:22px;
+    145deg,
 
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
+    rgba(255,255,255,0.12),
+
+    rgba(255,255,255,0.05)
+
+    );
+
+
+    border:1px solid rgba(245,197,66,0.5);
+
+
+    border-radius:30px;
+
+
+    padding:25px;
+
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.4);
+
 
 }
+
+
+
+
 
 
 
@@ -446,784 +129,817 @@ body{
 
     text-align:center;
 
-    color:var(--gold-light);
-
-    margin-bottom:15px;
+    color:#ffd86b;
 
 }
 
 
 
-.upload-info{
+
+
+.bulk-upload-card p{
 
     text-align:center;
 
-    color:var(--text);
+    color:#e8ecff;
 
-    font-size:13px;
+}
 
-    line-height:1.6;
+/* ==========================================
+DROPDOWN + JSON INPUT DESIGN
+PART 2 / 5
+========================================== */
 
-    margin-bottom:18px;
+
+
+
+
+.bulk-upload-card label{
+
+    display:block;
+
+    color:#ffd86b;
+
+    font-weight:700;
+
+    margin-top:18px;
+
+    margin-bottom:8px;
 
 }
 
 
 
-#bulkQuestionInput{
+
+
+
+
+.bulk-upload-card select{
+
 
     width:100%;
 
-    min-height:220px;
 
-    resize:vertical;
+    padding:14px;
 
-    padding:16px;
 
     border-radius:18px;
 
-    border:1px solid var(--border);
 
-    background:rgba(255,255,255,.08);
-
-    color:var(--white);
-
-    outline:none;
-
-    font-size:13px;
-
-    line-height:1.6;
-
-}
+    border:1px solid rgba(245,197,66,.5);
 
 
-
-#bulkQuestionInput::placeholder{
-
-    color:rgba(255,255,255,.55);
-
-}
+    background:#101d3d;
 
 
+    color:#ffffff;
 
-.upload-btn{
-
-    width:100%;
-
-    margin-top:15px;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:18px;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    font-weight:800;
 
     font-size:15px;
 
+
+    outline:none;
+
+
+}
+
+
+
+
+
+
+
+.bulk-upload-card select option{
+
+
+    background:#081229;
+
+
+    color:#ffffff;
+
+
+}
+
+
+
+
+
+
+
+
+/* JSON TEXT AREA */
+
+
+.json-upload-area{
+
+
+    margin-top:20px;
+
+
+}
+
+
+
+
+
+
+
+#bulkQuestionsInput{
+
+
+    width:100%;
+
+
+    height:250px;
+
+
+    padding:15px;
+
+
+    border-radius:20px;
+
+
+    border:1px solid rgba(245,197,66,.5);
+
+
+    background:#101d3d;
+
+
+    color:#ffffff;
+
+
+    font-size:14px;
+
+
+    resize:vertical;
+
+
+    outline:none;
+
+
+}
+
+
+
+
+
+
+
+#bulkQuestionsInput::placeholder{
+
+
+    color:#bfc7e8;
+
+
+}
+
+
+
+
+
+
+
+.format-note{
+
+
+    color:#ffd86b !important;
+
+
+    font-size:13px;
+
+
+}
+
+/* ==========================================
+BUTTON + INFO CARD DESIGN
+PART 3 / 5
+========================================== */
+
+
+
+
+
+.upload-buttons{
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+    margin-top:25px;
+
+
+    justify-content:center;
+
+
+    flex-wrap:wrap;
+
+
+}
+
+
+
+
+
+
+
+.upload-buttons button{
+
+
+    padding:14px 25px;
+
+
+    border:none;
+
+
+    border-radius:30px;
+
+
+    background:#f5c542;
+
+
+    color:#081229;
+
+
+    font-weight:800;
+
+
+    font-size:15px;
+
+
     cursor:pointer;
 
+
+    transition:.3s;
+
+
 }
 
 
 
-.upload-btn:hover{
 
-    transform:translateY(-2px);
+
+.upload-buttons button:hover{
+
+
+    background:#ffd86b;
+
+
+    transform:translateY(-3px);
+
 
 }
 
+
+
+
+
+
+
+/* STATUS BOX */
 
 
 .upload-status{
 
-    margin-top:15px;
 
-    padding:14px;
+    margin-top:20px;
 
-    border-radius:15px;
-
-    background:rgba(255,255,255,.06);
-
-    color:var(--gold-light);
-
-    text-align:center;
-
-    font-size:14px;
-
-}
-
-
-
-
-
-/* ADD QUESTION FORM */
-
-
-.add-question-section{
-
-    padding:20px;
-
-}
-
-
-
-.add-question-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:22px;
-
-}
-
-
-
-.add-question-card h2{
-
-    text-align:center;
-
-    color:var(--gold-light);
-
-    margin-bottom:20px;
-
-}
-
-
-
-.add-question-card input{
-
-    width:100%;
-
-    padding:14px;
-
-    margin-bottom:12px;
-
-    border-radius:15px;
-
-    border:1px solid var(--border);
-
-    background:rgba(255,255,255,.08);
-
-    color:var(--white);
-
-    outline:none;
-
-    font-size:14px;
-
-}
-
-
-
-.add-question-card input::placeholder{
-
-    color:rgba(255,255,255,.55);
-
-}
-
-
-
-.save-btn{
-
-    width:100%;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:18px;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    font-weight:800;
-
-    cursor:pointer;
-
-    font-size:15px;
-
-}
-
-
-
-.save-btn:hover{
-
-    transform:translateY(-2px);
-
-}
-
-/* ==========================================
-   ADMIN CSS
-   PART 4 / 5
-   QUESTION MANAGEMENT + ANALYTICS
-========================================== */
-
-
-
-/* QUESTION MANAGEMENT */
-
-.question-management-section{
-
-    padding:20px;
-
-}
-
-
-
-.question-management-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:22px;
-
-}
-
-
-
-.question-management-card h2{
-
-    text-align:center;
-
-    color:var(--gold-light);
-
-    margin-bottom:20px;
-
-}
-
-
-
-.question-management-card input,
-
-.question-management-card select{
-
-    width:100%;
-
-    padding:14px;
-
-    margin-bottom:14px;
-
-    border-radius:15px;
-
-    border:1px solid var(--border);
-
-    background:rgba(255,255,255,.08);
-
-    color:var(--white);
-
-    outline:none;
-
-}
-
-
-
-.question-management-card select option{
-
-    background:#081229;
-
-    color:#fff;
-
-}
-
-
-
-/* QUESTION LIST */
-
-.question-list{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
-
-    margin-top:15px;
-
-}
-
-
-
-.question-item{
-
-    background:rgba(255,255,255,.06);
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    padding:16px;
-
-}
-
-
-
-.question-item h3{
-
-    color:var(--gold-light);
-
-    font-size:15px;
-
-    margin-bottom:10px;
-
-}
-
-
-
-.question-item p{
-
-    color:var(--text);
-
-    font-size:13px;
-
-}
-
-
-
-/* QUESTION ACTION BUTTONS */
-
-
-.question-actions{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-top:15px;
-
-}
-
-
-
-.edit-btn,
-
-.delete-btn{
-
-    flex:1;
-
-    padding:12px;
-
-    border:none;
-
-    border-radius:14px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-}
-
-
-
-.edit-btn{
-
-    background:#2196f3;
-
-    color:#fff;
-
-}
-
-
-
-.delete-btn{
-
-    background:#d32f2f;
-
-    color:#fff;
-
-}
-
-
-
-.edit-btn:hover,
-
-.delete-btn:hover{
-
-    transform:translateY(-2px);
-
-}
-
-
-
-
-
-/* ANALYTICS */
-
-
-.analytics-section{
-
-    padding:20px;
-
-}
-
-
-
-.analytics-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:22px;
-
-}
-
-
-
-.analytics-card h2{
-
-    text-align:center;
-
-    color:var(--gold-light);
-
-    margin-bottom:20px;
-
-}
-
-
-
-.analytics-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:12px;
-
-}
-
-
-
-.analytics-item{
-
-    background:rgba(255,255,255,.06);
-
-    border-radius:18px;
-
-    padding:16px 10px;
-
-    text-align:center;
-
-}
-
-
-
-.analytics-item span{
-
-    display:block;
-
-    color:var(--text);
-
-    font-size:12px;
-
-    margin-bottom:8px;
-
-}
-
-
-
-.analytics-item strong{
-
-    color:var(--gold);
-
-    font-size:22px;
-
-}
-
-/* ==========================================
-   ADMIN CSS
-   PART 5 / 5
-   SETTINGS + FOOTER + RESPONSIVE
-========================================== */
-
-
-
-/* ADMIN SETTINGS */
-
-.admin-settings-section{
-
-    padding:20px;
-
-}
-
-
-
-.admin-settings-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:22px;
-
-}
-
-
-
-.admin-settings-card h2{
-
-    text-align:center;
-
-    color:var(--gold-light);
-
-    margin-bottom:20px;
-
-}
-
-
-
-.settings-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:14px;
-
-}
-
-
-
-.settings-btn{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    text-decoration:none;
-
-    border:none;
-
-    background:var(--gold);
-
-    color:#081229;
 
     padding:15px;
 
+
     border-radius:18px;
 
-    font-weight:700;
 
-    cursor:pointer;
-
-}
+    background:rgba(255,255,255,.08);
 
 
+    border:1px solid rgba(245,197,66,.4);
 
-.settings-btn:hover{
-
-    transform:translateY(-2px);
-
-}
-
-
-
-.logout{
-
-    background:#d32f2f;
-
-    color:#fff;
-
-}
-
-
-
-
-
-/* FOOTER */
-
-.app-footer{
-
-    margin-top:30px;
-
-    padding:30px 20px;
 
     text-align:center;
 
-    background:rgba(0,0,0,.20);
 
-    border-top:1px solid var(--border);
+    color:#e8ecff;
+
 
 }
 
 
 
-.app-footer h3{
-
-    color:var(--gold);
-
-    margin-bottom:8px;
-
-}
 
 
 
-.app-footer p{
 
-    color:var(--text);
-
-    font-size:13px;
-
-}
+/* INFO GRID */
 
 
+.admin-info-grid{
 
-.footer-links{
 
-    display:flex;
+    display:grid;
 
-    justify-content:center;
 
-    flex-wrap:wrap;
+    grid-template-columns:1fr;
+
 
     gap:15px;
 
-    margin:20px 0;
 
-}
-
-
-
-.footer-links a{
-
-    color:var(--white);
-
-    text-decoration:none;
-
-}
-
-
-
-.footer-links a:hover{
-
-    color:var(--gold);
-
-}
-
-
-
-.copyright{
-
-    font-size:12px;
-
-}
-
-
-
-
-
-/* RESPONSIVE */
-
-
-
-@media(max-width:360px){
-
-
-.admin-stats-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-
-.admin-actions-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-
-.analytics-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-
-.settings-grid{
-
-    grid-template-columns:1fr;
-
-}
+    margin-top:25px;
 
 
 }
 
 
 
-@media(min-width:601px){
 
 
-.admin-container{
 
-    max-width:760px;
+
+.admin-info-card{
+
+
+    background:rgba(255,255,255,.08);
+
+
+    border:1px solid rgba(245,197,66,.5);
+
+
+    border-radius:25px;
+
+
+    padding:20px;
+
+
+    text-align:center;
+
 
 }
 
 
-.admin-stats-grid{
 
-    grid-template-columns:repeat(4,1fr);
+
+
+
+
+.info-icon{
+
+
+    font-size:40px;
+
+
+    margin-bottom:10px;
+
 
 }
 
 
-.social-links{
 
-    flex-direction:row;
+
+
+
+
+.admin-info-card h3{
+
+
+    color:#ffd86b;
+
 
 }
 
 
+
+
+
+.admin-info-card p{
+
+
+    color:#ffffff;
+
+
+    font-size:20px;
+
+
+    font-weight:bold;
+
+
+}
+
+/* ==========================================
+PREVIEW + HISTORY DESIGN
+PART 4 / 5
+========================================== */
+
+
+
+
+
+.upload-guide-card,
+.preview-section,
+.history-section{
+
+
+    margin-top:25px;
+
+
+    background:rgba(255,255,255,.08);
+
+
+    border:1px solid rgba(245,197,66,.4);
+
+
+    border-radius:25px;
+
+
+    padding:20px;
+
+
 }
 
 
 
-@media(min-width:1024px){
 
 
-.admin-container{
 
-    max-width:1000px;
+
+.upload-guide-card h3,
+.preview-section h2,
+.history-section h2{
+
+
+    color:#ffd86b;
+
+
+    text-align:center;
+
 
 }
 
 
-.admin-profile-card,
 
-.admin-actions-card,
 
-.bulk-upload-card,
 
-.add-question-card,
 
-.question-management-card,
 
-.analytics-card,
+.upload-guide-card ul{
 
-.admin-settings-card{
 
-    max-width:900px;
+    color:#e8ecff;
+
+
+    line-height:1.8;
+
+
+}
+
+
+
+
+
+
+
+/* QUESTION PREVIEW */
+
+
+.question-preview{
+
+
+    background:#101d3d;
+
+
+    border-radius:20px;
+
+
+    padding:15px;
+
+
+    color:#ffffff;
+
+
+    max-height:350px;
+
+
+    overflow-y:auto;
+
+
+}
+
+
+
+
+
+
+
+/* HISTORY TABLE */
+
+
+.history-table-wrapper{
+
+
+    overflow-x:auto;
+
+
+}
+
+
+
+
+
+
+
+.upload-table{
+
+
+    width:100%;
+
+
+    border-collapse:collapse;
+
+
+    color:#ffffff;
+
+
+}
+
+
+
+
+
+
+
+.upload-table th{
+
+
+    background:#f5c542;
+
+
+    color:#081229;
+
+
+    padding:12px;
+
+
+}
+
+
+
+
+
+
+
+.upload-table td{
+
+
+    padding:12px;
+
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+
+
+.upload-table tr:hover{
+
+
+    background:rgba(245,197,66,.1);
+
+
+}
+
+
+
+
+
+
+
+/* CLEAR BUTTON */
+
+
+.admin-action-area{
+
+
+    text-align:center;
+
+
+    margin-top:20px;
+
+
+}
+
+
+
+
+
+
+
+#clearPreviewBtn{
+
+
+    padding:12px 25px;
+
+
+    border-radius:25px;
+
+
+    border:none;
+
+
+    background:#ff5c5c;
+
+
+    color:#ffffff;
+
+
+    font-weight:700;
+
+
+}
+
+/* ==========================================
+FOOTER + RESPONSIVE
+PART 5 / 5 FINAL
+========================================== */
+
+
+
+
+
+.admin-footer{
+
+
+    margin-top:35px;
+
+
+    padding:25px;
+
+
+    text-align:center;
+
+
+    background:rgba(255,255,255,.06);
+
+
+    border-top:1px solid rgba(245,197,66,.4);
+
+
+}
+
+
+
+
+
+.admin-footer h3{
+
+
+    color:#ffd86b;
+
+
+    font-size:22px;
+
+
+}
+
+
+
+
+
+.admin-footer p{
+
+
+    color:#e8ecff;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+
+
+
+
+/* MOBILE RESPONSIVE */
+
+
+@media(min-width:600px){
+
+
+
+.admin-info-grid{
+
+
+    grid-template-columns:repeat(3,1fr);
+
+
+}
+
+
+
+.bulk-upload-card{
+
+
+    max-width:700px;
+
 
     margin:auto;
 
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+@media(max-width:420px){
+
+
+
+.admin-container{
+
+
+    padding:15px;
+
+
+}
+
+
+
+.bulk-upload-card{
+
+
+    padding:20px 15px;
+
+
+}
+
+
+
+.upload-buttons{
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+.upload-buttons button{
+
+
+    width:100%;
+
+
+}
+
+
+
+.admin-info-card{
+
+
+    padding:15px;
+
+
+}
+
+
+
+.question-preview{
+
+
+    font-size:13px;
+
+
+}
+
+
+
+.upload-table{
+
+
+    font-size:13px;
+
+
 }
 
 
@@ -1231,65 +947,31 @@ body{
 
 
 
-/* TOUCH */
-
-button,
-a{
-
-    -webkit-tap-highlight-color:transparent;
-
-}
-
-
-button:active,
-a:active{
-
-    transform:scale(.97);
-
-}
 
 
 
-/* SCROLLBAR */
 
-::-webkit-scrollbar{
-
-    width:6px;
-
-}
+/* FINAL TEXT VISIBILITY FIX */
 
 
-::-webkit-scrollbar-thumb{
-
-    background:var(--gold);
-
-    border-radius:10px;
-
-}
+.admin-container h1,
+.admin-container h2,
+.admin-container h3{
 
 
-::-webkit-scrollbar-track{
+    color:#ffd86b !important;
 
-    background:#081229;
 
 }
 
 
 
-html{
+.admin-container p,
+.admin-container li,
+.admin-container td{
 
-    scroll-behavior:smooth;
+
+    color:#e8ecff !important;
+
 
 }
-
-
-
-body{
-
-    overflow-x:hidden;
-
-}
-
-
-
-/* ADMIN CSS v5.0 COMPLETE */
