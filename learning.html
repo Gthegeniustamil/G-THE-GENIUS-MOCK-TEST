@@ -1,1 +1,643 @@
 
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
+// LEARNING HTML
+// PART 1 / 5
+// ==========================================
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+
+Learning Zone | G THE GENIUS
+
+</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+<link rel="stylesheet" href="learning.css">
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="learning-container">
+
+
+
+<!-- HEADER -->
+
+
+<header class="learning-header">
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo-img">
+
+
+<h1>
+
+G THE GENIUS
+
+</h1>
+
+
+<p>
+
+Government Exam Learning Zone
+
+</p>
+
+
+</header>
+
+
+
+
+
+<!-- BACK BUTTON -->
+
+
+<div class="back-area">
+
+
+<a href="dashboard.html">
+
+⬅ Dashboard
+
+</a>
+
+
+</div>
+
+
+
+
+
+<!-- PAGE TITLE -->
+
+
+<section class="learning-title">
+
+
+<h2>
+
+📚 Learning Zone
+
+</h2>
+
+
+<p>
+
+Choose your preparation category
+
+</p>
+
+
+</section>
+
+  
+// ==========================================
+// LEARNING CATEGORY CARDS
+// PART 2 / 5
+// ==========================================
+
+
+
+<section class="category-section">
+
+
+
+<div class="category-grid">
+
+
+
+
+
+<!-- TAMIL -->
+
+
+<div class="category-card"
+
+onclick="openCategory('tamil')">
+
+
+<div class="category-icon">
+
+📖
+
+</div>
+
+
+<h3>
+
+தமிழ்
+
+</h3>
+
+
+<p>
+
+இலக்கணம் • இலக்கியம் • திருக்குறள்
+
+</p>
+
+
+<button>
+
+Start Learning
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- PHYSICAL -->
+
+
+<div class="category-card"
+
+onclick="openCategory('physical')">
+
+
+<div class="category-icon">
+
+🏃
+
+</div>
+
+
+<h3>
+
+Physical Tips
+
+</h3>
+
+
+<p>
+
+Police PET Preparation & Fitness
+
+</p>
+
+
+<button>
+
+Start Learning
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- PSYCHOLOGY -->
+
+
+<div class="category-card"
+
+onclick="openCategory('psychology')">
+
+
+<div class="category-icon">
+
+🧠
+
+</div>
+
+
+<h3>
+
+Psychology
+
+</h3>
+
+
+<p>
+
+Confidence • Stress Control • Mind Power
+
+</p>
+
+
+<button>
+
+Start Learning
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- GENERAL SUBJECTS -->
+
+
+<div class="category-card"
+
+onclick="openCategory('general')">
+
+
+<div class="category-icon">
+
+📚
+
+</div>
+
+
+<h3>
+
+General Subjects
+
+</h3>
+
+
+<p>
+
+15 Subjects • Topic Wise Preparation
+
+</p>
+
+
+<button>
+
+Start Learning
+
+</button>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+// ==========================================
+// SUBJECT + TOPIC DISPLAY AREA
+// PART 3 / 5
+// ==========================================
+
+
+
+<section class="content-area">
+
+
+
+<!-- SUBJECT LIST -->
+
+<div id="subjectSection"
+
+class="hidden">
+
+
+<h2>
+
+📚 Subjects
+
+</h2>
+
+
+
+<div id="subjectList"
+
+class="subject-list">
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- TOPIC LIST -->
+
+
+<div id="topicSection"
+
+class="hidden">
+
+
+
+<h2>
+
+📖 Topics
+
+</h2>
+
+
+
+<div id="topicList"
+
+class="topic-list">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- STUDY AREA -->
+
+
+<div id="studySection"
+
+class="hidden">
+
+
+
+<h2>
+
+📘 Study Area
+
+</h2>
+
+
+
+<div class="study-card">
+
+
+<div class="study-icon">
+
+📚
+
+</div>
+
+
+
+<h3 id="selectedTopic">
+
+Topic Name
+
+</h3>
+
+
+
+<p>
+
+இந்த Topic-ஐ படித்து Practice Test எழுதுங்கள்.
+
+</p>
+
+
+
+
+<div class="study-buttons">
+
+
+<button
+
+id="notesBtn">
+
+📖 Notes
+
+</button>
+
+
+
+
+<button
+
+id="practiceBtn">
+
+📝 Practice Test
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+  
+
+// ==========================================
+// LEARNING FOOTER + NAVIGATION
+// PART 4 / 5
+// ==========================================
+
+
+
+<!-- FOOTER -->
+
+
+<footer class="learning-footer">
+
+
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+
+
+<p>
+
+ALL GOVERNMENT EXAM MOCK TEST
+
+</p>
+
+
+
+
+<div class="footer-links">
+
+
+<a href="dashboard.html">
+
+🏠 Home
+
+</a>
+
+
+
+<a href="leaderboard.html">
+
+🏆 Leaderboard
+
+</a>
+
+
+
+<a href="profile.html">
+
+👤 Profile
+
+</a>
+
+
+
+<a href="history.html">
+
+📜 History
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+<p class="copyright">
+
+© 2026 G THE GENIUS. All Rights Reserved.
+
+</p>
+
+
+
+</footer>
+
+
+
+
+
+
+
+<!-- BOTTOM NAVIGATION -->
+
+
+<nav class="bottom-nav">
+
+
+<a href="dashboard.html">
+
+🏠
+
+<span>
+
+Home
+
+</span>
+
+</a>
+
+
+
+<a href="learning.html">
+
+📚
+
+<span>
+
+Learn
+
+</span>
+
+</a>
+
+
+
+<a href="mocktest.html">
+
+📝
+
+<span>
+
+Test
+
+</span>
+
+</a>
+
+
+
+<a href="profile.html">
+
+👤
+
+<span>
+
+Profile
+
+</span>
+
+</a>
+
+
+
+</nav>
+
+  
+// ==========================================
+// SCRIPT CONNECTION
+// PART 5 / 5 FINAL
+// ==========================================
+
+
+
+<script type="module" src="subjects-data.js"></script>
+
+
+<script type="module" src="learning.js"></script>
+
+
+
+</body>
+
+
+</html>
