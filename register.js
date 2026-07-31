@@ -2,18 +2,13 @@ import { auth, db } from "./firebase-config.js";
 
 
 import {
-createUserWithEmailAndPassword
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-import {
 doc,
-setDoc
+setDoc,
+serverTimestamp
 }
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 
 document.getElementById("registerBtn").onclick = async function(){
@@ -94,26 +89,23 @@ userCredential.user;
 
 await setDoc(
 
-doc(db,"users",user.uid),
+doc(db,"students",user.uid),
 
 {
 
-
 name:name,
-
 
 email:email,
 
-
 district:district,
 
+xp:0,
+
+level:1,
 
 createdAt:serverTimestamp()
 
-
 }
-
-
 
 );
 
