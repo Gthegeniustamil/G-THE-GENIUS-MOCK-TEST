@@ -1,86 +1,24 @@
-// ==========================================
-// G THE GENIUS MOCK TEST PORTAL v5.0
-// MOCK TEST CSS
-// PART 1 / 5
-// ==========================================
 
-
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-
-
-
-
-:root{
-
-
-    --bg:#081229;
-
-    --card:rgba(255,255,255,0.08);
-
-    --gold:#f5c542;
-
-    --gold-light:#ffd86b;
-
-    --white:#ffffff;
-
-    --text:#d8def0;
-
-    --border:rgba(255,255,255,0.15);
-
-    --danger:#ff4d4d;
-
-
-}
-
-
-
-
-
+/* ==========================================
+G THE GENIUS MOCK TEST PORTAL v5.0
+MOCKTEST CSS PREMIUM DESIGN
+========================================== */
 
 
 *{
-
-
-    margin:0;
-
-    padding:0;
-
     box-sizing:border-box;
-
-    font-family:'Poppins',sans-serif;
-
-
 }
-
-
-
-
-
-
 
 
 body{
 
+    margin:0;
 
-    background:
+    background:#081229;
 
-    linear-gradient(
+    color:#ffffff;
 
-    135deg,
-
-    #081229,
-
-    #101d3a
-
-    );
-
-
-    color:var(--white);
-
-    min-height:100vh;
-
+    font-family:Arial,sans-serif;
 
 }
 
@@ -88,21 +26,20 @@ body{
 
 
 
+/* MAIN CONTAINER */
 
 
 .mock-container{
 
+    min-height:100vh;
 
-    max-width:480px;
+    padding:20px;
+
+    max-width:900px;
 
     margin:auto;
 
-    min-height:100vh;
-
-
 }
-
-
 
 
 
@@ -115,25 +52,27 @@ body{
 
 .mock-header{
 
+    text-align:center;
 
-    display:flex;
+    padding:15px;
 
-    align-items:center;
+}
 
-    gap:15px;
 
-    padding:18px;
 
-    background:rgba(8,18,41,0.9);
+.mock-header h1{
 
-    border-bottom:1px solid var(--border);
+    color:#ffd86b;
 
-    position:sticky;
+    font-size:28px;
 
-    top:0;
+}
 
-    z-index:10;
 
+
+.mock-header p{
+
+    color:#ffffff;
 
 }
 
@@ -143,119 +82,30 @@ body{
 
 
 
+/* TIMER */
 
-.logo-box{
 
+#timer{
 
-    width:65px;
+    background:#101d3d;
 
-    height:65px;
+    border:2px solid #ffd86b;
 
-    border-radius:50%;
+    color:#ffd86b;
 
-    overflow:hidden;
+    padding:12px 25px;
 
-    border:3px solid var(--gold);
-
-
-}
-
-
-
-
-
-
-
-.mock-logo{
-
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-
-}
-
-
-
-
-
-
-
-.mock-title h1{
-
-
-    color:var(--gold);
-
-    font-size:22px;
-
-    font-weight:700;
-
-
-}
-
-
-
-
-
-
-
-.mock-title p{
-
-
-    color:var(--text);
-
-    font-size:12px;
-
-
-}
-
-
-
-
-
-
-
-
-/* TEST INFO */
-
-
-.test-info{
-
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:10px;
-
-    padding:20px;
-
-
-}
-
-
-
-
-
-
-
-
-.info-card{
-
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    padding:15px 8px;
+    border-radius:30px;
 
     text-align:center;
 
+    width:max-content;
+
+    margin:15px auto;
+
+    font-size:20px;
+
+    font-weight:bold;
 
 }
 
@@ -265,189 +115,24 @@ body{
 
 
 
-.info-card h3{
-
-
-    font-size:12px;
-
-    color:var(--text);
-
-
-}
-
-
-
-
-
-
-
-.info-card strong{
-
-
-    display:block;
-
-    margin-top:8px;
-
-    color:var(--gold);
-
-    font-size:16px;
-
-
-}
-
-// ==========================================
-// MOCK TEST CSS
-// PROGRESS + QUESTION DESIGN
-// PART 2 / 5
-// ==========================================
-
-
-
-
-
-
-/* PROGRESS SECTION */
-
-
-.progress-section{
-
-
-    padding:0 20px 15px;
-
-
-}
-
-
-
-
-
-
-
-.progress-text{
-
-
-    display:flex;
-
-    justify-content:space-between;
-
-    color:var(--text);
-
-    font-size:13px;
-
-    margin-bottom:8px;
-
-
-}
-
-
-
-
-
-
-
-.progress-bar{
-
-
-    width:100%;
-
-    height:10px;
-
-    background:rgba(255,255,255,0.15);
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-
-}
-
-
-
-
-
-
-
-#progressFill{
-
-
-    width:0%;
-
-    height:100%;
-
-    background:var(--gold);
-
-    border-radius:20px;
-
-    transition:0.3s;
-
-
-}
-
-
-
-
-
-
-
-
-/* QUESTION SECTION */
-
-
-.question-section{
-
-
-    padding:20px;
-
-
-}
-
-
-
-
-
+/* QUESTION CARD */
 
 
 .question-card{
 
+    background:
 
-    background:var(--card);
+    rgba(255,255,255,0.10);
 
-    border:1px solid var(--border);
+    border:1px solid rgba(255,216,107,.5);
 
     border-radius:25px;
 
-    padding:22px;
+    padding:25px;
 
-    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+    margin-top:20px;
 
-    backdrop-filter:blur(15px);
-
-
-}
-
-
-
-
-
-
-
-.question-number{
-
-
-    display:inline-block;
-
-    padding:8px 18px;
-
-    border-radius:20px;
-
-    background:rgba(245,197,66,0.15);
-
-    color:var(--gold-light);
-
-    font-size:13px;
-
-    margin-bottom:15px;
-
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
 
 }
 
@@ -455,22 +140,31 @@ body{
 
 
 
+#questionNumber{
+
+    color:#ffd86b;
+
+    font-weight:bold;
+
+}
 
 
-.question-card h2{
 
 
-    font-size:18px;
+
+#questionText{
+
+    color:#ffffff;
+
+    font-size:20px;
 
     line-height:1.6;
 
-    color:var(--white);
+    margin-top:15px;
 
-    margin-bottom:20px;
-
+    font-weight:700;
 
 }
-
 
 
 
@@ -481,15 +175,9 @@ body{
 /* OPTIONS */
 
 
-.options-container{
+#optionsBox{
 
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
+    margin-top:20px;
 
 }
 
@@ -497,1063 +185,33 @@ body{
 
 
 
-
-
 .option-btn{
-
 
     width:100%;
 
-    padding:14px;
+    padding:15px;
+
+    margin:10px 0;
+
+    background:#101d3d;
+
+    color:#ffffff;
+
+    border:1px solid #ffd86b;
 
     border-radius:18px;
 
-    border:1px solid var(--border);
-
-    background:rgba(255,255,255,0.05);
-
-    color:var(--white);
+    font-size:16px;
 
     text-align:left;
 
     cursor:pointer;
 
-    font-size:14px;
+    transition:.3s;
 
-    transition:0.3s;
-
-
-}
-
-
-
-
-
-
-
-.option-btn:hover{
-
-
-    border-color:var(--gold);
-
-}
-
-
-
-
-
-
-
-.option-btn.selected{
-
-
-    background:var(--gold);
-
-    color:#081229;
-
-    border-color:var(--gold);
-
-    font-weight:600;
-
-
-}
-
-// ==========================================
-// MOCK TEST CSS
-// PALETTE + NAVIGATION DESIGN
-// PART 3 / 5
-// ==========================================
-
-
-
-
-
-
-/* QUESTION PALETTE */
-
-
-.palette-section{
-
-
-    padding:20px;
-
-
-}
-
-
-
-
-
-
-
-.palette-section h3{
-
-
-    color:var(--gold-light);
-
-    font-size:18px;
-
-    margin-bottom:15px;
-
-
-}
-
-
-
-
-
-
-
-.question-palette{
-
-
-    display:grid;
-
-    grid-template-columns:repeat(5,1fr);
-
-    gap:10px;
-
-
-}
-
-
-
-
-
-
-
-.question-number-btn{
-
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:50%;
-
-    border:1px solid var(--border);
-
-    background:rgba(255,255,255,0.08);
-
-    color:var(--white);
-
-    cursor:pointer;
-
-    font-weight:600;
-
-}
-
-
-
-
-
-
-
-.question-number-btn.active{
-
-
-    background:var(--gold);
-
-    color:#081229;
-
-}
-
-
-
-
-
-
-
-.question-number-btn.answered{
-
-
-    border-color:var(--gold);
-
-}
-
-
-
-
-
-
-
-
-
-/* NAVIGATION SECTION */
-
-
-.navigation-section{
-
-
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:15px;
-
-    padding:20px;
-
-
-}
-
-
-
-
-
-
-
-.nav-btn{
-
-
-    flex:1;
-
-    padding:14px;
-
-    border:none;
-
-    border-radius:30px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:0.3s;
-
-
-}
-
-
-
-
-
-
-
-.nav-btn.primary{
-
-
-    background:var(--gold);
-
-    color:#081229;
-
-
-}
-
-
-
-
-
-
-
-.nav-btn.secondary{
-
-
-    background:rgba(255,255,255,0.12);
-
-    color:var(--white);
-
-
-}
-
-
-
-
-
-
-
-.nav-btn:hover{
-
-
-    transform:translateY(-2px);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* SUBMIT BUTTON */
-
-
-.submit-section{
-
-
-    padding:0 20px 20px;
-
-    text-align:center;
-
-
-}
-
-
-
-
-
-
-
-.submit-btn{
-
-
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:30px;
-
-    background:#f5c542;
-
-    color:#081229;
-
-    font-size:16px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-
-}
-
-
-
-
-
-
-
-.submit-btn:active{
-
-
-    transform:scale(0.97);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* TEST STATUS */
-
-
-.test-status{
-
-
-    text-align:center;
-
-    padding:15px;
-
-    color:var(--gold-light);
-
-    font-size:14px;
-
-
-}
-
-// ==========================================
-// MOCK TEST CSS
-// RULES + LOADING + FOOTER DESIGN
-// PART 4 / 5
-// ==========================================
-
-
-
-
-
-
-/* RULES SECTION */
-
-
-.rules-section{
-
-
-    padding:20px;
-
-
-}
-
-
-
-
-
-
-
-.rules-card{
-
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:22px;
-
-    box-shadow:0 8px 25px rgba(0,0,0,0.35);
-
-
-}
-
-
-
-
-
-
-
-.rules-card h2{
-
-
-    color:var(--gold-light);
-
-    text-align:center;
-
-    margin-bottom:15px;
-
-    font-size:20px;
-
-
-}
-
-
-
-
-
-
-
-.rules-card ul{
-
-
-    padding-left:20px;
-
-
-}
-
-
-
-
-
-
-
-.rules-card li{
-
-
-    color:var(--text);
-
-    font-size:13px;
-
-    line-height:1.8;
-
-    margin-bottom:8px;
-
-
-}
-
-
-
-
-
-
-
-
-/* LOADING OVERLAY */
-
-
-.loading-overlay{
-
-
-    position:fixed;
-
-    top:0;
-
-    left:0;
-
-    width:100%;
-
-    height:100%;
-
-    background:rgba(8,18,41,0.95);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:999;
-
-
-}
-
-
-
-
-
-
-
-.loader-box{
-
-
-    text-align:center;
-
-
-}
-
-
-
-
-
-
-
-.loader{
-
-
-    width:55px;
-
-    height:55px;
-
-    border-radius:50%;
-
-    border:5px solid rgba(255,255,255,0.2);
-
-    border-top-color:#f5c542;
-
-    animation:spin 1s linear infinite;
-
-    margin:auto;
-
-}
-
-
-
-@keyframes spin{
-
-
-    from{
-
-        transform:rotate(0deg);
-
-    }
-
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
-
-}
-
-
-
-
-
-
-
-.loader-box p{
-
-
-    margin-top:15px;
-
-    color:var(--gold-light);
-
-    font-size:14px;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ERROR MESSAGE */
-
-
-.error-message{
-
-
-    text-align:center;
-
-    color:#ff8080;
-
-    padding:15px;
-
-    font-size:14px;
-
-
-}
-
-
-
-
-
-
-
-/* FOOTER */
-
-
-/* No Logo - Only Text Footer */
-
-
-.app-footer{
-
-
-    margin-top:25px;
-
-    padding:25px 20px;
-
-    text-align:center;
-
-    background:rgba(0,0,0,0.25);
-
-    border-top:1px solid var(--border);
-
-
-}
-
-
-
-
-
-
-
-.app-footer h3{
-
-
-    color:var(--gold);
-
-    font-size:22px;
-
-
-}
-
-
-
-
-
-
-
-.app-footer p{
-
-
-    color:var(--text);
-
-    font-size:13px;
-
-    margin-top:8px;
-
-
-}
-
-
-
-
-
-
-
-.footer-links{
-
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:15px;
-
-    flex-wrap:wrap;
-
-    margin:15px 0;
-
-
-}
-
-
-
-
-
-
-
-.footer-links a{
-
-
-    color:var(--white);
-
-    text-decoration:none;
-
-    font-size:13px;
-
-
-}
-
-
-
-
-
-
-
-.footer-links a:hover{
-
-
-    color:var(--gold);
-
-
-  }
-
-// ==========================================
-// MOCK TEST CSS
-// RESPONSIVE + FINAL SETTINGS
-// PART 5 / 5
-// ==========================================
-
-
-
-
-
-
-/* SMALL MOBILE */
-
-
-@media(max-width:360px){
-
-
-
-.mock-container{
-
-    width:100%;
-
-}
-
-
-
-.mock-header{
-
-    padding:15px;
-
-}
-
-
-
-.logo-box{
-
-    width:55px;
-
-    height:55px;
-
-}
-
-
-
-.mock-title h1{
-
-    font-size:18px;
-
-}
-
-
-
-.test-info{
-
-    grid-template-columns:1fr;
-
-}
-
-
-
-.question-card h2{
-
-    font-size:16px;
-
-}
-
-
-
-.question-palette{
-
-    grid-template-columns:repeat(4,1fr);
-
-}
-
-
-
-.question-number-btn{
-
-    width:38px;
-
-    height:38px;
-
-}
-
-
-
-.navigation-section{
-
-    flex-direction:column;
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* NORMAL MOBILE */
-
-
-@media(min-width:361px) and (max-width:600px){
-
-
-
-.mock-container{
-
-    max-width:480px;
-
-}
-
-
-
-.question-card{
-
-    padding:20px;
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* TABLET */
-
-
-@media(min-width:601px){
-
-
-
-.mock-container{
-
-    max-width:700px;
-
-}
-
-
-
-.test-info{
-
-    grid-template-columns:repeat(3,1fr);
-
-}
-
-
-
-.question-palette{
-
-    grid-template-columns:repeat(10,1fr);
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* DESKTOP */
-
-
-@media(min-width:1024px){
-
-
-
-.mock-container{
-
-    max-width:850px;
-
-}
-
-
-
-.question-card h2{
-
-    font-size:20px;
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* BUTTON TOUCH EFFECT */
-
-
-button,
-a{
-
-
-    -webkit-tap-highlight-color:transparent;
-
-
-}
-
-
-
-
-
-
-
-button:active{
-
-
-    transform:scale(0.96);
-
-
-}
-
-
-
-
-
-
-
-
-/* IMAGE PROTECTION */
-
-
-img{
-
-
-    user-select:none;
-
-    -webkit-user-drag:none;
-
-
-}
-
-
-
-
-
-
-
-body{
-
-
-    overflow-x:hidden;
-
-
-}
-
-
-
-
-
-
-/* MOCK TEST CSS v5.0 COMPLETE */
-
-/* TEXT VISIBILITY FIX */
-
-body{
-    background:#081229;
-    color:#ffffff;
-}
-
-
-.mock-container h1,
-.mock-container h2,
-.mock-container h3{
-    color:#ffd86b !important;
-}
-
-
-.mock-container p,
-.mock-container span,
-.mock-container label,
-.mock-container div{
-    color:#ffffff;
-}
-
-
-
-.question-card{
-
-    background:rgba(255,255,255,0.10);
-
-    border:1px solid rgba(255,216,107,0.5);
-
-    border-radius:25px;
-
-    padding:25px;
-
 }
 
 
-
-.question-text{
-
-    color:#ffffff !important;
-
-    font-size:20px;
-
-    font-weight:700;
-
-}
-
-
-
-.option-btn{
-
-    background:#101d3d;
-
-    color:#ffffff !important;
-
-    border:1px solid #ffd86b;
-
-    padding:15px;
-
-    border-radius:15px;
-
-    margin:8px 0;
-
-}
 
 
 
@@ -1561,6 +219,162 @@ body{
 
     background:#ffd86b;
 
-    color:#081229 !important;
+    color:#081229;
 
 }
+
+
+
+
+
+.option-btn.selected{
+
+    background:#ffd86b;
+
+    color:#081229;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+
+
+/* BUTTON AREA */
+
+
+.test-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    justify-content:center;
+
+    margin-top:25px;
+
+}
+
+
+
+
+
+.test-buttons button{
+
+
+    padding:14px 30px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#ffd86b;
+
+    color:#081229;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+
+
+/* LOADING */
+
+
+#loading{
+
+    text-align:center;
+
+    color:#ffd86b;
+
+    font-size:20px;
+
+    padding:50px;
+
+}
+
+
+
+
+
+
+
+/* RESULT / EXPLANATION */
+
+
+.explanation-box{
+
+    background:#101d3d;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    color:#ffffff;
+
+    margin-top:20px;
+
+}
+
+
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:600px){
+
+
+.mock-container{
+
+    padding:15px;
+
+}
+
+
+
+.mock-header h1{
+
+    font-size:22px;
+
+}
+
+
+
+#questionText{
+
+    font-size:17px;
+
+}
+
+
+
+.test-buttons{
+
+    flex-direction:column;
+
+}
+
+
+
+.test-buttons button{
+
+    width:100%;
+
+}
+
+
+}
+
