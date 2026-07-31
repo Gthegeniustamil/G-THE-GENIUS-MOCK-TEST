@@ -9,11 +9,36 @@
 
 
 <title>
-G THE GENIUS Profile
+My Profile | G THE GENIUS
 </title>
 
 
-<link rel="stylesheet" href="profile.css">
+<meta name="theme-color" content="#081229">
+
+
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+
+<link rel="stylesheet"
+href="css/profile.css">
+
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 
 </head>
@@ -23,27 +48,22 @@ G THE GENIUS Profile
 
 
 
-<!-- =========================
-HEADER
-========================= -->
-
-
 <header class="profile-header">
+
+
+<div class="brand">
 
 
 <img
 
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 
-class="profile-logo"
+class="logo"
 
-
->
-
+alt="Logo">
 
 
 <div>
-
 
 <h2>
 
@@ -62,143 +82,147 @@ Student Profile
 </div>
 
 
+</div>
+
+
+
+<button onclick="goDashboard()">
+
+⬅ Dashboard
+
+</button>
+
+
 </header>
 
 
 
 
+<main class="profile-container">
 
-
-
-
-<!-- =========================
-PROFILE CARD
-========================= -->
 
 
 <section class="profile-card">
 
 
 
-<img
+<div class="profile-avatar">
 
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+👤
 
-class="student-avatar"
-
-
->
+</div>
 
 
 
+<h1 id="userName">
 
-<h2 id="profileName">
+Student Name
 
-Student
-
-</h2>
-
+</h1>
 
 
+<p id="userDistrict">
 
-<p>
+📍 District
 
-📍 
+</p>
 
-<span id="profileDistrict">
 
--
+<p id="userEmail">
 
-</span>
+📧 Email
 
 </p>
 
 
 
-<p>
+  </section>
 
-🎯 Exam :
+  <section class="profile-stats">
 
-<span id="profileExam">
 
-TNUSRB
 
-</span>
+<div class="stat-card">
+
+
+<h3>
+
+⭐ XP
+
+</h3>
+
+
+<p id="userXP">
+
+0
 
 </p>
 
 
-
-</section>
-
+</div>
 
 
 
 
+<div class="stat-card">
 
 
+<h3>
 
-<!-- =========================
-LEVEL SECTION
-========================= -->
+🏆 Level
 
-
-<section class="level-card">
+</h3>
 
 
-<h2>
-
-🏅 Level System
-
-</h2>
-
-
-
-<div class="level-info">
-
-
-<h1>
-
-Level 
-
-<span id="profileLevel">
+<p id="userLevel">
 
 1
 
-</span>
-
-</h1>
+</p>
 
 
+</div>
 
-<p>
 
-XP :
 
-<span id="profileXP">
+
+<div class="stat-card">
+
+
+<h3>
+
+📝 Tests
+
+</h3>
+
+
+<p id="userTests">
 
 0
-
-</span>
 
 </p>
 
 
-
 </div>
 
 
 
 
+<div class="stat-card">
 
 
-<div class="xp-container">
+<h3>
+
+🎯 Score
+
+</h3>
 
 
-<div id="profileXPBar">
+<p id="userScore">
 
+0
 
-</div>
+</p>
 
 
 </div>
@@ -211,94 +235,25 @@ XP :
 
 
 
-
-
-
-<!-- =========================
-STATISTICS BASE
-========================= -->
-
-
-<section class="stats-card">
+<section class="history-section">
 
 
 <h2>
 
-📊 My Statistics
+📊 Test History
 
 </h2>
 
 
 
-
-<div class="stats-grid">
-
-
-<div>
-
-
-<h2 id="totalTests">
-
-0
-
-</h2>
+<div id="testHistory">
 
 
 <p>
 
-Tests
+No Test Attempted Yet
 
 </p>
-
-
-</div>
-
-
-
-
-
-<div>
-
-
-<h2 id="totalScore">
-
-0
-
-</h2>
-
-
-<p>
-
-Score
-
-</p>
-
-
-</div>
-
-
-
-
-
-<div>
-
-
-<h2 id="bestPercentage">
-
-0%
-
-</h2>
-
-
-<p>
-
-Best
-
-</p>
-
-
-</div>
-
 
 
 </div>
@@ -311,155 +266,7 @@ Best
 
 
 
-
-
-
-<script type="module" src="profile.js"></script>
-
-  <!-- =========================
-BADGE COLLECTION
-========================= -->
-
-
-<section class="badge-section">
-
-
-<h2>
-
-🏅 My Badges
-
-</h2>
-
-
-
-
-<div id="profileBadges">
-
-
-<div class="badge-item">
-
-⭐ Beginner
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-ACHIEVEMENT CARD
-========================= -->
-
-
-<section class="achievement-card">
-
-
-<h2>
-
-🎖 Achievements
-
-</h2>
-
-
-
-<div class="achievement-grid">
-
-
-<div>
-
-
-<h1 id="completedTests">
-
-0
-
-</h1>
-
-
-<p>
-
-Completed Tests
-
-</p>
-
-
-</div>
-
-
-
-
-<div>
-
-
-<h1 id="highestScore">
-
-0%
-
-</h1>
-
-
-<p>
-
-Highest Score
-
-</p>
-
-
-</div>
-
-
-
-
-<div>
-
-
-<h1 id="currentRank">
-
--
-
-</h1>
-
-
-<p>
-
-Current Rank
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-ACCOUNT ACTION
-========================= -->
-
-
-<section class="account-card">
+<section class="profile-actions">
 
 
 <button id="logoutBtn">
@@ -467,167 +274,61 @@ ACCOUNT ACTION
 
 🚪 Logout
 
+
 </button>
 
 
 
-</section>
+  </section>
 
+</main>
 
 
 
 
-
-
-
-<!-- =========================
-BOTTOM NAVIGATION
-========================= -->
-
-
-<nav class="bottom-nav">
-
-
-<a href="dashboard.html">
-
-🏠
-
-<br>
-
-Home
-
-</a>
-
-
-
-
-<a href="practice.html">
-
-📚
-
-<br>
-
-Practice
-
-</a>
-
-
-
-
-<a href="leaderboard.html">
-
-🏆
-
-<br>
-
-Rank
-
-</a>
-
-
-
-
-<a href="profile.html">
-
-👤
-
-<br>
-
-Profile
-
-</a>
-
-
-
-</nav>
-
-
-
-
-
-
-
-
-<!-- =========================
-FOOTER
-========================= -->
-
-
-<footer class="footer">
-
-
-<img
-
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="footer-logo"
-
-
->
-
-
-
-<h3>
-
-G THE GENIUS
-
-</h3>
-
-
+<footer class="profile-footer">
 
 
 <p>
 
-All Government Exam Mock Test Platform
+© 2026 G THE GENIUS
 
 </p>
-
-
-
-
-<a href="https://youtube.com/@gthegeniustamil">
-
-▶ YouTube Channel
-
-</a>
-
-
-
-
-
-<a href="https://t.me/gthegenius">
-
-📢 Telegram Channel
-
-</a>
-
-
-
-
-
-<a href="mailto:gthegenius7@gmail.com">
-
-📧 Email
-
-</a>
-
-
-
 
 
 <p>
 
-© 2026 G THE GENIUS.
-All Rights Reserved.
+All Government Exam Mock Test Portal
 
 </p>
-
 
 
 </footer>
 
-</body>
 
+
+
+<script type="module" src="js/profile.js"></script>
+
+
+
+<script>
+
+
+function goDashboard(){
+
+
+window.location.href="dashboard.html";
+
+
+}
+
+
+</script>
+
+
+
+</body>
 
 </html>
 
