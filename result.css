@@ -1230,3 +1230,100 @@ body{
 
 
 /* RESULT CSS v5.0 COMPLETE */
+/* ==========================================
+   QUESTION REVIEW DESIGN
+========================================== */
+
+.review-section{
+
+width:95%;
+max-width:1000px;
+margin:30px auto;
+
+}
+
+.review-section h2{
+
+color:#FFD700;
+text-align:center;
+margin-bottom:20px;
+font-size:28px;
+
+}
+
+.review-card{
+
+background:#13203d;
+border:1px solid rgba(255,215,0,.25);
+border-radius:15px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+}
+
+.review-card h3{
+
+color:#ffffff;
+font-size:20px;
+margin-bottom:15px;
+
+}
+
+.review-card p{
+
+color:#d8e6ff;
+line-height:1.8;
+font-size:16px;
+margin:8px 0;
+
+}
+
+.review-card b{
+
+color:#FFD700;
+
+}
+
+.correct-answer{
+
+color:#00ff88;
+font-weight:bold;
+
+}
+
+.wrong-answer{
+
+color:#ff4d4d;
+font-weight:bold;
+
+}
+
+.unanswered{
+
+color:#ffb300;
+font-weight:bold;
+
+}
+
+@media(max-width:768px){
+
+.review-card{
+
+padding:15px;
+
+}
+
+.review-card h3{
+
+font-size:17px;
+
+}
+
+.review-card p{
+
+font-size:14px;
+
+}
+
+}
