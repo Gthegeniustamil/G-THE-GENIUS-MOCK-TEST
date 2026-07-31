@@ -1488,3 +1488,79 @@ body{
 
 
 /* MOCK TEST CSS v5.0 COMPLETE */
+
+/* TEXT VISIBILITY FIX */
+
+body{
+    background:#081229;
+    color:#ffffff;
+}
+
+
+.mock-container h1,
+.mock-container h2,
+.mock-container h3{
+    color:#ffd86b !important;
+}
+
+
+.mock-container p,
+.mock-container span,
+.mock-container label,
+.mock-container div{
+    color:#ffffff;
+}
+
+
+
+.question-card{
+
+    background:rgba(255,255,255,0.10);
+
+    border:1px solid rgba(255,216,107,0.5);
+
+    border-radius:25px;
+
+    padding:25px;
+
+}
+
+
+
+.question-text{
+
+    color:#ffffff !important;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+
+
+.option-btn{
+
+    background:#101d3d;
+
+    color:#ffffff !important;
+
+    border:1px solid #ffd86b;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    margin:8px 0;
+
+}
+
+
+
+.option-btn:hover{
+
+    background:#ffd86b;
+
+    color:#081229 !important;
+
+}
