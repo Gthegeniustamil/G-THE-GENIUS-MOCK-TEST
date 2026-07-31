@@ -1,22 +1,37 @@
-// =====================================
-// G THE GENIUS
-// PREMIUM DASHBOARD JS
-// PART 1
-// =====================================
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
+// DASHBOARD JS
+// PART 1 / 2
+// ==========================================
 
 
-import { auth, db } from "./firebase-config.js";
 
+// Firebase Config
 
 import {
 
-onAuthStateChanged
+auth,
+db
 
-}
+} from "./firebase-config.js";
 
-from
 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+// Firebase Functions
+
+import {
+
+onAuthStateChanged,
+signOut
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
 
 
 import {
@@ -24,72 +39,62 @@ import {
 doc,
 getDoc
 
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 
-// ===============================
-// DOM ELEMENTS
-// ===============================
+
+
+
+
+// HTML Elements
 
 
 const studentName =
-
 document.getElementById("studentName");
 
 
 const studentDistrict =
-
 document.getElementById("studentDistrict");
 
 
-const userXP =
-
-document.getElementById("userXP");
-
-
-const userLevel =
-
-document.getElementById("userLevel");
+const testCount =
+document.getElementById("testCount");
 
 
-const xpProgress =
-
-document.getElementById("xpProgress");
-
+const studentRank =
+document.getElementById("studentRank");
 
 
+const totalMarks =
+document.getElementById("totalMarks");
 
 
-// ===============================
-// ADMIN UID
-// ===============================
-
-
-const ADMIN_UID = "Mh7hnDPtKBMW7LQHKsOxm7c5GFg2";
+const completedTests =
+document.getElementById("completedTests");
 
 
 
 
 
-// ===============================
-// LOAD STUDENT DATA
-// ===============================
 
 
-onAuthStateChanged(auth,async(user)=>{
+
+
+// Check Login Status
+
+
+onAuthStateChanged(auth, async(user)=>{
+
 
 
 if(!user){
 
 
 window.location.href="login.html";
+
 
 return;
 
@@ -98,66 +103,72 @@ return;
 
 
 
+
+
+
 try{
 
 
-const userDoc =
 
-await getDoc(
+// Get Student Document
 
-doc(db,"students",user.uid)
+
+const studentRef = doc(
+
+db,
+
+"students",
+
+user.uid
 
 );
 
 
 
-if(userDoc.exists()){
+const studentSnap =
+
+await getDoc(studentRef);
 
 
-const data=userDoc.data();
+
+
+
+
+
+
+if(studentSnap.exists()){
+
+
+
+const data = studentSnap.data();
+
+
+
+
+
+
+
+// Display Student Details
 
 
 
 if(studentName){
 
 studentName.innerHTML =
+
 data.name || "Student";
 
 }
 
 
 
+
+
 if(studentDistrict){
 
 studentDistrict.innerHTML =
-"📍 "+(data.district || "District");
 
-}
-
-
-
-
-let xp = data.xp || 0;
-
-
-
-let level =
-
-Math.floor(xp / 50)+1;
-
-
-
-if(userXP){
-
-userXP.innerHTML=xp;
-
-}
-
-
-
-if(userLevel){
-
-userLevel.innerHTML=level;
+data.district || "-";
 
 }
 
@@ -165,23 +176,115 @@ userLevel.innerHTML=level;
 
 
 
-let progress =
-
-(xp % 50)/50*100;
 
 
 
-if(xpProgress){
+if(totalMarks){
 
-xpProgress.style.width=
+totalMarks.innerHTML =
 
-progress+"%";
+data.totalMarks || 0;
 
 }
 
 
 
+if(studentRank){
+
+studentRank.innerHTML =
+
+data.rank || "-";
+
 }
+
+
+
+if(completedTests){
+
+completedTests.innerHTML =
+
+data.testsCompleted || 0;
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+
+"Dashboard Data Error",
+
+error
+
+);
+
+
+}
+
+
+
+});
+
+// ==========================================
+// DASHBOARD JS
+// PART 2 / 2
+// FINAL
+// ==========================================
+
+
+
+
+
+
+// LOGOUT SYSTEM
+
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+
+
+if(logoutBtn){
+
+
+logoutBtn.addEventListener("click", async()=>{
+
+
+
+try{
+
+
+
+await signOut(auth);
+
+
+
+// Clear Local Storage
+
+
+localStorage.removeItem("student");
+
+
+
+
+
+window.location.href="login.html";
+
+
 
 
 
@@ -190,127 +293,22 @@ progress+"%";
 catch(error){
 
 
-console.log(error);
+console.log(
+
+"Logout Error",
+
+error
+
+);
 
 
 }
 
-
-});
-
-// =====================================
-// G THE GENIUS
-// PREMIUM DASHBOARD JS
-// PART 2 FINAL
-// =====================================
-
-
-
-// ===============================
-// DAILY MOTIVATION
-// ===============================
-
-
-const motivationList = [
-
-
-"வெற்றி என்பது தினமும் செய்யும் சிறிய முயற்சிகளின் முடிவு.",
-
-
-"இன்று படிக்கும் ஒவ்வொரு நிமிடமும் நாளைய வெற்றியை உருவாக்கும்.",
-
-
-"முயற்சி செய்பவர்களுக்கு மட்டுமே வெற்றி கிடைக்கும்.",
-
-
-"Mock Test எழுதுங்கள்... உங்கள் Selection கனவை நெருங்குங்கள்.",
-
-
-"கடின உழைப்பு + சரியான பயிற்சி = அரசு வேலை."
-
-
-];
-
-
-
-const quoteBox =
-
-document.getElementById("dailyQuote");
-
-
-
-if(quoteBox){
-
-
-let day = new Date().getDate();
-
-
-quoteBox.innerHTML =
-
-motivationList[day % motivationList.length];
-
-
-}
-
-
-
-
-
-// ===============================
-// ADMIN SECURITY
-// ===============================
-
-
-const adminLink =
-
-document.getElementById("adminLink");
-
-
-
-if(adminLink){
-
-
-onAuthStateChanged(auth,(user)=>{
-
-
-if(user && user.uid === ADMIN_UID){
-
-
-adminLink.style.display="block";
-
-
-}
-
-else{
-
-
-adminLink.style.display="none";
-
-
-}
 
 
 });
 
 
-}
-
-
-
-
-
-// ===============================
-// START TEST
-// ===============================
-
-
-window.startTest = function(type){
-
-
-window.location.href =
-
-"mocktest.html?type="+type;
-
 
 }
 
@@ -318,13 +316,59 @@ window.location.href =
 
 
 
-// ===============================
-// APP READY
-// ===============================
+
+
+
+
+// SAVE LAST VISIT
+
+
+localStorage.setItem(
+
+"lastPage",
+
+"dashboard"
+
+);
+
+
+
+
+
+
+
+// BUTTON PROTECTION
+
+
+document.querySelectorAll("a")
+
+.forEach(link=>{
+
+
+link.addEventListener("click",()=>{
 
 
 console.log(
 
-"G THE GENIUS PREMIUM DASHBOARD READY"
+"Opening:",
+
+link.href
+
+);
+
+
+});
+
+
+});
+
+
+
+
+
+
+console.log(
+
+"G THE GENIUS Dashboard Loaded Successfully"
 
 );
