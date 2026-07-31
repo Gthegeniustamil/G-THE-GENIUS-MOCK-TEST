@@ -7,9 +7,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>
-Dashboard | G THE GENIUS
+G THE GENIUS Dashboard
 </title>
 
 
@@ -20,56 +19,37 @@ Dashboard | G THE GENIUS
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 
-<link rel="stylesheet"
-href="css/dashboard.css">
+<link rel="stylesheet" href="css/dashboard.css">
+
+<link rel="stylesheet" href="css/style.css">
 
 
-<link rel="stylesheet"
-href="css/style.css">
-
-
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
-
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 
 </head>
 
+  <body>
 
 
-<body>
+<header class="app-header">
+
+
+<div class="app-logo">
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+
+</div>
 
 
 
-<header class="dashboard-header">
-
-
-<div class="brand">
-
-
-<img
-
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="logo"
-
-alt="G THE GENIUS">
-
-
-<div>
+<div class="app-title">
 
 <h2>
 G THE GENIUS
 </h2>
-
 
 <p>
 Government Exam Portal
@@ -78,25 +58,27 @@ Government Exam Portal
 </div>
 
 
-</div>
-
-
-<button id="logoutBtn">
-
-Logout
-
-</button>
-
 
 </header>
 
-
-
-<main class="dashboard-container">
+  <main class="dashboard-container">
 
 
 
 <section class="welcome-card">
+
+
+<div class="profile-circle">
+
+
+👤
+
+
+</div>
+
+
+
+<div class="student-info">
 
 
 <h1>
@@ -109,204 +91,116 @@ Student
 
 </span>
 
-👋
-
 </h1>
+
+
+<p id="studentDistrict">
+
+📍 District
+
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<section class="level-card">
+
+
+<div class="level-title">
+
+
+<h3>
+
+⭐ Level
+
+<span id="userLevel">
+
+1
+
+</span>
+
+</h3>
 
 
 <p>
 
-Prepare for your Government Exam Success
+XP :
+
+<span id="userXP">
+
+0
+
+</span>
 
 </p>
+
+
+</div>
+
+
+
+
+<div class="xp-bar">
+
+
+<div id="xpProgress">
+
+</div>
+
+
+</div>
+
 
 
 </section>
 
-<section class="profile-card">
 
 
-<div class="profile-header">
 
 
-<div class="profile-icon">
-
-👤
-
-</div>
-
-
-<div>
-
-<h3 id="profileName">
-
-Student Name
-
-</h3>
-
-
-<p id="profileDistrict">
-
-District
-
-</p>
-
-</div>
-
-
-</div>
-
-
-
-<div class="stats-box">
-
-
-
-<div class="stat-item">
-
-<h4>
-
-⭐ XP
-
-</h4>
-
-
-<p id="xp">
-
-0
-
-</p>
-
-</div>
-
-
-
-<div class="stat-item">
-
-<h4>
-
-🏆 Level
-
-</h4>
-
-
-<p id="level">
-
-1
-
-</p>
-
-</div>
-
-
-
-<div class="stat-item">
-
-<h4>
-
-📝 Tests
-
-</h4>
-
-
-<p id="testsAttempted">
-
-0
-
-</p>
-
-</div>
-
-
-
-<div class="stat-item">
-
-<h4>
-
-🎯 Score
-
-</h4>
-
-
-<p id="totalScore">
-
-0
-
-</p>
-
-</div>
-
-
-
-</div>
-
-
-
-
-<div class="level-progress">
-
-
-<div class="progress-title">
-
-<span>
-
-Level Progress
-
-</span>
-
-
-<span id="progressText">
-
-0 / 100 XP
-
-</span>
-
-
-</div>
-
-
-
-<div class="progress-bar">
-
-
-<div 
-
-id="xpProgress"
-
-class="progress-fill">
-
-</div>
-
-
-</div>
-
-
-</div>
 <section class="motivation-card">
 
+
 <h3>
+
 🌟 Daily Motivation
+
 </h3>
 
+
 <p id="dailyQuote">
+
 Loading...
+
 </p>
 
+
 <span>
+
 - G THE GENIUS
+
 </span>
 
 
 </section>
 
-<section class="test-section">
+    <section class="test-section">
 
 
 <h2>
 
-🚀 Start Your Mock Test
+📝 Mock Tests
 
 </h2>
+
 
 
 
@@ -338,7 +232,9 @@ Loading...
 </p>
 
 
-<button onclick="startTest('daily')">
+<button 
+type="button"
+onclick="startTest('daily')">
 
 Start Test
 
@@ -346,6 +242,7 @@ Start Test
 
 
 </div>
+
 
 
 
@@ -374,7 +271,9 @@ Start Test
 </p>
 
 
-<button onclick="startTest('weekly')">
+<button 
+type="button"
+onclick="startTest('weekly')">
 
 Start Test
 
@@ -382,6 +281,7 @@ Start Test
 
 
 </div>
+
 
 
 
@@ -410,7 +310,9 @@ Start Test
 </p>
 
 
-<button onclick="startTest('monthly')">
+<button 
+type="button"
+onclick="startTest('monthly')">
 
 Start Test
 
@@ -424,24 +326,27 @@ Start Test
 </div>
 
 
-</section>
+  </section>
 
-
-
-
-<section class="menu-section">
+    <section class="quick-menu">
 
 
 <div class="menu-card"
-
 onclick="location.href='leaderboard.html'">
 
 
+<h3>
+
 🏆
 
-<br>
+</h3>
+
+
+<p>
 
 Leaderboard
+
+</p>
 
 
 </div>
@@ -449,16 +354,49 @@ Leaderboard
 
 
 
-<div class="menu-card"
 
+<div class="menu-card"
 onclick="location.href='profile.html'">
 
 
+<h3>
+
 👤
 
-<br>
+</h3>
 
-My Profile
+
+<p>
+
+Profile
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="menu-card"
+id="adminLink"
+style="display:none;"
+onclick="location.href='admin.html'">
+
+
+<h3>
+
+⚙️
+
+</h3>
+
+
+<p>
+
+Admin
+
+</p>
 
 
 </div>
@@ -467,24 +405,76 @@ My Profile
 
 </section>
 
-<footer class="dashboard-footer">
 
 
-<p>
-
-© 2026 G THE GENIUS
-
-</p>
 
 
-<p>
-
-All Government Exam Mock Test Portal
-
-</p>
+</main>
 
 
-</footer>
+
+
+
+<nav class="bottom-nav">
+
+
+<a href="dashboard.html">
+
+🏠
+
+<span>
+
+Home
+
+</span>
+
+</a>
+
+
+
+<a href="mocktest.html?type=daily">
+
+📝
+
+<span>
+
+Test
+
+</span>
+
+</a>
+
+
+
+<a href="leaderboard.html">
+
+🏆
+
+<span>
+
+Rank
+
+</span>
+
+</a>
+
+
+
+<a href="profile.html">
+
+👤
+
+<span>
+
+Profile
+
+</span>
+
+</a>
+
+
+</nav>
+
 
 
 
@@ -493,6 +483,24 @@ All Government Exam Mock Test Portal
 
 
 
+<script>
+
+
+function startTest(type){
+
+
+window.location.href=
+
+"mocktest.html?type="+type;
+
+
+}
+
+
+</script>
+
+
+
 </body>
 
-  </html>  
+</html>
