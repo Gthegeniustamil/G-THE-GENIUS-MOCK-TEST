@@ -1047,46 +1047,26 @@ error
 
 async function submitTest(){
 
+    clearInterval(timer);
 
+    let resultData = calculateResult();
 
-clearInterval(timer);
+    console.log("Result Data:", resultData);
 
+    await saveResult(resultData);
 
+    localStorage.setItem("lastScore", resultData.correct);
 
+    localStorage.setItem(
+        "lastPercentage",
+        ((resultData.correct / questions.length) * 100).toFixed(2)
+    );
 
+    localStorage.setItem("lastCorrect", resultData.correct);
+    localStorage.setItem("lastWrong", resultData.wrong);
+    localStorage.setItem("lastUnanswered", resultData.unanswered);
 
-let resultData =
-
-calculateResult();
-
-
-await saveResult(resultData);
-
-
-
-
-localStorage.setItem(
-"lastScore",
-resultData.correct
-);
-
-
-localStorage.setItem(
-"lastPercentage",
-(
-resultData.correct /
-questions.length
-*
-100
-).toFixed(2)
-);
-
-
-window.location.href =
-
-"result.html";
-
-
+    window.location.href = "result.html";
 
 }
 
