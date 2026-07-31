@@ -1,10 +1,8 @@
-
 // ==========================================
 // G THE GENIUS MOCK TEST PORTAL v5.0
-// MOCKTEST JS TOPIC FILTER UPDATE
+// MOCKTEST.JS FULL FINAL
 // PART 1 / 5
 // ==========================================
-
 
 
 import { db } from "./firebase-config.js";
@@ -13,71 +11,44 @@ import { db } from "./firebase-config.js";
 import {
 
 collection,
-
 getDocs,
-
 query,
+where,
+addDoc,
+serverTimestamp
 
-where
+} from
 
-} from 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 
+// ==========================================
 // URL DATA
+// ==========================================
 
 
-const urlParams =
+const params =
 new URLSearchParams(
 window.location.search
 );
 
 
 
-const selectedCategory =
-urlParams.get("category");
-
+const testType =
+params.get("type") || "topic";
 
 
 const selectedTopic =
-urlParams.get("topic");
+params.get("topic");
 
 
 
+const selectedSubject =
+params.get("subject");
 
-
-
-
-console.log(
-"Category:",
-selectedCategory
-);
-
-
-
-console.log(
-"Topic:",
-selectedTopic
-);
-
-
-
-
-
-
-
-
-// QUESTIONS ARRAY
-
-
-let questions = [];
-
-let currentQuestion = 0;
-
-let selectedAnswers = [];
 
 
 
@@ -85,164 +56,19 @@ let selectedAnswers = [];
 
 
 // ==========================================
-// LOAD QUESTIONS
+// TEST SETTINGS
 // ==========================================
-
-
-async function loadQuestions(){
-
-
-try{
-
-
-let qRef =
-collection(
-db,
-"questions"
-);
-
-
-
-
-let snap;
-
-
-
-// Topic Practice Test
-
-
-if(selectedTopic){
-
-
-let q =
-query(
-
-qRef,
-
-where(
-"topic",
-"==",
-selectedTopic
-)
-
-);
-
-
-
-snap =
-await getDocs(q);
-
-
-}
-
-
-
-
-
-// Normal Mock Test
-
-
-else{
-
-
-snap =
-await getDocs(qRef);
-
-
-}
-
-
-
-
-
-
-questions=[];
-
-
-
-
-
-snap.forEach(doc=>{
-
-
-questions.push({
-
-id:doc.id,
-
-...doc.data()
-
-});
-
-
-});
-
-
-
-
-
-
-
-console.log(
-"Loaded Questions:",
-questions.length
-);
-
-
-
-}
-
-catch(error){
-
-
-console.error(
-"Question Load Error",
-error
-);
-
-
-}
-
-
-
-}
-
-
-// ==========================================
-// TEST TYPE SETTINGS
-// PART 2 / 5
-// ==========================================
-
-
-
-const testType =
-urlParams.get("type") || "topic";
-
 
 
 let totalQuestions = 10;
+
 
 let timeLimit = 5 * 60;
 
 
 
 
-
-if(testType === "daily"){
-
-
-totalQuestions = 10;
-
-
-timeLimit = 5 * 60;
-
-
-}
-
-
-
-
-
-else if(testType === "weekly"){
+if(testType==="weekly"){
 
 
 totalQuestions = 25;
@@ -255,9 +81,7 @@ timeLimit = 10 * 60;
 
 
 
-
-
-else if(testType === "monthly"){
+if(testType==="monthly"){
 
 
 totalQuestions = 100;
@@ -274,94 +98,35 @@ timeLimit = 60 * 60;
 
 
 
-// ==========================================
-// SHUFFLE QUESTIONS
-// ==========================================
-
-
-
-function shuffleQuestions(array){
-
-
-return array.sort(
-
-()=>Math.random() - 0.5
-
-);
-
-
-}
-
-
-
-
-
-
 
 // ==========================================
-// SELECT QUESTIONS
+// VARIABLES
 // ==========================================
 
 
-
-function prepareQuestions(){
-
+let questions = [];
 
 
-questions = shuffleQuestions(
-questions
-);
+let currentQuestion = 0;
 
 
+let selectedAnswers = [];
 
 
-
-if(
-questions.length > totalQuestions
-){
+let remainingTime = timeLimit;
 
 
-questions =
-questions.slice(
-0,
-totalQuestions
-);
-
-
-}
+let timer;
 
 
 
 
 
-
-selectedAnswers = 
-new Array(
-questions.length
-).fill(null);
-
-
-
-
-
-
-console.log(
-
-"Test Questions Ready:",
-questions.length
-
-);
-
-
-
-}
 
 
 // ==========================================
-// QUESTION DISPLAY SYSTEM
-// PART 3 / 5
+// HTML ELEMENTS
 // ==========================================
-
 
 
 const questionNumber =
@@ -385,12 +150,302 @@ document.getElementById(
 
 
 
+const timerBox =
+document.getElementById(
+"timer"
+);
+
+
+
+const loading =
+document.getElementById(
+"loading"
+);
+
+
+// ==========================================
+// LOAD QUESTIONS FROM FIRESTORE
+// PART 2 / 5
+// ==========================================
+
+
+
+async function loadQuestions(){
+
+
+try{
+
+
+let qRef =
+collection(
+db,
+"questions"
+);
+
+
+
+let snapshot;
+
+
+
+
+
+// TOPIC BASED PRACTICE
+
+
+if(selectedTopic){
+
+
+
+let q =
+
+query(
+
+qRef,
+
+where(
+"topic",
+"==",
+selectedTopic
+)
+
+);
+
+
+
+snapshot =
+await getDocs(q);
+
+
+
+}
+
+
+
+
+
+// SUBJECT BASED PRACTICE
+
+
+else if(selectedSubject){
+
+
+
+let q =
+
+query(
+
+qRef,
+
+where(
+"subject",
+"==",
+selectedSubject
+)
+
+);
+
+
+
+snapshot =
+await getDocs(q);
+
+
+
+}
+
+
+
+
+
+// NORMAL MOCK TEST
+
+
+else{
+
+
+snapshot =
+await getDocs(qRef);
+
+
+}
+
+
+
+
+
+
+
+questions=[];
+
+
+
+
+
+
+snapshot.forEach(doc=>{
+
+
+questions.push({
+
+id:doc.id,
+
+...doc.data()
+
+});
+
+
+});
+
+
+
+
+
+
+console.log(
+
+"Questions Loaded:",
+
+questions.length
+
+);
+
+
+
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(
+
+"Question Load Error",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
 
 
 
 
 // ==========================================
-// SHOW QUESTION
+// SHUFFLE QUESTIONS
+// ==========================================
+
+
+function shuffle(array){
+
+
+return array.sort(
+
+()=>Math.random()-0.5
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================================
+// PREPARE TEST QUESTIONS
+// ==========================================
+
+
+function prepareQuestions(){
+
+
+
+questions =
+shuffle(
+questions
+);
+
+
+
+
+
+
+if(
+questions.length >
+totalQuestions
+
+){
+
+
+questions =
+
+questions.slice(
+
+0,
+
+totalQuestions
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+selectedAnswers =
+
+new Array(
+
+questions.length
+
+)
+
+.fill(null);
+
+
+
+
+
+
+console.log(
+
+"Test Ready:",
+
+questions.length
+
+);
+
+
+
+}
+
+
+// ==========================================
+// QUESTION DISPLAY SYSTEM
+// PART 3 / 5
 // ==========================================
 
 
@@ -409,11 +464,15 @@ return;
 
 
 let q =
+
 questions[currentQuestion];
 
 
 
 
+
+
+// QUESTION NUMBER
 
 
 if(questionNumber){
@@ -422,11 +481,17 @@ if(questionNumber){
 questionNumber.innerText =
 
 "Question "
+
 +
+
 (currentQuestion + 1)
+
 +
+
 " / "
+
 +
+
 questions.length;
 
 
@@ -438,10 +503,14 @@ questions.length;
 
 
 
+// QUESTION TEXT
+
+
 if(questionText){
 
 
 questionText.innerText =
+
 q.question;
 
 
@@ -452,6 +521,10 @@ q.question;
 
 
 
+
+// OPTIONS
+
+
 if(optionsBox){
 
 
@@ -459,21 +532,27 @@ optionsBox.innerHTML="";
 
 
 
+
+
 q.options.forEach(option=>{
 
 
 
-let button =
-document.createElement("button");
+let btn =
+
+document.createElement(
+"button"
+);
 
 
 
-button.className =
+
+btn.className =
 "option-btn";
 
 
 
-button.innerText =
+btn.innerText =
 option;
 
 
@@ -482,13 +561,15 @@ option;
 
 
 if(
+
 selectedAnswers[currentQuestion]
+
 === option
 
 ){
 
 
-button.classList.add(
+btn.classList.add(
 "selected"
 );
 
@@ -500,16 +581,21 @@ button.classList.add(
 
 
 
-button.onclick = ()=>{
+btn.onclick = ()=>{
 
 
 selectedAnswers[currentQuestion]
+
 =
+
 option;
 
 
 
+
+
 showQuestion();
+
 
 
 };
@@ -519,9 +605,8 @@ showQuestion();
 
 
 
-optionsBox.appendChild(
-button
-);
+
+optionsBox.appendChild(btn);
 
 
 
@@ -542,15 +627,20 @@ button
 
 
 
+
 // ==========================================
 // NEXT BUTTON
 // ==========================================
 
 
+
 const nextBtn =
+
 document.getElementById(
 "nextBtn"
 );
+
+
 
 
 
@@ -560,9 +650,12 @@ if(nextBtn){
 nextBtn.onclick = ()=>{
 
 
+
 if(
+
 currentQuestion <
-questions.length-1
+
+questions.length - 1
 
 ){
 
@@ -573,10 +666,13 @@ currentQuestion++;
 showQuestion();
 
 
+
 }
 
 
+
 };
+
 
 
 }
@@ -593,10 +689,14 @@ showQuestion();
 // ==========================================
 
 
+
 const prevBtn =
+
 document.getElementById(
 "prevBtn"
 );
+
+
 
 
 
@@ -606,7 +706,9 @@ if(prevBtn){
 prevBtn.onclick = ()=>{
 
 
+
 if(
+
 currentQuestion > 0
 
 ){
@@ -618,67 +720,46 @@ currentQuestion--;
 showQuestion();
 
 
+
 }
+
 
 
 };
 
 
+
 }
 
 
 // ==========================================
-// TIMER + RESULT CALCULATION
+// TIMER SYSTEM
 // PART 4 / 5
 // ==========================================
 
-
-
-let timer;
-
-
-let remainingTime =
-timeLimit;
-
-
-
-
-
-
-
-const timerBox =
-document.getElementById(
-"timer"
-);
-
-
-
-
-
-
-// ==========================================
-// START TIMER
-// ==========================================
 
 
 function startTimer(){
 
 
 
-timer =
-setInterval(()=>{
+timer = setInterval(()=>{
 
 
 
-let minutes =
+let min =
+
 Math.floor(
 remainingTime / 60
 );
 
 
 
-let seconds =
+let sec =
+
 remainingTime % 60;
+
+
 
 
 
@@ -692,13 +773,16 @@ timerBox.innerText =
 "⏰ "
 
 +
-String(minutes).padStart(2,"0")
+
+String(min).padStart(2,"0")
 
 +
+
 ":"
 
 +
-String(seconds).padStart(2,"0");
+
+String(sec).padStart(2,"0");
 
 
 }
@@ -719,12 +803,10 @@ remainingTime--;
 if(remainingTime < 0){
 
 
-
 clearInterval(timer);
 
 
 submitTest();
-
 
 
 }
@@ -743,9 +825,13 @@ submitTest();
 
 
 
+
+
+
 // ==========================================
-// CALCULATE SCORE
+// SCORE CALCULATION
 // ==========================================
+
 
 
 function calculateScore(){
@@ -757,14 +843,18 @@ let score = 0;
 
 
 
-questions.forEach(
-(q,index)=>{
+
+
+questions.forEach((q,index)=>{
 
 
 
 if(
+
 selectedAnswers[index]
+
 ===
+
 q.answer
 
 ){
@@ -782,6 +872,8 @@ score++;
 
 
 
+
+
 return score;
 
 
@@ -794,12 +886,140 @@ return score;
 
 
 
+
+
+// ==========================================
+// SAVE RESULT
+// ==========================================
+
+
+
+async function saveResult(score){
+
+
+
+try{
+
+
+
+await addDoc(
+
+collection(
+db,
+"results"
+),
+
+{
+
+
+studentName:
+
+localStorage.getItem(
+"studentName"
+)
+
+|| "Student",
+
+
+
+district:
+
+localStorage.getItem(
+"district"
+)
+
+|| "-",
+
+
+
+testType:
+
+
+
+testType,
+
+
+
+score:
+
+score,
+
+
+
+totalQuestions:
+
+questions.length,
+
+
+
+percentage:
+
+(
+
+score /
+
+questions.length
+
+*
+
+100
+
+).toFixed(2),
+
+
+
+createdAt:
+
+serverTimestamp()
+
+
+
+}
+
+
+);
+
+
+
+console.log(
+"Result Saved"
+);
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(
+error
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
 // ==========================================
 // SUBMIT TEST
 // ==========================================
 
 
-function submitTest(){
+
+async function submitTest(){
 
 
 
@@ -810,22 +1030,14 @@ clearInterval(timer);
 
 
 let score =
+
 calculateScore();
 
 
 
 
 
-
-let percentage =
-
-(
-score /
-questions.length
-
-)
-*
-100;
+await saveResult(score);
 
 
 
@@ -843,27 +1055,26 @@ score
 
 
 
+
 localStorage.setItem(
 
 "lastPercentage",
 
-percentage.toFixed(2)
+(
+
+score /
+
+questions.length
+
+*
+
+100
+
+).toFixed(2)
 
 );
 
 
-
-
-
-
-
-console.log({
-
-score,
-
-percentage
-
-});
 
 
 
@@ -879,7 +1090,7 @@ window.location.href =
 
 
 // ==========================================
-// FINAL TEST INITIALIZATION
+// FINAL TEST START SYSTEM
 // PART 5 / 5 FINAL
 // ==========================================
 
@@ -887,8 +1098,35 @@ window.location.href =
 
 
 
+
 // ==========================================
-// START MOCK TEST
+// HIDE LOADING
+// ==========================================
+
+
+function hideLoading(){
+
+
+if(loading){
+
+
+loading.style.display="none";
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================================
+// START TEST
 // ==========================================
 
 
@@ -902,15 +1140,23 @@ await loadQuestions();
 
 
 
+
 if(
 questions.length === 0
 
 ){
 
 
-alert(
-"No Questions Available"
-);
+
+if(loading){
+
+
+loading.innerHTML =
+
+"❌ No Questions Found";
+
+
+}
 
 
 return;
@@ -922,7 +1168,17 @@ return;
 
 
 
+
+
 prepareQuestions();
+
+
+
+
+
+
+hideLoading();
+
 
 
 
@@ -934,7 +1190,9 @@ showQuestion();
 
 
 
+
 startTimer();
+
 
 
 
@@ -942,13 +1200,76 @@ startTimer();
 
 console.log(
 
-"G THE GENIUS MOCK TEST STARTED"
+"G THE GENIUS TEST STARTED"
 
 );
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+// ==========================================
+// SUBMIT BUTTON
+// ==========================================
+
+
+const submitBtn =
+
+document.getElementById(
+"submitBtn"
+);
+
+
+
+
+
+
+if(submitBtn){
+
+
+
+submitBtn.onclick = ()=>{
+
+
+
+let confirmSubmit =
+
+confirm(
+
+"Submit Test?"
+
+);
+
+
+
+
+
+
+if(confirmSubmit){
+
+
+submitTest();
+
+
+}
+
+
+
+};
+
+
+
+}
+
 
 
 
@@ -971,101 +1292,11 @@ window.addEventListener(
 startTest();
 
 
-
 }
 
 );
 
 
-// ==========================================
-// MOCK TEST UI FINAL FIX
-// ==========================================
-
-
-// HIDE LOADING AFTER QUESTIONS LOAD
-
-
-function hideLoading(){
-
-
-const loading =
-document.getElementById(
-"loading"
-);
-
-
-if(loading){
-
-loading.style.display="none";
-
-}
-
-
-}
-
-
-
-
-
-
-// SUBMIT BUTTON
-
-
-const submitBtn =
-document.getElementById(
-"submitBtn"
-);
-
-
-
-if(submitBtn){
-
-
-submitBtn.onclick = ()=>{
-
-
-if(confirm(
-"Are you sure you want to submit?"
-)){
-
-
-submitTest();
-
-
-}
-
-
-};
-
-
-}
-
-
-
-
-
-
-
-// UPDATE START TEST
-
-
-const oldStartTest =
-startTest;
-
-
-
-startTest = async function(){
-
-
-
-await oldStartTest();
-
-
-
-hideLoading();
-
-
-};
 
 
 
@@ -1076,4 +1307,13 @@ hideLoading();
 
 
 window.submitTest =
+
 submitTest;
+
+
+
+console.log(
+
+"MOCK TEST JS READY ✅"
+
+);
