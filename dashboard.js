@@ -10,8 +10,7 @@ import { auth, db } from "./firebase-config.js";
 
 import {
 
-onAuthStateChanged,
-signOut
+onAuthStateChanged
 
 }
 
@@ -34,51 +33,57 @@ from
 
 
 
-// =====================================
-// DOM ELEMENTS
-// =====================================
+
+// ===============================
+// DOM
+// ===============================
 
 
 const studentName =
+
 document.getElementById("studentName");
 
 
-const profileName =
-document.getElementById("profileName");
+const studentDistrict =
+
+document.getElementById("studentDistrict");
 
 
-const profileDistrict =
-document.getElementById("profileDistrict");
+const userXP =
+
+document.getElementById("userXP");
 
 
-const xpText =
-document.getElementById("xp");
+const userLevel =
 
-
-const levelText =
-document.getElementById("level");
-
-
-const testsText =
-document.getElementById("testsAttempted");
-
-
-const scoreText =
-document.getElementById("totalScore");
+document.getElementById("userLevel");
 
 
 const xpProgress =
+
 document.getElementById("xpProgress");
 
 
 
 
-// =====================================
-// AUTH CHECK + LOAD PROFILE
-// =====================================
+
+// ===============================
+// ADMIN UID
+// ===============================
 
 
-onAuthStateChanged(auth, async(user)=>{
+const ADMIN_UID = "YOUR_ADMIN_UID";
+
+
+
+
+
+// ===============================
+// LOAD USER
+// ===============================
+
+
+onAuthStateChanged(auth,async(user)=>{
 
 
 if(!user){
@@ -93,80 +98,70 @@ return;
 
 
 
-try{
-
-
 const userRef =
 
-doc(
-
-db,
-
-"students",
-
-user.uid
-
-);
+doc(db,"students",user.uid);
 
 
 
-const userSnap =
+const snap =
 
 await getDoc(userRef);
 
 
 
-if(userSnap.exists()){
+if(snap.exists()){
+
+
+const data=snap.data();
 
 
 
-const data = userSnap.data();
+if(studentName)
+
+studentName.innerHTML=data.name;
 
 
 
-studentName.innerHTML =
-data.name;
+if(studentDistrict)
 
-
-profileName.innerHTML =
-data.name;
-
-
-profileDistrict.innerHTML =
+studentDistrict.innerHTML=
 "📍 "+data.district;
 
 
-xpText.innerHTML =
-data.xp || 0;
 
-
-levelText.innerHTML =
-data.level || 1;
-
-
-testsText.innerHTML =
-data.testsAttempted || 0;
-
-
-scoreText.innerHTML =
-data.totalScore || 0;
+let xp=data.xp || 0;
 
 
 
-}
-
-
-}
+let level=Math.floor(xp/50)+1;
 
 
 
-catch(error){
+if(userXP)
+
+userXP.innerHTML=xp;
 
 
-console.log(
-"Dashboard Load Error:",
-error
-);
+
+if(userLevel)
+
+userLevel.innerHTML=level;
+
+
+
+let progress=
+
+(xp%50)/50*100;
+
+
+
+if(xpProgress)
+
+xpProgress.style.width=
+
+progress+"%";
+
 
 
 }
@@ -176,370 +171,131 @@ error
 });
 
 // =====================================
+// G THE GENIUS
 // DASHBOARD JS
-// PART 2
+// PART 2 FINAL
 // =====================================
 
 
 
-// =====================================
-// XP PROGRESS BAR
-// =====================================
-
-
-function updateXPProgress(xp){
-
-
-let currentXP = xp || 0;
-
-
-let nextLevelXP = 100;
-
-
-
-let percentage =
-
-(currentXP / nextLevelXP) * 100;
-
-
-
-if(percentage > 100){
-
-percentage = 100;
-
-}
-
-
-
-if(xpProgress){
-
-xpProgress.style.width =
-
-percentage + "%";
-
-}
-
-
-
-const progressText =
-
-document.getElementById("progressText");
-
-
-
-if(progressText){
-
-progressText.innerHTML =
-
-currentXP + " / " + nextLevelXP + " XP";
-
-}
-
-
-}
-
-
-
-
-// =====================================
-// START MOCK TEST
-// =====================================
-
-
-window.startTest = function(type){
-
-
-
-if(type==="daily"){
-
-
-window.location.href=
-
-"mocktest.html?type=daily";
-
-
-}
-
-
-
-else if(type==="weekly"){
-
-
-window.location.href=
-
-"mocktest.html?type=weekly";
-
-
-}
-
-
-
-else if(type==="monthly"){
-
-
-window.location.href=
-
-"mocktest.html?type=monthly";
-
-
-}
-
-
-
-};
-
-
-
-
-// =====================================
-// LOGOUT
-// =====================================
-
-
-const logoutBtn =
-
-document.getElementById("logoutBtn");
-
-
-
-if(logoutBtn){
-
-
-logoutBtn.addEventListener("click",async()=>{
-
-
-try{
-
-
-await signOut(auth);
-
-
-window.location.href="login.html";
-
-
-}
-
-
-catch(error){
-
-
-alert(
-
-"Logout Failed"
-
-);
-
-
-}
-
-
-
-});
-
-
-}
-
-// =====================================
-// DASHBOARD JS
-// PART 3 FINAL
-// =====================================
-
-
-
-// =====================================
-// LEVEL SYSTEM
-// =====================================
-
-
-function calculateLevel(xp){
-
-
-let level =
-
-Math.floor(xp / 100) + 1;
-
-
-return level;
-
-
-}
-
-
-
-
-// =====================================
-// UPDATE LEVEL DISPLAY
-// =====================================
-
-
-async function updateStudentLevel(user){
-
-
-try{
-
-
-const userRef =
-
-doc(
-
-db,
-
-"students",
-
-user.uid
-
-);
-
-
-
-const userSnap =
-
-await getDoc(userRef);
-
-
-
-if(userSnap.exists()){
-
-
-const data = userSnap.data();
-
-
-const currentXP =
-
-data.xp || 0;
-
-
-
-const newLevel =
-
-calculateLevel(currentXP);
-
-
-
-if(levelText){
-
-levelText.innerHTML =
-
-newLevel;
-
-}
-
-
-
-updateXPProgress(currentXP);
-
-
-
-}
-
-
-
-}
-
-
-catch(error){
-
-
-console.log(
-
-"Level Update Error",
-
-error
-
-);
-
-
-}
-
-
-
-}
-
-
-
-
-// =====================================
-// PROFILE BUTTON
-// =====================================
-
-
-const profileBtn =
-
-document.querySelector(
-
-".menu-card:nth-child(2)"
-
-);
-
-
-
-if(profileBtn){
-
-
-profileBtn.addEventListener("click",()=>{
-
-
-window.location.href="profile.html";
-
-
-});
-
-
-}
-
-
-
-
-// =====================================
-// PAGE READY
-// =====================================
-
-
-window.addEventListener(
-
-"load",
-
-()=>{
-
-
-console.log(
-
-"Dashboard Loaded Successfully"
-
-);
-
-
-}
-
-);
 // ===============================
-// DAILY MOTIVATION QUOTES
+// DAILY MOTIVATION
 // ===============================
+
 
 const quotes = [
 
-"வெற்றி என்பது முயற்சியை ஒருபோதும் கைவிடாதவர்களுக்கு மட்டுமே கிடைக்கும்.",
 
-"இன்று படிக்கும் ஒரு மணி நேரம் நாளைய வெற்றியை உருவாக்கும்.",
+"வெற்றி என்பது தினசரி செய்யும் சிறிய முயற்சிகளின் பலன்.",
 
-"தோல்வி என்பது முடிவு அல்ல, மீண்டும் முயற்சி செய்யும் வாய்ப்பு.",
 
-"கனவு காணுங்கள், திட்டமிடுங்கள், தினமும் உழையுங்கள்.",
+"இன்று படிக்கும் நேரம் நாளைய வெற்றியை உருவாக்கும்.",
 
-"ஒவ்வொரு Mock Test-மும் உங்களை Selection-க்கு அருகில் கொண்டு செல்லும்."
+
+"தோல்வியை பயப்படாதீர்கள், முயற்சியை மட்டும் நிறுத்தாதீர்கள்.",
+
+
+"உங்கள் இலக்கு Selection என்றால் உங்கள் முயற்சி தினமும் தொடர வேண்டும்.",
+
+
+"ஒவ்வொரு Mock Test-மும் உங்கள் வெற்றிக்கான ஒரு படி.",
+
+
+"கனவு + உழைப்பு = வெற்றி."
+
 
 ];
 
 
-const quoteBox = document.getElementById("dailyQuote");
+
+const quoteBox =
+
+document.getElementById("dailyQuote");
+
 
 
 if(quoteBox){
 
-let today = new Date().getDate();
 
-let quoteIndex = today % quotes.length;
+const today = new Date().getDate();
 
-quoteBox.innerHTML = quotes[quoteIndex];
+
+quoteBox.innerHTML =
+
+quotes[today % quotes.length];
+
 
 }
+
+
+
+
+
+// ===============================
+// ADMIN LINK CONTROL
+// ===============================
+
+
+const adminLink =
+
+document.getElementById("adminLink");
+
+
+
+if(adminLink){
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+if(user && user.uid === ADMIN_UID){
+
+
+adminLink.style.display="block";
+
+
+}
+
+else{
+
+
+adminLink.style.display="none";
+
+
+}
+
+
+});
+
+
+}
+
+
+
+
+
+// ===============================
+// TEST START
+// ===============================
+
+
+window.startTest=function(type){
+
+
+window.location.href =
+
+"mocktest.html?type="+type;
+
+
+}
+
+
+
+
+
+console.log(
+
+"G THE GENIUS DASHBOARD LOADED"
+
+);
+
