@@ -1,8 +1,11 @@
-/* =========================
-G THE GENIUS LEADERBOARD CSS
+/* =====================================
+G THE GENIUS
+LEADERBOARD CSS
 PART 1
-========================= */
+===================================== */
 
+
+/* GLOBAL */
 
 *{
 
@@ -16,123 +19,99 @@ font-family:'Poppins',sans-serif;
 
 body{
 
-
-background:
-
-linear-gradient(
-180deg,
-#081229,
-#102451
-);
-
+background:#081229;
 
 color:white;
 
-
 min-height:100vh;
-
-
-padding-bottom:90px;
-
 
 }
 
 
 
 
-
-
-/* =========================
-HEADER
-========================= */
+/* HEADER */
 
 
 .leader-header{
 
-
 display:flex;
 
+justify-content:space-between;
 
 align-items:center;
 
+padding:15px 25px;
 
-gap:15px;
+background:rgba(255,255,255,0.05);
 
-
-padding:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-bottom:
-
-1px solid rgba(255,215,0,.3);
-
-
+border-bottom:1px solid rgba(255,255,255,0.1);
 
 }
 
 
 
-.leader-logo{
+.brand{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
 
 
-width:65px;
 
+.logo{
 
-height:65px;
+width:55px;
 
+height:55px;
 
 border-radius:50%;
 
-
-object-fit:cover;
-
-
-border:
-
-3px solid #FFD700;
-
-
-background:white;
-
-
-padding:2px;
-
+object-fit:contain;
 
 }
 
 
 
-.leader-header h2{
-
+.brand h2{
 
 color:#FFD700;
 
+font-size:20px;
 
-font-size:22px;
+}
 
+
+.brand p{
+
+color:#ccc;
+
+font-size:12px;
 
 }
 
 
 
-.leader-header p{
 
+.leader-header button{
 
-color:#ddd;
+background:#FFD700;
 
+color:#081229;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:25px;
+
+font-weight:600;
+
+cursor:pointer;
 
 }
 
@@ -140,819 +119,103 @@ color:#ddd;
 
 
 
+/* CONTAINER */
 
 
-/* =========================
-TITLE
-========================= */
+.leader-container{
 
+max-width:1100px;
 
-.leader-title{
-
-
-margin:20px;
-
+margin:auto;
 
 padding:25px;
 
-
-text-align:center;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.leader-title h1{
-
-
-color:#FFD700;
-
-
-font-size:28px;
-
-
-}
-
-
-
-.leader-title p{
-
-
-margin-top:8px;
-
-
-color:#ddd;
-
-
 }
 
 
 
 
-
-
-
-
-/* =========================
-FILTER
-========================= */
-
-
-.filter-card{
-
-
-margin:20px;
-
-
-display:flex;
-
-
-gap:12px;
-
-
-
-}
-
-
-
-.filter-card select{
-
-
-flex:1;
-
-
-padding:14px;
-
-
-border-radius:18px;
-
-
-background:
-
-rgba(255,255,255,.1);
-
-
-
-color:white;
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-outline:none;
-
-
-}
-
-
-
-.filter-card option{
-
-
-background:#081229;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-TOP THREE
-========================= */
-
-
-.top-three{
-
-
-display:flex;
-
-
-align-items:end;
-
-
-justify-content:center;
-
-
-gap:12px;
-
-
-margin:25px 20px;
-
-
-}
-
-
-
-.rank-box{
-
-
-width:30%;
-
-
-padding:20px 10px;
-
-
-text-align:center;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-}
-
-
-
-.rank-box h2{
-
-
-font-size:35px;
-
-
-}
-
-
-
-.rank-box h3{
-
-
-font-size:14px;
-
-
-margin-top:10px;
-
-
-color:white;
-
-
-}
-
-
-
-.rank-box p{
-
-
-color:#FFD700;
-
-
-margin-top:8px;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-
-
-/* FIRST RANK */
-
-
-.rank-box.first{
-
-
-transform:
-
-translateY(-20px);
-
-
-
-border:
-
-2px solid #FFD700;
-
-
-
-background:
-
-rgba(255,215,0,.15);
-
-
-
-}
-
-
-
-
-
-/* SECOND */
-
-
-.rank-box.second{
-
-
-border-color:#C0C0C0;
-
-
-}
-
-
-
-
-
-/* THIRD */
-
-
-.rank-box.third{
-
-
-border-color:#CD7F32;
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-LEADERBOARD CARD
-========================= */
+/* LEADER CARD */
 
 
 .leader-card{
 
-
-margin:20px;
-
-
-padding:20px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.leader-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-
-
-
-/* TABLE HEADER */
-
-
-.table-header{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-.5fr 2fr 1fr 1fr;
-
-
-
-padding:12px;
-
-
-border-radius:15px;
-
-
-
-background:
-
-rgba(255,215,0,.15);
-
-
-
-color:#FFD700;
-
-
-
-font-size:13px;
-
-
-}
-
-/* =========================
-RANKING LIST ROW
-========================= */
-
-
-#leaderList{
-
-
-margin-top:15px;
-
-
-}
-
-
-
-.rank-row{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-
-.5fr 2fr 1fr 1fr;
-
-
-
-align-items:center;
-
-
-padding:15px 10px;
-
-
-margin-bottom:10px;
-
-
-border-radius:18px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.15);
-
-
-
-}
-
-
-
-.rank-row span{
-
-
-font-size:14px;
-
-
-}
-
-
-
-.rank-row .rank{
-
-
-color:#FFD700;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-.rank-row .score{
-
-
-color:#FFD700;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-.rank-row:hover{
-
-
-background:
-
-rgba(255,215,0,.15);
-
-
-}
-
-
-
-
-
-
-/* =========================
-MY RANK CARD
-========================= */
-
-
-.my-rank-card{
-
-
-margin:20px;
-
+background:rgba(255,255,255,0.06);
 
 padding:25px;
 
-
-
 border-radius:25px;
 
-
-
-background:
-
-rgba(255,215,0,.12);
-
-
-
-border:
-
-1px solid #FFD700;
-
-
+border:1px solid rgba(255,215,0,0.2);
 
 }
 
 
 
-.my-rank-card h2{
-
+.leader-card h1{
 
 color:#FFD700;
-
 
 margin-bottom:20px;
 
+}
+/* =====================================
+G THE GENIUS
+LEADERBOARD CSS
+PART 2 FINAL
+===================================== */
+
+
+/* TABLE */
+
+
+.table-container{
+
+overflow-x:auto;
 
 }
 
 
 
-.my-rank-grid{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-
-repeat(3,1fr);
-
-
-
-gap:12px;
-
-
-}
-
-
-
-.my-rank-grid div{
-
-
-text-align:center;
-
-
-padding:15px;
-
-
-border-radius:18px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-}
-
-
-
-.my-rank-grid h1{
-
-
-color:#FFD700;
-
-
-font-size:28px;
-
-
-}
-
-
-
-.my-rank-grid p{
-
-
-font-size:12px;
-
-
-color:#ddd;
-
-
-margin-top:8px;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-BADGE CARD
-========================= */
-
-
-.badge-card{
-
-
-margin:20px;
-
-
-padding:22px;
-
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.badge-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:15px;
-
-
-}
-
-
-
-#badgeList{
-
-
-display:flex;
-
-
-flex-wrap:wrap;
-
-
-gap:10px;
-
-
-}
-
-
-
-.badge-item{
-
-
-padding:10px 15px;
-
-
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,215,0,.15);
-
-
-
-border:
-
-1px solid #FFD700;
-
-
-
-color:#FFD700;
-
-
-font-size:14px;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-BOTTOM NAV
-========================= */
-
-
-.bottom-nav{
-
-
-position:fixed;
-
-
-bottom:0;
-
-
-left:0;
-
+table{
 
 width:100%;
 
-
-height:70px;
-
-
-
-display:flex;
-
-
-justify-content:space-around;
-
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(8,18,41,.95);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-top:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-z-index:999;
-
-
+border-collapse:collapse;
 
 }
 
 
 
-.bottom-nav a{
+thead{
 
-
-text-decoration:none;
-
-
-color:white;
-
-
-font-size:12px;
-
-
-text-align:center;
-
+background:rgba(255,215,0,0.15);
 
 }
 
 
 
-.bottom-nav a.active{
+th{
 
+padding:15px;
 
 color:#FFD700;
 
+text-align:center;
+
+}
+
+
+
+td{
+
+padding:14px;
+
+text-align:center;
+
+border-bottom:1px solid rgba(255,255,255,0.1);
+
+color:#ddd;
 
 }
 
@@ -960,212 +223,177 @@ color:#FFD700;
 
 
 
+/* TOP STUDENTS */
 
 
-/* =========================
-FOOTER
-========================= */
+.top-students{
 
+margin-top:30px;
 
-.footer{
-
-
-margin:25px 20px 100px;
-
+background:rgba(255,255,255,0.06);
 
 padding:25px;
 
-
-
-text-align:center;
-
-
-
 border-radius:25px;
 
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
 }
 
 
 
-.footer-logo{
+.top-students h2,
 
-
-width:70px;
-
-
-height:70px;
-
-
-border-radius:50%;
-
-
-object-fit:cover;
-
-
-border:
-
-3px solid #FFD700;
-
-
-}
-
-
-
-.footer h3{
-
+.district-ranking h2{
 
 color:#FFD700;
 
-
-margin-top:10px;
-
+margin-bottom:20px;
 
 }
 
 
 
-.footer p{
 
+#topStudents{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:20px;
+
+}
+
+
+
+.top-card{
+
+background:rgba(255,255,255,0.08);
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+
+}
+
+
+
+.top-card h3{
+
+color:#FFD700;
+
+}
+
+
+
+
+
+/* DISTRICT */
+
+
+.district-ranking{
+
+margin-top:30px;
+
+background:rgba(255,255,255,0.06);
+
+padding:25px;
+
+border-radius:25px;
+
+}
+
+
+
+#districtFilter{
+
+padding:12px 20px;
+
+border-radius:20px;
+
+border:none;
+
+background:#FFD700;
+
+color:#081229;
+
+font-weight:600;
+
+}
+
+
+
+
+
+/* FOOTER */
+
+
+.leader-footer{
+
+text-align:center;
+
+padding:25px;
+
+margin-top:30px;
 
 color:#aaa;
 
+font-size:13px;
+
+}
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:768px){
+
+
+.leader-container{
+
+padding:15px;
+
+}
+
+
+
+.brand h2{
+
+font-size:16px;
+
+}
+
+
+
+.logo{
+
+width:45px;
+
+height:45px;
+
+}
+
+
+
+#topStudents{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+th,td{
 
 font-size:13px;
 
-
-margin:10px;
-
+padding:10px;
 
 }
 
 
-
-.footer a{
-
-
-display:block;
-
-
-color:white;
-
-
-text-decoration:none;
-
-
-margin:8px;
-
-
-font-size:14px;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-MOBILE RESPONSIVE
-========================= */
-
-
-@media(max-width:600px){
-
-
-
-.filter-card{
-
-
-flex-direction:column;
-
-
-}
-
-
-
-.top-three{
-
-
-gap:8px;
-
-
-}
-
-
-
-.rank-box{
-
-
-padding:15px 5px;
-
-
-}
-
-
-
-.rank-box h2{
-
-
-font-size:28px;
-
-
-}
-
-
-
-.table-header,
-
-
-.rank-row{
-
-
-grid-template-columns:
-
-
-.5fr 1.8fr 1fr 1fr;
-
-
-font-size:12px;
-
-
-}
-
-
-
-.my-rank-grid{
-
-
-gap:8px;
-
-
-}
-
-
-
-.my-rank-grid h1{
-
-
-font-size:22px;
-
-
-}
-
-
-
-}
+  }
