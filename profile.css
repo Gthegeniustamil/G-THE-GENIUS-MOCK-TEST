@@ -1,8 +1,11 @@
-/* =========================
-G THE GENIUS PROFILE CSS
+/* =====================================
+G THE GENIUS
+PROFILE CSS
 PART 1
-========================= */
+===================================== */
 
+
+/* GLOBAL */
 
 *{
 
@@ -14,232 +17,171 @@ font-family:'Poppins',sans-serif;
 }
 
 
-
 body{
 
-
-background:
-
-linear-gradient(
-180deg,
-#081229,
-#102451
-);
-
+background:#081229;
 
 color:white;
 
-
 min-height:100vh;
-
-
-padding-bottom:90px;
-
 
 }
 
 
-
-
-
-
-/* =========================
-HEADER
-========================= */
+/* HEADER */
 
 
 .profile-header{
 
-
 display:flex;
 
+justify-content:space-between;
 
 align-items:center;
 
+padding:15px 25px;
 
-gap:15px;
+background:rgba(255,255,255,0.05);
 
-
-padding:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-bottom:
-
-1px solid rgba(255,215,0,.3);
-
-
+border-bottom:1px solid rgba(255,255,255,0.1);
 
 }
 
 
 
-.profile-logo{
+.brand{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
 
 
-width:70px;
 
+.logo{
 
-height:70px;
+width:55px;
 
+height:55px;
 
 border-radius:50%;
 
-
-object-fit:cover;
-
-
-
-border:
-
-3px solid #FFD700;
-
-
-background:white;
-
-
-padding:2px;
-
+object-fit:contain;
 
 }
 
 
 
-.profile-header h2{
-
+.brand h2{
 
 color:#FFD700;
 
+font-size:20px;
 
-font-size:24px;
+}
 
+
+.brand p{
+
+color:#ccc;
+
+font-size:12px;
 
 }
 
 
 
-.profile-header p{
+.profile-header button{
 
+background:#FFD700;
 
-color:#ddd;
+color:#081229;
 
+border:none;
 
-font-size:13px;
+padding:10px 18px;
 
+border-radius:25px;
+
+font-weight:600;
+
+cursor:pointer;
 
 }
 
 
 
 
+/* PROFILE CONTAINER */
+
+
+.profile-container{
+
+max-width:900px;
+
+margin:auto;
+
+padding:25px;
+
+}
 
 
 
-/* =========================
-PROFILE CARD
-========================= */
+/* PROFILE CARD */
 
 
 .profile-card{
 
+text-align:center;
 
-margin:20px;
-
+background:rgba(255,255,255,0.06);
 
 padding:30px;
 
+border-radius:25px;
 
-text-align:center;
-
-
-
-border-radius:30px;
-
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-rgba(255,215,0,.18),
-
-rgba(255,255,255,.08)
-
-);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-
-box-shadow:
-
-0 0 25px rgba(255,215,0,.15);
-
-
+border:1px solid rgba(255,215,0,0.2);
 
 }
 
 
 
-.student-avatar{
+.profile-avatar{
 
+width:100px;
 
-width:120px;
+height:100px;
 
-
-height:120px;
-
+margin:auto;
 
 border-radius:50%;
 
+background:#FFD700;
 
-object-fit:cover;
+color:#081229;
 
+display:flex;
 
+align-items:center;
 
-border:
+justify-content:center;
 
-4px solid #FFD700;
+font-size:50px;
 
-
-
-background:white;
-
-
-padding:3px;
-
-
+margin-bottom:15px;
 
 }
 
 
 
-.profile-card h2{
-
-
-margin-top:15px;
-
+.profile-card h1{
 
 color:#FFD700;
 
+font-size:26px;
 
 }
 
@@ -247,528 +189,123 @@ color:#FFD700;
 
 .profile-card p{
 
+color:#ccc;
 
-margin-top:10px;
-
-
-color:#ddd;
-
+margin-top:8px;
 
 }
 
+/* =====================================
+G THE GENIUS
+PROFILE CSS
+PART 2 FINAL
+===================================== */
 
 
-.profile-card span{
+/* STATS SECTION */
 
 
-color:#FFD700;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-LEVEL CARD
-========================= */
-
-
-.level-card{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.level-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-.level-info{
-
-
-display:flex;
-
-
-justify-content:space-between;
-
-
-align-items:center;
-
-
-
-}
-
-
-
-.level-info h1{
-
-
-color:#FFD700;
-
-
-font-size:28px;
-
-
-}
-
-
-
-.level-info p{
-
-
-color:#ddd;
-
-
-}
-
-
-
-
-
-
-
-/* XP BAR */
-
-
-.xp-container{
-
-
-height:14px;
-
-
-background:#222;
-
-
-border-radius:20px;
-
-
-overflow:hidden;
-
-
-margin-top:20px;
-
-
-}
-
-
-
-#profileXPBar{
-
-
-height:100%;
-
-
-width:0%;
-
-
-background:#FFD700;
-
-
-border-radius:20px;
-
-
-transition:.5s;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-STATISTICS CARD
-========================= */
-
-
-.stats-card{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.stats-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-.stats-grid{
-
+.profile-stats{
 
 display:grid;
 
+grid-template-columns:repeat(4,1fr);
 
-grid-template-columns:
+gap:15px;
 
-
-repeat(3,1fr);
-
-
-
-gap:12px;
-
+margin-top:25px;
 
 }
 
 
 
-.stats-grid div{
+.stat-card{
 
+background:rgba(255,255,255,0.06);
 
-padding:18px 10px;
+padding:20px;
 
+border-radius:20px;
 
 text-align:center;
 
-
-
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
+border:1px solid rgba(255,215,0,0.2);
 
 }
 
 
 
-.stats-grid h2{
+.stat-card h3{
 
+color:#ccc;
+
+font-size:15px;
+
+margin-bottom:10px;
+
+}
+
+
+
+.stat-card p{
 
 color:#FFD700;
 
+font-size:25px;
 
-font-size:26px;
-
-
-}
-
-
-
-.stats-grid p{
-
-
-font-size:12px;
-
-
-color:#ddd;
-
+font-weight:700;
 
 }
 
-/* =========================
-BADGE SECTION
-========================= */
 
 
-.badge-section{
+
+/* HISTORY SECTION */
 
 
-margin:20px;
+.history-section{
 
+margin-top:30px;
+
+background:rgba(255,255,255,0.06);
 
 padding:25px;
 
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.badge-section h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-#profileBadges{
-
-
-display:flex;
-
-
-flex-wrap:wrap;
-
-
-gap:12px;
-
-
-}
-
-
-
-.badge-item{
-
-
-padding:12px 18px;
-
-
 border-radius:20px;
 
+border:1px solid rgba(255,255,255,0.1);
 
-
-background:
-
-rgba(255,215,0,.15);
+}
 
 
 
-border:
-
-1px solid #FFD700;
-
-
+.history-section h2{
 
 color:#FFD700;
 
+margin-bottom:15px;
 
-font-weight:bold;
+}
 
 
-font-size:14px;
 
+#testHistory{
+
+color:#ccc;
 
 }
 
 
 
 
+/* ACTION BUTTON */
 
 
-
-/* =========================
-ACHIEVEMENT CARD
-========================= */
-
-
-.achievement-card{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-rgba(255,215,0,.15),
-
-rgba(255,255,255,.08)
-
-);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-}
-
-
-
-.achievement-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-.achievement-grid{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-
-repeat(3,1fr);
-
-
-
-gap:12px;
-
-
-}
-
-
-
-.achievement-grid div{
-
+.profile-actions{
 
 text-align:center;
 
-
-padding:18px 10px;
-
-
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-}
-
-
-
-.achievement-grid h1{
-
-
-color:#FFD700;
-
-
-font-size:28px;
-
-
-}
-
-
-
-.achievement-grid p{
-
-
-font-size:12px;
-
-
-color:#ddd;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-ACCOUNT BUTTON
-========================= */
-
-
-.account-card{
-
-
-margin:20px;
-
+margin-top:30px;
 
 }
 
@@ -776,340 +313,112 @@ margin:20px;
 
 #logoutBtn{
 
+background:#ff4d4d;
 
-width:100%;
-
-
-padding:16px;
-
+color:white;
 
 border:none;
 
+padding:12px 30px;
 
-border-radius:20px;
+border-radius:30px;
 
-
-
-background:
-
-#ff4444;
-
-
-
-color:white;
-
-
-
-font-size:16px;
-
-
-font-weight:bold;
-
+font-weight:600;
 
 cursor:pointer;
 
-
-
-}
-
-
-
-#logoutBtn:hover{
-
-
-transform:scale(1.03);
-
-
 }
 
 
 
 
 
+/* FOOTER */
 
 
-
-/* =========================
-BOTTOM NAVIGATION
-========================= */
-
-
-.bottom-nav{
-
-
-position:fixed;
-
-
-bottom:0;
-
-
-left:0;
-
-
-width:100%;
-
-
-height:70px;
-
-
-
-display:flex;
-
-
-justify-content:space-around;
-
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(8,18,41,.95);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-top:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-z-index:999;
-
-
-
-}
-
-
-
-.bottom-nav a{
-
-
-text-decoration:none;
-
-
-color:white;
-
-
-font-size:12px;
-
+.profile-footer{
 
 text-align:center;
-
-
-}
-
-
-
-.bottom-nav a:hover{
-
-
-color:#FFD700;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-FOOTER
-========================= */
-
-
-.footer{
-
-
-margin:25px 20px 100px;
-
 
 padding:25px;
 
-
-text-align:center;
-
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.footer-logo{
-
-
-width:75px;
-
-
-height:75px;
-
-
-border-radius:50%;
-
-
-object-fit:cover;
-
-
-
-border:
-
-3px solid #FFD700;
-
-
-
-background:white;
-
-
-}
-
-
-
-.footer h3{
-
-
-color:#FFD700;
-
-
-margin-top:12px;
-
-
-}
-
-
-
-.footer p{
-
-
 color:#aaa;
-
 
 font-size:13px;
 
-
-margin:10px;
-
-
-}
-
-
-
-.footer a{
-
-
-display:block;
-
-
-color:white;
-
-
-text-decoration:none;
-
-
-margin:8px;
-
-
-font-size:14px;
-
-
-}
-
-
-
-.footer a:hover{
-
-
-color:#FFD700;
-
-
 }
 
 
 
 
 
+/* MOBILE RESPONSIVE */
 
 
-/* =========================
-MOBILE RESPONSIVE
-========================= */
+@media(max-width:768px){
 
 
-@media(max-width:600px){
+.profile-container{
 
-
-
-.stats-grid,
-
-
-.achievement-grid{
-
-
-grid-template-columns:
-
-repeat(3,1fr);
-
+padding:15px;
 
 }
 
 
 
-.student-avatar{
+.profile-header{
 
-
-width:100px;
-
-
-height:100px;
-
+padding:12px 15px;
 
 }
 
 
 
-.level-info h1{
+.brand h2{
 
+font-size:16px;
+
+}
+
+
+
+.logo{
+
+width:45px;
+
+height:45px;
+
+}
+
+
+
+.profile-stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+
+.profile-card h1{
 
 font-size:22px;
 
-
 }
-
-
-
-.achievement-grid h1{
-
-
-font-size:22px;
 
 
 }
 
 
 
+@media(max-width:400px){
+
+
+.profile-stats{
+
+grid-template-columns:1fr;
+
 }
+
+
+  }
