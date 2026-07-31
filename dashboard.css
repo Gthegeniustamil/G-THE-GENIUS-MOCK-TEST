@@ -1664,3 +1664,86 @@ footer a{
     text-decoration:none;
 
 }
+/* =====================================
+DASHBOARD TEXT VISIBILITY FIX
+===================================== */
+
+
+.dashboard-container,
+.dashboard-container *{
+
+    opacity:1;
+
+}
+
+
+.dashboard-container h1,
+.dashboard-container h2,
+.dashboard-container h3,
+.dashboard-container h4{
+
+    color:#ffffff !important;
+
+    opacity:1 !important;
+
+}
+
+
+.dashboard-container p,
+.dashboard-container span,
+.dashboard-container small{
+
+    color:#e8ecff !important;
+
+    opacity:1 !important;
+
+}
+
+
+/* GOLD HEADINGS */
+
+.test-card h3,
+.subject-card h3,
+.topic-card h3,
+.performance-card h3{
+
+    color:#ffd86b !important;
+
+}
+
+
+/* QUESTION COUNT */
+
+.test-card strong,
+.stat-card strong{
+
+    color:#f5c542 !important;
+
+}
+
+
+
+/* CARD BACKGROUND */
+
+.test-card,
+.subject-card,
+.topic-card,
+.performance-card,
+.quick-card{
+
+    background:rgba(255,255,255,0.10) !important;
+
+}
+
+
+
+/* BUTTON TEXT */
+
+.start-btn,
+.practice-btn{
+
+    color:#081229 !important;
+
+    font-weight:800;
+
+}
