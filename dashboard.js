@@ -372,3 +372,24 @@ console.log(
 "G THE GENIUS Dashboard Loaded Successfully"
 
 );
+const quotes = [
+
+"வெற்றி ஒரே நாளில் கிடைக்காது... தினமும் முயற்சி செய்தால் நிச்சயம் கிடைக்கும்.",
+
+"இன்று படிக்கும் ஒவ்வொரு பக்கமும் நாளைய வெற்றிக்கான படிக்கட்டு.",
+
+"கனவு அரசு வேலை என்றால் முயற்சி தினமும் தொடர வேண்டும்.",
+
+"முயற்சி செய்பவர்களுக்கு வெற்றி நிச்சயம்.",
+
+"நேரத்தை சரியாக பயன்படுத்துபவன் வாழ்க்கையில் உயர்வான்."
+
+];
+
+
+const quote = quotes[
+Math.floor(Math.random()*quotes.length)
+];
+
+
+document.getElementById("dailyQuote").innerText = quote;
