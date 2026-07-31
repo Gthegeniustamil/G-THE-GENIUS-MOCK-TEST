@@ -1,1 +1,643 @@
+/* ===========================================================
+   G THE GENIUS MOCK TEST PORTAL
+   AUTH.CSS
+   PART 1
+=========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ================= RESET ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#081229;
+
+    color:#fff;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+}
+
+
+
+/* ================= LOGIN CONTAINER ================= */
+
+.login-container{
+
+    width:100%;
+
+    max-width:420px;
+
+}
+
+
+
+/* ================= LOGIN CARD ================= */
+
+.login-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:25px;
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+}
+
+
+
+/* ================= LOGO ================= */
+
+.logo{
+
+    width:110px;
+
+    height:110px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#fff;
+
+    border:4px solid gold;
+
+    margin:auto;
+
+}
+
+
+
+/* ================= TITLE ================= */
+
+.login-card h1{
+
+    margin-top:18px;
+
+    color:gold;
+
+    font-size:30px;
+
+}
+
+.login-card p{
+
+    margin-top:8px;
+
+    color:#ddd;
+
+}
+
+
+
+/* ================= FORM ================= */
+
+#loginForm{
+
+    margin-top:30px;
+
+}
+
+
+
+/* ================= INPUT ================= */
+
+.input-group{
+
+    margin-bottom:20px;
+
+    text-align:left;
+
+}
+
+.input-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+}
+
+.input-group input{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    background:#ffffff15;
+
+    color:#fff;
+
+    font-size:15px;
+
+    border:1px solid transparent;
+
+    transition:.3s;
+
+}
+
+.input-group input:focus{
+
+    border-color:gold;
+
+}
+
+/* ===========================================================
+   AUTH.CSS
+   PART 2
+=========================================================== */
+
+
+/* ================= SHOW PASSWORD ================= */
+
+.show-password{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:18px;
+
+    font-size:14px;
+
+    color:#ddd;
+
+}
+
+.show-password input{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:gold;
+
+}
+
+
+
+/* ================= LOGIN OPTIONS ================= */
+
+.login-options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    font-size:13px;
+
+}
+
+.login-options label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#ddd;
+
+}
+
+.login-options input{
+
+    accent-color:gold;
+
+}
+
+.login-options a{
+
+    color:gold;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.login-options a:hover{
+
+    color:#fff;
+
+}
+
+
+
+/* ================= LOGIN BUTTON ================= */
+
+.login-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#FFD700,#FFC107);
+
+    color:#081229;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 20px rgba(255,215,0,.35);
+
+}
+
+
+
+/* ================= REGISTER ================= */
+
+.register-area{
+
+    margin-top:25px;
+
+    text-align:center;
+
+}
+
+.register-area p{
+
+    color:#ddd;
+
+    margin-bottom:12px;
+
+}
+
+.register-btn{
+
+    display:inline-block;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    border:2px solid gold;
+
+    color:gold;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.register-btn:hover{
+
+    background:gold;
+
+    color:#081229;
+
+}
+
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:480px){
+
+.login-card{
+
+padding:28px 20px;
+
+}
+
+.logo{
+
+width:90px;
+
+height:90px;
+
+}
+
+.login-card h1{
+
+font-size:26px;
+
+}
+
+.login-options{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:10px;
+
+}
+
+      }
+
+/* ===========================================================
+   AUTH.CSS
+   PART 3 (FINAL)
+=========================================================== */
+
+
+/* ================= SOCIAL SECTION ================= */
+
+.social-section{
+
+    margin-top:35px;
+
+    text-align:center;
+
+}
+
+.social-section h3{
+
+    color:gold;
+
+    margin-bottom:18px;
+
+}
+
+.social-buttons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.social-btn{
+
+    display:block;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.youtube{
+
+    background:#FF0000;
+
+}
+
+.telegram{
+
+    background:#229ED9;
+
+}
+
+.email{
+
+    background:#00A86B;
+
+}
+
+.social-btn:hover{
+
+    transform:translateY(-3px);
+
+    opacity:.92;
+
+}
+
+
+
+/* ================= QUICK LINKS ================= */
+
+.quick-links{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    line-height:2;
+
+}
+
+.quick-links a{
+
+    color:#FFD700;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    transition:.3s;
+
+}
+
+.quick-links a:hover{
+
+    color:#ffffff;
+
+}
+
+
+
+/* ================= FOOTER ================= */
+
+.login-footer{
+
+    margin-top:35px;
+
+    text-align:center;
+
+    color:#cccccc;
+
+}
+
+.footer-logo{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#fff;
+
+    border:3px solid gold;
+
+    margin:0 auto 15px;
+
+}
+
+.login-footer p{
+
+    margin-top:6px;
+
+    font-size:13px;
+
+}
+
+
+
+/* ================= TOAST ================= */
+
+#toast{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:25px;
+
+    transform:translateX(-50%);
+
+    background:#FFD700;
+
+    color:#081229;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    opacity:0;
+
+    transition:.35s;
+
+    z-index:9999;
+
+}
+
+#toast.show{
+
+    opacity:1;
+
+}
+
+
+
+/* ================= LOADING ================= */
+
+#loading{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(8,18,41,.75);
+
+    backdrop-filter:blur(5px);
+
+    z-index:99999;
+
+}
+
+#loading::after{
+
+    content:"";
+
+    width:50px;
+
+    height:50px;
+
+    border:5px solid rgba(255,255,255,.2);
+
+    border-top-color:#FFD700;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.login-card{
+
+    animation:fadeUp .6s ease;
+
+}
+
 
