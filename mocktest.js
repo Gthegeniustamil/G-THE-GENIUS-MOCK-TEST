@@ -1,152 +1,217 @@
-// =====================================
-// G THE GENIUS
+// ==========================================
+// G THE GENIUS MOCK TEST PORTAL v5.0
 // MOCK TEST JS
-// PART 1
-// =====================================
+// PART 1 / 5
+// ==========================================
 
-
-import { db, auth } from "./firebase-config.js";
 
 
 import {
 
-collection,
-getDocs
+auth,
+db
 
-}
+} from "./firebase-config.js";
 
-from
 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
 
 
 import {
 
 onAuthStateChanged
 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+
+import {
+
+collection,
+getDocs,
+addDoc,
+serverTimestamp
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+
+
+
+// ===============================
+// GLOBAL VARIABLES
+// ===============================
+
+
+
+let questions = [];
+
+let selectedAnswers = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let timer;
+
+let timeLeft = 300;
+
+let userData = null;
+
+
+
+
+
+
+
+
+
+// TEST SETTINGS
+
+
+const urlParams = new URLSearchParams(
+
+window.location.search
+
+);
+
+
+
+const testType =
+
+urlParams.get("type") || "daily";
+
+
+
+const subject =
+
+urlParams.get("subject");
+
+
+
+const topic =
+
+urlParams.get("topic");
+
+
+
+
+
+
+
+
+
+
+
+// TEST CONFIGURATION
+
+
+let totalQuestions = 10;
+
+
+
+if(testType === "weekly"){
+
+
+totalQuestions = 25;
+
+
+timeLeft = 600;
+
+
 }
 
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
+else if(testType === "monthly"){
 
 
-// =====================================
-// DOM
-// =====================================
+totalQuestions = 100;
+
+
+timeLeft = 3600;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// HTML ELEMENTS
 
 
 const questionText =
+
 document.getElementById("questionText");
 
 
+
 const optionsContainer =
+
 document.getElementById("optionsContainer");
 
 
+
 const questionNumber =
+
 document.getElementById("questionNumber");
 
 
-const totalQuestions =
-document.getElementById("totalQuestions");
 
+const questionCount =
 
-const testTitle =
-document.getElementById("testTitle");
+document.getElementById("questionCount");
 
 
 
-const timer =
+const timerDisplay =
+
 document.getElementById("timer");
 
 
 
+const progressCount =
 
-
-// =====================================
-// TEST SETTINGS
-// =====================================
-
-
-let testType =
-new URLSearchParams(window.location.search)
-.get("type") || "daily";
+document.getElementById("progressCount");
 
 
 
-let totalQuestionCount = 10;
+const progressFill =
 
-let timeLimit = 5 * 60;
+document.getElementById("progressFill");
 
-
-
-if(testType==="weekly"){
-
-
-totalQuestionCount=25;
-
-timeLimit=10*60;
-
-
-testTitle.innerHTML=
-"🟡 Weekly Mock Test";
-
-
-}
-
-
-
-if(testType==="monthly"){
-
-
-totalQuestionCount=100;
-
-timeLimit=60*60;
-
-
-testTitle.innerHTML=
-"🔴 Monthly Grand Test";
-
-
-}
-
-
-
-
-totalQuestions.innerHTML =
-totalQuestionCount;
-
-
-
-
-// =====================================
-// VARIABLES
-// =====================================
-
-
-let questions=[];
-
-let currentIndex=0;
-
-let selectedAnswers=[];
-
-let timeLeft=timeLimit;
-
-let timerInterval;
+// ==========================================
+// MOCK TEST JS
+// QUESTION LOAD SYSTEM
+// PART 2 / 5
+// ==========================================
 
 
 
 
 
-// =====================================
+
+// ===============================
 // AUTH CHECK
-// =====================================
+// ===============================
 
 
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth, async(user)=>{
+
 
 
 if(!user){
@@ -155,7 +220,34 @@ if(!user){
 window.location.href="login.html";
 
 
+return;
+
+
 }
+
+
+
+
+
+
+// GET STUDENT DATA
+
+
+userData = {
+
+uid:user.uid,
+
+email:user.email
+
+};
+
+
+
+
+
+
+await loadQuestions();
+
 
 
 });
@@ -164,18 +256,35 @@ window.location.href="login.html";
 
 
 
-// =====================================
-// LOAD QUESTIONS
-// =====================================
+
+
+
+
+
+
+// ===============================
+// LOAD QUESTIONS FROM FIRESTORE
+// ===============================
+
 
 
 async function loadQuestions(){
 
 
+
 try{
 
 
-const snap =
+
+const loadingScreen =
+
+document.getElementById("loadingScreen");
+
+
+
+
+
+const questionSnapshot =
 
 await getDocs(
 
@@ -185,28 +294,132 @@ collection(db,"questions")
 
 
 
-let allQuestions=[];
 
 
 
-snap.forEach((doc)=>{
+let allQuestions = [];
 
 
-allQuestions.push(doc.data());
+
+
+
+
+questionSnapshot.forEach((doc)=>{
+
+
+
+allQuestions.push({
+
+
+id:doc.id,
+
+
+...doc.data()
+
 
 
 });
 
 
 
+});
+
+
+
+
+
+
+
+
+// SUBJECT FILTER
+
+
+if(subject){
+
+
+
+allQuestions =
+
+allQuestions.filter(q=>
+
+
+q.subject === subject
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+// TOPIC FILTER
+
+
+if(topic){
+
+
+
+allQuestions =
+
+allQuestions.filter(q=>
+
+
+q.topic === topic
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// RANDOM QUESTIONS
+
+
+
+allQuestions.sort(()=>Math.random()-0.5);
+
+
+
+
+
+
+
+
 questions =
 
-allQuestions
+allQuestions.slice(
 
-.sort(()=>Math.random()-0.5)
+0,
 
-.slice(0,totalQuestionCount);
+totalQuestions
 
+);
+
+
+
+
+
+
+
+
+
+// INITIALIZE ANSWERS
 
 
 selectedAnswers =
@@ -219,7 +432,38 @@ questions.length
 
 
 
+
+
+
+
+
+if(questionCount){
+
+
+questionCount.innerHTML =
+
+questions.length;
+
+
+}
+
+
+
+
+
+
+createQuestionPalette();
+
+
+
+
+
+
 showQuestion();
+
+
+
+
 
 
 
@@ -227,10 +471,33 @@ startTimer();
 
 
 
+
+
+
+
+
+if(loadingScreen){
+
+
+loadingScreen.style.display="none";
+
+
 }
 
 
+
+
+
+
+}
+
+
+
+
+
+
 catch(error){
+
 
 
 console.log(
@@ -242,91 +509,174 @@ error
 );
 
 
-}
+
+const errorBox =
+
+document.getElementById("errorMessage");
+
+
+
+if(errorBox){
+
+
+errorBox.innerHTML =
+
+"Unable to load questions";
 
 
 }
 
 
 
+}
 
 
-// START
 
-loadQuestions();
 
-// =====================================
+
+}
+// ==========================================
 // MOCK TEST JS
-// PART 2
-// =====================================
+// QUESTION DISPLAY SYSTEM
+// PART 3 / 5
+// ==========================================
 
 
 
-// =====================================
+
+
+
+// ===============================
 // SHOW QUESTION
-// =====================================
+// ===============================
 
 
 function showQuestion(){
 
 
-if(!questions.length) return;
+
+if(!questions.length){
+
+return;
+
+}
 
 
 
-const q =
 
-questions[currentIndex];
 
+
+
+const question =
+
+questions[currentQuestion];
+
+
+
+
+
+
+
+
+// QUESTION NUMBER
 
 
 questionNumber.innerHTML =
 
-currentIndex + 1;
+currentQuestion + 1;
 
+
+
+
+
+
+
+// QUESTION TEXT
 
 
 questionText.innerHTML =
 
-q.question;
-
-
-
-optionsContainer.innerHTML="";
+question.question;
 
 
 
 
-q.options.forEach((option,index)=>{
 
 
 
-const btn =
+
+// CLEAR OPTIONS
+
+
+optionsContainer.innerHTML = "";
+
+
+
+
+
+
+
+
+// CREATE OPTIONS
+
+
+
+question.options.forEach((option,index)=>{
+
+
+
+
+
+
+const button =
 
 document.createElement("button");
 
 
 
-btn.className="option-btn";
 
 
-btn.innerHTML =
+button.className =
 
-option;
-
-
-
-if(selectedAnswers[currentIndex]===index){
+"option-btn";
 
 
-btn.classList.add("selected");
+
+
+
+
+button.innerHTML =
+
+`${index + 1}. ${option}`;
+
+
+
+
+
+
+
+// SELECTED ANSWER STYLE
+
+
+if(
+
+selectedAnswers[currentQuestion] === index
+
+){
+
+
+button.classList.add("selected");
 
 
 }
 
 
 
-btn.onclick=()=>{
+
+
+
+
+button.onclick = ()=>{
 
 
 selectAnswer(index);
@@ -336,7 +686,14 @@ selectAnswer(index);
 
 
 
-optionsContainer.appendChild(btn);
+
+
+
+
+optionsContainer.appendChild(button);
+
+
+
 
 
 
@@ -344,7 +701,16 @@ optionsContainer.appendChild(btn);
 
 
 
-updatePalette();
+
+
+
+
+
+
+updateProgress();
+
+
+
 
 
 }
@@ -353,18 +719,33 @@ updatePalette();
 
 
 
-// =====================================
+
+
+
+
+// ===============================
 // SELECT ANSWER
-// =====================================
+// ===============================
 
 
 function selectAnswer(index){
 
 
-selectedAnswers[currentIndex]=index;
+
+selectedAnswers[currentQuestion] = index;
+
+
+
 
 
 showQuestion();
+
+
+
+
+
+updatePalette();
+
 
 
 }
@@ -372,14 +753,253 @@ showQuestion();
 
 
 
-// =====================================
-// BUTTONS
-// =====================================
+
+
+
+
+
+// ===============================
+// QUESTION PALETTE
+// ===============================
+
+
+function createQuestionPalette(){
+
+
+
+const palette =
+
+document.getElementById(
+
+"questionPalette"
+
+);
+
+
+
+
+
+palette.innerHTML="";
+
+
+
+
+
+
+
+
+questions.forEach((q,index)=>{
+
+
+
+const btn =
+
+document.createElement("button");
+
+
+
+
+
+btn.className =
+
+"question-number-btn";
+
+
+
+
+
+btn.innerHTML =
+
+index + 1;
+
+
+
+
+
+
+
+btn.onclick = ()=>{
+
+
+
+currentQuestion = index;
+
+
+showQuestion();
+
+
+
+};
+
+
+
+
+
+
+
+palette.appendChild(btn);
+
+
+
+
+
+});
+
+
+
+
+}
+
+
+// ==========================================
+// MOCK TEST JS
+// NAVIGATION + TIMER SYSTEM
+// PART 4 / 5
+// ==========================================
+
+
+
+
+
+
+// ===============================
+// PROGRESS UPDATE
+// ===============================
+
+
+function updateProgress(){
+
+
+
+let answered =
+
+selectedAnswers.filter(
+
+(answer)=>answer !== null
+
+).length;
+
+
+
+
+
+
+
+if(progressCount){
+
+
+
+progressCount.innerHTML =
+
+`${answered} / ${questions.length}`;
+
+
+}
+
+
+
+
+
+
+
+if(progressFill){
+
+
+
+let percent =
+
+(answered / questions.length) * 100;
+
+
+
+
+
+progressFill.style.width =
+
+percent + "%";
+
+
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// NEXT BUTTON
+// ===============================
+
 
 
 const nextBtn =
 
 document.getElementById("nextBtn");
+
+
+
+
+
+if(nextBtn){
+
+
+
+nextBtn.onclick = ()=>{
+
+
+
+
+
+if(currentQuestion < questions.length - 1){
+
+
+
+currentQuestion++;
+
+
+
+showQuestion();
+
+
+
+}
+
+
+
+
+
+
+
+};
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// PREVIOUS BUTTON
+// ===============================
+
 
 
 const previousBtn =
@@ -389,139 +1009,69 @@ document.getElementById("previousBtn");
 
 
 
-nextBtn.onclick=()=>{
+
+if(previousBtn){
 
 
-if(currentIndex < questions.length-1){
+
+previousBtn.onclick = ()=>{
 
 
-currentIndex++;
+
+
+
+if(currentQuestion > 0){
+
+
+
+currentQuestion--;
+
 
 
 showQuestion();
 
 
+
 }
+
+
+
+
 
 
 };
 
 
 
-previousBtn.onclick=()=>{
-
-
-if(currentIndex>0){
-
-
-currentIndex--;
-
-
-showQuestion();
-
-
-}
-
-
-};
-
-
-
-
-
-// =====================================
-// QUESTION PALETTE
-// =====================================
-
-
-const palette =
-
-document.getElementById("palette");
-
-
-
-function updatePalette(){
-
-
-palette.innerHTML="";
-
-
-
-questions.forEach((q,index)=>{
-
-
-const btn =
-
-document.createElement("button");
-
-
-
-btn.className="palette-btn";
-
-
-btn.innerHTML=index+1;
-
-
-
-
-if(index===currentIndex){
-
-
-btn.classList.add("active");
-
-
 }
 
 
 
-if(selectedAnswers[index]!==null){
-
-
-btn.classList.add("answered");
-
-
-}
 
 
 
-btn.onclick=()=>{
-
-
-currentIndex=index;
-
-
-showQuestion();
-
-
-};
 
 
 
-palette.appendChild(btn);
+// ===============================
+// TIMER SYSTEM
+// ===============================
 
-
-
-});
-
-
-    }
-
-// =====================================
-// MOCK TEST JS
-// PART 3 FINAL
-// =====================================
-
-
-
-// =====================================
-// TIMER
-// =====================================
 
 
 function startTimer(){
 
 
-timerInterval = setInterval(()=>{
+
+clearInterval(timer);
+
+
+
+
+
+
+timer = setInterval(()=>{
+
 
 
 let minutes =
@@ -536,43 +1086,44 @@ timeLeft % 60;
 
 
 
-timer.innerHTML =
-
-"⏰ " +
-
-String(minutes).padStart(2,"0")
-
-+
-
-":"
-
-+
-
-String(seconds).padStart(2,"0");
 
 
 
 
-if(timeLeft <= 60){
+
+if(seconds < 10){
 
 
-timer.classList.add("timer-warning");
+
+seconds =
+
+"0" + seconds;
 
 
 }
 
 
 
-if(timeLeft <= 0){
 
 
-clearInterval(timerInterval);
 
 
-submitTest();
+
+if(timerDisplay){
+
+
+
+timerDisplay.innerHTML =
+
+`${minutes}:${seconds}`;
 
 
 }
+
+
+
+
+
 
 
 
@@ -580,7 +1131,20 @@ timeLeft--;
 
 
 
-},1000);
+
+
+
+
+if(timeLeft < 0){
+
+
+
+clearInterval(timer);
+
+
+
+submitTest();
+
 
 
 }
@@ -588,9 +1152,26 @@ timeLeft--;
 
 
 
-// =====================================
-// SUBMIT TEST
-// =====================================
+},1000);
+
+
+
+}
+// ==========================================
+// MOCK TEST JS
+// RESULT SAVE + SUBMIT SYSTEM
+// PART 5 / 5
+// FINAL
+// ==========================================
+
+
+
+
+
+
+// ===============================
+// SUBMIT BUTTON
+// ===============================
 
 
 const submitBtn =
@@ -599,63 +1180,78 @@ document.getElementById("submitBtn");
 
 
 
+
+
+
 if(submitBtn){
 
 
-submitBtn.onclick=()=>{
 
-
-let confirmSubmit =
-
-confirm(
-
-"Are you sure you want to submit?"
-
-);
-
-
-
-if(confirmSubmit){
+submitBtn.onclick = ()=>{
 
 
 submitTest();
 
 
-}
-
-
-
 };
 
 
+
 }
 
 
 
+
+
+
+
+
+
+// ===============================
+// SUBMIT TEST
+// ===============================
 
 
 async function submitTest(){
 
 
-clearInterval(timerInterval);
 
 
 
-let correct = 0;
+clearInterval(timer);
 
 
 
-questions.forEach((q,index)=>{
+
+
+
+
+score = 0;
+
+
+
+
+
+
+
+
+// CHECK ANSWERS
+
+
+questions.forEach((question,index)=>{
+
 
 
 if(
 
-selectedAnswers[index] === q.correctAnswer
+selectedAnswers[index] === question.answer
 
 ){
 
 
-correct++;
+
+score++;
+
 
 
 }
@@ -666,79 +1262,17 @@ correct++;
 
 
 
-let score = correct;
-
-
-let percentage =
-
-Math.round(
-
-(score / questions.length) * 100
-
-);
 
 
 
 
 
-const user = auth.currentUser;
 
-
-
-if(user){
-
-
-
-await saveResult(
-
-user,
-
-score,
-
-percentage
-
-);
-
-
-
-}
-
-
-
-
-
-window.location.href =
-
-"result.html?score="
-
-+
-
-score
-
-+
-
-"&total="
-
-+
-
-questions.length;
-
-
-
-}
-
-
-
-
-// =====================================
 // SAVE RESULT FIRESTORE
-// =====================================
-
-
-async function saveResult(user,score,percentage){
 
 
 try{
+
 
 
 await addDoc(
@@ -748,36 +1282,107 @@ collection(db,"results"),
 {
 
 
-uid:user.uid,
+uid:userData.uid,
 
 
-score:score,
-
-
-percentage:percentage,
+email:userData.email,
 
 
 testType:testType,
 
 
+subject:subject || "",
+
+
+topic:topic || "",
+
+
+marks:score,
+
+
 totalQuestions:questions.length,
 
 
-createdAt:new Date()
+
+timestamp:serverTimestamp()
 
 
 
 }
+
 
 
 );
 
 
 
+
+
+
+
+
+
+
+
+// UPDATE STATUS
+
+
+const status =
+
+document.getElementById("testStatus");
+
+
+
+if(status){
+
+
+
+status.innerHTML =
+
+`Test Completed 🎉 Marks : ${score}`;
+
+
+
 }
 
 
+
+
+
+
+
+// GO RESULT PAGE
+
+
+setTimeout(()=>{
+
+
+
+window.location.href =
+
+`result.html?marks=${score}&total=${questions.length}`;
+
+
+
+},1500);
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
 catch(error){
+
 
 
 console.log(
@@ -789,8 +1394,30 @@ error
 );
 
 
+
 }
 
 
-           }
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// PAGE LOAD MESSAGE
+// ===============================
+
+
+
+console.log(
+
+"G THE GENIUS Mock Test Loaded Successfully"
+
+);
 
