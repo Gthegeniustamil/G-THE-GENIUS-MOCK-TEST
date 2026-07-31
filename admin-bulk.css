@@ -1,1 +1,198 @@
+/* ==========================================
+G THE GENIUS
+ADMIN BULK UPLOAD PREMIUM CSS
+========================================== */
 
+
+*{
+    box-sizing:border-box;
+}
+
+
+body{
+
+    margin:0;
+
+    background:#081229;
+
+    color:white;
+
+    font-family:Arial,sans-serif;
+
+}
+
+
+
+
+
+.admin-container{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:25px;
+
+}
+
+
+
+
+
+
+
+h1{
+
+    text-align:center;
+
+    color:#ffd86b;
+
+    margin-bottom:30px;
+
+}
+
+
+
+
+
+
+
+select,
+textarea{
+
+    width:100%;
+
+    padding:15px;
+
+    margin:10px 0;
+
+    border-radius:15px;
+
+    border:1px solid #ffd86b;
+
+    background:#101d3d;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+
+
+
+
+select option{
+
+    background:#081229;
+
+    color:white;
+
+}
+
+
+
+
+
+
+
+textarea{
+
+    height:250px;
+
+    resize:none;
+
+}
+
+
+
+
+
+
+
+
+button{
+
+    width:100%;
+
+    padding:16px;
+
+    margin-top:20px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#ffd86b;
+
+    color:#081229;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+    transform:scale(1.02);
+
+}
+
+
+
+
+
+
+
+
+#uploadResult{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:rgba(255,255,255,.1);
+
+    border-radius:20px;
+
+    border:1px solid #ffd86b;
+
+    line-height:1.8;
+
+}
+
+
+
+
+
+
+@media(max-width:600px){
+
+
+.admin-container{
+
+    padding:15px;
+
+}
+
+
+h1{
+
+    font-size:22px;
+
+}
+
+
+textarea{
+
+    height:200px;
+
+}
+
+
+}
