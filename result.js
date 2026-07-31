@@ -710,7 +710,66 @@ saveLocalHistory();
 // RESULT PAGE READY
 // ==========================================
 
+// ==========================================
+// QUESTION REVIEW
+// ==========================================
 
+const reviewContainer =
+document.getElementById("reviewContainer");
+
+const reviewData =
+JSON.parse(
+localStorage.getItem("lastReview")
+) || [];
+
+if(reviewContainer){
+
+reviewData.forEach((item,index)=>{
+
+reviewContainer.innerHTML += `
+
+<div class="review-card">
+
+<h3>Q${index+1}. ${item.question}</h3>
+
+<p>
+<b>Your Answer:</b>
+${item.yourAnswer}
+</p>
+
+<p>
+<b>Correct Answer:</b>
+${item.correctAnswer}
+</p>
+
+<p>
+<b>Explanation:</b>
+${item.explanation}
+</p>
+
+<p style="font-weight:bold;color:${
+item.status==="Correct"
+?
+"#00ff88"
+:
+item.status==="Wrong"
+?
+"#ff4444"
+:
+"#ffaa00"
+};">
+
+${item.status}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+}
 
 console.log(
 
