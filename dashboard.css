@@ -5,19 +5,15 @@ PART 1
 ===================================== */
 
 
-/* GLOBAL */
-
 *{
 
 margin:0;
-
 padding:0;
-
 box-sizing:border-box;
-
 font-family:'Poppins',sans-serif;
 
 }
+
 
 
 body{
@@ -28,112 +24,84 @@ color:white;
 
 min-height:100vh;
 
+padding-bottom:80px;
+
 }
+
+
 
 
 /* HEADER */
 
-.dashboard-header{
 
-width:100%;
-
-padding:15px 25px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-background:rgba(255,255,255,0.05);
-
-backdrop-filter:blur(10px);
-
-border-bottom:1px solid rgba(255,255,255,0.1);
-
-}
-
-
-
-.brand{
+.app-header{
 
 display:flex;
 
 align-items:center;
 
-gap:12px;
+justify-content:center;
+
+gap:15px;
+
+padding:25px 15px;
 
 }
 
 
 
-.brand .logo{
+.app-logo img{
 
-width:55px;
+width:80px;
 
-height:55px;
+height:80px;
 
 border-radius:50%;
 
-object-fit:contain;
+object-fit:cover;
+
+border:3px solid #FFD700;
 
 }
 
 
 
-.brand h2{
-
-font-size:20px;
+.app-title h2{
 
 color:#FFD700;
 
-}
-
-
-
-.brand p{
-
-font-size:12px;
-
-color:#ccc;
+font-size:22px;
 
 }
 
 
 
+.app-title p{
 
-#logoutBtn{
+color:#aaa;
 
-background:#FFD700;
-
-color:#081229;
-
-border:none;
-
-padding:10px 18px;
-
-border-radius:25px;
-
-font-weight:600;
-
-cursor:pointer;
+font-size:13px;
 
 }
 
 
 
-/* DASHBOARD CONTAINER */
+
+
+/* CONTAINER */
 
 
 .dashboard-container{
 
-max-width:1100px;
+max-width:900px;
 
 margin:auto;
 
-padding:25px;
+padding:15px;
 
 }
+
+
 
 
 
@@ -142,83 +110,29 @@ padding:25px;
 
 .welcome-card{
 
-background:linear-gradient(
-
-135deg,
-
-rgba(255,215,0,0.15),
-
-rgba(255,255,255,0.05)
-
-);
-
-padding:25px;
-
-border-radius:20px;
-
-border:1px solid rgba(255,215,0,0.3);
-
-margin-bottom:20px;
-
-}
-
-
-
-.welcome-card h1{
-
-font-size:26px;
-
-}
-
-
-.welcome-card span{
-
-color:#FFD700;
-
-}
-
-
-.welcome-card p{
-
-margin-top:8px;
-
-color:#ccc;
-
-}
-
-
-/* PROFILE CARD */
-
-
-.profile-card{
-
-background:rgba(255,255,255,0.06);
-
-padding:25px;
-
-border-radius:20px;
-
-border:1px solid rgba(255,255,255,0.1);
-
-}
-
-
-.profile-header{
-
 display:flex;
 
 align-items:center;
 
-gap:15px;
+gap:20px;
+
+background:rgba(255,255,255,0.08);
+
+padding:25px;
+
+border-radius:30px;
+
+border:1px solid rgba(255,215,0,0.25);
 
 }
 
 
-.profile-icon{
 
-width:60px;
+.profile-circle{
 
-height:60px;
+width:70px;
+
+height:70px;
 
 border-radius:50%;
 
@@ -232,59 +146,55 @@ align-items:center;
 
 justify-content:center;
 
-font-size:30px;
+font-size:35px;
 
 }
 
 
 
-.profile-header h3{
+.student-info h1{
+
+font-size:20px;
+
+}
+
+
+
+.student-info span{
 
 color:#FFD700;
 
 }
 
 
-.profile-header p{
+
+.student-info p{
 
 color:#ccc;
 
-font-size:14px;
+margin-top:5px;
 
-  }
+}
 
-/* =====================================
+  /* =====================================
+G THE GENIUS
 DASHBOARD CSS
 PART 2
 ===================================== */
 
 
-/* STATS BOX */
+/* LEVEL CARD */
 
 
-.stats-box{
+.level-card{
 
-display:grid;
+margin-top:20px;
 
-grid-template-columns:repeat(4,1fr);
+background:rgba(255,255,255,0.08);
 
-gap:15px;
+padding:20px;
 
-margin-top:25px;
-
-}
-
-
-
-.stat-item{
-
-background:rgba(255,255,255,0.05);
-
-padding:18px;
-
-border-radius:15px;
-
-text-align:center;
+border-radius:25px;
 
 border:1px solid rgba(255,215,0,0.2);
 
@@ -292,61 +202,34 @@ border:1px solid rgba(255,215,0,0.2);
 
 
 
-.stat-item h4{
-
-font-size:14px;
-
-color:#ccc;
-
-margin-bottom:8px;
-
-}
-
-
-
-.stat-item p{
-
-font-size:24px;
-
-font-weight:700;
-
-color:#FFD700;
-
-}
-
-
-
-
-/* XP PROGRESS */
-
-
-.level-progress{
-
-margin-top:25px;
-
-}
-
-
-
-.progress-title{
+.level-title{
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:14px;
+color:#FFD700;
 
-margin-bottom:10px;
-
-color:#ddd;
+margin-bottom:15px;
 
 }
 
 
 
-.progress-bar{
+.level-title p{
 
-height:14px;
+color:white;
+
+}
+
+
+
+/* XP BAR */
+
+
+.xp-bar{
+
+height:12px;
 
 background:rgba(255,255,255,0.15);
 
@@ -358,7 +241,7 @@ overflow:hidden;
 
 
 
-.progress-fill{
+#xpProgress{
 
 height:100%;
 
@@ -376,12 +259,68 @@ transition:0.5s;
 
 
 
+/* MOTIVATION */
+
+
+.motivation-card{
+
+margin-top:20px;
+
+background:linear-gradient(
+135deg,
+rgba(255,215,0,0.15),
+rgba(255,255,255,0.05)
+);
+
+padding:25px;
+
+border-radius:30px;
+
+text-align:center;
+
+}
+
+
+
+.motivation-card h3{
+
+color:#FFD700;
+
+margin-bottom:15px;
+
+}
+
+
+
+.motivation-card p{
+
+font-size:17px;
+
+line-height:1.6;
+
+}
+
+
+
+.motivation-card span{
+
+display:block;
+
+margin-top:15px;
+
+color:#aaa;
+
+}
+
+
+
+
 /* TEST SECTION */
 
 
 .test-section{
 
-margin-top:30px;
+margin-top:25px;
 
 }
 
@@ -404,24 +343,23 @@ display:grid;
 
 grid-template-columns:repeat(3,1fr);
 
-gap:20px;
+gap:15px;
 
 }
 
 
 
-
 .test-card{
 
-padding:25px;
+background:rgba(255,255,255,0.08);
 
-border-radius:20px;
+padding:20px;
 
-background:rgba(255,255,255,0.06);
-
-border:1px solid rgba(255,255,255,0.1);
+border-radius:25px;
 
 text-align:center;
+
+border:1px solid rgba(255,255,255,0.1);
 
 }
 
@@ -429,7 +367,9 @@ text-align:center;
 
 .test-card h3{
 
-margin-bottom:15px;
+font-size:16px;
+
+margin-bottom:10px;
 
 }
 
@@ -439,11 +379,20 @@ margin-bottom:15px;
 
 color:#ccc;
 
-margin:8px;
+font-size:14px;
+
+margin:5px;
 
 }
 
+/* =====================================
+G THE GENIUS
+DASHBOARD CSS
+PART 3 FINAL
+===================================== */
 
+
+/* TEST BUTTON */
 
 
 .test-card button{
@@ -464,8 +413,9 @@ font-weight:700;
 
 cursor:pointer;
 
-}
+transition:0.3s;
 
+}
 
 
 .test-card button:hover{
@@ -477,49 +427,18 @@ transform:scale(1.05);
 
 
 
-/* DIFFERENT TEST COLORS */
+/* QUICK MENU */
 
 
-.daily{
-
-border-top:3px solid #00ff99;
-
-}
-
-
-
-.weekly{
-
-border-top:3px solid #FFD700;
-
-}
-
-
-
-.monthly{
-
-border-top:3px solid #ff4d4d;
-
-}
-
-/* =====================================
-DASHBOARD CSS
-PART 3 FINAL
-===================================== */
-
-
-/* MENU SECTION */
-
-
-.menu-section{
+.quick-menu{
 
 display:grid;
 
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:repeat(3,1fr);
 
-gap:20px;
+gap:15px;
 
-margin-top:30px;
+margin-top:25px;
 
 }
 
@@ -527,131 +446,80 @@ margin-top:30px;
 
 .menu-card{
 
-background:rgba(255,255,255,0.06);
+background:rgba(255,255,255,0.08);
 
-border:1px solid rgba(255,215,0,0.2);
+padding:20px;
 
-padding:25px;
-
-border-radius:20px;
+border-radius:25px;
 
 text-align:center;
-
-font-size:18px;
-
-font-weight:600;
 
 cursor:pointer;
 
-transition:0.3s;
+border:1px solid rgba(255,215,0,0.2);
 
 }
 
 
 
-.menu-card:hover{
+.menu-card h3{
 
-background:rgba(255,215,0,0.15);
+font-size:30px;
 
-transform:translateY(-5px);
+}
+
+
+
+.menu-card p{
+
+margin-top:8px;
+
+color:#FFD700;
 
 }
 
 
 
 
-/* FOOTER */
+
+/* BOTTOM NAV */
 
 
-.dashboard-footer{
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+height:70px;
+
+background:#101b36;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+border-top:1px solid rgba(255,215,0,0.2);
+
+z-index:100;
+
+}
+
+
+
+.bottom-nav a{
+
+color:white;
+
+text-decoration:none;
 
 text-align:center;
-
-padding:25px;
-
-margin-top:30px;
-
-color:#aaa;
-
-font-size:13px;
-
-}
-
-
-
-
-/* BUTTON EFFECT */
-
-
-button{
-
-transition:0.3s;
-
-}
-
-
-
-button:hover{
-
-opacity:0.9;
-
-}
-
-
-
-
-/* MOBILE RESPONSIVE */
-
-
-@media(max-width:768px){
-
-
-
-.dashboard-header{
-
-padding:12px 15px;
-
-}
-
-
-
-.brand h2{
-
-font-size:16px;
-
-}
-
-
-
-.brand .logo{
-
-width:45px;
-
-height:45px;
-
-}
-
-
-
-#logoutBtn{
-
-padding:8px 14px;
-
-font-size:12px;
-
-}
-
-
-
-.dashboard-container{
-
-padding:15px;
-
-}
-
-
-
-.welcome-card h1{
 
 font-size:22px;
 
@@ -659,9 +527,52 @@ font-size:22px;
 
 
 
-.stats-box{
+.bottom-nav span{
 
-grid-template-columns:repeat(2,1fr);
+display:block;
+
+font-size:11px;
+
+color:#ccc;
+
+}
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:768px){
+
+
+
+.app-header{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+
+
+.app-logo img{
+
+width:90px;
+
+height:90px;
+
+}
+
+
+
+.welcome-card{
+
+flex-direction:column;
+
+text-align:center;
 
 }
 
@@ -675,20 +586,27 @@ grid-template-columns:1fr;
 
 
 
-.menu-section{
+.quick-menu{
 
-grid-template-columns:1fr;
+grid-template-columns:repeat(3,1fr);
+
+}
+
+
+
+.menu-card{
+
+padding:15px;
 
 }
 
 
 
-.profile-card{
+.menu-card h3{
 
-padding:18px;
+font-size:25px;
 
 }
-
 
 
 }
@@ -698,59 +616,11 @@ padding:18px;
 @media(max-width:400px){
 
 
-.stats-box{
+.quick-menu{
 
 grid-template-columns:1fr;
 
 }
 
 
-
-.welcome-card h1{
-
-font-size:20px;
-
-}
-
-
-}
-.motivation-card{
-
-background:rgba(255,255,255,0.08);
-
-border:1px solid rgba(255,215,0,0.3);
-
-border-radius:25px;
-
-padding:25px;
-
-margin:20px 0;
-
-text-align:center;
-
-}
-
-
-.motivation-card h3{
-
-color:#FFD700;
-
-}
-
-
-.motivation-card p{
-
-font-size:18px;
-
-line-height:1.6;
-
-margin:15px 0;
-
-}
-
-
-.motivation-card span{
-
-color:#aaa;
-
-}
+     }
