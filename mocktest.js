@@ -1073,54 +1073,12 @@ async function submitTest(){
         let resultData = calculateResult();
 await saveResult(resultData);
 alert("saveResult completed");
-// ==========================================
-// SAVE RESULT LOCAL STORAGE
-// ==========================================
 
-localStorage.setItem(
-    "lastScore",
-    resultData.correct
-);
+alert("Before Redirect");
 
-localStorage.setItem(
-    "lastCorrect",
-    resultData.correct
-);
+window.location.href = "result.html";
 
-localStorage.setItem(
-    "lastWrong",
-    resultData.wrong
-);
-
-localStorage.setItem(
-    "lastUnanswered",
-    resultData.unanswered
-);
-
-localStorage.setItem(
-    "lastTotal",
-    questions.length
-);
-
-localStorage.setItem(
-    "lastPercentage",
-    ((resultData.correct / questions.length) * 100).toFixed(2)
-);
-localStorage.setItem(
-    "lastReview",
-    JSON.stringify(resultData.review)
-);
-// Full Review Data
-
-localStorage.setItem(
-    "lastReview",
-    JSON.stringify(resultData.review)
-);
-        
-
-}catch(error){
-
-    console.error("Submit Error:", error);
+alert("After Redirect");
 
     alert(
         "Submit Error:\n\n" +
