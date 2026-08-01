@@ -1,3 +1,4 @@
+
 // ==========================================
 // G THE GENIUS RESULT JS v6.0
 // PART 1
@@ -41,7 +42,13 @@ localStorage.getItem("district") || "-";
 
 const reviewData =
 JSON.parse(localStorage.getItem("lastReview")) || [];
-
+console.log("lastScore =", localStorage.getItem("lastScore"));
+console.log("lastCorrect =", localStorage.getItem("lastCorrect"));
+console.log("lastWrong =", localStorage.getItem("lastWrong"));
+console.log("lastUnanswered =", localStorage.getItem("lastUnanswered"));
+console.log("lastTotal =", localStorage.getItem("lastTotal"));
+console.log("lastPercentage =", localStorage.getItem("lastPercentage"));
+console.log("lastReview =", localStorage.getItem("lastReview"));
 
 // ==========================================
 // HTML ELEMENTS
