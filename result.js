@@ -83,55 +83,21 @@ localStorage.getItem(
 
 // RESULT ELEMENTS
 
-
 const scoreBox =
-document.getElementById(
-"score"
-);
-
-
+document.getElementById("marks");
 
 const percentageBox =
-document.getElementById(
-"percentage"
-);
+document.getElementById("percentage");
 
-
-
-
-
-
-if(scoreBox){
-
-scoreBox.innerText =
-score;
-
-}
-
-
-
-if(percentageBox){
-
-percentageBox.innerText =
-percentage + "%";
-
-}
 const correctBox =
-document.getElementById("correct");
-
-if(correctBox){
-    correctBox.innerText = correct;
-}
+document.getElementById("correctAnswers");
 
 const wrongBox =
-document.getElementById("wrong");
-
-if(wrongBox){
-    wrongBox.innerText = wrong;
-}
+document.getElementById("wrongAnswers");
 
 const totalBox =
 document.getElementById("totalQuestions");
+
 
 if(totalBox){
     totalBox.innerText = total;
