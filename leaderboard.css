@@ -1088,3 +1088,29 @@ body{
 
 /* LEADERBOARD CSS v5.0 COMPLETE */
 
+.rank-gold{
+    background: linear-gradient(135deg,#FFD700,#FFB300);
+    color:#081229;
+    font-weight:700;
+}
+
+.rank-silver{
+    background: linear-gradient(135deg,#E0E0E0,#BDBDBD);
+    color:#081229;
+    font-weight:700;
+}
+
+.rank-bronze{
+    background: linear-gradient(135deg,#CD7F32,#A05A2C);
+    color:#fff;
+    font-weight:700;
+}
+
+#leaderboardBody tr{
+    border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+#leaderboardBody tr:hover{
+    transform:scale(1.01);
+    transition:.3s;
+}
