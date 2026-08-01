@@ -47,8 +47,11 @@ JSON.parse(localStorage.getItem("lastReview")) || [];
 // HTML ELEMENTS
 // ==========================================
 
-const marksBox =
-document.getElementById("marks");
+const marksBox = document.getElementById("marks");
+
+if (marksBox) {
+    marksBox.innerText = localStorage.getItem("lastScore") || 0;
+}
 
 const correctBox =
 document.getElementById("correctAnswers");
