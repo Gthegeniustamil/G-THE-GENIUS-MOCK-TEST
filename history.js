@@ -130,7 +130,7 @@ async function loadHistory(){
 
             where("uid","==",currentUser.uid),
 
-            orderBy("timestamp","desc")
+            orderBy("createdAt","desc")
 
         );
 
@@ -295,8 +295,7 @@ function updateStatistics(){
 
     }
 
-    const marks = historyData.map(item => Number(item.marks) || 0);
-
+    const marks = historyData.map(item => Number(item.score) || 0);
     const best = Math.max(...marks);
 
     const average = Math.round(
