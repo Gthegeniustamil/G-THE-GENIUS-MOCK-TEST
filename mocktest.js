@@ -1,6 +1,6 @@
 // ==========================================
-// G THE GENIUS MOCK TEST PORTAL v6.0
-// RESULT.JS
+// G THE GENIUS MOCK TEST PORTAL v6.1
+// MOCKTEST.JS
 // PART 1
 // ==========================================
 
@@ -8,386 +8,368 @@ import { db } from "./firebase-config.js";
 
 import {
     collection,
-    getDocs
+    getDocs,
+    query,
+    where,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 // ==========================================
-// GET RESULT FROM LOCAL STORAGE
+// URL PARAMETERS
 // ==========================================
 
-const score =
-Number(localStorage.getItem("lastScore")) || 0;
+const params = new URLSearchParams(window.location.search);
 
-const correct =
-Number(localStorage.getItem("lastCorrect")) || 0;
-
-const wrong =
-Number(localStorage.getItem("lastWrong")) || 0;
-
-const unanswered =
-Number(localStorage.getItem("lastUnanswered")) || 0;
-
-const total =
-Number(localStorage.getItem("lastTotal")) || 0;
-
-const percentage =
-Number(localStorage.getItem("lastPercentage")) || 0;
-
-const review =
-JSON.parse(
-localStorage.getItem("lastReview")
-) || [];
+const testType = params.get("type") || "daily";
+const selectedTopic = params.get("topic");
+const selectedSubject = params.get("subject");
 
 
 // ==========================================
-// STUDENT DETAILS
+// TEST SETTINGS
 // ==========================================
 
-const studentName =
-localStorage.getItem("studentName") || "Student";
+let totalQuestions = 10;
+let timeLimit = 5 * 60;
 
-const district =
-localStorage.getItem("district") || "-";
+switch(testType){
+
+    case "weekly":
+        totalQuestions = 25;
+        timeLimit = 10 * 60;
+        break;
+
+    case "monthly":
+        totalQuestions = 100;
+        timeLimit = 60 * 60;
+        break;
+
+    default:
+        totalQuestions = 10;
+        timeLimit = 5 * 60;
+}
+
+
+// ==========================================
+// VARIABLES
+// ==========================================
+
+let questions = [];
+let currentQuestion = 0;
+let selectedAnswers = [];
+let remainingTime = timeLimit;
+let timer = null;
 
 
 // ==========================================
 // HTML ELEMENTS
 // ==========================================
 
-const marksBox =
-document.getElementById("marks");
+const loading =
+document.getElementById("loading");
 
-const correctBox =
-document.getElementById("correctAnswers");
+const timerBox =
+document.getElementById("timer");
 
-const wrongBox =
-document.getElementById("wrongAnswers");
+const questionNumber =
+document.getElementById("questionNumber");
 
-const totalBox =
-document.getElementById("totalQuestions");
+const questionText =
+document.getElementById("questionText");
 
-const rankBox =
-document.getElementById("rank");
+const optionsBox =
+document.getElementById("optionsBox");
 
-const resultMessage =
-document.getElementById("resultMessage");
+const nextBtn =
+document.getElementById("nextBtn");
 
-const reviewContainer =
-document.getElementById("reviewContainer");
+const prevBtn =
+document.getElementById("prevBtn");
 
+const submitBtn =
+document.getElementById("submitBtn");
 
-// ==========================================
-// DISPLAY RESULT
-// ==========================================
-
-if(marksBox){
-    marksBox.innerText = score;
-}
-
-if(correctBox){
-    correctBox.innerText = correct;
-}
-
-if(wrongBox){
-    wrongBox.innerText = wrong;
-}
-
-if(totalBox){
-    totalBox.innerText = total;
-}
-
-
-// ==========================================
-// PERFORMANCE MESSAGE
-// ==========================================
-
-if(resultMessage){
-
-    if(percentage >= 90){
-
-        resultMessage.innerText =
-        "🏆 Excellent Performance";
-
-    }
-
-    else if(percentage >= 75){
-
-        resultMessage.innerText =
-        "⭐ Very Good";
-
-    }
-
-    else if(percentage >= 50){
-
-        resultMessage.innerText =
-        "🔥 Good Effort";
-
-    }
-
-    else{
-
-        resultMessage.innerText =
-        "📚 Keep Practicing";
-
-    }
-
-}
-
-console.log("✅ RESULT PART 1 LOADED");
+console.log("✅ MOCKTEST PART 1 READY");
 
 // ==========================================
 // PART 2
-// FIRESTORE RANK CALCULATION
+// LOAD QUESTIONS FROM FIRESTORE
 // ==========================================
 
-async function calculateRank(){
+async function loadQuestions(){
 
     try{
 
-        const snapshot =
-        await getDocs(collection(db,"results"));
+        let qRef = collection(db,"questions");
 
-        let students = [];
+        let snapshot;
 
-        snapshot.forEach(doc=>{
+        if(selectedTopic){
 
-            students.push(doc.data());
+            snapshot = await getDocs(
 
-        });
+                query(
+                    qRef,
+                    where("topic","==",selectedTopic)
+                )
 
-        // Highest percentage first
-        students.sort((a,b)=>{
-
-            if(Number(b.percentage) === Number(a.percentage)){
-
-                return Number(b.score) - Number(a.score);
-
-            }
-
-            return Number(b.percentage) - Number(a.percentage);
-
-        });
-
-        let rank = "-";
-
-        for(let i=0;i<students.length;i++){
-
-            const s = students[i];
-
-            if(
-                s.studentName === studentName &&
-                Number(s.score) === score &&
-                Number(s.percentage) === percentage
-            ){
-
-                rank = i + 1;
-                break;
-
-            }
+            );
 
         }
 
-        if(rankBox){
+        else if(selectedSubject){
 
-            rankBox.innerText = rank;
+            snapshot = await getDocs(
 
-        }
+                query(
+                    qRef,
+                    where("subject","==",selectedSubject)
+                )
 
-        console.log("Rank :", rank);
-
-    }
-
-    catch(error){
-
-        console.error("Rank Error :", error);
-
-        if(rankBox){
-
-            rankBox.innerText = "-";
-
-        }
-
-    }
-
-}
-
-calculateRank();
-
-
-// ==========================================
-// RESULT SUMMARY
-// ==========================================
-
-console.log("================================");
-console.log("Student :", studentName);
-console.log("District :", district);
-console.log("Score :", score);
-console.log("Correct :", correct);
-console.log("Wrong :", wrong);
-console.log("Unanswered :", unanswered);
-console.log("Total :", total);
-console.log("Percentage :", percentage + "%");
-console.log("================================");
-
-// ==========================================
-// PART 3
-// QUESTION REVIEW
-// ==========================================
-
-if(reviewContainer){
-
-    reviewContainer.innerHTML = "";
-
-    if(review.length === 0){
-
-        reviewContainer.innerHTML = `
-            <div class="review-card">
-                <h3>No Question Review Available</h3>
-            </div>
-        `;
-
-    }else{
-
-        review.forEach((item,index)=>{
-
-            let color = "#ffaa00";
-
-            if(item.status === "Correct"){
-                color = "#00c853";
-            }
-
-            else if(item.status === "Wrong"){
-                color = "#ff1744";
-            }
-
-            reviewContainer.innerHTML += `
-
-            <div class="review-card">
-
-                <h3>Question ${index+1}</h3>
-
-                <p>
-                    <b>Question</b><br>
-                    ${item.question}
-                </p>
-
-                <hr>
-
-                <p>
-                    <b>Your Answer</b><br>
-                    <span style="color:${color};font-weight:bold;">
-                        ${item.yourAnswer}
-                    </span>
-                </p>
-
-                <p>
-                    <b>Correct Answer</b><br>
-                    <span style="color:#00c853;font-weight:bold;">
-                        ${item.correctAnswer}
-                    </span>
-                </p>
-
-                <p>
-                    <b>Explanation</b><br>
-                    ${item.explanation}
-                </p>
-
-                <p style="color:${color};font-weight:bold;">
-                    ${item.status}
-                </p>
-
-            </div>
-
-            `;
-
-        });
-
-    }
-
-}
-
-console.log("✅ QUESTION REVIEW READY");
-
-// ==========================================
-// PART 4
-// SHARE + HISTORY + RETRY + PRINT
-// ==========================================
-
-
-// SAVE HISTORY
-
-let history = JSON.parse(
-    localStorage.getItem("testHistory")
-) || [];
-
-history.push({
-
-    studentName: studentName,
-    district: district,
-
-    score: score,
-    correct: correct,
-    wrong: wrong,
-    unanswered: unanswered,
-
-    total: total,
-    percentage: percentage,
-
-    testType:
-    localStorage.getItem("lastTestType") || "Practice",
-
-    date: new Date().toLocaleString()
-
-});
-
-localStorage.setItem(
-    "testHistory",
-    JSON.stringify(history)
-);
-
-
-// ==========================================
-// SHARE RESULT
-// ==========================================
-
-const shareBtn =
-document.getElementById("shareBtn");
-
-if(shareBtn){
-
-    shareBtn.onclick = async()=>{
-
-        const text =
-
-`🏆 G THE GENIUS MOCK TEST RESULT
-
-👤 ${studentName}
-
-✅ Correct : ${correct}
-❌ Wrong : ${wrong}
-📄 Total : ${total}
-
-⭐ Score : ${score}
-📊 Percentage : ${percentage}%
-
-`;
-
-        if(navigator.share){
-
-            await navigator.share({
-
-                title:"G THE GENIUS",
-
-                text:text
-
-            });
+            );
 
         }
 
         else{
 
-            alert(text);
+            snapshot = await getDocs(qRef);
+
+        }
+
+        questions = [];
+
+        snapshot.forEach(doc=>{
+
+            const data = doc.data();
+
+            if(
+
+                data.question &&
+
+                Array.isArray(data.options) &&
+
+                data.options.length >= 4
+
+            ){
+
+                questions.push({
+
+                    id:doc.id,
+
+                    question:data.question,
+
+                    options:data.options,
+
+                    answer:data.answer,
+
+                    explanation:
+                    data.explanation || "",
+
+                    subject:
+                    data.subject || "",
+
+                    topic:
+                    data.topic || ""
+
+                });
+
+            }
+
+        });
+
+        console.log(
+            "Questions Loaded :",
+            questions.length
+        );
+
+        if(questions.length===0){
+
+            if(loading){
+
+                loading.innerHTML =
+                "❌ No Questions Found";
+
+            }
+
+            return;
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        if(loading){
+
+            loading.innerHTML =
+            "❌ Question Loading Failed";
+
+        }
+
+        alert(error.message);
+
+    }
+
+}
+
+
+
+// ==========================================
+// SHUFFLE QUESTIONS
+// ==========================================
+
+function shuffle(array){
+
+    for(
+
+        let i=array.length-1;
+
+        i>0;
+
+        i--
+
+    ){
+
+        let j = Math.floor(
+
+            Math.random() * (i+1)
+
+        );
+
+        [array[i],array[j]] =
+        [array[j],array[i]];
+
+    }
+
+    return array;
+
+}
+
+
+
+// ==========================================
+// PREPARE QUESTIONS
+// ==========================================
+
+function prepareQuestions(){
+
+    shuffle(questions);
+
+    if(
+
+        questions.length >
+
+        totalQuestions
+
+    ){
+
+        questions = questions.slice(
+
+            0,
+
+            totalQuestions
+
+        );
+
+    }
+
+    selectedAnswers =
+
+    new Array(
+
+        questions.length
+
+    ).fill(null);
+
+    console.log(
+
+        "Prepared :",questions.length
+
+    );
+
+}
+
+console.log("✅ MOCKTEST PART 2 READY");
+
+// ==========================================
+// PART 3
+// QUESTION DISPLAY + NEXT + PREVIOUS
+// ==========================================
+
+function showQuestion(){
+
+    if(questions.length === 0) return;
+
+    const q = questions[currentQuestion];
+
+    if(questionNumber){
+
+        questionNumber.innerText =
+        `Question ${currentQuestion + 1} / ${questions.length}`;
+
+    }
+
+    if(questionText){
+
+        questionText.innerText =
+        q.question;
+
+    }
+
+    if(optionsBox){
+
+        optionsBox.innerHTML = "";
+
+        q.options.forEach(option=>{
+
+            const btn =
+            document.createElement("button");
+
+            btn.className = "option-btn";
+
+            btn.innerText = option;
+
+            if(selectedAnswers[currentQuestion] === option){
+
+                btn.classList.add("selected");
+
+            }
+
+            btn.onclick = ()=>{
+
+                selectedAnswers[currentQuestion] = option;
+
+                showQuestion();
+
+            };
+
+            optionsBox.appendChild(btn);
+
+        });
+
+    }
+
+}
+
+
+
+// ==========================================
+// NEXT BUTTON
+// ==========================================
+
+if(nextBtn){
+
+    nextBtn.onclick = ()=>{
+
+        if(currentQuestion < questions.length - 1){
+
+            currentQuestion++;
+
+            showQuestion();
 
         }
 
@@ -396,168 +378,376 @@ if(shareBtn){
 }
 
 
+
 // ==========================================
-// RETRY TEST
+// PREVIOUS BUTTON
 // ==========================================
 
-const retryBtn =
-document.getElementById("retryBtn");
+if(prevBtn){
 
-if(retryBtn){
+    prevBtn.onclick = ()=>{
 
-    retryBtn.onclick = ()=>{
+        if(currentQuestion > 0){
 
-        history.back();
+            currentQuestion--;
+
+            showQuestion();
+
+        }
 
     };
 
 }
 
 
+
 // ==========================================
-// PRINT RESULT
+// LOADING HIDE
 // ==========================================
 
-const printBtn =
-document.getElementById("printBtn");
+function hideLoading(){
 
-if(printBtn){
+    if(loading){
 
-    printBtn.onclick = ()=>{
+        loading.style.display = "none";
 
-        window.print();
+    }
+
+}
+
+console.log("✅ MOCKTEST PART 3 READY");
+
+// ==========================================
+// PART 4
+// TIMER + RESULT CALCULATION
+// ==========================================
+
+// TIMER
+
+function startTimer(){
+
+    timer = setInterval(()=>{
+
+        const min = Math.floor(remainingTime / 60);
+        const sec = remainingTime % 60;
+
+        if(timerBox){
+
+            timerBox.innerText =
+            `⏰ ${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+
+        }
+
+        if(remainingTime <= 0){
+
+            clearInterval(timer);
+
+            submitTest();
+
+            return;
+
+        }
+
+        remainingTime--;
+
+    },1000);
+
+}
+
+
+
+// ANSWER NORMALIZER
+
+function normalizeAnswer(answer, options=[]){
+
+    if(answer === null || answer === undefined)
+        return "";
+
+    if(typeof answer === "number"){
+
+        return String(options[answer] || "")
+        .trim()
+        .toLowerCase();
+
+    }
+
+    let value = String(answer).trim();
+
+    const map = {
+        A:0,
+        B:1,
+        C:2,
+        D:3
+    };
+
+    if(map[value.toUpperCase()] !== undefined){
+
+        return String(
+            options[map[value.toUpperCase()]] || ""
+        )
+        .trim()
+        .toLowerCase();
+
+    }
+
+    return value.toLowerCase();
+
+}
+
+
+
+// RESULT CALCULATION
+
+function calculateResult(){
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    let review = [];
+
+    questions.forEach((q,index)=>{
+
+        const userAnswer =
+        selectedAnswers[index];
+
+        const selected =
+        normalizeAnswer(userAnswer,q.options);
+
+        const correctAnswer =
+        normalizeAnswer(q.answer,q.options);
+
+        let status = "Wrong";
+
+        if(!userAnswer){
+
+            unanswered++;
+            status = "Unanswered";
+
+        }
+
+        else if(selected === correctAnswer){
+
+            correct++;
+            status = "Correct";
+
+        }
+
+        else{
+
+            wrong++;
+
+        }
+
+        review.push({
+
+            question: q.question,
+
+            yourAnswer:
+            userAnswer || "Not Answered",
+
+            correctAnswer:
+            correctAnswer,
+
+            explanation:
+            q.explanation ||
+            "No Explanation",
+
+            status: status
+
+        });
+
+    });
+
+    return{
+
+        correct,
+        wrong,
+        unanswered,
+        review
 
     };
 
 }
 
+console.log("✅ MOCKTEST PART 4 READY");
 
-console.log("✅ PART 4 READY");
 // ==========================================
 // PART 5
-// XP + LEVEL + COINS + BADGE + FINAL
+// SAVE RESULT + SUBMIT + START TEST
 // ==========================================
 
+// SAVE RESULT TO FIRESTORE
 
-// XP SYSTEM
+async function saveResult(resultData){
 
-let xp =
-Number(localStorage.getItem("xp")) || 0;
+    await addDoc(collection(db,"results"),{
 
-xp += 10;
+        studentName:
+        localStorage.getItem("studentName") || "Student",
 
-localStorage.setItem("xp", xp);
+        district:
+        localStorage.getItem("district") || "-",
 
+        testType,
 
-// LEVEL
+        score: resultData.correct,
+        correct: resultData.correct,
+        wrong: resultData.wrong,
+        unanswered: resultData.unanswered,
 
-const level =
-Math.floor(xp / 50) + 1;
+        totalQuestions: questions.length,
 
-const levelBox =
-document.getElementById("level");
+        percentage: Number(
+            (
+                resultData.correct /
+                questions.length *
+                100
+            ).toFixed(2)
+        ),
 
-if(levelBox){
+        createdAt: serverTimestamp()
 
-    levelBox.innerText =
-    "Level " + level;
+    });
 
-}
-
-
-// COINS
-
-let coins =
-Number(localStorage.getItem("coins")) || 0;
-
-coins += 5;
-
-localStorage.setItem("coins", coins);
-
-const coinBox =
-document.getElementById("coins");
-
-if(coinBox){
-
-    coinBox.innerText = coins;
+    console.log("✅ Result Saved");
 
 }
 
 
-// PASS / FAIL
 
-const badge =
-document.getElementById("resultBadge");
+// SUBMIT TEST
 
-if(badge){
+async function submitTest(){
 
-    if(percentage >= 35){
+    clearInterval(timer);
 
-        badge.innerHTML = "🏆 PASS";
-        badge.style.background = "#00c853";
+    try{
 
-    }else{
+        const resultData = calculateResult();
 
-        badge.innerHTML = "❌ FAIL";
-        badge.style.background = "#d50000";
+        localStorage.setItem(
+            "lastScore",
+            resultData.correct
+        );
+
+        localStorage.setItem(
+            "lastCorrect",
+            resultData.correct
+        );
+
+        localStorage.setItem(
+            "lastWrong",
+            resultData.wrong
+        );
+
+        localStorage.setItem(
+            "lastUnanswered",
+            resultData.unanswered
+        );
+
+        localStorage.setItem(
+            "lastTotal",
+            questions.length
+        );
+
+        localStorage.setItem(
+            "lastPercentage",
+            (
+                resultData.correct /
+                questions.length *
+                100
+            ).toFixed(2)
+        );
+
+        localStorage.setItem(
+            "lastReview",
+            JSON.stringify(resultData.review)
+        );
+
+        localStorage.setItem(
+            "lastTestType",
+            testType
+        );
+
+        await saveResult(resultData);
+
+        window.location.href = "result.html";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Submit Error:\n\n" +
+            error.message
+        );
 
     }
 
 }
 
 
-// PROGRESS BAR
 
-const progressBar =
-document.getElementById("progressBar");
+// START TEST
 
-if(progressBar){
+async function startTest(){
 
-    progressBar.style.width = "0%";
+    await loadQuestions();
 
-    setTimeout(()=>{
+    if(questions.length===0){
 
-        progressBar.style.width =
-        percentage + "%";
-
-    },300);
-
-}
-
-
-// CERTIFICATE
-
-const certificateBtn =
-document.getElementById("certificateBtn");
-
-if(certificateBtn){
-
-    if(percentage >= 90){
-
-        certificateBtn.style.display =
-        "inline-block";
-
-    }else{
-
-        certificateBtn.style.display =
-        "none";
+        return;
 
     }
 
+    prepareQuestions();
+
+    hideLoading();
+
+    showQuestion();
+
+    startTimer();
+
 }
 
 
-// FINAL LOG
+
+// SUBMIT BUTTON
+
+if(submitBtn){
+
+    submitBtn.onclick = ()=>{
+
+        if(confirm("Submit Test?")){
+
+            submitTest();
+
+        }
+
+    };
+
+}
+
+
+
+// PAGE LOAD
+
+window.addEventListener(
+    "load",
+    startTest
+);
+
+
+
+// EXPORT
+
+window.submitTest = submitTest;
 
 console.log("====================================");
-console.log("G THE GENIUS RESULT READY");
-console.log("Student :", studentName);
-console.log("Score :", score);
-console.log("Correct :", correct);
-console.log("Wrong :", wrong);
-console.log("Total :", total);
-console.log("Percentage :", percentage + "%");
-console.log("XP :", xp);
-console.log("Level :", level);
-console.log("Coins :", coins);
+console.log("G THE GENIUS MOCK TEST READY");
+console.log("Questions :", questions.length);
+console.log("Test Type :", testType);
 console.log("====================================");
