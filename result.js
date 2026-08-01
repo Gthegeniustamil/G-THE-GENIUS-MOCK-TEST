@@ -1,6 +1,6 @@
-alert("RESULT JS LOADED");
 // ==========================================
-// G THE GENIUS RESULT JS v6.0
+// G THE GENIUS MOCK TEST PORTAL
+// RESULT.JS v7 FINAL
 // PART 1
 // ==========================================
 
@@ -13,7 +13,7 @@ import {
 
 
 // ==========================================
-// GET RESULT DATA
+// GET DATA FROM LOCAL STORAGE
 // ==========================================
 
 const score =
@@ -34,37 +34,38 @@ Number(localStorage.getItem("lastTotal")) || 0;
 const percentage =
 Number(localStorage.getItem("lastPercentage")) || 0;
 
+const review =
+JSON.parse(
+    localStorage.getItem("lastReview")
+) || [];
+
+
+// ==========================================
+// STUDENT DETAILS
+// ==========================================
+
 const studentName =
 localStorage.getItem("studentName") || "Student";
 
 const district =
 localStorage.getItem("district") || "-";
 
-const reviewData =
-JSON.parse(localStorage.getItem("lastReview")) || [];
-console.log("lastScore =", localStorage.getItem("lastScore"));
-console.log("lastCorrect =", localStorage.getItem("lastCorrect"));
-console.log("lastWrong =", localStorage.getItem("lastWrong"));
-console.log("lastUnanswered =", localStorage.getItem("lastUnanswered"));
-console.log("lastTotal =", localStorage.getItem("lastTotal"));
-console.log("lastPercentage =", localStorage.getItem("lastPercentage"));
-console.log("lastReview =", localStorage.getItem("lastReview"));
 
 // ==========================================
 // HTML ELEMENTS
 // ==========================================
 
-const marksBox = document.getElementById("marks");
-
-if (marksBox) {
-    marksBox.innerText = localStorage.getItem("lastScore") || 0;
-}
+const marksBox =
+document.getElementById("marks");
 
 const correctBox =
 document.getElementById("correctAnswers");
 
 const wrongBox =
 document.getElementById("wrongAnswers");
+
+const unansweredBox =
+document.getElementById("unanswered");
 
 const totalBox =
 document.getElementById("totalQuestions");
@@ -86,67 +87,67 @@ document.getElementById("reviewContainer");
 // DISPLAY RESULT
 // ==========================================
 
-if(marksBox) marksBox.innerText = score;
+if(marksBox)
+    marksBox.innerText = score;
 
-if(correctBox) correctBox.innerText = correct;
+if(correctBox)
+    correctBox.innerText = correct;
 
-if(wrongBox) wrongBox.innerText = wrong;
+if(wrongBox)
+    wrongBox.innerText = wrong;
 
-if(totalBox) totalBox.innerText = total;
+if(unansweredBox)
+    unansweredBox.innerText = unanswered;
+
+if(totalBox)
+    totalBox.innerText = total;
 
 if(percentageBox)
-percentageBox.innerText = percentage + "%";
+    percentageBox.innerText =
+    percentage + "%";
 
-}
 
 // ==========================================
-// RESULT MESSAGE
-// PART 2
+// PERFORMANCE MESSAGE
 // ==========================================
-
-function getPerformanceMessage(){
-
-    if(percentage >= 90){
-        return "🏆 Excellent! Top Rank Preparation";
-    }
-
-    if(percentage >= 75){
-        return "⭐ Very Good! Keep Practicing";
-    }
-
-    if(percentage >= 50){
-        return "🔥 Good Effort! Keep Improving";
-    }
-
-    return "📚 Need More Practice";
-}
 
 if(resultMessage){
-    resultMessage.innerText = getPerformanceMessage();
+
+    if(percentage >= 90){
+
+        resultMessage.innerText =
+        "🏆 Excellent Performance";
+
+    }
+
+    else if(percentage >= 75){
+
+        resultMessage.innerText =
+        "⭐ Very Good Performance";
+
+    }
+
+    else if(percentage >= 50){
+
+        resultMessage.innerText =
+        "🔥 Good Effort";
+
+    }
+
+    else{
+
+        resultMessage.innerText =
+        "📚 Keep Practicing";
+
+    }
+
 }
 
+console.log("✅ RESULT PART 1 READY");
 
 // ==========================================
-// STUDENT DETAILS
-// ==========================================
-
-const studentNameBox =
-document.getElementById("studentName");
-
-const districtBox =
-document.getElementById("district");
-
-if(studentNameBox){
-    studentNameBox.innerText = studentName;
-}
-
-if(districtBox){
-    districtBox.innerText = district;
-}
-
-
-// ==========================================
-// RANK CALCULATION
+// PART 2
+// FIRESTORE RANK CALCULATION
 // ==========================================
 
 async function calculateRank(){
@@ -154,9 +155,11 @@ async function calculateRank(){
     try{
 
         const snapshot =
-        await getDocs(collection(db,"results"));
+        await getDocs(
+            collection(db,"results")
+        );
 
-        let students=[];
+        let students = [];
 
         snapshot.forEach(doc=>{
 
@@ -164,33 +167,65 @@ async function calculateRank(){
 
         });
 
-        students.sort((a,b)=>
+        // Highest Score First
+        students.sort((a,b)=>{
 
-            Number(b.percentage) -
-            Number(a.percentage)
+            if(Number(b.score) === Number(a.score)){
 
-        );
+                return Number(b.percentage) -
+                Number(a.percentage);
 
-        let rank = students.findIndex(item=>
+            }
 
-            item.studentName===studentName &&
+            return Number(b.score) -
+            Number(a.score);
 
-            Number(item.percentage)===percentage
+        });
 
-        ) + 1;
+        let rank = "-";
+
+        for(let i=0;i<students.length;i++){
+
+            const s = students[i];
+
+            if(
+
+                s.studentName === studentName &&
+
+                Number(s.score) === score
+
+            ){
+
+                rank = i + 1;
+
+                break;
+
+            }
+
+        }
 
         if(rankBox){
 
-            rankBox.innerText =
-            rank > 0 ? rank : "-";
+            rankBox.innerText = rank;
 
         }
+
+        console.log("🏆 Rank :",rank);
 
     }
 
     catch(error){
 
-        console.error("Rank Error:",error);
+        console.error(
+            "Rank Error",
+            error
+        );
+
+        if(rankBox){
+
+            rankBox.innerText = "-";
+
+        }
 
     }
 
@@ -200,106 +235,195 @@ calculateRank();
 
 
 // ==========================================
-// SAVE HISTORY
+// RESULT SUMMARY
 // ==========================================
 
-let history = JSON.parse(
+console.log("================================");
+console.log("Student :",studentName);
+console.log("District :",district);
+console.log("Score :",score);
+console.log("Correct :",correct);
+console.log("Wrong :",wrong);
+console.log("Unanswered :",unanswered);
+console.log("Total :",total);
+console.log("Percentage :",percentage+"%");
+console.log("================================");
 
-localStorage.getItem("testHistory")
-
-) || [];
-
-history.push({
-
-    studentName,
-    score,
-    correct,
-    wrong,
-    unanswered,
-    total,
-    percentage,
-    date:new Date().toLocaleString()
-
-});
-
-localStorage.setItem(
-
-"testHistory",
-
-JSON.stringify(history)
-
-);
-
-
+console.log("✅ RESULT PART 2 READY");
 // ==========================================
 // PART 3
-// QUESTION REVIEW + SHARE + FINAL
-// ==========================================
-
 // QUESTION REVIEW
+// ==========================================
 
 if(reviewContainer){
 
     reviewContainer.innerHTML = "";
 
-    reviewData.forEach((item,index)=>{
+    if(review.length === 0){
 
-        let color = "#ffaa00";
-
-        if(item.status==="Correct"){
-            color="#00ff88";
-        }
-
-        if(item.status==="Wrong"){
-            color="#ff4444";
-        }
-
-        reviewContainer.innerHTML += `
+        reviewContainer.innerHTML = `
 
         <div class="review-card">
 
-            <h3>Question ${index+1}</h3>
+            <h3>No Question Review Available</h3>
 
             <p>
-                <b>Question</b><br>
-                ${item.question}
-            </p>
-
-            <p>
-                <b>Your Answer</b><br>
-                <span style="color:${color};font-weight:bold;">
-                    ${item.yourAnswer}
-                </span>
-            </p>
-
-            <p>
-                <b>Correct Answer</b><br>
-                <span style="color:#00ff88;font-weight:bold;">
-                    ${item.correctAnswer}
-                </span>
-            </p>
-
-            <p>
-                <b>Explanation</b><br>
-                ${item.explanation}
-            </p>
-
-            <p style="color:${color};font-weight:bold;">
-                ${item.status}
+            Review data not found.
             </p>
 
         </div>
 
         `;
 
-    });
+    }
+
+    else{
+
+        review.forEach((item,index)=>{
+
+            let statusColor = "#ffaa00";
+
+            if(item.status === "Correct"){
+
+                statusColor = "#00c853";
+
+            }
+
+            else if(item.status === "Wrong"){
+
+                statusColor = "#ff1744";
+
+            }
+
+            reviewContainer.innerHTML += `
+
+            <div class="review-card">
+
+                <h3>
+                Question ${index+1}
+                </h3>
+
+                <p>
+
+                    <b>Question</b>
+
+                    <br>
+
+                    ${item.question}
+
+                </p>
+
+                <hr>
+
+                <p>
+
+                    <b>Your Answer</b>
+
+                    <br>
+
+                    <span
+                    style="
+                    color:${statusColor};
+                    font-weight:bold;
+                    ">
+
+                    ${item.yourAnswer}
+
+                    </span>
+
+                </p>
+
+                <p>
+
+                    <b>Correct Answer</b>
+
+                    <br>
+
+                    <span
+                    style="
+                    color:#00c853;
+                    font-weight:bold;
+                    ">
+
+                    ${item.correctAnswer}
+
+                    </span>
+
+                </p>
+
+                <p>
+
+                    <b>Explanation</b>
+
+                    <br>
+
+                    ${item.explanation}
+
+                </p>
+
+                <p
+                style="
+                color:${statusColor};
+                font-weight:bold;
+                ">
+
+                ${item.status}
+
+                </p>
+
+            </div>
+
+            `;
+
+        });
+
+    }
 
 }
 
+console.log("✅ QUESTION REVIEW READY");
 
 
 // ==========================================
-// SHARE BUTTON
+// PART 4
+// HISTORY + SHARE + RETRY + PRINT
+// ==========================================
+
+
+// SAVE HISTORY
+
+let history = JSON.parse(
+    localStorage.getItem("testHistory")
+) || [];
+
+history.push({
+
+    studentName,
+    district,
+
+    score,
+    correct,
+    wrong,
+    unanswered,
+
+    total,
+    percentage,
+
+    testType:
+    localStorage.getItem("lastTestType") || "Practice",
+
+    date: new Date().toLocaleString()
+
+});
+
+localStorage.setItem(
+    "testHistory",
+    JSON.stringify(history)
+);
+
+
+// ==========================================
+// SHARE RESULT
 // ==========================================
 
 const shareBtn =
@@ -311,34 +435,44 @@ if(shareBtn){
 
         const text =
 
-`🏆 G THE GENIUS MOCK TEST
+`🏆 G THE GENIUS MOCK TEST RESULT
 
 👤 ${studentName}
 
 ✅ Correct : ${correct}
 ❌ Wrong : ${wrong}
-📄 Total : ${total}
+⚪ Unanswered : ${unanswered}
 
-⭐ Score : ${score}
+📝 Total : ${total}
+🏆 Marks : ${score}
 📊 Percentage : ${percentage}%
-
 `;
 
-        if(navigator.share){
+        try{
 
-            await navigator.share({
+            if(navigator.share){
 
-                title:"G THE GENIUS Result",
+                await navigator.share({
 
-                text:text
+                    title:"G THE GENIUS Result",
 
-            });
+                    text:text
+
+                });
+
+            }
+
+            else{
+
+                alert(text);
+
+            }
 
         }
 
-        else{
+        catch(err){
 
-            alert(text);
+            console.log(err);
 
         }
 
@@ -347,218 +481,191 @@ if(shareBtn){
 }
 
 
-
 // ==========================================
-// RESULT READY
-// ==========================================
-
-console.log("=================================");
-console.log("G THE GENIUS RESULT READY");
-console.log("Student :",studentName);
-console.log("Score :",score);
-console.log("Correct :",correct);
-console.log("Wrong :",wrong);
-console.log("Percentage :",percentage+"%");
-console.log("=================================");
-
-// ==========================================
-// PART 4
-// ADVANCED RESULT FEATURES
+// RETRY TEST
 // ==========================================
 
+const retryBtn =
+document.getElementById("retryBtn");
 
+if(retryBtn){
+
+    retryBtn.onclick = ()=>{
+
+        window.history.back();
+
+    };
+
+}
+
+
+// ==========================================
+// PRINT RESULT
+// ==========================================
+
+const printBtn =
+document.getElementById("printBtn");
+
+if(printBtn){
+
+    printBtn.onclick = ()=>{
+
+        window.print();
+
+    };
+
+}
+
+console.log("✅ RESULT PART 4 READY");
+
+// ==========================================
+// PART 5
+// XP + LEVEL + COINS + BADGE + FINAL
+// ==========================================
+
+
+// ==========================================
+// XP SYSTEM
+// ==========================================
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+// ஒவ்வொரு test-க்கும் 10 XP
+xp += 10;
+
+localStorage.setItem("xp", xp);
+
+
+// ==========================================
+// LEVEL SYSTEM
+// ==========================================
+
+const level =
+Math.floor(xp / 50) + 1;
+
+const levelBox =
+document.getElementById("level");
+
+if(levelBox){
+
+    levelBox.innerText =
+    "Level " + level;
+
+}
+
+
+// ==========================================
+// COINS SYSTEM
+// ==========================================
+
+let coins =
+Number(localStorage.getItem("coins")) || 0;
+
+// ஒவ்வொரு test-க்கும் 5 Coins
+coins += 5;
+
+localStorage.setItem("coins", coins);
+
+const coinsBox =
+document.getElementById("coins");
+
+if(coinsBox){
+
+    coinsBox.innerText = coins;
+
+}
+
+
+// ==========================================
 // PASS / FAIL BADGE
+// ==========================================
 
 const badge =
 document.getElementById("resultBadge");
 
 if(badge){
 
-    if(percentage>=35){
+    if(percentage >= 35){
 
-        badge.innerHTML="🏆 PASS";
-
-        badge.style.background="#00c853";
+        badge.innerHTML = "🏆 PASS";
+        badge.style.background = "#00c853";
+        badge.style.color = "#fff";
 
     }
 
     else{
 
-        badge.innerHTML="❌ FAIL";
-
-        badge.style.background="#d50000";
+        badge.innerHTML = "❌ FAIL";
+        badge.style.background = "#d50000";
+        badge.style.color = "#fff";
 
     }
 
 }
 
 
-
+// ==========================================
 // PROGRESS BAR
+// ==========================================
 
 const progressBar =
 document.getElementById("progressBar");
 
 if(progressBar){
 
-    progressBar.style.width="0%";
+    progressBar.style.width = "0%";
 
     setTimeout(()=>{
 
-        progressBar.style.width=
-
-        percentage+"%";
+        progressBar.style.width =
+        percentage + "%";
 
     },300);
 
 }
 
 
-
-// XP SYSTEM
-
-let xp=
-
-Number(
-
-localStorage.getItem("xp")
-
-)||0;
-
-xp+=10;
-
-localStorage.setItem(
-
-"xp",
-
-xp
-
-);
-
-
-
-// LEVEL SYSTEM
-
-let level=
-
-Math.floor(xp/50)+1;
-
-const levelBox=
-
-document.getElementById("level");
-
-if(levelBox){
-
-levelBox.innerText=
-
-"Level "+level;
-
-}
-
-
-
-// COINS
-
-let coins=
-
-Number(
-
-localStorage.getItem("coins")
-
-)||0;
-
-coins+=5;
-
-localStorage.setItem(
-
-"coins",
-
-coins
-
-);
-
-const coinBox=
-
-document.getElementById("coins");
-
-if(coinBox){
-
-coinBox.innerText=coins;
-
-}
-
-
-
-// RETRY BUTTON
-
-const retryBtn=
-
-document.getElementById("retryBtn");
-
-if(retryBtn){
-
-retryBtn.onclick=()=>{
-
-history.back();
-
-};
-
-}
-
-
-
-// PRINT RESULT
-
-const printBtn=
-
-document.getElementById("printBtn");
-
-if(printBtn){
-
-printBtn.onclick=()=>{
-
-window.print();
-
-};
-
-}
-
-
-
+// ==========================================
 // CERTIFICATE
+// ==========================================
 
-const certificateBtn=
-
+const certificateBtn =
 document.getElementById("certificateBtn");
 
 if(certificateBtn){
 
-if(percentage>=90){
+    if(percentage >= 90){
 
-certificateBtn.style.display="inline-block";
+        certificateBtn.style.display =
+        "inline-block";
+
+    }
+
+    else{
+
+        certificateBtn.style.display =
+        "none";
+
+    }
 
 }
 
-else{
 
-certificateBtn.style.display="none";
-
-}
-
-}
-
-
-
+// ==========================================
 // FINAL LOG
+// ==========================================
 
 console.log("================================");
-
-console.log("RESULT FINAL READY");
-
-console.log("XP :",xp);
-
-console.log("LEVEL :",level);
-
-console.log("COINS :",coins);
-
+console.log("G THE GENIUS RESULT READY ✅");
+console.log("Student :", studentName);
+console.log("Score :", score);
+console.log("Correct :", correct);
+console.log("Wrong :", wrong);
+console.log("Unanswered :", unanswered);
+console.log("Total :", total);
+console.log("Percentage :", percentage + "%");
+console.log("XP :", xp);
+console.log("Level :", level);
+console.log("Coins :", coins);
 console.log("================================");
