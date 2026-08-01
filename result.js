@@ -1,4 +1,4 @@
-
+alert("RESULT JS LOADED");
 // ==========================================
 // G THE GENIUS RESULT JS v6.0
 // PART 1
