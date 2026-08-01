@@ -428,7 +428,42 @@ function calculateResult(){
 
 }
 
+// ==========================================
+// SAVE RESULT TO FIRESTORE
+// ==========================================
 
+async function saveResult(resultData){
+
+    await addDoc(
+        collection(db,"results"),
+        {
+            studentName: localStorage.getItem("studentName") || "Student",
+            district: localStorage.getItem("district") || "-",
+            testType: testType,
+
+            score: resultData.correct,
+            correct: resultData.correct,
+            wrong: resultData.wrong,
+            unanswered: resultData.unanswered,
+
+            totalQuestions: questions.length,
+
+            percentage: Number(
+                (
+                    resultData.correct /
+                    questions.length *
+                    100
+                ).toFixed(2)
+            ),
+
+            createdAt: serverTimestamp()
+
+        }
+    );
+
+    console.log("✅ Result Saved");
+
+}
 
 // ==========================================
 // SUBMIT TEST
