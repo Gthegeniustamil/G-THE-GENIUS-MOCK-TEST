@@ -1,6 +1,6 @@
 // ==========================================
-// G THE GENIUS MOCK TEST PORTAL v6.1
-// MOCKTEST.JS
+// G THE GENIUS MOCK TEST PORTAL
+// MOCKTEST.JS v7 FINAL
 // PART 1
 // ==========================================
 
@@ -22,9 +22,14 @@ import {
 
 const params = new URLSearchParams(window.location.search);
 
-const testType = params.get("type") || "daily";
-const selectedTopic = params.get("topic");
-const selectedSubject = params.get("subject");
+const testType =
+params.get("type") || "daily";
+
+const selectedSubject =
+params.get("subject");
+
+const selectedTopic =
+params.get("topic");
 
 
 // ==========================================
@@ -32,23 +37,27 @@ const selectedSubject = params.get("subject");
 // ==========================================
 
 let totalQuestions = 10;
-let timeLimit = 5 * 60;
+let timeLimit = 300;
 
 switch(testType){
 
     case "weekly":
+
         totalQuestions = 25;
-        timeLimit = 10 * 60;
+        timeLimit = 600;
         break;
 
     case "monthly":
+
         totalQuestions = 100;
-        timeLimit = 60 * 60;
+        timeLimit = 3600;
         break;
 
     default:
+
         totalQuestions = 10;
-        timeLimit = 5 * 60;
+        timeLimit = 300;
+
 }
 
 
@@ -57,10 +66,14 @@ switch(testType){
 // ==========================================
 
 let questions = [];
+
 let currentQuestion = 0;
+
 let selectedAnswers = [];
-let remainingTime = timeLimit;
+
 let timer = null;
+
+let remainingTime = timeLimit;
 
 
 // ==========================================
@@ -91,7 +104,18 @@ document.getElementById("prevBtn");
 const submitBtn =
 document.getElementById("submitBtn");
 
-console.log("✅ MOCKTEST PART 1 READY");
+
+// ==========================================
+// RESULT VARIABLES
+// ==========================================
+
+let correct = 0;
+let wrong = 0;
+let unanswered = 0;
+
+let review = [];
+
+console.log("✅ MOCKTEST v7 PART 1 LOADED");
 
 // ==========================================
 // PART 2
@@ -106,6 +130,8 @@ async function loadQuestions(){
 
         let snapshot;
 
+        // Topic Wise
+
         if(selectedTopic){
 
             snapshot = await getDocs(
@@ -119,6 +145,8 @@ async function loadQuestions(){
 
         }
 
+        // Subject Wise
+
         else if(selectedSubject){
 
             snapshot = await getDocs(
@@ -131,6 +159,8 @@ async function loadQuestions(){
             );
 
         }
+
+        // All Questions
 
         else{
 
@@ -147,22 +177,20 @@ async function loadQuestions(){
             if(
 
                 data.question &&
-
                 Array.isArray(data.options) &&
-
                 data.options.length >= 4
 
             ){
 
                 questions.push({
 
-                    id:doc.id,
+                    id: doc.id,
 
-                    question:data.question,
+                    question: data.question,
 
-                    options:data.options,
+                    options: data.options,
 
-                    answer:data.answer,
+                    answer: data.answer,
 
                     explanation:
                     data.explanation || "",
@@ -184,33 +212,16 @@ async function loadQuestions(){
             questions.length
         );
 
-        if(questions.length===0){
-
-            if(loading){
-
-                loading.innerHTML =
-                "❌ No Questions Found";
-
-            }
-
-            return;
-
-        }
-
     }
 
     catch(error){
 
         console.error(error);
 
-        if(loading){
-
-            loading.innerHTML =
-            "❌ Question Loading Failed";
-
-        }
-
-        alert(error.message);
+        alert(
+            "Question Load Error\n\n" +
+            error.message
+        );
 
     }
 
@@ -222,30 +233,26 @@ async function loadQuestions(){
 // SHUFFLE QUESTIONS
 // ==========================================
 
-function shuffle(array){
+function shuffleQuestions(){
 
     for(
 
-        let i=array.length-1;
+        let i = questions.length - 1;
 
-        i>0;
+        i > 0;
 
         i--
 
     ){
 
-        let j = Math.floor(
-
-            Math.random() * (i+1)
-
+        const j = Math.floor(
+            Math.random() * (i + 1)
         );
 
-        [array[i],array[j]] =
-        [array[j],array[i]];
+        [questions[i],questions[j]] =
+        [questions[j],questions[i]];
 
     }
-
-    return array;
 
 }
 
@@ -257,7 +264,7 @@ function shuffle(array){
 
 function prepareQuestions(){
 
-    shuffle(questions);
+    shuffleQuestions();
 
     if(
 
@@ -286,32 +293,35 @@ function prepareQuestions(){
     ).fill(null);
 
     console.log(
-
-        "Prepared :",questions.length
-
+        "Prepared Questions :",
+        questions.length
     );
 
 }
 
-console.log("✅ MOCKTEST PART 2 READY");
+console.log("✅ MOCKTEST v7 PART 2 READY");
 
 // ==========================================
 // PART 3
-// QUESTION DISPLAY + NEXT + PREVIOUS
+// QUESTION DISPLAY SYSTEM
 // ==========================================
 
 function showQuestion(){
 
-    if(questions.length === 0) return;
+    if(questions.length===0) return;
 
     const q = questions[currentQuestion];
+
+    // Question Number
 
     if(questionNumber){
 
         questionNumber.innerText =
-        `Question ${currentQuestion + 1} / ${questions.length}`;
+        `Question ${currentQuestion+1} / ${questions.length}`;
 
     }
+
+    // Question
 
     if(questionText){
 
@@ -320,38 +330,51 @@ function showQuestion(){
 
     }
 
-    if(optionsBox){
+    // Options
 
-        optionsBox.innerHTML = "";
+    optionsBox.innerHTML = "";
 
-        q.options.forEach(option=>{
+    q.options.forEach((option,index)=>{
 
-            const btn =
-            document.createElement("button");
+        const btn =
+        document.createElement("button");
 
-            btn.className = "option-btn";
+        btn.className =
+        "option-btn";
 
-            btn.innerText = option;
+        btn.innerText =
+        option;
 
-            if(selectedAnswers[currentQuestion] === option){
+        // Already Selected
 
-                btn.classList.add("selected");
+        if(
+            selectedAnswers[currentQuestion] === option
+        ){
 
-            }
+            btn.classList.add("selected");
 
-            btn.onclick = ()=>{
+        }
 
-                selectedAnswers[currentQuestion] = option;
+        btn.onclick = ()=>{
 
-                showQuestion();
+            selectedAnswers[currentQuestion] =
+            option;
 
-            };
+            document
+            .querySelectorAll(".option-btn")
+            .forEach(button=>{
 
-            optionsBox.appendChild(btn);
+                button.classList.remove("selected");
 
-        });
+            });
 
-    }
+            btn.classList.add("selected");
+
+        };
+
+        optionsBox.appendChild(btn);
+
+    });
 
 }
 
@@ -365,7 +388,10 @@ if(nextBtn){
 
     nextBtn.onclick = ()=>{
 
-        if(currentQuestion < questions.length - 1){
+        if(
+            currentQuestion <
+            questions.length-1
+        ){
 
             currentQuestion++;
 
@@ -387,7 +413,7 @@ if(prevBtn){
 
     prevBtn.onclick = ()=>{
 
-        if(currentQuestion > 0){
+        if(currentQuestion>0){
 
             currentQuestion--;
 
@@ -399,28 +425,12 @@ if(prevBtn){
 
 }
 
-
-
-// ==========================================
-// LOADING HIDE
-// ==========================================
-
-function hideLoading(){
-
-    if(loading){
-
-        loading.style.display = "none";
-
-    }
-
-}
-
-console.log("✅ MOCKTEST PART 3 READY");
-
+console.log("✅ MOCKTEST v7 PART 3 READY");
 // ==========================================
 // PART 4
-// TIMER + RESULT CALCULATION
+// TIMER + RESULT CALCULATION + SAVE RESULT
 // ==========================================
+
 
 // TIMER
 
@@ -428,8 +438,11 @@ function startTimer(){
 
     timer = setInterval(()=>{
 
-        const min = Math.floor(remainingTime / 60);
-        const sec = remainingTime % 60;
+        const min =
+        Math.floor(remainingTime/60);
+
+        const sec =
+        remainingTime%60;
 
         if(timerBox){
 
@@ -438,7 +451,7 @@ function startTimer(){
 
         }
 
-        if(remainingTime <= 0){
+        if(remainingTime<=0){
 
             clearInterval(timer);
 
@@ -456,37 +469,42 @@ function startTimer(){
 
 
 
-// ANSWER NORMALIZER
+// NORMALIZE ANSWER
 
-function normalizeAnswer(answer, options=[]){
+function normalizeAnswer(answer,options=[]){
 
-    if(answer === null || answer === undefined)
+    if(answer===null || answer===undefined)
         return "";
 
-    if(typeof answer === "number"){
+    if(typeof answer==="number"){
 
-        return String(options[answer] || "")
-        .trim()
-        .toLowerCase();
+        return String(
+            options[answer] || ""
+        ).trim().toLowerCase();
 
     }
 
-    let value = String(answer).trim();
+    let value =
+    String(answer).trim();
 
-    const map = {
+    const map={
+
         A:0,
         B:1,
         C:2,
         D:3
+
     };
 
-    if(map[value.toUpperCase()] !== undefined){
+    if(map[value.toUpperCase()]!==undefined){
 
         return String(
-            options[map[value.toUpperCase()]] || ""
-        )
-        .trim()
-        .toLowerCase();
+
+            options[
+                map[value.toUpperCase()]
+            ] || ""
+
+        ).trim().toLowerCase();
 
     }
 
@@ -500,11 +518,11 @@ function normalizeAnswer(answer, options=[]){
 
 function calculateResult(){
 
-    let correct = 0;
-    let wrong = 0;
-    let unanswered = 0;
+    correct=0;
+    wrong=0;
+    unanswered=0;
 
-    let review = [];
+    review=[];
 
     questions.forEach((q,index)=>{
 
@@ -512,24 +530,32 @@ function calculateResult(){
         selectedAnswers[index];
 
         const selected =
-        normalizeAnswer(userAnswer,q.options);
+        normalizeAnswer(
+            userAnswer,
+            q.options
+        );
 
-        const correctAnswer =
-        normalizeAnswer(q.answer,q.options);
+        const answer =
+        normalizeAnswer(
+            q.answer,
+            q.options
+        );
 
-        let status = "Wrong";
+        let status="Wrong";
 
         if(!userAnswer){
 
             unanswered++;
-            status = "Unanswered";
+
+            status="Unanswered";
 
         }
 
-        else if(selected === correctAnswer){
+        else if(selected===answer){
 
             correct++;
-            status = "Correct";
+
+            status="Correct";
 
         }
 
@@ -541,19 +567,19 @@ function calculateResult(){
 
         review.push({
 
-            question: q.question,
+            question:q.question,
 
             yourAnswer:
             userAnswer || "Not Answered",
 
             correctAnswer:
-            correctAnswer,
+            answer,
 
             explanation:
             q.explanation ||
             "No Explanation",
 
-            status: status
+            status:status
 
         });
 
@@ -570,51 +596,71 @@ function calculateResult(){
 
 }
 
-console.log("✅ MOCKTEST PART 4 READY");
 
-// ==========================================
-// PART 5
-// SAVE RESULT + SUBMIT + START TEST
-// ==========================================
 
-// SAVE RESULT TO FIRESTORE
+// SAVE RESULT
 
 async function saveResult(resultData){
 
-    await addDoc(collection(db,"results"),{
+    await addDoc(
 
-        studentName:
-        localStorage.getItem("studentName") || "Student",
+        collection(db,"results"),
 
-        district:
-        localStorage.getItem("district") || "-",
+        {
 
-        testType,
+            studentName:
+            localStorage.getItem("studentName")
+            || "Student",
 
-        score: resultData.correct,
-        correct: resultData.correct,
-        wrong: resultData.wrong,
-        unanswered: resultData.unanswered,
+            district:
+            localStorage.getItem("district")
+            || "-",
 
-        totalQuestions: questions.length,
+            testType,
 
-        percentage: Number(
-            (
-                resultData.correct /
-                questions.length *
-                100
-            ).toFixed(2)
-        ),
+            score:
+            resultData.correct,
 
-        createdAt: serverTimestamp()
+            correct:
+            resultData.correct,
 
-    });
+            wrong:
+            resultData.wrong,
+
+            unanswered:
+            resultData.unanswered,
+
+            totalQuestions:
+            questions.length,
+
+            percentage:Number(
+
+                (
+
+                    resultData.correct /
+                    questions.length
+
+                )*100
+
+            ).toFixed(2),
+
+            createdAt:
+            serverTimestamp()
+
+        }
+
+    );
 
     console.log("✅ Result Saved");
 
 }
 
+console.log("✅ MOCKTEST v7 PART 4 READY");
 
+// ==========================================
+// PART 5
+// SUBMIT + START TEST + PAGE LOAD
+// ==========================================
 
 // SUBMIT TEST
 
@@ -624,7 +670,10 @@ async function submitTest(){
 
     try{
 
-        const resultData = calculateResult();
+        const resultData =
+        calculateResult();
+
+        // LOCAL STORAGE
 
         localStorage.setItem(
             "lastScore",
@@ -651,13 +700,16 @@ async function submitTest(){
             questions.length
         );
 
-        localStorage.setItem(
-            "lastPercentage",
+        const percentage = Number(
             (
                 resultData.correct /
-                questions.length *
-                100
-            ).toFixed(2)
+                questions.length
+            ) * 100
+        ).toFixed(2);
+
+        localStorage.setItem(
+            "lastPercentage",
+            percentage
         );
 
         localStorage.setItem(
@@ -670,9 +722,13 @@ async function submitTest(){
             testType
         );
 
+        // SAVE TO FIRESTORE
+
         await saveResult(resultData);
 
-        window.location.href = "result.html";
+        // REDIRECT
+
+        window.location.replace("result.html");
 
     }
 
@@ -681,9 +737,23 @@ async function submitTest(){
         console.error(error);
 
         alert(
-            "Submit Error:\n\n" +
+            "Submit Error\n\n" +
             error.message
         );
+
+    }
+
+}
+
+
+
+// HIDE LOADING
+
+function hideLoading(){
+
+    if(loading){
+
+        loading.style.display = "none";
 
     }
 
@@ -698,6 +768,13 @@ async function startTest(){
     await loadQuestions();
 
     if(questions.length===0){
+
+        if(loading){
+
+            loading.innerHTML =
+            "❌ No Questions Found";
+
+        }
 
         return;
 
@@ -744,10 +821,13 @@ window.addEventListener(
 
 // EXPORT
 
-window.submitTest = submitTest;
+window.submitTest =
+submitTest;
 
-console.log("====================================");
-console.log("G THE GENIUS MOCK TEST READY");
+
+
+console.log("==================================");
+console.log("G THE GENIUS MOCK TEST v7 READY");
 console.log("Questions :", questions.length);
 console.log("Test Type :", testType);
-console.log("====================================");
+console.log("==================================");
