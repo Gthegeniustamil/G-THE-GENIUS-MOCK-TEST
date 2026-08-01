@@ -240,7 +240,7 @@ function renderHistory(data){
 
                         <strong>Marks</strong>
 
-                        <p>${item.marks || 0}</p>
+                        <p>${item.score || 0}</p>
 
                     </div>
 
