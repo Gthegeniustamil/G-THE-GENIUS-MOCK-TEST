@@ -56,14 +56,13 @@ localStorage.getItem("district") || "-";
 // ==========================================
 
 const marksBox =
-document.getElementById("marks");
+document.getElementById("score");
 
 const correctBox =
-document.getElementById("correctAnswers");
+document.getElementById("correct");
 
 const wrongBox =
-document.getElementById("wrongAnswers");
-
+document.getElementById("wrong");
 const unansweredBox =
 document.getElementById("unanswered");
 
