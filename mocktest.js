@@ -433,3 +433,131 @@ if(printBtn){
 
 
 console.log("✅ PART 4 READY");
+// ==========================================
+// PART 5
+// XP + LEVEL + COINS + BADGE + FINAL
+// ==========================================
+
+
+// XP SYSTEM
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += 10;
+
+localStorage.setItem("xp", xp);
+
+
+// LEVEL
+
+const level =
+Math.floor(xp / 50) + 1;
+
+const levelBox =
+document.getElementById("level");
+
+if(levelBox){
+
+    levelBox.innerText =
+    "Level " + level;
+
+}
+
+
+// COINS
+
+let coins =
+Number(localStorage.getItem("coins")) || 0;
+
+coins += 5;
+
+localStorage.setItem("coins", coins);
+
+const coinBox =
+document.getElementById("coins");
+
+if(coinBox){
+
+    coinBox.innerText = coins;
+
+}
+
+
+// PASS / FAIL
+
+const badge =
+document.getElementById("resultBadge");
+
+if(badge){
+
+    if(percentage >= 35){
+
+        badge.innerHTML = "🏆 PASS";
+        badge.style.background = "#00c853";
+
+    }else{
+
+        badge.innerHTML = "❌ FAIL";
+        badge.style.background = "#d50000";
+
+    }
+
+}
+
+
+// PROGRESS BAR
+
+const progressBar =
+document.getElementById("progressBar");
+
+if(progressBar){
+
+    progressBar.style.width = "0%";
+
+    setTimeout(()=>{
+
+        progressBar.style.width =
+        percentage + "%";
+
+    },300);
+
+}
+
+
+// CERTIFICATE
+
+const certificateBtn =
+document.getElementById("certificateBtn");
+
+if(certificateBtn){
+
+    if(percentage >= 90){
+
+        certificateBtn.style.display =
+        "inline-block";
+
+    }else{
+
+        certificateBtn.style.display =
+        "none";
+
+    }
+
+}
+
+
+// FINAL LOG
+
+console.log("====================================");
+console.log("G THE GENIUS RESULT READY");
+console.log("Student :", studentName);
+console.log("Score :", score);
+console.log("Correct :", correct);
+console.log("Wrong :", wrong);
+console.log("Total :", total);
+console.log("Percentage :", percentage + "%");
+console.log("XP :", xp);
+console.log("Level :", level);
+console.log("Coins :", coins);
+console.log("====================================");
