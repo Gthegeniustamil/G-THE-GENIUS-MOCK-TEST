@@ -135,21 +135,7 @@ id:doc.id,
 
 
 
-
-
-console.log(
-
-"Leaderboard Loaded:",
-
-results.length
-
-);
-
-
-
-
-
-
+console.log(results);
 displayLeaderboard(results);
 
 
@@ -381,16 +367,6 @@ leaderboardBody.appendChild(row);
 // FILTER SYSTEM
 // PART 3 / 5
 // ==========================================
-
-
-
-const districtFilter =
-
-document.getElementById(
-"districtFilter"
-);
-
-
 
 
 
