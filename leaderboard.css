@@ -1114,3 +1114,138 @@ body{
     transform:scale(1.01);
     transition:.3s;
 }
+
+/* ===========================
+TOP 3 PODIUM DESIGN
+=========================== */
+
+.top-rank-section{
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:15px;
+    margin:35px 0;
+    flex-wrap:nowrap;
+}
+
+.rank-card{
+    width:31%;
+    border-radius:22px;
+    padding:20px 12px;
+    text-align:center;
+    color:#fff;
+    background:linear-gradient(180deg,#122347,#081229);
+    box-shadow:0 10px 25px rgba(0,0,0,.45);
+    transition:.3s;
+    position:relative;
+}
+
+.rank-card:hover{
+    transform:translateY(-8px);
+}
+
+.rank-card h3{
+    margin:12px 0 8px;
+    font-size:22px;
+    color:#FFD700;
+}
+
+.rank-card p{
+    margin:5px 0;
+    font-size:15px;
+    color:#ddd;
+}
+
+.rank-card b{
+    display:block;
+    font-size:22px;
+    color:#fff;
+}
+
+/* 1st */
+
+.rank-card.first{
+    order:2;
+    height:280px;
+    border:3px solid #FFD700;
+    background:linear-gradient(180deg,#1b2f63,#081229);
+    transform:translateY(-20px);
+}
+
+.rank-card.first::before{
+    content:"👑";
+    position:absolute;
+    top:-22px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:48px;
+}
+
+/* 2nd */
+
+.rank-card.second{
+    order:1;
+    height:235px;
+    border:3px solid #C0C0C0;
+}
+
+.rank-card.second::before{
+    content:"🥈";
+    position:absolute;
+    top:-18px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:40px;
+}
+
+/* 3rd */
+
+.rank-card.third{
+    order:3;
+    height:215px;
+    border:3px solid #CD7F32;
+}
+
+.rank-card.third::before{
+    content:"🥉";
+    position:absolute;
+    top:-18px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:40px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.top-rank-section{
+    gap:8px;
+}
+
+.rank-card{
+    width:32%;
+    padding:15px 8px;
+}
+
+.rank-card.first{
+    height:240px;
+}
+
+.rank-card.second{
+    height:205px;
+}
+
+.rank-card.third{
+    height:185px;
+}
+
+.rank-card h3{
+    font-size:18px;
+}
+
+.rank-card b{
+    font-size:18px;
+}
+
+}
