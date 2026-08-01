@@ -468,7 +468,7 @@ async function saveResult(resultData){
 // ==========================================
 // SUBMIT TEST
 // ==========================================
-
+console.log(typeof saveResult);
 async function submitTest(){
 
     clearInterval(timer);
