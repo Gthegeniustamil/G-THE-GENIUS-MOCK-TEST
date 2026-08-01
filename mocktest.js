@@ -4,7 +4,7 @@
 // PART 1
 // ==========================================
 
-import { db } from "./firebase-config.js";
+import { db, auth } from "./firebase-config.js";
 
 import {
     collection,
@@ -615,7 +615,10 @@ async function saveResult(resultData){
             district:
             localStorage.getItem("district")
             || "-",
+uid: auth.currentUser?.uid || "",
 
+email: auth.currentUser?.email || "",
+            
             testType,
 
             score:
