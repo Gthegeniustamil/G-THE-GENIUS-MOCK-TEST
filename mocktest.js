@@ -1,6 +1,6 @@
 // ==========================================
 // G THE GENIUS MOCK TEST PORTAL v6.0
-// MOCKTEST.JS
+// RESULT.JS
 // PART 1
 // ==========================================
 
@@ -8,633 +8,386 @@ import { db } from "./firebase-config.js";
 
 import {
     collection,
-    getDocs,
-    query,
-    where,
-    addDoc,
-    serverTimestamp
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 // ==========================================
-// URL PARAMETERS
+// GET RESULT FROM LOCAL STORAGE
 // ==========================================
 
-const params = new URLSearchParams(window.location.search);
+const score =
+Number(localStorage.getItem("lastScore")) || 0;
 
-const testType = params.get("type") || "daily";
-const selectedSubject = params.get("subject");
-const selectedTopic = params.get("topic");
+const correct =
+Number(localStorage.getItem("lastCorrect")) || 0;
 
+const wrong =
+Number(localStorage.getItem("lastWrong")) || 0;
 
-// ==========================================
-// TEST SETTINGS
-// ==========================================
+const unanswered =
+Number(localStorage.getItem("lastUnanswered")) || 0;
 
-let totalQuestions = 10;
-let timeLimit = 5 * 60;
+const total =
+Number(localStorage.getItem("lastTotal")) || 0;
 
-switch(testType){
+const percentage =
+Number(localStorage.getItem("lastPercentage")) || 0;
 
-    case "weekly":
-        totalQuestions = 25;
-        timeLimit = 10 * 60;
-        break;
-
-    case "monthly":
-        totalQuestions = 100;
-        timeLimit = 60 * 60;
-        break;
-
-    default:
-        totalQuestions = 10;
-        timeLimit = 5 * 60;
-
-}
+const review =
+JSON.parse(
+localStorage.getItem("lastReview")
+) || [];
 
 
 // ==========================================
-// VARIABLES
+// STUDENT DETAILS
 // ==========================================
 
-let questions = [];
-let currentQuestion = 0;
-let selectedAnswers = [];
-let timer = null;
-let remainingTime = timeLimit;
+const studentName =
+localStorage.getItem("studentName") || "Student";
+
+const district =
+localStorage.getItem("district") || "-";
 
 
 // ==========================================
 // HTML ELEMENTS
 // ==========================================
 
-const loading = document.getElementById("loading");
-const timerBox = document.getElementById("timer");
+const marksBox =
+document.getElementById("marks");
 
-const questionNumber =
-document.getElementById("questionNumber");
+const correctBox =
+document.getElementById("correctAnswers");
 
-const questionText =
-document.getElementById("questionText");
+const wrongBox =
+document.getElementById("wrongAnswers");
 
-const optionsBox =
-document.getElementById("optionsBox");
+const totalBox =
+document.getElementById("totalQuestions");
 
-const nextBtn =
-document.getElementById("nextBtn");
+const rankBox =
+document.getElementById("rank");
 
-const prevBtn =
-document.getElementById("prevBtn");
+const resultMessage =
+document.getElementById("resultMessage");
 
-const submitBtn =
-document.getElementById("submitBtn");
+const reviewContainer =
+document.getElementById("reviewContainer");
 
-console.log("✅ MOCKTEST PART 1 LOADED");
+
+// ==========================================
+// DISPLAY RESULT
+// ==========================================
+
+if(marksBox){
+    marksBox.innerText = score;
+}
+
+if(correctBox){
+    correctBox.innerText = correct;
+}
+
+if(wrongBox){
+    wrongBox.innerText = wrong;
+}
+
+if(totalBox){
+    totalBox.innerText = total;
+}
+
+
+// ==========================================
+// PERFORMANCE MESSAGE
+// ==========================================
+
+if(resultMessage){
+
+    if(percentage >= 90){
+
+        resultMessage.innerText =
+        "🏆 Excellent Performance";
+
+    }
+
+    else if(percentage >= 75){
+
+        resultMessage.innerText =
+        "⭐ Very Good";
+
+    }
+
+    else if(percentage >= 50){
+
+        resultMessage.innerText =
+        "🔥 Good Effort";
+
+    }
+
+    else{
+
+        resultMessage.innerText =
+        "📚 Keep Practicing";
+
+    }
+
+}
+
+console.log("✅ RESULT PART 1 LOADED");
 
 // ==========================================
 // PART 2
-// LOAD QUESTIONS FROM FIRESTORE
+// FIRESTORE RANK CALCULATION
 // ==========================================
 
-async function loadQuestions(){
+async function calculateRank(){
 
     try{
 
-        let qRef = collection(db, "questions");
-        let snapshot;
+        const snapshot =
+        await getDocs(collection(db,"results"));
 
-        if(selectedTopic){
-
-            snapshot = await getDocs(
-                query(
-                    qRef,
-                    where("topic","==",selectedTopic)
-                )
-            );
-
-        }
-
-        else if(selectedSubject){
-
-            snapshot = await getDocs(
-                query(
-                    qRef,
-                    where("subject","==",selectedSubject)
-                )
-            );
-
-        }
-
-        else{
-
-            snapshot = await getDocs(qRef);
-
-        }
-
-        questions = [];
+        let students = [];
 
         snapshot.forEach(doc=>{
 
-            const data = doc.data();
-
-            if(
-                data.question &&
-                Array.isArray(data.options) &&
-                data.options.length >= 4
-            ){
-
-                questions.push({
-
-                    id:doc.id,
-
-                    question:data.question,
-
-                    options:data.options,
-
-                    answer:data.answer,
-
-                    explanation:data.explanation || "",
-
-                    subject:data.subject || "",
-
-                    topic:data.topic || ""
-
-                });
-
-            }
+            students.push(doc.data());
 
         });
 
-        console.log("Questions Loaded :",questions.length);
+        // Highest percentage first
+        students.sort((a,b)=>{
+
+            if(Number(b.percentage) === Number(a.percentage)){
+
+                return Number(b.score) - Number(a.score);
+
+            }
+
+            return Number(b.percentage) - Number(a.percentage);
+
+        });
+
+        let rank = "-";
+
+        for(let i=0;i<students.length;i++){
+
+            const s = students[i];
+
+            if(
+                s.studentName === studentName &&
+                Number(s.score) === score &&
+                Number(s.percentage) === percentage
+            ){
+
+                rank = i + 1;
+                break;
+
+            }
+
+        }
+
+        if(rankBox){
+
+            rankBox.innerText = rank;
+
+        }
+
+        console.log("Rank :", rank);
 
     }
 
     catch(error){
 
-        console.error("Question Load Error",error);
+        console.error("Rank Error :", error);
 
-        alert(error.message);
+        if(rankBox){
+
+            rankBox.innerText = "-";
+
+        }
 
     }
 
 }
 
+calculateRank();
 
 
 // ==========================================
-// SHUFFLE
+// RESULT SUMMARY
 // ==========================================
 
-function shuffle(array){
-
-    for(let i=array.length-1;i>0;i--){
-
-        let j=Math.floor(Math.random()*(i+1));
-
-        [array[i],array[j]]=[array[j],array[i]];
-
-    }
-
-    return array;
-
-}
-
-
-
-// ==========================================
-// PREPARE QUESTIONS
-// ==========================================
-
-function prepareQuestions(){
-
-    shuffle(questions);
-
-    questions = questions.slice(
-        0,
-        Math.min(totalQuestions,questions.length)
-    );
-
-    selectedAnswers = new Array(
-        questions.length
-    ).fill(null);
-
-    console.log(
-        "Prepared Questions:",
-        questions.length
-    );
-
-                    }
+console.log("================================");
+console.log("Student :", studentName);
+console.log("District :", district);
+console.log("Score :", score);
+console.log("Correct :", correct);
+console.log("Wrong :", wrong);
+console.log("Unanswered :", unanswered);
+console.log("Total :", total);
+console.log("Percentage :", percentage + "%");
+console.log("================================");
 
 // ==========================================
 // PART 3
-// QUESTION DISPLAY SYSTEM
+// QUESTION REVIEW
 // ==========================================
 
-function showQuestion(){
+if(reviewContainer){
 
-    if(questions.length===0) return;
+    reviewContainer.innerHTML = "";
 
-    const q = questions[currentQuestion];
+    if(review.length === 0){
 
-    if(questionNumber){
+        reviewContainer.innerHTML = `
+            <div class="review-card">
+                <h3>No Question Review Available</h3>
+            </div>
+        `;
 
-        questionNumber.innerText =
-        `Question ${currentQuestion+1} / ${questions.length}`;
+    }else{
+
+        review.forEach((item,index)=>{
+
+            let color = "#ffaa00";
+
+            if(item.status === "Correct"){
+                color = "#00c853";
+            }
+
+            else if(item.status === "Wrong"){
+                color = "#ff1744";
+            }
+
+            reviewContainer.innerHTML += `
+
+            <div class="review-card">
+
+                <h3>Question ${index+1}</h3>
+
+                <p>
+                    <b>Question</b><br>
+                    ${item.question}
+                </p>
+
+                <hr>
+
+                <p>
+                    <b>Your Answer</b><br>
+                    <span style="color:${color};font-weight:bold;">
+                        ${item.yourAnswer}
+                    </span>
+                </p>
+
+                <p>
+                    <b>Correct Answer</b><br>
+                    <span style="color:#00c853;font-weight:bold;">
+                        ${item.correctAnswer}
+                    </span>
+                </p>
+
+                <p>
+                    <b>Explanation</b><br>
+                    ${item.explanation}
+                </p>
+
+                <p style="color:${color};font-weight:bold;">
+                    ${item.status}
+                </p>
+
+            </div>
+
+            `;
+
+        });
 
     }
-
-    if(questionText){
-
-        questionText.innerText = q.question;
-
-    }
-
-    optionsBox.innerHTML = "";
-
-    q.options.forEach((option,index)=>{
-
-        const btn = document.createElement("button");
-
-        btn.className = "option-btn";
-
-        btn.innerText = option;
-
-        if(selectedAnswers[currentQuestion]===option){
-
-            btn.classList.add("selected");
-
-        }
-
-        btn.onclick = ()=>{
-
-            selectedAnswers[currentQuestion] = option;
-
-            document
-            .querySelectorAll(".option-btn")
-            .forEach(b=>b.classList.remove("selected"));
-
-            btn.classList.add("selected");
-
-        };
-
-        optionsBox.appendChild(btn);
-
-    });
 
 }
 
-
-
-// ==========================================
-// NEXT BUTTON
-// ==========================================
-
-nextBtn.onclick = ()=>{
-
-    if(currentQuestion < questions.length-1){
-
-        currentQuestion++;
-
-        showQuestion();
-
-    }
-
-};
-
-
-
-// ==========================================
-// PREVIOUS BUTTON
-// ==========================================
-
-prevBtn.onclick = ()=>{
-
-    if(currentQuestion>0){
-
-        currentQuestion--;
-
-        showQuestion();
-
-    }
-
-};
+console.log("✅ QUESTION REVIEW READY");
 
 // ==========================================
 // PART 4
-// RESULT CALCULATION
+// SHARE + HISTORY + RETRY + PRINT
 // ==========================================
 
-function normalizeAnswer(answer, options = []){
 
-    if(answer === null || answer === undefined) return "";
+// SAVE HISTORY
 
-    if(typeof answer === "number"){
-        return String(options[answer] || "")
-            .trim()
-            .toLowerCase();
-    }
+let history = JSON.parse(
+    localStorage.getItem("testHistory")
+) || [];
 
-    let value = String(answer).trim();
+history.push({
 
-    const map = {
-        "A":0,
-        "B":1,
-        "C":2,
-        "D":3
-    };
+    studentName: studentName,
+    district: district,
 
-    if(map[value.toUpperCase()] !== undefined){
+    score: score,
+    correct: correct,
+    wrong: wrong,
+    unanswered: unanswered,
 
-        return String(
-            options[map[value.toUpperCase()]] || ""
-        )
-        .trim()
-        .toLowerCase();
+    total: total,
+    percentage: percentage,
 
-    }
+    testType:
+    localStorage.getItem("lastTestType") || "Practice",
 
-    return value.toLowerCase();
+    date: new Date().toLocaleString()
 
-}
+});
 
+localStorage.setItem(
+    "testHistory",
+    JSON.stringify(history)
+);
 
 
-function calculateResult(){
+// ==========================================
+// SHARE RESULT
+// ==========================================
 
-    let correct = 0;
-    let wrong = 0;
-    let unanswered = 0;
+const shareBtn =
+document.getElementById("shareBtn");
 
-    let review = [];
+if(shareBtn){
 
-    questions.forEach((q,index)=>{
+    shareBtn.onclick = async()=>{
 
-        const userAnswer = selectedAnswers[index];
+        const text =
 
-        const selected =
-        normalizeAnswer(userAnswer,q.options);
+`🏆 G THE GENIUS MOCK TEST RESULT
 
-        const answer =
-        normalizeAnswer(q.answer,q.options);
+👤 ${studentName}
 
-        let status = "Wrong";
+✅ Correct : ${correct}
+❌ Wrong : ${wrong}
+📄 Total : ${total}
 
-        if(!userAnswer){
+⭐ Score : ${score}
+📊 Percentage : ${percentage}%
 
-            unanswered++;
-            status = "Unanswered";
+`;
 
-        }
+        if(navigator.share){
 
-        else if(selected === answer){
+            await navigator.share({
 
-            correct++;
-            status = "Correct";
+                title:"G THE GENIUS",
+
+                text:text
+
+            });
 
         }
 
         else{
 
-            wrong++;
-
-        }
-
-        review.push({
-
-            question:q.question,
-
-            yourAnswer:userAnswer || "Not Answered",
-
-            correctAnswer:answer,
-
-            explanation:
-            q.explanation ||
-            "No Explanation",
-
-            status:status
-
-        });
-
-    });
-
-    return{
-
-        correct,
-        wrong,
-        unanswered,
-        review
-
-    };
-
-}
-
-// ==========================================
-// SAVE RESULT TO FIRESTORE
-// ==========================================
-async function saveResult(resultData){
-
-    try{
-
-        await addDoc(
-            collection(db,"results"),
-            {
-                studentName: localStorage.getItem("studentName") || "Student",
-                district: localStorage.getItem("district") || "-",
-                testType: testType,
-
-                score: resultData.correct,
-                correct: resultData.correct,
-                wrong: resultData.wrong,
-                unanswered: resultData.unanswered,
-                totalQuestions: questions.length,
-
-                percentage: Number(
-                    ((resultData.correct / questions.length) * 100).toFixed(2)
-                ),
-
-                createdAt: serverTimestamp()
-            }
-        );
-
-        console.log("✅ Result Saved");
-
-    }catch(error){
-
-        console.error("Save Result Error:", error);
-        throw error;
-
-    }
-
-}
-
-// ==========================================
-// SUBMIT TEST
-// ==========================================
-console.log(typeof saveResult);
-async function submitTest(){
-
-    clearInterval(timer);
-
-    try{
-
-        const resultData =
-        calculateResult();
-
-        localStorage.setItem(
-            "lastScore",
-            resultData.correct
-        );
-
-        localStorage.setItem(
-            "lastCorrect",
-            resultData.correct
-        );
-
-        localStorage.setItem(
-            "lastWrong",
-            resultData.wrong
-        );
-
-        localStorage.setItem(
-            "lastUnanswered",
-            resultData.unanswered
-        );
-
-        localStorage.setItem(
-            "lastTotal",
-            questions.length
-        );
-
-        localStorage.setItem(
-            "lastPercentage",
-            (
-                resultData.correct /
-                questions.length *
-                100
-            ).toFixed(2)
-        );
-
-        localStorage.setItem(
-            "lastReview",
-            JSON.stringify(resultData.review)
-        );
-
-        await saveResult(resultData);
-
-        window.location.href =
-        "result.html";
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        alert(
-            "Submit Error : " +
-            error.message
-        );
-
-    }
-
-}
-
-// ==========================================
-// PART 5
-// TIMER + START TEST + FINAL
-// ==========================================
-
-// TIMER
-
-function startTimer(){
-
-    timer = setInterval(()=>{
-
-        const min =
-        Math.floor(remainingTime/60);
-
-        const sec =
-        remainingTime%60;
-
-        if(timerBox){
-
-            timerBox.innerText =
-            `⏰ ${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
-
-        }
-
-        if(remainingTime<=0){
-
-            clearInterval(timer);
-
-            submitTest();
-
-            return;
-
-        }
-
-        remainingTime--;
-
-    },1000);
-
-}
-
-
-
-// LOADING
-
-function hideLoading(){
-
-    if(loading){
-
-        loading.style.display="none";
-
-    }
-
-}
-
-
-
-// START TEST
-
-async function startTest(){
-
-    await loadQuestions();
-
-    if(questions.length===0){
-
-        if(loading){
-
-            loading.innerHTML =
-            "❌ No Questions Found";
-
-        }
-
-        return;
-
-    }
-
-    prepareQuestions();
-
-    hideLoading();
-
-    showQuestion();
-
-    startTimer();
-
-}
-
-
-
-// SUBMIT BUTTON
-
-if(submitBtn){
-
-    submitBtn.onclick=()=>{
-
-        if(confirm("Submit Test?")){
-
-            submitTest();
+            alert(text);
 
         }
 
@@ -643,15 +396,40 @@ if(submitBtn){
 }
 
 
+// ==========================================
+// RETRY TEST
+// ==========================================
 
-// PAGE LOAD
+const retryBtn =
+document.getElementById("retryBtn");
 
-window.addEventListener("load",startTest);
+if(retryBtn){
+
+    retryBtn.onclick = ()=>{
+
+        history.back();
+
+    };
+
+}
 
 
+// ==========================================
+// PRINT RESULT
+// ==========================================
 
-// EXPORT
+const printBtn =
+document.getElementById("printBtn");
 
-window.submitTest=submitTest;
+if(printBtn){
 
-console.log("✅ MOCKTEST JS v6 READY");
+    printBtn.onclick = ()=>{
+
+        window.print();
+
+    };
+
+}
+
+
+console.log("✅ PART 4 READY");
