@@ -1118,11 +1118,16 @@ localStorage.setItem(
 );
         
 
-    }catch(error){
+}catch(error){
 
-        console.error("Submit Error:", error);
+    console.error("Submit Error:", error);
 
-        alert(error.message);
+    alert(
+        "Submit Error:\n\n" +
+        error.message +
+        "\n\n" +
+        error.stack
+    );
 
     }
 
