@@ -357,7 +357,28 @@ leaderboardBody.appendChild(row);
 
 
 
-});
+});const top3 = data.slice(0,3);
+
+if(top3[0]){
+    document.getElementById("rank1Card").innerHTML =
+    `<b>${top3[0].studentName}</b><br>
+    📍 ${top3[0].district}<br>
+    ⭐ ${top3[0].percentage}%`;
+}
+
+if(top3[1]){
+    document.getElementById("rank2Card").innerHTML =
+    `<b>${top3[1].studentName}</b><br>
+    📍 ${top3[1].district}<br>
+    ⭐ ${top3[1].percentage}%`;
+}
+
+if(top3[2]){
+    document.getElementById("rank3Card").innerHTML =
+    `<b>${top3[2].studentName}</b><br>
+    📍 ${top3[2].district}<br>
+    ⭐ ${top3[2].percentage}%`;
+}
 
 
 
