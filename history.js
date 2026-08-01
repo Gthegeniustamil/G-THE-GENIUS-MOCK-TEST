@@ -202,10 +202,10 @@ function renderHistory(data){
 
     data.forEach(item=>{
 
-        const date = item.timestamp
-        ? item.timestamp.toDate().toLocaleString("en-IN")
-        : "-";
-
+        const date = item.createdAt
+    ? item.createdAt.toDate().toLocaleString("en-IN")
+    : "-";
+        
         historyList.innerHTML += `
 
         <div class="history-card">
