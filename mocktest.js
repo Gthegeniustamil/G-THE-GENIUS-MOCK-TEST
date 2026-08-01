@@ -1070,27 +1070,34 @@ async function submitTest(){
 
     try{
 
-        let resultData = calculateResult();
-await saveResult(resultData);
-alert("saveResult completed");
+        const resultData = calculateResult();
 
-alert("Before Redirect");
+        await saveResult(resultData);
 
-window.location.href = "result.html";
+        localStorage.setItem("lastScore", resultData.correct);
+        localStorage.setItem("lastCorrect", resultData.correct);
+        localStorage.setItem("lastWrong", resultData.wrong);
+        localStorage.setItem("lastUnanswered", resultData.unanswered);
+        localStorage.setItem("lastTotal", questions.length);
+        localStorage.setItem(
+            "lastPercentage",
+            ((resultData.correct / questions.length) * 100).toFixed(2)
+        );
+        localStorage.setItem(
+            "lastReview",
+            JSON.stringify(resultData.review)
+        );
 
-alert("After Redirect");
+        window.location.href = "result.html";
 
-    alert(
-        "Submit Error:\n\n" +
-        error.message +
-        "\n\n" +
-        error.stack
-    );
+    }catch(error){
+
+        console.error("Submit Error:", error);
+        alert("Submit Error: " + error.message);
 
     }
 
 }
-
 
 
 
