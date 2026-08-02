@@ -681,3 +681,102 @@ console.log(
 
 console.log(
 "================================");
+// ==========================================
+// BULK CSV UPLOAD
+// PART 1
+// ==========================================
+
+uploadBulkBtn.addEventListener("click", () => {
+
+    if (!bulkFile.files.length) {
+
+        alert("Please Select CSV File");
+
+        return;
+
+    }
+
+    const file = bulkFile.files[0];
+
+    Papa.parse(file, {
+
+        header: true,
+
+        skipEmptyLines: true,
+
+        complete: async function(results) {
+
+            const lessons = results.data;
+
+            let success = 0;
+
+            let failed = 0;
+
+            uploadStatus.innerHTML =
+            "Uploading...";
+
+            for (const lesson of lessons) {
+
+                try {
+
+                    await addDoc(
+
+                        collection(db, "learning"),
+
+                        {
+
+                            subject:
+                            lesson.Subject || "",
+
+                            topic:
+                            lesson.Topic || "",
+
+                            title:
+                            lesson.Title || "",
+
+                            content:
+                            lesson.Content || "",
+
+                            image:
+                            lesson.Image || "",
+
+                            pdf:
+                            lesson.PDF || "",
+
+                            youtube:
+                            lesson.YouTube || "",
+
+                            createdAt:
+                            serverTimestamp()
+
+                        }
+
+                    );
+
+                    success++;
+
+                }
+
+                catch (e) {
+
+                    console.log(e);
+
+                    failed++;
+
+                }
+
+            }
+
+            uploadStatus.innerHTML =
+
+            `✅ Success : ${success}
+            ❌ Failed : ${failed}`;
+
+            loadLessons();
+
+        }
+
+    });
+
+});
+
