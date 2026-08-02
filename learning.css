@@ -1,443 +1,88 @@
 /* ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-LEARNING CSS
-PART 1 / 5
+G THE GENIUS LEARNING ZONE CSS
+PART 1 / CSS
 ========================================== */
 
 
+/* =========================
+GLOBAL
+========================= */
 
-/* PAGE BACKGROUND */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:
+    "Poppins",
+    "Noto Sans Tamil",
+    sans-serif;
+}
 
 
 body{
 
     background:#081229;
+    color:white;
+    min-height:100vh;
 
-    color:#ffffff;
+}
 
-    font-family:Arial, sans-serif;
+
+a{
+
+    text-decoration:none;
+    color:white;
+
+}
+
+
+button{
+
+    cursor:pointer;
+    border:none;
 
 }
 
 
 
-
-
-/* MAIN CONTAINER */
+/* =========================
+CONTAINER
+========================= */
 
 
 .learning-container{
 
     width:100%;
-
-    min-height:100vh;
-
-    padding-bottom:90px;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
 
 }
 
 
 
-
-
-
-/* HEADER */
+/* =========================
+HEADER
+========================= */
 
 
 .learning-header{
 
-    text-align:center;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    padding:25px 15px;
+    padding:15px 20px;
 
-}
+    background:
+    rgba(255,255,255,0.08);
 
-
-
-.logo-img{
-
-    width:90px;
-
-    height:90px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    border:3px solid #f5c542;
-
-}
-
-
-
-
-.learning-header h1{
-
-    color:#ffd86b;
-
-    font-size:28px;
-
-    margin:15px 0 5px;
-
-}
-
-
-
-.learning-header p{
-
-    color:#e8ecff;
-
-    font-size:15px;
-
-}
-
-
-
-
-
-
-/* BACK BUTTON */
-
-
-.back-area{
-
-    padding:10px 20px;
-
-}
-
-
-
-.back-area a{
-
-    display:inline-block;
-
-    padding:10px 18px;
+    backdrop-filter:blur(15px);
 
     border-radius:20px;
 
-    background:#f5c542;
-
-    color:#081229;
-
-    font-weight:700;
-
-    text-decoration:none;
-
-}
-
-
-
-
-
-
-/* PAGE TITLE */
-
-
-.learning-title{
-
-    text-align:center;
-
-    padding:10px 20px;
-
-}
-
-
-
-.learning-title h2{
-
-    color:#ffd86b;
-
-    font-size:25px;
-
-}
-
-
-
-.learning-title p{
-
-    color:#e8ecff;
-
-}
-/* ==========================================
-LEARNING CATEGORY CARDS
-PART 2 / 5
-========================================== */
-
-
-
-
-
-.category-section{
-
-    padding:20px;
-
-}
-
-
-
-
-
-.category-grid{
-
-    display:grid;
-
-    grid-template-columns:1fr;
-
-    gap:20px;
-
-}
-
-
-
-
-
-
-
-.category-card{
-
-    background:
-
-    linear-gradient(
-
-    145deg,
-
-    rgba(255,255,255,0.12),
-
-    rgba(255,255,255,0.04)
-
-    );
-
-
-    border:1px solid rgba(245,197,66,0.5);
-
-
-    border-radius:30px;
-
-
-    padding:25px 20px;
-
-
-    text-align:center;
-
-
-    box-shadow:
-
-    0 10px 30px rgba(0,0,0,0.35);
-
-
-    transition:.4s;
-
-
-    cursor:pointer;
-
-}
-
-
-
-
-
-.category-card:hover{
-
-
-    transform:translateY(-8px);
-
-
-    border-color:#ffd86b;
-
-
-}
-
-
-
-
-
-
-
-.category-icon{
-
-
-    width:90px;
-
-
-    height:90px;
-
-
-    margin:auto;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    align-items:center;
-
-
-    font-size:50px;
-
-
-    border-radius:50%;
-
-
-    background:
-
-    rgba(245,197,66,0.15);
-
-
-    border:3px solid #f5c542;
-
-
-    margin-bottom:18px;
-
-
-}
-
-
-
-
-
-
-
-
-.category-card h3{
-
-
-    color:#ffd86b;
-
-
-    font-size:24px;
-
-
-    margin:10px 0;
-
-
-}
-
-
-
-
-
-
-
-.category-card p{
-
-
-    color:#e8ecff;
-
-
-    font-size:14px;
-
-
-    line-height:1.6;
-
-
-}
-
-
-
-
-
-
-
-.category-card button{
-
-
-    margin-top:18px;
-
-
-    padding:12px 28px;
-
-
-    border:none;
-
-
-    border-radius:30px;
-
-
-    background:#f5c542;
-
-
-    color:#081229;
-
-
-    font-weight:800;
-
-
-    cursor:pointer;
-
-
-}
-
-
-
-
-
-
-.category-card button:hover{
-
-
-    background:#ffd86b;
-
-
-}
-
-
-
-
-
-@media(min-width:600px){
-
-
-.category-grid{
-
-
-    grid-template-columns:repeat(2,1fr);
-
-
-}
-
-
-}
-/* ==========================================
-SUBJECT + TOPIC + STUDY AREA DESIGN
-PART 3 / 5
-========================================== */
-
-
-
-
-
-.content-area{
-
-    padding:20px;
-
-}
-
-
-
-
-
-
-.hidden{
-
-    display:none;
-
-}
-
-
-
-
-
-
-
-.content-area h2{
-
-    text-align:center;
-
-    color:#ffd86b;
-
-    font-size:24px;
+    border:
+    1px solid rgba(255,215,0,0.25);
 
     margin-bottom:20px;
 
@@ -445,27 +90,381 @@ PART 3 / 5
 
 
 
+.header-left{
 
-
-
-
-/* SUBJECT LIST */
-
-
-.subject-list{
-
-    display:grid;
-
-    grid-template-columns:1fr;
-
+    display:flex;
+    align-items:center;
     gap:15px;
 
 }
 
 
 
+.logo-img{
+
+    width:65px;
+    height:65px;
+
+    object-fit:contain;
+
+}
 
 
+
+.header-left h1{
+
+    color:#FFD700;
+    font-size:26px;
+
+}
+
+
+.header-left p{
+
+    color:#ddd;
+    font-size:14px;
+
+}
+
+
+
+.dashboard-btn{
+
+    background:#FFD700;
+
+    color:#081229;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* =========================
+WELCOME CARD
+========================= */
+
+
+.welcome-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+    135deg,
+    #101f45,
+    #081229
+    );
+
+
+    padding:25px;
+
+    border-radius:25px;
+
+    border:
+    1px solid rgba(255,215,0,.3);
+
+    margin-bottom:20px;
+
+}
+
+
+
+.welcome-left h2{
+
+    font-size:22px;
+
+}
+
+
+
+.welcome-left h3{
+
+    color:#FFD700;
+
+    font-size:28px;
+
+    margin-top:8px;
+
+}
+
+
+
+.welcome-left p{
+
+    color:#ccc;
+
+    margin-top:5px;
+
+}
+
+
+
+.avatar{
+
+    width:90px;
+
+    height:90px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:45px;
+
+
+    background:
+    rgba(255,255,255,.1);
+
+    border-radius:50%;
+
+}
+
+
+
+/* =========================
+PROGRESS CARD
+========================= */
+
+
+.progress-card{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.progress-item{
+
+
+    text-align:center;
+
+    padding:20px;
+
+    border-radius:20px;
+
+
+    background:
+    rgba(255,255,255,.08);
+
+
+    border:
+    1px solid rgba(255,215,0,.2);
+
+
+}
+
+
+
+.progress-item h3{
+
+    color:#FFD700;
+
+    margin:10px 0;
+
+    font-size:24px;
+
+}
+
+
+
+.progress-item p{
+
+    color:#ddd;
+
+}
+
+
+
+/* =========================
+SEARCH
+========================= */
+
+
+.search-section{
+
+    margin:25px 0;
+
+}
+
+
+#searchBox{
+
+
+    width:100%;
+
+    padding:15px 20px;
+
+    border-radius:15px;
+
+    outline:none;
+
+    border:none;
+
+    background:
+    rgba(255,255,255,.1);
+
+    color:white;
+
+    font-size:16px;
+
+
+}
+
+
+#searchBox::placeholder{
+
+    color:#ccc;
+
+}
+
+ /* ==========================================
+ G THE GENIUS LEARNING ZONE CSS
+ PART 2 / CSS
+ ========================================== */
+
+
+/* =========================
+CONTINUE LEARNING
+========================= */
+
+
+.continue-learning{
+
+    margin-bottom:25px;
+
+}
+
+
+.continue-learning h2,
+.subject-section h2,
+.topic-section h2,
+.lesson-section h2,
+.practice-section h2,
+.recent-section h2,
+.achievement-section h2{
+
+    color:#FFD700;
+
+    margin-bottom:15px;
+
+    font-size:24px;
+
+}
+
+
+
+.continue-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    border:
+    1px solid rgba(255,215,0,.25);
+
+}
+
+
+
+.continue-card h3{
+
+    color:white;
+
+    font-size:20px;
+
+}
+
+
+
+.continue-card p{
+
+    color:#ccc;
+
+    margin-top:5px;
+
+}
+
+
+
+#continueBtn{
+
+
+    background:#FFD700;
+
+    color:#081229;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+/* =========================
+SUBJECT GRID
+========================= */
+
+
+.subject-section{
+
+    margin-top:25px;
+
+}
+
+
+
+.subject-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(230px,1fr));
+
+
+    gap:20px;
+
+
+}
+
+
+
+/* =========================
+SUBJECT CARD
+========================= */
 
 
 .subject-card{
@@ -473,214 +472,56 @@ PART 3 / 5
 
     background:
 
-    rgba(255,255,255,0.08);
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,.12),
+    rgba(255,255,255,.04)
+    );
 
 
-    border:1px solid rgba(245,197,66,0.5);
+    padding:25px 20px;
 
 
-    border-radius:22px;
+    border-radius:25px;
 
 
-    padding:18px;
+    text-align:center;
 
 
-    color:#ffffff;
+    border:
 
-
-    cursor:pointer;
+    1px solid rgba(255,215,0,.25);
 
 
     transition:.3s;
 
 
+    cursor:pointer;
+
+
 }
-
-
 
 
 
 .subject-card:hover{
 
 
-    transform:translateX(8px);
+    transform:translateY(-8px);
 
 
-    border-color:#ffd86b;
+    box-shadow:
 
-
-}
-
-
-
-
-
-
-
-.subject-card h3{
-
-
-    color:#ffd86b;
-
-
-    margin:0;
+    0 10px 30px rgba(255,215,0,.25);
 
 
 }
 
 
 
+.subject-icon{
 
 
-.subject-card p{
-
-
-    color:#e8ecff;
-
-
-    margin-top:8px;
-
-
-}
-
-
-
-
-
-
-
-
-/* TOPIC LIST */
-
-
-.topic-list{
-
-
-    display:grid;
-
-
-    grid-template-columns:1fr;
-
-
-    gap:12px;
-
-
-}
-
-
-
-
-
-
-
-.topic-card{
-
-
-    background:
-
-    rgba(255,255,255,0.08);
-
-
-    border-left:4px solid #f5c542;
-
-
-    border-radius:18px;
-
-
-    padding:16px;
-
-
-    color:#ffffff;
-
-
-    cursor:pointer;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-
-
-.topic-card:hover{
-
-
-    background:
-
-    rgba(245,197,66,0.15);
-
-
-}
-
-
-
-
-
-
-
-.topic-card h3{
-
-
-    color:#ffffff;
-
-
-    font-size:17px;
-
-
-}
-
-
-
-
-
-
-
-/* STUDY CARD */
-
-
-.study-card{
-
-
-    background:
-
-    linear-gradient(
-
-    145deg,
-
-    rgba(255,255,255,0.12),
-
-    rgba(255,255,255,0.05)
-
-    );
-
-
-    border:1px solid #f5c542;
-
-
-    border-radius:28px;
-
-
-    padding:25px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-
-
-
-
-.study-icon{
-
-
-    font-size:55px;
+    font-size:45px;
 
 
     margin-bottom:15px;
@@ -690,339 +531,657 @@ PART 3 / 5
 
 
 
+.subject-card h3{
 
 
+    color:#FFD700;
 
 
-.study-card h3{
+    font-size:21px;
 
 
-    color:#ffd86b;
-
-
-}
-
-
-
-
-
-
-
-.study-card p{
-
-
-    color:#e8ecff;
-
-
-    line-height:1.6;
+    margin-bottom:10px;
 
 
 }
 
 
 
+.subject-card p{
 
 
-.study-buttons{
+    color:#ddd;
 
 
-    display:flex;
+    font-size:14px;
 
 
-    gap:15px;
-
-
-    justify-content:center;
-
-
-    margin-top:20px;
+    min-height:45px;
 
 
 }
 
 
 
+.subject-card button{
 
 
-.study-buttons button{
+    margin-top:15px;
 
 
     padding:12px 20px;
 
 
-    border-radius:25px;
+    border-radius:15px;
 
 
-    border:none;
-
-
-    background:#f5c542;
+    background:#FFD700;
 
 
     color:#081229;
 
 
-    font-weight:800;
+    font-weight:bold;
 
 
 }
 
-/* ==========================================
-FOOTER + BOTTOM NAV DESIGN
-PART 4 / 5
-========================================== */
 
 
+/* =========================
+TOPIC SECTION
+========================= */
 
 
+.topic-section{
 
-.learning-footer{
 
     margin-top:30px;
 
-    padding:25px 20px;
 
-    text-align:center;
+}
+
+
+
+.hidden{
+
+
+    display:none;
+
+
+}
+
+
+
+.topic-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(220px,1fr));
+
+
+    gap:15px;
+
+
+}
+
+
+
+.topic-card{
+
 
     background:
 
-    rgba(255,255,255,0.06);
+    rgba(255,255,255,.08);
 
 
-    border-top:1px solid rgba(245,197,66,0.4);
+    padding:18px;
+
+
+    border-radius:18px;
+
+
+    border:
+
+    1px solid rgba(255,215,0,.2);
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
 
 }
 
 
 
+.topic-card:hover{
 
 
-.learning-footer h3{
+    background:
 
-    color:#ffd86b;
+    rgba(255,215,0,.15);
 
-    font-size:22px;
 
 }
 
 
 
+.topic-card h3{
 
 
-.learning-footer p{
+    color:#FFD700;
 
-    color:#e8ecff;
+
+    margin-bottom:8px;
+
 
 }
 
 
 
+.topic-card p{
 
 
-.footer-links{
+    color:#ddd;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+/* =========================
+LESSON SECTION START
+========================= */
+
+
+.lesson-section{
+
+
+    margin-top:30px;
+
+
+}
+
+
+
+.lesson-header{
+
 
     display:flex;
 
-    justify-content:center;
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+}
+
+
+
+.lesson-progress{
+
+
+    background:
+
+    rgba(255,215,0,.15);
+
+
+    padding:10px 15px;
+
+
+    border-radius:15px;
+
+
+    color:#FFD700;
+
+
+}
+
+ /* ==========================================
+ G THE GENIUS LEARNING ZONE CSS
+ PART 3 / CSS
+ ========================================== */
+
+
+/* =========================
+LESSON CARD
+========================= */
+
+
+.lesson-card{
+
+    margin-top:20px;
+
+    padding:25px;
+
+    background:
+
+    linear-gradient(
+    145deg,
+    #101f45,
+    #081229
+    );
+
+    border-radius:25px;
+
+    border:
+
+    1px solid rgba(255,215,0,.25);
+
+}
+
+
+
+.lesson-card h2{
+
+    color:#FFD700;
+
+    margin-bottom:15px;
+
+}
+
+
+
+#lessonContent{
+
+    color:#ddd;
+
+    line-height:1.8;
+
+    font-size:16px;
+
+}
+
+
+
+.lesson-image{
+
+    width:100%;
+
+    max-height:350px;
+
+    object-fit:cover;
+
+    margin-top:20px;
+
+    border-radius:20px;
+
+}
+
+
+
+/* =========================
+LESSON BUTTONS
+========================= */
+
+
+.lesson-buttons{
+
+    display:flex;
 
     flex-wrap:wrap;
 
     gap:15px;
 
-    margin:20px 0;
+    margin-top:25px;
 
 }
 
 
 
+.lesson-btn{
 
+    padding:12px 20px;
 
-.footer-links a{
+    border-radius:15px;
 
-    color:#ffffff;
+    font-weight:bold;
 
-    text-decoration:none;
-
-    padding:10px 16px;
-
-    border-radius:20px;
-
-    background:rgba(245,197,66,0.15);
-
-    border:1px solid rgba(245,197,66,0.5);
-
-}
-
-
-
-
-
-.copyright{
-
-    font-size:13px;
-
-    color:#bfc7e8 !important;
-
-}
-
-
-
-
-
-
-
-/* BOTTOM NAVIGATION */
-
-
-.bottom-nav{
-
-    position:fixed;
-
-    bottom:0;
-
-    left:0;
-
-    width:100%;
-
-
-    display:flex;
-
-    justify-content:space-around;
-
-
-    padding:12px 5px;
-
-
-    background:#081229;
-
-
-    border-top:1px solid #f5c542;
-
-
-    z-index:1000;
-
-}
-
-
-
-
-
-.bottom-nav a{
-
-    display:flex;
-
-    flex-direction:column;
+    display:inline-flex;
 
     align-items:center;
 
-
-    gap:4px;
-
-
-    color:#ffffff;
-
-
-    text-decoration:none;
-
-
-    font-size:13px;
+    justify-content:center;
 
 }
 
 
 
+.pdf-btn{
 
+    background:#e53935;
 
-.bottom-nav a:hover{
-
-    color:#ffd86b;
-
-}
-
-
-
-
-
-.bottom-nav span{
-
-    color:#ffffff;
-
-}
-/* ==========================================
-RESPONSIVE + FINAL POLISH
-PART 5 / 5 FINAL
-========================================== */
-
-
-
-
-
-@media(max-width:420px){
-
-
-.learning-header h1{
-
-    font-size:24px;
+    color:white;
 
 }
 
 
 
-.learning-title h2{
+.video-btn{
 
-    font-size:22px;
+    background:#ff0000;
 
-}
-
-
-
-.category-card{
-
-    padding:20px 15px;
+    color:white;
 
 }
 
 
 
-.category-icon{
+.complete-btn{
 
-    width:75px;
+    background:#FFD700;
 
-    height:75px;
-
-    font-size:40px;
+    color:#081229;
 
 }
 
 
 
-.category-card h3{
-
-    font-size:21px;
-
-}
+/* =========================
+PRACTICE TEST
+========================= */
 
 
+.practice-section{
 
-.category-card p{
-
-    font-size:13px;
+    margin-top:30px;
 
 }
 
 
 
-.study-buttons{
+.practice-card{
 
-    flex-direction:column;
+
+    padding:25px;
+
+
+    text-align:center;
+
+
+    background:
+
+    rgba(255,255,255,.08);
+
+
+    border-radius:25px;
+
+
+    border:
+
+    1px solid rgba(255,215,0,.25);
+
 
 }
 
 
 
-.study-buttons button{
+.practice-card p{
 
-    width:100%;
+
+    color:#ddd;
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+#practiceBtn{
+
+
+    padding:15px 30px;
+
+
+    background:#FFD700;
+
+
+    color:#081229;
+
+
+    border-radius:15px;
+
+
+    font-weight:bold;
+
+
+    font-size:16px;
+
+
+}
+
+
+
+/* =========================
+RECENT LESSONS
+========================= */
+
+
+.recent-section{
+
+    margin-top:35px;
+
+}
+
+
+
+.recent-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(250px,1fr));
+
+
+    gap:20px;
+
+
+}
+
+
+
+.recent-card{
+
+
+    padding:20px;
+
+
+    background:
+
+    rgba(255,255,255,.08);
+
+
+    border-radius:20px;
+
+
+    border:
+
+    1px solid rgba(255,215,0,.2);
+
+
+}
+
+
+
+.recent-card h3{
+
+
+    color:#FFD700;
+
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+.recent-card p{
+
+
+    color:#ccc;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+/* =========================
+ACHIEVEMENTS
+========================= */
+
+
+.achievement-section{
+
+
+    margin-top:35px;
+
+
+}
+
+
+
+.achievement-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+
+    gap:15px;
+
+
+}
+
+
+
+.achievement-card{
+
+
+    text-align:center;
+
+
+    padding:25px;
+
+
+    background:
+
+    rgba(255,255,255,.08);
+
+
+    border-radius:20px;
+
+
+    border:
+
+    1px solid rgba(255,215,0,.25);
+
+
+}
+
+
+
+.achievement-card h3{
+
+
+    color:#FFD700;
+
+
+    margin:10px 0;
+
+
+}
+
+
+
+.achievement-card p{
+
+
+    color:#ddd;
+
+
+}
+
+
+
+/* =========================
+FOOTER
+========================= */
+
+
+.learning-footer{
+
+
+    margin-top:50px;
+
+
+    padding:30px 20px;
+
+
+    background:
+
+    rgba(255,255,255,.06);
+
+
+    border-radius:25px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+.footer-logo-img{
+
+
+    width:80px;
+
+}
+
+
+
+.learning-footer h2{
+
+
+    color:#FFD700;
+
+
+    margin:10px 0;
+
+
+}
+
+
+
+.learning-footer p{
+
+
+    color:#ccc;
+
 
 }
 
@@ -1030,7 +1189,21 @@ PART 5 / 5 FINAL
 
 .footer-links{
 
-    flex-direction:column;
+
+    display:flex;
+
+
+    flex-wrap:wrap;
+
+
+    justify-content:center;
+
+
+    gap:20px;
+
+
+    margin:25px 0;
+
 
 }
 
@@ -1038,124 +1211,567 @@ PART 5 / 5 FINAL
 
 .footer-links a{
 
-    width:80%;
 
-    margin:auto;
-
-}
-
+    color:white;
 
 
 }
 
 
 
+.footer-social{
 
 
-/* CARD ANIMATION */
+    display:flex;
 
 
-@keyframes fadeIn{
+    justify-content:center;
 
 
-from{
-
-    opacity:0;
-
-    transform:translateY(20px);
-
-}
-
-
-to{
-
-    opacity:1;
-
-    transform:translateY(0);
-
-}
+    gap:20px;
 
 
 }
 
 
+.copyright{
 
-.category-card,
+
+    margin-top:20px;
+
+
+    font-size:14px;
+
+
+}
+
+ /* ==========================================
+ G THE GENIUS LEARNING ZONE CSS
+ PART 4 / FINAL CSS
+ ========================================== */
+
+
+/* =========================
+BOTTOM NAVIGATION
+========================= */
+
+
+.bottom-nav{
+
+
+    position:fixed;
+
+
+    bottom:15px;
+
+
+    left:50%;
+
+
+    transform:translateX(-50%);
+
+
+
+    width:90%;
+
+
+    max-width:600px;
+
+
+
+    display:flex;
+
+
+    justify-content:space-around;
+
+
+    align-items:center;
+
+
+
+    padding:12px;
+
+
+
+    background:
+
+    rgba(8,18,41,.95);
+
+
+
+    backdrop-filter:blur(15px);
+
+
+
+    border-radius:25px;
+
+
+
+    border:
+
+    1px solid rgba(255,215,0,.3);
+
+
+
+    z-index:999;
+
+
+
+}
+
+
+
+.bottom-nav a{
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    align-items:center;
+
+
+
+    gap:5px;
+
+
+
+    color:#ccc;
+
+
+
+    font-size:13px;
+
+
+
+    transition:.3s;
+
+
+
+}
+
+
+
+.bottom-nav a span{
+
+
+    font-size:12px;
+
+
+}
+
+
+
+.bottom-nav a:hover,
+
+
+.bottom-nav .active{
+
+
+    color:#FFD700;
+
+
+    transform:translateY(-5px);
+
+
+}
+
+
+
+/* =========================
+SCROLL BAR
+========================= */
+
+
+::-webkit-scrollbar{
+
+
+    width:8px;
+
+
+}
+
+
+
+::-webkit-scrollbar-track{
+
+
+    background:#081229;
+
+
+}
+
+
+
+::-webkit-scrollbar-thumb{
+
+
+    background:#FFD700;
+
+
+    border-radius:10px;
+
+
+}
+
+
+
+/* =========================
+CARD ANIMATION
+========================= */
+
+
 .subject-card,
 .topic-card,
-.study-card{
+.recent-card,
+.achievement-card{
 
 
-    animation:fadeIn .5s ease;
+    animation:
 
-
-}
-
-
-
-
-
-
-/* LINK RESET */
-
-
-a{
-
-    -webkit-tap-highlight-color:transparent;
-
-}
-
-
-
-
-
-
-/* SMOOTH SCROLL */
-
-
-html{
-
-    scroll-behavior:smooth;
-
-}
-
-
-
-
-
-
-/* FINAL TEXT FIX */
-
-
-.learning-container *{
-
-
-    opacity:1 !important;
-
-
-}
-
-
-.learning-container h1,
-.learning-container h2,
-.learning-container h3{
-
-
-    color:#ffd86b !important;
+    fadeUp .5s ease;
 
 
 }
 
 
 
-.learning-container p,
-.learning-container span{
+@keyframes fadeUp{
 
 
-    color:#e8ecff !important;
+    from{
+
+
+        opacity:0;
+
+
+        transform:translateY(20px);
+
+
+    }
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:translateY(0);
+
+
+    }
 
 
 }
 
 
 
+/* =========================
+TABLET RESPONSIVE
+========================= */
+
+
+@media(max-width:900px){
+
+
+.learning-container{
+
+
+    padding:15px;
+
+
+}
+
+
+
+.progress-card{
+
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+
+}
+
+
+
+.subject-grid{
+
+
+    grid-template-columns:
+
+    repeat(2,1fr);
+
+
+}
+
+
+}
+
+
+
+/* =========================
+MOBILE RESPONSIVE
+========================= */
+
+
+@media(max-width:600px){
+
+
+
+.learning-header{
+
+
+    flex-direction:column;
+
+
+    gap:15px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+.header-left{
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+.logo-img{
+
+
+    width:75px;
+
+
+    height:75px;
+
+
+}
+
+
+
+.header-left h1{
+
+
+    font-size:22px;
+
+
+}
+
+
+
+.welcome-card{
+
+
+    padding:20px;
+
+
+}
+
+
+
+.welcome-left h3{
+
+
+    font-size:22px;
+
+
+}
+
+
+
+.avatar{
+
+
+    width:70px;
+
+
+    height:70px;
+
+
+    font-size:35px;
+
+
+}
+
+
+
+.progress-card{
+
+
+    grid-template-columns:
+
+    1fr;
+
+
+}
+
+
+
+.progress-item{
+
+
+    padding:15px;
+
+
+}
+
+
+
+.continue-card{
+
+
+    flex-direction:column;
+
+
+    gap:15px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+.subject-grid{
+
+
+    grid-template-columns:
+
+    1fr;
+
+
+}
+
+
+
+.topic-grid{
+
+
+    grid-template-columns:
+
+    1fr;
+
+
+}
+
+
+
+.lesson-header{
+
+
+    flex-direction:column;
+
+
+    gap:15px;
+
+
+}
+
+
+
+.lesson-buttons{
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+.lesson-btn{
+
+
+    width:100%;
+
+
+}
+
+
+
+.achievement-grid{
+
+
+    grid-template-columns:
+
+    1fr;
+
+
+}
+
+
+
+.footer-links{
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+.bottom-nav{
+
+
+    width:95%;
+
+
+    bottom:10px;
+
+
+}
+
+
+
+.bottom-nav a{
+
+
+    font-size:18px;
+
+
+}
+
+
+
+.bottom-nav a span{
+
+
+    font-size:10px;
+
+
+}
+
+
+
+body{
+
+
+    padding-bottom:90px;
+
+
+}
+
+
+}
+
+
+
+/* =========================
+END CSS
+G THE GENIUS
+========================= */
