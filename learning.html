@@ -1,367 +1,456 @@
-
-// ==========================================
-// G THE GENIUS MOCK TEST PORTAL v5.0
-// LEARNING HTML
-// PART 1 / 5
-// ==========================================
-
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
-
 <meta charset="UTF-8">
-
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>
-
 Learning Zone | G THE GENIUS
-
 </title>
 
+<meta name="theme-color" content="#081229">
+
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 <link rel="stylesheet" href="style.css">
 
-
 <link rel="stylesheet" href="learning.css">
-
 
 </head>
 
-
-
 <body>
-
 
 <div class="learning-container">
 
-
-
-<!-- HEADER -->
-
+<!-- ==========================================
+HEADER
+========================================== -->
 
 <header class="learning-header">
 
+<div class="header-left">
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="logo-img">
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo-img"
+alt="Logo">
 
+<div>
 
 <h1>
-
 G THE GENIUS
-
 </h1>
 
-
 <p>
-
 Government Exam Learning Zone
-
 </p>
 
+</div>
 
-</header>
+</div>
 
+<div class="header-right">
 
+<a href="dashboard.html"
+class="dashboard-btn">
 
-
-
-<!-- BACK BUTTON -->
-
-
-<div class="back-area">
-
-
-<a href="dashboard.html">
-
-⬅ Dashboard
+🏠 Dashboard
 
 </a>
 
-
 </div>
 
+</header>
 
+<!-- ==========================================
+WELCOME CARD
+========================================== -->
 
+<section class="welcome-card">
 
-
-<!-- PAGE TITLE -->
-
-
-<section class="learning-title">
-
+<div class="welcome-left">
 
 <h2>
 
-📚 Learning Zone
+👋
+<span id="greeting">
+
+Good Morning
+
+</span>
 
 </h2>
 
+<h3 id="studentName">
 
-<p>
+Student
 
-Choose your preparation category
+</h3>
+
+<p id="studentDistrict">
+
+Tamil Nadu
 
 </p>
 
+</div>
+
+<div class="welcome-right">
+
+<div class="avatar">
+
+👨‍🎓
+
+</div>
+
+</div>
 
 </section>
 
-  
-// ==========================================
-// LEARNING CATEGORY CARDS
-// PART 2 / 5
-// ==========================================
+<!-- ==========================================
+PROGRESS CARD
+========================================== -->
 
+<section class="progress-card">
 
+<div class="progress-item">
 
-<section class="category-section">
+🪙
 
+<h3 id="coins">
 
-
-<div class="category-grid">
-
-
-
-
-
-<!-- TAMIL -->
-
-
-<div class="category-card"
-
-onclick="openCategory('tamil')">
-
-
-<div class="category-icon">
-
-📖
-
-</div>
-
-
-<h3>
-
-தமிழ்
+0
 
 </h3>
 
-
 <p>
 
-இலக்கணம் • இலக்கியம் • திருக்குறள்
+Coins
 
 </p>
 
-
-<button>
-
-Start Learning
-
-</button>
-
-
 </div>
 
+<div class="progress-item">
 
+⭐
 
+<h3 id="level">
 
-
-
-
-
-<!-- PHYSICAL -->
-
-
-<div class="category-card"
-
-onclick="openCategory('physical')">
-
-
-<div class="category-icon">
-
-🏃
-
-</div>
-
-
-<h3>
-
-Physical Tips
+Level 1
 
 </h3>
 
-
 <p>
 
-Police PET Preparation & Fitness
+XP Level
 
 </p>
 
-
-<button>
-
-Start Learning
-
-</button>
-
-
 </div>
 
-
-
-
-
-
-
-
-<!-- PSYCHOLOGY -->
-
-
-<div class="category-card"
-
-onclick="openCategory('psychology')">
-
-
-<div class="category-icon">
-
-🧠
-
-</div>
-
-
-<h3>
-
-Psychology
-
-</h3>
-
-
-<p>
-
-Confidence • Stress Control • Mind Power
-
-</p>
-
-
-<button>
-
-Start Learning
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- GENERAL SUBJECTS -->
-
-
-<div class="category-card"
-
-onclick="openCategory('general')">
-
-
-<div class="category-icon">
+<div class="progress-item">
 
 📚
 
-</div>
+<h3 id="completedLessons">
 
-
-<h3>
-
-General Subjects
+0
 
 </h3>
 
-
 <p>
 
-15 Subjects • Topic Wise Preparation
+Completed
 
 </p>
 
-
-<button>
-
-Start Learning
-
-</button>
-
-
 </div>
-
-
-
-
-
-</div>
-
 
 </section>
 
+<!-- ==========================================
+SEARCH BAR
+========================================== -->
 
-// ==========================================
-// SUBJECT + TOPIC DISPLAY AREA
-// PART 3 / 5
-// ==========================================
+<section class="search-section">
 
+<input
+type="text"
+id="searchBox"
+placeholder="🔍 Search Subject or Topic...">
 
+</section>
 
-<section class="content-area">
+<!-- ==========================================
+CONTINUE LEARNING
+========================================== -->
 
-
-
-<!-- SUBJECT LIST -->
-
-<div id="subjectSection"
-
-class="hidden">
-
+<section class="continue-learning">
 
 <h2>
 
-📚 Subjects
+📖 Continue Learning
 
 </h2>
 
+<div class="continue-card">
 
+<div>
 
-<div id="subjectList"
+<h3 id="continueLesson">
 
-class="subject-list">
+No Lesson Started
 
+</h3>
+
+<p>
+
+Continue from your last lesson.
+
+</p>
 
 </div>
 
+<button id="continueBtn">
+
+Continue
+
+</button>
 
 </div>
 
+</section>
 
+<!-- ==========================================
+SUBJECT GRID START
+========================================== -->
 
+<section class="subject-section">
 
+<h2>
 
-<!-- TOPIC LIST -->
+📚 Learning Categories
 
+</h2>
 
-<div id="topicSection"
+<div class="subject-grid">
 
-class="hidden">
+  <!-- ==========================================
+SUBJECT CARDS
+PART 2 / 5
+========================================== -->
 
+<!-- தமிழ் -->
 
+<div class="subject-card"
+onclick="openCategory('tamil')">
+
+<div class="subject-icon">📖</div>
+
+<h3>தமிழ்</h3>
+
+<p>இலக்கணம் • இலக்கியம் • திருக்குறள்</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- GENERAL SUBJECTS -->
+
+<div class="subject-card"
+onclick="openCategory('general')">
+
+<div class="subject-icon">📚</div>
+
+<h3>General Subjects</h3>
+
+<p>15 Subjects • Topic Wise</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- PHYSICAL -->
+
+<div class="subject-card"
+onclick="openCategory('physical')">
+
+<div class="subject-icon">🏃</div>
+
+<h3>Physical</h3>
+
+<p>PET • PMT • Running Tips</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- PSYCHOLOGY -->
+
+<div class="subject-card"
+onclick="openCategory('psychology')">
+
+<div class="subject-icon">🧠</div>
+
+<h3>Psychology</h3>
+
+<p>Confidence • Motivation</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- CURRENT AFFAIRS -->
+
+<div class="subject-card"
+onclick="openCategory('currentaffairs')">
+
+<div class="subject-icon">📰</div>
+
+<h3>Current Affairs</h3>
+
+<p>Daily • Weekly • Monthly</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- HISTORY -->
+
+<div class="subject-card"
+onclick="openCategory('history')">
+
+<div class="subject-icon">🏛️</div>
+
+<h3>History</h3>
+
+<p>Indian & Tamil Nadu History</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- GEOGRAPHY -->
+
+<div class="subject-card"
+onclick="openCategory('geography')">
+
+<div class="subject-icon">🌍</div>
+
+<h3>Geography</h3>
+
+<p>India • World Geography</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- POLITY -->
+
+<div class="subject-card"
+onclick="openCategory('polity')">
+
+<div class="subject-icon">⚖️</div>
+
+<h3>Polity</h3>
+
+<p>Indian Constitution</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- ECONOMY -->
+
+<div class="subject-card"
+onclick="openCategory('economy')">
+
+<div class="subject-icon">💰</div>
+
+<h3>Economy</h3>
+
+<p>Indian Economy</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- SCIENCE -->
+
+<div class="subject-card"
+onclick="openCategory('science')">
+
+<div class="subject-icon">🔬</div>
+
+<h3>Science</h3>
+
+<p>Physics • Chemistry • Biology</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- COMPUTER -->
+
+<div class="subject-card"
+onclick="openCategory('computer')">
+
+<div class="subject-icon">💻</div>
+
+<h3>Computer</h3>
+
+<p>Basics • Internet • MS Office</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- REASONING -->
+
+<div class="subject-card"
+onclick="openCategory('reasoning')">
+
+<div class="subject-icon">🧩</div>
+
+<h3>Reasoning</h3>
+
+<p>Logical & Mental Ability</p>
+
+<button>Start Learning</button>
+
+</div>
+
+<!-- MATHS -->
+
+<div class="subject-card"
+onclick="openCategory('maths')">
+
+<div class="subject-icon">➗</div>
+
+<h3>Mathematics</h3>
+
+<p>Aptitude • Short Tricks</p>
+
+<button>Start Learning</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+TOPIC SECTION START
+PART 3 CONTINUES...
+========================================== -->
+
+<section id="topicSection"
+class="topic-section hidden">
 
 <h2>
 
@@ -369,148 +458,278 @@ class="hidden">
 
 </h2>
 
+<div id="topicList"
+class="topic-grid">
 
+<!-- ==========================================
+TOPIC SECTION
+PART 3 / 5
+========================================== -->
 
 <div id="topicList"
+class="topic-grid">
 
-class="topic-list">
-
-
-</div>
-
-
+<!-- Topics will load from Firebase -->
 
 </div>
-
-
-
-
-
-
-<!-- STUDY AREA -->
-
-
-<div id="studySection"
-
-class="hidden">
-
-
-
-<h2>
-
-📘 Study Area
-
-</h2>
-
-
-
-<div class="study-card">
-
-
-<div class="study-icon">
-
-📚
-
-</div>
-
-
-
-<h3 id="selectedTopic">
-
-Topic Name
-
-</h3>
-
-
-
-<p>
-
-இந்த Topic-ஐ படித்து Practice Test எழுதுங்கள்.
-
-</p>
-
-
-
-
-<div class="study-buttons">
-
-
-<button
-
-id="notesBtn">
-
-📖 Notes
-
-</button>
-
-
-
-
-<button
-
-id="practiceBtn">
-
-📝 Practice Test
-
-</button>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
 
 </section>
 
-  
+<!-- ==========================================
+LESSON SECTION
+========================================== -->
 
-// ==========================================
-// LEARNING FOOTER + NAVIGATION
-// PART 4 / 5
-// ==========================================
+<section
+id="lessonSection"
+class="lesson-section hidden">
 
+<div class="lesson-header">
 
+<h2>
 
-<!-- FOOTER -->
+📘 Lesson
 
+</h2>
 
-<footer class="learning-footer">
+<div class="lesson-progress">
 
+Completed :
+<strong id="lessonProgress">
 
+0%
 
-<h3>
+</strong>
 
-G THE GENIUS
+</div>
 
-</h3>
+</div>
 
+<div class="lesson-card">
 
+<h2 id="lessonTitle">
 
-<p>
+Lesson Title
 
-ALL GOVERNMENT EXAM MOCK TEST
+</h2>
+
+<p id="lessonContent">
+
+Select any lesson to start learning.
 
 </p>
 
+<img
+id="lessonImage"
+class="lesson-image"
+src=""
+style="display:none;">
 
+<div class="lesson-buttons">
 
+<a
+id="pdfBtn"
+class="lesson-btn pdf-btn"
+target="_blank"
+style="display:none;">
 
-<div class="footer-links">
-
-
-<a href="dashboard.html">
-
-🏠 Home
+📄 View PDF
 
 </a>
 
+<a
+id="videoBtn"
+class="lesson-btn video-btn"
+target="_blank"
+style="display:none;">
 
+▶ Watch Video
+
+</a>
+
+<button
+id="completeLessonBtn"
+class="lesson-btn complete-btn">
+
+✅ Mark as Completed
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+PRACTICE TEST
+========================================== -->
+
+<section
+id="practiceSection"
+class="practice-section hidden">
+
+<h2>
+
+📝 Practice Test
+
+</h2>
+
+<div class="practice-card">
+
+<p>
+
+Complete this lesson and test your knowledge.
+
+</p>
+
+<button
+id="practiceBtn">
+
+🚀 Start Practice Test
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+RECENT LESSONS
+========================================== -->
+
+<section
+class="recent-section">
+
+<h2>
+
+🔥 Recently Added
+
+</h2>
+
+<div
+id="recentLessons"
+class="recent-grid">
+
+<!-- Auto Load -->
+
+</div>
+
+</section>
+
+<!-- ==========================================
+ACHIEVEMENTS
+========================================== -->
+
+<section
+class="achievement-section">
+
+<h2>
+
+🏆 Your Achievements
+
+</h2>
+
+<div class="achievement-grid">
+
+<div class="achievement-card">
+
+⭐
+
+<h3 id="xpValue">
+
+0 XP
+
+</h3>
+
+<p>
+
+Experience
+
+</p>
+
+</div>
+
+<div class="achievement-card">
+
+🪙
+
+<h3 id="coinValue">
+
+0
+
+</h3>
+
+<p>
+
+Coins
+
+</p>
+
+</div>
+
+<div class="achievement-card">
+
+📚
+
+<h3 id="completedValue">
+
+0
+
+</h3>
+
+<p>
+
+Lessons Completed
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+ <!-- ==========================================
+FOOTER + BOTTOM NAVIGATION
+PART 4 / 5
+========================================== -->
+
+<footer class="learning-footer">
+
+<div class="footer-logo">
+
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="Logo"
+class="footer-logo-img">
+
+<h2>
+
+G THE GENIUS
+
+</h2>
+
+<p>
+
+ALL GOVERNMENT EXAM LEARNING PORTAL
+
+</p>
+
+</div>
+
+<div class="footer-links">
+
+<a href="dashboard.html">
+
+🏠 Dashboard
+
+</a>
+
+<a href="learning.html">
+
+📚 Learning
+
+</a>
 
 <a href="leaderboard.html">
 
@@ -518,15 +737,11 @@ ALL GOVERNMENT EXAM MOCK TEST
 
 </a>
 
-
-
 <a href="profile.html">
 
 👤 Profile
 
 </a>
-
-
 
 <a href="history.html">
 
@@ -534,35 +749,49 @@ ALL GOVERNMENT EXAM MOCK TEST
 
 </a>
 
+</div>
 
+<div class="footer-social">
+
+<a
+href="https://youtube.com/@gthegeniustamil"
+target="_blank">
+
+▶ YouTube
+
+</a>
+
+<a
+href="https://t.me/gthegenius"
+target="_blank">
+
+✈ Telegram
+
+</a>
+
+<a
+href="mailto:gthegenius7@gmail.com">
+
+✉ Email
+
+</a>
 
 </div>
 
-
-
-
-
 <p class="copyright">
 
-© 2026 G THE GENIUS. All Rights Reserved.
+© 2026 G THE GENIUS.
+All Rights Reserved.
 
 </p>
 
-
-
 </footer>
 
-
-
-
-
-
-
-<!-- BOTTOM NAVIGATION -->
-
+<!-- ==========================================
+BOTTOM NAVIGATION
+========================================== -->
 
 <nav class="bottom-nav">
-
 
 <a href="dashboard.html">
 
@@ -576,9 +805,9 @@ Home
 
 </a>
 
-
-
-<a href="learning.html">
+<a
+href="learning.html"
+class="active">
 
 📚
 
@@ -589,8 +818,6 @@ Learn
 </span>
 
 </a>
-
-
 
 <a href="mocktest.html">
 
@@ -604,7 +831,17 @@ Test
 
 </a>
 
+<a href="leaderboard.html">
 
+🏆
+
+<span>
+
+Rank
+
+</span>
+
+</a>
 
 <a href="profile.html">
 
@@ -618,26 +855,31 @@ Profile
 
 </a>
 
-
-
 </nav>
 
-  
-// ==========================================
-// SCRIPT CONNECTION
-// PART 5 / 5 FINAL
-// ==========================================
+<!-- ==========================================
+SCRIPT + FIREBASE
+PART 5 / 5
+========================================== -->
 
 
+<!-- Firebase Config -->
 
-<script type="module" src="subjects-data.js"></script>
+<script type="module"
+src="firebase-config.js">
+</script>
 
 
-<script type="module" src="learning.js"></script>
+<!-- Learning JS -->
+
+<script type="module"
+src="learning.js">
+</script>
 
 
+</div>
 
 </body>
 
-
 </html>
+
