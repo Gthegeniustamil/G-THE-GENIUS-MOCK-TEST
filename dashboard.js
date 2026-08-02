@@ -170,10 +170,36 @@ if(studentName){
 
     }
 
-    studentName.innerHTML = data.name || "Student";
+    if(studentName){
 
-}
+    const hour = new Date().getHours();
 
+    let greeting = "👋 Welcome";
+
+    if(hour < 12){
+
+        greeting = "🌅 Good Morning";
+
+    }else if(hour < 17){
+
+        greeting = "☀️ Good Afternoon";
+
+    }else{
+
+        greeting = "🌙 Good Evening";
+
+    }
+
+    studentName.innerHTML = `
+        <small style="display:block;font-size:14px;color:#FFD700;">
+            ${greeting}
+        </small>
+        <span style="font-size:24px;font-weight:bold;">
+            ${data.name || "Student"}
+        </span>
+    `;
+
+    }
 
 
 if(studentDistrict){
@@ -432,35 +458,7 @@ window.openLearning = function(subject){
 
 };
 
-// Welcome Message
-const hour = new Date().getHours();
 
-let greeting = "Welcome";
-
-if(hour < 12){
-
-    greeting = "🌅 Good Morning";
-
-}
-else if(hour < 17){
-
-    greeting = "☀️ Good Afternoon";
-
-}
-else{
-
-    greeting = "🌙 Good Evening";
-
-}
-
-if(studentName){
-
-    studentName.innerHTML =
-    greeting + "<br>" + studentName.innerText;
-
-}
-
-console.log("Premium Dashboard Ready ✅");
 
 const quotes = [
 
