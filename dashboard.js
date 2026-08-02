@@ -14,8 +14,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-    doc,
-    getDoc
+    collection,
+    query,
+    where,
+    getDocs,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ==========================================
@@ -45,29 +48,41 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     try {
+const q = query(
+    collection(db, "results"),
+    where("uid", "==", user.uid),
+    orderBy("createdAt", "desc")
+);
 
-        const studentRef = doc(db, "students", user.uid);
-        const studentSnap = await getDoc(studentRef);
+const snapshot = await getDocs(q);
 
-        if (studentSnap.exists()) {
+let totalMarksValue = 0;
+let testsCompletedValue = 0;
+let latestRank = "-";
+let studentDistrictValue = "-";
+let studentNameValue = user.displayName || "Student";
 
-            const data = studentSnap.data();
+snapshot.forEach((doc) => {
 
-            // ===============================
-            // GOOD MORNING / AFTERNOON
-            // ===============================
+    const data = doc.data();
 
-            const hour = new Date().getHours();
+    totalMarksValue += Number(data.score || 0);
+    testsCompletedValue++;
 
-            let greeting = "👋 Welcome";
+    if (latestRank === "-" && data.rank) {
+        latestRank = data.rank;
+    }
 
-            if (hour < 12) {
-                greeting = "🌅 Good Morning";
-            } else if (hour < 17) {
-                greeting = "☀️ Good Afternoon";
-            } else {
-                greeting = "🌙 Good Evening";
-            }
+    if (studentDistrictValue === "-" && data.district) {
+        studentDistrictValue = data.district;
+    }
+
+    if (data.studentName) {
+        studentNameValue = data.studentName;
+    }
+
+});
+        
 
             // ===============================
             // STUDENT NAME
