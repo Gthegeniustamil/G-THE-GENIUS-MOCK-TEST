@@ -1,1 +1,882 @@
+ /* ==========================================
+ G THE GENIUS CERTIFICATE CSS
+ PART 1 / 3
+ PREMIUM DESIGN
+ ========================================== */
 
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:
+    "Poppins",
+    "Noto Sans Tamil",
+    sans-serif;
+
+}
+
+
+
+body{
+
+
+    background:#081229;
+
+    color:white;
+
+}
+
+
+
+/* =========================
+CONTAINER
+========================= */
+
+
+.certificate-container{
+
+
+    width:100%;
+
+    max-width:1000px;
+
+    margin:auto;
+
+    padding:30px;
+
+}
+
+
+
+
+
+/* =========================
+HEADER
+========================= */
+
+
+.certificate-header{
+
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+.certificate-logo{
+
+
+    width:90px;
+
+    height:90px;
+
+    object-fit:contain;
+
+
+}
+
+
+
+.certificate-header h1{
+
+
+    color:#FFD700;
+
+    font-size:32px;
+
+    margin-top:10px;
+
+
+}
+
+
+
+.certificate-header p{
+
+
+    color:#ccc;
+
+    font-size:16px;
+
+
+}
+
+
+
+
+
+/* =========================
+CERTIFICATE CARD
+========================= */
+
+
+.certificate-card{
+
+
+    position:relative;
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    #fff9e6,
+
+    #ffffff
+
+    );
+
+
+    color:#081229;
+
+
+    padding:50px;
+
+
+    border-radius:25px;
+
+
+    border:
+
+
+    8px solid #FFD700;
+
+
+    box-shadow:
+
+
+    0 0 30px rgba(255,215,0,.35);
+
+
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+/* GOLD INNER BORDER */
+
+
+.certificate-card::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    inset:15px;
+
+
+    border:
+
+
+    2px solid #d4af37;
+
+
+    border-radius:18px;
+
+
+    pointer-events:none;
+
+
+}
+
+
+
+
+
+/* =========================
+TITLE
+========================= */
+
+
+.certificate-title{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+}
+
+
+
+.certificate-title h2{
+
+
+    font-size:32px;
+
+
+    color:#8b6508;
+
+
+    margin:15px 0;
+
+
+}
+
+
+
+.certificate-text{
+
+
+    margin-top:30px;
+
+
+    font-size:18px;
+
+
+    color:#555;
+
+
+}
+
+ /* ==========================================
+ G THE GENIUS CERTIFICATE CSS
+ PART 2 / 3
+ ========================================== */
+
+
+
+/* =========================
+STUDENT NAME
+========================= */
+
+
+#studentName{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    margin:20px 0;
+
+
+    font-size:38px;
+
+
+    color:#081229;
+
+
+    text-transform:uppercase;
+
+
+    font-weight:700;
+
+
+    border-bottom:
+
+
+    2px solid #d4af37;
+
+
+    display:inline-block;
+
+
+    padding:0 30px 10px;
+
+
+}
+
+
+
+
+
+.certificate-card > p{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+}
+
+
+
+
+
+#achievementTitle{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    color:#b8860b;
+
+
+    font-size:26px;
+
+
+    margin:15px 0;
+
+
+}
+
+
+
+
+
+/* =========================
+DETAIL CARDS
+========================= */
+
+
+.certificate-details{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(2,1fr);
+
+
+    gap:20px;
+
+
+    margin:35px 0;
+
+
+}
+
+
+
+
+
+.certificate-details div{
+
+
+    background:
+
+
+    rgba(212,175,55,.15);
+
+
+    padding:20px;
+
+
+    border-radius:15px;
+
+
+    border:
+
+
+    1px solid #d4af37;
+
+
+}
+
+
+
+.certificate-details h3{
+
+
+    font-size:28px;
+
+
+    color:#8b6508;
+
+
+}
+
+
+
+.certificate-details p{
+
+
+    margin-top:8px;
+
+
+    color:#555;
+
+
+}
+
+
+
+
+
+/* =========================
+CERTIFICATE INFO
+========================= */
+
+
+.certificate-info{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    margin:25px 0;
+
+
+    font-size:16px;
+
+
+}
+
+
+
+.certificate-info p{
+
+
+    margin:10px;
+
+
+    color:#444;
+
+
+}
+
+
+
+
+/* =========================
+SIGNATURE
+========================= */
+
+
+.signature-section{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    display:flex;
+
+
+    justify-content:space-around;
+
+
+    margin-top:40px;
+
+
+}
+
+
+
+.signature-box{
+
+
+    text-align:center;
+
+
+    min-width:200px;
+
+
+}
+
+
+
+.signature-box h3{
+
+
+    color:#081229;
+
+
+    border-top:
+
+
+    2px solid #333;
+
+
+    padding-top:10px;
+
+
+}
+
+
+
+.signature-box p{
+
+
+    color:#666;
+
+
+    margin-top:5px;
+
+
+}
+
+
+
+
+
+/* =========================
+DOWNLOAD BUTTON
+========================= */
+
+
+.download-btn{
+
+
+    margin-top:40px;
+
+
+    padding:15px 35px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    background:#FFD700;
+
+
+    color:#081229;
+
+
+    font-size:16px;
+
+
+    font-weight:bold;
+
+
+    cursor:pointer;
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+}
+
+
+
+.download-btn:hover{
+
+
+    transform:scale(1.05);
+
+
+}
+
+ /* ==========================================
+ G THE GENIUS CERTIFICATE CSS
+ PART 3 / 3 FINAL
+ ========================================== */
+
+
+
+/* =========================
+FOOTER
+========================= */
+
+
+.certificate-footer{
+
+
+    text-align:center;
+
+
+    margin-top:30px;
+
+
+    padding:25px;
+
+
+}
+
+
+
+.certificate-footer img{
+
+
+    width:60px;
+
+
+}
+
+
+
+.certificate-footer h3{
+
+
+    color:#FFD700;
+
+
+    margin:10px 0;
+
+
+}
+
+
+
+.certificate-footer p{
+
+
+    color:#ccc;
+
+
+    margin:5px;
+
+
+}
+
+
+
+
+
+/* =========================
+PRINT CERTIFICATE
+========================= */
+
+
+@media print{
+
+
+body{
+
+
+    background:white;
+
+
+}
+
+
+
+.certificate-container{
+
+
+    max-width:none;
+
+
+    padding:0;
+
+
+}
+
+
+
+.certificate-header,
+
+
+.download-btn{
+
+
+    display:none;
+
+
+}
+
+
+
+.certificate-card{
+
+
+    width:297mm;
+
+
+    height:210mm;
+
+
+    margin:auto;
+
+
+    border:8px solid #d4af37;
+
+
+    box-shadow:none;
+
+
+}
+
+
+
+.certificate-footer{
+
+
+    display:none;
+
+
+}
+
+
+
+}
+
+
+
+
+
+/* =========================
+MOBILE RESPONSIVE
+========================= */
+
+
+@media(max-width:600px){
+
+
+
+.certificate-container{
+
+
+    padding:15px;
+
+
+}
+
+
+
+
+.certificate-card{
+
+
+    padding:35px 20px;
+
+
+}
+
+
+
+
+.certificate-header h1{
+
+
+    font-size:24px;
+
+
+}
+
+
+
+
+.certificate-title h2{
+
+
+    font-size:24px;
+
+
+}
+
+
+
+
+#studentName{
+
+
+    font-size:26px;
+
+
+    padding:0 10px 8px;
+
+
+}
+
+
+
+
+#achievementTitle{
+
+
+    font-size:20px;
+
+
+}
+
+
+
+
+.certificate-details{
+
+
+    grid-template-columns:
+
+    1fr;
+
+
+}
+
+
+
+
+.signature-section{
+
+
+    flex-direction:column;
+
+
+    gap:30px;
+
+
+}
+
+
+
+
+.signature-box{
+
+
+    min-width:auto;
+
+
+}
+
+
+
+.download-btn{
+
+
+    width:100%;
+
+
+}
+
+
+
+
+}
+
+
+
+
+
+/* =========================
+END
+G THE GENIUS CERTIFICATE
+========================= */
