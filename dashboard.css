@@ -3126,3 +3126,148 @@ PREMIUM GLOW EFFECT
 /* =====================================
 END
 ===================================== */
+.student-dashboard-card{
+
+    width:100%;
+    padding:18px;
+    border-radius:22px;
+
+    background:linear-gradient(135deg,#0d1b3d,#132b63);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+    margin:15px 0;
+
+}
+
+.student-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+
+}
+
+.student-left h2{
+
+    font-size:20px;
+    margin:0;
+
+}
+
+.student-left p{
+
+    margin-top:4px;
+    color:#d8d8d8;
+    font-size:14px;
+
+}
+
+.student-avatar{
+
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#FFD700;
+    color:#081229;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:28px;
+    font-weight:bold;
+
+}
+
+.student-stats{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:12px 0;
+
+}
+
+.stat-item{
+
+    background:rgba(255,255,255,.08);
+    padding:10px;
+    border-radius:12px;
+    text-align:center;
+
+}
+
+.stat-item span{
+
+    display:block;
+    font-size:12px;
+    color:#ddd;
+
+}
+
+.stat-item strong{
+
+    display:block;
+    font-size:18px;
+    color:#FFD700;
+    margin-top:5px;
+
+}
+
+.student-progress{
+
+    margin-top:10px;
+
+}
+
+.progress-bar{
+
+    width:100%;
+    height:8px;
+    background:#20335d;
+    border-radius:20px;
+    overflow:hidden;
+
+}
+
+#xpBar{
+
+    width:0%;
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,#FFD700,#FFA500);
+
+}
+
+.student-bottom{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+
+}
+
+.coin-card,
+.test-card{
+
+    padding:10px;
+    border-radius:12px;
+    background:rgba(255,255,255,.08);
+    text-align:center;
+
+}
+
+.coin-card strong,
+.test-card strong{
+
+    display:block;
+    margin-top:5px;
+    color:#FFD700;
+    font-size:18px;
+
+}
