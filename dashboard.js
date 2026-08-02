@@ -16,9 +16,10 @@ import {
     query,
     where,
     getDocs,
-    orderBy
+    orderBy,
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 
 // ==========================================
 // HTML ELEMENTS
@@ -94,7 +95,44 @@ async function loadDashboard() {
 
     console.log("Loading Dashboard...");
 }
+// LOAD STUDENT PROFILE
 
+try {
+
+    const userRef = doc(
+        db,
+        "users",
+        currentUser.uid
+    );
+
+    const userSnap = await getDoc(userRef);
+
+
+    if(userSnap.exists()){
+
+        const userData = userSnap.data();
+
+        myName =
+        userData.name || 
+        userData.studentName ||
+        "Student";
+
+
+        myDistrict =
+        userData.district ||
+        "-";
+
+    }
+
+}
+catch(error){
+
+    console.error(
+        "Profile Load Error",
+        error
+    );
+
+}
 // ==========================================
 // LOAD MY RESULTS
 // ==========================================
