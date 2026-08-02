@@ -1,13 +1,11 @@
 // ==========================================
 // G THE GENIUS MOCK TEST PORTAL v5.0
-// DASHBOARD JS
-// PART 1 / 2
+// DASHBOARD JS - FINAL
+// PART 1 / 5
 // ==========================================
 
-// Firebase Config
 import { auth, db } from "./firebase-config.js";
 
-// Firebase Functions
 import {
     onAuthStateChanged,
     signOut
@@ -21,23 +19,61 @@ import {
     orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
 // ==========================================
 // HTML ELEMENTS
 // ==========================================
 
-const studentName = document.getElementById("studentName");
-const studentDistrict = document.getElementById("studentDistrict");
-const testCount = document.getElementById("testCount");
-const studentRank = document.getElementById("studentRank");
-const totalMarks = document.getElementById("totalMarks");
-const completedTests = document.getElementById("completedTests");
+const studentName =
+document.getElementById("studentName");
 
-const levelBox = document.getElementById("level");
-const coinsBox = document.getElementById("coins");
-const xpBar = document.getElementById("xpBar");
+const studentDistrict =
+document.getElementById("studentDistrict");
+
+const studentRank =
+document.getElementById("studentRank");
+
+const totalMarks =
+document.getElementById("totalMarks");
+
+const completedTests =
+document.getElementById("completedTests");
+
+const testCount =
+document.getElementById("testCount");
+
+const level =
+document.getElementById("level");
+
+const coins =
+document.getElementById("coins");
+
+const xpBar =
+document.getElementById("xpBar");
+
 
 // ==========================================
-// LOGIN CHECK
+// GLOBAL VARIABLES
+// ==========================================
+
+let currentUser = null;
+
+let myResults = [];
+
+let totalScore = 0;
+
+let totalTests = 0;
+
+let district = "";
+
+let student = "";
+
+console.log("Dashboard Part 1 Loaded ✅");
+
+// ==========================================
+// DASHBOARD JS FINAL
+// PART 2 / 5
+// LOAD STUDENT RESULTS
 // ==========================================
 
 onAuthStateChanged(auth, async (user) => {
@@ -47,204 +83,270 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
+    currentUser = user;
+
     try {
-const q = query(
-    collection(db, "results"),
-    where("uid", "==", user.uid),
-    orderBy("createdAt", "desc")
-);
 
-const snapshot = await getDocs(q);
+        const q = query(
+            collection(db, "results"),
+            where("studentId", "==", user.uid),
+            orderBy("timestamp", "desc")
+        );
 
-let totalMarksValue = 0;
-let testsCompletedValue = 0;
-let latestRank = "-";
-let studentDistrictValue = "-";
-let studentNameValue = user.displayName || "Student";
+        const snapshot = await getDocs(q);
 
-snapshot.forEach((doc) => {
+        myResults = [];
+        totalScore = 0;
+        totalTests = 0;
 
-    const data = doc.data();
+        snapshot.forEach((doc) => {
 
-    totalMarksValue += Number(data.score || 0);
-    testsCompletedValue++;
+            const data = doc.data();
 
-    if (latestRank === "-" && data.rank) {
-        latestRank = data.rank;
-    }
+            myResults.push(data);
 
-    if (studentDistrictValue === "-" && data.district) {
-        studentDistrictValue = data.district;
-    }
+            totalScore += Number(data.score || 0);
+            totalTests++;
 
-    if (data.studentName) {
-        studentNameValue = data.studentName;
-    }
+            student = data.studentName || student;
+            district = data.district || district;
 
-});
-        
+        });
 
-            // ===============================
-            // STUDENT NAME
-            // ===============================
+        // Greeting
+        const hour = new Date().getHours();
 
-            if (studentName) {
+        let greeting = "👋 Welcome";
 
-                studentName.innerHTML = `
-                    <small style="display:block;font-size:14px;color:#FFD54F;">
-                        ${greeting}
-                    </small>
+        if (hour < 12) {
 
-                    <span style="display:block;font-size:24px;font-weight:700;">
-                        ${data.name || "Student"}
-                    </span>
-                `;
+            greeting = "🌅 Good Morning";
 
-            }
+        } else if (hour < 17) {
 
-            // ===============================
-            // DISTRICT
-            // ===============================
+            greeting = "☀️ Good Afternoon";
 
-            if (studentDistrict) {
-                studentDistrict.textContent =
-                    data.district || "-";
-            }
+        } else {
 
-            // ===============================
-            // MARKS
-            // ===============================
-
-            if (totalMarks) {
-                totalMarks.textContent =
-                    data.totalMarks || 0;
-            }
-
-            // ===============================
-            // RANK
-            // ===============================
-
-            if (studentRank) {
-                studentRank.textContent =
-                    data.rank || "-";
-            }
-
-            // ===============================
-            // COMPLETED TESTS
-            // ===============================
-
-            if (completedTests) {
-                completedTests.textContent =
-                    data.testsCompleted || 0;
-            }
-
-            if (testCount) {
-                testCount.textContent =
-                    data.testsCompleted || 0;
-            }
-
-            // ===============================
-            // XP / LEVEL / COINS
-            // ===============================
-
-            const xp = Number(localStorage.getItem("xp")) || 0;
-            const coins = Number(localStorage.getItem("coins")) || 0;
-
-            const level = Math.floor(xp / 50) + 1;
-
-            if (levelBox) {
-                levelBox.innerText = "Level " + level;
-            }
-
-            if (coinsBox) {
-                coinsBox.innerText = coins;
-            }
-
-            if (xpBar) {
-                xpBar.style.width = ((xp % 50) * 2) + "%";
-            }
+            greeting = "🌙 Good Evening";
 
         }
 
-    } catch (error) {
+        // Student Name
+        if (studentName) {
 
-        console.error("Dashboard Error :", error);
+            studentName.innerHTML = `
+                <small style="display:block;color:#FFD700;font-size:13px;">
+                    ${greeting}
+                </small>
+                ${student || "Student"}
+            `;
+
+        }
+
+        // District
+        if (studentDistrict) {
+
+            studentDistrict.innerText =
+            district || "-";
+
+        }
+
+        // Total Marks
+        if (totalMarks) {
+
+            totalMarks.innerText =
+            totalScore;
+
+        }
+
+        // Tests Completed
+        if (completedTests) {
+
+            completedTests.innerText =
+            totalTests;
+
+        }
+
+        // Test Count
+        if (testCount) {
+
+            testCount.innerText =
+            totalTests;
+
+        }
+
+        console.log("Dashboard Student Data Loaded ✅");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard Error : ",
+            error
+        );
 
     }
 
 });
 
 // ==========================================
-// G THE GENIUS MOCK TEST PORTAL v5.0
-// DASHBOARD JS
-// PART 2 / 2 FINAL
+// DASHBOARD JS FINAL
+// PART 3 / 5
+// RANK + XP + COINS
 // ==========================================
 
-// ==========================================
-// LOGOUT
-// ==========================================
+try {
 
-const logoutBtn = document.getElementById("logoutBtn");
+    // Load All Results
+    const allSnapshot = await getDocs(
+        collection(db, "results")
+    );
 
-if (logoutBtn) {
+    let leaderboard = [];
 
-    logoutBtn.addEventListener("click", async () => {
+    allSnapshot.forEach((doc) => {
 
-        try {
+        const data = doc.data();
 
-            await signOut(auth);
+        const index = leaderboard.findIndex(
+            s => s.studentId === data.studentId
+        );
 
-            localStorage.removeItem("student");
+        if (index === -1) {
 
-            window.location.href = "login.html";
+            leaderboard.push({
+                studentId: data.studentId,
+                studentName: data.studentName,
+                totalScore: Number(data.score || 0)
+            });
 
-        } catch (error) {
+        } else {
 
-            console.error("Logout Error :", error);
+            leaderboard[index].totalScore +=
+            Number(data.score || 0);
 
         }
 
     });
 
+    // Highest Score First
+    leaderboard.sort(
+        (a, b) =>
+        b.totalScore - a.totalScore
+    );
+
+    // Find My Rank
+    const myRankIndex =
+    leaderboard.findIndex(
+        s => s.studentId === currentUser.uid
+    );
+
+    if (studentRank) {
+
+        studentRank.innerText =
+        myRankIndex >= 0
+        ? myRankIndex + 1
+        : "-";
+
+    }
+
+    // XP
+    const xp =
+    Number(localStorage.getItem("xp")) || 0;
+
+    const currentLevel =
+    Math.floor(xp / 50) + 1;
+
+    if (level) {
+
+        level.innerText =
+        "Level " + currentLevel;
+
+    }
+
+    // XP Progress
+    if (xpBar) {
+
+        const progress =
+        (xp % 50) * 2;
+
+        xpBar.style.width =
+        progress + "%";
+
+    }
+
+    // Coins
+    if (coins) {
+
+        coins.innerText =
+        Number(
+            localStorage.getItem("coins")
+        ) || 0;
+
+    }
+
+    console.log("Rank Loaded ✅");
+
+}
+
+catch(error){
+
+    console.error(
+        "Rank Error :",
+        error
+    );
+
 }
 
 // ==========================================
-// DAILY QUOTE
+// DASHBOARD JS FINAL
+// PART 4 / 5
+// MOTIVATION + LEARNING + ADMIN + LOGOUT
 // ==========================================
 
+// Daily Motivation Quotes
 const quotes = [
 
-    "வெற்றி ஒரே நாளில் கிடைக்காது... தினமும் முயற்சி செய்தால் நிச்சயம் கிடைக்கும்.",
+"வெற்றி ஒரே நாளில் கிடைக்காது... தினமும் முயற்சி செய்தால் நிச்சயம் கிடைக்கும்.",
 
-    "இன்று படிக்கும் ஒவ்வொரு பக்கமும் நாளைய வெற்றிக்கான படிக்கட்டு.",
+"இன்று படிக்கும் ஒவ்வொரு பக்கமும் நாளைய வெற்றிக்கான படிக்கட்டு.",
 
-    "கனவு அரசு வேலை என்றால் முயற்சி தினமும் தொடர வேண்டும்.",
+"கனவு அரசு வேலை என்றால் முயற்சி தினமும் தொடர வேண்டும்.",
 
-    "முயற்சி செய்பவர்களுக்கு வெற்றி நிச்சயம்.",
+"முயற்சி செய்பவர்களுக்கு வெற்றி நிச்சயம்.",
 
-    "நேரத்தை சரியாக பயன்படுத்துபவன் வாழ்க்கையில் உயர்வான்."
+"நேரத்தை சரியாக பயன்படுத்துபவன் வாழ்க்கையில் உயர்வான்.",
+
+"நம்பிக்கை இருந்தால் வெற்றி உறுதி.",
+
+"தினமும் ஒரு Mock Test எழுதுங்கள்."
 
 ];
 
-const quoteElement = document.getElementById("dailyQuote");
+const quoteBox =
+document.getElementById("dailyQuote");
 
-if (quoteElement) {
+if(quoteBox){
 
-    quoteElement.innerText =
-        quotes[Math.floor(Math.random() * quotes.length)];
+    quoteBox.innerText =
+    quotes[Math.floor(Math.random() * quotes.length)];
 
 }
 
+
 // ==========================================
-// LEARNING BUTTON
+// LEARNING PAGE NAVIGATION
 // ==========================================
 
-window.openLearning = function (subject) {
+window.openLearning = function(subject){
 
     window.location.href =
-        "learning.html?subject=" + subject;
+    "learning.html?subject=" + subject;
 
 };
+
 
 // ==========================================
 // ADMIN ACCESS
@@ -253,53 +355,163 @@ window.openLearning = function (subject) {
 const adminAccess =
 document.getElementById("adminAccess");
 
-onAuthStateChanged(auth, (user) => {
+if(adminAccess){
 
-    if (!adminAccess) return;
+    if(
 
-    if (
-        user &&
-        user.email === "gthegenius7@gmail.com"
-    ) {
+        currentUser &&
+        currentUser.email ===
+        "gthegenius7@gmail.com"
+
+    ){
 
         adminAccess.style.display = "flex";
 
-    } else {
+    }
+
+    else{
 
         adminAccess.style.display = "none";
 
     }
 
-});
+}
+
 
 // ==========================================
-// SAVE LAST PAGE
+// LOGOUT
 // ==========================================
 
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener(
+
+        "click",
+
+        async()=>{
+
+            try{
+
+                await signOut(auth);
+
+                localStorage.removeItem("lastPage");
+
+                window.location.href =
+                "login.html";
+
+            }
+
+            catch(error){
+
+                console.error(
+                    error
+                );
+
+            }
+
+        }
+
+    );
+
+}
+
+console.log("Dashboard Part 4 Loaded ✅");
+
+// ==========================================
+// DASHBOARD JS FINAL
+// PART 5 / 5
+// FINAL INITIALIZATION
+// ==========================================
+
+// Save Last Page
 localStorage.setItem(
     "lastPage",
     "dashboard"
 );
 
-// ==========================================
-// LINK LOG
-// ==========================================
+// Button Click Log
+document.querySelectorAll("a").forEach(link=>{
 
-document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click",()=>{
 
-    link.addEventListener("click", () => {
-
-        console.log("Opening :", link.href);
+        console.log(
+            "Opening :",
+            link.getAttribute("href")
+        );
 
     });
 
 });
 
-// ==========================================
-// DASHBOARD READY
-// ==========================================
+// Auto Refresh Dashboard
+window.addEventListener(
 
-console.log("====================================");
-console.log("G THE GENIUS Dashboard Ready ✅");
-console.log("Premium Dashboard Loaded");
-console.log("====================================");
+    "focus",
+
+    async()=>{
+
+        if(currentUser){
+
+            location.reload();
+
+        }
+
+    }
+
+);
+
+// Global Error
+window.addEventListener(
+
+    "error",
+
+    (event)=>{
+
+        console.error(
+            "Dashboard Error :",
+            event.message
+        );
+
+    }
+
+);
+
+// Promise Error
+window.addEventListener(
+
+    "unhandledrejection",
+
+    (event)=>{
+
+        console.error(
+            "Promise Error :",
+            event.reason
+        );
+
+    }
+
+);
+
+// Dashboard Ready
+console.log(`
+======================================
+G THE GENIUS DASHBOARD READY ✅
+--------------------------------------
+✔ Student Profile
+✔ Good Morning
+✔ District
+✔ Rank
+✔ Total Marks
+✔ Tests Completed
+✔ XP Level
+✔ Coins
+✔ Progress Bar
+✔ Learning Zone
+✔ Admin Access
+✔ Logout
+✔ Auto Refresh
+======================================
+`);
