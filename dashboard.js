@@ -150,17 +150,29 @@ const data = studentSnap.data();
 
 // Display Student Details
 
-
-
 if(studentName){
 
-studentName.innerHTML =
+    const hour = new Date().getHours();
 
-data.name || "Student";
+    let greeting = "👋 Welcome";
+
+    if(hour < 12){
+
+        greeting = "🌅 Good Morning";
+
+    }else if(hour < 17){
+
+        greeting = "☀️ Good Afternoon";
+
+    }else{
+
+        greeting = "🌙 Good Evening";
+
+    }
+
+    studentName.innerHTML = data.name || "Student";
 
 }
-
-
 
 
 
