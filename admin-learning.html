@@ -1,1 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+Admin Learning | G THE GENIUS
+</title>
+
+<meta name="theme-color" content="#081229">
+
+<link rel="stylesheet" href="admin-learning.css">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+<!-- HEADER -->
+
+<header class="admin-header">
+
+<div class="left">
+
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo">
+
+<div>
+
+<h1>G THE GENIUS</h1>
+
+<p>Learning Management</p>
+
+</div>
+
+</div>
+
+<div class="right">
+
+<a href="admin.html" class="back-btn">
+
+🏠 Dashboard
+
+</a>
+
+</div>
+
+</header>
+
+<!-- TITLE -->
+
+<section class="page-title">
+
+<h2>
+
+📚 Learning Management
+
+</h2>
+
+<p>
+
+Add • Edit • Delete • Bulk Upload Lessons
+
+</p>
+
+</section>
+
+<!-- DASHBOARD CARDS -->
+
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<h3 id="lessonCount">
+
+0
+
+</h3>
+
+<p>
+
+Lessons
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h3 id="subjectCount">
+
+0
+
+</h3>
+
+<p>
+
+Subjects
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h3 id="topicCount">
+
+0
+
+</h3>
+
+<p>
+
+Topics
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h3 id="todayUploads">
+
+0
+
+</h3>
+
+<p>
+
+Today's Upload
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+ADD NEW LESSON
+========================================== -->
+
+<section class="add-lesson-card">
+
+<h2>
+
+➕ Add New Lesson
+
+</h2>
+
+<div class="form-grid">
+
+<!-- SUBJECT -->
+
+<div class="form-group">
+
+<label>
+
+Subject
+
+</label>
+
+<select id="subject">
+
+<option value="">Select Subject</option>
+
+<option>தமிழ்</option>
+
+<option>English</option>
+
+<option>Mathematics</option>
+
+<option>Physics</option>
+
+<option>Chemistry</option>
+
+<option>Biology</option>
+
+<option>History</option>
+
+<option>Geography</option>
+
+<option>Polity</option>
+
+<option>Economy</option>
+
+<option>Current Affairs</option>
+
+<option>Reasoning</option>
+
+<option>Mental Ability</option>
+
+<option>Computer</option>
+
+<option>Psychology</option>
+
+<option>Police PET</option>
+
+</select>
+
+</div>
+
+<!-- TOPIC -->
+
+<div class="form-group">
+
+<label>
+
+Topic
+
+</label>
+
+<input
+type="text"
+id="topic"
+placeholder="Ex : இலக்கணம்">
+
+</div>
+
+<!-- LESSON TITLE -->
+
+<div class="form-group full">
+
+<label>
+
+Lesson Title
+
+</label>
+
+<input
+type="text"
+id="title"
+placeholder="Enter Lesson Title">
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="form-group full">
+
+<label>
+
+Lesson Content
+
+</label>
+
+<textarea
+id="content"
+rows="12"
+placeholder="Enter Full Lesson..."></textarea>
+
+</div>
+
+<!-- IMAGE -->
+
+<div class="form-group">
+
+<label>
+
+Image URL
+
+</label>
+
+<input
+type="text"
+id="image"
+placeholder="https://...">
+
+</div>
+
+<!-- PDF -->
+
+<div class="form-group">
+
+<label>
+
+PDF URL
+
+</label>
+
+<input
+type="text"
+id="pdf"
+placeholder="https://...">
+
+</div>
+
+<!-- YOUTUBE -->
+
+<div class="form-group full">
+
+<label>
+
+YouTube URL
+
+</label>
+
+<input
+type="text"
+id="youtube"
+placeholder="https://youtube.com/...">
+
+</div>
+
+</div>
+
+<div class="button-group">
+
+<button id="saveLesson">
+
+💾 Save Lesson
+
+</button>
+
+<button id="clearForm">
+
+🗑 Clear
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+END ADD LESSON
+========================================== -->
+
+  <!-- ==========================================
+BULK UPLOAD SECTION
+========================================== -->
+
+<section class="bulk-upload-card">
+
+<h2>
+📤 Bulk Upload Lessons
+</h2>
+
+<p>
+Upload CSV / Excel file to add multiple lessons at once.
+</p>
+
+<div class="bulk-box">
+
+<input
+type="file"
+id="bulkFile"
+accept=".csv,.xlsx">
+
+<button id="uploadBulkBtn">
+
+🚀 Upload Lessons
+
+</button>
+
+</div>
+
+<div id="uploadStatus">
+
+No file selected
+
+</div>
+
+</section>
+
+
+
+<!-- ==========================================
+SEARCH SECTION
+========================================== -->
+
+<section class="search-card">
+
+<input
+type="text"
+id="searchLesson"
+placeholder="🔍 Search Subject / Topic / Lesson">
+
+</section>
+
+
+
+<!-- ==========================================
+LESSON LIST
+========================================== -->
+
+<section class="lesson-table-card">
+
+<h2>
+
+📚 All Learning Lessons
+
+</h2>
+
+<div class="table-scroll">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Subject</th>
+
+<th>Topic</th>
+
+<th>Lesson</th>
+
+<th>PDF</th>
+
+<th>Video</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="lessonTable">
+
+<tr>
+
+<td colspan="7">
+
+No Lessons Found
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- ==========================================
+FOOTER BUTTONS
+========================================== -->
+
+<div class="bottom-buttons">
+
+<button onclick="location.href='admin.html'">
+
+🏠 Admin Dashboard
+
+</button>
+
+<button onclick="location.reload()">
+
+🔄 Refresh
+
+</button>
+
+</div>
+
+
+
+</div>
+
+<script type="module"
+src="admin-learning.js"></script>
+
+</body>
+
+</html>
 
