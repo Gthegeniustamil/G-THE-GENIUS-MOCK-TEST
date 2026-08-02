@@ -1,11 +1,4 @@
-<!-- ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-PROFILE HTML
-PART 1 / 5
-========================================== -->
-
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -16,9 +9,7 @@ PART 1 / 5
 content="width=device-width, initial-scale=1.0">
 
 <title>
-
 Profile | G THE GENIUS
-
 </title>
 
 <meta name="theme-color"
@@ -26,6 +17,9 @@ content="#081229">
 
 <link rel="icon"
 href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+<link rel="stylesheet"
+href="style.css">
 
 <link rel="stylesheet"
 href="profile.css">
@@ -36,595 +30,761 @@ href="profile.css">
 
 <div class="profile-container">
 
-<!-- HEADER START -->
+<!-- ==========================================
+HEADER
+========================================== -->
 
 <header class="profile-header">
 
-<div class="logo-box">
+<div class="header-left">
 
 <img
 src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS Logo"
-class="profile-logo">
+class="logo-img"
+alt="Logo">
 
-</div>
-
-<div class="profile-title">
+<div>
 
 <h1>
-
 G THE GENIUS
-
 </h1>
 
 <p>
-
 Student Profile
-
-</p>
-
-</div>
-
-</header>
-
-<!-- HEADER END -->
-
-
-
-
-
-<!-- PROFILE CARD START -->
-
-<section class="profile-section">
-
-<div class="profile-card">
-
-<div class="profile-avatar">
-
-👤
-
-</div>
-
-<h2 id="studentName">
-
-Loading...
-
-</h2>
-
-<p id="studentEmail">
-
-Loading...
-
-</p>
-
-<span class="profile-badge">
-
-🎓 Registered Student
-
-</span>
-
-</div>
-
-</section>
-<!-- ==========================================
-PROFILE HTML
-PART 2 / 5
-========================================== -->
-
-
-
-<!-- STUDENT INFORMATION -->
-
-<section class="student-info-section">
-
-<div class="student-info-card">
-
-<h2>
-
-👤 Student Information
-
-</h2>
-
-<div class="info-grid">
-
-<div class="info-item">
-
-<span>
-
-🆔 Student ID
-
-</span>
-
-<strong id="studentId">
-
-Loading...
-
-</strong>
-
-</div>
-
-<div class="info-item">
-
-<span>
-
-📍 District
-
-</span>
-
-<strong id="studentDistrict">
-
-Loading...
-
-</strong>
-
-</div>
-
-<div class="info-item">
-
-<span>
-
-📅 Joined Date
-
-</span>
-
-<strong id="joinedDate">
-
-Loading...
-
-</strong>
-
-</div>
-
-<div class="info-item">
-
-<span>
-
-🏆 Best Marks
-
-</span>
-
-<strong id="bestMarks">
-
-0
-
-</strong>
-
-</div>
-
-<div class="info-item">
-
-<span>
-
-📝 Tests Completed
-
-</span>
-
-<strong id="testsCompleted">
-
-0
-
-</strong>
-
-</div>
-
-<div class="info-item">
-
-<span>
-
-⭐ Current Rank
-
-</span>
-
-<strong id="currentRank">
-
--
-
-</strong>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- PERFORMANCE SUMMARY -->
-
-<section class="performance-section">
-
-<div class="performance-card">
-
-<h2>
-
-📊 Performance Summary
-
-</h2>
-
-<div class="performance-grid">
-
-<div class="performance-item">
-
-<span>
-
-🎯 Total Marks
-
-</span>
-
-<strong id="totalMarks">
-
-0
-
-</strong>
-
-</div>
-
-<div class="performance-item">
-
-<span>
-
-🔥 Last Test Marks
-
-</span>
-
-<strong id="lastMarks">
-
-0
-
-</strong>
-
-</div>
-
-<div class="performance-item">
-
-<span>
-
-🏅 Highest Score
-
-</span>
-
-<strong id="highestScore">
-
-0
-
-</strong>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-  <!-- ==========================================
-PROFILE HTML
-PART 3 / 5
-========================================== -->
-
-
-
-<!-- ACHIEVEMENTS SECTION -->
-
-<section class="achievement-section">
-
-<div class="achievement-card">
-
-<h2>
-
-🏅 Achievements
-
-</h2>
-
-<div class="achievement-grid">
-
-<div class="achievement-item">
-
-<div class="achievement-icon">
-
-🥇
-
-</div>
-
-<h3>
-
-Top Rank
-
-</h3>
-
-<p id="topRankAchievement">
-
-Not Yet
-
-</p>
-
-</div>
-
-<div class="achievement-item">
-
-<div class="achievement-icon">
-
-🔥
-
-</div>
-
-<h3>
-
-Test Streak
-
-</h3>
-
-<p id="testStreak">
-
-0 Days
-
-</p>
-
-</div>
-
-<div class="achievement-item">
-
-<div class="achievement-icon">
-
-⭐
-
-</div>
-
-<h3>
-
-Badges
-
-</h3>
-
-<p id="badgeCount">
-
-0 Earned
-
 </p>
 
 </div>
 
 </div>
 
-</div>
-
-</section>
-
-
-
-<!-- QUICK ACTIONS -->
-
-<section class="quick-actions-section">
-
-<div class="quick-actions-card">
-
-<h2>
-
-⚡ Quick Actions
-
-</h2>
-
-<div class="quick-actions-grid">
-
-<a href="dashboard.html" class="quick-btn">
+<a
+href="dashboard.html"
+class="dashboard-btn">
 
 🏠 Dashboard
 
 </a>
 
-<a href="history.html" class="quick-btn">
+</header>
 
-📜 History
+<!-- ==========================================
+PROFILE CARD
+========================================== -->
 
-</a>
+<section class="profile-card">
 
-<a href="leaderboard.html" class="quick-btn">
+<div class="profile-top">
 
-🏆 Leaderboard
+<div class="profile-avatar">
 
-</a>
-
-<a href="mocktest.html?type=daily" class="quick-btn">
-
-📝 Daily Test
-
-</a>
+<img
+id="profileImage"
+src="assets/default-avatar.png"
+alt="Profile">
 
 </div>
+
+<div class="profile-info">
+
+<h2 id="studentName">
+
+Student Name
+
+</h2>
+
+<p id="studentEmail">
+
+student@email.com
+
+</p>
+
+<p id="studentDistrict">
+
+Tamil Nadu
+
+</p>
+
+<p id="studentRegisterNo">
+
+Registration No : GTG000001
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+QUICK STATS
+========================================== -->
+
+<section class="stats-section">
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+⭐
+
+<h3 id="xpValue">
+
+0 XP
+
+</h3>
+
+<p>
+
+Experience
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+🪙
+
+<h3 id="coinValue">
+
+0
+
+</h3>
+
+<p>
+
+Coins
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+📚
+
+<h3 id="lessonValue">
+
+0
+
+</h3>
+
+<p>
+
+Lessons
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+🔥
+
+<h3 id="streakValue">
+
+0
+
+</h3>
+
+<p>
+
+Day Streak
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+ <!-- ==========================================
+LEVEL PROGRESS
+PART 2 / 4
+========================================== -->
+
+<section class="level-section">
+
+<h2>
+
+⭐ Learning Level
+
+</h2>
+
+<div class="level-card">
+
+<div class="level-header">
+
+<h3 id="studentLevel">
+
+Level 1 Beginner
+
+</h3>
+
+<span id="levelPercentage">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+id="levelProgressBar"
+class="progress-fill">
+
+</div>
+
+</div>
+
+<p id="nextLevelText">
+
+100 XP required to reach Level 2
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- ==========================================
+BADGES
+========================================== -->
+
+<section class="badge-section">
+
+<h2>
+
+🏆 Achievements
+
+</h2>
+
+<div
+id="badgeContainer"
+class="badge-grid">
+
+<!-- Auto Load from Firebase -->
+
+</div>
+
+</section>
+
+
+
+<!-- ==========================================
+CERTIFICATES
+========================================== -->
+
+<section class="certificate-section">
+
+<h2>
+
+📜 My Certificates
+
+</h2>
+
+<div
+id="certificateContainer"
+class="certificate-grid">
+
+<!-- Auto Load -->
+
+</div>
+
+<a
+href="certificate.html"
+class="view-certificate-btn">
+
+🏆 View Latest Certificate
+
+</a>
+
+</section>
+
+
+
+<!-- ==========================================
+LEARNING PROGRESS
+========================================== -->
+
+<section class="learning-section">
+
+<h2>
+
+📚 Learning Progress
+
+</h2>
+
+<div class="learning-card">
+
+<div class="progress-item">
+
+<p>
+
+Lessons Completed
+
+</p>
+
+<h3 id="completedLessons">
+
+0 / 100
+
+</h3>
+
+</div>
+
+<div class="progress-item">
+
+<p>
+
+Learning Progress
+
+</p>
+
+<div class="progress-bar">
+
+<div
+id="learningProgressBar"
+class="progress-fill">
+
+</div>
+
+</div>
+
+<p id="learningProgressText">
+
+0% Completed
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==========================================
+RECENT ACTIVITY
+========================================== -->
+
+<section class="activity-section">
+
+<h2>
+
+🕒 Recent Activity
+
+</h2>
+
+<div
+id="activityContainer"
+class="activity-list">
+
+<!-- Auto Load -->
 
 </div>
 
 </section>
 
   <!-- ==========================================
-PROFILE HTML
-PART 4 / 5
+MOCK TEST STATISTICS
+PART 3 / 4
 ========================================== -->
 
-
-
-<!-- SOCIAL SECTION -->
-
-<section class="social-section">
-
-<div class="social-card">
+<section class="mocktest-section">
 
 <h2>
 
-🌐 Connect With Us
+📝 Mock Test Statistics
 
 </h2>
 
-<div class="social-links">
+<div class="mocktest-grid">
 
-<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
-target="_blank"
-class="social-btn youtube">
+<div class="stat-card">
 
-▶ YouTube
+✅
 
-</a>
+<h3 id="testsTaken">
 
-<a href="https://t.me/gthegenius"
-target="_blank"
-class="social-btn telegram">
-
-✈ Telegram
-
-</a>
-
-<a href="mailto:gthegenius7@gmail.com"
-class="social-btn email">
-
-✉ Email
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ACCOUNT SECTION -->
-
-<section class="account-section">
-
-<div class="account-card">
-
-<h2>
-
-⚙️ Account
-
-</h2>
-
-<div class="account-actions">
-
-<a href="register.html"
-class="account-btn">
-
-✏️ Update Profile
-
-</a>
-
-<a href="login.html"
-id="logoutBtn"
-class="account-btn logout">
-
-🚪 Logout
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- MOTIVATION CARD -->
-
-<section class="motivation-section">
-
-<div class="motivation-card">
-
-<h2>
-
-💡 Daily Motivation
-
-</h2>
-
-<p>
-
-"Success comes from consistent practice. Complete mock tests every day and improve your rank!"
-
-</p>
-
-</div>
-
-</section>
-
-  
-<!-- ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-PROFILE HTML
-PART 5 / 5
-FINAL
-========================================== -->
-
-
-
-<!-- FOOTER START -->
-
-<footer class="app-footer">
-
-<h3>
-
-G THE GENIUS
+0
 
 </h3>
 
 <p>
 
-ALL GOVERNMENT EXAM MOCK TEST
+Tests Taken
 
 </p>
 
-<div class="footer-links">
+</div>
 
-<a href="dashboard.html">
+<div class="stat-card">
 
-Home
+🎯
+
+<h3 id="averageScore">
+
+0
+
+</h3>
+
+<p>
+
+Average Score
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+🏅
+
+<h3 id="bestScore">
+
+0
+
+</h3>
+
+<p>
+
+Best Score
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+🏆
+
+<h3 id="overallRank">
+
+--
+
+</h3>
+
+<p>
+
+Overall Rank
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==========================================
+RANK CARD
+========================================== -->
+
+<section class="rank-section">
+
+<h2>
+
+🥇 Student Ranking
+
+</h2>
+
+<div class="rank-card">
+
+<div>
+
+<h3>
+
+🌍 State Rank
+
+</h3>
+
+<h2 id="stateRank">
+
+--
+
+</h2>
+
+</div>
+
+<div>
+
+<h3>
+
+📍 District Rank
+
+</h3>
+
+<h2 id="districtRank">
+
+--
+
+</h2>
+
+</div>
+
+<div>
+
+<h3>
+
+⭐ Current Level
+
+</h3>
+
+<h2 id="currentLevel">
+
+Level 1
+
+</h2>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==========================================
+PROFILE SETTINGS
+========================================== -->
+
+<section class="settings-section">
+
+<h2>
+
+⚙ Profile Settings
+
+</h2>
+
+<div class="settings-grid">
+
+<a href="edit-profile.html"
+class="settings-card">
+
+✏️
+
+<h3>
+
+Edit Profile
+
+</h3>
 
 </a>
 
-<a href="mocktest.html?type=daily">
+<a href="history.html"
+class="settings-card">
 
-Mock Test
+📜
+
+<h3>
+
+Learning History
+
+</h3>
 
 </a>
 
-<a href="leaderboard.html">
+<a href="certificate.html"
+class="settings-card">
+
+🏆
+
+<h3>
+
+Certificates
+
+</h3>
+
+</a>
+
+<a href="leaderboard.html"
+class="settings-card">
+
+🥇
+
+<h3>
 
 Leaderboard
 
-</a>
-
-<a href="history.html">
-
-History
+</h3>
 
 </a>
 
 </div>
 
-<p class="copyright">
+</section>
+
+
+
+<!-- ==========================================
+LOGOUT
+========================================== -->
+
+<section class="logout-section">
+
+<button
+id="logoutBtn"
+class="logout-btn">
+
+🚪 Logout
+
+</button>
+
+</section>
+
+
+
+<!-- ==========================================
+FOOTER
+========================================== -->
+
+<footer class="profile-footer">
+
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="footer-logo"
+alt="Logo">
+
+<h2>
+
+G THE GENIUS
+
+</h2>
+
+<p>
+
+Government Exam Preparation Platform
+
+</p>
+
+<p>
 
 © 2026 G THE GENIUS. All Rights Reserved.
 
 </p>
 
 </footer>
+<!-- ==========================================
+BOTTOM NAVIGATION
+PART 4 / 4 FINAL
+========================================== -->
 
-<!-- FOOTER END -->
+<nav class="bottom-nav">
+
+<a href="dashboard.html">
+
+🏠
+
+<span>
+
+Home
+
+</span>
+
+</a>
+
+<a href="learning.html">
+
+📚
+
+<span>
+
+Learning
+
+</span>
+
+</a>
+
+<a href="mocktest.html">
+
+📝
+
+<span>
+
+Tests
+
+</span>
+
+</a>
+
+<a href="leaderboard.html">
+
+🏆
+
+<span>
+
+Rank
+
+</span>
+
+</a>
+
+<a
+href="profile.html"
+class="active">
+
+👤
+
+<span>
+
+Profile
+
+</span>
+
+</a>
+
+</nav>
 
 
+
+<!-- ==========================================
+LOADING SCREEN
+========================================== -->
+
+<div
+id="loadingScreen"
+class="loading-screen">
+
+<div class="loader"></div>
+
+<p>
+
+Loading Profile...
+
+</p>
 
 </div>
 
-<!-- PROFILE JS -->
 
-<script
-type="module"
-src="profile.js">
 
+<!-- ==========================================
+FIREBASE + JS
+========================================== -->
+
+<script type="module"
+src="firebase-config.js">
 </script>
+
+<script type="module"
+src="learning-progress.js">
+</script>
+
+<script type="module"
+src="profile.js">
+</script>
+
+</div>
 
 </body>
 
-</html>  
+</html>
