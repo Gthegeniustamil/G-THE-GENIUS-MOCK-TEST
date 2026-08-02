@@ -2071,3 +2071,206 @@ G THE GENIUS LEARNING ZONE CARDS
 
 
 }
+/* =====================================
+PREMIUM STUDENT CARD
+===================================== */
+
+.student-dashboard-card{
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    border-radius:28px;
+
+    padding:22px;
+
+    margin:20px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+}
+
+.student-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.student-left h2{
+
+    color:#fff;
+
+    font-size:24px;
+
+    margin-bottom:8px;
+
+}
+
+.student-left p{
+
+    color:#FFD700;
+
+    font-size:15px;
+
+}
+
+.student-avatar{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#FFD700,#ff9800);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:34px;
+
+    color:#081229;
+
+    font-weight:bold;
+
+}
+
+.student-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:22px;
+
+}
+
+.stat-item{
+
+    background:#0d2245;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    text-align:center;
+
+}
+
+.stat-item span{
+
+    display:block;
+
+    color:#bbb;
+
+    font-size:13px;
+
+}
+
+.stat-item strong{
+
+    display:block;
+
+    margin-top:8px;
+
+    color:#FFD700;
+
+    font-size:22px;
+
+}
+
+.student-progress{
+
+    margin-top:25px;
+
+}
+
+.progress-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#fff;
+
+    margin-bottom:8px;
+
+}
+
+.progress-bar{
+
+    height:12px;
+
+    background:#1d3568;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+#xpBar{
+
+    width:0%;
+
+    height:100%;
+
+    background:linear-gradient(90deg,#FFD700,#ff9800);
+
+    border-radius:20px;
+
+    transition:width .8s ease;
+
+}
+
+.student-bottom{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    margin-top:25px;
+
+}
+
+.coin-card,
+.test-card{
+
+    background:#102a55;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    color:#fff;
+
+    text-align:center;
+
+}
+
+.coin-card strong,
+.test-card strong{
+
+    display:block;
+
+    margin-top:8px;
+
+    color:#FFD700;
+
+    font-size:24px;
+
+    }
