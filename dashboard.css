@@ -2274,3 +2274,855 @@ PREMIUM STUDENT CARD
     font-size:24px;
 
     }
+/* =====================================
+LEARNING ZONE PREMIUM
+===================================== */
+
+.learning-zone{
+
+    margin:20px;
+
+}
+
+.learning-zone h2{
+
+    color:#FFD700;
+
+    font-size:24px;
+
+    margin-bottom:18px;
+
+}
+
+.learning-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+
+    gap:18px;
+
+}
+
+.learning-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    border-radius:22px;
+
+    padding:22px;
+
+    text-align:center;
+
+    transition:.35s;
+
+    cursor:pointer;
+
+}
+
+.learning-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 12px 30px rgba(255,215,0,.25);
+
+}
+
+.learning-icon{
+
+    width:65px;
+
+    height:65px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#FFD700,#ff9800);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:30px;
+
+    color:#081229;
+
+    margin-bottom:15px;
+
+}
+
+.learning-card h3{
+
+    color:#fff;
+
+    font-size:20px;
+
+    margin-bottom:10px;
+
+}
+
+.learning-card p{
+
+    color:#d7d7d7;
+
+    font-size:14px;
+
+    line-height:22px;
+
+    min-height:65px;
+
+}
+
+.learning-card button{
+
+    margin-top:18px;
+
+    background:linear-gradient(90deg,#FFD700,#ff9800);
+
+    color:#081229;
+
+    border:none;
+
+    border-radius:30px;
+
+    padding:12px 22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.learning-card button:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* =====================================
+QUICK ACCESS PREMIUM
+===================================== */
+
+.quick-menu-section{
+
+    margin:20px;
+
+}
+
+.quick-menu-section h2{
+
+    color:#FFD700;
+
+    margin-bottom:18px;
+
+}
+
+.quick-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+.quick-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    border-radius:22px;
+
+    transition:.35s;
+
+}
+
+.quick-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 10px 25px rgba(255,215,0,.25);
+
+}
+
+.quick-card a{
+
+    display:block;
+
+    padding:28px;
+
+    text-align:center;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    line-height:34px;
+
+}
+
+/* =====================================
+PERFORMANCE CARD
+===================================== */
+
+.performance-section{
+
+    margin:20px;
+
+}
+
+.performance-section h2{
+
+    color:#FFD700;
+
+    margin-bottom:18px;
+
+}
+
+.performance-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    border-radius:24px;
+
+    padding:20px;
+
+}
+
+.performance-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.performance-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.performance-item span{
+
+    color:#ddd;
+
+    font-size:16px;
+
+}
+
+.performance-item strong{
+
+    color:#FFD700;
+
+    font-size:22px;
+
+}
+
+/* =====================================
+BOTTOM NAVIGATION
+===================================== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    height:72px;
+
+    background:#081229;
+
+    border-top:1px solid rgba(255,215,0,.25);
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    z-index:999;
+
+}
+
+.bottom-nav a{
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+    text-align:center;
+
+    font-size:13px;
+
+}
+
+.bottom-nav a span{
+
+    display:block;
+
+    font-size:24px;
+
+    margin-bottom:4px;
+
+}
+
+.bottom-nav a.active{
+
+    color:#FFD700;
+
+}
+
+/* Mobile spacing */
+
+body{
+
+    padding-bottom:90px;
+
+    }
+
+/* =====================================
+PREMIUM MOCK TEST CARDS
+===================================== */
+
+.mock-section{
+
+    margin:20px;
+
+}
+
+.mock-section h2{
+
+    color:#FFD700;
+
+    margin-bottom:18px;
+
+}
+
+.test-grid{
+
+    display:grid;
+
+    gap:20px;
+
+}
+
+.dashboard-test-card{
+
+    position:relative;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    border-radius:24px;
+
+    padding:22px;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+}
+
+.dashboard-test-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 35px rgba(255,215,0,.20);
+
+}
+
+.dashboard-test-card.daily{
+
+    border-left:6px solid #00e676;
+
+}
+
+.dashboard-test-card.weekly{
+
+    border-left:6px solid #ffd600;
+
+}
+
+.dashboard-test-card.monthly{
+
+    border-left:6px solid #ff5252;
+
+}
+
+.test-badge{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    background:#102a55;
+
+    color:#FFD700;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+}
+
+.dashboard-test-card h3{
+
+    color:#fff;
+
+    margin-bottom:10px;
+
+}
+
+.dashboard-test-card p{
+
+    color:#ddd;
+
+    line-height:24px;
+
+}
+
+.start-btn{
+
+    display:inline-block;
+
+    margin-top:18px;
+
+    background:linear-gradient(90deg,#FFD700,#ff9800);
+
+    color:#081229;
+
+    padding:12px 26px;
+
+    border-radius:30px;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.start-btn:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* =====================================
+MOTIVATION CARD
+===================================== */
+
+.motivation-box,
+.motivation-card{
+
+    margin:20px;
+
+    background:linear-gradient(135deg,#1b356d,#081229);
+
+    border:1px solid rgba(255,215,0,.25);
+
+    border-radius:24px;
+
+    padding:22px;
+
+    color:#fff;
+
+    text-align:center;
+
+}
+
+.motivation-box h3,
+.motivation-card h2{
+
+    color:#FFD700;
+
+    margin-bottom:12px;
+
+}
+
+/* =====================================
+SOCIAL CARD
+===================================== */
+
+.social-card{
+
+    margin:20px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:24px;
+
+    padding:22px;
+
+    border:1px solid rgba(255,215,0,.25);
+
+}
+
+.social-card h2{
+
+    color:#FFD700;
+
+    text-align:center;
+
+    margin-bottom:18px;
+
+}
+
+.social-btn{
+
+    display:block;
+
+    margin:12px 0;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.youtube{
+
+    background:#ff0000;
+
+}
+
+.telegram{
+
+    background:#229ED9;
+
+}
+
+.email{
+
+    background:#4CAF50;
+
+}
+
+.social-btn:hover{
+
+    transform:translateY(-3px);
+
+    opacity:.9;
+
+}
+
+/* =====================================
+CARD ANIMATION
+===================================== */
+
+.dashboard-test-card,
+.learning-card,
+.quick-card,
+.student-dashboard-card{
+
+    animation:fadeUp .5s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+    }
+
+/* =====================================
+HEADER PREMIUM
+===================================== */
+
+.dashboard-header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 20px;
+
+    background:rgba(8,18,41,.95);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,215,0,.20);
+
+}
+
+.dashboard-logo{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:14px;
+
+}
+
+.dashboard-brand h1{
+
+    color:#FFD700;
+
+    font-size:22px;
+
+    margin:0;
+
+}
+
+.dashboard-brand p{
+
+    color:#ddd;
+
+    font-size:13px;
+
+    margin-top:3px;
+
+}
+
+.profile-icon a{
+
+    width:50px;
+
+    height:50px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:#102a55;
+
+    color:#FFD700;
+
+    text-decoration:none;
+
+    font-size:24px;
+
+}
+
+/* =====================================
+FOOTER
+===================================== */
+
+.app-footer{
+
+    margin-top:30px;
+
+    padding:30px 20px;
+
+    text-align:center;
+
+    background:#081229;
+
+    border-top:1px solid rgba(255,215,0,.20);
+
+}
+
+.app-footer h3{
+
+    color:#FFD700;
+
+    margin-bottom:10px;
+
+}
+
+.app-footer p{
+
+    color:#ccc;
+
+    line-height:24px;
+
+}
+
+.footer-links{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin:18px 0;
+
+}
+
+.footer-links a{
+
+    color:#fff;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.footer-links a:hover{
+
+    color:#FFD700;
+
+}
+
+.copyright{
+
+    font-size:13px;
+
+    color:#888;
+
+}
+
+/* =====================================
+SCROLLBAR
+===================================== */
+
+::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#FFD700;
+
+    border-radius:10px;
+
+}
+
+/* =====================================
+MOBILE RESPONSIVE
+===================================== */
+
+@media(max-width:768px){
+
+.dashboard-brand h1{
+
+    font-size:18px;
+
+}
+
+.student-stats{
+
+    grid-template-columns:1fr;
+
+}
+
+.student-bottom{
+
+    grid-template-columns:1fr;
+
+}
+
+.quick-grid{
+
+    grid-template-columns:1fr 1fr;
+
+}
+
+.learning-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+/* =====================================
+PREMIUM GLOW EFFECT
+===================================== */
+
+.student-dashboard-card,
+.dashboard-test-card,
+.learning-card,
+.quick-card,
+.performance-card{
+
+    transition:all .35s ease;
+
+}
+
+.student-dashboard-card:hover,
+.dashboard-test-card:hover,
+.learning-card:hover,
+.quick-card:hover,
+.performance-card:hover{
+
+    box-shadow:0 0 25px rgba(255,215,0,.25);
+
+}
+
+/* =====================================
+END
+===================================== */
