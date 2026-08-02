@@ -10,13 +10,12 @@ import { auth, db } from "./firebase-config.js";
 
 
 import {
-
-    doc,
-    getDoc
-
+    collection,
+    getDocs,
+    query,
+    where,
+    addDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
 import {
 
     onAuthStateChanged
