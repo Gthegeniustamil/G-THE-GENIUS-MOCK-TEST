@@ -372,6 +372,84 @@ console.log(
 "G THE GENIUS Dashboard Loaded Successfully"
 
 );
+
+// ==========================================
+// PREMIUM DASHBOARD EXTRA FEATURES
+// ==========================================
+
+// XP
+const xp = Number(localStorage.getItem("xp")) || 0;
+
+// Coins
+const coins = Number(localStorage.getItem("coins")) || 0;
+
+// Level
+const level = Math.floor(xp / 50) + 1;
+
+// Elements
+const levelBox = document.getElementById("level");
+const coinsBox = document.getElementById("coins");
+const xpBar = document.getElementById("xpBar");
+
+// Update UI
+if(levelBox){
+
+    levelBox.innerText = "Level " + level;
+
+}
+
+if(coinsBox){
+
+    coinsBox.innerText = coins;
+
+}
+
+if(xpBar){
+
+    const percent = xp % 50;
+
+    xpBar.style.width = (percent * 2) + "%";
+
+}
+
+// Learning Navigation
+window.openLearning = function(subject){
+
+    window.location.href =
+    "learning.html?subject=" + subject;
+
+};
+
+// Welcome Message
+const hour = new Date().getHours();
+
+let greeting = "Welcome";
+
+if(hour < 12){
+
+    greeting = "🌅 Good Morning";
+
+}
+else if(hour < 17){
+
+    greeting = "☀️ Good Afternoon";
+
+}
+else{
+
+    greeting = "🌙 Good Evening";
+
+}
+
+if(studentName){
+
+    studentName.innerHTML =
+    greeting + "<br>" + studentName.innerText;
+
+}
+
+console.log("Premium Dashboard Ready ✅");
+
 const quotes = [
 
 "வெற்றி ஒரே நாளில் கிடைக்காது... தினமும் முயற்சி செய்தால் நிச்சயம் கிடைக்கும்.",
