@@ -1,40 +1,67 @@
-/* =========================
-G THE GENIUS PRACTICE CSS
-PART 1
-========================= */
+/* ==========================================
+   G THE GENIUS
+   Practice Test CSS
+   Part 1
+========================================== */
+
+
+:root{
+
+    --bg:#081229;
+
+    --card:rgba(255,255,255,.08);
+
+    --gold:#FFD700;
+
+    --gold2:#ffb800;
+
+    --white:#ffffff;
+
+    --muted:#b7bfd8;
+
+    --border:rgba(255,255,255,.15);
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+
+    --radius:22px;
+
+    --transition:.3s ease;
+
+}
+
+
+
 
 
 *{
 
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
 
 }
+
+
 
 
 
 body{
 
+    font-family:'Poppins',sans-serif;
 
-background:
+    background:linear-gradient(
+        180deg,
+        #081229,
+        #102452
+    );
 
-linear-gradient(
-180deg,
-#081229,
-#102451
-);
+    color:var(--white);
 
+    min-height:100vh;
 
-color:white;
-
-
-min-height:100vh;
-
-
-padding-bottom:90px;
-
+    padding-bottom:90px;
 
 }
 
@@ -42,103 +69,116 @@ padding-bottom:90px;
 
 
 
+/* ==========================================
+   Container
+========================================== */
 
 
-/* =========================
-HEADER
-========================= */
+.practice-container{
+
+    width:100%;
+
+    max-width:600px;
+
+    margin:auto;
+
+    padding:18px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Header
+========================================== */
 
 
 .practice-header{
 
+    text-align:center;
 
-display:flex;
-
-
-align-items:center;
-
-
-gap:15px;
-
-
-padding:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-bottom:
-
-1px solid rgba(255,215,0,.3);
-
-
+    margin-bottom:25px;
 
 }
 
 
 
-.practice-logo{
 
 
-width:70px;
+.practice-header .logo{
 
+    width:90px;
 
-height:70px;
+    height:90px;
 
+    object-fit:contain;
 
-border-radius:50%;
+    border-radius:50%;
 
+    background:#fff;
 
-object-fit:cover;
+    padding:8px;
 
+    border:3px solid var(--gold);
 
-
-border:
-
-3px solid #FFD700;
-
-
-background:white;
-
-
-padding:2px;
-
+    box-shadow:var(--shadow);
 
 }
 
 
 
-.practice-header h2{
 
 
-color:#FFD700;
+.practice-header h1{
 
+    margin-top:15px;
 
-font-size:24px;
+    color:var(--gold);
 
+    font-size:26px;
 
 }
+
+
 
 
 
 .practice-header p{
 
+    color:var(--muted);
 
-color:#ddd;
+    font-size:14px;
+
+    margin-top:6px;
+
+}
 
 
-font-size:13px;
 
+
+
+/* ==========================================
+   Setup Card
+========================================== */
+
+
+.setup-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:22px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
 
 }
 
@@ -146,134 +186,27 @@ font-size:13px;
 
 
 
+.setup-card h2{
 
+    color:var(--gold);
 
+    font-size:22px;
 
-/* =========================
-CATEGORY CARD
-========================= */
-
-
-.category-card{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.category-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
+    margin-bottom:8px;
 
 }
 
 
 
 
-.category-card select{
 
+.setup-card p{
 
-width:100%;
+    color:var(--muted);
 
+    font-size:14px;
 
-padding:15px;
-
-
-border-radius:18px;
-
-
-background:#081229;
-
-
-color:white;
-
-
-border:
-
-1px solid #FFD700;
-
-
-outline:none;
-
-
-font-size:15px;
-
-
-}
-
-
-
-
-.category-card button{
-
-
-width:100%;
-
-
-margin-top:15px;
-
-
-padding:15px;
-
-
-border:none;
-
-
-border-radius:20px;
-
-
-
-background:#FFD700;
-
-
-color:#081229;
-
-
-font-weight:bold;
-
-
-font-size:16px;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-.category-card button:hover{
-
-
-transform:scale(1.03);
-
+    margin-bottom:20px;
 
 }
 
@@ -281,38 +214,16 @@ transform:scale(1.03);
 
 
 
+/* ==========================================
+   Select Group
+========================================== */
 
 
+.select-group{
 
-/* =========================
-PRACTICE BOX
-========================= */
+    text-align:left;
 
-
-.practice-box{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-border-radius:28px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
+    margin-bottom:18px;
 
 }
 
@@ -320,33 +231,15 @@ border:
 
 
 
-.progress-info{
+.select-group label{
 
+    display:block;
 
-display:flex;
+    color:var(--gold);
 
+    font-size:14px;
 
-justify-content:space-between;
-
-
-margin-bottom:20px;
-
-
-color:#ddd;
-
-
-}
-
-
-
-.progress-info span{
-
-
-color:#FFD700;
-
-
-font-weight:bold;
-
+    margin-bottom:8px;
 
 }
 
@@ -354,23 +247,35 @@ font-weight:bold;
 
 
 
+.select-group select{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:15px;
+
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.10);
+
+    color:#fff;
+
+    outline:none;
+
+    font-size:14px;
+
+}
 
 
 
-#questionText{
 
 
-font-size:20px;
+.select-group select option{
 
+    background:#081229;
 
-line-height:1.5;
-
-
-margin:20px 0;
-
-
-color:white;
-
+    color:#fff;
 
 }
 
@@ -378,86 +283,294 @@ color:white;
 
 
 
+/* ==========================================
+   Start Button
+========================================== */
 
 
+.start-btn{
 
-/* =========================
-OPTIONS
-========================= */
+    width:100%;
 
+    margin-top:10px;
 
-.options-box{
+    padding:15px;
 
+    border:none;
 
-display:flex;
+    border-radius:50px;
 
+    background:linear-gradient(
+        90deg,
+        var(--gold),
+        var(--gold2)
+    );
 
-flex-direction:column;
+    color:#081229;
 
+    font-size:16px;
 
-gap:12px;
+    font-weight:700;
 
+    cursor:pointer;
+
+    transition:var(--transition);
 
 }
+
+
+
+
+
+.start-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 20px rgba(255,215,0,.3);
+
+}
+
+/* ==========================================
+   G THE GENIUS
+   Practice Test CSS
+   Part 2
+   Question + Timer + Navigation
+========================================== */
+
+
+/* ==========================================
+   Test Area
+========================================== */
+
+
+.test-area{
+
+    margin-top:25px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Question Header
+========================================== */
+
+
+.question-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Progress Box
+========================================== */
+
+
+.progress-box{
+
+    flex:1;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:12px;
+
+}
+
+
+
+
+
+#questionCount{
+
+    color:var(--gold);
+
+    font-size:13px;
+
+}
+
+
+
+
+
+.progress-bar{
+
+    width:100%;
+
+    height:8px;
+
+    background:rgba(255,255,255,.15);
+
+    border-radius:50px;
+
+    margin-top:10px;
+
+    overflow:hidden;
+
+}
+
+
+
+
+
+#progressFill{
+
+    height:100%;
+
+    width:10%;
+
+    background:var(--gold);
+
+    border-radius:50px;
+
+    transition:.3s ease;
+
+}
+
+
+
+
+
+/* ==========================================
+   Timer
+========================================== */
+
+
+.timer-box{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:14px;
+
+    color:var(--gold);
+
+    font-weight:700;
+
+    font-size:15px;
+
+    white-space:nowrap;
+
+}
+
+
+
+
+
+/* ==========================================
+   Question Card
+========================================== */
+
+
+.question-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:22px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.question-card h2{
+
+    font-size:18px;
+
+    line-height:1.6;
+
+    margin-bottom:22px;
+
+    color:#fff;
+
+}
+
+
+
+
+
+/* ==========================================
+   Options
+========================================== */
+
+
+.options-container{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
 
 
 
 
 .option-btn{
 
+    width:100%;
 
-width:100%;
+    padding:14px;
 
+    border-radius:15px;
 
-padding:16px;
+    border:1px solid var(--border);
 
+    background:rgba(255,255,255,.08);
 
-border-radius:18px;
+    color:#fff;
 
+    text-align:left;
 
-text-align:left;
+    font-size:14px;
 
+    cursor:pointer;
 
-
-background:
-
-rgba(255,255,255,.1);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-color:white;
-
-
-font-size:15px;
-
-
-cursor:pointer;
-
-
-transition:.3s;
-
+    transition:.3s ease;
 
 }
+
+
 
 
 
 .option-btn:hover{
 
+    border-color:var(--gold);
 
-background:
-
-rgba(255,215,0,.2);
-
-
-
-color:#FFD700;
-
+    transform:translateX(5px);
 
 }
 
@@ -465,29 +578,15 @@ color:#FFD700;
 
 
 
+.option-btn.selected{
 
-.correct{
+    background:var(--gold);
 
+    color:#081229;
 
-background:#0b8f3c !important;
+    border-color:var(--gold);
 
-
-border-color:#00ff7f;
-
-
-}
-
-
-
-
-.wrong{
-
-
-background:#a32020 !important;
-
-
-border-color:#ff4444;
-
+    font-weight:600;
 
 }
 
@@ -495,38 +594,11 @@ border-color:#ff4444;
 
 
 
+.option-btn.correct{
 
+    background:#16a34a;
 
-
-/* =========================
-EXPLANATION
-========================= */
-
-
-#explanationBox{
-
-
-margin-top:20px;
-
-
-padding:15px;
-
-
-border-radius:18px;
-
-
-
-background:
-
-rgba(255,215,0,.12);
-
-
-
-color:#ddd;
-
-
-display:none;
-
+    color:#fff;
 
 }
 
@@ -534,161 +606,32 @@ display:none;
 
 
 
+.option-btn.wrong{
 
+    background:#dc2626;
 
-
-/* =========================
-NEXT BUTTON
-========================= */
-
-
-#nextQuestion{
-
-
-margin-top:20px;
-
-
-width:100%;
-
-
-padding:15px;
-
-
-border:none;
-
-
-border-radius:20px;
-
-
-
-background:#FFD700;
-
-
-color:#081229;
-
-
-font-weight:bold;
-
-
-font-size:16px;
-
-
-cursor:pointer;
-
-
-}
-
-/* =========================
-RESULT CARD
-========================= */
-
-
-result-card{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-border-radius:25px;
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-.result-card h2{
-
-
-color:#FFD700;
-
-
-margin-bottom:20px;
-
+    color:#fff;
 
 }
 
 
 
 
-.result-grid{
+
+/* ==========================================
+   Navigation Buttons
+========================================== */
 
 
-display:grid;
+.question-navigation{
 
+    display:flex;
 
-grid-template-columns:
+    justify-content:space-between;
 
-repeat(3,1fr);
+    gap:15px;
 
-
-
-gap:12px;
-
-
-}
-
-
-
-
-.result-grid div{
-
-
-padding:18px 10px;
-
-
-text-align:center;
-
-
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-}
-
-
-
-
-.result-grid h1{
-
-
-color:#FFD700;
-
-
-font-size:28px;
-
-
-}
-
-
-
-.result-grid p{
-
-
-color:#ddd;
-
-
-font-size:12px;
-
+    margin-top:22px;
 
 }
 
@@ -696,92 +639,25 @@ font-size:12px;
 
 
 
+.nav-btn{
 
+    flex:1;
 
-/* =========================
-PROGRESS BAR
-========================= */
+    padding:13px;
 
+    border-radius:50px;
 
-.practice-progress{
+    border:1px solid var(--gold);
 
+    background:transparent;
 
-margin:20px;
+    color:var(--gold);
 
+    font-weight:600;
 
-padding:20px;
+    cursor:pointer;
 
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-}
-
-
-
-.practice-progress h3{
-
-
-color:#FFD700;
-
-
-margin-bottom:15px;
-
-
-}
-
-
-
-
-.progress-container{
-
-
-height:14px;
-
-
-background:#222;
-
-
-border-radius:20px;
-
-
-overflow:hidden;
-
-
-}
-
-
-
-#practiceProgress{
-
-
-height:100%;
-
-
-width:0%;
-
-
-background:#FFD700;
-
-
-border-radius:20px;
-
-
-transition:.5s;
-
+    transition:.3s ease;
 
 }
 
@@ -789,76 +665,32 @@ transition:.5s;
 
 
 
+.nav-btn:hover{
 
+    background:var(--gold);
 
-
-/* =========================
-MOTIVATION CARD
-========================= */
-
-
-.practice-motivation{
-
-
-margin:20px;
-
-
-padding:25px;
-
-
-text-align:center;
-
-
-
-border-radius:25px;
-
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-rgba(255,215,0,.15),
-
-rgba(255,255,255,.08)
-
-);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
+    color:#081229;
 
 }
 
+/* ==========================================
+   G THE GENIUS
+   Practice Test CSS
+   Part 3 Final
+   Submit + Result + Footer + Responsive
+========================================== */
 
 
-.practice-motivation h2{
+/* ==========================================
+   Submit Section
+========================================== */
 
 
-color:#FFD700;
+.submit-section{
 
+    margin-top:25px;
 
-margin-bottom:12px;
-
-
-}
-
-
-
-.practice-motivation p{
-
-
-color:#ddd;
-
-
-font-size:14px;
-
+    text-align:center;
 
 }
 
@@ -866,92 +698,31 @@ font-size:14px;
 
 
 
+.submit-btn{
 
+    width:100%;
 
-/* =========================
-BOTTOM NAV
-========================= */
+    padding:15px;
 
+    border:none;
 
-.bottom-nav{
+    border-radius:50px;
 
+    background:linear-gradient(
+        90deg,
+        var(--gold),
+        var(--gold2)
+    );
 
-position:fixed;
+    color:#081229;
 
+    font-size:16px;
 
-bottom:0;
+    font-weight:700;
 
+    cursor:pointer;
 
-left:0;
-
-
-width:100%;
-
-
-height:70px;
-
-
-
-display:flex;
-
-
-justify-content:space-around;
-
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(8,18,41,.95);
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-border-top:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-z-index:999;
-
-
-}
-
-
-
-.bottom-nav a{
-
-
-text-decoration:none;
-
-
-color:white;
-
-
-font-size:12px;
-
-
-text-align:center;
-
-
-}
-
-
-
-.bottom-nav a:hover{
-
-
-color:#FFD700;
-
+    transition:.3s ease;
 
 }
 
@@ -959,128 +730,40 @@ color:#FFD700;
 
 
 
+.submit-btn:hover{
 
+    transform:translateY(-3px);
 
-
-/* =========================
-FOOTER
-========================= */
-
-
-.footer{
-
-
-margin:25px 20px 100px;
-
-
-padding:25px;
-
-
-text-align:center;
-
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
+    box-shadow:0 10px 25px rgba(255,215,0,.3);
 
 }
 
 
 
-.footer-logo{
 
 
-width:75px;
+/* ==========================================
+   Result Preview
+========================================== */
 
 
-height:75px;
+.result-preview{
 
+    margin-top:25px;
 
-border-radius:50%;
+    background:var(--card);
 
+    border:1px solid var(--border);
 
-object-fit:cover;
+    border-radius:25px;
 
+    padding:25px;
 
+    text-align:center;
 
-border:
+    backdrop-filter:blur(18px);
 
-3px solid #FFD700;
-
-
-background:white;
-
-
-}
-
-
-
-.footer h3{
-
-
-color:#FFD700;
-
-
-margin-top:12px;
-
-
-}
-
-
-
-.footer p{
-
-
-color:#aaa;
-
-
-font-size:13px;
-
-
-margin:10px;
-
-
-}
-
-
-
-.footer a{
-
-
-display:block;
-
-
-color:white;
-
-
-text-decoration:none;
-
-
-margin:8px;
-
-
-}
-
-
-
-.footer a:hover{
-
-
-color:#FFD700;
-
+    box-shadow:var(--shadow);
 
 }
 
@@ -1088,58 +771,304 @@ color:#FFD700;
 
 
 
+.result-preview h2{
 
+    color:var(--gold);
 
-
-/* =========================
-MOBILE RESPONSIVE
-========================= */
-
-
-@media(max-width:600px){
-
-
-
-.result-grid{
-
-
-grid-template-columns:
-
-repeat(3,1fr);
-
+    margin-bottom:15px;
 
 }
 
 
 
-.result-grid h1{
 
 
-font-size:22px;
+#scoreDisplay{
 
+    font-size:22px;
 
-}
+    font-weight:700;
 
+    color:#fff;
 
-
-.practice-box{
-
-
-padding:20px;
-
+    margin:20px 0;
 
 }
 
 
 
-#questionText{
 
 
-font-size:17px;
+.retry-btn{
 
+    padding:12px 25px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:var(--gold);
+
+    color:#081229;
+
+    font-weight:700;
+
+    cursor:pointer;
 
 }
 
+
+
+
+
+/* ==========================================
+   Bottom Navigation
+========================================== */
+
+
+.bottom-navigation{
+
+    position:fixed;
+
+    bottom:12px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:calc(100% - 30px);
+
+    max-width:560px;
+
+    background:rgba(8,18,41,.92);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:12px 8px;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    z-index:1000;
+
+}
+
+
+
+
+
+.nav-item{
+
+    text-decoration:none;
+
+    color:var(--muted);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:4px;
+
+    font-size:12px;
+
+}
+
+
+
+
+
+.nav-item.active,
+.nav-item:hover{
+
+    color:var(--gold);
+
+}
+
+
+
+
+
+/* ==========================================
+   Footer
+========================================== */
+
+
+.dashboard-footer{
+
+    margin-top:35px;
+
+    padding:25px 18px;
+
+    text-align:center;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.dashboard-footer img{
+
+    width:75px;
+
+    height:75px;
+
+    object-fit:contain;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    padding:6px;
+
+    border:2px solid var(--gold);
+
+}
+
+
+
+
+
+.dashboard-footer h3{
+
+    color:var(--gold);
+
+    margin-top:12px;
+
+}
+
+
+
+
+
+.dashboard-footer p{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+
+
+
+
+.footer-links{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin:20px 0;
+
+}
+
+
+
+
+
+.footer-links a{
+
+    text-decoration:none;
+
+    color:#fff;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid var(--border);
+
+    padding:10px 15px;
+
+    border-radius:50px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Mobile Responsive
+========================================== */
+
+
+@media(max-width:480px){
+
+
+    .practice-container{
+
+        padding:15px;
+
+    }
+
+
+
+    .question-header{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+
+
+    .timer-box{
+
+        text-align:center;
+
+    }
+
+
+
+    .question-card h2{
+
+        font-size:16px;
+
+    }
+
+
+
+    .bottom-navigation{
+
+        width:calc(100% - 20px);
+
+    }
+
+
+
+    .footer-links{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .footer-links a{
+
+        width:100%;
+
+    }
 
 
 }
