@@ -1,1574 +1,57 @@
 /* ==========================================
-   DASHBOARD CSS v6.0
-   PART 1 / 8
    G THE GENIUS
+   Dashboard CSS
+   Part 1A
 ========================================== */
+
+:root{
+    --bg:#081229;
+    --card:rgba(255,255,255,.08);
+    --card2:rgba(255,255,255,.12);
+    --gold:#FFD700;
+    --gold2:#ffb800;
+    --white:#ffffff;
+    --text:#e8ecff;
+    --muted:#b7bfd8;
+    --border:rgba(255,255,255,.15);
+    --shadow:0 10px 30px rgba(0,0,0,.30);
+    --radius:20px;
+    --transition:.3s ease;
+}
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:"Poppins",sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-
-    background:#081229;
-    color:#ffffff;
-    overflow-x:hidden;
-
-}
-
-.dashboard-container{
-
-    width:100%;
-    max-width:480px;
-    margin:auto;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(180deg,#081229,#0d1f46);
+    color:var(--white);
     min-height:100vh;
-    padding:20px 18px 100px;
-
-}
-
-/* ==========================================
-HEADER
-========================================== */
-
-.dashboard-header{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-
-}
-
-.header-left{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-}
-
-.logo-img{
-
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    object-fit:cover;
-    border:2px solid #FFD700;
-
-}
-
-.header-left h1{
-
-    font-size:22px;
-    font-weight:700;
-    color:#FFD700;
-
-}
-
-.header-left p{
-
-    font-size:12px;
-    color:#BFC8E2;
-    margin-top:2px;
-
-}
-
-.header-right{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-}
-
-.icon-btn,
-.profile-btn{
-
-    width:45px;
-    height:45px;
-    border:none;
-    border-radius:50%;
-    background:#132347;
-    color:#FFD700;
-    font-size:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    text-decoration:none;
-    transition:.3s;
-
-}
-
-.icon-btn:hover,
-.profile-btn:hover{
-
-    background:#FFD700;
-    color:#081229;
-    transform:scale(1.08);
-
-}
-
-/* ==========================================
-WELCOME CARD
-========================================== */
-
-.welcome-card{
-
-    background:linear-gradient(135deg,#0D1E45,#1B3573);
-    border:1px solid rgba(255,215,0,.25);
-    border-radius:22px;
-    padding:22px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,.35);
-
-}
-
-.welcome-card h2{
-
-    font-size:18px;
-    color:#FFD700;
-    margin-bottom:8px;
-
-}
-
-.welcome-card h3{
-
-    font-size:24px;
-    font-weight:700;
-    margin-bottom:8px;
-
-}
-
-.welcome-card p{
-
-    color:#D9E2FF;
-    font-size:14px;
-
-}
-
-.welcome-badge{
-
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    background:#FFD700;
-    color:#081229;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:34px;
-    font-weight:bold;
-}
-
-/* ==========================================
-STATUS CARD
-========================================== */
-
-.status-card{
-
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-bottom:22px;
-
-}
-
-.status-item{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.15);
-    border-radius:18px;
-    padding:16px;
-    text-align:center;
-
-}
-
-.status-item h3{
-
-    color:#FFD700;
-    font-size:22px;
-    margin:10px 0 5px;
-
-}
-
-.status-item p{
-
-    font-size:13px;
-    color:#C8D2F0;
-
-}
-
-/* ==========================================
-DASHBOARD CSS v6.0
-PART 2 / 8
-========================================== */
-
-/* ==========================================
-TODAY'S MISSION
-========================================== */
-
-.mission-section{
-
-    margin-bottom:22px;
-
-}
-
-.mission-section h2{
-
-    font-size:20px;
-    color:#FFD700;
-    margin-bottom:12px;
-
-}
-
-.mission-card{
-
-    background:#132347;
-    border-radius:20px;
-    padding:18px;
-    border:1px solid rgba(255,215,0,.15);
-
-}
-
-.mission-item{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:14px;
-
-}
-
-.mission-item input{
-
-    width:20px;
-    height:20px;
-    accent-color:#FFD700;
-
-}
-
-.mission-item label{
-
-    color:#ffffff;
-    font-size:15px;
-
-}
-
-.mission-reward{
-
-    margin-top:15px;
-    padding-top:15px;
-    border-top:1px solid rgba(255,255,255,.10);
-
-}
-
-.mission-reward h3{
-
-    color:#FFD700;
-    margin-bottom:8px;
-
-}
-
-.mission-reward p{
-
-    color:#E8EEFF;
-    line-height:1.8;
-
-}
-
-/* ==========================================
-CONTINUE LEARNING
-========================================== */
-
-.continue-section{
-
-    margin-bottom:22px;
-
-}
-
-.continue-section h2{
-
-    color:#FFD700;
-    margin-bottom:12px;
-
-}
-
-.continue-card{
-
-    background:#132347;
-    border-radius:20px;
-    padding:18px;
-    border:1px solid rgba(255,215,0,.15);
-
-}
-
-.continue-info h3{
-
-    font-size:20px;
-    margin-bottom:8px;
-
-}
-
-.continue-info p{
-
-    color:#C9D5F5;
-    margin-bottom:12px;
-
-}
-
-/* ==========================================
-PROGRESS BAR
-========================================== */
-
-.progress-bar{
-
-    width:100%;
-    height:10px;
-    background:#243B69;
-    border-radius:50px;
-    overflow:hidden;
-    margin:12px 0;
-
-}
-
-.progress-fill{
-
-    width:0%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        #FFD700,
-        #FFA500
-    );
-    border-radius:50px;
-    transition:width .5s ease;
-
-}
-
-/* ==========================================
-PRIMARY BUTTON
-========================================== */
-
-.primary-btn{
-
-    width:100%;
-    border:none;
-    border-radius:14px;
-    background:#FFD700;
-    color:#081229;
-    padding:14px;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-    margin-top:14px;
-    transition:.3s;
-
-}
-
-.primary-btn:hover{
-
-    transform:translateY(-2px);
-    background:#FFC107;
-
-}
-
-.primary-btn:active{
-
-    transform:scale(.98);
-
-}
-
-/* ==========================================
-YOUR PROGRESS
-========================================== */
-
-.progress-section{
-
-    margin-bottom:24px;
-
-}
-
-.progress-section h2{
-
-    color:#FFD700;
-    margin-bottom:12px;
-
-}
-
-.progress-grid{
-
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-
-}
-
-.progress-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.15);
-    border-radius:18px;
-    padding:18px;
-    text-align:center;
-
-}
-
-.progress-card h3{
-
-    color:#FFD700;
-    font-size:24px;
-    margin:10px 0 6px;
-
-}
-
-.progress-card p{
-
-    color:#C9D5F5;
-    font-size:14px;
-
-    }
-
-/* ==========================================
-   DASHBOARD CSS v6.0
-   PART 3 / 8
-========================================== */
-
-/* ==========================================
-MOCK TEST
-========================================== */
-
-.mocktest-section{
-
-    margin-bottom:24px;
-
-}
-
-.mocktest-section h2{
-
-    color:#FFD700;
-    font-size:20px;
-    margin-bottom:14px;
-
-}
-
-.mocktest-grid{
-
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-
-}
-
-.mock-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.15);
-    border-radius:20px;
-    padding:20px;
-    transition:.3s;
-    box-shadow:0 10px 25px rgba(0,0,0,.20);
-
-}
-
-.mock-card:hover{
-
-    transform:translateY(-4px);
-    border-color:#FFD700;
-
-}
-
-.mock-icon{
-
-    font-size:38px;
-    margin-bottom:12px;
-
-}
-
-.mock-card h3{
-
-    color:#FFD700;
-    font-size:20px;
-    margin-bottom:8px;
-
-}
-
-.mock-card p{
-
-    color:#D7E1FF;
-    margin-bottom:15px;
-    font-size:14px;
-
-}
-
-.mock-btn{
-
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:14px;
-    background:#FFD700;
-    color:#081229;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.3s;
-
-}
-
-.mock-btn:hover{
-
-    background:#FFC107;
-
-}
-
-/* ==========================================
-LEARNING ZONE
-========================================== */
-
-.learning-section{
-
-    margin-bottom:24px;
-
-}
-
-.learning-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.learning-card{
-
-    background:linear-gradient(135deg,#10295A,#1C3F84);
-    border-radius:20px;
-    padding:20px;
-    border:1px solid rgba(255,215,0,.20);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-
-}
-
-.learning-card h3{
-
-    color:#FFD700;
-    margin-bottom:8px;
-
-}
-
-.learning-card p{
-
-    color:#D8E2FF;
-    font-size:14px;
-
-}
-
-/* ==========================================
-GENIUS AI
-========================================== */
-
-.ai-section{
-
-    margin-bottom:24px;
-
-}
-
-.ai-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.ai-card{
-
-    background:linear-gradient(135deg,#261C57,#3D2F86);
-    border-radius:20px;
-    padding:20px;
-    border:1px solid rgba(255,215,0,.20);
-
-}
-
-.ai-left h3{
-
-    color:#FFD700;
-    font-size:20px;
-    margin-bottom:10px;
-
-}
-
-.ai-left p{
-
-    color:#E2E8FF;
-    font-size:14px;
-    line-height:1.7;
-    margin-bottom:16px;
-
-}
-
-/* ==========================================
-CARD ANIMATION
-========================================== */
-
-.mock-card,
-.learning-card,
-.ai-card{
-
-    animation:fadeUp .5s ease;
-
-}
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-        transform:translateY(20px);
-
-    }
-
-    to{
-
-        opacity:1;
-        transform:translateY(0);
-
-    }
-
-}
-
-/* ==========================================
-   DASHBOARD CSS v6.0
-   PART 4 / 8
-========================================== */
-
-/* ==========================================
-LEADERBOARD
-========================================== */
-
-.leaderboard-section{
-
-    margin-bottom:24px;
-
-}
-
-.leaderboard-section h2{
-
-    color:#FFD700;
-    font-size:20px;
-    margin-bottom:14px;
-
-}
-
-.leaderboard-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:20px;
-    padding:20px;
-
-}
-
-.leader-item{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:14px 0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-
-}
-
-.leader-item:last-child{
-
-    border-bottom:none;
-
-}
-
-.leader-item span{
-
-    color:#D8E2FF;
-    font-size:15px;
-
-}
-
-.leader-item strong{
-
-    color:#FFD700;
-    font-size:17px;
-    font-weight:700;
-
-}
-
-/* ==========================================
-RECENT ACTIVITY
-========================================== */
-
-.activity-section{
-
-    margin-bottom:24px;
-
-}
-
-.activity-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.activity-card{
-
-    background:#132347;
-    border-radius:20px;
-    border:1px solid rgba(255,215,0,.18);
-    padding:18px;
-
-}
-
-.activity-item{
-
-    padding:14px;
-    margin-bottom:10px;
-    border-radius:12px;
-    background:#1A2F58;
-    color:#E8EEFF;
-    font-size:14px;
-
-}
-
-.activity-item:last-child{
-
-    margin-bottom:0;
-
-}
-
-/* ==========================================
-CURRENT AFFAIRS
-========================================== */
-
-.currentaffairs-section{
-
-    margin-bottom:24px;
-
-}
-
-.currentaffairs-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.current-card{
-
-    background:linear-gradient(135deg,#17386E,#224A93);
-    border-radius:20px;
-    border:1px solid rgba(255,215,0,.20);
-    padding:20px;
-
-}
-
-.current-card h3{
-
-    color:#FFD700;
-    margin-bottom:10px;
-    font-size:18px;
-
-}
-
-.current-card p{
-
-    color:#E2E8FF;
-    line-height:1.8;
-    margin-bottom:16px;
-
-}
-
-/* ==========================================
-UPCOMING EXAMS
-========================================== */
-
-.exam-section{
-
-    margin-bottom:24px;
-
-}
-
-.exam-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.exam-card{
-
-    background:#132347;
-    border-radius:20px;
-    border:1px solid rgba(255,215,0,.18);
-    padding:18px;
-
-}
-
-.exam-item{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:14px;
-    margin-bottom:10px;
-    border-radius:12px;
-    background:#1A2F58;
-    color:#E8EEFF;
-    font-size:14px;
-
-}
-
-.exam-item:last-child{
-
-    margin-bottom:0;
-
-}
-
-/* ==========================================
-HOVER EFFECT
-========================================== */
-
-.leaderboard-card,
-.activity-card,
-.current-card,
-.exam-card{
-
-    transition:.3s ease;
-
-}
-
-.leaderboard-card:hover,
-.activity-card:hover,
-.current-card:hover,
-.exam-card:hover{
-
-    transform:translateY(-3px);
-    border-color:#FFD700;
-    box-shadow:0 12px 25px rgba(255,215,0,.12);
-
-}
-
-/* ==========================================
-   DASHBOARD CSS v6.0
-   PART 5 / 8
-========================================== */
-
-/* ==========================================
-ACHIEVEMENTS
-========================================== */
-
-.achievement-section{
-
-    margin-bottom:24px;
-
-}
-
-.achievement-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.achievement-grid{
-
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-
-}
-
-.achievement-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:20px;
-    padding:20px;
-    text-align:center;
-    transition:.3s;
-
-}
-
-.achievement-card:hover{
-
-    transform:translateY(-4px);
-    border-color:#FFD700;
-
-}
-
-.achievement-card{
-
-    font-size:32px;
-
-}
-
-.achievement-card h3{
-
-    color:#FFD700;
-    margin:12px 0 8px;
-
-}
-
-.achievement-card p{
-
-    color:#D8E2FF;
-    font-size:13px;
-    line-height:1.5;
-
-}
-
-/* ==========================================
-DAILY CHALLENGE
-========================================== */
-
-.challenge-section{
-
-    margin-bottom:24px;
-
-}
-
-.challenge-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.challenge-card{
-
-    background:linear-gradient(135deg,#4A2C00,#7A4A00);
-    border:1px solid rgba(255,215,0,.25);
-    border-radius:20px;
-    padding:22px;
-
-}
-
-.challenge-card h3{
-
-    color:#FFD700;
-    font-size:20px;
-    margin-bottom:10px;
-
-}
-
-.challenge-card p{
-
-    color:#F5F5F5;
-    line-height:1.7;
-    margin-bottom:16px;
-
-}
-
-.reward-box{
-
-    background:rgba(255,255,255,.08);
-    border-radius:14px;
-    padding:15px;
-    color:#FFD700;
-    font-weight:700;
-    text-align:center;
-    margin-bottom:18px;
-
-}
-
-/* ==========================================
-WEEKLY PROGRESS
-========================================== */
-
-.weekly-progress-section{
-
-    margin-bottom:24px;
-
-}
-
-.weekly-progress-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.weekly-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:20px;
-    padding:20px;
-
-}
-
-.progress-row{
-
-    margin-bottom:18px;
-
-}
-
-.progress-row:last-child{
-
-    margin-bottom:0;
-
-}
-
-.progress-row span{
-
-    display:block;
-    color:#E2E8FF;
-    margin-bottom:8px;
-
-}
-
-progress{
-
-    width:100%;
-    height:12px;
-    border:none;
-    border-radius:20px;
-    overflow:hidden;
-
-}
-
-progress::-webkit-progress-bar{
-
-    background:#223A68;
-
-}
-
-progress::-webkit-progress-value{
-
-    background:#FFD700;
-
-}
-
-/* ==========================================
-MOTIVATION
-========================================== */
-
-.motivation-section{
-
-    margin-bottom:24px;
-
-}
-
-.motivation-card{
-
-    background:linear-gradient(135deg,#1B3573,#274B9A);
-    border:1px solid rgba(255,215,0,.20);
-    border-radius:20px;
-    padding:24px;
-    text-align:center;
-
-}
-
-.motivation-card h2{
-
-    color:#FFD700;
-    margin-bottom:12px;
-
-}
-
-.motivation-card p{
-
-    color:#FFFFFF;
-    font-size:16px;
-    line-height:1.8;
-    font-style:italic;
-
-}
-
-/* ==========================================
-   DASHBOARD CSS v6.0
-   PART 6 / 8
-========================================== */
-
-/* ==========================================
-PERFORMANCE SUMMARY
-========================================== */
-
-.performance-section{
-
-    margin-bottom:24px;
-
-}
-
-.performance-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.performance-grid{
-
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-
-}
-
-.performance-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:20px;
-    padding:18px;
-    text-align:center;
-    transition:.3s;
-
-}
-
-.performance-card:hover{
-
-    transform:translateY(-4px);
-    border-color:#FFD700;
-    box-shadow:0 8px 20px rgba(255,215,0,.15);
-
-}
-
-.performance-card h3{
-
-    color:#FFD700;
-    font-size:24px;
-    margin:10px 0 6px;
-
-}
-
-.performance-card p{
-
-    color:#D8E2FF;
-    font-size:14px;
-
-}
-
-/* ==========================================
-RECOMMENDED LEARNING
-========================================== */
-
-.recommended-section{
-
-    margin-bottom:24px;
-
-}
-
-.recommended-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.recommended-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:20px;
-    padding:20px;
-
-}
-
-.recommended-card h3{
-
-    color:#FFD700;
-    margin-bottom:16px;
-
-}
-
-#recommendedTopics{
-
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-
-}
-
-.topic-btn{
-
-    background:#1D3C78;
-    color:#FFFFFF;
-    border:1px solid rgba(255,215,0,.20);
-    border-radius:30px;
-    padding:10px 16px;
-    cursor:pointer;
-    transition:.3s;
-
-}
-
-.topic-btn:hover{
-
-    background:#FFD700;
-    color:#081229;
-
-}
-
-/* ==========================================
-WRONG ANSWER NOTEBOOK
-========================================== */
-
-.wrong-note-section{
-
-    margin-bottom:24px;
-
-}
-
-.wrong-note-card{
-
-    background:linear-gradient(135deg,#5B1212,#8B1E1E);
-    border:1px solid rgba(255,215,0,.20);
-    border-radius:20px;
-    padding:20px;
-
-}
-
-.wrong-note-card p{
-
-    color:#FFFFFF;
-    line-height:1.7;
-    margin-bottom:16px;
-
-}
-
-/* ==========================================
-QUICK REVISION
-========================================== */
-
-.revision-section{
-
-    margin-bottom:24px;
-
-}
-
-.revision-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.revision-grid{
-
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-
-}
-
-.revision-btn{
-
-    background:#132347;
-    color:#FFFFFF;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:16px;
-    padding:15px;
-    font-size:15px;
-    cursor:pointer;
-    transition:.3s;
-
-}
-
-.revision-btn:hover{
-
-    background:#FFD700;
-    color:#081229;
-
-}
-
-/* ==========================================
-GENIUS AI SUGGESTIONS
-========================================== */
-
-.ai-suggestion-section{
-
-    margin-bottom:24px;
-
-}
-
-.ai-suggestion-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.ai-suggestion-card{
-
-    background:linear-gradient(135deg,#221B5A,#3A2E8E);
-    border:1px solid rgba(255,215,0,.20);
-    border-radius:20px;
-    padding:20px;
-
-}
-
-.ai-suggestion-card p{
-
-    color:#E2E8FF;
-    margin-bottom:16px;
-
-}
-
-.ai-question-list{
-
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    margin-bottom:18px;
-
-}
-
-.ai-btn{
-
-    background:#2C4B91;
-    color:#FFFFFF;
-    border:none;
-    border-radius:14px;
-    padding:14px;
-    text-align:left;
-    cursor:pointer;
-    transition:.3s;
-
-}
-
-.ai-btn:hover{
-
-    background:#FFD700;
-    color:#081229;
-
-}
-
-/* ==========================================
-   DASHBOARD CSS v6.0
-   PART 7 / 8
-========================================== */
-
-/* ==========================================
-SETTINGS
-========================================== */
-
-.settings-section{
-
-    margin-bottom:24px;
-
-}
-
-.settings-section h2{
-
-    color:#FFD700;
-    font-size:20px;
-    margin-bottom:14px;
-
-}
-
-.settings-card{
-
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-
-}
-
-.setting-btn{
-
-    background:#132347;
-    color:#FFFFFF;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:18px;
-    padding:18px;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-
-}
-
-.setting-btn:hover{
-
-    background:#FFD700;
-    color:#081229;
-    transform:translateY(-3px);
-
-}
-
-/* ==========================================
-HELP & SUPPORT
-========================================== */
-
-.support-section{
-
-    margin-bottom:24px;
-
-}
-
-.support-section h2{
-
-    color:#FFD700;
-    margin-bottom:14px;
-
-}
-
-.support-card{
-
-    background:#132347;
-    border:1px solid rgba(255,215,0,.18);
-    border-radius:20px;
-    padding:20px;
-
-}
-
-.support-card p{
-
-    color:#D8E2FF;
-    margin-bottom:18px;
-
-}
-
-.support-buttons{
-
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-
+    overflow-x:hidden;
+    padding-bottom:90px;
 }
 
-.support-btn{
+/* Scrollbar */
 
-    background:#FFD700;
-    color:#081229;
-    border:none;
-    border-radius:14px;
-    padding:12px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.3s;
-
-}
-
-.support-btn:hover{
-
-    background:#FFC107;
-    transform:scale(1.05);
-
-}
-
-/* ==========================================
-FOOTER
-========================================== */
-
-.dashboard-footer{
-
-    margin:30px 0 90px;
-    text-align:center;
-    padding:20px;
-    border-top:1px solid rgba(255,255,255,.08);
-
-}
-
-.footer-logo{
-
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    border:2px solid #FFD700;
-    margin-bottom:12px;
-
-}
-
-.dashboard-footer h3{
-
-    color:#FFD700;
-    margin-bottom:8px;
-
-}
-
-.dashboard-footer p{
-
-    color:#BFC8E2;
-    font-size:13px;
-    line-height:1.7;
-
-}
-
-/* ==========================================
-BOTTOM NAVIGATION
-========================================== */
-
-.bottom-nav{
-    position:fixed;
-    left:50%;
-    bottom:15px;
-    transform:translateX(-50%);
-    width:95%;
-    max-width:430px;
-    height:72px;
-    background:rgba(14,25,55,.95);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,215,0,.2);
-    border-radius:22px;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.45);
-    z-index:999;
-}
-
-.nav-item{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-decoration:none;
-    color:#BFC8E2;
-    font-size:12px;
-    transition:.3s;
-}
-
-.nav-item span:first-child{
-    font-size:24px;
-}
-
-.nav-item.active{
-    color:#FFD700;
-    transform:translateY(-4px);
+::-webkit-scrollbar{
+    width:6px;
 }
 
-.nav-item.ai{
-    width:64px;
-    height:64px;
-    background:#FFD700;
-    color:#081229;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-top:-35px;
-    font-size:28px;
-    font-weight:bold;
-    box-shadow:0 8px 20px rgba(255,215,0,.45);
+::-webkit-scrollbar-thumb{
+    background:var(--gold);
+    border-radius:10px;
 }
-
-/* ==========================================
-   DASHBOARD CSS v6.0
-   PART 8 / 8 FINAL
-   G THE GENIUS
-========================================== */
-
-/* ==========================================
-LOADING OVERLAY
-========================================== */
 
-.loading-overlay{
+/* Splash Screen */
 
+#splash-screen{
     position:fixed;
     inset:0;
     background:#081229;
@@ -1576,274 +59,835 @@ LOADING OVERLAY
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    z-index:99999;
-
+    z-index:9999;
 }
 
-.loader{
-
-    width:65px;
-    height:65px;
-    border:6px solid rgba(255,255,255,.15);
-    border-top:6px solid #FFD700;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-
+.splash-logo{
+    width:110px;
+    height:110px;
+    object-fit:contain;
+    animation:zoom 1.2s ease infinite alternate;
 }
 
-.loading-overlay h3{
-
-    margin-top:20px;
-    color:#FFD700;
-    font-size:18px;
-    font-weight:600;
-
+#splash-screen h1{
+    margin-top:15px;
+    font-size:28px;
+    font-weight:700;
+    color:var(--gold);
 }
 
-@keyframes spin{
+#splash-screen p{
+    margin-top:8px;
+    color:#fff;
+    font-size:15px;
+    opacity:.9;
+}
 
-    100%{
+@keyframes zoom{
 
-        transform:rotate(360deg);
+    from{
+        transform:scale(.95);
+    }
 
+    to{
+        transform:scale(1.05);
     }
 
 }
 
-/* ==========================================
-TOAST MESSAGE
-========================================== */
+/* Dashboard */
 
-.toast-message{
+.dashboard-container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:18px;
+}
 
-    position:fixed;
-    left:50%;
-    bottom:100px;
-    transform:translateX(-50%);
-    background:#FFD700;
-    color:#081229;
-    padding:14px 20px;
-    border-radius:12px;
+/* Header */
+
+.dashboard-header{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.logo{
+    width:90px;
+    height:90px;
+    object-fit:contain;
+    border-radius:50%;
+    border:3px solid var(--gold);
+    background:#fff;
+    padding:8px;
+    box-shadow:var(--shadow);
+}
+
+.dashboard-header h1{
+    margin-top:14px;
+    font-size:26px;
+    color:var(--gold);
     font-weight:700;
-    opacity:0;
-    visibility:hidden;
-    transition:.35s;
-    z-index:9999;
-
 }
 
-.toast-message.show{
-
-    opacity:1;
-    visibility:visible;
-
+.tagline{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:14px;
 }
 
-/* ==========================================
-CUSTOM SCROLLBAR
-========================================== */
+/* Welcome Card */
 
-::-webkit-scrollbar{
-
-    width:8px;
-
+.welcome-card{
+    background:var(--card);
+    backdrop-filter:blur(18px);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
 }
 
-::-webkit-scrollbar-track{
-
-    background:#081229;
-
+.welcome-card h2{
+    font-size:24px;
+    color:var(--gold);
 }
 
-::-webkit-scrollbar-thumb{
-
-    background:#FFD700;
-    border-radius:20px;
-
+.welcome-card h3{
+    margin-top:8px;
+    font-size:22px;
+    color:#fff;
 }
 
-/* ==========================================
-SELECTION
-========================================== */
-
-::selection{
-
-    background:#FFD700;
+.future-badge{
+    display:inline-block;
+    margin-top:16px;
+    padding:8px 18px;
+    border-radius:50px;
+    background:linear-gradient(90deg,var(--gold),var(--gold2));
     color:#081229;
+    font-weight:700;
+    font-size:14px;
+}
 
+.date-time{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+    color:var(--muted);
+    font-size:14px;
+   }
+
+/* ==========================================
+   Daily Quote Card
+========================================== */
+
+.quote-card{
+    background:var(--card);
+    backdrop-filter:blur(18px);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px;
+    margin-bottom:20px;
+    box-shadow:var(--shadow);
+    transition:var(--transition);
+}
+
+.quote-card:hover{
+    transform:translateY(-3px);
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.card-header h2{
+    font-size:18px;
+    color:var(--gold);
+}
+
+.quote-content{
+    text-align:center;
+}
+
+#dailyQuote{
+    font-size:15px;
+    line-height:1.8;
+    color:var(--white);
+    font-style:italic;
 }
 
 /* ==========================================
-SMOOTH SCROLL
+   Section Title
 ========================================== */
 
-html{
+.section-title{
+    margin:25px 0 15px;
+}
 
-    scroll-behavior:smooth;
+.section-title h2{
+    color:var(--gold);
+    font-size:20px;
+    margin-bottom:5px;
+}
 
+.section-title p{
+    color:var(--muted);
+    font-size:13px;
 }
 
 /* ==========================================
-RESPONSIVE
+   Mock Test Cards
 ========================================== */
+
+.mock-test-section{
+    margin-bottom:25px;
+}
+
+.test-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:15px;
+    backdrop-filter:blur(18px);
+    cursor:pointer;
+    transition:var(--transition);
+    box-shadow:var(--shadow);
+}
+
+.test-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--gold);
+}
+
+.card-left h3{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.card-left p{
+    color:var(--white);
+    font-size:14px;
+    margin-bottom:4px;
+}
+
+.card-left span{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.start-btn{
+    background:linear-gradient(90deg,var(--gold),var(--gold2));
+    color:#081229;
+    border:none;
+    border-radius:50px;
+    padding:10px 20px;
+    font-weight:700;
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.start-btn:hover{
+    transform:scale(1.05);
+}
+
+.daily-card{
+    border-left:5px solid #22c55e;
+}
+
+.weekly-card{
+    border-left:5px solid #facc15;
+}
+
+.monthly-card{
+    border-left:5px solid #ef4444;
+}
+
+/* ==========================================
+   Dashboard CSS
+   Part 2A
+   Learning Zone & Practice
+========================================== */
+
+/* ---------- Section Header ---------- */
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:28px 0 16px;
+}
+
+.section-header h2{
+    font-size:20px;
+    font-weight:700;
+    color:var(--gold);
+}
+
+.view-all{
+    text-decoration:none;
+    color:var(--gold);
+    font-size:14px;
+    font-weight:600;
+    transition:var(--transition);
+}
+
+.view-all:hover{
+    opacity:.8;
+}
+
+/* ---------- Learning Grid ---------- */
+
+.learning-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.learning-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    backdrop-filter:blur(18px);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.learning-card:hover{
+    transform:translateY(-5px);
+    border-color:var(--gold);
+}
+
+.learning-icon{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:15px;
+    font-size:28px;
+    background:rgba(255,215,0,.15);
+    border:2px solid rgba(255,215,0,.35);
+}
+
+.learning-card h3{
+    font-size:17px;
+    margin-bottom:8px;
+    color:var(--gold);
+}
+
+.learning-card p{
+    font-size:13px;
+    line-height:1.6;
+    color:var(--muted);
+}
+
+/* ---------- Practice Card ---------- */
+
+.practice-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:18px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:20px;
+    backdrop-filter:blur(18px);
+    box-shadow:var(--shadow);
+    margin-bottom:28px;
+}
+
+.practice-left{
+    flex:1;
+}
+
+.practice-left h3{
+    color:var(--gold);
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.practice-left p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.7;
+}
+
+.practice-btn{
+    border:none;
+    outline:none;
+    cursor:pointer;
+    border-radius:50px;
+    padding:12px 22px;
+    font-size:14px;
+    font-weight:700;
+    color:#081229;
+    background:linear-gradient(90deg,var(--gold),var(--gold2));
+    transition:var(--transition);
+    white-space:nowrap;
+}
+
+.practice-btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 8px 18px rgba(255,215,0,.30);
+}
+
+/* ---------- Mobile ---------- */
 
 @media (max-width:480px){
 
-    .dashboard-container{
-
-        padding:16px 14px 95px;
-
+    .learning-grid{
+        grid-template-columns:1fr;
     }
 
-    .header-left h1{
-
-        font-size:18px;
-
-    }
-
-    .welcome-card{
-
+    .practice-card{
         flex-direction:column;
         align-items:flex-start;
-        gap:18px;
-
     }
 
-    .welcome-badge{
-
-        align-self:center;
-
+    .practice-btn{
+        width:100%;
+        margin-top:10px;
     }
 
-    .achievement-grid,
-    .progress-grid,
-    .performance-grid,
-    .settings-card,
-    .revision-grid{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .support-buttons{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-
+   }
 /* ==========================================
-CARD EFFECT
+   Dashboard CSS
+   Part 2B
+   Leaderboard & Bottom Navigation
 ========================================== */
 
-.mock-card,
-.learning-card,
-.ai-card,
-.progress-card,
-.performance-card,
-.achievement-card,
-.current-card,
-.exam-card,
-.challenge-card,
-.recommended-card,
-.wrong-note-card,
-.weekly-card,
-.motivation-card,
-.settings-card,
-.support-card{
 
-    transition:all .3s ease;
+/* ---------- Leaderboard ---------- */
 
+.leaderboard-section{
+    margin-bottom:30px;
 }
 
-.mock-card:hover,
-.learning-card:hover,
-.ai-card:hover,
-.progress-card:hover,
-.performance-card:hover,
-.achievement-card:hover,
-.current-card:hover,
-.exam-card:hover,
-.challenge-card:hover,
-.recommended-card:hover,
-.wrong-note-card:hover,
-.weekly-card:hover,
-.motivation-card:hover,
-.settings-card:hover,
-.support-card:hover{
-
-    transform:translateY(-4px);
-    box-shadow:0 12px 28px rgba(255,215,0,.15);
-
+.leaderboard-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:20px 15px;
+    backdrop-filter:blur(18px);
+    box-shadow:var(--shadow);
 }
 
-/* ==========================================
-DISABLE TAP HIGHLIGHT
-========================================== */
 
-*{
-
-    -webkit-tap-highlight-color:transparent;
-
+.podium-preview{
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:10px;
 }
 
-/* ==========================================
-END
-========================================== */
-/* ==========================
-BOTTOM NAVIGATION
-========================== */
 
-.bottom-nav{
+.podium{
+    flex:1;
+    text-align:center;
+    padding:15px 5px;
+    background:rgba(255,255,255,.06);
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.10);
+}
+
+
+.podium.first{
+    transform:translateY(-15px);
+    border:2px solid var(--gold);
+}
+
+
+.rank-circle{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+
+.podium h3,
+.podium h4{
+    color:#fff;
+    font-size:14px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+
+.podium small{
+    color:var(--muted);
+    font-size:12px;
+}
+
+
+/* ---------- Bottom Navigation ---------- */
+
+.bottom-navigation{
+
     position:fixed;
     bottom:12px;
     left:50%;
     transform:translateX(-50%);
-    width:95%;
-    max-width:430px;
-    height:72px;
-    background:#13224b;
-    border-radius:22px;
+
+    width:calc(100% - 30px);
+    max-width:470px;
+
+    background:rgba(8,18,41,.90);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
     display:flex;
+
+    justify-content:space-around;
+
     align-items:center;
-    justify-content:space-between;
-    padding:0 8px;
-    border:1px solid rgba(255,215,0,.25);
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
-    z-index:999;
+
+    padding:12px 8px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.40);
+
+    z-index:1000;
+
 }
+
 
 .nav-item{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+
     text-decoration:none;
-    color:#fff;
+
+    color:var(--muted);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:4px;
+
     font-size:11px;
-    font-weight:600;
-    line-height:1.2;
+
+    transition:var(--transition);
+
 }
 
-.nav-item span{
-    display:block;
-    margin-top:4px;
+
+.nav-icon{
+
+    font-size:22px;
+
 }
 
+
+.nav-item:hover,
 .nav-item.active{
-    color:#FFD700;
+
+    color:var(--gold);
+
+    transform:translateY(-3px);
+
 }
 
-.nav-item.ai{
-    width:60px;
-    height:60px;
-    flex:none;
+
+.nav-text{
+
+    font-weight:500;
+
+}
+
+
+/* ---------- Responsive Leaderboard ---------- */
+
+@media(max-width:380px){
+
+    .podium-preview{
+
+        gap:5px;
+
+    }
+
+
+    .rank-circle{
+
+        font-size:28px;
+
+    }
+
+
+    .podium h3,
+    .podium h4{
+
+        font-size:12px;
+
+    }
+
+}
+
+/* ==========================================
+   Dashboard CSS
+   Part 3 Final
+   Footer + Animations + Final Responsive
+========================================== */
+
+
+/* ---------- Footer ---------- */
+
+.dashboard-footer{
+
+    margin-top:35px;
+
+    padding:25px 18px;
+
+    text-align:center;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.footer-logo img{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:contain;
+
+    background:#fff;
+
     border-radius:50%;
-    background:#FFD700;
+
+    padding:6px;
+
+    border:2px solid var(--gold);
+
+}
+
+
+.footer-logo h3{
+
+    margin-top:12px;
+
+    font-size:20px;
+
+    color:var(--gold);
+
+}
+
+
+.footer-logo p{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+
+/* ---------- Footer Links ---------- */
+
+.footer-links{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin:22px 0;
+
+}
+
+
+.footer-links a{
+
+    text-decoration:none;
+
+    color:#fff;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid var(--border);
+
+    padding:10px 16px;
+
+    border-radius:50px;
+
+    font-size:13px;
+
+    transition:var(--transition);
+
+}
+
+
+.footer-links a:hover{
+
     color:#081229;
-    font-size:30px;
-    margin-top:-28px;
-    box-shadow:0 0 20px rgba(255,215,0,.6);
+
+    background:var(--gold);
+
+    transform:translateY(-3px);
+
+}
+
+
+/* ---------- Copyright ---------- */
+
+.footer-copy{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.7;
+
+}
+
+
+/* ---------- Card Animation ---------- */
+
+.welcome-card,
+.quote-card,
+.test-card,
+.learning-card,
+.practice-card,
+.leaderboard-card{
+
+    animation:fadeUp .6s ease;
+
+}
+
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ---------- Extra Mobile Optimization ---------- */
+
+@media(max-width:480px){
+
+
+    .dashboard-container{
+
+        padding:15px;
+
+    }
+
+
+    .dashboard-header h1{
+
+        font-size:23px;
+
+    }
+
+
+    .welcome-card h2{
+
+        font-size:21px;
+
+    }
+
+
+    .welcome-card h3{
+
+        font-size:19px;
+
+    }
+
+
+    .test-card{
+
+        padding:15px;
+
+    }
+
+
+    .card-left h3{
+
+        font-size:16px;
+
+    }
+
+
+    .start-btn{
+
+        padding:9px 15px;
+
+        font-size:12px;
+
+    }
+
+
+    .footer-links{
+
+        flex-direction:column;
+
+    }
+
+
+    .footer-links a{
+
+        width:100%;
+
+    }
+
+}
+
+
+/* ---------- Large Screen ---------- */
+
+@media(min-width:768px){
+
+
+    .dashboard-container{
+
+        max-width:600px;
+
+    }
+
+
 }
