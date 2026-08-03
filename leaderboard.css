@@ -1,445 +1,168 @@
 /* ==========================================
-   G THE GENIUS MOCK TEST PORTAL v5.0
-   LEADERBOARD CSS
-   PART 1 / 5
+   G THE GENIUS
+   Leaderboard CSS
+   Part 1
+
+   Premium Dark Blue + Gold Theme
 ========================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 :root{
 
     --bg:#081229;
-    --card:rgba(255,255,255,0.08);
-    --gold:#f5c542;
-    --gold-light:#ffd86b;
-    --silver:#d9d9d9;
-    --bronze:#cd7f32;
+
+    --card:rgba(255,255,255,.08);
+
+    --gold:#FFD700;
+
+    --gold2:#ffb800;
+
     --white:#ffffff;
-    --text:#d8def0;
-    --border:rgba(255,255,255,0.15);
+
+    --muted:#b7bfd8;
+
+    --border:rgba(255,255,255,.15);
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+
+    --radius:22px;
 
 }
+
+
+
+
 
 *{
 
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
 
 }
+
+
+
+
 
 body{
 
-    background:
-    linear-gradient(
-    135deg,
-    #081229,
-    #101d3a
+    font-family:'Poppins',sans-serif;
+
+    background:linear-gradient(
+        180deg,
+        #081229,
+        #102452
     );
 
     color:var(--white);
+
     min-height:100vh;
 
-}
-
-.leaderboard-container{
-
-    max-width:480px;
-    margin:auto;
-    min-height:100vh;
+    padding-bottom:90px;
 
 }
 
 
 
-/* HEADER */
 
-.leaderboard-header{
 
-    display:flex;
-    align-items:center;
-    gap:15px;
-
-    padding:18px;
-
-    background:rgba(8,18,41,.92);
-
-    border-bottom:1px solid var(--border);
-
-    position:sticky;
-    top:0;
-    z-index:100;
-
-}
-
-.logo-box{
-
-    width:65px;
-    height:65px;
-
-    border-radius:50%;
-    overflow:hidden;
-
-    border:3px solid var(--gold);
-
-}
-
-.leaderboard-logo{
-
-    width:100%;
-    height:100%;
-    object-fit:cover;
-
-}
-
-.leaderboard-title{
-
-    flex:1;
-
-}
-
-.leaderboard-title h1{
-
-    color:var(--gold);
-    font-size:22px;
-    font-weight:800;
-
-}
-
-.leaderboard-title p{
-
-    color:var(--text);
-    font-size:12px;
-
-}
-
-
-
-/* PODIUM SECTION */
-
-.podium-section{
-
-    padding:20px;
-
-}
-
-.podium-section h2{
-
-    text-align:center;
-    color:var(--gold-light);
-    margin-bottom:20px;
-    font-size:22px;
-
-}
-
-.podium-container{
-
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    gap:12px;
-
-}
-
-.podium-card{
-
-    flex:1;
-
-    background:var(--card);
-
-    border-radius:22px;
-
-    padding:18px 10px;
-
-    text-align:center;
-
-    border:1px solid var(--border);
-
-    backdrop-filter:blur(12px);
-
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
-
-}
-
-.podium-position{
-
-    font-size:30px;
-    margin-bottom:10px;
-
-}
-
-.podium-card h3{
-
-    color:var(--white);
-    font-size:15px;
-    margin-bottom:6px;
-
-}
-
-.podium-card p{
-
-    color:var(--text);
-    font-size:13px;
-
-}
-
-
-
-/* PODIUM HEIGHTS */
-
-.first{
-
-    min-height:190px;
-    border:2px solid var(--gold);
-
-}
-
-.second{
-
-    min-height:160px;
-    border:2px solid var(--silver);
-
-}
-
-.third{
-
-    min-height:145px;
-    border:2px solid var(--bronze);
-
-}
 /* ==========================================
-   LEADERBOARD CSS
-   FILTER + TABLE DESIGN
-   PART 2 / 5
+   Container
 ========================================== */
 
 
-
-/* FILTER SECTION */
-
-.filter-section{
-
-    padding:20px;
-
-}
-
-.filter-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:20px;
-
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
-
-}
-
-.filter-card h3{
-
-    color:var(--gold-light);
-
-    text-align:center;
-
-    margin-bottom:15px;
-
-}
-
-.filter-card select,
-.filter-card input{
+.leader-container{
 
     width:100%;
 
-    padding:14px;
+    max-width:650px;
 
-    margin-bottom:12px;
+    margin:auto;
 
-    border-radius:15px;
+    padding:18px;
 
-    border:1px solid var(--border);
+}
 
-    background:rgba(255,255,255,.08);
 
-    color:var(--white);
 
-    outline:none;
+
+
+/* ==========================================
+   Header
+========================================== */
+
+
+.leader-header{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+.leader-header .logo{
+
+    width:90px;
+
+    height:90px;
+
+    object-fit:contain;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    padding:8px;
+
+    border:3px solid var(--gold);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.leader-header h1{
+
+    margin-top:15px;
+
+    color:var(--gold);
+
+    font-size:28px;
+
+}
+
+
+
+
+
+.leader-header p{
+
+    color:var(--muted);
 
     font-size:14px;
 
 }
 
-.filter-card select option{
 
-    background:#081229;
 
-    color:#fff;
 
-}
-
-.refresh-btn{
-
-    width:100%;
-
-    padding:14px;
-
-    border:none;
-
-    border-radius:15px;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-.refresh-btn:hover{
-
-    transform:translateY(-2px);
-
-}
-
-
-
-/* LEADERBOARD TABLE */
-
-.leaderboard-section{
-
-    padding:20px;
-
-}
-
-.leaderboard-section h2{
-
-    text-align:center;
-
-    color:var(--gold-light);
-
-    margin-bottom:18px;
-
-}
-
-.leaderboard-table{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    overflow:hidden;
-
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
-
-}
-
-.leaderboard-head{
-
-    display:grid;
-
-    grid-template-columns:70px 1fr 80px;
-
-    gap:10px;
-
-    background:rgba(245,197,66,.15);
-
-    padding:15px;
-
-    font-weight:700;
-
-    color:var(--gold);
-
-}
-
-.leaderboard-list{
-
-    display:flex;
-
-    flex-direction:column;
-
-}
-
-.leaderboard-row{
-
-    display:grid;
-
-    grid-template-columns:70px 1fr 80px;
-
-    gap:10px;
-
-    align-items:center;
-
-    padding:15px;
-
-    border-top:1px solid var(--border);
-
-    transition:.3s;
-
-}
-
-.leaderboard-row:hover{
-
-    background:rgba(255,255,255,.05);
-
-}
-
-.rank{
-
-    font-weight:700;
-
-    color:var(--gold);
-
-}
-
-.student-name{
-
-    color:var(--white);
-
-    font-weight:600;
-
-    overflow:hidden;
-
-    white-space:nowrap;
-
-    text-overflow:ellipsis;
-
-}
-
-.student-marks{
-
-    color:var(--gold-light);
-
-    text-align:right;
-
-    font-weight:700;
-
-      }
 
 /* ==========================================
-   LEADERBOARD CSS
-   STUDENT CARD + SUMMARY
-   PART 3 / 5
+   Podium Section
 ========================================== */
 
 
-
-/* CURRENT STUDENT */
-
-.student-rank-section{
-
-    padding:20px;
-
-}
-
-.student-rank-card{
+.podium-section{
 
     background:var(--card);
 
@@ -449,83 +172,197 @@ body{
 
     padding:22px;
 
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
 
 }
 
-.student-rank-card h2{
+
+
+
+
+.podium-section h2{
 
     text-align:center;
-
-    color:var(--gold-light);
-
-    margin-bottom:20px;
-
-}
-
-.student-rank-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:12px;
-
-}
-
-.student-rank-item{
-
-    background:rgba(255,255,255,.06);
-
-    border-radius:18px;
-
-    padding:16px 10px;
-
-    text-align:center;
-
-}
-
-.student-rank-item span{
-
-    display:block;
-
-    color:var(--text);
-
-    font-size:12px;
-
-    margin-bottom:8px;
-
-}
-
-.student-rank-item strong{
 
     color:var(--gold);
 
-    font-size:22px;
+    margin-bottom:25px;
 
 }
 
 
 
-/* SUMMARY */
 
-.summary-section{
 
-    padding:20px;
+.podium-container{
 
-}
+    display:flex;
 
-.summary-grid{
+    justify-content:center;
 
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
+    align-items:end;
 
     gap:12px;
 
 }
 
-.summary-card{
+
+
+
+
+.podium-card{
+
+    flex:1;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:18px 10px;
+
+}
+
+
+
+
+
+.podium-card .rank{
+
+    font-size:35px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+
+
+.podium-card h3{
+
+    font-size:14px;
+
+    color:#fff;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+
+
+
+.podium-card p{
+
+    margin-top:8px;
+
+    color:var(--gold);
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   G THE GENIUS
+   Leaderboard CSS
+   Part 2
+
+   Podium Highlight + Rank Cards
+========================================== */
+
+
+
+/* ==========================================
+   Podium Highlight
+========================================== */
+
+
+.podium-card.first{
+
+    transform:translateY(-15px);
+
+    border:2px solid var(--gold);
+
+    box-shadow:
+    0 10px 30px rgba(255,215,0,.25);
+
+}
+
+
+
+
+
+.podium-card.second{
+
+    border-color:#c0c0c0;
+
+}
+
+
+
+
+
+.podium-card.third{
+
+    border-color:#cd7f32;
+
+}
+
+
+
+
+
+/* ==========================================
+   Rank Section
+========================================== */
+
+
+.rank-section{
+
+    margin-top:25px;
+
+}
+
+
+
+
+
+.rank-section h2{
+
+    color:var(--gold);
+
+    text-align:center;
+
+    margin-bottom:18px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Rank Card
+========================================== */
+
+
+.rank-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
 
     background:var(--card);
 
@@ -533,227 +370,226 @@ body{
 
     border-radius:20px;
 
-    text-align:center;
+    padding:15px;
 
-    padding:18px 10px;
+    margin-bottom:12px;
 
-}
+    backdrop-filter:blur(15px);
 
-.summary-card h3{
-
-    color:var(--text);
-
-    font-size:13px;
-
-    margin-bottom:10px;
-
-}
-
-.summary-card strong{
-
-    color:var(--gold);
-
-    font-size:24px;
+    box-shadow:var(--shadow);
 
 }
 
 
 
-/* QUICK NAVIGATION */
 
-.leaderboard-nav{
 
-    padding:20px;
+.rank-card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:var(--gold);
+
+}
+
+
+
+
+
+.rank-number{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
 
     display:flex;
 
-    flex-direction:column;
+    align-items:center;
 
-    gap:14px;
-
-}
-
-.leader-btn{
-
-    display:block;
-
-    text-align:center;
-
-    text-decoration:none;
+    justify-content:center;
 
     background:var(--gold);
 
     color:#081229;
 
-    padding:15px;
-
-    border-radius:30px;
-
-    font-weight:700;
-
-    transition:.3s;
-
-}
-
-.leader-btn:hover{
-
-    transform:translateY(-2px);
+    font-weight:800;
 
 }
 
 
 
-/* ACHIEVEMENT */
 
-.achievement-section{
 
-    padding:20px;
+.student-info{
+
+    flex:1;
 
 }
 
-.achievement-card{
 
-    background:linear-gradient(
-    135deg,
-    rgba(245,197,66,.18),
-    rgba(255,255,255,.06)
-    );
 
-    border:1px solid var(--gold);
 
-    border-radius:25px;
 
-    padding:24px;
+.student-info h3{
+
+    color:#fff;
+
+    font-size:15px;
+
+}
+
+
+
+
+
+.student-info p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-top:5px;
+
+}
+
+
+
+
+
+.marks-box{
 
     text-align:center;
 
-}
-
-.achievement-card h2{
-
-    color:var(--gold-light);
-
-    margin-bottom:10px;
+    min-width:55px;
 
 }
 
-.achievement-card p{
 
-    color:var(--text);
 
-    line-height:1.7;
 
-    font-size:14px;
+
+.marks-box span{
+
+    display:block;
+
+    color:var(--gold);
+
+    font-size:20px;
+
+    font-weight:800;
+
+}
+
+
+
+
+
+.marks-box small{
+
+    color:var(--muted);
+
+    font-size:11px;
 
 }
 
 /* ==========================================
-   LEADERBOARD CSS
-   SOCIAL + INFO + FOOTER
-   PART 4 / 5
+   G THE GENIUS
+   Leaderboard CSS
+   Part 3 Final
+
+   Navigation + Footer + Responsive
 ========================================== */
 
 
 
-/* SOCIAL SECTION */
+/* ==========================================
+   Bottom Navigation
+========================================== */
 
-.social-section{
 
-    padding:20px;
+.bottom-navigation{
 
-}
+    position:fixed;
 
-.social-card{
+    bottom:12px;
 
-    background:var(--card);
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:calc(100% - 30px);
+
+    max-width:600px;
+
+    background:rgba(8,18,41,.95);
+
+    backdrop-filter:blur(20px);
 
     border:1px solid var(--border);
 
     border-radius:25px;
 
-    padding:22px;
+    padding:12px 8px;
 
-    text-align:center;
+    display:flex;
 
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
+    justify-content:space-around;
 
-}
-
-.social-card h3{
-
-    color:var(--gold-light);
-
-    margin-bottom:18px;
+    z-index:1000;
 
 }
 
-.social-buttons{
+
+
+
+
+.nav-item{
+
+    text-decoration:none;
+
+    color:var(--muted);
 
     display:flex;
 
     flex-direction:column;
 
-    gap:12px;
+    align-items:center;
 
-}
+    gap:4px;
 
-.social-buttons a{
-
-    display:block;
-
-    text-decoration:none;
-
-    padding:14px;
-
-    border-radius:30px;
-
-    font-weight:700;
-
-    transition:.3s;
-
-}
-
-.social-buttons a:nth-child(1){
-
-    background:#FF0000;
-
-    color:#fff;
-
-}
-
-.social-buttons a:nth-child(2){
-
-    background:#229ED9;
-
-    color:#fff;
-
-}
-
-.social-buttons a:nth-child(3){
-
-    background:var(--gold);
-
-    color:#081229;
-
-}
-
-.social-buttons a:hover{
-
-    transform:translateY(-2px);
+    font-size:12px;
 
 }
 
 
 
-/* INFO SECTION */
 
-.info-section{
 
-    padding:20px;
+.nav-item.active,
+.nav-item:hover{
+
+    color:var(--gold);
 
 }
 
-.info-card{
+
+
+
+
+/* ==========================================
+   Footer
+========================================== */
+
+
+.dashboard-footer{
+
+    margin-top:35px;
+
+    padding:25px 18px;
+
+    text-align:center;
 
     background:var(--card);
 
@@ -761,77 +597,57 @@ body{
 
     border-radius:25px;
 
-    padding:22px;
-
 }
 
-.info-card h3{
 
-    color:var(--gold-light);
 
-    margin-bottom:15px;
 
-}
 
-.info-card ul{
+.dashboard-footer img{
 
-    list-style:none;
+    width:75px;
 
-}
+    height:75px;
 
-.info-card li{
+    object-fit:contain;
 
-    color:var(--text);
+    border-radius:50%;
 
-    padding:10px 0;
+    background:#fff;
 
-    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:6px;
 
-    line-height:1.6;
-
-}
-
-.info-card li:last-child{
-
-    border-bottom:none;
+    border:2px solid var(--gold);
 
 }
 
 
 
-/* FOOTER */
 
-.app-footer{
 
-    margin-top:30px;
-
-    padding:30px 20px;
-
-    text-align:center;
-
-    background:rgba(0,0,0,.25);
-
-    border-top:1px solid var(--border);
-
-}
-
-.app-footer h3{
+.dashboard-footer h3{
 
     color:var(--gold);
 
-    font-size:22px;
+    margin-top:12px;
 
 }
 
-.app-footer p{
 
-    color:var(--text);
+
+
+
+.dashboard-footer p{
+
+    color:var(--muted);
 
     font-size:13px;
 
-    margin-top:8px;
-
 }
+
+
+
+
 
 .footer-links{
 
@@ -841,411 +657,137 @@ body{
 
     flex-wrap:wrap;
 
-    gap:16px;
+    gap:10px;
 
-    margin:20px 0;
+    margin:18px 0;
 
 }
+
+
+
+
 
 .footer-links a{
 
     text-decoration:none;
 
-    color:var(--white);
+    color:#fff;
 
-    font-size:13px;
+    background:rgba(255,255,255,.08);
 
-    transition:.3s;
+    border:1px solid var(--border);
+
+    padding:10px 15px;
+
+    border-radius:50px;
 
 }
+
+
+
+
 
 .footer-links a:hover{
 
-    color:var(--gold);
+    background:var(--gold);
+
+    color:#081229;
 
 }
 
-.copyright{
 
-    opacity:.8;
 
-    font-size:12px !important;
 
-}
 
 /* ==========================================
-   LEADERBOARD CSS
-   RESPONSIVE + FINAL
-   PART 5 / 5
+   Mobile Responsive
 ========================================== */
 
 
+@media(max-width:480px){
 
-/* SMALL MOBILE */
 
-@media (max-width:360px){
+    .leader-container{
 
-.leaderboard-container{
+        padding:15px;
 
-    width:100%;
+    }
 
-}
 
-.leaderboard-header{
 
-    padding:15px;
+    .podium-container{
 
-}
+        gap:8px;
 
-.logo-box{
+    }
 
-    width:55px;
 
-    height:55px;
 
-}
+    .podium-card{
 
-.leaderboard-title h1{
+        padding:14px 6px;
 
-    font-size:18px;
+    }
 
-}
 
-.podium-container{
 
-    gap:8px;
+    .podium-card .rank{
 
-}
+        font-size:28px;
 
-.podium-card{
+    }
 
-    padding:14px 8px;
 
-}
 
-.podium-card h3{
+    .podium-card h3{
 
-    font-size:13px;
+        font-size:12px;
 
-}
+    }
 
-.student-rank-grid,
-.summary-grid{
 
-    grid-template-columns:1fr;
 
-}
+    .rank-card{
 
-.leaderboard-head,
-.leaderboard-row{
+        padding:12px;
 
-    grid-template-columns:55px 1fr 70px;
+    }
 
-    font-size:12px;
 
-}
 
-}
+    .rank-number{
 
+        width:38px;
 
+        height:38px;
 
-/* NORMAL MOBILE */
+        font-size:13px;
 
-@media (min-width:361px) and (max-width:600px){
+    }
 
-.leaderboard-container{
 
-    max-width:480px;
 
-}
+    .bottom-navigation{
 
-}
+        width:calc(100% - 20px);
 
+    }
 
 
-/* TABLET */
 
-@media (min-width:601px){
+    .footer-links{
 
-.leaderboard-container{
+        flex-direction:column;
 
-    max-width:760px;
+    }
 
-}
 
-.student-rank-grid,
-.summary-grid{
 
-    grid-template-columns:repeat(3,1fr);
+    .footer-links a{
 
-}
+        width:100%;
 
-.social-buttons{
+    }
 
-    flex-direction:row;
-
-}
-
-.social-buttons a{
-
-    flex:1;
-
-}
-
-}
-
-
-
-/* DESKTOP */
-
-@media (min-width:1024px){
-
-.leaderboard-container{
-
-    max-width:950px;
-
-}
-
-.podium-container{
-
-    max-width:750px;
-
-    margin:auto;
-
-}
-
-.leaderboard-table{
-
-    font-size:16px;
-
-}
-
-}
-
-
-
-/* TOUCH EFFECTS */
-
-button,
-a{
-
-    -webkit-tap-highlight-color:transparent;
-
-}
-
-button:active,
-a:active{
-
-    transform:scale(.97);
-
-}
-
-
-
-/* IMAGE SETTINGS */
-
-img{
-
-    user-select:none;
-
-    -webkit-user-drag:none;
-
-}
-
-
-
-/* SCROLLBAR */
-
-::-webkit-scrollbar{
-
-    width:6px;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-    background:var(--gold);
-
-    border-radius:10px;
-
-}
-
-::-webkit-scrollbar-track{
-
-    background:#081229;
-
-}
-
-
-
-/* FINAL */
-
-body{
-
-    overflow-x:hidden;
-
-}
-
-/* LEADERBOARD CSS v5.0 COMPLETE */
-
-.rank-gold{
-    background: linear-gradient(135deg,#FFD700,#FFB300);
-    color:#081229;
-    font-weight:700;
-}
-
-.rank-silver{
-    background: linear-gradient(135deg,#E0E0E0,#BDBDBD);
-    color:#081229;
-    font-weight:700;
-}
-
-.rank-bronze{
-    background: linear-gradient(135deg,#CD7F32,#A05A2C);
-    color:#fff;
-    font-weight:700;
-}
-
-#leaderboardBody tr{
-    border-bottom:1px solid rgba(255,255,255,.15);
-}
-
-#leaderboardBody tr:hover{
-    transform:scale(1.01);
-    transition:.3s;
-}
-
-/* ===========================
-TOP 3 PODIUM DESIGN
-=========================== */
-
-.top-rank-section{
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-    gap:15px;
-    margin:35px 0;
-    flex-wrap:nowrap;
-}
-
-.rank-card{
-    width:31%;
-    border-radius:22px;
-    padding:20px 12px;
-    text-align:center;
-    color:#fff;
-    background:linear-gradient(180deg,#122347,#081229);
-    box-shadow:0 10px 25px rgba(0,0,0,.45);
-    transition:.3s;
-    position:relative;
-}
-
-.rank-card:hover{
-    transform:translateY(-8px);
-}
-
-.rank-card h3{
-    margin:12px 0 8px;
-    font-size:22px;
-    color:#FFD700;
-}
-
-.rank-card p{
-    margin:5px 0;
-    font-size:15px;
-    color:#ddd;
-}
-
-.rank-card b{
-    display:block;
-    font-size:22px;
-    color:#fff;
-}
-
-/* 1st */
-
-.rank-card.first{
-    order:2;
-    height:280px;
-    border:3px solid #FFD700;
-    background:linear-gradient(180deg,#1b2f63,#081229);
-    transform:translateY(-20px);
-}
-
-.rank-card.first::before{
-    content:"👑";
-    position:absolute;
-    top:-22px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:48px;
-}
-
-/* 2nd */
-
-.rank-card.second{
-    order:1;
-    height:235px;
-    border:3px solid #C0C0C0;
-}
-
-.rank-card.second::before{
-    content:"🥈";
-    position:absolute;
-    top:-18px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:40px;
-}
-
-/* 3rd */
-
-.rank-card.third{
-    order:3;
-    height:215px;
-    border:3px solid #CD7F32;
-}
-
-.rank-card.third::before{
-    content:"🥉";
-    position:absolute;
-    top:-18px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:40px;
-}
-
-/* Mobile */
-
-@media(max-width:768px){
-
-.top-rank-section{
-    gap:8px;
-}
-
-.rank-card{
-    width:32%;
-    padding:15px 8px;
-}
-
-.rank-card.first{
-    height:240px;
-}
-
-.rank-card.second{
-    height:205px;
-}
-
-.rank-card.third{
-    height:185px;
-}
-
-.rank-card h3{
-    font-size:18px;
-}
-
-.rank-card b{
-    font-size:18px;
-}
 
 }
