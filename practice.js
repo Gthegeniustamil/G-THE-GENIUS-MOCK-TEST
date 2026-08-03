@@ -54,10 +54,13 @@ const topicSelect =
 document.getElementById("topic");
 
 
-const startBtn =
-document.getElementById("startPractice");
+const startBtn = document.getElementById("startPracticeBtn");
 
+startBtn?.addEventListener("click", () => {
 
+    window.location.href = "practice-test.html";
+
+});
 
 
 
