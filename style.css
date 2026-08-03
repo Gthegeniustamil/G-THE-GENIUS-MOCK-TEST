@@ -1,46 +1,32 @@
 /* ==========================================
-   G THE GENIUS MOCK TEST PORTAL v5.0
-   MAIN STYLE CSS
-   PART 1 / 5
+   G THE GENIUS
+   MAIN GLOBAL STYLE CSS
+   PREMIUM DARK BLUE + GOLD THEME
+   PART 1
 ========================================== */
 
 
-/* GOOGLE FONT */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-
-
-
-/* ROOT COLORS */
-
 :root{
 
-    --primary-bg:#081229;
+    --primary:#081229;
 
-    --secondary-bg:#101d3a;
+    --secondary:#102452;
 
-    --card-bg:rgba(255,255,255,0.08);
-
-    --gold:#f5c542;
-
-    --gold-light:#ffd86b;
+    --gold:#FFD700;
 
     --white:#ffffff;
 
-    --text-light:#d8def0;
+    --text:#cfd6ee;
 
-    --border:rgba(255,255,255,0.15);
+    --card:rgba(255,255,255,.08);
 
-    --shadow:0 8px 25px rgba(0,0,0,0.35);
+    --border:rgba(255,255,255,.15);
+
+    --shadow:0 15px 40px rgba(0,0,0,.4);
 
 }
 
 
-
-
-
-
-/* RESET */
 
 *{
 
@@ -49,8 +35,6 @@
     padding:0;
 
     box-sizing:border-box;
-
-    font-family:'Poppins',sans-serif;
 
 }
 
@@ -66,12 +50,14 @@ html{
 
 body{
 
+    font-family:'Poppins',sans-serif;
+
     background:
 
     linear-gradient(
-    135deg,
-    #081229,
-    #101d3a
+        180deg,
+        var(--primary),
+        var(--secondary)
     );
 
     color:var(--white);
@@ -84,20 +70,44 @@ body{
 
 
 
+a{
 
-/* APP CONTAINER */
+    text-decoration:none;
 
-.app-container{
+    color:inherit;
+
+}
+
+
+
+
+
+button{
+
+    font-family:'Poppins',sans-serif;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+/* ==========================
+   Main Container
+========================== */
+
+
+.container{
 
     width:100%;
 
-    max-width:480px;
+    max-width:650px;
 
     margin:auto;
 
-    min-height:100vh;
-
-    overflow:hidden;
+    padding:18px;
 
 }
 
@@ -105,35 +115,26 @@ body{
 
 
 
+/* ==========================
+   Glass Card
+========================== */
 
 
-/* HEADER */
+.glass-card{
 
-.app-header{
+    background:var(--card);
 
-    width:100%;
+    border:
+
+    1px solid var(--border);
+
+    border-radius:25px;
 
     padding:20px;
 
-    display:flex;
+    backdrop-filter:blur(15px);
 
-    align-items:center;
-
-    gap:15px;
-
-    background:
-
-    rgba(8,18,41,0.85);
-
-    backdrop-filter:blur(12px);
-
-    position:sticky;
-
-    top:0;
-
-    z-index:100;
-
-    border-bottom:1px solid var(--border);
+    box-shadow:var(--shadow);
 
 }
 
@@ -141,34 +142,28 @@ body{
 
 
 
+/* ==========================
+   Logo Common
+========================== */
 
-/* LOGO */
 
-.logo-box{
+.logo{
 
-    width:70px;
+    width:85px;
 
-    height:70px;
+    height:85px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:8px;
 
     border-radius:50%;
 
-    overflow:hidden;
-
     border:3px solid var(--gold);
 
-    flex-shrink:0;
-
-}
-
-
-
-.app-logo{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
+    box-shadow:var(--shadow);
 
 }
 
@@ -176,14 +171,20 @@ body{
 
 
 
+/* ==========================
+   Headings
+========================== */
 
-/* BRAND TEXT */
 
-.brand-text h1{
-
-    font-size:22px;
+h1,h2,h3{
 
     font-weight:800;
+
+}
+
+
+
+.gold-text{
 
     color:var(--gold);
 
@@ -191,113 +192,11 @@ body{
 
 
 
-.brand-text p{
-
-    font-size:11px;
-
-    color:var(--text-light);
-
-    margin-top:3px;
-
-}
 
 
-
-
-
-/* HERO SECTION */
-
-.hero-section{
-
-    padding:25px 18px;
-
-}
-
-
-
-.hero-card{
-
-    background:var(--card-bg);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:25px 20px;
-
-    text-align:center;
-
-    box-shadow:var(--shadow);
-
-    backdrop-filter:blur(15px);
-
-}
-
-
-
-.hero-card h2{
-
-    font-size:24px;
-
-    line-height:1.3;
-
-    margin-bottom:12px;
-
-    color:var(--gold-light);
-
-}
-
-
-
-.hero-card p{
-
-    color:var(--text-light);
-
-    font-size:14px;
-
-    line-height:1.6;
-
-}
-
-/* ==========================================
-   BUTTONS + FEATURE CARDS
-   PART 2 / 5
-========================================== */
-
-
-
-/* HERO BUTTONS */
-
-.hero-buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:15px;
-
-    margin-top:25px;
-
-}
-
-
-
-.btn{
-
-    text-decoration:none;
-
-    padding:12px 28px;
-
-    border-radius:30px;
-
-    font-size:14px;
-
-    font-weight:600;
-
-    transition:0.3s;
-
-}
-
+/* ==========================
+   Premium Button
+========================== */
 
 
 .primary-btn{
@@ -306,8 +205,38 @@ body{
 
     color:#081229;
 
+    border:none;
+
+    padding:14px 25px;
+
+    border-radius:50px;
+
+    font-weight:800;
+
+    transition:.3s;
+
 }
 
+
+
+.primary-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 25px rgba(255,215,0,.35);
+
+}
+/* ==========================================
+   G THE GENIUS
+   MAIN GLOBAL STYLE CSS
+   PART 2
+========================================== */
+
+
+
+/* ==========================
+   Secondary Button
+========================== */
 
 
 .secondary-btn{
@@ -316,43 +245,25 @@ body{
 
     color:var(--gold);
 
-    border:2px solid var(--gold);
+    border:1px solid var(--gold);
+
+    padding:14px 25px;
+
+    border-radius:50px;
+
+    font-weight:700;
+
+    transition:.3s;
 
 }
 
 
 
-.btn:hover{
+.secondary-btn:hover{
 
-    transform:translateY(-3px);
+    background:var(--gold);
 
-}
-
-
-
-
-
-
-
-/* SECTION COMMON */
-
-section{
-
-    padding:20px 18px;
-
-}
-
-
-
-section h2{
-
-    text-align:center;
-
-    color:var(--gold-light);
-
-    font-size:22px;
-
-    margin-bottom:20px;
+    color:#081229;
 
 }
 
@@ -361,116 +272,94 @@ section h2{
 
 
 
+/* ==========================
+   Section Title
+========================== */
 
-/* FEATURE SECTION */
 
+.section-title{
 
-.feature-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:12px;
+    margin:25px 0 15px;
 
 }
 
 
 
-.feature-card{
-
-    background:var(--card-bg);
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    padding:15px 10px;
-
-    text-align:center;
-
-    backdrop-filter:blur(12px);
-
-    box-shadow:var(--shadow);
-
-}
-
-
-
-.feature-icon{
-
-    font-size:28px;
-
-    margin-bottom:8px;
-
-}
-
-
-
-.feature-card h3{
-
-    font-size:14px;
+.section-title h2{
 
     color:var(--gold);
 
-    margin-bottom:5px;
+    font-size:22px;
 
 }
 
 
 
-.feature-card p{
+.section-title p{
 
-    font-size:11px;
+    color:var(--text);
 
-    color:var(--text-light);
-
-}
-
-
-
-
-
-
-
-/* MOCK TEST SECTION */
-
-
-.test-grid{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
+    font-size:14px;
 
 }
 
 
 
+
+
+
+/* ==========================
+   Dashboard Cards
+========================== */
+
+
+.dashboard-card,
 .test-card{
 
-    background:var(--card-bg);
+    background:var(--card);
 
     border:1px solid var(--border);
 
-    border-radius:22px;
+    border-radius:25px;
 
     padding:20px;
 
-    text-align:center;
+    margin-bottom:15px;
 
     box-shadow:var(--shadow);
 
     backdrop-filter:blur(15px);
 
+    transition:.3s;
+
 }
 
 
 
-.test-icon{
+.dashboard-card:hover,
+.test-card:hover{
 
-    font-size:35px;
+    transform:translateY(-4px);
+
+}
+
+
+
+
+
+
+/* ==========================
+   Mock Test Card
+========================== */
+
+
+.test-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
 
 }
 
@@ -478,45 +367,24 @@ section h2{
 
 .test-card h3{
 
-    margin:10px 0;
-
     color:var(--gold);
 
-    font-size:20px;
+    font-size:18px;
 
 }
 
 
 
-.test-card p{
+.test-card p,
+.test-card span{
 
-    color:var(--text-light);
+    color:var(--text);
 
-    font-size:14px;
+    font-size:13px;
 
-    line-height:1.6;
+    display:block;
 
-}
-
-
-
-.test-btn{
-
-    display:inline-block;
-
-    margin-top:15px;
-
-    padding:10px 25px;
-
-    border-radius:25px;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    text-decoration:none;
-
-    font-weight:600;
+    margin-top:6px;
 
 }
 
@@ -525,65 +393,75 @@ section h2{
 
 
 
-
-/* SUBJECT SECTION */
-
-
-.subject-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:15px;
-
-}
+/* ==========================
+   Bottom Navigation
+========================== */
 
 
+.bottom-navigation,
+.bottom-nav{
 
-.subject-card{
+    position:fixed;
 
-    background:var(--card-bg);
+    bottom:15px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:92%;
+
+    max-width:620px;
+
+    background:rgba(8,18,41,.95);
 
     border:1px solid var(--border);
 
-    border-radius:20px;
+    border-radius:30px;
 
-    padding:18px 12px;
+    display:flex;
 
-    text-align:center;
+    justify-content:space-around;
+
+    align-items:center;
+
+    padding:12px;
+
+    backdrop-filter:blur(20px);
 
     box-shadow:var(--shadow);
 
-}
-
-
-
-.subject-card span{
-
-    font-size:30px;
+    z-index:999;
 
 }
 
 
 
-.subject-card h3{
+.nav-item{
 
-    margin:8px 0;
+    color:var(--text);
 
-    color:var(--gold);
-
-    font-size:16px;
-
-}
-
-
-
-.subject-card p{
+    text-align:center;
 
     font-size:12px;
 
-    color:var(--text-light);
+}
+
+
+
+.nav-item span{
+
+    display:block;
+
+    margin-top:4px;
+
+}
+
+
+
+.nav-item.active{
+
+    color:var(--gold);
 
 }
 
@@ -591,154 +469,117 @@ section h2{
 
 
 
+/* ==========================
+   Forms
+========================== */
 
 
-/* SMART CARD */
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:15px;
+
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    outline:none;
+
+}
 
 
-.smart-card{
 
-    background:
+input::placeholder,
+textarea::placeholder{
 
-    linear-gradient(
-    135deg,
-    rgba(245,197,66,0.15),
-    rgba(255,255,255,0.05)
-    );
+    color:#aab3cc;
 
-    border:1px solid var(--gold);
+}
 
-    border-radius:25px;
+
+
+
+
+/* ==========================
+   Footer
+========================== */
+
+
+.dashboard-footer,
+.footer{
+
+    margin-top:40px;
 
     padding:25px;
 
-}
+    text-align:center;
 
+    background:var(--card);
 
+    border-radius:25px;
 
-.smart-card h2{
-
-    margin-bottom:15px;
-
-}
-
-
-
-.smart-card ul{
-
-    list-style:none;
+    border:1px solid var(--border);
 
 }
 
 
 
-.smart-card li{
+.dashboard-footer h3,
+.footer h3{
 
-    padding:8px 0;
+    color:var(--gold);
 
-    color:var(--text-light);
+}
+
+
+
+.dashboard-footer p,
+.footer p{
+
+    color:var(--text);
 
     font-size:14px;
 
-}
+                         }
+
 
 /* ==========================================
-   LEADERBOARD + BENEFIT + SOCIAL DESIGN
-   PART 3 / 5
+   G THE GENIUS
+   MAIN GLOBAL STYLE CSS
+   PART 3 FINAL
 ========================================== */
 
 
 
+/* ==========================
+   Badge Styles
+========================== */
 
 
-/* LEADERBOARD PREVIEW */
+.badge{
 
+    display:inline-block;
 
-.podium-container{
+    padding:6px 14px;
 
-    display:flex;
+    border-radius:50px;
 
-    justify-content:center;
-
-    align-items:flex-end;
-
-    gap:10px;
-
-    margin-top:30px;
-
-}
-
-
-
-.podium-card{
-
-    width:30%;
-
-    background:var(--card-bg);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:15px 8px;
-
-    text-align:center;
-
-    box-shadow:var(--shadow);
-
-    backdrop-filter:blur(12px);
-
-}
-
-
-
-.podium-card.first{
-
-    transform:translateY(-25px);
-
-    border:2px solid var(--gold);
-
-}
-
-
-
-.rank-number{
-
-    font-size:35px;
-
-    margin-bottom:8px;
-
-}
-
-
-
-.podium-card h3{
+    background:rgba(255,215,0,.15);
 
     color:var(--gold);
 
-    font-size:14px;
-
-}
-
-
-
-.podium-card p{
-
-    color:var(--white);
+    border:1px solid var(--gold);
 
     font-size:12px;
 
-    margin:5px 0;
-
-}
-
-
-
-.podium-card span{
-
-    color:var(--text-light);
-
-    font-size:12px;
+    font-weight:700;
 
 }
 
@@ -746,196 +587,12 @@ section h2{
 
 
 
-.view-btn{
+/* ==========================
+   Rank Cards
+========================== */
 
-    display:block;
 
-    width:max-content;
-
-    margin:25px auto 0;
-
-    padding:12px 25px;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    border-radius:30px;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-}
-
-
-
-
-
-
-
-/* BENEFIT SECTION */
-
-
-.benefit-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:15px;
-
-}
-
-
-
-.benefit-card{
-
-    background:var(--card-bg);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:18px 12px;
-
-    text-align:center;
-
-    box-shadow:var(--shadow);
-
-}
-
-
-
-.benefit-card h3{
-
-    color:var(--gold);
-
-    font-size:15px;
-
-    margin-bottom:8px;
-
-}
-
-
-
-.benefit-card p{
-
-    color:var(--text-light);
-
-    font-size:12px;
-
-    line-height:1.5;
-
-}
-
-
-
-
-
-
-
-/* SOCIAL SECTION */
-
-
-.social-buttons{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-}
-
-
-
-.social-btn{
-
-    display:block;
-
-    text-align:center;
-
-    padding:13px;
-
-    border-radius:30px;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-    transition:0.3s;
-
-}
-
-
-
-.social-btn:hover{
-
-    transform:scale(1.03);
-
-}
-
-
-
-.youtube{
-
-    background:#ff0000;
-
-    color:white;
-
-}
-
-
-
-.telegram{
-
-    background:#229ED9;
-
-    color:white;
-
-}
-
-
-
-.email{
-
-    background:var(--gold);
-
-    color:#081229;
-
-}
-
-
-
-
-
-
-
-/* APP FLOW */
-
-
-.flow-container{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
-
-}
-
-
-
-.flow-card{
-
-    background:var(--card-bg);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:20px;
+.rank-card{
 
     display:flex;
 
@@ -943,13 +600,23 @@ section h2{
 
     gap:15px;
 
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    padding:18px;
+
+    margin-bottom:12px;
+
     box-shadow:var(--shadow);
 
 }
 
 
 
-.flow-number{
+.rank-number{
 
     width:45px;
 
@@ -959,113 +626,15 @@ section h2{
 
     display:flex;
 
+    justify-content:center;
+
     align-items:center;
 
-    justify-content:center;
-
     background:var(--gold);
 
     color:#081229;
 
-    font-size:20px;
-
-    font-weight:700;
-
-    flex-shrink:0;
-
-}
-
-
-
-.flow-card h3{
-
-    color:var(--gold);
-
-    font-size:16px;
-
-}
-
-
-
-.flow-card p{
-
-    color:var(--text-light);
-
-    font-size:12px;
-
-}
-
-/* ==========================================
-   ADMIN + SECURITY + FOOTER DESIGN
-   PART 4 / 5
-========================================== */
-
-
-
-
-
-/* ADMIN SECTION */
-
-
-.admin-card{
-
-    background:var(--card-bg);
-
-    border:1px solid var(--gold);
-
-    border-radius:25px;
-
-    padding:25px 20px;
-
-    text-align:center;
-
-    box-shadow:var(--shadow);
-
-    backdrop-filter:blur(15px);
-
-}
-
-
-
-.admin-card h2{
-
-    color:var(--gold-light);
-
-    margin-bottom:12px;
-
-}
-
-
-
-.admin-card p{
-
-    color:var(--text-light);
-
-    font-size:14px;
-
-    line-height:1.6;
-
-}
-
-
-
-.admin-btn{
-
-    display:inline-block;
-
-    margin-top:18px;
-
-    padding:12px 30px;
-
-    border-radius:30px;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    text-decoration:none;
-
-    font-weight:700;
+    font-weight:800;
 
 }
 
@@ -1073,79 +642,24 @@ section h2{
 
 
 
+/* ==========================
+   Profile Avatar
+========================== */
 
 
+.profile-avatar{
 
-/* SECURITY SECTION */
+    width:90px;
 
+    height:90px;
 
-.security-card{
+    border-radius:50%;
 
-    background:
+    background:white;
 
-    linear-gradient(
-    135deg,
-    rgba(245,197,66,0.12),
-    rgba(255,255,255,0.06)
-    );
+    padding:8px;
 
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:25px 20px;
-
-    text-align:center;
-
-    box-shadow:var(--shadow);
-
-}
-
-
-
-.security-card h2{
-
-    color:var(--gold);
-
-}
-
-
-
-.security-card p{
-
-    color:var(--text-light);
-
-    font-size:14px;
-
-    margin-bottom:20px;
-
-}
-
-
-
-.security-items{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
-}
-
-
-
-.security-items span{
-
-    background:rgba(255,255,255,0.05);
-
-    padding:10px;
-
-    border-radius:15px;
-
-    color:var(--white);
-
-    font-size:13px;
+    border:3px solid var(--gold);
 
 }
 
@@ -1153,225 +667,66 @@ section h2{
 
 
 
+/* ==========================
+   Loading Animation
+========================== */
 
 
-/* FOOTER */
-/* Logo Removed - Single Logo Only Header */
+.loader{
 
+    width:45px;
 
-.app-footer{
+    height:45px;
 
-    margin-top:30px;
+    border-radius:50%;
 
-    padding:30px 20px;
+    border:5px solid rgba(255,255,255,.2);
 
-    text-align:center;
+    border-top-color:var(--gold);
 
-    background:
+    animation:spin 1s linear infinite;
 
-    rgba(0,0,0,0.25);
-
-    border-top:1px solid var(--border);
-
-}
-
-
-
-.app-footer h3{
-
-    color:var(--gold);
-
-    font-size:22px;
-
-    margin-bottom:5px;
+    margin:auto;
 
 }
 
 
 
-.app-footer p{
+@keyframes spin{
 
-    color:var(--text-light);
+    100%{
 
-    font-size:13px;
-
-}
-
-
-
-.footer-links{
-
-    display:flex;
-
-    justify-content:center;
-
-    flex-wrap:wrap;
-
-    gap:15px;
-
-    margin:20px 0;
-
-}
-
-
-
-.footer-links a{
-
-    color:var(--white);
-
-    text-decoration:none;
-
-    font-size:13px;
-
-}
-
-
-
-.footer-links a:hover{
-
-    color:var(--gold);
-
-}
-
-
-
-.copyright{
-
-    margin-top:15px;
-
-    font-size:12px !important;
-
-    opacity:0.8;
-
-}
-
-
-
-
-
-
-
-/* PAGE TRANSITION */
-
-
-.app-container{
-
-    animation:fadeIn 0.5s ease;
-
-}
-
-
-
-@keyframes fadeIn{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(10px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
+        transform:rotate(360deg);
 
     }
 
 }
 
-/* ==========================================
-   RESPONSIVE DESIGN + FINAL SETTINGS
-   PART 5 / 5
-========================================== */
 
 
 
 
 
-/* MOBILE SMALL DEVICES */
+/* ==========================
+   Alert Box
+========================== */
 
-@media(max-width:360px){
 
-
-.app-header{
+.alert{
 
     padding:15px;
 
-    gap:10px;
+    border-radius:15px;
 
-}
+    background:rgba(255,255,255,.08);
 
+    border:1px solid var(--border);
 
+    color:var(--text);
 
-.logo-box{
+    text-align:center;
 
-    width:60px;
-
-    height:60px;
-
-}
-
-
-
-.brand-text h1{
-
-    font-size:18px;
-
-}
-
-
-
-.brand-text p{
-
-    font-size:9px;
-
-}
-
-
-
-.hero-card h2{
-
-    font-size:20px;
-
-}
-
-
-
-.feature-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-
-
-.subject-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-
-
-.podium-container{
-
-    gap:5px;
-
-}
-
-
-
-.podium-card{
-
-    width:33%;
-
-}
-
-
+    margin:15px 0;
 
 }
 
@@ -1379,39 +734,21 @@ section h2{
 
 
 
+.alert.success{
 
+    border-color:#00ff99;
 
-
-
-/* MOBILE DEVICES */
-
-@media(min-width:361px) and (max-width:600px){
-
-
-
-.app-container{
-
-    max-width:480px;
+    color:#00ff99;
 
 }
 
 
 
-.hero-section{
+.alert.error{
 
-    padding-top:20px;
+    border-color:#ff5555;
 
-}
-
-
-
-.feature-card{
-
-    padding:18px 10px;
-
-}
-
-
+    color:#ff5555;
 
 }
 
@@ -1419,55 +756,32 @@ section h2{
 
 
 
-/* TABLET DEVICES */
-
-@media(min-width:601px){
-
-
-
-.app-container{
-
-    max-width:600px;
-
-}
+/* ==========================
+   Scrollbar
+========================== */
 
 
+::-webkit-scrollbar{
 
-.hero-card{
-
-    padding:35px;
+    width:6px;
 
 }
 
 
 
-.test-grid{
+::-webkit-scrollbar-track{
 
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
+    background:#081229;
 
 }
 
 
 
-.subject-grid{
+::-webkit-scrollbar-thumb{
 
-    grid-template-columns:repeat(4,1fr);
+    background:var(--gold);
 
-}
-
-
-
-.flow-container{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-}
-
-
+    border-radius:20px;
 
 }
 
@@ -1475,187 +789,67 @@ section h2{
 
 
 
+/* ==========================
+   Mobile Responsive
+========================== */
 
 
+@media(max-width:480px){
 
 
-/* LARGE SCREEN */
+    .container{
 
+        padding:15px;
 
-@media(min-width:1024px){
+    }
 
 
-.app-container{
 
-    max-width:700px;
+    h1{
 
-}
+        font-size:26px;
 
+    }
 
 
-.hero-card h2{
 
-    font-size:30px;
+    h2{
 
-}
+        font-size:20px;
 
+    }
 
 
-}
 
+    .test-card{
 
+        flex-direction:column;
 
+        align-items:flex-start;
 
+        gap:15px;
 
-/* BUTTON ACTIVE EFFECT */
+    }
 
 
-button,
-.btn,
-.test-btn,
-.admin-btn,
-.view-btn,
-.social-btn{
 
-    cursor:pointer;
+    .primary-btn,
+    .secondary-btn{
 
-    user-select:none;
+        width:100%;
 
-}
+    }
 
 
 
-button:active,
-.btn:active,
-.test-btn:active,
-.admin-btn:active{
+    .bottom-navigation,
+    .bottom-nav{
 
-    transform:scale(0.96);
+        width:95%;
 
-}
+        bottom:10px;
 
+    }
 
 
-
-
-
-
-/* REMOVE IMAGE DRAG */
-
-
-img{
-
-    user-select:none;
-
-    -webkit-user-drag:none;
-
-}
-
-
-
-
-
-
-
-/* SMOOTH SCROLL */
-
-
-*{
-
-    -webkit-tap-highlight-color:transparent;
-
-}
-
-
-
-
-
-/* FINAL BODY SUPPORT */
-
-
-body{
-
-    overflow-x:hidden;
-
-}
-
-
-
-
-
-/* END OF STYLE.CSS v5.0 */
-
-/* =====================================
-G THE GENIUS GLOBAL TEXT VISIBILITY FIX
-===================================== */
-
-
-body{
-
-    color:#ffffff !important;
-
-}
-
-
-h1,h2,h3,h4,h5,h6{
-
-    color:#ffffff !important;
-
-}
-
-
-p,span,label,li{
-
-    color:#e8ecff !important;
-
-}
-
-
-/* Cards */
-
-.card,
-.dashboard-card,
-.test-card,
-.question-card,
-.result-card,
-.history-card,
-.admin-card{
-
-    color:#ffffff !important;
-
-}
-
-
-/* Card Heading */
-
-.card h1,
-.card h2,
-.card h3,
-.card h4,
-.test-card h3,
-.result-card h3{
-
-    color:#ffd86b !important;
-
-}
-
-
-/* Numbers */
-
-strong,
-.score,
-.rank,
-.percentage{
-
-    color:#f5c542 !important;
-
-}
-
-
-/* Remove faded text */
-
-*{
-
-    opacity:1 !important;
-
-}
+       }
