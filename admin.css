@@ -1,36 +1,82 @@
-   /* ==========================================
-G THE GENIUS MOCK TEST PORTAL v5.0
-ADMIN CSS
-PART 1 / 5
+/* ==========================================
+   G THE GENIUS
+   Admin CSS
+   Part 1
+
+   Premium Dark Blue + Gold Theme
 ========================================== */
 
 
+:root{
 
-body{
+    --bg:#081229;
 
-    background:#081229;
+    --card:rgba(255,255,255,.08);
 
-    color:#ffffff;
+    --gold:#FFD700;
 
-    font-family:Arial,sans-serif;
+    --white:#ffffff;
+
+    --muted:#b7bfd8;
+
+    --border:rgba(255,255,255,.15);
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
 
 }
 
 
 
 
-/* MAIN ADMIN CONTAINER */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+
+
+
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:linear-gradient(
+        180deg,
+        #081229,
+        #102452
+    );
+
+    color:#fff;
+
+    min-height:100vh;
+
+}
+
+
+
+
+
+/* ==========================================
+   Container
+========================================== */
 
 
 .admin-container{
 
     width:100%;
 
-    min-height:100vh;
+    max-width:650px;
 
-    padding:20px;
+    margin:auto;
 
-    padding-bottom:80px;
+    padding:18px;
 
 }
 
@@ -38,25 +84,52 @@ body{
 
 
 
-
-
-/* HEADER */
+/* ==========================================
+   Header
+========================================== */
 
 
 .admin-header{
 
     text-align:center;
 
-    padding:20px;
+    margin-bottom:25px;
 
 }
 
 
 
 
+
+.admin-header .logo{
+
+    width:90px;
+
+    height:90px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    padding:8px;
+
+    border:3px solid var(--gold);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
 .admin-header h1{
 
-    color:#ffd86b;
+    margin-top:15px;
+
+    color:var(--gold);
 
     font-size:28px;
 
@@ -64,218 +137,40 @@ body{
 
 
 
+
+
 .admin-header p{
 
-    color:#e8ecff;
-
-}
-
-
-
-
-
-
-
-/* BULK UPLOAD CARD */
-
-
-.bulk-upload-section{
-
-    padding:10px;
-
-}
-
-
-
-.bulk-upload-card{
-
-
-    background:
-
-    linear-gradient(
-
-    145deg,
-
-    rgba(255,255,255,0.12),
-
-    rgba(255,255,255,0.05)
-
-    );
-
-
-    border:1px solid rgba(245,197,66,0.5);
-
-
-    border-radius:30px;
-
-
-    padding:25px;
-
-
-    box-shadow:
-
-    0 10px 30px rgba(0,0,0,.4);
-
-
-}
-
-
-
-
-
-
-
-.bulk-upload-card h2{
-
-    text-align:center;
-
-    color:#ffd86b;
-
-}
-
-
-
-
-
-.bulk-upload-card p{
-
-    text-align:center;
-
-    color:#e8ecff;
-
-}
-
-/* ==========================================
-DROPDOWN + JSON INPUT DESIGN
-PART 2 / 5
-========================================== */
-
-
-
-
-
-.bulk-upload-card label{
-
-    display:block;
-
-    color:#ffd86b;
-
-    font-weight:700;
-
-    margin-top:18px;
-
-    margin-bottom:8px;
-
-}
-
-
-
-
-
-
-
-.bulk-upload-card select{
-
-
-    width:100%;
-
-
-    padding:14px;
-
-
-    border-radius:18px;
-
-
-    border:1px solid rgba(245,197,66,.5);
-
-
-    background:#101d3d;
-
-
-    color:#ffffff;
-
-
-    font-size:15px;
-
-
-    outline:none;
-
-
-}
-
-
-
-
-
-
-
-.bulk-upload-card select option{
-
-
-    background:#081229;
-
-
-    color:#ffffff;
-
-
-}
-
-
-
-
-
-
-
-
-/* JSON TEXT AREA */
-
-
-.json-upload-area{
-
-
-    margin-top:20px;
-
-
-}
-
-
-
-
-
-
-
-#bulkQuestionsInput{
-
-
-    width:100%;
-
-
-    height:250px;
-
-
-    padding:15px;
-
-
-    border-radius:20px;
-
-
-    border:1px solid rgba(245,197,66,.5);
-
-
-    background:#101d3d;
-
-
-    color:#ffffff;
-
+    color:var(--muted);
 
     font-size:14px;
 
+}
 
-    resize:vertical;
 
 
-    outline:none;
 
+
+/* ==========================================
+   Admin Card
+========================================== */
+
+
+.admin-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    margin-bottom:20px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
 
 }
 
@@ -283,13 +178,13 @@ PART 2 / 5
 
 
 
+.admin-card h2{
 
+    color:var(--gold);
 
-#bulkQuestionsInput::placeholder{
+    margin-bottom:15px;
 
-
-    color:#bfc7e8;
-
+    font-size:21px;
 
 }
 
@@ -297,265 +192,32 @@ PART 2 / 5
 
 
 
+.admin-card p{
 
+    color:var(--muted);
 
-.format-note{
-
-
-    color:#ffd86b !important;
-
-
-    font-size:13px;
-
+    font-size:14px;
 
 }
 
 /* ==========================================
-BUTTON + INFO CARD DESIGN
-PART 3 / 5
+   G THE GENIUS
+   Admin CSS
+   Part 2
+
+   Form + Input + Buttons + Upload
 ========================================== */
 
 
-
-
-
-.upload-buttons{
-
-
-    display:flex;
-
-
-    gap:15px;
-
-
-    margin-top:25px;
-
-
-    justify-content:center;
-
-
-    flex-wrap:wrap;
-
-
-}
-
-
-
-
-
-
-
-.upload-buttons button{
-
-
-    padding:14px 25px;
-
-
-    border:none;
-
-
-    border-radius:30px;
-
-
-    background:#f5c542;
-
-
-    color:#081229;
-
-
-    font-weight:800;
-
-
-    font-size:15px;
-
-
-    cursor:pointer;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-
-
-.upload-buttons button:hover{
-
-
-    background:#ffd86b;
-
-
-    transform:translateY(-3px);
-
-
-}
-
-
-
-
-
-
-
-/* STATUS BOX */
-
-
-.upload-status{
-
-
-    margin-top:20px;
-
-
-    padding:15px;
-
-
-    border-radius:18px;
-
-
-    background:rgba(255,255,255,.08);
-
-
-    border:1px solid rgba(245,197,66,.4);
-
-
-    text-align:center;
-
-
-    color:#e8ecff;
-
-
-}
-
-
-
-
-
-
-
-/* INFO GRID */
-
-
-.admin-info-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:1fr;
-
-
-    gap:15px;
-
-
-    margin-top:25px;
-
-
-}
-
-
-
-
-
-
-
-.admin-info-card{
-
-
-    background:rgba(255,255,255,.08);
-
-
-    border:1px solid rgba(245,197,66,.5);
-
-
-    border-radius:25px;
-
-
-    padding:20px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-
-
-
-
-.info-icon{
-
-
-    font-size:40px;
-
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-
-
-
-
-.admin-info-card h3{
-
-
-    color:#ffd86b;
-
-
-}
-
-
-
-
-
-.admin-info-card p{
-
-
-    color:#ffffff;
-
-
-    font-size:20px;
-
-
-    font-weight:bold;
-
-
-}
 
 /* ==========================================
-PREVIEW + HISTORY DESIGN
-PART 4 / 5
+   Form Group
 ========================================== */
 
 
+.form-group{
 
-
-
-.upload-guide-card,
-.preview-section,
-.history-section{
-
-
-    margin-top:25px;
-
-
-    background:rgba(255,255,255,.08);
-
-
-    border:1px solid rgba(245,197,66,.4);
-
-
-    border-radius:25px;
-
-
-    padding:20px;
-
+    margin-bottom:18px;
 
 }
 
@@ -563,35 +225,17 @@ PART 4 / 5
 
 
 
+.form-group label{
 
+    display:block;
 
-.upload-guide-card h3,
-.preview-section h2,
-.history-section h2{
+    color:var(--gold);
 
+    font-size:14px;
 
-    color:#ffd86b;
+    margin-bottom:8px;
 
-
-    text-align:center;
-
-
-}
-
-
-
-
-
-
-
-.upload-guide-card ul{
-
-
-    color:#e8ecff;
-
-
-    line-height:1.8;
-
+    font-weight:600;
 
 }
 
@@ -599,88 +243,30 @@ PART 4 / 5
 
 
 
+/* ==========================================
+   Input / Select / Textarea
+========================================== */
 
 
-/* QUESTION PREVIEW */
-
-
-.question-preview{
-
-
-    background:#101d3d;
-
-
-    border-radius:20px;
-
-
-    padding:15px;
-
-
-    color:#ffffff;
-
-
-    max-height:350px;
-
-
-    overflow-y:auto;
-
-
-}
-
-
-
-
-
-
-
-/* HISTORY TABLE */
-
-
-.history-table-wrapper{
-
-
-    overflow-x:auto;
-
-
-}
-
-
-
-
-
-
-
-.upload-table{
-
+.form-group input,
+.form-group select,
+.form-group textarea{
 
     width:100%;
 
+    padding:14px;
 
-    border-collapse:collapse;
+    border-radius:15px;
 
+    border:1px solid var(--border);
 
-    color:#ffffff;
+    outline:none;
 
+    background:rgba(255,255,255,.08);
 
-}
+    color:#fff;
 
-
-
-
-
-
-
-.upload-table th{
-
-
-    background:#f5c542;
-
-
-    color:#081229;
-
-
-    padding:12px;
-
+    font-family:'Poppins',sans-serif;
 
 }
 
@@ -688,19 +274,11 @@ PART 4 / 5
 
 
 
+.form-group select option{
 
+    background:#081229;
 
-.upload-table td{
-
-
-    padding:12px;
-
-
-    border-bottom:1px solid rgba(255,255,255,.15);
-
-
-    text-align:center;
-
+    color:#fff;
 
 }
 
@@ -708,13 +286,11 @@ PART 4 / 5
 
 
 
+.form-group textarea{
 
+    min-height:120px;
 
-.upload-table tr:hover{
-
-
-    background:rgba(245,197,66,.1);
-
+    resize:vertical;
 
 }
 
@@ -722,19 +298,10 @@ PART 4 / 5
 
 
 
+.form-group input::placeholder,
+.form-group textarea::placeholder{
 
-
-/* CLEAR BUTTON */
-
-
-.admin-action-area{
-
-
-    text-align:center;
-
-
-    margin-top:20px;
-
+    color:#b7bfd8;
 
 }
 
@@ -742,57 +309,247 @@ PART 4 / 5
 
 
 
+/* ==========================================
+   Admin Button
+========================================== */
 
 
-#clearPreviewBtn{
+.admin-btn{
 
+    width:100%;
 
-    padding:12px 25px;
+    padding:15px;
 
-
-    border-radius:25px;
-
+    margin-top:10px;
 
     border:none;
 
+    border-radius:50px;
 
-    background:#ff5c5c;
+    background:var(--gold);
+
+    color:#081229;
+
+    font-weight:800;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
 
 
-    color:#ffffff;
 
 
-    font-weight:700;
 
+.admin-btn:hover{
+
+    transform:translateY(-2px);
+
+    opacity:.9;
+
+}
+
+
+
+
+
+/* ==========================================
+   Upload Status
+========================================== */
+
+
+#uploadStatus{
+
+    margin-top:15px;
+
+    padding:12px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.06);
+
+    color:var(--muted);
+
+    text-align:center;
+
+}
+
+
+
+
+
+/* ==========================================
+   File Input
+========================================== */
+
+
+input[type="file"]{
+
+    padding:12px;
+
+    cursor:pointer;
 
 }
 
 /* ==========================================
-FOOTER + RESPONSIVE
-PART 5 / 5 FINAL
+   G THE GENIUS
+   Admin CSS
+   Part 3 Final
+
+   Footer + List + Responsive
 ========================================== */
 
 
 
+/* ==========================================
+   Data List Cards
+========================================== */
+
+
+.data-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    padding:15px;
+
+    margin-bottom:12px;
+
+}
+
+
+
+
+
+.data-card h3{
+
+    color:#fff;
+
+    font-size:15px;
+
+}
+
+
+
+
+
+.data-card p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+
+
+
+.data-card span{
+
+    color:var(--gold);
+
+    font-weight:700;
+
+}
+
+
+
+
+
+/* ==========================================
+   Progress Bar
+========================================== */
+
+
+.progress-box{
+
+    width:100%;
+
+    height:12px;
+
+    background:rgba(255,255,255,.1);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-top:15px;
+
+}
+
+
+
+
+
+.progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:var(--gold);
+
+    transition:.3s;
+
+}
+
+
+
+
+
+/* ==========================================
+   Footer
+========================================== */
 
 
 .admin-footer{
 
-
-    margin-top:35px;
-
+    margin-top:30px;
 
     padding:25px;
 
-
     text-align:center;
 
+    background:var(--card);
 
-    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+}
 
 
-    border-top:1px solid rgba(245,197,66,.4);
 
+
+
+.admin-footer img{
+
+    width:75px;
+
+    height:75px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:6px;
+
+    border-radius:50%;
+
+    border:2px solid var(--gold);
 
 }
 
@@ -802,12 +559,9 @@ PART 5 / 5 FINAL
 
 .admin-footer h3{
 
+    color:var(--gold);
 
-    color:#ffd86b;
-
-
-    font-size:22px;
-
+    margin-top:12px;
 
 }
 
@@ -817,12 +571,7 @@ PART 5 / 5 FINAL
 
 .admin-footer p{
 
-
-    color:#e8ecff;
-
-
-    font-size:14px;
-
+    color:var(--muted);
 
 }
 
@@ -830,236 +579,40 @@ PART 5 / 5 FINAL
 
 
 
+/* ==========================================
+   Mobile Responsive
+========================================== */
 
 
-/* MOBILE RESPONSIVE */
+@media(max-width:480px){
 
 
-@media(min-width:600px){
+    .admin-container{
 
+        padding:15px;
 
+    }
 
-.admin-info-grid{
 
 
-    grid-template-columns:repeat(3,1fr);
+    .admin-card{
 
+        padding:20px;
 
-}
+    }
 
 
 
-.bulk-upload-card{
+    .data-card{
 
+        flex-direction:column;
 
-    max-width:700px;
+        align-items:flex-start;
 
+        gap:8px;
 
-    margin:auto;
+    }
 
 
-}
-
-
-
-}
-
-
-
-
-
-
-
-@media(max-width:420px){
-
-
-
-.admin-container{
-
-
-    padding:15px;
-
-
-}
-
-
-
-.bulk-upload-card{
-
-
-    padding:20px 15px;
-
-
-}
-
-
-
-.upload-buttons{
-
-
-    flex-direction:column;
-
-
-}
-
-
-
-.upload-buttons button{
-
-
-    width:100%;
-
-
-}
-
-
-
-.admin-info-card{
-
-
-    padding:15px;
-
-
-}
-
-
-
-.question-preview{
-
-
-    font-size:13px;
-
-
-}
-
-
-
-.upload-table{
-
-
-    font-size:13px;
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-/* FINAL TEXT VISIBILITY FIX */
-
-
-.admin-container h1,
-.admin-container h2,
-.admin-container h3{
-
-
-    color:#ffd86b !important;
-
-
-}
-
-
-
-.admin-container p,
-.admin-container li,
-.admin-container td{
-
-
-    color:#e8ecff !important;
-
-
-}
-/* =====================================
-G THE GENIUS ADMIN FINAL UI FIX
-===================================== */
-
-
-body{
-
-    margin:0;
-
-    min-height:100vh;
-
-    background:#081229 !important;
-
-    color:#ffffff;
-
-    font-family:Arial,sans-serif;
-
-}
-
-
-
-.admin-container{
-
-    max-width:900px;
-
-    margin:30px auto;
-
-    padding:25px;
-
-    background:rgba(255,255,255,0.08);
-
-    border:1px solid #ffd86b;
-
-    border-radius:25px;
-
-}
-
-
-
-h1,h2,h3{
-
-    color:#ffd86b !important;
-
-}
-
-
-
-p,label,span,div{
-
-    color:#ffffff;
-
-}
-
-
-
-input,
-select,
-textarea{
-
-    background:#101d3d !important;
-
-    color:#ffffff !important;
-
-    border:1px solid #ffd86b;
-
-    border-radius:15px;
-
-    padding:12px;
-
-}
-
-
-
-button{
-
-    background:#ffd86b;
-
-    color:#081229;
-
-    border:none;
-
-    border-radius:30px;
-
-    padding:14px 25px;
-
-    font-weight:bold;
 
 }
