@@ -1,97 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
 
-// ==========================================
-// G THE GENIUS MOCK TEST PORTAL v5.0
-// ADMIN BULK UPLOAD HTML
-// PART 1 / 5
-// ==========================================
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 
-<section class="bulk-upload-section">
+<title>
+Admin Panel | G THE GENIUS
+</title>
 
 
-<div class="bulk-upload-card">
+<meta name="theme-color"
+content="#081229">
+
+
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+href="css/admin.css">
+
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="admin-container">
+
+
+
+
+
+<!-- =========================
+     Admin Header
+========================= -->
+
+
+<header class="admin-header">
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo"
+alt="G THE GENIUS Logo">
+
+
+
+
+
+<h1>
+
+⚡ Admin Panel
+
+</h1>
+
+
+
+
+<p>
+
+Manage G THE GENIUS Mock Test System
+
+</p>
+
+
+</header>
+
+
+
+
+
+
+
+<!-- =========================
+     Admin Status
+========================= -->
+
+
+<section class="admin-card">
 
 
 
 <h2>
 
-📤 Bulk Upload Questions
+🔐 Admin Dashboard
 
 </h2>
 
 
-<p>
 
-Subject & Topic Based Question Upload
+<p id="adminStatus">
+
+Checking Access...
 
 </p>
 
 
 
+</section>
+<!-- =========================
+     Add Question Section
+========================= -->
 
 
-<!-- CATEGORY SELECT -->
+<section class="admin-card question-section">
 
 
-<label>
 
-Select Category
+<h2>
 
-</label>
+➕ Add New Question
 
-
-<select id="categorySelect">
-
-
-<option value="">
-
-Select Category
-
-</option>
-
-
-<option value="tamil">
-
-📖 தமிழ்
-
-</option>
-
-
-<option value="physical">
-
-🏃 Physical Tips
-
-</option>
-
-
-<option value="psychology">
-
-🧠 Psychology
-
-</option>
-
-
-<option value="general">
-
-📚 General Subjects
-
-</option>
-
-
-</select>
+</h2>
 
 
 
 
 
-<!-- SUBJECT SELECT -->
+<div class="form-group">
 
 
 <label>
 
-Select Subject
+Subject
 
 </label>
+
 
 
 <select id="subjectSelect">
@@ -104,20 +157,69 @@ Select Subject
 </option>
 
 
+<option value="Tamil">
+
+Tamil
+
+</option>
+
+
+<option value="General Knowledge">
+
+General Knowledge
+
+</option>
+
+
+<option value="History">
+
+History
+
+</option>
+
+
+<option value="Geography">
+
+Geography
+
+</option>
+
+
+<option value="Polity">
+
+Polity
+
+</option>
+
+
+<option value="Science">
+
+Science
+
+</option>
+
+
 </select>
 
 
+</div>
 
 
 
-<!-- TOPIC SELECT -->
+
+
+
+
+
+<div class="form-group">
 
 
 <label>
 
-Select Topic
+Topic
 
 </label>
+
 
 
 <select id="topicSelect">
@@ -133,70 +235,53 @@ Select Topic
 </select>
 
 
-
 </div>
 
 
-</section>
-
-
-// ==========================================
-// BULK QUESTION INPUT AREA
-// PART 2 / 5
-// ==========================================
 
 
 
-<!-- QUESTION JSON BOX -->
 
 
-<div class="json-upload-area">
-
+<div class="form-group">
 
 
 <label>
 
-Paste Questions JSON
+Question
 
 </label>
 
 
 
-<textarea
-
-id="bulkQuestionsInput"
-
-placeholder='
-[
- {
-  "question":"Question Text",
-  "options":[
-   "Option 1",
-   "Option 2",
-   "Option 3",
-   "Option 4"
-  ],
-  "answer":"Correct Answer",
-  "subject":"Indian Polity",
-  "topic":"Constitution Basics"
- }
-]
-'>
-
+<textarea id="questionText"
+placeholder="Enter question">
 
 </textarea>
 
 
+</div>
 
 
-<p class="format-note">
-
-Format:
-question + options + answer + subject + topic
-
-</p>
 
 
+
+
+
+<div class="form-group">
+
+
+<label>
+
+Option A
+
+</label>
+
+
+
+<input type="text"
+id="optionA"
+placeholder="Option A">
 
 
 </div>
@@ -207,267 +292,235 @@ question + options + answer + subject + topic
 
 
 
-<!-- BUTTON AREA -->
+<div class="form-group">
 
 
-<div class="upload-buttons">
+<label>
+
+Option B
+
+</label>
 
 
 
-<button
+<input type="text"
+id="optionB"
+placeholder="Option B">
 
-id="checkDuplicateBtn">
 
-🔍 Check Duplicate
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+Option C
+
+</label>
+
+
+
+<input type="text"
+id="optionC"
+placeholder="Option C">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+Option D
+
+</label>
+
+
+
+<input type="text"
+id="optionD"
+placeholder="Option D">
+
+
+</div>
+
+ <!-- =========================
+     Answer & Save Section
+========================= -->
+
+
+<div class="form-group">
+
+
+<label>
+
+Correct Answer
+
+</label>
+
+
+
+<select id="correctAnswer">
+
+
+<option value="">
+
+Select Answer
+
+</option>
+
+
+<option value="A">
+
+A
+
+</option>
+
+
+<option value="B">
+
+B
+
+</option>
+
+
+<option value="C">
+
+C
+
+</option>
+
+
+<option value="D">
+
+D
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+Explanation
+
+</label>
+
+
+
+<textarea id="explanation"
+placeholder="Enter explanation">
+
+</textarea>
+
+
+</div>
+
+
+
+
+
+
+
+<button id="addQuestionBtn"
+class="admin-btn">
+
+
+➕ Add Question
+
 
 </button>
 
 
 
 
-<button
+</section>
 
-id="uploadBulkBtn">
 
-📤 Upload Questions
 
-</button>
 
 
 
-</div>
 
 
+<!-- =========================
+     Bulk Upload Section
+========================= -->
 
 
-
-
-<!-- STATUS -->
-
-
-<div
-
-id="uploadStatus"
-
-class="upload-status">
-
-
-</div>
-
-
-// ==========================================
-// ADMIN INFO + UPLOAD DETAILS
-// PART 3 / 5
-// ==========================================
-
-
-
-<!-- QUESTION COUNT CARD -->
-
-
-<div class="admin-info-grid">
-
-
-
-
-
-<div class="admin-info-card">
-
-
-<div class="info-icon">
-
-📊
-
-</div>
-
-
-<h3>
-
-Total Questions
-
-</h3>
-
-
-<p id="totalQuestionCount">
-
-0
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="admin-info-card">
-
-
-<div class="info-icon">
-
-📚
-
-</div>
-
-
-<h3>
-
-Selected Topic
-
-</h3>
-
-
-<p id="selectedTopicName">
-
--
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="admin-info-card">
-
-
-<div class="info-icon">
-
-✅
-
-</div>
-
-
-<h3>
-
-Upload Status
-
-</h3>
-
-
-<p id="currentUploadStatus">
-
-Ready
-
-</p>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-<!-- UPLOAD RULES -->
-
-
-<div class="upload-guide-card">
-
-
-
-<h3>
-
-📌 Bulk Upload Guide
-
-</h3>
-
-
-
-<ul>
-
-
-<li>
-
-ஒரே JSON format-ல் பல கேள்விகள் upload செய்யலாம்
-
-</li>
-
-
-<li>
-
-Subject & Topic சரியாக select செய்ய வேண்டும்
-
-</li>
-
-
-<li>
-
-Duplicate questions automatic check செய்யப்படும்
-
-</li>
-
-
-<li>
-
-Upload ஆன பிறகு Student Practice Test-ல் வரும்
-
-</li>
-
-
-</ul>
-
-
-
-</div>
-
-
-// ==========================================
-// QUESTION PREVIEW + UPLOAD HISTORY
-// PART 4 / 5
-// ==========================================
-
-
-
-
-
-<!-- QUESTION PREVIEW -->
-
-
-<div class="preview-section">
+<section class="admin-card">
 
 
 
 <h2>
 
-👁️ Question Preview
+📤 Smart Bulk Upload
 
 </h2>
 
 
 
+<p>
 
-<div id="questionPreview"
+Upload multiple questions easily
 
-class="question-preview">
+</p>
 
 
-No Questions Loaded
 
+
+<input type="file"
+id="bulkFile"
+accept=".json,.csv">
+
+
+
+
+
+<button id="uploadBtn"
+class="admin-btn">
+
+
+⬆️ Upload Questions
+
+
+</button>
+
+
+
+<div id="uploadStatus">
 
 </div>
 
 
 
-
-</div>
-
+</section>
 
 
 
@@ -475,122 +528,29 @@ No Questions Loaded
 
 
 
-<!-- UPLOAD HISTORY -->
+
+<!-- =========================
+     Manage Section
+========================= -->
 
 
-<div class="history-section">
+<section class="admin-card">
 
 
 
 <h2>
 
-📜 Upload History
+📚 Manage Data
 
 </h2>
 
 
 
+<button class="admin-btn"
+onclick="location.href='questions.html'">
 
-<div class="history-table-wrapper">
 
-
-<table class="upload-table">
-
-
-<thead>
-
-
-<tr>
-
-<th>
-
-Date
-
-</th>
-
-
-<th>
-
-Subject
-
-</th>
-
-
-<th>
-
-Topic
-
-</th>
-
-
-<th>
-
-Count
-
-</th>
-
-
-<th>
-
-Status
-
-</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-<tbody id="uploadHistoryBody">
-
-
-<tr>
-
-<td colspan="5">
-
-No Upload History
-
-</td>
-
-
-</tr>
-
-
-</tbody>
-
-
-
-</table>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- CLEAR AREA -->
-
-
-<div class="admin-action-area">
-
-
-
-<button
-
-id="clearPreviewBtn">
-
-
-🗑️ Clear Preview
+Manage Questions
 
 
 </button>
@@ -598,20 +558,38 @@ id="clearPreviewBtn">
 
 
 
-</div>
+
+<button class="admin-btn"
+onclick="location.href='results.html'">
 
 
-// ==========================================
-// ADMIN FOOTER + SCRIPT CONNECTION
-// PART 5 / 5 FINAL
-// ==========================================
+View Results
+
+
+</button>
 
 
 
-<!-- ADMIN FOOTER -->
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+     Footer
+========================= -->
 
 
 <footer class="admin-footer">
+
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
 
 
 <h3>
@@ -621,19 +599,13 @@ G THE GENIUS
 </h3>
 
 
-<p>
-
-Admin Bulk Question Management
-
-</p>
-
-
 
 <p>
 
-© 2026 G THE GENIUS. All Rights Reserved.
+Admin Management System
 
 </p>
+
 
 
 </footer>
@@ -644,17 +616,20 @@ Admin Bulk Question Management
 
 
 
-<!-- SCRIPTS -->
+</div>
 
 
-<script type="module" src="subjects-data.js"></script>
 
 
-<script type="module" src="admin.js"></script>
+
+
+
+<script type="module"
+src="js/admin.js"></script>
 
 
 
 </body>
 
-
 </html>
+ 
