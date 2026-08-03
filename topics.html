@@ -1,1 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+
+    <title>
+        Topics | G THE GENIUS
+    </title>
+
+
+    <meta name="theme-color"
+        content="#081229">
+
+
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+        href="css/topics.css">
+
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="topics-container">
+
+
+
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
+
+    <header class="topics-header">
+
+
+        <button class="back-btn"
+            onclick="history.back()">
+
+            ←
+
+        </button>
+
+
+
+        <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+            class="logo"
+            alt="G THE GENIUS Logo">
+
+
+
+        <h1>
+            📖 Learning Topics
+        </h1>
+
+
+
+        <p>
+            Choose Topic & Start Learning
+        </p>
+
+
+    </header>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- Subject Banner -->
+    <!-- ========================= -->
+
+
+    <section class="topic-banner">
+
+
+        <h2 id="subjectTitle">
+
+            Loading Subject...
+
+        </h2>
+
+
+
+        <p>
+
+            Topic wise preparation
+
+        </p>
+
+
+    </section>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- Topic Section -->
+    <!-- ========================= -->
+
+
+    <section class="topic-section">
+
+
+        <div class="section-title">
+
+
+            <h2>
+
+                📚 Available Topics
+
+            </h2>
+
+
+
+        </div>
+
+
+
+        <div class="topic-list"
+            id="topicList">
+
+                <!-- ========================= -->
+            <!-- Topic Cards Container -->
+            <!-- ========================= -->
+
+
+            <div class="topic-card">
+
+                <div class="topic-icon">
+                    📖
+                </div>
+
+
+                <div class="topic-info">
+
+
+                    <h3>
+                        Topic Name
+                    </h3>
+
+
+                    <p>
+                        Important concepts and
+                        exam preparation notes
+                    </p>
+
+
+                    <span>
+                        Questions: 25
+                    </span>
+
+
+                </div>
+
+
+
+                <div class="topic-actions">
+
+
+                    <button class="learn-btn">
+
+                        Learn
+
+                    </button>
+
+
+
+                    <button class="practice-btn">
+
+                        Practice
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <!-- Dynamic Topics Will Load Here -->
+
+            <div id="dynamicTopics">
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- Quick Practice Card -->
+    <!-- ========================= -->
+
+
+    <section class="quick-practice">
+
+
+        <div class="practice-box">
+
+
+            <h2>
+                🎯 Topic Practice
+            </h2>
+
+
+            <p>
+
+                Select any topic and test your
+                knowledge with random questions.
+
+            </p>
+
+
+
+            <button onclick="startTopicPractice()">
+
+                Start Practice →
+
+            </button>
+
+
+
+        </div>
+
+
+    </section>
+
+      <!-- ========================= -->
+    <!-- Bottom Navigation -->
+    <!-- ========================= -->
+
+
+    <nav class="bottom-navigation">
+
+
+        <a href="dashboard.html"
+            class="nav-item">
+
+
+            🏠
+
+            <span>
+                Home
+            </span>
+
+
+        </a>
+
+
+
+        <a href="learning.html"
+            class="nav-item active">
+
+
+            📚
+
+            <span>
+                Learning
+            </span>
+
+
+        </a>
+
+
+
+        <a href="practice.html"
+            class="nav-item">
+
+
+            📝
+
+            <span>
+                Practice
+            </span>
+
+
+        </a>
+
+
+
+        <a href="leaderboard.html"
+            class="nav-item">
+
+
+            🏆
+
+            <span>
+                Rank
+            </span>
+
+
+        </a>
+
+
+    </nav>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- Footer -->
+    <!-- ========================= -->
+
+
+    <footer class="dashboard-footer">
+
+
+        <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+            alt="G THE GENIUS Logo">
+
+
+
+        <h3>
+            G THE GENIUS
+        </h3>
+
+
+
+        <p>
+            Learn • Practice • Succeed
+        </p>
+
+
+
+        <div class="footer-links">
+
+
+            <a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
+                target="_blank">
+
+                📺 YouTube
+
+            </a>
+
+
+
+            <a href="https://t.me/gthegenius"
+                target="_blank">
+
+                📢 Telegram
+
+            </a>
+
+
+
+            <a href="mailto:gthegenius7@gmail.com">
+
+                📧 Email
+
+            </a>
+
+
+        </div>
+
+
+
+        <small>
+
+            © 2026 G THE GENIUS
+            <br>
+            All Rights Reserved.
+
+        </small>
+
+
+    </footer>
+
+
+
+</div>
+
+
+
+
+
+<!-- JavaScript -->
+
+<script src="js/topics.js"></script>
+
+
+
+</body>
+
+</html>
+    <!-- ========================= -->
+    <!-- Bottom Navigation -->
+    <!-- ========================= -->
+
+
+    <nav class="bottom-navigation">
+
+
+        <a href="dashboard.html"
+            class="nav-item">
+
+
+            🏠
+
+            <span>
+                Home
+            </span>
+
+
+        </a>
+
+
+
+        <a href="learning.html"
+            class="nav-item active">
+
+
+            📚
+
+            <span>
+                Learning
+            </span>
+
+
+        </a>
+
+
+
+        <a href="practice.html"
+            class="nav-item">
+
+
+            📝
+
+            <span>
+                Practice
+            </span>
+
+
+        </a>
+
+
+
+        <a href="leaderboard.html"
+            class="nav-item">
+
+
+            🏆
+
+            <span>
+                Rank
+            </span>
+
+
+        </a>
+
+
+    </nav>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- Footer -->
+    <!-- ========================= -->
+
+
+    <footer class="dashboard-footer">
+
+
+        <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+            alt="G THE GENIUS Logo">
+
+
+
+        <h3>
+            G THE GENIUS
+        </h3>
+
+
+
+        <p>
+            Learn • Practice • Succeed
+        </p>
+
+
+
+        <div class="footer-links">
+
+
+            <a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
+                target="_blank">
+
+                📺 YouTube
+
+            </a>
+
+
+
+            <a href="https://t.me/gthegenius"
+                target="_blank">
+
+                📢 Telegram
+
+            </a>
+
+
+
+            <a href="mailto:gthegenius7@gmail.com">
+
+                📧 Email
+
+            </a>
+
+
+        </div>
+
+
+
+        <small>
+
+            © 2026 G THE GENIUS
+            <br>
+            All Rights Reserved.
+
+        </small>
+
+
+    </footer>
+
+
+
+</div>
+
+
+
+
+
+<!-- JavaScript -->
+
+<script src="js/topics.js"></script>
+
+
+
+</body>
+
+</html>
