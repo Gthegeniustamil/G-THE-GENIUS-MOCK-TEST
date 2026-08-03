@@ -5,61 +5,73 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 
 <title>
-G THE GENIUS Practice
+Practice Test | G THE GENIUS
 </title>
 
 
-<link rel="stylesheet" href="practice.css">
+<meta name="theme-color"
+content="#081229">
+
+
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+href="css/practice.css">
 
 
 </head>
+
 
 
 <body>
 
 
 
+<div class="practice-container">
+
+
 
 <!-- =========================
-HEADER
+     Header
 ========================= -->
 
 
 <header class="practice-header">
 
 
-<img
-
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="practice-logo"
-
-
->
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo"
+alt="G THE GENIUS Logo">
 
 
 
-<div>
+<h1>
+📝 Practice Test
+</h1>
 
-<h2>
-
-G THE GENIUS
-
-</h2>
 
 
 <p>
-
-Practice Zone
-
+Learn • Practice • Improve
 </p>
-
-
-</div>
 
 
 </header>
@@ -68,134 +80,71 @@ Practice Zone
 
 
 
-
-
-
 <!-- =========================
-CATEGORY SECTION
+     Setup Card
 ========================= -->
 
 
-<section class="category-card">
+<section class="setup-card">
 
 
 <h2>
-
-📚 Select Category
-
+🎯 Select Your Practice
 </h2>
 
 
 
+<p>
+Choose Subject and Topic
+</p>
 
-<select id="categorySelect">
 
 
-<option value="all">
 
-All Questions
 
+<div class="select-group">
+
+
+<label>
+Subject
+</label>
+
+
+<select id="subjectSelect">
+
+
+<option value="">
+Select Subject
 </option>
-
-
-
-<option value="polity">
-
-Indian Polity
-
-</option>
-
-
-
-<option value="history">
-
-Indian History
-
-</option>
-
-
-
-<option value="geography">
-
-Geography
-
-</option>
-
-
-
-<option value="science">
-
-General Science
-
-</option>
-
-
-
-<option value="tamilnadu">
-
-Tamil Nadu GK
-
-</option>
-
 
 
 </select>
 
 
 
-
-<button id="startPracticeBtn" class="primary-btn">
-    Start Practice
-</button>
-
-
-
-</section>
+</div>
 
 
 
 
 
+<div class="select-group">
 
 
-
-<!-- =========================
-PRACTICE BOX
-========================= -->
-
-
-<section class="practice-box">
+<label>
+Topic
+</label>
 
 
-
-<div class="progress-info">
-
-
-<p>
-
-Question 
-
-<span id="questionNumber">
-
-0
-
-</span>
-
-</p>
+<select id="topicSelect">
 
 
+<option value="">
+Select Topic
+</option>
 
-<p>
 
-Score :
-
-<span id="practiceScore">
-
-0
-
-</span>
-
-</p>
+</select>
 
 
 
@@ -205,81 +154,12 @@ Score :
 
 
 
+<button id="startPracticeBtn"
+class="start-btn">
 
 
+Start Practice 🚀
 
-<h2 id="questionText">
-
-Select category and start practice
-
-</h2>
-
-
-
-
-
-
-
-<div class="options-box">
-
-
-
-<button class="option-btn" id="option0">
-
-Option A
-
-</button>
-
-
-
-<button class="option-btn" id="option1">
-
-Option B
-
-</button>
-
-
-
-<button class="option-btn" id="option2">
-
-Option C
-
-</button>
-
-
-
-<button class="option-btn" id="option3">
-
-Option D
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div id="explanationBox">
-
-
-</div>
-
-
-
-
-
-
-
-<button id="nextQuestion">
-
-
-Next Question ➡️
 
 </button>
 
@@ -291,43 +171,127 @@ Next Question ➡️
 
 
 
-
-
-
-<script type="module" src="practice.js"></script>
-
 <!-- =========================
-ANSWER RESULT CARD
+     Test Area Start
 ========================= -->
 
 
-<section class="result-card" id="resultCard">
+<section id="testArea"
+class="test-area"
+style="display:none;">
+
+    <!-- =========================
+     Question Header
+========================= -->
 
 
-<h2>
-
-📊 Practice Result
-
-</h2>
+<div class="question-header">
 
 
+    <div class="progress-box">
 
-<div class="result-grid">
+
+        <span id="questionCount">
+
+            Question 1 / 10
+
+        </span>
 
 
-<div>
+        <div class="progress-bar">
 
-<h1 id="correctCount">
 
-0
+            <div id="progressFill">
 
-</h1>
+            </div>
 
-<p>
 
-Correct
+        </div>
 
-</p>
+
+    </div>
+
+
+
+
+    <!-- Timer -->
+
+
+    <div class="timer-box">
+
+
+        ⏰
+
+        <span id="timer">
+
+            05:00
+
+        </span>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- =========================
+     Question Card
+========================= -->
+
+
+<div class="question-card">
+
+
+    <h2 id="questionText">
+
+        Question Loading...
+
+    </h2>
+
+
+
+
+    <div class="options-container"
+    id="optionsContainer">
+
+
+        <button class="option-btn">
+
+            Option A
+
+        </button>
+
+
+        <button class="option-btn">
+
+            Option B
+
+        </button>
+
+
+        <button class="option-btn">
+
+            Option C
+
+        </button>
+
+
+        <button class="option-btn">
+
+            Option D
+
+        </button>
+
+
+
+    </div>
+
 
 </div>
 
@@ -335,45 +299,102 @@ Correct
 
 
 
-<div>
-
-<h1 id="wrongCount">
-
-0
-
-</h1>
-
-<p>
-
-Wrong
-
-</p>
-
-</div>
 
 
+<!-- =========================
+     Navigation Buttons
+========================= -->
+
+
+<div class="question-navigation">
+
+
+<button id="previousBtn"
+class="nav-btn">
+
+
+← Previous
+
+
+</button>
 
 
 
-<div>
 
-<h1 id="accuracy">
+<button id="nextBtn"
+class="nav-btn">
 
-0%
 
-</h1>
+Next →
 
-<p>
 
-Accuracy
-
-</p>
-
-</div>
+</button>
 
 
 
 </div>
+
+
+
+
+</section>
+<!-- =========================
+     Submit Section
+========================= -->
+
+
+<section class="submit-section"
+id="submitSection">
+
+
+    <button id="submitBtn"
+    class="submit-btn">
+
+
+        Submit Test ✅
+
+
+    </button>
+
+
+
+</section>
+
+
+
+
+
+<!-- =========================
+     Result Preview
+========================= -->
+
+
+<section class="result-preview"
+id="resultPreview"
+style="display:none;">
+
+
+    <h2>
+
+        🎉 Test Completed
+
+    </h2>
+
+
+    <div id="scoreDisplay">
+
+
+    </div>
+
+
+    <button onclick="location.reload()"
+    class="retry-btn">
+
+
+        Retry Test 🔄
+
+
+    </button>
 
 
 </section>
@@ -383,95 +404,23 @@ Accuracy
 
 
 
-
-
 <!-- =========================
-PROGRESS BAR
+     Bottom Navigation
 ========================= -->
 
 
-<section class="practice-progress">
+<nav class="bottom-navigation">
 
 
-<h3>
-
-Your Progress
-
-</h3>
-
-
-
-<div class="progress-container">
-
-
-<div id="practiceProgress">
-
-
-</div>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-MOTIVATION CARD
-========================= -->
-
-
-<section class="practice-motivation">
-
-
-<h2>
-
-🔥 Keep Practicing
-
-</h2>
-
-
-
-<p>
-
-Every question makes you stronger for your government exam.
-
-</p>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-BOTTOM NAVIGATION
-========================= -->
-
-
-<nav class="bottom-nav">
-
-
-<a href="dashboard.html">
+<a href="dashboard.html"
+class="nav-item">
 
 
 🏠
 
-<br>
-
+<span>
 Home
+</span>
 
 
 </a>
@@ -479,15 +428,15 @@ Home
 
 
 
-
-<a href="practice.html">
+<a href="learning.html"
+class="nav-item">
 
 
 📚
 
-<br>
-
-Practice
+<span>
+Learning
+</span>
 
 
 </a>
@@ -495,31 +444,31 @@ Practice
 
 
 
+<a href="practice.html"
+class="nav-item active">
 
-<a href="leaderboard.html">
+
+📝
+
+<span>
+Practice
+</span>
+
+
+</a>
+
+
+
+
+<a href="leaderboard.html"
+class="nav-item">
 
 
 🏆
 
-<br>
-
+<span>
 Rank
-
-
-</a>
-
-
-
-
-
-<a href="profile.html">
-
-
-👤
-
-<br>
-
-Profile
+</span>
 
 
 </a>
@@ -533,23 +482,16 @@ Profile
 
 
 
-
 <!-- =========================
-FOOTER
+     Footer
 ========================= -->
 
 
-<footer class="footer">
+<footer class="dashboard-footer">
 
 
-<img
-
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-
-class="footer-logo"
-
-
->
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo">
 
 
 
@@ -561,33 +503,35 @@ G THE GENIUS
 
 
 
-
 <p>
 
-All Government Exam Mock Test Platform
+Learn • Practice • Succeed
 
 </p>
 
 
 
 
-
-<a href="https://youtube.com/@gthegeniustamil">
-
-▶ YouTube Channel
-
-</a>
+<div class="footer-links">
 
 
 
+<a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
+target="_blank">
 
-
-<a href="https://t.me/gthegenius">
-
-📢 Telegram Channel
+📺 YouTube
 
 </a>
 
+
+
+
+<a href="https://t.me/gthegenius"
+target="_blank">
+
+📢 Telegram
+
+</a>
 
 
 
@@ -600,20 +544,36 @@ All Government Exam Mock Test Platform
 
 
 
+</div>
 
 
-<p>
+
+
+<small>
 
 © 2026 G THE GENIUS
+<br>
+All Rights Reserved.
 
-</p>
+</small>
 
 
 
 </footer>
-  
+
+
+
+
+</div>
+
+
+
+
+
+<script src="js/practice.js"></script>
+
+
 </body>
 
-
 </html>
-
+    
