@@ -1,38 +1,31 @@
-// ==========================================
-// G THE GENIUS MOCK TEST PORTAL v5.0
-// RESULT CSS
-// PART 1 / 4
-// ==========================================
+/* ==========================================
+   G THE GENIUS
+   Result CSS
+   Part 1
 
-
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-
-
-
+   Premium Dark Blue + Gold Theme
+========================================== */
 
 
 :root{
 
-
     --bg:#081229;
 
-    --card:rgba(255,255,255,0.08);
+    --card:rgba(255,255,255,.08);
 
-    --gold:#f5c542;
+    --gold:#FFD700;
 
-    --gold-light:#ffd86b;
+    --gold2:#ffb800;
 
     --white:#ffffff;
 
-    --text:#d8def0;
+    --muted:#b7bfd8;
 
-    --border:rgba(255,255,255,0.15);
+    --border:rgba(255,255,255,.15);
 
+    --shadow:0 10px 30px rgba(0,0,0,.35);
 
 }
-
-
 
 
 
@@ -40,19 +33,13 @@
 
 *{
 
-
     margin:0;
 
     padding:0;
 
     box-sizing:border-box;
 
-    font-family:'Poppins',sans-serif;
-
-
 }
-
-
 
 
 
@@ -60,24 +47,19 @@
 
 body{
 
+    font-family:'Poppins',sans-serif;
 
-    background:
-
-    linear-gradient(
-
-    135deg,
-
-    #081229,
-
-    #101d3a
-
+    background:linear-gradient(
+        180deg,
+        #081229,
+        #102452
     );
 
-
-    color:var(--white);
+    color:#fff;
 
     min-height:100vh;
 
+    padding-bottom:90px;
 
 }
 
@@ -85,17 +67,20 @@ body{
 
 
 
+/* ==========================================
+   Container
+========================================== */
 
 
 .result-container{
 
+    width:100%;
 
-    max-width:480px;
+    max-width:600px;
 
     margin:auto;
 
-    min-height:100vh;
-
+    padding:18px;
 
 }
 
@@ -103,28 +88,16 @@ body{
 
 
 
-
-
-
-
-/* HEADER */
+/* ==========================================
+   Header
+========================================== */
 
 
 .result-header{
 
+    text-align:center;
 
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:18px;
-
-    background:rgba(8,18,41,0.9);
-
-    border-bottom:1px solid var(--border);
-
+    margin-bottom:25px;
 
 }
 
@@ -132,22 +105,23 @@ body{
 
 
 
+.result-header .logo{
 
+    width:90px;
 
+    height:90px;
 
-.logo-box{
+    object-fit:contain;
 
-
-    width:65px;
-
-    height:65px;
+    background:#fff;
 
     border-radius:50%;
 
-    overflow:hidden;
+    padding:8px;
 
     border:3px solid var(--gold);
 
+    box-shadow:var(--shadow);
 
 }
 
@@ -155,35 +129,13 @@ body{
 
 
 
+.result-header h1{
 
-
-.result-logo{
-
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-
-}
-
-
-
-
-
-
-
-.result-title h1{
-
+    margin-top:15px;
 
     color:var(--gold);
 
-    font-size:22px;
-
-    font-weight:700;
-
+    font-size:28px;
 
 }
 
@@ -191,15 +143,11 @@ body{
 
 
 
+.result-header p{
 
+    color:var(--muted);
 
-.result-title p{
-
-
-    color:var(--text);
-
-    font-size:12px;
-
+    font-size:14px;
 
 }
 
@@ -207,45 +155,28 @@ body{
 
 
 
-
-
-
-/* HERO CARD */
-
-
-.result-hero{
-
-
-    padding:20px;
-
-
-}
-
-
-
-
-
+/* ==========================================
+   Result Card
+========================================== */
 
 
 .result-card{
-
 
     background:var(--card);
 
     border:1px solid var(--border);
 
-    border-radius:30px;
+    border-radius:25px;
 
-    padding:30px 20px;
+    padding:25px;
 
     text-align:center;
 
-    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+    backdrop-filter:blur(18px);
 
+    box-shadow:var(--shadow);
 
 }
-
-
 
 
 
@@ -253,15 +184,11 @@ body{
 
 .result-card h2{
 
+    color:#fff;
 
-    color:var(--gold-light);
-
-    font-size:24px;
-
+    font-size:20px;
 
 }
-
-
 
 
 
@@ -269,13 +196,9 @@ body{
 
 .result-card p{
 
+    color:var(--muted);
 
-    color:var(--text);
-
-    font-size:14px;
-
-    margin-top:8px;
-
+    margin-top:5px;
 
 }
 
@@ -283,138 +206,26 @@ body{
 
 
 
+/* ==========================================
+   Main Score
+========================================== */
 
 
-.marks-display{
+.main-score{
 
-
-    margin:25px auto 0;
-
-    width:150px;
-
-    height:150px;
-
-    border-radius:50%;
-
-    border:5px solid var(--gold);
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:rgba(245,197,66,0.12);
-
-
-}
-
-
-
-
-
-
-
-.marks-display span{
-
-
-    font-size:45px;
-
-    font-weight:800;
-
-    color:var(--gold);
-
-
-}
-
-
-
-
-
-
-
-.marks-display small{
-
-
-    color:var(--text);
-
-    font-size:14px;
-
-
-}
-
-// ==========================================
-// RESULT CSS
-// RANK + SCORE DESIGN
-// PART 2 / 4
-// ==========================================
-
-
-
-
-
-
-/* RANK SECTION */
-
-
-.rank-section{
-
-
-    padding:0 20px 20px;
-
-
-}
-
-
-
-
-
-
-
-.rank-card{
-
-
-    background:
-
-    linear-gradient(
-
-    135deg,
-
-    rgba(245,197,66,0.18),
-
-    rgba(255,255,255,0.05)
-
-    );
-
-
-    border:1px solid var(--gold);
-
-    border-radius:25px;
+    margin-top:25px;
 
     padding:25px;
 
-    text-align:center;
+    border-radius:25px;
 
-    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+    background:linear-gradient(
+        135deg,
+        rgba(255,215,0,.2),
+        rgba(255,255,255,.05)
+    );
 
-
-}
-
-
-
-
-
-
-
-.rank-card h3{
-
-
-    color:var(--gold-light);
-
-    font-size:20px;
-
+    border:1px solid var(--gold);
 
 }
 
@@ -422,19 +233,13 @@ body{
 
 
 
-
-
-.rank-number{
-
-
-    margin:15px 0;
-
-    font-size:35px;
-
-    font-weight:800;
+.main-score h1{
 
     color:var(--gold);
 
+    font-size:60px;
+
+    font-weight:800;
 
 }
 
@@ -442,66 +247,38 @@ body{
 
 
 
+.main-score span{
 
+    color:#fff;
 
-.rank-number span{
-
-
-    color:var(--white);
-
+    font-size:16px;
 
 }
 
+/* ==========================================
+   G THE GENIUS
+   Result CSS
+   Part 2
+
+   Summary + Rank + Buttons
+========================================== */
 
 
 
+/* ==========================================
+   Answer Summary
+========================================== */
 
 
-
-.rank-card p{
-
-
-    color:var(--text);
-
-    font-size:13px;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* SCORE SECTION */
-
-
-.score-section{
-
-
-    padding:20px;
-
-
-}
-
-
-
-
-
-
-
-.score-grid{
-
+.answer-summary{
 
     display:grid;
 
     grid-template-columns:repeat(3,1fr);
 
-    gap:10px;
+    gap:12px;
 
+    margin-top:25px;
 
 }
 
@@ -509,10 +286,7 @@ body{
 
 
 
-
-
-.score-box{
-
+.summary-box{
 
     background:var(--card);
 
@@ -520,44 +294,33 @@ body{
 
     border-radius:20px;
 
-    padding:18px 8px;
+    padding:15px 8px;
 
     text-align:center;
 
-
 }
 
 
 
 
 
-
-
-.score-box h3{
-
-
-    font-size:12px;
-
-    color:var(--text);
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-
-
-
-
-.score-box strong{
-
-
-    color:var(--gold);
+.summary-box h3{
 
     font-size:25px;
 
+}
+
+
+
+
+
+.summary-box p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin:8px 0;
 
 }
 
@@ -565,16 +328,13 @@ body{
 
 
 
+.summary-box span{
 
+    color:var(--gold);
 
-/* RESULT MESSAGE */
+    font-size:22px;
 
-
-.result-message-section{
-
-
-    padding:20px;
-
+    font-weight:800;
 
 }
 
@@ -582,10 +342,44 @@ body{
 
 
 
+.correct-box{
+
+    border-color:#16a34a;
+
+}
 
 
-.message-card{
 
+
+
+.wrong-box{
+
+    border-color:#dc2626;
+
+}
+
+
+
+
+
+.skipped-box{
+
+    border-color:#f59e0b;
+
+}
+
+
+
+
+
+/* ==========================================
+   Rank Result Card
+========================================== */
+
+
+.rank-result-card{
+
+    margin-top:25px;
 
     background:var(--card);
 
@@ -593,10 +387,11 @@ body{
 
     border-radius:25px;
 
-    padding:25px;
+    padding:22px;
 
     text-align:center;
 
+    box-shadow:var(--shadow);
 
 }
 
@@ -604,15 +399,11 @@ body{
 
 
 
+.rank-result-card h2{
 
+    color:var(--gold);
 
-.message-card h2{
-
-
-    color:var(--gold-light);
-
-    font-size:20px;
-
+    margin-bottom:20px;
 
 }
 
@@ -620,79 +411,15 @@ body{
 
 
 
+.rank-item{
 
+    background:rgba(255,255,255,.06);
 
-.message-card p{
-
-
-    color:var(--text);
-
-    font-size:14px;
-
-    margin-top:10px;
-
-
-  }
-
-// ==========================================
-// RESULT CSS
-// ACTION + SOCIAL DESIGN
-// PART 3 / 4
-// ==========================================
-
-
-
-
-
-
-/* ACTION SECTION */
-
-
-.action-section{
-
-
-    padding:20px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
-
-
-}
-
-
-
-
-
-
-
-.action-btn{
-
-
-    display:block;
-
-    width:100%;
+    border-radius:18px;
 
     padding:15px;
 
-    border-radius:30px;
-
-    text-align:center;
-
-    text-decoration:none;
-
-    color:var(--white);
-
-    background:rgba(255,255,255,0.08);
-
-    border:1px solid var(--border);
-
-    font-weight:600;
-
-    transition:0.3s;
-
+    margin-bottom:12px;
 
 }
 
@@ -700,10 +427,99 @@ body{
 
 
 
+.rank-item p{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
 
 
-.action-btn.primary{
 
+
+
+.rank-item h3{
+
+    margin-top:8px;
+
+    color:#fff;
+
+    font-size:22px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Action Buttons
+========================================== */
+
+
+.result-actions{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+
+
+
+
+.share-btn,
+.retry-btn{
+
+    flex:1;
+
+    padding:14px;
+
+    border-radius:50px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+.share-btn{
+
+    background:transparent;
+
+    color:var(--gold);
+
+    border:1px solid var(--gold);
+
+}
+
+
+
+
+
+.retry-btn{
+
+    background:var(--gold);
+
+    color:#081229;
+
+    border:none;
+
+}
+
+
+
+
+
+.share-btn:hover{
 
     background:var(--gold);
 
@@ -711,35 +527,32 @@ body{
 
 }
 
+/* ==========================================
+   G THE GENIUS
+   Result CSS
+   Part 3 Final
+
+   History + Navigation + Footer + Responsive
+========================================== */
 
 
 
+/* ==========================================
+   History Section
+========================================== */
 
 
+.history-section{
 
-.action-btn:hover{
+    margin-top:25px;
 
+    background:var(--card);
 
-    transform:translateY(-3px);
+    border:1px solid var(--border);
 
-}
+    border-radius:25px;
 
-
-
-
-
-
-
-
-
-/* SHARE SECTION */
-
-
-.share-section{
-
-
-    padding:20px;
-
+    padding:22px;
 
 }
 
@@ -747,10 +560,160 @@ body{
 
 
 
+.history-section h2{
+
+    text-align:center;
+
+    color:var(--gold);
+
+    margin-bottom:18px;
+
+}
 
 
-.share-card{
 
+
+
+.history-card{
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:15px;
+
+    margin-bottom:12px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+
+
+.history-card h3{
+
+    font-size:15px;
+
+}
+
+
+
+
+
+.history-card p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+
+
+
+.history-mark{
+
+    color:var(--gold);
+
+    font-weight:800;
+
+}
+
+
+
+
+
+/* ==========================================
+   Bottom Navigation
+========================================== */
+
+
+.bottom-navigation{
+
+    position:fixed;
+
+    bottom:12px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:calc(100% - 30px);
+
+    max-width:600px;
+
+    background:rgba(8,18,41,.95);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:12px 8px;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    z-index:1000;
+
+}
+
+
+
+
+
+.nav-item{
+
+    text-decoration:none;
+
+    color:var(--muted);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:4px;
+
+    font-size:12px;
+
+}
+
+
+
+
+
+.nav-item.active,
+.nav-item:hover{
+
+    color:var(--gold);
+
+}
+
+
+
+
+
+/* ==========================================
+   Footer
+========================================== */
+
+
+.result-footer{
+
+    margin-top:35px;
 
     background:var(--card);
 
@@ -762,6 +725,27 @@ body{
 
     text-align:center;
 
+}
+
+
+
+
+
+.result-footer img{
+
+    width:75px;
+
+    height:75px;
+
+    object-fit:contain;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    padding:6px;
+
+    border:2px solid var(--gold);
 
 }
 
@@ -769,171 +753,11 @@ body{
 
 
 
-
-
-.share-card h3{
-
-
-    color:var(--gold-light);
-
-    font-size:20px;
-
-
-}
-
-
-
-
-
-
-
-.share-card p{
-
-
-    color:var(--text);
-
-    font-size:13px;
-
-    margin:10px 0 20px;
-
-
-}
-
-
-
-
-
-
-
-
-/* SOCIAL BUTTONS */
-
-
-.share-buttons{
-
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-
-}
-
-
-
-
-
-
-
-.share-buttons a{
-
-
-    padding:13px;
-
-    border-radius:30px;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-    color:white;
-
-
-}
-
-
-
-
-
-
-
-.share-buttons a:nth-child(1){
-
-
-    background:#ff0000;
-
-
-}
-
-
-
-
-
-
-
-.share-buttons a:nth-child(2){
-
-
-    background:#229ED9;
-
-
-}
-
-
-
-
-
-
-
-.share-buttons a:nth-child(3){
-
-
-    background:#f5c542;
-
-    color:#081229;
-
-
-}
-
-// ==========================================
-// RESULT CSS
-// FOOTER + RESPONSIVE
-// PART 4 / 4
-// FINAL
-// ==========================================
-
-
-
-
-
-
-/* FOOTER */
-
-
-/* Logo Removed - Header Only Logo */
-
-
-.app-footer{
-
-
-    margin-top:30px;
-
-    padding:30px 20px;
-
-    text-align:center;
-
-    background:rgba(0,0,0,0.25);
-
-    border-top:1px solid var(--border);
-
-
-}
-
-
-
-
-
-
-
-.app-footer h3{
-
+.result-footer h3{
 
     color:var(--gold);
 
-    font-size:22px;
-
+    margin-top:12px;
 
 }
 
@@ -941,17 +765,21 @@ body{
 
 
 
+.result-footer p{
 
-
-.app-footer p{
-
-
-    color:var(--text);
+    color:var(--muted);
 
     font-size:13px;
 
-    margin-top:8px;
+}
 
+
+
+
+
+.result-footer small{
+
+    color:var(--muted);
 
 }
 
@@ -959,453 +787,67 @@ body{
 
 
 
-
-
-.footer-links{
-
-
-    display:flex;
-
-    justify-content:center;
-
-    flex-wrap:wrap;
-
-    gap:15px;
-
-    margin:18px 0;
-
-
-}
-
-
-
-
-
-
-
-.footer-links a{
-
-
-    color:var(--white);
-
-    text-decoration:none;
-
-    font-size:13px;
-
-
-}
-
-
-
-
-
-
-
-.footer-links a:hover{
-
-
-    color:var(--gold);
-
-
-}
-
-
-
-
-
-
-
-.copyright{
-
-
-    opacity:0.8;
-
-    font-size:12px !important;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* RESPONSIVE MOBILE */
-
-
-@media(max-width:360px){
-
-
-
-.result-container{
-
-    width:100%;
-
-}
-
-
-
-.result-header{
-
-    padding:15px;
-
-}
-
-
-
-.logo-box{
-
-    width:55px;
-
-    height:55px;
-
-}
-
-
-
-.result-title h1{
-
-    font-size:18px;
-
-}
-
-
-
-.marks-display{
-
-    width:130px;
-
-    height:130px;
-
-}
-
-
-
-.marks-display span{
-
-    font-size:38px;
-
-}
-
-
-
-.score-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* TABLET */
-
-
-@media(min-width:601px){
-
-
-
-.result-container{
-
-    max-width:700px;
-
-}
-
-
-
-.score-grid{
-
-    grid-template-columns:repeat(3,1fr);
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* DESKTOP */
-
-
-@media(min-width:1024px){
-
-
-
-.result-container{
-
-    max-width:850px;
-
-}
-
-
-
-.result-card{
-
-    padding:40px;
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-/* TOUCH EFFECT */
-
-
-button,
-a{
-
-
-    -webkit-tap-highlight-color:transparent;
-
-
-}
-
-
-
-a:active{
-
-
-    transform:scale(0.96);
-
-
-}
-
-
-/* RESULT TEXT VISIBILITY FINAL FIX */
-
-body{
-    background:#081229;
-    color:#ffffff;
-}
-
-
-.result-card h1,
-.result-card h2,
-.result-card h3{
-    color:#ffd86b !important;
-}
-
-
-.result-card p,
-.result-card span,
-.result-card div{
-    color:#ffffff !important;
-}
-
-
-.score-box{
-    color:#ffd86b !important;
-    background:#101d3d;
-}
-
-
-
-
-
-/* RESULT CSS v5.0 COMPLETE */
 /* ==========================================
-   QUESTION REVIEW DESIGN
+   Mobile Responsive
 ========================================== */
 
-.review-section{
 
-width:95%;
-max-width:1000px;
-margin:30px auto;
+@media(max-width:480px){
 
-}
 
-.review-section h2{
+    .result-container{
 
-color:#FFD700;
-text-align:center;
-margin-bottom:20px;
-font-size:28px;
+        padding:15px;
 
-}
+    }
 
-.review-card{
 
-background:#13203d;
-border:1px solid rgba(255,215,0,.25);
-border-radius:15px;
-padding:20px;
-margin-bottom:20px;
-box-shadow:0 8px 20px rgba(0,0,0,.35);
 
-}
+    .answer-summary{
 
-.review-card h3{
+        gap:8px;
 
-color:#ffffff;
-font-size:20px;
-margin-bottom:15px;
+    }
 
-}
 
-.review-card p{
 
-color:#d8e6ff;
-line-height:1.8;
-font-size:16px;
-margin:8px 0;
+    .summary-box{
 
-}
+        padding:12px 5px;
 
-.review-card b{
+    }
 
-color:#FFD700;
 
-}
 
-.correct-answer{
+    .summary-box h3{
 
-color:#00ff88;
-font-weight:bold;
+        font-size:20px;
 
-}
+    }
 
-.wrong-answer{
 
-color:#ff4d4d;
-font-weight:bold;
 
-}
+    .main-score h1{
 
-.unanswered{
+        font-size:50px;
 
-color:#ffb300;
-font-weight:bold;
+    }
 
-}
 
-@media(max-width:768px){
 
-.review-card{
+    .result-actions{
 
-padding:15px;
+        flex-direction:column;
 
-}
+    }
 
-.review-card h3{
 
-font-size:17px;
 
-}
+    .bottom-navigation{
 
-.review-card p{
+        width:calc(100% - 20px);
 
-font-size:14px;
+    }
 
-}
 
-}
-/* ==========================================
-   RESULT EXTRA FEATURES
-========================================== */
-
-.extra-result{
-    width:95%;
-    max-width:900px;
-    margin:25px auto;
-    padding:20px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:18px;
-    backdrop-filter:blur(12px);
-    text-align:center;
-}
-
-.badge{
-    display:inline-block;
-    padding:10px 25px;
-    border-radius:30px;
-    font-size:20px;
-    font-weight:700;
-    color:#fff;
-    margin-bottom:20px;
-}
-
-.progress{
-    width:100%;
-    height:14px;
-    background:#1f2d4d;
-    border-radius:30px;
-    overflow:hidden;
-    margin:20px 0;
-}
-
-#progressBar{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#FFD700,#FF9800);
-    transition:1s;
-}
-
-.stats{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-    margin:20px 0;
-}
-
-.stat-box{
-    min-width:170px;
-    padding:15px;
-    border-radius:12px;
-    background:#122040;
-    color:#fff;
-    font-weight:bold;
-}
-
-.result-buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:15px;
-    margin-top:20px;
-}
-
-.result-buttons button{
-    padding:12px 25px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    background:#FFD700;
-    color:#081229;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.result-buttons button:hover{
-    transform:translateY(-3px);
-    background:#ffb300;
 }
