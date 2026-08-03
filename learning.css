@@ -1,155 +1,273 @@
 /* ==========================================
-G THE GENIUS LEARNING ZONE CSS
-PART 1 / CSS
+   G THE GENIUS
+   Learning Zone CSS
+   Part 1
 ========================================== */
 
 
-/* =========================
-GLOBAL
-========================= */
+:root{
+
+    --bg:#081229;
+
+    --card:rgba(255,255,255,.08);
+
+    --gold:#FFD700;
+
+    --gold2:#ffb800;
+
+    --white:#ffffff;
+
+    --muted:#b7bfd8;
+
+    --border:rgba(255,255,255,.15);
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+
+    --radius:22px;
+
+    --transition:.3s ease;
+
+}
+
+
 
 *{
+
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
-    font-family:
-    "Poppins",
-    "Noto Sans Tamil",
-    sans-serif;
+
 }
+
 
 
 body{
 
-    background:#081229;
-    color:white;
+    font-family:'Poppins',sans-serif;
+
+    background:linear-gradient(
+        180deg,
+        #081229,
+        #102452
+    );
+
+    color:var(--white);
+
     min-height:100vh;
 
-}
-
-
-a{
-
-    text-decoration:none;
-    color:white;
-
-}
-
-
-button{
-
-    cursor:pointer;
-    border:none;
+    padding-bottom:90px;
 
 }
 
 
 
-/* =========================
-CONTAINER
-========================= */
+/* ==========================================
+   Main Container
+========================================== */
 
 
 .learning-container{
 
     width:100%;
-    max-width:1200px;
+
+    max-width:600px;
+
     margin:auto;
-    padding:20px;
+
+    padding:18px;
 
 }
 
 
 
-/* =========================
-HEADER
-========================= */
+/* ==========================================
+   Header
+========================================== */
 
 
 .learning-header{
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    text-align:center;
 
-    padding:15px 20px;
-
-    background:
-    rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(15px);
-
-    border-radius:20px;
-
-    border:
-    1px solid rgba(255,215,0,0.25);
-
-    margin-bottom:20px;
+    margin-bottom:25px;
 
 }
 
 
 
-.header-left{
+.learning-header .logo{
 
-    display:flex;
-    align-items:center;
-    gap:15px;
+    width:90px;
 
-}
+    height:90px;
 
-
-
-.logo-img{
-
-    width:65px;
-    height:65px;
+    border-radius:50%;
 
     object-fit:contain;
 
+    background:#fff;
+
+    padding:8px;
+
+    border:3px solid var(--gold);
+
+    box-shadow:var(--shadow);
+
 }
 
 
 
-.header-left h1{
+.learning-header h1{
 
-    color:#FFD700;
+    margin-top:15px;
+
+    color:var(--gold);
+
     font-size:26px;
 
+    font-weight:700;
+
 }
 
 
-.header-left p{
 
-    color:#ddd;
+.learning-header p{
+
+    margin-top:8px;
+
+    color:var(--muted);
+
     font-size:14px;
 
 }
 
 
 
-.dashboard-btn{
+/* ==========================================
+   Learning Banner
+========================================== */
 
-    background:#FFD700;
 
-    color:#081229;
+.learning-banner{
 
-    padding:12px 18px;
+    background:var(--card);
 
-    border-radius:12px;
+    border:1px solid var(--border);
 
-    font-weight:bold;
+    backdrop-filter:blur(18px);
+
+    border-radius:var(--radius);
+
+    padding:22px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:22px;
 
 }
 
 
 
-/* =========================
-WELCOME CARD
-========================= */
+.learning-banner h2{
+
+    color:var(--gold);
+
+    font-size:22px;
+
+    margin-bottom:8px;
+
+}
 
 
-.welcome-card{
+
+.learning-banner p{
+
+    color:var(--muted);
+
+    font-size:14px;
+
+}
+
+
+
+/* ==========================================
+   Search Box
+========================================== */
+
+
+.search-box{
+
+    margin-bottom:25px;
+
+}
+
+
+
+.search-box input{
+
+    width:100%;
+
+    padding:15px 18px;
+
+    border-radius:50px;
+
+    border:1px solid var(--border);
+
+    outline:none;
+
+    background:rgba(255,255,255,.10);
+
+    color:#fff;
+
+    font-size:15px;
+
+    backdrop-filter:blur(15px);
+
+}
+
+
+
+.search-box input::placeholder{
+
+    color:#c5cbe0;
+
+}
+
+
+
+.search-box input:focus{
+
+    border-color:var(--gold);
+
+    box-shadow:0 0 15px rgba(255,215,0,.25);
+
+}
+/* ==========================================
+   G THE GENIUS
+   Learning Zone CSS
+   Part 2
+   Subject Cards
+========================================== */
+
+
+/* ==========================================
+   Subject Section Header
+========================================== */
+
+
+.subjects-section{
+
+    margin-top:20px;
+
+}
+
+
+
+.section-title{
 
     display:flex;
 
@@ -157,62 +275,118 @@ WELCOME CARD
 
     align-items:center;
 
-    background:
-    linear-gradient(
-    135deg,
-    #101f45,
-    #081229
-    );
-
-
-    padding:25px;
-
-    border-radius:25px;
-
-    border:
-    1px solid rgba(255,215,0,.3);
-
-    margin-bottom:20px;
+    margin-bottom:18px;
 
 }
 
 
 
-.welcome-left h2{
+.section-title h2{
 
-    font-size:22px;
+    color:var(--gold);
 
-}
-
-
-
-.welcome-left h3{
-
-    color:#FFD700;
-
-    font-size:28px;
-
-    margin-top:8px;
+    font-size:21px;
 
 }
 
 
 
-.welcome-left p{
+.section-title span{
 
-    color:#ccc;
+    color:var(--muted);
 
-    margin-top:5px;
+    font-size:13px;
+
+    background:rgba(255,255,255,.08);
+
+    padding:6px 12px;
+
+    border-radius:50px;
 
 }
 
 
 
-.avatar{
 
-    width:90px;
 
-    height:90px;
+/* ==========================================
+   Subjects Grid
+========================================== */
+
+
+.subjects-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Subject Card
+========================================== */
+
+
+.subject-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:18px 15px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+    animation:cardShow .5s ease;
+
+}
+
+
+
+
+
+.subject-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:var(--gold);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
+
+}
+
+
+
+
+
+/* ==========================================
+   Subject Icon
+========================================== */
+
+
+.subject-icon{
+
+    width:65px;
+
+    height:65px;
+
+    margin:0 auto 14px;
 
     display:flex;
 
@@ -220,183 +394,271 @@ WELCOME CARD
 
     align-items:center;
 
-    font-size:45px;
-
-
-    background:
-    rgba(255,255,255,.1);
-
     border-radius:50%;
 
-}
+    font-size:32px;
 
+    background:rgba(255,215,0,.15);
 
-
-/* =========================
-PROGRESS CARD
-========================= */
-
-
-.progress-card{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(3,1fr);
-
-    gap:15px;
-
-    margin-bottom:20px;
+    border:2px solid rgba(255,215,0,.35);
 
 }
 
 
 
-.progress-item{
 
 
-    text-align:center;
+.subject-card h3{
 
-    padding:20px;
-
-    border-radius:20px;
-
-
-    background:
-    rgba(255,255,255,.08);
-
-
-    border:
-    1px solid rgba(255,215,0,.2);
-
-
-}
-
-
-
-.progress-item h3{
-
-    color:#FFD700;
-
-    margin:10px 0;
-
-    font-size:24px;
-
-}
-
-
-
-.progress-item p{
-
-    color:#ddd;
-
-}
-
-
-
-/* =========================
-SEARCH
-========================= */
-
-
-.search-section{
-
-    margin:25px 0;
-
-}
-
-
-#searchBox{
-
-
-    width:100%;
-
-    padding:15px 20px;
-
-    border-radius:15px;
-
-    outline:none;
-
-    border:none;
-
-    background:
-    rgba(255,255,255,.1);
-
-    color:white;
+    color:#fff;
 
     font-size:16px;
 
+    margin-bottom:8px;
 
-}
-
-
-#searchBox::placeholder{
-
-    color:#ccc;
-
-}
-
- /* ==========================================
- G THE GENIUS LEARNING ZONE CSS
- PART 2 / CSS
- ========================================== */
-
-
-/* =========================
-CONTINUE LEARNING
-========================= */
-
-
-.continue-learning{
-
-    margin-bottom:25px;
-
-}
-
-
-.continue-learning h2,
-.subject-section h2,
-.topic-section h2,
-.lesson-section h2,
-.practice-section h2,
-.recent-section h2,
-.achievement-section h2{
-
-    color:#FFD700;
-
-    margin-bottom:15px;
-
-    font-size:24px;
+    line-height:1.4;
 
 }
 
 
 
-.continue-card{
+
+
+.subject-card p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.5;
+
+}
+
+
+
+
+
+/* ==========================================
+   Animation
+========================================== */
+
+
+@keyframes cardShow{
+
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Subject Active Effect
+========================================== */
+
+
+.subject-card:active{
+
+    transform:scale(.96);
+
+}
+
+
+
+
+
+
+/* ==========================================
+   Tablet
+========================================== */
+
+
+@media(min-width:600px){
+
+
+    .subjects-grid{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+
+}
+
+/* ==========================================
+   G THE GENIUS
+   Learning Zone CSS
+   Part 3 Final
+   Footer + Navigation + Responsive
+========================================== */
+
+
+/* ==========================================
+   Bottom Navigation
+========================================== */
+
+
+.bottom-navigation{
+
+    position:fixed;
+
+    bottom:12px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:calc(100% - 30px);
+
+    max-width:560px;
+
+    background:rgba(8,18,41,.92);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:12px 8px;
 
     display:flex;
 
-    justify-content:space-between;
+    justify-content:space-around;
 
     align-items:center;
 
-    padding:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
 
-    background:
-    rgba(255,255,255,.08);
-
-    border-radius:20px;
-
-    border:
-    1px solid rgba(255,215,0,.25);
+    z-index:1000;
 
 }
 
 
 
-.continue-card h3{
 
-    color:white;
+
+.nav-item{
+
+    text-decoration:none;
+
+    color:var(--muted);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:4px;
+
+    font-size:12px;
+
+    transition:.3s ease;
+
+}
+
+
+
+
+
+.nav-item:hover,
+.nav-item.active{
+
+    color:var(--gold);
+
+    transform:translateY(-4px);
+
+}
+
+
+
+
+
+.nav-item span{
+
+    font-size:12px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Footer
+========================================== */
+
+
+.dashboard-footer{
+
+    margin-top:35px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:25px 18px;
+
+    text-align:center;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.dashboard-footer img{
+
+    width:75px;
+
+    height:75px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:6px;
+
+    border-radius:50%;
+
+    border:2px solid var(--gold);
+
+}
+
+
+
+
+
+.dashboard-footer h3{
+
+    margin-top:12px;
+
+    color:var(--gold);
 
     font-size:20px;
 
@@ -404,1374 +666,152 @@ CONTINUE LEARNING
 
 
 
-.continue-card p{
-
-    color:#ccc;
-
-    margin-top:5px;
-
-}
 
 
+.dashboard-footer p{
 
-#continueBtn{
+    color:var(--muted);
 
+    margin-top:6px;
 
-    background:#FFD700;
-
-    color:#081229;
-
-    padding:12px 22px;
-
-    border-radius:12px;
-
-    font-weight:bold;
+    font-size:13px;
 
 }
 
 
-
-
-/* =========================
-SUBJECT GRID
-========================= */
-
-
-.subject-section{
-
-    margin-top:25px;
-
-}
-
-
-
-.subject-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(230px,1fr));
-
-
-    gap:20px;
-
-
-}
-
-
-
-/* =========================
-SUBJECT CARD
-========================= */
-
-
-.subject-card{
-
-
-    background:
-
-    linear-gradient(
-    145deg,
-    rgba(255,255,255,.12),
-    rgba(255,255,255,.04)
-    );
-
-
-    padding:25px 20px;
-
-
-    border-radius:25px;
-
-
-    text-align:center;
-
-
-    border:
-
-    1px solid rgba(255,215,0,.25);
-
-
-    transition:.3s;
-
-
-    cursor:pointer;
-
-
-}
-
-
-
-.subject-card:hover{
-
-
-    transform:translateY(-8px);
-
-
-    box-shadow:
-
-    0 10px 30px rgba(255,215,0,.25);
-
-
-}
-
-
-
-.subject-icon{
-
-
-    font-size:45px;
-
-
-    margin-bottom:15px;
-
-
-}
-
-
-
-.subject-card h3{
-
-
-    color:#FFD700;
-
-
-    font-size:21px;
-
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-.subject-card p{
-
-
-    color:#ddd;
-
-
-    font-size:14px;
-
-
-    min-height:45px;
-
-
-}
-
-
-
-.subject-card button{
-
-
-    margin-top:15px;
-
-
-    padding:12px 20px;
-
-
-    border-radius:15px;
-
-
-    background:#FFD700;
-
-
-    color:#081229;
-
-
-    font-weight:bold;
-
-
-}
-
-
-
-/* =========================
-TOPIC SECTION
-========================= */
-
-
-.topic-section{
-
-
-    margin-top:30px;
-
-
-}
-
-
-
-.hidden{
-
-
-    display:none;
-
-
-}
-
-
-
-.topic-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-
-    repeat(auto-fit,minmax(220px,1fr));
-
-
-    gap:15px;
-
-
-}
-
-
-
-.topic-card{
-
-
-    background:
-
-    rgba(255,255,255,.08);
-
-
-    padding:18px;
-
-
-    border-radius:18px;
-
-
-    border:
-
-    1px solid rgba(255,215,0,.2);
-
-
-    cursor:pointer;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-.topic-card:hover{
-
-
-    background:
-
-    rgba(255,215,0,.15);
-
-
-}
-
-
-
-.topic-card h3{
-
-
-    color:#FFD700;
-
-
-    margin-bottom:8px;
-
-
-}
-
-
-
-.topic-card p{
-
-
-    color:#ddd;
-
-
-    font-size:14px;
-
-
-}
-
-
-
-/* =========================
-LESSON SECTION START
-========================= */
-
-
-.lesson-section{
-
-
-    margin-top:30px;
-
-
-}
-
-
-
-.lesson-header{
-
-
-    display:flex;
-
-
-    justify-content:space-between;
-
-
-    align-items:center;
-
-
-}
-
-
-
-.lesson-progress{
-
-
-    background:
-
-    rgba(255,215,0,.15);
-
-
-    padding:10px 15px;
-
-
-    border-radius:15px;
-
-
-    color:#FFD700;
-
-
-}
-
- /* ==========================================
- G THE GENIUS LEARNING ZONE CSS
- PART 3 / CSS
- ========================================== */
-
-
-/* =========================
-LESSON CARD
-========================= */
-
-
-.lesson-card{
-
-    margin-top:20px;
-
-    padding:25px;
-
-    background:
-
-    linear-gradient(
-    145deg,
-    #101f45,
-    #081229
-    );
-
-    border-radius:25px;
-
-    border:
-
-    1px solid rgba(255,215,0,.25);
-
-}
-
-
-
-.lesson-card h2{
-
-    color:#FFD700;
-
-    margin-bottom:15px;
-
-}
-
-
-
-#lessonContent{
-
-    color:#ddd;
-
-    line-height:1.8;
-
-    font-size:16px;
-
-}
-
-
-
-.lesson-image{
-
-    width:100%;
-
-    max-height:350px;
-
-    object-fit:cover;
-
-    margin-top:20px;
-
-    border-radius:20px;
-
-}
-
-
-
-/* =========================
-LESSON BUTTONS
-========================= */
-
-
-.lesson-buttons{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:15px;
-
-    margin-top:25px;
-
-}
-
-
-
-.lesson-btn{
-
-    padding:12px 20px;
-
-    border-radius:15px;
-
-    font-weight:bold;
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-}
-
-
-
-.pdf-btn{
-
-    background:#e53935;
-
-    color:white;
-
-}
-
-
-
-.video-btn{
-
-    background:#ff0000;
-
-    color:white;
-
-}
-
-
-
-.complete-btn{
-
-    background:#FFD700;
-
-    color:#081229;
-
-}
-
-
-
-/* =========================
-PRACTICE TEST
-========================= */
-
-
-.practice-section{
-
-    margin-top:30px;
-
-}
-
-
-
-.practice-card{
-
-
-    padding:25px;
-
-
-    text-align:center;
-
-
-    background:
-
-    rgba(255,255,255,.08);
-
-
-    border-radius:25px;
-
-
-    border:
-
-    1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-.practice-card p{
-
-
-    color:#ddd;
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-#practiceBtn{
-
-
-    padding:15px 30px;
-
-
-    background:#FFD700;
-
-
-    color:#081229;
-
-
-    border-radius:15px;
-
-
-    font-weight:bold;
-
-
-    font-size:16px;
-
-
-}
-
-
-
-/* =========================
-RECENT LESSONS
-========================= */
-
-
-.recent-section{
-
-    margin-top:35px;
-
-}
-
-
-
-.recent-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-
-    repeat(auto-fit,minmax(250px,1fr));
-
-
-    gap:20px;
-
-
-}
-
-
-
-.recent-card{
-
-
-    padding:20px;
-
-
-    background:
-
-    rgba(255,255,255,.08);
-
-
-    border-radius:20px;
-
-
-    border:
-
-    1px solid rgba(255,215,0,.2);
-
-
-}
-
-
-
-.recent-card h3{
-
-
-    color:#FFD700;
-
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-.recent-card p{
-
-
-    color:#ccc;
-
-
-    font-size:14px;
-
-
-}
-
-
-
-/* =========================
-ACHIEVEMENTS
-========================= */
-
-
-.achievement-section{
-
-
-    margin-top:35px;
-
-
-}
-
-
-
-.achievement-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-
-    repeat(3,1fr);
-
-
-    gap:15px;
-
-
-}
-
-
-
-.achievement-card{
-
-
-    text-align:center;
-
-
-    padding:25px;
-
-
-    background:
-
-    rgba(255,255,255,.08);
-
-
-    border-radius:20px;
-
-
-    border:
-
-    1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-.achievement-card h3{
-
-
-    color:#FFD700;
-
-
-    margin:10px 0;
-
-
-}
-
-
-
-.achievement-card p{
-
-
-    color:#ddd;
-
-
-}
-
-
-
-/* =========================
-FOOTER
-========================= */
-
-
-.learning-footer{
-
-
-    margin-top:50px;
-
-
-    padding:30px 20px;
-
-
-    background:
-
-    rgba(255,255,255,.06);
-
-
-    border-radius:25px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-.footer-logo-img{
-
-
-    width:80px;
-
-}
-
-
-
-.learning-footer h2{
-
-
-    color:#FFD700;
-
-
-    margin:10px 0;
-
-
-}
-
-
-
-.learning-footer p{
-
-
-    color:#ccc;
-
-
-}
 
 
 
 .footer-links{
 
-
     display:flex;
-
-
-    flex-wrap:wrap;
-
 
     justify-content:center;
 
+    flex-wrap:wrap;
 
-    gap:20px;
+    gap:10px;
 
-
-    margin:25px 0;
-
+    margin:20px 0;
 
 }
+
+
 
 
 
 .footer-links a{
 
+    text-decoration:none;
 
-    color:white;
+    color:#fff;
 
+    padding:10px 15px;
 
-}
+    border-radius:50px;
 
+    background:rgba(255,255,255,.08);
 
-
-.footer-social{
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    gap:20px;
-
-
-}
-
-
-.copyright{
-
-
-    margin-top:20px;
-
-
-    font-size:14px;
-
-
-}
-
- /* ==========================================
- G THE GENIUS LEARNING ZONE CSS
- PART 4 / FINAL CSS
- ========================================== */
-
-
-/* =========================
-BOTTOM NAVIGATION
-========================= */
-
-
-.bottom-nav{
-
-
-    position:fixed;
-
-
-    bottom:15px;
-
-
-    left:50%;
-
-
-    transform:translateX(-50%);
-
-
-
-    width:90%;
-
-
-    max-width:600px;
-
-
-
-    display:flex;
-
-
-    justify-content:space-around;
-
-
-    align-items:center;
-
-
-
-    padding:12px;
-
-
-
-    background:
-
-    rgba(8,18,41,.95);
-
-
-
-    backdrop-filter:blur(15px);
-
-
-
-    border-radius:25px;
-
-
-
-    border:
-
-    1px solid rgba(255,215,0,.3);
-
-
-
-    z-index:999;
-
-
-
-}
-
-
-
-.bottom-nav a{
-
-
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    align-items:center;
-
-
-
-    gap:5px;
-
-
-
-    color:#ccc;
-
-
+    border:1px solid var(--border);
 
     font-size:13px;
 
-
-
-    transition:.3s;
-
-
+    transition:.3s ease;
 
 }
 
 
 
-.bottom-nav a span{
 
+
+.footer-links a:hover{
+
+    background:var(--gold);
+
+    color:#081229;
+
+}
+
+
+
+
+
+.dashboard-footer small{
+
+    color:var(--muted);
 
     font-size:12px;
 
+    line-height:1.6;
 
 }
 
 
 
-.bottom-nav a:hover,
 
 
-.bottom-nav .active{
+/* ==========================================
+   Mobile Responsive
+========================================== */
 
 
-    color:#FFD700;
+@media(max-width:480px){
 
 
-    transform:translateY(-5px);
+    .learning-container{
 
-
-}
-
-
-
-/* =========================
-SCROLL BAR
-========================= */
-
-
-::-webkit-scrollbar{
-
-
-    width:8px;
-
-
-}
-
-
-
-::-webkit-scrollbar-track{
-
-
-    background:#081229;
-
-
-}
-
-
-
-::-webkit-scrollbar-thumb{
-
-
-    background:#FFD700;
-
-
-    border-radius:10px;
-
-
-}
-
-
-
-/* =========================
-CARD ANIMATION
-========================= */
-
-
-.subject-card,
-.topic-card,
-.recent-card,
-.achievement-card{
-
-
-    animation:
-
-    fadeUp .5s ease;
-
-
-}
-
-
-
-@keyframes fadeUp{
-
-
-    from{
-
-
-        opacity:0;
-
-
-        transform:translateY(20px);
-
+        padding:15px;
 
     }
 
 
-    to{
+
+    .learning-header h1{
+
+        font-size:23px;
+
+    }
 
 
-        opacity:1;
+
+    .subjects-grid{
+
+        grid-template-columns:1fr;
+
+    }
 
 
-        transform:translateY(0);
 
+    .subject-card{
+
+        padding:20px;
+
+    }
+
+
+
+    .bottom-navigation{
+
+        width:calc(100% - 20px);
+
+    }
+
+
+
+    .footer-links{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .footer-links a{
+
+        width:100%;
 
     }
 
 
 }
 
-
-
-/* =========================
-TABLET RESPONSIVE
-========================= */
-
-
-@media(max-width:900px){
-
-
-.learning-container{
-
-
-    padding:15px;
-
-
-}
-
-
-
-.progress-card{
-
-
-    grid-template-columns:
-
-    repeat(3,1fr);
-
-
-}
-
-
-
-.subject-grid{
-
-
-    grid-template-columns:
-
-    repeat(2,1fr);
-
-
-}
-
-
-}
-
-
-
-/* =========================
-MOBILE RESPONSIVE
-========================= */
-
-
-@media(max-width:600px){
-
-
-
-.learning-header{
-
-
-    flex-direction:column;
-
-
-    gap:15px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-.header-left{
-
-
-    flex-direction:column;
-
-
-}
-
-
-
-.logo-img{
-
-
-    width:75px;
-
-
-    height:75px;
-
-
-}
-
-
-
-.header-left h1{
-
-
-    font-size:22px;
-
-
-}
-
-
-
-.welcome-card{
-
-
-    padding:20px;
-
-
-}
-
-
-
-.welcome-left h3{
-
-
-    font-size:22px;
-
-
-}
-
-
-
-.avatar{
-
-
-    width:70px;
-
-
-    height:70px;
-
-
-    font-size:35px;
-
-
-}
-
-
-
-.progress-card{
-
-
-    grid-template-columns:
-
-    1fr;
-
-
-}
-
-
-
-.progress-item{
-
-
-    padding:15px;
-
-
-}
-
-
-
-.continue-card{
-
-
-    flex-direction:column;
-
-
-    gap:15px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-.subject-grid{
-
-
-    grid-template-columns:
-
-    1fr;
-
-
-}
-
-
-
-.topic-grid{
-
-
-    grid-template-columns:
-
-    1fr;
-
-
-}
-
-
-
-.lesson-header{
-
-
-    flex-direction:column;
-
-
-    gap:15px;
-
-
-}
-
-
-
-.lesson-buttons{
-
-
-    flex-direction:column;
-
-
-}
-
-
-
-.lesson-btn{
-
-
-    width:100%;
-
-
-}
-
-
-
-.achievement-grid{
-
-
-    grid-template-columns:
-
-    1fr;
-
-
-}
-
-
-
-.footer-links{
-
-
-    flex-direction:column;
-
-
-}
-
-
-
-.bottom-nav{
-
-
-    width:95%;
-
-
-    bottom:10px;
-
-
-}
-
-
-
-.bottom-nav a{
-
-
-    font-size:18px;
-
-
-}
-
-
-
-.bottom-nav a span{
-
-
-    font-size:10px;
-
-
-}
-
-
-
-body{
-
-
-    padding-bottom:90px;
-
-
-}
-
-
-}
-
-
-
-/* =========================
-END CSS
-G THE GENIUS
-========================= */
