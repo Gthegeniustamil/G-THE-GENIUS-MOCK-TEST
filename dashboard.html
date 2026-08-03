@@ -3,576 +3,596 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>Dashboard | G THE GENIUS</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#081229">
 
-    <!-- Google Font -->
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com">
+<title>
+Mock Test | G THE GENIUS
+</title>
 
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+<meta name="theme-color"
+content="#081229">
 
-    <!-- Main CSS -->
-    <link rel="stylesheet"
-        href="css/common.css">
 
-    <link rel="stylesheet"
-        href="css/dashboard.css">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+href="css/mocktest.css">
+
 
 </head>
 
+
+
 <body>
 
-    <!-- ========================= -->
-    <!-- Splash Screen -->
-    <!-- ========================= -->
 
-    <div id="splash-screen">
 
-        <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-            alt="G THE GENIUS Logo"
-            class="splash-logo">
+<div class="mock-container">
 
-        <h1>G THE GENIUS</h1>
 
-        <p>Learn • Practice • Succeed</p>
 
-    </div>
 
-    <!-- ========================= -->
-    <!-- Dashboard -->
-    <!-- ========================= -->
 
-    <div class="dashboard-container">
+<!-- =========================
+     Header
+========================= -->
 
-        <!-- Header -->
 
-        <header class="dashboard-header">
+<header class="mock-header">
 
-            <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-                alt="Logo"
-                class="logo">
 
-            <h1>G THE GENIUS</h1>
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo"
+alt="G THE GENIUS Logo">
 
-            <p class="tagline">
-                Learn • Practice • Succeed
-            </p>
 
-        </header>
 
-        <!-- Welcome Card -->
+<h1 id="testTitle">
 
-        <section class="welcome-card">
+🎯 Mock Test
 
-            <div class="welcome-top">
+</h1>
 
-                <div>
 
-                    <h2 id="greeting">
 
-                        Good Morning ☀️
+<p>
 
-                    </h2>
+Learn • Practice • Succeed
 
-                    <h3>
+</p>
 
-                        Welcome,
 
-                        <span id="studentName">
+</header>
 
-                            Loading...
 
-                        </span>
 
-                    </h3>
 
-                </div>
 
-            </div>
 
-            <div class="future-badge">
 
-                ⭐ Future Officer
+<!-- =========================
+     Test Info Card
+========================= -->
 
-            </div>
 
-            <div class="date-time">
+<section class="test-info-card">
 
-                <div>
 
-                    📅
 
-                    <span id="currentDate">
+<div>
 
-                        Loading...
 
-                    </span>
+<h3>
+Test Type
+</h3>
 
-                </div>
 
-                <div>
+<p id="testTypeName">
 
-                    🕒
+Loading...
 
-                    <span id="currentTime">
+</p>
 
-                        Loading...
 
-                    </span>
+</div>
 
-                </div>
 
-            </div>
 
-        </section>
 
-             <!-- ========================= -->
-        <!-- Daily Quote -->
-        <!-- ========================= -->
 
-        <section class="quote-card">
+<div>
 
-            <div class="card-header">
 
-                <h2>📖 Daily Quote</h2>
+<h3>
+Questions
+</h3>
 
-            </div>
 
-            <div class="quote-content">
+<p id="totalQuestions">
 
-                <p id="dailyQuote">
+0
 
-                    Loading Quote...
+</p>
 
-                </p>
 
-            </div>
+</div>
 
-        </section>
 
-        <!-- ========================= -->
-        <!-- Mock Test Section -->
-        <!-- ========================= -->
 
-        <section class="mock-test-section">
 
-            <div class="section-title">
 
-                <h2>🚀 Mock Tests</h2>
+<div>
 
-                <p>
-                    Improve your performance with daily practice
-                </p>
 
-            </div>
+<h3>
+Time
 
-            <div class="test-card daily-card"
-                onclick="location.href='mocktest.html?type=daily'">
+</h3>
 
-                <div class="card-left">
 
-                    <h3>🟢 Daily Mock Test</h3>
+<p id="testTime">
 
-                    <p>25 Questions</p>
+00:00
 
-                    <span>⏱ 5 Minutes</span>
+</p>
 
-                </div>
 
-                <div class="card-right">
+</div>
 
-                    <button class="start-btn">
 
-                        Start →
 
-                    </button>
+</section>
 
-                </div>
 
-            </div>
 
-            <div class="test-card weekly-card"
-                onclick="location.href='mocktest.html?type=weekly'">
 
-                <div class="card-left">
 
-                    <h3>🟡 Weekly Mock Test</h3>
 
-                    <p>50 Questions</p>
+<!-- =========================
+     Test Area
+========================= -->
 
-                    <span>⏱ 10 Minutes</span>
 
-                </div>
+<section id="testArea"
+class="test-area">
 
-                <div class="card-right">
 
-                    <button class="start-btn">
 
-                        Start →
+<div class="question-header">
 
-                    </button>
 
-                </div>
+<div class="progress-box">
 
-            </div>
 
-            <div class="test-card monthly-card"
-                onclick="location.href='mocktest.html?type=monthly'">
+<span id="questionCount">
 
-                <div class="card-left">
+Question 1 / 25
 
-                    <h3>🔴 Monthly Grand Test</h3>
+</span>
 
-                    <p>100 Questions</p>
 
-                    <span>⏱ 30 Minutes</span>
 
-                </div>
+<div class="progress-bar">
 
-                <div class="card-right">
+<div id="progressFill">
 
-                    <button class="start-btn">
+</div>
 
-                        Start →
+</div>
 
-                    </button>
 
-                </div>
+</div>
 
-            </div>
 
-        </section>
 
-             <!-- ========================= -->
-        <!-- Learning Zone -->
-        <!-- ========================= -->
 
-        <section class="learning-section">
 
-            <div class="section-header">
+<div class="timer-box">
 
-                <h2>📚 Learning Zone</h2>
+⏰
 
-                <a href="learning.html" class="view-all">
+<span id="timer">
 
-                    View All →
+05:00
 
-                </a>
+</span>
 
-            </div>
 
-            <div class="learning-grid">
+</div>
 
-                <!-- Psychology -->
 
-                <div class="learning-card"
-                    onclick="location.href='learning.html?subject=Psychology'">
 
-                    <div class="learning-icon">
+</div>
+<!-- =========================
+     Question Card
+========================= -->
 
-                        🧠
 
-                    </div>
+<div class="question-card">
 
-                    <h3>Psychology</h3>
 
-                    <p>
+<h2 id="questionText">
 
-                        Learn important psychology topics
-                        with explanations.
+Question Loading...
 
-                    </p>
+</h2>
 
-                </div>
 
-                <!-- Physical -->
 
-                <div class="learning-card"
-                    onclick="location.href='learning.html?subject=Physical'">
 
-                    <div class="learning-icon">
 
-                        💪
+<div class="options-container"
+id="optionsContainer">
 
-                    </div>
 
-                    <h3>Physical</h3>
 
-                    <p>
+<button class="option-btn">
 
-                        Prepare physical fitness tips,
-                        PET & PMT guidance.
+Option A
 
-                    </p>
+</button>
 
-                </div>
 
-                <!-- General Studies -->
 
-                <div class="learning-card"
-                    onclick="location.href='learning.html?subject=General Studies'">
+<button class="option-btn">
 
-                    <div class="learning-icon">
+Option B
 
-                        📘
+</button>
 
-                    </div>
 
-                    <h3>General Studies</h3>
 
-                    <p>
+<button class="option-btn">
 
-                        Study important government
-                        exam subjects easily.
+Option C
 
-                    </p>
+</button>
 
-                </div>
 
-            </div>
 
-        </section>
+<button class="option-btn">
 
-        <!-- ========================= -->
-        <!-- Practice Test -->
-        <!-- ========================= -->
+Option D
 
-        <section class="practice-section">
+</button>
 
-            <div class="section-header">
 
-                <h2>📝 Practice Test</h2>
 
-            </div>
+</div>
 
-            <div class="practice-card">
 
-                <div class="practice-left">
 
-                    <h3>
+</div>
 
-                        Subject & Topic Wise Practice
 
-                    </h3>
 
-                    <p>
 
-                        Select your subject and topic,
-                        then start unlimited random
-                        practice tests.
 
-                    </p>
 
-                </div>
 
-                <div class="practice-right">
+<!-- =========================
+     Navigation Buttons
+========================= -->
 
-                    <button
-                        class="practice-btn"
-                        onclick="location.href='practice.html'">
 
-                        Start Practice →
+<div class="question-navigation">
 
-                    </button>
 
-                </div>
 
-            </div>
+<button id="previousBtn"
+class="nav-btn">
 
-        </section>
-        <!-- ========================= -->
-        <!-- Leaderboard Preview -->
-        <!-- ========================= -->
 
-        <section class="leaderboard-section">
+← Previous
 
-            <div class="section-header">
 
-                <h2>🏆 Leaderboard</h2>
+</button>
 
-                <a href="leaderboard.html" class="view-all">
-                    View All →
-                </a>
 
-            </div>
 
-            <div class="leaderboard-card">
 
-                <div class="podium-preview">
 
-                    <div class="podium second">
-                        <div class="rank-circle">🥈</div>
-                        <h4 id="secondName">Loading...</h4>
-                        <small>Rank #2</small>
-                    </div>
+<button id="nextBtn"
+class="nav-btn">
 
-                    <div class="podium first">
-                        <div class="rank-circle">🥇</div>
-                        <h3 id="firstName">Loading...</h3>
-                        <small>Rank #1</small>
-                    </div>
 
-                    <div class="podium third">
-                        <div class="rank-circle">🥉</div>
-                        <h4 id="thirdName">Loading...</h4>
-                        <small>Rank #3</small>
-                    </div>
+Next →
 
-                </div>
 
-            </div>
+</button>
 
-        </section>
 
-        <!-- ========================= -->
-        <!-- Bottom Navigation -->
-        <!-- ========================= -->
 
-        <nav class="bottom-navigation">
 
-            <a href="dashboard.html"
-                class="nav-item active">
+</div>
+  <!-- =========================
+     Submit Section
+========================= -->
 
-                <span class="nav-icon">🏠</span>
 
-                <span class="nav-text">
+<section class="submit-section">
 
-                    Home
 
-                </span>
+<button id="submitBtn"
+class="submit-btn">
 
-            </a>
 
-            <a href="learning.html"
-                class="nav-item">
+Submit Test ✅
 
-                <span class="nav-icon">📚</span>
 
-                <span class="nav-text">
+</button>
 
-                    Learning
 
-                </span>
+</section>
 
-            </a>
 
-            <a href="practice.html"
-                class="nav-item">
 
-                <span class="nav-icon">📝</span>
 
-                <span class="nav-text">
 
-                    Practice
 
-                </span>
 
-            </a>
+<!-- =========================
+     Result Box
+========================= -->
 
-            <a href="leaderboard.html"
-                class="nav-item">
 
-                <span class="nav-icon">🏆</span>
+<section id="resultBox"
+class="result-box"
+style="display:none;">
 
-                <span class="nav-text">
 
-                    Leaderboard
 
-                </span>
+<h2>
 
-            </a>
+🎉 Test Result
 
-            <a href="profile.html"
-                class="nav-item">
+</h2>
 
-                <span class="nav-icon">👤</span>
 
-                <span class="nav-text">
 
-                    Profile
+<div id="scoreDisplay">
 
-                </span>
 
-            </a>
+</div>
 
-        </nav>
-             <!-- ========================= -->
-        <!-- Footer -->
-        <!-- ========================= -->
 
-        <footer class="dashboard-footer">
 
-            <div class="footer-logo">
+<button onclick="location.reload()"
+class="retry-btn">
 
-                <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-                    alt="G THE GENIUS Logo">
 
-                <h3>G THE GENIUS</h3>
+Retry Test 🔄
 
-                <p>Learn • Practice • Succeed</p>
 
-            </div>
+</button>
 
-            <div class="footer-links">
 
-                <a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
-                    target="_blank">
 
-                    📺 YouTube
+</section>
 
-                </a>
 
-                <a href="https://t.me/gthegenius"
-                    target="_blank">
 
-                    📢 Telegram
 
-                </a>
 
-                <a href="mailto:gthegenius7@gmail.com">
 
-                    📧 gthegenius7@gmail.com
 
-                </a>
+</section>
 
-            </div>
 
-            <div class="footer-copy">
 
-                © 2026 G THE GENIUS
-                <br>
-                All Rights Reserved.
 
-            </div>
 
-        </footer>
 
-    </div>
-    <!-- End Dashboard Container -->
 
-    <!-- ========================= -->
-    <!-- JavaScript -->
-    <!-- ========================= -->
 
-    <script type="module"
-        src="js/firebase-config.js"></script>
+<!-- =========================
+     Bottom Navigation
+========================= -->
 
-    <script src="js/common.js"></script>
 
-    <script type="module"
-        src="js/dashboard.js"></script>
+<nav class="bottom-navigation">
+
+
+<a href="dashboard.html"
+class="nav-item">
+
+
+🏠
+
+<span>
+Home
+</span>
+
+
+</a>
+
+
+
+
+
+<a href="learning.html"
+class="nav-item">
+
+
+📚
+
+<span>
+Learning
+</span>
+
+
+</a>
+
+
+
+
+
+<a href="practice.html"
+class="nav-item">
+
+
+📝
+
+<span>
+Practice
+</span>
+
+
+</a>
+
+
+
+
+
+<a href="leaderboard.html"
+class="nav-item">
+
+
+🏆
+
+<span>
+Rank
+</span>
+
+
+</a>
+
+
+
+</nav>
+
+
+
+
+
+
+
+
+<!-- =========================
+     Footer
+========================= -->
+
+
+<footer class="dashboard-footer">
+
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo">
+
+
+
+
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+
+
+
+
+<p>
+
+Learn • Practice • Succeed
+
+</p>
+
+
+
+
+
+<div class="footer-links">
+
+
+
+<a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
+target="_blank">
+
+📺 YouTube
+
+</a>
+
+
+
+
+
+<a href="https://t.me/gthegenius"
+target="_blank">
+
+📢 Telegram
+
+</a>
+
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+📧 Email
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+<small>
+
+© 2026 G THE GENIUS
+<br>
+All Rights Reserved.
+
+</small>
+
+
+
+</footer>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<script src="js/mocktest.js"></script>
+
+
 
 </body>
 
-</html>
+</html>  
+    
