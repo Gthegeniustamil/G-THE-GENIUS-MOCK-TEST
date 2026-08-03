@@ -1,1 +1,746 @@
+/* ==========================================
+   G THE GENIUS
+   Landing CSS
+   Part 1
 
+   Premium Dark Blue + Gold Theme
+========================================== */
+
+
+:root{
+
+    --bg:#081229;
+
+    --card:rgba(255,255,255,.08);
+
+    --gold:#FFD700;
+
+    --white:#ffffff;
+
+    --muted:#b7bfd8;
+
+    --border:rgba(255,255,255,.15);
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+
+}
+
+
+
+
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+
+
+
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:linear-gradient(
+        180deg,
+        #081229,
+        #102452
+    );
+
+    color:#fff;
+
+    min-height:100vh;
+
+}
+
+
+
+
+
+/* ==========================================
+   Container
+========================================== */
+
+
+.landing-container{
+
+    width:100%;
+
+    max-width:650px;
+
+    margin:auto;
+
+    padding:18px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Header
+========================================== */
+
+
+.landing-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+
+
+
+
+.landing-header .logo{
+
+    width:100px;
+
+    height:100px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    padding:8px;
+
+    border:3px solid var(--gold);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.landing-header h1{
+
+    margin-top:15px;
+
+    color:var(--gold);
+
+    font-size:32px;
+
+    font-weight:800;
+
+}
+
+
+
+
+
+.landing-header p{
+
+    color:var(--muted);
+
+    font-size:15px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Hero Card
+========================================== */
+
+
+.hero-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:30px;
+
+    padding:30px 22px;
+
+    text-align:center;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.hero-card h2{
+
+    color:var(--gold);
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+
+
+.hero-card p{
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+}
+
+
+
+
+
+/* ==========================================
+   Buttons
+========================================== */
+
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+
+
+
+
+.primary-btn,
+.secondary-btn{
+
+    flex:1;
+
+    padding:15px;
+
+    border-radius:50px;
+
+    font-weight:800;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+.primary-btn{
+
+    background:var(--gold);
+
+    color:#081229;
+
+    border:none;
+
+}
+
+
+
+
+
+.secondary-btn{
+
+    background:transparent;
+
+    color:var(--gold);
+
+    border:1px solid var(--gold);
+
+}
+
+/* ==========================================
+   G THE GENIUS
+   Landing CSS
+   Part 2
+
+   Features + Highlights + Community
+========================================== */
+
+
+
+/* ==========================================
+   Section Title
+========================================== */
+
+
+.features-section,
+.highlight-section,
+.community-section{
+
+    margin-top:30px;
+
+}
+
+
+
+
+
+.features-section h2,
+.highlight-section h2,
+.community-section h2{
+
+    text-align:center;
+
+    color:var(--gold);
+
+    margin-bottom:20px;
+
+    font-size:22px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Feature Grid
+========================================== */
+
+
+.feature-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+
+
+
+
+.feature-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.feature-card h3{
+
+    font-size:30px;
+
+}
+
+
+
+
+
+.feature-card h4{
+
+    margin-top:10px;
+
+    color:#fff;
+
+}
+
+
+
+
+
+.feature-card p{
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Test Highlight Cards
+========================================== */
+
+
+.highlight-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.highlight-card h3{
+
+    color:var(--gold);
+
+}
+
+
+
+
+
+.highlight-card p{
+
+    color:var(--muted);
+
+    margin-top:8px;
+
+}
+
+
+
+
+
+/* ==========================================
+   Community Section
+========================================== */
+
+
+.community-section{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+}
+
+
+
+
+
+.community-section p{
+
+    color:var(--muted);
+
+}
+
+
+
+
+
+.social-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:20px;
+
+}
+
+
+
+
+
+.social-buttons a{
+
+    flex:1;
+
+    padding:14px;
+
+    border-radius:50px;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+}
+
+
+
+
+
+.youtube-btn{
+
+    background:#ff0000;
+
+    color:#fff;
+
+}
+
+
+
+
+
+.telegram-btn{
+
+    background:#229ED9;
+
+    color:#fff;
+
+}
+
+/* ==========================================
+   G THE GENIUS
+   Landing CSS
+   Part 3 Final
+
+   CTA + Footer + Responsive
+========================================== */
+
+
+
+/* ==========================================
+   CTA Card
+========================================== */
+
+
+.cta-card{
+
+    margin-top:30px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(255,215,0,.20),
+        rgba(255,255,255,.06)
+    );
+
+    border:1px solid var(--gold);
+
+    border-radius:30px;
+
+    padding:30px 20px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+
+
+.cta-card h2{
+
+    color:var(--gold);
+
+    font-size:24px;
+
+}
+
+
+
+
+
+.cta-card p{
+
+    color:var(--muted);
+
+    margin:15px 0;
+
+}
+
+
+
+
+
+.cta-card .primary-btn{
+
+    width:100%;
+
+}
+
+
+
+
+
+/* ==========================================
+   Footer
+========================================== */
+
+
+.landing-footer{
+
+    margin-top:35px;
+
+    padding:25px;
+
+    text-align:center;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+}
+
+
+
+
+
+.landing-footer img{
+
+    width:80px;
+
+    height:80px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:6px;
+
+    border-radius:50%;
+
+    border:2px solid var(--gold);
+
+}
+
+
+
+
+
+.landing-footer h3{
+
+    color:var(--gold);
+
+    margin-top:12px;
+
+}
+
+
+
+
+
+.landing-footer p{
+
+    color:var(--muted);
+
+}
+
+
+
+
+
+.landing-footer small{
+
+    color:var(--muted);
+
+}
+
+
+
+
+
+/* ==========================================
+   Hover Effects
+========================================== */
+
+
+.feature-card:hover,
+.highlight-card:hover,
+.hero-card:hover{
+
+    transform:translateY(-3px);
+
+    transition:.3s;
+
+}
+
+
+
+
+
+/* ==========================================
+   Mobile Responsive
+========================================== */
+
+
+@media(max-width:480px){
+
+
+    .landing-container{
+
+        padding:15px;
+
+    }
+
+
+
+    .hero-buttons,
+    .social-buttons{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .feature-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .landing-header h1{
+
+        font-size:28px;
+
+    }
+
+
+
+    .hero-card h2{
+
+        font-size:21px;
+
+    }
+
+
+}
