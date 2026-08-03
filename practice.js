@@ -1,155 +1,165 @@
-// ===================================
-// G THE GENIUS PRACTICE SYSTEM
-// FINAL VERSION
-// ===================================
+/* ==========================================
+   G THE GENIUS
+   Practice Test JavaScript
+   Part 1
 
-
-import { db } from "./firebase-config.js";
-
-import { subjectTopics } from "./subjects.js";
-
-
-import {
-
-collection,
-getDocs
-
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+   Features:
+   - Subject Load
+   - Topic Load
+   - Question JSON Loading
+   - Random Question Setup
+========================================== */
 
 
 
-
-// =========================
-// VARIABLES
-// =========================
-
-
-let questions=[];
-
-let practiceQuestions=[];
-
-let currentIndex=0;
-
-let score=0;
-
-let correct=0;
-
-let wrong=0;
-
-
-
-
-// =========================
-// ELEMENTS
-// =========================
+/* ==========================================
+   Elements
+========================================== */
 
 
 const subjectSelect =
-document.getElementById("subject");
+    document.getElementById(
+        "subjectSelect"
+    );
 
 
 const topicSelect =
-document.getElementById("topic");
+    document.getElementById(
+        "topicSelect"
+    );
 
 
-const startBtn = document.getElementById("startPracticeBtn");
-
-startBtn?.addEventListener("click", () => {
-
-    window.location.href = "practice-test.html";
-
-});
+const startPracticeBtn =
+    document.getElementById(
+        "startPracticeBtn"
+    );
 
 
+const testArea =
+    document.getElementById(
+        "testArea"
+    );
 
-// =========================
-// LOAD SUBJECTS
-// =========================
+
+
+
+
+/* ==========================================
+   Variables
+========================================== */
+
+
+let allQuestions = [];
+
+let testQuestions = [];
+
+let currentQuestion = 0;
+
+let selectedAnswers = [];
+
+let totalQuestions = 10;
+
+
+
+
+
+/* ==========================================
+   Load Questions JSON
+========================================== */
+
+
+async function loadQuestionData(){
+
+
+    try{
+
+
+        const response =
+            await fetch(
+                "questions/questions.json"
+            );
+
+
+        allQuestions =
+            await response.json();
+
+
+
+        loadSubjects();
+
+
+
+    }
+
+    catch(error){
+
+
+        console.log(
+            "Question Load Error:",
+            error
+        );
+
+
+    }
+
+
+}
+
+
+
+
+
+loadQuestionData();
+
+
+
+
+
+/* ==========================================
+   Load Subjects
+========================================== */
 
 
 function loadSubjects(){
 
 
-if(!subjectSelect)
-return;
+    const subjects = [
+
+        ...new Set(
+
+            allQuestions.map(
+                q=>q.subject
+            )
+
+        )
+
+    ];
 
 
 
-subjectSelect.innerHTML="";
+    subjects.forEach(subject=>{
 
 
-
-Object.keys(subjectTopics)
-.forEach(sub=>{
-
-
-let option =
-document.createElement("option");
+        const option =
+            document.createElement(
+                "option"
+            );
 
 
-option.value=sub;
-
-option.textContent=sub;
-
-
-subjectSelect.appendChild(option);
+        option.value =
+            subject;
 
 
-});
+        option.textContent =
+            subject;
 
 
-
-loadTopics();
-
-
-}
+        subjectSelect.appendChild(
+            option
+        );
 
 
-
-
-
-
-// =========================
-// LOAD TOPICS
-// =========================
-
-
-function loadTopics(){
-
-
-if(!topicSelect)
-return;
-
-
-topicSelect.innerHTML="";
-
-
-
-let selected =
-subjectSelect.value;
-
-
-
-subjectTopics[selected]
-.forEach(topic=>{
-
-
-let option =
-document.createElement("option");
-
-
-option.value=topic;
-
-option.textContent=topic;
-
-
-topicSelect.appendChild(option);
-
-
-});
-
+    });
 
 
 }
@@ -157,573 +167,375 @@ topicSelect.appendChild(option);
 
 
 
-subjectSelect?.addEventListener(
+
+/* ==========================================
+   Subject Change
+========================================== */
+
+
+if(subjectSelect){
+
+
+subjectSelect.addEventListener(
 "change",
-loadTopics
-);
+()=>{
 
 
+    const subject =
+        subjectSelect.value;
 
 
 
+    topicSelect.innerHTML = `
 
+    <option value="">
+    Select Topic
+    </option>
 
+    `;
 
-// =========================
-// LOAD QUESTIONS
-// =========================
 
 
-async function loadQuestions(){
+    const topics = [
 
+        ...new Set(
 
-try{
+            allQuestions
 
+            .filter(
+                q=>
+                q.subject===subject
+            )
 
-let snap =
-await getDocs(
-collection(db,"questions")
-);
+            .map(
+                q=>q.topic
+            )
 
+        )
 
+    ];
 
-questions=[];
 
 
+    topics.forEach(topic=>{
 
-snap.forEach(doc=>{
 
+        const option =
+            document.createElement(
+                "option"
+            );
 
-questions.push({
 
-id:doc.id,
+        option.value =
+            topic;
 
-...doc.data()
 
-});
+        option.textContent =
+            topic;
 
 
-});
+        topicSelect.appendChild(
+            option
+        );
 
 
+    });
 
-console.log(
-"Questions Loaded",
-questions.length
-);
-
-
-
-}
-
-catch(error){
-
-
-console.log(
-"Question Load Error",
-error
-);
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-// =========================
-// START PRACTICE
-// =========================
-
-
-if(startBtn){
-
-
-startBtn.onclick=()=>{
-
-
-let subject =
-subjectSelect.value;
-
-
-
-let topic =
-topicSelect.value;
-
-
-
-
-
-if(subject==="All Mixed"){
-
-
-practiceQuestions =
-[...questions];
-
-
-}
-
-
-
-else if(topic==="All Topics"){
-
-
-practiceQuestions =
-
-questions.filter(q=>
-
-q.subject===subject
-
-);
-
-
-
-}
-
-
-
-else{
-
-
-practiceQuestions =
-
-questions.filter(q=>
-
-q.subject===subject
-&&
-q.topic===topic
-
-);
-
-
-
-}
-
-
-
-
-
-
-practiceQuestions.sort(
-
-()=>Math.random()-0.5
-
-);
-
-
-
-
-
-currentIndex=0;
-
-score=0;
-
-correct=0;
-
-wrong=0;
-
-
-
-showQuestion();
-
-
-
-};
-
-}
-
-
-
-
-// =========================
-// SHOW QUESTION
-// =========================
-
-
-function showQuestion(){
-
-
-if(
-currentIndex >= practiceQuestions.length
-){
-
-
-practiceComplete();
-
-
-return;
-
-}
-
-
-
-let q =
-practiceQuestions[currentIndex];
-
-
-
-
-
-document.getElementById(
-"questionNumber"
-).innerHTML=
-
-`
-${currentIndex+1}
-/
-${practiceQuestions.length}
-`;
-
-
-
-document.getElementById(
-"questionText"
-).innerHTML =
-q.question;
-
-
-
-
-
-
-for(let i=0;i<4;i++){
-
-
-
-let btn =
-document.getElementById(
-"option"+i
-);
-
-
-
-if(btn){
-
-
-
-btn.innerHTML =
-q.options[i];
-
-
-
-btn.className =
-"option-btn";
-
-
-
-btn.disabled=false;
-
-
-
-btn.onclick=()=>{
-
-
-checkAnswer(
-i,
-q.answer,
-q
-);
-
-
-};
-
-
-}
-
-
-}
-
-
-updateProgress();
-
-
-
-}
-
-
-
-
-
-
-
-// =========================
-// CHECK ANSWER
-// =========================
-
-
-function checkAnswer(
-selected,
-answer,
-q
-){
-
-
-let buttons =
-document.querySelectorAll(
-".option-btn"
-);
-
-
-
-buttons.forEach(btn=>{
-
-
-btn.disabled=true;
 
 
 });
 
 
-
-
-
-if(
-buttons[selected].innerHTML
-===
-answer
-){
-
-
-score++;
-
-correct++;
-
-
-buttons[selected]
-.classList.add(
-"correct"
-);
-
-
-}
-
-else{
-
-
-wrong++;
-
-
-buttons[selected]
-.classList.add(
-"wrong"
-);
-
-
-
-buttons.forEach(btn=>{
-
-
-if(btn.innerHTML===answer){
-
-
-btn.classList.add(
-"correct"
-);
-
-
-}
-
-
-});
-
-
-
-}
-
-
-
-showExplanation(
-q.explanation
-);
-
-
-
-updateScore();
-
-
 }
 
 
 
 
 
+/* ==========================================
+   Start Practice
+========================================== */
 
 
-
-// =========================
-// NEXT QUESTION
-// =========================
+if(startPracticeBtn){
 
 
-const nextBtn =
-document.getElementById(
-"nextQuestion"
-);
-
-
-
-nextBtn?.addEventListener(
+startPracticeBtn.addEventListener(
 "click",
 ()=>{
 
 
-currentIndex++;
+    const subject =
+        subjectSelect.value;
 
-showQuestion();
 
-
-}
-);
-
+    const topic =
+        topicSelect.value;
 
 
 
+    let filtered =
+        allQuestions.filter(
+            q=>
+
+            q.subject===subject
+            &&
+            q.topic===topic
+
+        );
 
 
 
-
-// =========================
-// SCORE UPDATE
-// =========================
+    if(filtered.length===0){
 
 
-function updateScore(){
+        alert(
+            "Questions not available"
+        );
 
 
-
-document.getElementById(
-"practiceScore"
-).innerHTML=score;
+        return;
 
 
-
-document.getElementById(
-"correctCount"
-).innerHTML=correct;
+    }
 
 
 
-document.getElementById(
-"wrongCount"
-).innerHTML=wrong;
+    filtered.sort(
+        ()=>Math.random()-0.5
+    );
 
 
 
-let total =
-correct+wrong;
+    testQuestions =
+        filtered.slice(
+            0,
+            totalQuestions
+        );
 
 
 
-let accuracy =
-total ?
-
-Math.round(
-(correct/total)*100
-)
-:
-0;
+    selectedAnswers =
+        new Array(
+            testQuestions.length
+        )
+        .fill(null);
 
 
 
-document.getElementById(
-"accuracy"
-).innerHTML=
-accuracy+"%";
-
-
-}
+    currentQuestion=0;
 
 
 
+    testArea.style.display =
+        "block";
 
 
 
-
-// =========================
-// EXPLANATION
-// =========================
+    displayQuestion();
 
 
-function showExplanation(text){
-
-
-let box =
-document.getElementById(
-"explanationBox"
-);
-
-
-
-if(!box)
-return;
-
-
-
-box.style.display="block";
-
-
-box.innerHTML=
-
-`
-💡 Explanation :
-
-<br>
-
-${text || "No Explanation"}
-
-`;
-
+});
 
 
 }
 
+/* ==========================================
+   G THE GENIUS
+   Practice Test JavaScript
+   Part 2
+
+   Features:
+   - Display Question
+   - Option Selection
+   - Next / Previous
+   - Progress Update
+   - Timer
+========================================== */
+
+
+
+/* ==========================================
+   Elements
+========================================== */
+
+
+const questionText =
+    document.getElementById(
+        "questionText"
+    );
+
+
+const optionsContainer =
+    document.getElementById(
+        "optionsContainer"
+    );
+
+
+const questionCount =
+    document.getElementById(
+        "questionCount"
+    );
+
+
+const progressFill =
+    document.getElementById(
+        "progressFill"
+    );
+
+
+const timerElement =
+    document.getElementById(
+        "timer"
+    );
+
+
+const previousBtn =
+    document.getElementById(
+        "previousBtn"
+    );
+
+
+const nextBtn =
+    document.getElementById(
+        "nextBtn"
+    );
+
+
+
+let timer;
+
+let timeLeft = 300;
 
 
 
 
 
+/* ==========================================
+   Display Question
+========================================== */
 
-// =========================
-// PROGRESS
-// =========================
+
+function displayQuestion(){
+
+
+    if(!testQuestions.length)
+        return;
+
+
+
+    const question =
+        testQuestions[currentQuestion];
+
+
+
+    questionText.textContent =
+        question.question;
+
+
+
+    questionCount.textContent =
+
+    `Question ${currentQuestion + 1} / ${testQuestions.length}`;
+
+
+
+
+
+    optionsContainer.innerHTML="";
+
+
+
+    question.options.forEach(
+        (option,index)=>{
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+
+        button.className =
+            "option-btn";
+
+
+
+        button.textContent =
+            option;
+
+
+
+        if(
+            selectedAnswers[currentQuestion]
+            === index
+        ){
+
+            button.classList.add(
+                "selected"
+            );
+
+        }
+
+
+
+
+        button.onclick = ()=>{
+
+
+            selectedAnswers[currentQuestion]
+            = index;
+
+
+
+            displayQuestion();
+
+
+        };
+
+
+
+        optionsContainer.appendChild(
+            button
+        );
+
+
+    });
+
+
+
+    updateProgress();
+
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Progress
+========================================== */
 
 
 function updateProgress(){
 
 
-let bar =
-document.getElementById(
-"practiceProgress"
-);
+    const percentage =
+
+    (
+        (currentQuestion + 1)
+        /
+        testQuestions.length
+    )
+    *100;
 
 
 
-if(bar){
-
-
-let percent =
-
-(
-(currentIndex+1)
-/
-practiceQuestions.length
-)
-*100;
-
-
-
-bar.style.width =
-percent+"%";
-
-
-}
-
+    progressFill.style.width =
+        percentage+"%";
 
 
 }
@@ -732,93 +544,76 @@ percent+"%";
 
 
 
+/* ==========================================
+   Next Button
+========================================== */
 
 
-// =========================
-// XP SYSTEM
-// =========================
+if(nextBtn){
 
 
-function addXP(){
+nextBtn.onclick = ()=>{
 
 
-let xp =
-Number(
-localStorage.getItem("xp")
-)||0;
+    if(
+        currentQuestion <
+        testQuestions.length-1
+    ){
 
 
-
-xp += correct*5;
-
+        currentQuestion++;
 
 
-localStorage.setItem(
-"xp",
-xp
-);
+        displayQuestion();
 
 
-}
+    }
 
 
+    else{
 
 
+        alert(
+            "Please Submit Test"
+        );
 
 
-
-// =========================
-// SAVE HISTORY
-// =========================
-
-
-function saveHistory(){
-
-
-let data={
-
-
-date:
-new Date()
-.toLocaleDateString(),
-
-
-score,
-
-correct,
-
-wrong
+    }
 
 
 };
 
 
-
-
-let history =
-
-JSON.parse(
-
-localStorage.getItem(
-"practiceHistory"
-)
-
-)||[];
+}
 
 
 
-history.push(data);
 
 
+/* ==========================================
+   Previous Button
+========================================== */
 
-localStorage.setItem(
 
-"practiceHistory",
+if(previousBtn){
 
-JSON.stringify(history)
 
-);
+previousBtn.onclick = ()=>{
 
+
+    if(currentQuestion>0){
+
+
+        currentQuestion--;
+
+
+        displayQuestion();
+
+
+    }
+
+
+};
 
 
 }
@@ -827,38 +622,250 @@ JSON.stringify(history)
 
 
 
+/* ==========================================
+   Timer Start
+========================================== */
+
+
+function startTimer(){
+
+
+    clearInterval(timer);
 
 
 
-// =========================
-// COMPLETE
-// =========================
-
-
-function practiceComplete(){
-
-
-addXP();
-
-
-saveHistory();
+    timeLeft=300;
 
 
 
-alert(
+    timer =
+    setInterval(
+    ()=>{
 
-`
-🎉 Practice Completed
 
-Correct : ${correct}
+        let minutes =
+            Math.floor(
+                timeLeft/60
+            );
 
-Wrong : ${wrong}
 
-Score : ${score}
+        let seconds =
+            timeLeft%60;
 
-`
 
-);
+
+        timerElement.textContent =
+
+        `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+
+
+
+
+        timeLeft--;
+
+
+
+        if(timeLeft < 0){
+
+
+            clearInterval(timer);
+
+
+
+            alert(
+                "Time Over! Test Submitted"
+            );
+
+
+
+            document
+            .getElementById(
+                "submitBtn"
+            )
+            .click();
+
+
+
+        }
+
+
+
+    },
+    1000
+    );
+
+
+}
+
+/* ==========================================
+   G THE GENIUS
+   Practice Test JavaScript
+   Part 3 Final
+
+   Features:
+   - Submit Test
+   - Marks Calculation
+   - Result Display
+   - Timer Start Connection
+========================================== */
+
+
+
+/* ==========================================
+   Submit Elements
+========================================== */
+
+
+const submitBtn =
+    document.getElementById(
+        "submitBtn"
+    );
+
+
+const resultPreview =
+    document.getElementById(
+        "resultPreview"
+    );
+
+
+const scoreDisplay =
+    document.getElementById(
+        "scoreDisplay"
+    );
+
+
+
+
+
+/* ==========================================
+   Submit Test
+========================================== */
+
+
+if(submitBtn){
+
+
+submitBtn.onclick = ()=>{
+
+
+    clearInterval(timer);
+
+
+
+    let correct = 0;
+
+    let wrong = 0;
+
+    let skipped = 0;
+
+
+
+    testQuestions.forEach(
+        (question,index)=>{
+
+
+        if(
+            selectedAnswers[index] === null
+            ||
+            selectedAnswers[index] === undefined
+        ){
+
+            skipped++;
+
+        }
+
+        else if(
+
+            selectedAnswers[index]
+            ==
+            question.correctAnswer
+
+        ){
+
+            correct++;
+
+        }
+
+        else{
+
+
+            wrong++;
+
+        }
+
+
+
+    });
+
+
+
+
+
+    const marks =
+        correct;
+
+
+
+    if(testArea){
+
+        testArea.style.display =
+            "none";
+
+    }
+
+
+
+    if(resultPreview){
+
+
+        resultPreview.style.display =
+            "block";
+
+
+    }
+
+
+
+
+    if(scoreDisplay){
+
+
+        scoreDisplay.innerHTML = `
+
+        <div>
+        🏆 Marks : ${marks}
+        </div>
+
+        <div>
+        ✅ Correct : ${correct}
+        </div>
+
+        <div>
+        ❌ Wrong : ${wrong}
+        </div>
+
+        <div>
+        ⏭️ Skipped : ${skipped}
+        </div>
+
+        `;
+
+
+    }
+
+
+
+    saveResult(
+        marks,
+        correct,
+        wrong,
+        skipped
+    );
+
+
+
+};
 
 
 }
@@ -867,16 +874,66 @@ Score : ${score}
 
 
 
-// =========================
-// INIT
-// =========================
+/* ==========================================
+   Save Result
+   Firebase Ready
+========================================== */
 
 
-loadSubjects();
+async function saveResult(
+    marks,
+    correct,
+    wrong,
+    skipped
+){
 
-loadQuestions();
+
+    console.log(
+
+        "Result Saved",
+
+        {
+            marks,
+            correct,
+            wrong,
+            skipped
+        }
+
+    );
 
 
-console.log(
-"✅ Practice Final Ready"
-);
+}
+
+
+
+
+
+/* ==========================================
+   Start Timer After Test Start
+========================================== */
+
+
+const oldDisplayQuestion =
+    displayQuestion;
+
+
+
+displayQuestion = function(){
+
+
+    oldDisplayQuestion();
+
+
+
+    if(
+        !timer
+        &&
+        testQuestions.length > 0
+    ){
+
+        startTimer();
+
+    }
+
+
+};
