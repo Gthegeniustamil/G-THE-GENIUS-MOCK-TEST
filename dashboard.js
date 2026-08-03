@@ -130,10 +130,6 @@ onAuthStateChanged(auth, async (user) => {
 // PART 2 / 8
 // ==========================================
 
-import {
-    doc,
-    getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ==========================================
 // DOM
@@ -309,13 +305,13 @@ function animateProgress(value){
 // ==========================================
 
 import {
-    collection,
-    query,
-    orderBy,
-    limit,
-    getDocs
+collection,
+query,
+where,
+orderBy,
+limit,
+getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 // ==========================================
 // DOM
 // ==========================================
@@ -489,14 +485,6 @@ setInterval(()=>{
 // PART 4 / 8
 // ==========================================
 
-import {
-    collection,
-    query,
-    where,
-    orderBy,
-    getDocs,
-    limit
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ==========================================
 // DOM
@@ -885,8 +873,6 @@ function updateDashboard(student){
 const toast =
 document.getElementById("toast");
 
-const loadingOverlay =
-document.getElementById("loadingOverlay");
 
 // ==========================================
 // TOAST MESSAGE
@@ -1296,7 +1282,6 @@ async function initializeDashboard() {
 
         showLoading();
 
-        updateGreeting();
 
         if (auth.currentUser) {
 
