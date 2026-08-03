@@ -5,41 +5,80 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 
 <title>
-G THE GENIUS | Leaderboard
+Leaderboard | G THE GENIUS
 </title>
 
 
-<link rel="stylesheet" href="leaderboard.css">
+<meta name="theme-color"
+content="#081229">
+
+
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+href="css/leaderboard.css">
 
 
 </head>
+
 
 
 <body>
 
 
 
-<div class="leaderboard-container">
+<div class="leader-container">
 
 
 
-<!-- HEADER -->
+
+
+<!-- =========================
+     Header
+========================= -->
+
 
 <header class="leader-header">
 
 
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo"
+alt="G THE GENIUS Logo">
+
+
+
 <h1>
-🏆 G THE GENIUS
+
+🏆 Leaderboard
+
 </h1>
 
 
+
 <p>
-Government Exam Mock Test Leaderboard
+
+Compete • Improve • Succeed
+
 </p>
+
 
 
 </header>
@@ -51,335 +90,383 @@ Government Exam Mock Test Leaderboard
 
 
 
-<!-- MY RANK CARD -->
+<!-- =========================
+     Top 3 Podium
+========================= -->
 
 
-<div class="my-rank-card">
-
-
-<h2>
-Your Rank
-</h2>
-
-
-<h1 id="myRank">
--
-</h1>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- TOP 3 -->
-
-<div class="top-rank-section">
-
-    <div class="rank-card second">
-
-        🥈
-
-        <h3>2nd Rank</h3>
-
-        <p id="rank2Card">Loading...</p>
-
-    </div>
-
-    <div class="rank-card first">
-
-        👑
-
-        <h3>1st Rank</h3>
-
-        <p id="rank1Card">Loading...</p>
-
-    </div>
-
-    <div class="rank-card third">
-
-        🥉
-
-        <h3>3rd Rank</h3>
-
-        <p id="rank3Card">Loading...</p>
-
-    </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- FILTER AREA -->
-
-
-<div class="filter-box">
+<section class="podium-section">
 
 
 
 <h2>
-Filter
-</h2>
 
+🔥 Top Performers
 
-
-<select id="testFilter">
-
-
-<option value="">
-All Tests
-</option>
-
-
-<option value="Daily">
-Daily Mock Test
-</option>
-
-
-<option value="Weekly">
-Weekly Mock Test
-</option>
-
-
-<option value="Monthly">
-Monthly Grand Test
-</option>
-
-
-
-</select>
-
-
-
-
-
-
-<select id="districtFilter">
-
-
-<option value="">
-All Districts
-</option>
-
-
-<option value="Ariyalur">
-Ariyalur
-</option>
-
-
-<option value="Chennai">
-Chennai
-</option>
-
-
-<option value="Coimbatore">
-Coimbatore
-</option>
-
-
-<option value="Madurai">
-Madurai
-</option>
-
-
-<option value="Salem">
-Salem
-</option>
-
-
-<option value="Tiruppur">
-Tiruppur
-</option>
-
-
-
-</select>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- LEADERBOARD TABLE -->
-
-
-<div class="table-card">
-
-
-
-<h2>
-🏆 Rank List
 </h2>
 
 
 
 
-
-<div class="table-scroll">
-
+<div class="podium-container">
 
 
-<table>
+<div class="podium-card second">
 
 
+<div class="rank">
 
-<thead>
+🥈
 
-
-<tr>
-
-
-<th>
-Rank
-</th>
+</div>
 
 
-<th>
-Name
-</th>
-
-
-<th>
-District
-</th>
-
-
-<th>
-Test
-</th>
-
-
-<th>
-Score
-</th>
-
-
-<th>
-%
-</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-
-
-<tbody id="leaderboardBody">
-
-
-<tr>
-
-<td colspan="6">
+<h3 id="secondName">
 
 Loading...
 
-</td>
-
-
-</tr>
-
-
-</tbody>
-
-
-
-
-
-</table>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- QUICK BUTTON -->
-
-
-<div class="bottom-buttons">
-
-
-
-<button onclick="location.href='dashboard.html'">
-
-🏠 Dashboard
-
-</button>
-
-
-
-
-<button onclick="location.href='mocktest.html'">
-
-📝 Start Test
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- FOOTER -->
-
-
-<footer>
-
-
-<h3>
-G THE GENIUS
 </h3>
 
 
-<p>
-ALL GOVERNMENT EXAM MOCK TEST
+<p id="secondMark">
+
+0 Marks
+
 </p>
 
 
+</div>
+
+
+
+
+
+<div class="podium-card first">
+
+
+<div class="rank">
+
+🥇
+
+</div>
+
+
+<h3 id="firstName">
+
+Loading...
+
+</h3>
+
+
+<p id="firstMark">
+
+0 Marks
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="podium-card third">
+
+
+<div class="rank">
+
+🥉
+
+</div>
+
+
+<h3 id="thirdName">
+
+Loading...
+
+</h3>
+
+
+<p id="thirdMark">
+
+0 Marks
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- =========================
+     Rank List Start
+========================= -->
+
+
+<section class="rank-section">
+
+
+<h2>
+
+📊 All Rankings
+
+</h2>
+
+
+
+<div id="leaderboardList">
+
+  <!-- =========================
+     Ranking Card Template
+========================= -->
+
+
+<div class="rank-card">
+
+
+<div class="rank-number">
+
+#1
+
+</div>
+
+
+
+<div class="student-info">
+
+
+<h3>
+
+Student Name
+
+</h3>
+
+
+
 <p>
+
+District • Test Type
+
+</p>
+
+
+
+</div>
+
+
+
+
+<div class="marks-box">
+
+
+<span>
+
+0
+
+</span>
+
+
+<small>
+
+Marks
+
+</small>
+
+
+</div>
+
+
+
+</div>
+
+ </div>
+
+</section>
+
+
+
+
+
+
+
+<!-- =========================
+     Bottom Navigation
+========================= -->
+
+
+<nav class="bottom-navigation">
+
+
+<a href="dashboard.html"
+class="nav-item">
+
+
+🏠
+
+<span>
+Home
+</span>
+
+
+</a>
+
+
+
+
+
+<a href="mocktest.html?type=daily"
+class="nav-item">
+
+
+📝
+
+<span>
+Test
+</span>
+
+
+</a>
+
+
+
+
+
+<a href="practice.html"
+class="nav-item">
+
+
+📚
+
+<span>
+Practice
+</span>
+
+
+</a>
+
+
+
+
+
+<a href="leaderboard.html"
+class="nav-item active">
+
+
+🏆
+
+<span>
+Rank
+</span>
+
+
+</a>
+
+
+
+</nav>
+
+
+
+
+
+
+
+
+<!-- =========================
+     Footer
+========================= -->
+
+
+<footer class="dashboard-footer">
+
+
+
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo">
+
+
+
+
+
+<h3>
+
+G THE GENIUS
+
+</h3>
+
+
+
+
+
+<p>
+
+Learn • Practice • Succeed
+
+</p>
+
+
+
+
+
+<div class="footer-links">
+
+
+<a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
+target="_blank">
+
+📺 YouTube
+
+</a>
+
+
+
+
+
+<a href="https://t.me/gthegenius"
+target="_blank">
+
+📢 Telegram
+
+</a>
+
+
+
+
+
+<a href="mailto:gthegenius7@gmail.com">
+
+📧 Email
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+<small>
+
 © 2026 G THE GENIUS
-</p>
+<br>
+All Rights Reserved.
+
+</small>
+
 
 
 </footer>
@@ -397,9 +484,12 @@ ALL GOVERNMENT EXAM MOCK TEST
 
 
 
-<script type="module" src="leaderboard.js"></script>
+
+<script type="module"
+src="js/leaderboard.js"></script>
+
 
 
 </body>
 
-</html>
+</html>   
