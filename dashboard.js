@@ -1,540 +1,126 @@
 /* ==========================================
    G THE GENIUS
-   Dashboard JavaScript
+   Mock Test JavaScript
    Part 1
 
    Features:
-   - Firebase Auth User
-   - Student Name
-   - Time Based Greeting
-   - Live Date & Time
-========================================== */
-
-
-import {
-    auth,
-    db
-} from "./firebase-config.js";
-
-
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-import {
-    doc,
-    getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-/* ==========================================
-   DOM Elements
-========================================== */
-
-
-const studentName =
-    document.getElementById("studentName");
-
-
-const greeting =
-    document.getElementById("greeting");
-
-
-const currentDate =
-    document.getElementById("currentDate");
-
-
-const currentTime =
-    document.getElementById("currentTime");
-
-
-
-/* ==========================================
-   Firebase User Load
-========================================== */
-
-
-onAuthStateChanged(auth, async(user)=>{
-
-
-    if(user){
-
-
-        try{
-
-
-            const userRef =
-                doc(db,"students",user.uid);
-
-
-            const userSnap =
-                await getDoc(userRef);
-
-
-
-            if(userSnap.exists()){
-
-
-                const data =
-                    userSnap.data();
-
-
-
-                studentName.textContent =
-                    data.name || "Student";
-
-
-            }
-
-            else{
-
-
-                studentName.textContent =
-                    "Student";
-
-
-            }
-
-
-        }
-
-        catch(error){
-
-
-            console.log(
-                "User Load Error:",
-                error
-            );
-
-
-            studentName.textContent =
-                "Student";
-
-
-        }
-
-
-    }
-
-    else{
-
-
-        studentName.textContent =
-            "Guest";
-
-
-    }
-
-
-});
-
-
-
-/* ==========================================
-   Time Based Greeting
-========================================== */
-
-
-function updateGreeting(){
-
-
-    const hour =
-        new Date().getHours();
-
-
-
-    let message;
-
-
-
-    if(hour >=5 && hour <12){
-
-
-        message =
-            "Good Morning ☀️";
-
-
-    }
-
-
-    else if(hour >=12 && hour <17){
-
-
-        message =
-            "Good Afternoon 🌤️";
-
-
-    }
-
-
-    else if(hour >=17 && hour <21){
-
-
-        message =
-            "Good Evening 🌆";
-
-
-    }
-
-
-    else{
-
-
-        message =
-            "Good Night 🌙";
-
-
-    }
-
-
-
-    if(greeting){
-
-
-        greeting.textContent =
-            message;
-
-
-    }
-
-
-}
-
-
-
-updateGreeting();
-
-
-
-/* ==========================================
-   Live Date & Time
-========================================== */
-
-
-function updateDateTime(){
-
-
-    const now =
-        new Date();
-
-
-
-    const options = {
-
-        weekday:"long",
-
-        day:"2-digit",
-
-        month:"long",
-
-        year:"numeric"
-
-    };
-
-
-
-    if(currentDate){
-
-
-        currentDate.textContent =
-            now.toLocaleDateString(
-                "en-IN",
-                options
-            );
-
-
-    }
-
-
-
-    if(currentTime){
-
-
-        currentTime.textContent =
-            now.toLocaleTimeString(
-                "en-IN",
-                {
-                    hour:"2-digit",
-                    minute:"2-digit",
-                    second:"2-digit"
-                }
-            );
-
-
-    }
-
-
-}
-
-
-
-updateDateTime();
-
-
-setInterval(
-    updateDateTime,
-    1000
-);
-
-
-setInterval(
-    updateGreeting,
-    60000
-);
-
-/* ==========================================
-   G THE GENIUS
-   Dashboard JavaScript
-   Part 2
-
-   Features:
-   - Tamil Daily Quotes
-   - Random Quote Display
-   - Auto Quote Change
+   - Read Test Type
+   - Daily / Weekly / Monthly Settings
+   - Load Questions
+   - Random Question Setup
 ========================================== */
 
 
 /* ==========================================
-   Daily Quotes
+   Get Test Type From URL
 ========================================== */
 
 
-const dailyQuotes = [
-
-    "வெற்றி என்பது ஒரே நாளில் கிடைப்பது இல்லை. தினமும் செய்யும் சிறிய முயற்சிகளின் பலன் தான் வெற்றி. 💪",
-
-    "கனவு காணுங்கள், முயற்சி செய்யுங்கள், ஒரு நாள் வெற்றி உங்களை தேடி வரும். 🚀",
-
-    "தோல்வி என்பது முடிவு அல்ல, வெற்றிக்கான முதல் பாடம். 📚",
-
-    "உங்கள் எதிர்காலத்தை மாற்றும் சக்தி உங்கள் கைகளில் தான் உள்ளது. 🔥",
-
-    "இன்று நீங்கள் படிக்கும் ஒரு பக்கம், நாளைய வெற்றிக்கு ஒரு படி. ⭐",
-
-    "கடின உழைப்புக்கு மாற்று எதுவும் இல்லை. தொடர்ந்து முயற்சி செய்யுங்கள். 🏆",
-
-    "நேரத்தை மதிப்பவன் தான் வாழ்க்கையில் உயரத்தை அடைவான். ⏰",
-
-    "சிறிய முன்னேற்றம் கூட பெரிய வெற்றிக்கான தொடக்கம். 🌱",
-
-    "உங்களை நீங்கள் நம்புங்கள், உலகம் உங்களை நம்ப ஆரம்பிக்கும். 💯",
-
-    "ஒரு நாள் வெற்றி பெறுவோம் என்று நினைக்காதீர்கள், இன்று வெற்றிக்காக உழையுங்கள். 🎯"
-
-];
-
-
-
-/* ==========================================
-   Quote Element
-========================================== */
-
-
-const quoteElement =
-    document.getElementById("dailyQuote");
-
-
-
-/* ==========================================
-   Show Random Quote
-========================================== */
-
-
-function showDailyQuote(){
-
-
-    if(!quoteElement){
-
-        return;
-
-    }
-
-
-
-    const randomIndex =
-        Math.floor(
-            Math.random() *
-            dailyQuotes.length
-        );
-
-
-
-    quoteElement.textContent =
-        dailyQuotes[randomIndex];
-
-
-}
-
-
-
-showDailyQuote();
-
-
-
-/* ==========================================
-   Auto Change Quote
-   Every 30 Minutes
-========================================== */
-
-
-setInterval(
-
-    showDailyQuote,
-
-    30 * 60 * 1000
-
-);
-
-
-
-/* ==========================================
-   Smooth Button Protection
-========================================== */
-
-
-document
-.querySelectorAll(".start-btn")
-.forEach(button=>{
-
-
-    button.addEventListener(
-        "click",
-        (event)=>{
-
-
-            event.stopPropagation();
-
-
-        }
+const urlParams =
+    new URLSearchParams(
+        window.location.search
     );
 
 
-});
-
-/* ==========================================
-   G THE GENIUS
-   Dashboard JavaScript
-   Part 3 Final
-
-   Features:
-   - Firestore Leaderboard Top 3
-   - Student Ranking Preview
-   - Final Dashboard Init
-========================================== */
+const testType =
+    urlParams.get("type") || "daily";
 
 
-import {
-
-    collection,
-    getDocs,
-    query,
-    orderBy,
-    limit
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 /* ==========================================
-   Leaderboard Elements
+   Test Configuration
 ========================================== */
 
 
-const firstName =
-    document.getElementById("firstName");
+const testSettings = {
 
 
-const secondName =
-    document.getElementById("secondName");
+    daily: {
+
+        title:"🟢 Daily Mock Test",
+
+        questions:25,
+
+        time:5 * 60
+
+    },
 
 
-const thirdName =
-    document.getElementById("thirdName");
+    weekly: {
+
+        title:"🟡 Weekly Mock Test",
+
+        questions:50,
+
+        time:10 * 60
+
+    },
+
+
+    monthly: {
+
+        title:"🔴 Monthly Grand Test",
+
+        questions:100,
+
+        time:30 * 60
+
+    }
+
+
+};
+
+
+
+
+
+let currentTest = 
+    testSettings[testType];
+
+
+
+let allQuestions = [];
+
+let testQuestions = [];
+
+let currentQuestion = 0;
+
+let selectedAnswers = [];
+
+let timer;
+
+let timeLeft = currentTest.time;
+
+
 
 
 
 /* ==========================================
-   Load Top 3 Students
+   Load Questions
 ========================================== */
 
 
-async function loadTopLeaderboard(){
+async function loadQuestions(){
 
 
     try{
 
 
-        const resultQuery = query(
-
-            collection(db,"results"),
-
-            orderBy(
-                "marks",
-                "desc"
-            ),
-
-            limit(3)
-
-        );
-
-
-
-        const snapshot =
-            await getDocs(resultQuery);
-
-
-
-        let students = [];
-
-
-
-        snapshot.forEach((doc)=>{
-
-
-            students.push(
-                doc.data()
+        const response =
+            await fetch(
+                "questions/questions.json"
             );
 
 
-        });
+
+        allQuestions =
+            await response.json();
 
 
 
-        if(firstName){
-
-
-            firstName.textContent =
-                students[0]?.name ||
-                "No Student";
-
-
-        }
-
-
-
-        if(secondName){
-
-
-            secondName.textContent =
-                students[1]?.name ||
-                "No Student";
-
-
-        }
-
-
-
-        if(thirdName){
-
-
-            thirdName.textContent =
-                students[2]?.name ||
-                "No Student";
-
-
-        }
+        prepareTest();
 
 
 
@@ -544,22 +130,9 @@ async function loadTopLeaderboard(){
 
 
         console.log(
-            "Leaderboard Error:",
+            "Question Loading Error",
             error
         );
-
-
-
-        if(firstName)
-            firstName.textContent="--";
-
-
-        if(secondName)
-            secondName.textContent="--";
-
-
-        if(thirdName)
-            thirdName.textContent="--";
 
 
     }
@@ -569,25 +142,738 @@ async function loadTopLeaderboard(){
 
 
 
-loadTopLeaderboard();
+
+
+/* ==========================================
+   Prepare Random Test
+========================================== */
+
+
+function prepareTest(){
+
+
+    allQuestions.sort(
+        ()=>Math.random()-0.5
+    );
+
+
+
+    testQuestions =
+        allQuestions.slice(
+            0,
+            currentTest.questions
+        );
+
+
+
+    selectedAnswers =
+        new Array(
+            testQuestions.length
+        )
+        .fill(null);
+
+
+
+    console.log(
+        currentTest.title,
+        testQuestions.length,
+        "Questions Loaded"
+    );
+
+
+}
+
 
 
 
 
 /* ==========================================
-   Dashboard Ready
+   Page Load
 ========================================== */
 
 
 window.addEventListener(
-    "load",
+    "DOMContentLoaded",
     ()=>{
 
 
-        console.log(
-            "G THE GENIUS Dashboard Loaded Successfully 🚀"
-        );
+        loadQuestions();
 
 
     }
-);
+);/* ==========================================
+   G THE GENIUS
+   Mock Test JavaScript
+   Part 2
+
+   Features:
+   - Display Question
+   - Option Selection
+   - Next / Previous
+   - Progress Update
+   - Timer
+========================================== */
+
+
+
+/* ==========================================
+   Elements
+========================================== */
+
+
+const questionText =
+    document.getElementById(
+        "questionText"
+    );
+
+
+const optionsContainer =
+    document.getElementById(
+        "optionsContainer"
+    );
+
+
+const questionCount =
+    document.getElementById(
+        "questionCount"
+    );
+
+
+const progressFill =
+    document.getElementById(
+        "progressFill"
+    );
+
+
+const timerDisplay =
+    document.getElementById(
+        "timer"
+    );
+
+
+const previousBtn =
+    document.getElementById(
+        "previousBtn"
+    );
+
+
+const nextBtn =
+    document.getElementById(
+        "nextBtn"
+    );
+
+
+
+
+
+/* ==========================================
+   Display Question
+========================================== */
+
+
+function displayQuestion(){
+
+
+    if(!testQuestions.length)
+        return;
+
+
+
+    const question =
+        testQuestions[currentQuestion];
+
+
+
+    if(questionText){
+
+
+        questionText.textContent =
+            question.question;
+
+
+    }
+
+
+
+    if(questionCount){
+
+
+        questionCount.textContent =
+
+        `Question ${currentQuestion + 1} / ${testQuestions.length}`;
+
+
+    }
+
+
+
+
+    if(optionsContainer){
+
+
+        optionsContainer.innerHTML="";
+
+
+
+        question.options.forEach(
+            (option,index)=>{
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "option-btn";
+
+
+
+            button.textContent =
+                option;
+
+
+
+            if(
+                selectedAnswers[currentQuestion]
+                === index
+            ){
+
+                button.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+
+
+            button.onclick = ()=>{
+
+
+                selectedAnswers[currentQuestion]
+                    = index;
+
+
+                displayQuestion();
+
+
+            };
+
+
+
+            optionsContainer.appendChild(
+                button
+            );
+
+
+        });
+
+
+    }
+
+
+
+    updateProgress();
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Progress Bar
+========================================== */
+
+
+function updateProgress(){
+
+
+    if(!progressFill)
+        return;
+
+
+
+    let progress =
+
+    (
+        (currentQuestion + 1)
+        /
+        testQuestions.length
+    )
+    *100;
+
+
+
+    progressFill.style.width =
+        progress + "%";
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Next Question
+========================================== */
+
+
+if(nextBtn){
+
+
+nextBtn.onclick = ()=>{
+
+
+    if(
+        currentQuestion <
+        testQuestions.length - 1
+    ){
+
+
+        currentQuestion++;
+
+
+        displayQuestion();
+
+
+    }
+
+
+};
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Previous Question
+========================================== */
+
+
+if(previousBtn){
+
+
+previousBtn.onclick = ()=>{
+
+
+    if(currentQuestion > 0){
+
+
+        currentQuestion--;
+
+
+        displayQuestion();
+
+
+    }
+
+
+};
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Timer
+========================================== */
+
+
+function startTimer(){
+
+
+    clearInterval(timer);
+
+
+
+    timer = setInterval(
+        ()=>{
+
+
+        let minutes =
+            Math.floor(
+                timeLeft / 60
+            );
+
+
+        let seconds =
+            timeLeft % 60;
+
+
+
+        if(timerDisplay){
+
+
+            timerDisplay.textContent =
+
+            `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+
+        }
+
+
+
+        timeLeft--;
+
+
+
+        if(timeLeft < 0){
+
+
+            clearInterval(timer);
+
+
+
+            alert(
+                "Time Over! Test Submitted"
+            );
+
+
+
+            const submit =
+                document.getElementById(
+                    "submitBtn"
+                );
+
+
+
+            if(submit)
+                submit.click();
+
+
+
+        }
+
+
+
+    },1000);
+
+
+}
+
+/* ==========================================
+   G THE GENIUS
+   Mock Test JavaScript
+   Part 3 Final
+
+   Features:
+   - Start Test
+   - Timer Connection
+   - Submit Test
+   - Score Calculation
+   - Result Ready
+========================================== */
+
+
+
+/* ==========================================
+   Start Test
+========================================== */
+
+
+function startTest(){
+
+
+    const setup =
+        document.getElementById(
+            "setupArea"
+        );
+
+
+    const testArea =
+        document.getElementById(
+            "testArea"
+        );
+
+
+
+    if(setup){
+
+        setup.style.display =
+            "none";
+
+    }
+
+
+
+    if(testArea){
+
+        testArea.style.display =
+            "block";
+
+    }
+
+
+
+    currentQuestion = 0;
+
+
+
+    displayQuestion();
+
+
+
+    startTimer();
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Auto Start After Questions Loaded
+========================================== */
+
+
+function prepareAndStart(){
+
+
+    if(
+        testQuestions.length > 0
+    ){
+
+        startTest();
+
+    }
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Submit Elements
+========================================== */
+
+
+const submitBtn =
+    document.getElementById(
+        "submitBtn"
+    );
+
+
+const resultBox =
+    document.getElementById(
+        "resultBox"
+    );
+
+
+const scoreDisplay =
+    document.getElementById(
+        "scoreDisplay"
+    );
+
+
+
+
+
+/* ==========================================
+   Submit Test
+========================================== */
+
+
+if(submitBtn){
+
+
+submitBtn.onclick = ()=>{
+
+
+    clearInterval(timer);
+
+
+
+    let correct = 0;
+
+    let wrong = 0;
+
+    let skipped = 0;
+
+
+
+
+    testQuestions.forEach(
+        (question,index)=>{
+
+
+        if(
+            selectedAnswers[index] === null
+        ){
+
+            skipped++;
+
+        }
+
+        else if(
+
+            selectedAnswers[index]
+            ===
+            question.correctAnswer
+
+        ){
+
+            correct++;
+
+        }
+
+        else{
+
+            wrong++;
+
+        }
+
+
+
+    });
+
+
+
+
+
+    const marks =
+        correct;
+
+
+
+
+
+    if(resultBox){
+
+
+        resultBox.style.display =
+            "block";
+
+
+    }
+
+
+
+
+    if(scoreDisplay){
+
+
+        scoreDisplay.innerHTML = `
+
+        🏆 Marks : ${marks}
+
+        <br><br>
+
+        ✅ Correct : ${correct}
+
+        <br>
+
+        ❌ Wrong : ${wrong}
+
+        <br>
+
+        ⏭ Skipped : ${skipped}
+
+        `;
+
+
+    }
+
+
+
+    saveMockResult({
+
+        type:testType,
+
+        marks,
+
+        correct,
+
+        wrong,
+
+        skipped,
+
+        total:testQuestions.length
+
+    });
+
+
+
+};
+
+}
+
+
+
+
+
+/* ==========================================
+   Firebase Ready Result Save
+========================================== */
+
+
+async function saveMockResult(data){
+
+
+    console.log(
+        "Mock Test Result",
+        data
+    );
+
+
+    /*
+    
+    Firebase Firestore:
+
+    collection("results")
+    addDoc(data)
+
+    Later connect with firebase-config.js
+
+    */
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Question Load Complete
+========================================== */
+
+
+const oldPrepareTest =
+    prepareTest;
+
+
+
+prepareTest = function(){
+
+
+    oldPrepareTest();
+
+
+
+    setTimeout(
+        ()=>{
+
+
+            prepareAndStart();
+
+
+        },
+        500
+    );
+
+
+};
