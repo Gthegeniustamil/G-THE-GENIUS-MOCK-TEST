@@ -1,33 +1,17 @@
-
-
 <!DOCTYPE html>
-
 <html lang="en">
-
-
 
 <head>
 
-
-
 <meta charset="UTF-8">
-
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 
-
-
-
 <title>
-
 Result | G THE GENIUS
-
 </title>
-
-
-
 
 
 <meta name="theme-color"
@@ -35,43 +19,29 @@ content="#081229">
 
 
 
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
 
-<!-- Logo -->
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
 
-<link rel="icon"
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
-
-
-
-
-
-
-
-<!-- CSS -->
 
 
 <link rel="stylesheet"
-
-href="result.css">
-
-
-
+href="css/result.css">
 
 
 </head>
 
 
 
-
-
-
-
 <body>
-
-
 
 
 
@@ -81,41 +51,23 @@ href="result.css">
 
 
 
-
-
-
-<!-- HEADER START -->
+<!-- =========================
+     Header
+========================= -->
 
 
 <header class="result-header">
 
 
-
-
-
-<div class="logo-box">
-
-
 <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="logo"
+alt="G THE GENIUS Logo">
 
-alt="G THE GENIUS Logo"
-
-class="result-logo">
-
-
-</div>
-
-
-
-
-
-
-<div class="result-title">
 
 
 <h1>
 
-G THE GENIUS
+🎉 Test Result
 
 </h1>
 
@@ -123,24 +75,163 @@ G THE GENIUS
 
 <p>
 
-Test Result
+Learn • Practice • Succeed
 
 </p>
-
-
-
-</div>
-
-
-
-
 
 
 </header>
 
 
 
-<!-- HEADER END -->
+
+
+
+
+<!-- =========================
+     Student Result Card
+========================= -->
+
+
+<section class="result-card">
+
+
+
+<h2 id="studentName">
+
+Student Name
+
+</h2>
+
+
+
+<p id="testName">
+
+Mock Test
+
+</p>
+
+
+
+
+<div class="main-score">
+
+
+<h1 id="marks">
+
+0
+
+</h1>
+
+
+
+<span>
+
+Marks
+
+</span>
+
+
+</div>
+
+ <!-- =========================
+     Answer Summary
+========================= -->
+
+
+<div class="answer-summary">
+
+
+
+<div class="summary-box correct-box">
+
+
+<h3>
+
+✅
+
+</h3>
+
+
+<p>
+
+Correct
+
+</p>
+
+
+<span id="correctCount">
+
+0
+
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="summary-box wrong-box">
+
+
+<h3>
+
+❌
+
+</h3>
+
+
+<p>
+
+Wrong
+
+</p>
+
+
+<span id="wrongCount">
+
+0
+
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="summary-box skipped-box">
+
+
+<h3>
+
+⏭
+
+</h3>
+
+
+<p>
+
+Skipped
+
+</p>
+
+
+<span id="skippedCount">
+
+0
+
+</span>
+
+
+</div>
+
+
+
+</div>
 
 
 
@@ -149,210 +240,64 @@ Test Result
 
 
 
-
-<!-- RESULT HERO CARD -->
-
-
-<section class="result-hero">
+<!-- =========================
+     Rank Section
+========================= -->
 
 
-
-<div class="result-card">
-
-
+<div class="rank-result-card">
 
 
 
 <h2>
 
-🎉 Test Completed
-
-</h2>
-
-
-
-
-<p>
-
-Your Performance Summary
-
-</p>
-
-
-
-
-
-
-<div class="marks-display">
-
-
-<span id="score">0</span>
-
-
-
-<small>
-
-Marks
-
-</small>
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-</section>
-
- 
-
-
-
-
-
-
-<!-- RANK SECTION START -->
-
-
-<section class="rank-section">
-
-
-
-
-
-<div class="rank-card">
-
-
-
-
-
-<h3>
-
 🏆 Your Rank
 
-</h3>
+</h2>
 
 
 
-
-
-
-<div class="rank-number">
-
-
-#
-
-<span id="rank">
-
--
-
-
-</span>
-
-
-
-</div>
-
-
-
+<div class="rank-item">
 
 
 <p>
 
-Based on your marks
+Overall Rank
 
 </p>
 
 
+<h3 id="overallRank">
 
-
-
-
-</div>
-
-
-
-
-
-</section>
-
-
-
-<!-- RANK SECTION END -->
-
-
-
-
-
-
-
-
-
-<!-- SCORE DETAILS START -->
-
-
-<section class="score-section">
-
-
-
-
-
-<div class="score-grid">
-
-
-
-
-
-
-<div class="score-box">
-
-
-
-<h3>
-
-✅ Correct
+Loading...
 
 </h3>
 
 
-
-<strong id="correct">0</strong>
-
-
-
 </div>
 
 
 
 
 
+<div class="rank-item">
 
 
+<p>
 
-<div class="score-box">
+District Rank
+
+</p>
 
 
+<h3 id="districtRank">
 
-<h3>
-
-❌ Wrong
+Loading...
 
 </h3>
 
 
-<strong id="wrong">0</strong>
-
-0
-
-</strong>
+</div>
 
 
 
@@ -365,77 +310,65 @@ Based on your marks
 
 
 
-<div class="score-box">
+<!-- =========================
+     Action Buttons
+========================= -->
+
+
+<div class="result-actions">
 
 
 
-<h3>
-
-📝 Total
-
-</h3>
+<button id="shareBtn"
+class="share-btn">
 
 
+📤 Share Result
 
-<strong id="totalQuestions">
 
-0
+</button>
 
-</strong>
+
+
+
+
+<button onclick="location.href='mocktest.html?type=daily'"
+class="retry-btn">
+
+
+🔄 Retry Test
+
+
+</button>
 
 
 
 </div>
 
+ <!-- =========================
+     Test History
+========================= -->
 
 
+<section class="history-section">
 
 
+<h2>
 
-</div>
-
-
-
-</section>
-
-
-
-<!-- SCORE DETAILS END -->
-
-
-
-
-
-
-
-
-
-<!-- MESSAGE CARD -->
-
-
-<section class="result-message-section">
-
-
-
-<div class="message-card">
-
-
-
-<h2 id="resultMessage">
-
-Keep Practicing 🔥
+📚 Test History
 
 </h2>
 
 
 
+<div id="historyList">
+
 
 <p>
 
-Every test improves your preparation.
+No history available
 
 </p>
-
 
 
 </div>
@@ -444,247 +377,108 @@ Every test improves your preparation.
 
 </section>
 
-  
-<!-- ===================================== -->
-<!-- QUESTION REVIEW -->
-<!-- ===================================== -->
-
-<section class="review-section">
-
-    <h2>📖 Question Review</h2>
-
-    <div id="reviewContainer">
-
-    </div>
-
-</section>
 
 
 
 
 
 
-<!-- ACTION SECTION START -->
+
+<!-- =========================
+     Bottom Navigation
+========================= -->
 
 
-<section class="action-section">
-
-
-
-
+<nav class="bottom-navigation">
 
 
 <a href="dashboard.html"
+class="nav-item">
 
-class="action-btn primary">
 
+🏠
 
-🏠 Dashboard
+<span>
+Home
+</span>
 
 
 </a>
 
 
 
+
+
+<a href="mocktest.html?type=daily"
+class="nav-item">
+
+
+📝
+
+<span>
+Test
+</span>
+
+
+</a>
+
+
+
+
+
+<a href="practice.html"
+class="nav-item">
+
+
+📚
+
+<span>
+Practice
+</span>
+
+
+</a>
 
 
 
 
 
 <a href="leaderboard.html"
-
-class="action-btn">
-
-
-🏆 Leaderboard
+class="nav-item">
 
 
-</a>
+🏆
 
-
-
-
-
-
-
-
-<a href="history.html"
-
-class="action-btn">
-
-
-📜 History
+<span>
+Rank
+</span>
 
 
 </a>
 
 
 
+</nav>
 
 
 
 
-</section>
 
 
 
-<!-- ACTION SECTION END -->
+<!-- =========================
+     Footer
+========================= -->
 
 
-<!-- RESULT EXTRA FEATURES -->
+<footer class="result-footer">
 
-<section class="extra-result">
 
-    <div id="resultBadge" class="badge">
-        PASS
-    </div>
 
-    <div class="progress">
+<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo">
 
-        <div id="progressBar"></div>
 
-    </div>
-
-    <div class="stats">
-
-        <div class="stat-box">
-            ⭐ XP :
-            <span id="level">Level 1</span>
-        </div>
-
-        <div class="stat-box">
-            🪙 Coins :
-            <span id="coins">0</span>
-        </div>
-
-    </div>
-
-    <div class="result-buttons">
-
-        <button id="shareBtn">📤 Share</button>
-
-<button id="retryBtn">🔄 Retry Test</button>
-
-<button id="printBtn">🖨 Print Result</button>
-
-        <button id="certificateBtn">
-            🎓 Certificate
-        </button>
-
-    </div>
-
-</section>
-
-
-
-
-
-
-<!-- SHARE RESULT SECTION -->
-
-
-<section class="share-section">
-
-
-
-<div class="share-card">
-
-
-
-<h3>
-
-Share Your Achievement
-
-</h3>
-
-
-
-
-<p>
-
-Keep learning and improve your rank.
-
-</p>
-
-
-
-
-
-
-
-<div class="share-buttons">
-
-
-
-
-
-
-<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
-
-target="_blank">
-
-
-▶ YouTube
-
-
-</a>
-
-
-
-
-
-
-
-<a href="https://t.me/gthegenius"
-
-target="_blank">
-
-
-✈ Telegram
-
-
-</a>
-
-
-
-
-
-
-
-<a href="mailto:gthegenius7@gmail.com">
-
-
-✉ Email
-
-
-</a>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-</section>
-
- 
-
-
-
-
-<!-- FOOTER START -->
-
-
-<footer class="app-footer">
 
 
 
@@ -700,7 +494,7 @@ G THE GENIUS
 
 <p>
 
-ALL GOVERNMENT EXAM MOCK TEST
+Learn • Practice • Succeed
 
 </p>
 
@@ -708,63 +502,13 @@ ALL GOVERNMENT EXAM MOCK TEST
 
 
 
+<small>
 
-<div class="footer-links">
-
-
-
-<a href="dashboard.html">
-
-Home
-
-</a>
-
-
-
-
-<a href="leaderboard.html">
-
-Leaderboard
-
-</a>
-
-
-
-
-<a href="profile.html">
-
-Profile
-
-</a>
-
-
-
-<a href="history.html">
-
-History
-
-</a>
-
-
-
-
-</div>
-
-
-
-
-
-
-<p class="copyright">
-
-
-© 2026 G THE GENIUS.
+© 2026 G THE GENIUS
+<br>
 All Rights Reserved.
 
-
-</p>
-
-
+</small>
 
 
 
@@ -772,41 +516,23 @@ All Rights Reserved.
 
 
 
-<!-- FOOTER END -->
+
+
+
+
+</section>
 
 
 
 
 
-
-
-
-
-<!-- RESULT JS -->
 
 
 <script type="module"
-
-src="result.js">
-
-</script>
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
+src="js/result.js"></script>
 
 
 
 </body>
 
-
-</html> 
+</html>
