@@ -1,744 +1,812 @@
-// ==========================================
-// G THE GENIUS PROFILE SYSTEM v1.0
-// PART 1 / 4
-// ==========================================
+/* ==========================================
+   G THE GENIUS
+   Profile JavaScript
+   Part 1
 
-import { auth, db } from "./firebase-config.js";
+   Features:
+   - Firebase Connect
+   - Load Student Details
+   - Display Profile
+========================================== */
+
+
+
+/* ==========================================
+   Firebase Imports
+========================================== */
+
 
 import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    db
+
+}
+
+from "./firebase-config.js";
+
+
 
 import {
-    doc,
-    getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    collection,
+
+    getDocs,
+
+    query,
+
+    where
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
-// ==========================================
-// HTML ELEMENTS
-// ==========================================
-
-const studentName =
-document.getElementById("studentName");
-
-const studentEmail =
-document.getElementById("studentEmail");
-
-const studentDistrict =
-document.getElementById("studentDistrict");
-
-const studentRegisterNo =
-document.getElementById("studentRegisterNo");
-
-const profileImage =
-document.getElementById("profileImage");
-
-const loadingScreen =
-document.getElementById("loadingScreen");
 
 
 
-// ==========================================
-// LOAD PROFILE
-// ==========================================
 
-async function loadProfile(user){
+/* ==========================================
+   Student Data
+========================================== */
+
+
+let studentData = {
+
+    name:"Student",
+
+    district:"Tamil Nadu"
+
+};
+
+
+
+
+
+
+
+/* ==========================================
+   Get Local Student Info
+========================================== */
+
+
+function getStudentInfo(){
+
+
+    studentData.name =
+
+    localStorage.getItem(
+        "studentName"
+    )
+    ||
+    "Student";
+
+
+
+
+    studentData.district =
+
+    localStorage.getItem(
+        "district"
+    )
+    ||
+    "Tamil Nadu";
+
+
+
+    showProfile();
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Show Profile
+========================================== */
+
+
+function showProfile(){
+
+
+    const name =
+        document.getElementById(
+            "studentName"
+        );
+
+
+
+    const district =
+        document.getElementById(
+            "studentDistrict"
+        );
+
+
+
+
+    if(name){
+
+        name.textContent =
+            studentData.name;
+
+    }
+
+
+
+
+    if(district){
+
+        district.textContent =
+            studentData.district;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Page Load
+========================================== */
+
+
+window.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+    getStudentInfo();
+
+
+}
+
+);
+
+/* ==========================================
+   G THE GENIUS
+   Profile JavaScript
+   Part 2
+
+   Features:
+   - Load Test Results
+   - Total Tests
+   - Total Marks
+   - Best Score
+   - History Display
+========================================== */
+
+
+
+/* ==========================================
+   Load Student Results
+========================================== */
+
+
+let studentResults = [];
+
+
+
+
+
+async function loadProfileResults(){
+
 
     try{
 
-        // students collection
-        const studentRef =
-        doc(db,"students",user.uid);
 
-        const studentSnap =
-        await getDoc(studentRef);
+        const snapshot =
 
-        if(studentSnap.exists()){
+        await getDocs(
+
+            collection(
+                db,
+                "results"
+            )
+
+        );
+
+
+
+
+
+        studentResults = [];
+
+
+
+
+        snapshot.forEach(
+            (doc)=>{
+
 
             const data =
-            studentSnap.data();
+                doc.data();
 
-            studentName.textContent =
-            data.name || "Student";
 
-            studentEmail.textContent =
-            data.email || user.email;
 
-            studentDistrict.textContent =
-            data.district || "Tamil Nadu";
+            if(
 
-            studentRegisterNo.textContent =
-            "Registration No : " +
-            (data.registerNo || user.uid.substring(0,8));
+                data.name ===
+                studentData.name
 
-            if(data.photoURL){
+            ){
 
-                profileImage.src =
-                data.photoURL;
+
+                studentResults.push({
+
+                    id:doc.id,
+
+                    ...data
+
+                });
+
 
             }
 
-        }
+
+
+        });
+
+
+
+
+
+        calculatePerformance();
+
+
+        displayHistory();
+
+
 
     }
+
+
     catch(error){
 
-        console.error(
-        "Profile Load Error:",
-        error
+
+        console.log(
+            "Profile Result Error:",
+            error
         );
 
+
     }
+
 
 }
 
 
 
-// ==========================================
-// AUTH STATE
-// ==========================================
 
-onAuthStateChanged(
-auth,
-async(user)=>{
 
-    if(user){
 
-        await loadProfile(user);
 
-        if(loadingScreen){
+/* ==========================================
+   Calculate Performance
+========================================== */
 
-            loadingScreen.style.display="none";
+
+function calculatePerformance(){
+
+
+
+    let totalTests =
+        studentResults.length;
+
+
+
+
+    let totalMarks = 0;
+
+
+
+    let bestScore = 0;
+
+
+
+
+
+    studentResults.forEach(
+
+        result=>{
+
+
+        totalMarks +=
+
+        Number(
+            result.marks || 0
+        );
+
+
+
+        if(
+
+            result.marks >
+
+            bestScore
+
+        ){
+
+            bestScore =
+                result.marks;
 
         }
 
-    }else{
-
-        window.location.href="login.html";
-
-    }
-
-});
-
-// ==========================================
-// G THE GENIUS PROFILE SYSTEM v1.0
-// PART 2 / 4
-// XP + LEVEL + PROGRESS
-// ==========================================
-
-import {
-    doc,
-    getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-
-// ==========================================
-// HTML ELEMENTS
-// ==========================================
-
-const xpValue =
-document.getElementById("xpValue");
-
-const coinValue =
-document.getElementById("coinValue");
-
-const lessonValue =
-document.getElementById("lessonValue");
-
-const streakValue =
-document.getElementById("streakValue");
-
-const studentLevel =
-document.getElementById("studentLevel");
-
-const currentLevel =
-document.getElementById("currentLevel");
-
-const completedLessons =
-document.getElementById("completedLessons");
-
-const learningProgressText =
-document.getElementById("learningProgressText");
-
-const learningProgressBar =
-document.getElementById("learningProgressBar");
-
-const levelProgressBar =
-document.getElementById("levelProgressBar");
-
-const levelPercentage =
-document.getElementById("levelPercentage");
-
-const nextLevelText =
-document.getElementById("nextLevelText");
+    });
 
 
 
 
-// ==========================================
-// LOAD STUDENT PROGRESS
-// ==========================================
 
-async function loadLearningProgress(user){
+
+
+    document.getElementById(
+        "totalTests"
+    ).textContent =
+
+    totalTests;
+
+
+
+
+
+
+    document.getElementById(
+        "totalMarks"
+    ).textContent =
+
+    totalMarks;
+
+
+
+
+
+
+    document.getElementById(
+        "bestScore"
+    ).textContent =
+
+    bestScore;
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Display History
+========================================== */
+
+
+function displayHistory(){
+
+
+    const history =
+
+    document.getElementById(
+        "profileHistory"
+    );
+
+
+
+    if(!history)
+        return;
+
+
+
+
+    history.innerHTML = "";
+
+
+
+
+    studentResults.forEach(
+
+        result=>{
+
+
+
+        history.innerHTML += `
+
+
+        <div class="history-card">
+
+
+            <strong>
+
+            ${result.testName || "Mock Test"}
+
+            </strong>
+
+
+
+            <span>
+
+            ${result.marks || 0} Marks
+
+            </span>
+
+
+
+        </div>
+
+
+        `;
+
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Connect After Profile Load
+========================================== */
+
+
+const oldGetStudentInfo =
+    getStudentInfo;
+
+
+
+getStudentInfo = function(){
+
+
+    oldGetStudentInfo();
+
+
+
+    loadProfileResults();
+
+
+};
+
+/* ==========================================
+   G THE GENIUS
+   Profile JavaScript
+   Part 3 Final
+
+   Features:
+   - Rank Calculation
+   - Edit Profile
+   - Logout
+   - Final Connection
+========================================== */
+
+
+
+/* ==========================================
+   Calculate Rank
+========================================== */
+
+
+async function calculateProfileRank(){
+
 
     try{
 
-        const progressRef =
-        doc(db,"studentProgress",user.uid);
 
-        const progressSnap =
-        await getDoc(progressRef);
+        const snapshot =
 
-        if(!progressSnap.exists()){
+        await getDocs(
 
-            return;
+            collection(
+                db,
+                "results"
+            )
+
+        );
+
+
+
+
+        let allData = [];
+
+
+
+
+        snapshot.forEach(
+            (doc)=>{
+
+
+            allData.push({
+
+                id:doc.id,
+
+                ...doc.data()
+
+            });
+
+
+
+        });
+
+
+
+
+
+        allData.sort(
+
+            (a,b)=>
+
+            b.marks - a.marks
+
+        );
+
+
+
+
+
+        const overallIndex =
+
+        allData.findIndex(
+
+            item =>
+
+            item.name ===
+            studentData.name
+
+        );
+
+
+
+
+
+        const overallRank =
+
+        document.getElementById(
+            "overallRank"
+        );
+
+
+
+        if(overallRank){
+
+
+            overallRank.textContent =
+
+            overallIndex >= 0
+
+            ?
+
+            "#"+(overallIndex+1)
+
+            :
+
+            "N/A";
+
 
         }
 
-        const data =
-        progressSnap.data();
 
 
 
-        // XP
-
-        const xp =
-        data.xp || 0;
-
-        xpValue.textContent =
-        xp + " XP";
 
 
+        const districtData =
 
-        // Coins
+        allData.filter(
 
-        coinValue.textContent =
-        data.coins || 0;
+            item =>
 
+            item.district ===
+            studentData.district
 
-
-        // Lessons
-
-        const lessons =
-        data.completedLessons || 0;
-
-        lessonValue.textContent =
-        lessons;
-
-        completedLessons.textContent =
-        lessons + " / 100";
-
-
-
-        // Daily Streak
-
-        streakValue.textContent =
-        data.streak || 0;
-
-
-
-        // Level
-
-        const level =
-        data.level || "Level 1";
-
-        studentLevel.textContent =
-        level;
-
-        currentLevel.textContent =
-        level;
-
-
-
-        // Learning Progress
-
-        const progress =
-        Math.min(
-            (lessons / 100) * 100,
-            100
         );
 
-        learningProgressBar.style.width =
-        progress + "%";
-
-        learningProgressText.textContent =
-        Math.round(progress) +
-        "% Completed";
 
 
 
-        // XP Progress
 
-        const xpInLevel =
-        xp % 1000;
+        const districtIndex =
 
-        const xpProgress =
-        (xpInLevel / 1000) * 100;
+        districtData.findIndex(
 
-        levelProgressBar.style.width =
-        xpProgress + "%";
+            item =>
 
-        levelPercentage.textContent =
-        Math.round(xpProgress) + "%";
+            item.name ===
+            studentData.name
 
-        nextLevelText.textContent =
-        (1000 - xpInLevel) +
-        " XP required to reach next level";
+        );
+
+
+
+
+
+
+        const districtRank =
+
+        document.getElementById(
+            "districtRank"
+        );
+
+
+
+        if(districtRank){
+
+
+            districtRank.textContent =
+
+            districtIndex >=0
+
+            ?
+
+            "#"+(districtIndex+1)
+
+            :
+
+            "N/A";
+
+
+        }
+
 
 
 
     }
+
+
     catch(error){
 
-        console.error(
-        "Progress Load Error:",
-        error
-        );
 
-    }
-
-}
-
-
-
-// ==========================================
-// UPDATE AUTH STATE
-// ==========================================
-
-onAuthStateChanged(
-auth,
-async(user)=>{
-
-    if(user){
-
-        await loadProfile(user);
-
-        await loadLearningProgress(user);
-
-        if(loadingScreen){
-
-            loadingScreen.style.display =
-            "none";
-
-        }
-
-    }
-
-});
-
-// ==========================================
-// G THE GENIUS PROFILE SYSTEM v1.0
-// PART 3 / 4
-// BADGES + CERTIFICATES + RANK
-// ==========================================
-
-import {
-    collection,
-    query,
-    where,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-// ==========================================
-// HTML ELEMENTS
-// ==========================================
-
-const badgeContainer =
-document.getElementById("badgeContainer");
-
-const certificateContainer =
-document.getElementById("certificateContainer");
-
-const activityContainer =
-document.getElementById("activityContainer");
-
-const testsTaken =
-document.getElementById("testsTaken");
-
-const averageScore =
-document.getElementById("averageScore");
-
-const bestScore =
-document.getElementById("bestScore");
-
-const overallRank =
-document.getElementById("overallRank");
-
-const stateRank =
-document.getElementById("stateRank");
-
-const districtRank =
-document.getElementById("districtRank");
-
-
-
-// ==========================================
-// LOAD BADGES
-// ==========================================
-
-async function loadBadges(user){
-
-    const progressDoc =
-    await getDoc(doc(db,"studentProgress",user.uid));
-
-    if(!progressDoc.exists()) return;
-
-    const badges =
-    progressDoc.data().badges || [];
-
-    badgeContainer.innerHTML = "";
-
-    if(badges.length===0){
-
-        badgeContainer.innerHTML=`
-
-        <div class="badge-card">
-
-        🏅
-
-        <h3>No Badges</h3>
-
-        <p>Complete lessons to unlock badges.</p>
-
-        </div>
-
-        `;
-
-        return;
-    }
-
-    badges.forEach(badge=>{
-
-        badgeContainer.innerHTML +=`
-
-        <div class="badge-card">
-
-        🏆
-
-        <h3>${badge}</h3>
-
-        <p>Achievement Unlocked</p>
-
-        </div>
-
-        `;
-
-    });
-
-}
-
-
-
-// ==========================================
-// LOAD CERTIFICATES
-// ==========================================
-
-async function loadCertificates(user){
-
-    const q =
-    query(
-        collection(db,"certificates"),
-        where("userId","==",user.uid)
-    );
-
-    const snap =
-    await getDocs(q);
-
-    certificateContainer.innerHTML="";
-
-    if(snap.empty){
-
-        certificateContainer.innerHTML=`
-
-        <div class="certificate-card">
-
-        <h3>No Certificate</h3>
-
-        <p>Complete 25 lessons to unlock.</p>
-
-        </div>
-
-        `;
-
-        return;
-    }
-
-    snap.forEach(docSnap=>{
-
-        const data =
-        docSnap.data();
-
-        certificateContainer.innerHTML +=`
-
-        <div class="certificate-card">
-
-        <h3>${data.level}</h3>
-
-        <p>${data.certificateId}</p>
-
-        </div>
-
-        `;
-
-    });
-
-}
-
-
-
-// ==========================================
-// MOCK TEST STATISTICS
-// ==========================================
-
-async function loadMockStats(user){
-
-    const q =
-    query(
-        collection(db,"results"),
-        where("userId","==",user.uid)
-    );
-
-    const snap =
-    await getDocs(q);
-
-    let total=0;
-    let best=0;
-
-    testsTaken.textContent =
-    snap.size;
-
-    snap.forEach(result=>{
-
-        const data =
-        result.data();
-
-        total +=
-        data.score || 0;
-
-        if((data.score||0)>best){
-
-            best =
-            data.score;
-
-        }
-
-    });
-
-    averageScore.textContent =
-    snap.size ?
-    Math.round(total/snap.size) : 0;
-
-    bestScore.textContent =
-    best;
-
-}
-
-
-
-// ==========================================
-// RANK (Placeholder)
-// ==========================================
-
-async function loadRank(){
-
-    overallRank.textContent="--";
-    stateRank.textContent="--";
-    districtRank.textContent="--";
-
-}
-
-
-
-// ==========================================
-// RECENT ACTIVITY
-// ==========================================
-
-function loadActivity(){
-
-    activityContainer.innerHTML=`
-
-    <div class="activity-card">
-
-    <h4>🎉 Welcome to G THE GENIUS</h4>
-
-    <p>Your recent learning activities will appear here.</p>
-
-    </div>
-
-    `;
-
-}
-
-
-
-// ==========================================
-// LOAD ALL
-// ==========================================
-
-async function loadProfileExtras(user){
-
-    await loadBadges(user);
-
-    await loadCertificates(user);
-
-    await loadMockStats(user);
-
-    await loadRank();
-
-    loadActivity();
-
-}
-
-// ==========================================
-// G THE GENIUS PROFILE SYSTEM v1.0
-// PART 4 / 4 FINAL
-// ==========================================
-
-
-
-// ===============================
-// LOGOUT
-// ===============================
-
-const logoutBtn =
-document.getElementById("logoutBtn");
-
-
-if(logoutBtn){
-
-    logoutBtn.addEventListener(
-    "click",
-    async()=>{
-
-        const confirmLogout = confirm(
-        "Are you sure you want to logout?"
-        );
-
-        if(!confirmLogout) return;
-
-        try{
-
-            await signOut(auth);
-
-            alert(
-            "Logout Successful"
-            );
-
-            window.location.href =
-            "login.html";
-
-        }
-
-        catch(error){
-
-            console.error(
-            "Logout Error:",
+        console.log(
+            "Rank Error:",
             error
-            );
+        );
 
-            alert(
-            "Logout Failed!"
-            );
-
-        }
-
-    });
-
-}
-
-
-
-
-// ===============================
-// AUTO REFRESH
-// ===============================
-
-function refreshProfile(){
-
-    const user =
-    auth.currentUser;
-
-    if(user){
-
-        loadProfile(user);
-
-        loadLearningProgress(user);
-
-        loadProfileExtras(user);
 
     }
 
+
 }
 
 
 
-// Auto Refresh every 60 seconds
-setInterval(
-refreshProfile,
-60000
+
+
+
+
+/* ==========================================
+   Edit Profile
+========================================== */
+
+
+const editProfileBtn =
+
+document.getElementById(
+    "editProfileBtn"
 );
 
 
 
 
-// ===============================
-// FINAL AUTH INITIALIZATION
-// ===============================
+if(editProfileBtn){
 
-onAuthStateChanged(
-auth,
-async(user)=>{
 
-    if(!user){
+editProfileBtn.onclick = ()=>{
 
-        window.location.href =
-        "login.html";
 
-        return;
+    const newName =
 
-    }
+    prompt(
 
-    try{
+        "Enter Student Name",
 
-        await loadProfile(user);
+        studentData.name
 
-        await loadLearningProgress(user);
+    );
 
-        await loadProfileExtras(user);
 
-        if(loadingScreen){
 
-            loadingScreen.style.display =
-            "none";
+    if(newName){
 
-        }
 
-    }
+        localStorage.setItem(
 
-    catch(error){
+            "studentName",
 
-        console.error(
-        "Profile Initialization Error:",
-        error
+            newName
+
         );
 
+
+
+        location.reload();
+
+
     }
 
-});
+
+};
+
+
+}
 
 
 
 
-// ===============================
-// SYSTEM READY
-// ===============================
 
-console.log(
-"👤 G THE GENIUS Profile System Loaded Successfully"
+
+
+/* ==========================================
+   Logout
+========================================== */
+
+
+const logoutBtn =
+
+document.getElementById(
+    "logoutBtn"
+);
+
+
+
+
+if(logoutBtn){
+
+
+logoutBtn.onclick = ()=>{
+
+
+    localStorage.clear();
+
+
+
+    location.href =
+        "login.html";
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Final Page Load
+========================================== */
+
+
+window.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+    calculateProfileRank();
+
+
+}
+
 );
