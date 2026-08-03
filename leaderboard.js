@@ -1,432 +1,239 @@
+/* ==========================================
+   G THE GENIUS
+   Leaderboard JavaScript
+   Part 1
 
-// ==========================================
-// G THE GENIUS MOCK TEST PORTAL v5.0
-// LEADERBOARD JS
-// PART 1 / 5
-// ==========================================
+   Features:
+   - Firebase Connect
+   - Load Results
+   - Sort Ranking
+   - Prepare Top 3
+========================================== */
 
 
 
-import { db } from "./firebase-config.js";
+/* ==========================================
+   Firebase Imports
+========================================== */
+
+
+import {
+
+    db
+
+}
+
+from "./firebase-config.js";
 
 
 
 import {
 
-collection,
+    collection,
 
-getDocs,
+    getDocs,
 
-query,
+    query,
 
-orderBy
+    orderBy
 
-} from
+}
 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-
-
-// ELEMENTS
-
-
-
-const leaderboardBody =
-
-document.getElementById(
-"leaderboardBody"
-);
-
-
-
-
-
-const testFilter =
-
-document.getElementById(
-"testFilter"
-);
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 
 
-
-let results = [];
-
-
-
+/* ==========================================
+   Variables
+========================================== */
 
 
+let leaderboardData = [];
 
 
-// ==========================================
-// LOAD RESULTS
-// ==========================================
 
+
+
+
+/* ==========================================
+   Load Results
+========================================== */
 
 
 async function loadLeaderboard(){
 
 
-
-try{
-
+    try{
 
 
-let q =
-
-query(
-
-collection(
-db,
-"results"
-),
-
-
-orderBy(
-"percentage",
-"desc"
-)
-
-);
+        const resultRef =
+            collection(
+                db,
+                "results"
+            );
 
 
 
+        const q =
+            query(
+                resultRef,
+                orderBy(
+                    "marks",
+                    "desc"
+                )
+            );
 
 
 
-
-let snapshot =
-
-await getDocs(q);
+        const snapshot =
+            await getDocs(q);
 
 
 
 
-
-
-results = [];
-
+        leaderboardData = [];
 
 
 
+        snapshot.forEach(
+            (doc)=>{
 
 
-snapshot.forEach(doc=>{
+            leaderboardData.push({
+
+                id:doc.id,
+
+                ...doc.data()
+
+            });
 
 
-results.push({
 
-id:doc.id,
-
-...doc.data()
-
-});
-
-
-});
+        });
 
 
 
 
-console.log(results);
-displayLeaderboard(results);
+
+        console.log(
+            "Leaderboard Loaded",
+            leaderboardData
+        );
 
 
 
-
-}
-
-catch(error){
+        showTopThree();
 
 
 
-console.error(
+    }
 
-"Leaderboard Error",
 
-error
+    catch(error){
 
-);
+
+        console.log(
+            "Leaderboard Error:",
+            error
+        );
+
+
+    }
 
 
 }
 
 
 
-}
-// ==========================================
-// LOAD TAMIL NADU DISTRICTS
-// ==========================================
 
 
-const tamilNaduDistricts = [
 
-"Ariyalur",
-"Chengalpattu",
-"Chennai",
-"Coimbatore",
-"Cuddalore",
-"Dharmapuri",
-"Dindigul",
-"Erode",
-"Kallakurichi",
-"Kancheepuram",
-"Kanniyakumari",
-"Karur",
-"Krishnagiri",
-"Madurai",
-"Mayiladuthurai",
-"Nagapattinam",
-"Namakkal",
-"Perambalur",
-"Pudukkottai",
-"Ramanathapuram",
-"Ranipet",
-"Salem",
-"Sivaganga",
-"Tenkasi",
-"Thanjavur",
-"Theni",
-"Thoothukudi",
-"Tiruchirappalli",
-"Tirunelveli",
-"Tirupathur",
-"Tiruppur",
-"Tiruvallur",
-"Tiruvannamalai",
-"Tiruvarur",
-"Vellore",
-"Viluppuram",
-"Virudhunagar"
 
-];
+/* ==========================================
+   Top 3 Podium
+========================================== */
 
 
+function showTopThree(){
 
 
+    const first =
+        leaderboardData[0];
 
-const districtFilter =
-document.getElementById(
-"districtFilter"
-);
 
+    const second =
+        leaderboardData[1];
 
 
+    const third =
+        leaderboardData[2];
 
 
-if(districtFilter){
 
 
-tamilNaduDistricts.forEach(
-(district)=>{
+    if(first){
 
 
-let option =
-document.createElement("option");
+        document.getElementById(
+            "firstName"
+        ).textContent =
+            first.name;
 
 
-option.value =
-district;
 
+        document.getElementById(
+            "firstMark"
+        ).textContent =
+            first.marks+" Marks";
 
-option.textContent =
-district;
 
+    }
 
 
-districtFilter.appendChild(option);
 
 
+    if(second){
 
-});
 
+        document.getElementById(
+            "secondName"
+        ).textContent =
+            second.name;
 
-}
-// ==========================================
-// DISPLAY LEADERBOARD TABLE
-// PART 2 / 5
-// ==========================================
 
 
+        document.getElementById(
+            "secondMark"
+        ).textContent =
+            second.marks+" Marks";
 
-function displayLeaderboard(data){
 
+    }
 
 
-if(!leaderboardBody)
 
-return;
 
 
+    if(third){
 
 
+        document.getElementById(
+            "thirdName"
+        ).textContent =
+            third.name;
 
 
-leaderboardBody.innerHTML = "";
 
+        document.getElementById(
+            "thirdMark"
+        ).textContent =
+            third.marks+" Marks";
 
 
-
-
-
-
-data.forEach((student,index)=>{
-
-
-
-
-
-let row =
-
-document.createElement("tr");
-
-
-
-
-
-
-row.innerHTML = `
-
-
-<td>
-
-${index + 1}
-
-</td>
-
-
-
-<td>
-
-${student.studentName || "-"}
-
-</td>
-
-
-
-<td>
-
-${student.district || "-"}
-
-</td>
-
-
-
-<td>
-
-${student.testType || "-"}
-
-</td>
-
-
-
-<td>
-
-${student.score || 0}
-
-</td>
-
-
-
-<td>
-
-${student.percentage || 0}%
-
-</td>
-
-
-
-`;
-
-
-
-
-
-
-
-leaderboardBody.appendChild(row);
-
-
-
-
-
-});const top3 = data.slice(0,3);
-
-if(top3[0]){
-    document.getElementById("rank1Card").innerHTML =
-    `<b>${top3[0].studentName}</b><br>
-    📍 ${top3[0].district}<br>
-    ⭐ ${top3[0].percentage}%`;
-}
-
-if(top3[1]){
-    document.getElementById("rank2Card").innerHTML =
-    `<b>${top3[1].studentName}</b><br>
-    📍 ${top3[1].district}<br>
-    ⭐ ${top3[1].percentage}%`;
-}
-
-if(top3[2]){
-    document.getElementById("rank3Card").innerHTML =
-    `<b>${top3[2].studentName}</b><br>
-    📍 ${top3[2].district}<br>
-    ⭐ ${top3[2].percentage}%`;
-}
-
-
-
-}
-
-// ==========================================
-// FILTER SYSTEM
-// PART 3 / 5
-// ==========================================
-
-
-
-
-function applyFilters(){
-
-
-
-let filtered = [...results];
-
-
-
-
-
-
-
-// TEST TYPE FILTER
-
-
-if(
-testFilter &&
-testFilter.value !== ""
-
-){
-
-
-
-filtered =
-
-filtered.filter(
-
-(item)=>
-
-item.testType ===
-testFilter.value
-
-
-);
-
+    }
 
 
 }
@@ -435,307 +242,331 @@ testFilter.value
 
 
 
-
-
-
-// DISTRICT FILTER
-
-
-if(
-
-districtFilter &&
-
-districtFilter.value !== ""
-
-){
-
-
-
-filtered =
-
-filtered.filter(
-
-(item)=>
-
-item.district ===
-
-districtFilter.value
-
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-displayLeaderboard(filtered);
-
-
-
-}
-
-
-
-
-
-
-
-
-// TEST FILTER CHANGE
-
-
-if(testFilter){
-
-
-testFilter.addEventListener(
-
-"change",
-
-applyFilters
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-// DISTRICT FILTER CHANGE
-
-
-if(districtFilter){
-
-
-districtFilter.addEventListener(
-
-"change",
-
-applyFilters
-
-);
-
-
-
-}
-
-
-// ==========================================
-// TOP 3 + CURRENT STUDENT RANK
-// PART 4 / 5
-// ==========================================
-
-
-
-
-
-function highlightTopRank(){
-
-
-
-const rows =
-
-document.querySelectorAll(
-
-"#leaderboardBody tr"
-
-);
-
-
-
-
-
-
-rows.forEach((row,index)=>{
-
-
-
-if(index === 0){
-
-
-row.classList.add(
-"rank-gold"
-);
-
-
-}
-
-
-
-else if(index === 1){
-
-
-row.classList.add(
-"rank-silver"
-);
-
-
-}
-
-
-
-
-else if(index === 2){
-
-
-row.classList.add(
-"rank-bronze"
-);
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-// ==========================================
-// CURRENT USER RANK
-// ==========================================
-
-
-
-function showMyRank(){
-
-
-
-let myName =
-
-localStorage.getItem(
-"studentName"
-);
-
-
-
-
-
-let myRank =
-
-results.findIndex(
-
-(student)=>
-
-student.studentName === myName
-
-)
-
-+1;
-
-
-
-
-
-
-
-const myRankBox =
-
-document.getElementById(
-"myRank"
-);
-
-
-
-
-
-
-if(myRankBox){
-
-
-myRankBox.innerText =
-
-myRank > 0
-
-?
-
-"🏆 Rank : " + myRank
-
-:
-
-"Rank Not Found";
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-// UPDATE DISPLAY
-
-
-const oldDisplay =
-displayLeaderboard;
-
-
-
-displayLeaderboard = function(data){
-
-
-oldDisplay(data);
-
-
-highlightTopRank();
-
-
-showMyRank();
-
-
-};
-
-
-// ==========================================
-// FINAL LEADERBOARD INITIALIZATION
-// PART 5 / 5 FINAL
-// ==========================================
-
-
-
-
-
-// ==========================================
-// LOAD ON PAGE OPEN
-// ==========================================
+/* ==========================================
+   Page Load
+========================================== */
 
 
 window.addEventListener(
 
-"load",
+"DOMContentLoaded",
 
 ()=>{
 
 
-loadLeaderboard();
-
+    loadLeaderboard();
 
 
 }
+
+);
+
+/* ==========================================
+   G THE GENIUS
+   Leaderboard JavaScript
+   Part 2
+
+   Features:
+   - Generate Full Ranking List
+   - Rank Cards
+   - Student Details
+========================================== */
+
+
+
+/* ==========================================
+   Leaderboard List Element
+========================================== */
+
+
+const leaderboardList =
+    document.getElementById(
+        "leaderboardList"
+    );
+
+
+
+
+
+
+/* ==========================================
+   Display Rankings
+========================================== */
+
+
+function displayLeaderboard(){
+
+
+    if(!leaderboardList)
+        return;
+
+
+
+    leaderboardList.innerHTML = "";
+
+
+
+
+
+    leaderboardData.forEach(
+        (student,index)=>{
+
+
+        const rank =
+            index + 1;
+
+
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+
+        card.className =
+            "rank-card";
+
+
+
+
+
+        card.innerHTML = `
+
+
+        <div class="rank-number">
+
+            #${rank}
+
+        </div>
+
+
+
+        <div class="student-info">
+
+
+            <h3>
+
+            ${student.name || "Student"}
+
+            </h3>
+
+
+
+            <p>
+
+            ${student.district || "Tamil Nadu"}
+
+            • 
+
+            ${student.testType || "Mock Test"}
+
+            </p>
+
+
+        </div>
+
+
+
+
+        <div class="marks-box">
+
+
+            <span>
+
+            ${student.marks || 0}
+
+            </span>
+
+
+            <small>
+
+            Marks
+
+            </small>
+
+
+        </div>
+
+
+
+        `;
+
+
+
+
+        leaderboardList.appendChild(
+            card
+        );
+
+
+
+    });
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Update Top Three Function
+========================================== */
+
+
+const oldShowTopThree =
+    showTopThree;
+
+
+
+showTopThree = function(){
+
+
+    oldShowTopThree();
+
+
+
+    displayLeaderboard();
+
+
+};
+
+/* ==========================================
+   G THE GENIUS
+   Leaderboard JavaScript
+   Part 3 Final
+
+   Features:
+   - Current Student Rank
+   - District Rank
+   - Auto Refresh
+   - Final Error Handling
+========================================== */
+
+
+
+/* ==========================================
+   Current Student Rank
+========================================== */
+
+
+function getCurrentStudentRank(){
+
+
+    const currentName =
+        localStorage.getItem(
+            "studentName"
+        );
+
+
+
+    if(!currentName)
+        return null;
+
+
+
+
+    const index =
+        leaderboardData.findIndex(
+            student =>
+            student.name === currentName
+        );
+
+
+
+    if(index !== -1){
+
+
+        return index + 1;
+
+
+    }
+
+
+
+    return null;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   District Rank
+========================================== */
+
+
+function getDistrictRank(){
+
+
+    const district =
+        localStorage.getItem(
+            "district"
+        );
+
+
+
+    if(!district)
+        return [];
+
+
+
+
+    return leaderboardData.filter(
+
+        student =>
+
+        student.district === district
+
+    );
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   Live Refresh
+========================================== */
+
+
+function refreshLeaderboard(){
+
+
+    loadLeaderboard();
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   Auto Update Every 60 Seconds
+========================================== */
+
+
+setInterval(
+
+()=>{
+
+
+    refreshLeaderboard();
+
+
+},
+
+60000
 
 );
 
@@ -745,33 +576,27 @@ loadLeaderboard();
 
 
 
-// ==========================================
-// EXPORT FOR OTHER FILES
-// ==========================================
+/* ==========================================
+   Safe Error Display
+========================================== */
 
 
-window.loadLeaderboard =
+window.addEventListener(
 
-loadLeaderboard;
+"error",
 
-
-
-
+(event)=>{
 
 
-console.log(
+    console.log(
 
-`
-================================
+        "Leaderboard Error:",
+        event.message
 
-G THE GENIUS LEADERBOARD READY ✅
+    );
 
-Rank System
-District Filter
-Test Filter
 
-================================
-`
+}
 
 );
 
