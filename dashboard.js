@@ -877,3 +877,188 @@ prepareTest = function(){
 
 
 };
+/* ==========================================
+   G THE GENIUS
+   Mock Test JavaScript
+   Part 4
+
+   Firebase Result Save
+========================================== */
+
+
+
+/* ==========================================
+   Firebase Imports
+========================================== */
+
+
+import {
+
+    db
+
+}
+from "./firebase-config.js";
+
+
+
+import {
+
+    collection,
+
+    addDoc,
+
+    serverTimestamp
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+/* ==========================================
+   Get Student Details
+========================================== */
+
+
+function getStudentData(){
+
+
+    return {
+
+
+        name:
+        localStorage.getItem(
+            "studentName"
+        )
+        ||
+        "Student",
+
+
+
+        district:
+        localStorage.getItem(
+            "district"
+        )
+        ||
+        "Tamil Nadu"
+
+
+
+    };
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   Save Mock Result
+========================================== */
+
+
+async function saveMockResult(data){
+
+
+    try{
+
+
+        const student =
+            getStudentData();
+
+
+
+        await addDoc(
+
+            collection(
+                db,
+                "results"
+            ),
+
+
+            {
+
+
+                name:
+                student.name,
+
+
+
+                district:
+                student.district,
+
+
+
+                testType:
+                data.type,
+
+
+
+                testName:
+                currentTest.title,
+
+
+
+                marks:
+                data.marks,
+
+
+
+                correct:
+                data.correct,
+
+
+
+                wrong:
+                data.wrong,
+
+
+
+                skipped:
+                data.skipped,
+
+
+
+                totalQuestions:
+                data.total,
+
+
+
+                createdAt:
+                serverTimestamp()
+
+
+
+            }
+
+        );
+
+
+
+        console.log(
+            "Result Saved Successfully"
+        );
+
+
+
+    }
+
+
+    catch(error){
+
+
+        console.log(
+            "Result Save Error:",
+            error
+        );
+
+
+    }
+
+
+}
+
