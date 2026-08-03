@@ -1,1610 +1,578 @@
-<!-- ==========================================
-DASHBOARD HTML v6.0
-PART 1 / 8
-G THE GENIUS
-========================================== -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | G THE GENIUS</title>
 
-<title>
+    <meta name="theme-color" content="#081229">
 
-Dashboard | G THE GENIUS
+    <!-- Google Font -->
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
 
-</title>
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
-<meta name="theme-color"
-content="#081229">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-<link rel="icon"
-href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+        href="css/common.css">
 
-<link rel="stylesheet"
-href="style.css">
-
-<link rel="stylesheet"
-href="dashboard.css">
+    <link rel="stylesheet"
+        href="css/dashboard.css">
 
 </head>
 
 <body>
 
-<div class="dashboard-container">
+    <!-- ========================= -->
+    <!-- Splash Screen -->
+    <!-- ========================= -->
 
-<!-- ==========================================
-HEADER
-========================================== -->
+    <div id="splash-screen">
 
-<header class="dashboard-header">
+        <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+            alt="G THE GENIUS Logo"
+            class="splash-logo">
 
-<div class="header-left">
+        <h1>G THE GENIUS</h1>
 
-<img
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="logo-img"
-alt="G THE GENIUS">
+        <p>Learn • Practice • Succeed</p>
 
-<div>
+    </div>
 
-<h1>
+    <!-- ========================= -->
+    <!-- Dashboard -->
+    <!-- ========================= -->
 
-G THE GENIUS
+    <div class="dashboard-container">
 
-</h1>
+        <!-- Header -->
 
-<p>
+        <header class="dashboard-header">
 
-Government Exam Learning Portal
+            <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+                alt="Logo"
+                class="logo">
 
-</p>
+            <h1>G THE GENIUS</h1>
 
-</div>
+            <p class="tagline">
+                Learn • Practice • Succeed
+            </p>
 
-</div>
+        </header>
 
-<div class="header-right">
-<div class="header-right">
+        <!-- Welcome Card -->
 
-<button
-id="notificationBtn"
-class="icon-btn">
+        <section class="welcome-card">
 
-🔔
+            <div class="welcome-top">
 
-</button>
+                <div>
 
-<a
-href="profile.html"
-class="profile-btn">
+                    <h2 id="greeting">
 
-👤
+                        Good Morning ☀️
 
-</a>
+                    </h2>
 
-</div>
+                    <h3>
 
-</header>
+                        Welcome,
 
-<!-- ==========================================
-WELCOME CARD
-========================================== -->
+                        <span id="studentName">
 
-<section class="welcome-card">
+                            Loading...
 
-<div class="welcome-left">
+                        </span>
 
-<h2>
+                    </h3>
 
-👋
-<span id="greeting">
+                </div>
 
-Good Morning
+            </div>
 
-</span>
+            <div class="future-badge">
 
-</h2>
+                ⭐ Future Officer
 
-<h3>
+            </div>
 
-Welcome,
+            <div class="date-time">
 
-<span id="studentName">
+                <div>
 
-Student
+                    📅
 
-</span>
+                    <span id="currentDate">
 
-</h3>
+                        Loading...
 
-<p>
+                    </span>
 
-📍
-<span id="studentDistrict">
+                </div>
 
-Tamil Nadu
+                <div>
 
-</span>
+                    🕒
 
-</p>
+                    <span id="currentTime">
 
-</div>
+                        Loading...
 
-<div class="welcome-right">
+                    </span>
 
-<div class="welcome-badge">
+                </div>
 
-🏆
+            </div>
 
-</div>
+        </section>
 
-</div>
+             <!-- ========================= -->
+        <!-- Daily Quote -->
+        <!-- ========================= -->
 
-</section>
+        <section class="quote-card">
 
-<!-- ==========================================
-TODAY STATUS
-========================================== -->
+            <div class="card-header">
 
-<section class="status-card">
+                <h2>📖 Daily Quote</h2>
 
-<div class="status-item">
+            </div>
 
-🔥
+            <div class="quote-content">
 
-<h3 id="streakCount">
+                <p id="dailyQuote">
 
-0
+                    Loading Quote...
 
-</h3>
+                </p>
 
-<p>
+            </div>
 
-Day Streak
+        </section>
 
-</p>
+        <!-- ========================= -->
+        <!-- Mock Test Section -->
+        <!-- ========================= -->
 
-</div>
+        <section class="mock-test-section">
 
-<div class="status-item">
+            <div class="section-title">
 
-⭐
+                <h2>🚀 Mock Tests</h2>
 
-<h3 id="xpCount">
+                <p>
+                    Improve your performance with daily practice
+                </p>
 
-0 XP
+            </div>
 
-</h3>
+            <div class="test-card daily-card"
+                onclick="location.href='mocktest.html?type=daily'">
 
-<p>
+                <div class="card-left">
 
-Experience
+                    <h3>🟢 Daily Mock Test</h3>
 
-</p>
+                    <p>25 Questions</p>
 
-</div>
+                    <span>⏱ 5 Minutes</span>
 
-<div class="status-item">
+                </div>
 
-🪙
+                <div class="card-right">
 
-<h3 id="coinCount">
+                    <button class="start-btn">
 
-0
+                        Start →
 
-</h3>
+                    </button>
 
-<p>
+                </div>
 
-Coins
+            </div>
 
-</p>
+            <div class="test-card weekly-card"
+                onclick="location.href='mocktest.html?type=weekly'">
 
-</div>
+                <div class="card-left">
 
-</section>
+                    <h3>🟡 Weekly Mock Test</h3>
 
- <!-- ==========================================
-TODAY'S MISSION
-PART 2 / 8
-========================================== -->
+                    <p>50 Questions</p>
 
-<section class="mission-section">
+                    <span>⏱ 10 Minutes</span>
 
-<h2>
+                </div>
 
-🎯 Today's Mission
+                <div class="card-right">
 
-</h2>
+                    <button class="start-btn">
 
-<div class="mission-card">
+                        Start →
 
-<div class="mission-item">
+                    </button>
 
-<input
-type="checkbox"
-id="mission1"
-disabled>
+                </div>
 
-<label for="mission1">
+            </div>
 
-📖 Learn 1 Lesson
+            <div class="test-card monthly-card"
+                onclick="location.href='mocktest.html?type=monthly'">
 
-</label>
+                <div class="card-left">
 
-</div>
+                    <h3>🔴 Monthly Grand Test</h3>
 
-<div class="mission-item">
+                    <p>100 Questions</p>
 
-<input
-type="checkbox"
-id="mission2"
-disabled>
+                    <span>⏱ 30 Minutes</span>
 
-<label for="mission2">
+                </div>
 
-📝 Complete 10 Practice Questions
+                <div class="card-right">
 
-</label>
+                    <button class="start-btn">
 
-</div>
+                        Start →
 
-<div class="mission-item">
+                    </button>
 
-<input
-type="checkbox"
-id="mission3"
-disabled>
+                </div>
 
-<label for="mission3">
+            </div>
 
-🏆 Score Above 80%
+        </section>
 
-</label>
+             <!-- ========================= -->
+        <!-- Learning Zone -->
+        <!-- ========================= -->
 
-</div>
+        <section class="learning-section">
 
-<div class="mission-reward">
+            <div class="section-header">
 
-<h3>
+                <h2>📚 Learning Zone</h2>
 
-🎁 Reward
+                <a href="learning.html" class="view-all">
 
-</h3>
+                    View All →
 
-<p>
+                </a>
 
-⭐ +50 XP
+            </div>
 
-</p>
+            <div class="learning-grid">
 
-<p>
+                <!-- Psychology -->
 
-🪙 +100 Coins
+                <div class="learning-card"
+                    onclick="location.href='learning.html?subject=Psychology'">
 
-</p>
+                    <div class="learning-icon">
 
-</div>
+                        🧠
 
-</div>
+                    </div>
 
-</section>
+                    <h3>Psychology</h3>
 
-<!-- ==========================================
-CONTINUE LEARNING
-========================================== -->
+                    <p>
 
-<section class="continue-section">
+                        Learn important psychology topics
+                        with explanations.
 
-<h2>
+                    </p>
 
-📚 Continue Learning
+                </div>
 
-</h2>
+                <!-- Physical -->
 
-<div class="continue-card">
+                <div class="learning-card"
+                    onclick="location.href='learning.html?subject=Physical'">
 
-<div class="continue-info">
+                    <div class="learning-icon">
 
-<h3 id="continueSubject">
+                        💪
 
-No Lesson Started
+                    </div>
 
-</h3>
+                    <h3>Physical</h3>
 
-<p id="continueTopic">
+                    <p>
 
-Start your first lesson today.
+                        Prepare physical fitness tips,
+                        PET & PMT guidance.
 
-</p>
+                    </p>
 
-<div class="progress-bar">
+                </div>
 
-<div
-id="continueProgress"
-class="progress-fill"
-style="width:0%;">
+                <!-- General Studies -->
 
-</div>
+                <div class="learning-card"
+                    onclick="location.href='learning.html?subject=General Studies'">
 
-</div>
+                    <div class="learning-icon">
 
-<p>
+                        📘
 
-Progress :
-<span id="continuePercent">
+                    </div>
 
-0%
+                    <h3>General Studies</h3>
 
-</span>
+                    <p>
 
-</p>
+                        Study important government
+                        exam subjects easily.
 
-</div>
+                    </p>
 
-<button
-id="continueBtn"
-class="primary-btn">
+                </div>
 
-▶ Continue
+            </div>
 
-</button>
+        </section>
 
-</div>
+        <!-- ========================= -->
+        <!-- Practice Test -->
+        <!-- ========================= -->
 
-</section>
+        <section class="practice-section">
 
-<!-- ==========================================
-YOUR PROGRESS
-========================================== -->
+            <div class="section-header">
 
-<section class="progress-section">
+                <h2>📝 Practice Test</h2>
 
-<h2>
+            </div>
 
-📊 Your Progress
+            <div class="practice-card">
 
-</h2>
+                <div class="practice-left">
 
-<div class="progress-grid">
+                    <h3>
 
-<div class="progress-card">
+                        Subject & Topic Wise Practice
 
-📖
+                    </h3>
 
-<h3 id="lessonCount">
+                    <p>
 
-0
+                        Select your subject and topic,
+                        then start unlimited random
+                        practice tests.
 
-</h3>
+                    </p>
 
-<p>
+                </div>
 
-Lessons Completed
+                <div class="practice-right">
 
-</p>
+                    <button
+                        class="practice-btn"
+                        onclick="location.href='practice.html'">
 
-</div>
+                        Start Practice →
 
-<div class="progress-card">
+                    </button>
 
-📝
+                </div>
 
-<h3 id="practiceCount">
+            </div>
 
-0
+        </section>
+        <!-- ========================= -->
+        <!-- Leaderboard Preview -->
+        <!-- ========================= -->
 
-</h3>
+        <section class="leaderboard-section">
 
-<p>
+            <div class="section-header">
 
-Practice Questions
+                <h2>🏆 Leaderboard</h2>
 
-</p>
+                <a href="leaderboard.html" class="view-all">
+                    View All →
+                </a>
 
-</div>
+            </div>
 
-<div class="progress-card">
+            <div class="leaderboard-card">
 
-🎯
+                <div class="podium-preview">
 
-<h3 id="accuracy">
+                    <div class="podium second">
+                        <div class="rank-circle">🥈</div>
+                        <h4 id="secondName">Loading...</h4>
+                        <small>Rank #2</small>
+                    </div>
 
-0%
+                    <div class="podium first">
+                        <div class="rank-circle">🥇</div>
+                        <h3 id="firstName">Loading...</h3>
+                        <small>Rank #1</small>
+                    </div>
 
-</h3>
+                    <div class="podium third">
+                        <div class="rank-circle">🥉</div>
+                        <h4 id="thirdName">Loading...</h4>
+                        <small>Rank #3</small>
+                    </div>
 
-<p>
+                </div>
 
-Accuracy
+            </div>
 
-</p>
+        </section>
 
-</div>
+        <!-- ========================= -->
+        <!-- Bottom Navigation -->
+        <!-- ========================= -->
 
-<div class="progress-card">
+        <nav class="bottom-navigation">
 
-🏅
+            <a href="dashboard.html"
+                class="nav-item active">
 
-<h3 id="rank">
+                <span class="nav-icon">🏠</span>
 
---
+                <span class="nav-text">
 
-</h3>
+                    Home
 
-<p>
+                </span>
 
-Current Rank
+            </a>
 
-</p>
+            <a href="learning.html"
+                class="nav-item">
 
-</div>
+                <span class="nav-icon">📚</span>
 
-</div>
+                <span class="nav-text">
 
-</section>
+                    Learning
 
-<!-- ==========================================
-DASHBOARD HTML v6.0
-PART 3 / 8
-MOCK TEST + LEARNING
-========================================== -->
+                </span>
 
-<!-- ==========================================
-MOCK TEST SECTION
-========================================== -->
+            </a>
 
-<section class="mocktest-section">
+            <a href="practice.html"
+                class="nav-item">
 
-<h2>
+                <span class="nav-icon">📝</span>
 
-📝 Mock Tests
+                <span class="nav-text">
 
-</h2>
+                    Practice
 
-<div class="mocktest-grid">
+                </span>
 
-<!-- DAILY -->
+            </a>
 
-<div class="mock-card daily-card">
+            <a href="leaderboard.html"
+                class="nav-item">
 
-<div class="mock-icon">
+                <span class="nav-icon">🏆</span>
 
-🟢
+                <span class="nav-text">
 
-</div>
+                    Leaderboard
 
-<h3>
+                </span>
 
-Daily Mock Test
+            </a>
 
-</h3>
+            <a href="profile.html"
+                class="nav-item">
 
-<p>
+                <span class="nav-icon">👤</span>
 
-10 Questions • 5 Minutes
+                <span class="nav-text">
 
-</p>
+                    Profile
 
-<button
-class="mock-btn"
-onclick="location.href='mocktest.html?type=daily'">
+                </span>
 
-Start Test
+            </a>
 
-</button>
+        </nav>
+             <!-- ========================= -->
+        <!-- Footer -->
+        <!-- ========================= -->
 
-</div>
+        <footer class="dashboard-footer">
 
-<!-- WEEKLY -->
+            <div class="footer-logo">
 
-<div class="mock-card weekly-card">
+                <img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+                    alt="G THE GENIUS Logo">
 
-<div class="mock-icon">
+                <h3>G THE GENIUS</h3>
 
-🟡
+                <p>Learn • Practice • Succeed</p>
 
-</div>
+            </div>
 
-<h3>
+            <div class="footer-links">
 
-Weekly Mock Test
+                <a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
+                    target="_blank">
 
-</h3>
+                    📺 YouTube
 
-<p>
+                </a>
 
-25 Questions • 10 Minutes
+                <a href="https://t.me/gthegenius"
+                    target="_blank">
 
-</p>
+                    📢 Telegram
 
-<button
-class="mock-btn"
-onclick="location.href='mocktest.html?type=weekly'">
+                </a>
 
-Start Test
+                <a href="mailto:gthegenius7@gmail.com">
 
-</button>
+                    📧 gthegenius7@gmail.com
 
-</div>
+                </a>
 
-<!-- MONTHLY -->
+            </div>
 
-<div class="mock-card monthly-card">
+            <div class="footer-copy">
 
-<div class="mock-icon">
+                © 2026 G THE GENIUS
+                <br>
+                All Rights Reserved.
 
-🔴
+            </div>
 
-</div>
+        </footer>
 
-<h3>
+    </div>
+    <!-- End Dashboard Container -->
 
-Monthly Grand Test
+    <!-- ========================= -->
+    <!-- JavaScript -->
+    <!-- ========================= -->
 
-</h3>
+    <script type="module"
+        src="js/firebase-config.js"></script>
 
-<p>
+    <script src="js/common.js"></script>
 
-100 Questions • 60 Minutes
-
-</p>
-
-<button
-class="mock-btn"
-onclick="location.href='mocktest.html?type=monthly'">
-
-Start Test
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-LEARNING ZONE
-========================================== -->
-
-<section class="learning-section">
-
-<h2>
-
-📚 Learning Zone
-
-</h2>
-
-<div class="learning-card">
-
-<div>
-
-<h3>
-
-Topic-wise Learning
-
-</h3>
-
-<p>
-
-Learn • Practice • PDF • Videos
-
-</p>
-
-</div>
-
-<button
-class="primary-btn"
-onclick="location.href='learning.html'">
-
-Open Learning
-
-</button>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-GENIUS AI
-========================================== -->
-
-<section class="ai-section">
-
-<h2>
-
-🤖 GENIUS AI
-
-</h2>
-
-<div class="ai-card">
-
-<div class="ai-left">
-
-<h3>
-
-Your Personal Government Exam Assistant
-
-</h3>
-
-<p>
-
-Ask Doubts • Current Affairs • Study Plans • MCQs • Exam Tips
-
-</p>
-
-</div>
-
-<button
-class="primary-btn"
-onclick="location.href='genius-ai.html'">
-
-Open GENIUS AI
-
-</button>
-
-</div>
-
-</section>
-<!-- ==========================================
-DASHBOARD HTML v6.0
-PART 4 / 8
-========================================== -->
-
-<!-- ==========================================
-LEADERBOARD PREVIEW
-========================================== -->
-
-<section class="leaderboard-section">
-
-<h2>
-
-🏆 Leaderboard
-
-</h2>
-
-<div class="leaderboard-card">
-
-<div class="leader-item">
-
-<span>
-
-🥇 Top Rank
-
-</span>
-
-<strong id="topRankStudent">
-
-Loading...
-
-</strong>
-
-</div>
-
-<div class="leader-item">
-
-<span>
-
-📍 Your District Rank
-
-</span>
-
-<strong id="districtRank">
-
---
-
-</strong>
-
-</div>
-
-<div class="leader-item">
-
-<span>
-
-🌍 Overall Rank
-
-</span>
-
-<strong id="overallRank">
-
---
-
-</strong>
-
-</div>
-
-<button
-class="primary-btn"
-onclick="location.href='leaderboard.html'">
-
-View Full Leaderboard
-
-</button>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-RECENT ACTIVITY
-========================================== -->
-
-<section class="activity-section">
-
-<h2>
-
-📜 Recent Activity
-
-</h2>
-
-<div
-id="recentActivity"
-class="activity-card">
-
-<div class="activity-item">
-
-📝 No recent activity available.
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-CURRENT AFFAIRS
-========================================== -->
-
-<section class="currentaffairs-section">
-
-<h2>
-
-📰 Today's Current Affairs
-
-</h2>
-
-<div class="current-card">
-
-<h3 id="currentTitle">
-
-Loading Current Affairs...
-
-</h3>
-
-<p id="currentSummary">
-
-Latest important current affairs for Government Exams will appear here.
-
-</p>
-
-<button
-class="primary-btn"
-onclick="location.href='learning.html?category=currentaffairs'">
-
-Read More
-
-</button>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-UPCOMING EXAMS
-========================================== -->
-
-<section class="exam-section">
-
-<h2>
-
-📅 Upcoming Exams
-
-</h2>
-
-<div
-id="examList"
-class="exam-card">
-
-<div class="exam-item">
-
-📌 No upcoming exams available.
-
-</div>
-
-</div>
-
-</section>
-
-   <!-- ==========================================
-DASHBOARD HTML v6.0
-PART 5 / 8
-ACHIEVEMENTS & CHALLENGES
-========================================== -->
-
-<!-- ==========================================
-ACHIEVEMENTS
-========================================== -->
-
-<section class="achievement-section">
-
-<h2>
-
-🏅 Achievements
-
-</h2>
-
-<div class="achievement-grid">
-
-<div class="achievement-card">
-
-🥉
-
-<h3>
-
-Bronze
-
-</h3>
-
-<p>
-
-Complete 5 Lessons
-
-</p>
-
-</div>
-
-<div class="achievement-card">
-
-🥈
-
-<h3>
-
-Silver
-
-</h3>
-
-<p>
-
-Score Above 80%
-
-</p>
-
-</div>
-
-<div class="achievement-card">
-
-🥇
-
-<h3>
-
-Gold
-
-</h3>
-
-<p>
-
-Complete 100 Practice Questions
-
-</p>
-
-</div>
-
-<div class="achievement-card">
-
-💎
-
-<h3>
-
-GENIUS
-
-</h3>
-
-<p>
-
-100% Score Without Hint
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-DAILY CHALLENGE
-========================================== -->
-
-<section class="challenge-section">
-
-<h2>
-
-🔥 Daily Challenge
-
-</h2>
-
-<div class="challenge-card">
-
-<h3 id="challengeTitle">
-
-Today's Challenge
-
-</h3>
-
-<p id="challengeDescription">
-
-Answer 10 Questions Without Using Hint.
-
-</p>
-
-<div class="reward-box">
-
-⭐ +100 XP
-
-<br>
-
-🪙 +200 Coins
-
-</div>
-
-<button
-class="primary-btn"
-id="challengeBtn">
-
-Start Challenge
-
-</button>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-WEEKLY PROGRESS
-========================================== -->
-
-<section class="weekly-progress-section">
-
-<h2>
-
-📊 Weekly Progress
-
-</h2>
-
-<div class="weekly-card">
-
-<div class="progress-row">
-
-<span>Lessons</span>
-
-<progress
-value="0"
-max="100"
-id="weeklyLessonProgress">
-
-</progress>
-
-</div>
-
-<div class="progress-row">
-
-<span>Practice</span>
-
-<progress
-value="0"
-max="100"
-id="weeklyPracticeProgress">
-
-</progress>
-
-</div>
-
-<div class="progress-row">
-
-<span>Mock Tests</span>
-
-<progress
-value="0"
-max="100"
-id="weeklyMockProgress">
-
-</progress>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-MOTIVATION
-========================================== -->
-
-<section class="motivation-section">
-
-<div class="motivation-card">
-
-<h2>
-
-💬 Daily Motivation
-
-</h2>
-
-<p id="motivationText">
-
-"Success comes to those who practice consistently."
-
-</p>
-
-</div>
-
-</section>
-
- <!-- ==========================================
-DASHBOARD HTML v6.0
-PART 6 / 8
-========================================== -->
-
-<!-- ==========================================
-PERFORMANCE SUMMARY
-========================================== -->
-
-<section class="performance-section">
-
-<h2>
-
-📈 Performance Summary
-
-</h2>
-
-<div class="performance-grid">
-
-<div class="performance-card">
-
-✅
-
-<h3 id="correctAnswers">
-
-0
-
-</h3>
-
-<p>
-
-Correct Answers
-
-</p>
-
-</div>
-
-<div class="performance-card">
-
-❌
-
-<h3 id="wrongAnswers">
-
-0
-
-</h3>
-
-<p>
-
-Wrong Answers
-
-</p>
-
-</div>
-
-<div class="performance-card">
-
-⏭️
-
-<h3 id="skippedAnswers">
-
-0
-
-</h3>
-
-<p>
-
-Skipped
-
-</p>
-
-</div>
-
-<div class="performance-card">
-
-🎯
-
-<h3 id="overallAccuracy">
-
-0%
-
-</h3>
-
-<p>
-
-Overall Accuracy
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-RECOMMENDED TOPICS
-========================================== -->
-
-<section class="recommended-section">
-
-<h2>
-
-📚 Recommended Learning
-
-</h2>
-
-<div class="recommended-card">
-
-<h3>
-
-Continue Your Preparation
-
-</h3>
-
-<div id="recommendedTopics">
-
-<button class="topic-btn">
-📜 Indian History
-</button>
-
-<button class="topic-btn">
-⚖️ Indian Polity
-</button>
-
-<button class="topic-btn">
-🌍 Geography
-</button>
-
-<button class="topic-btn">
-🔬 Science
-</button>
-
-<button class="topic-btn">
-📰 Current Affairs
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-WRONG ANSWER NOTEBOOK
-========================================== -->
-
-<section class="wrong-note-section">
-
-<h2>
-
-📕 Wrong Answer Notebook
-
-</h2>
-
-<div class="wrong-note-card">
-
-<p>
-
-Review all the questions you answered incorrectly and improve your weak areas.
-
-</p>
-
-<button
-class="primary-btn"
-onclick="location.href='wrong-answers.html'">
-
-Open Notebook
-
-</button>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-QUICK REVISION
-========================================== -->
-
-<section class="revision-section">
-
-<h2>
-
-🎯 Quick Revision
-
-</h2>
-
-<div class="revision-grid">
-
-<button class="revision-btn">
-📜 History
-</button>
-
-<button class="revision-btn">
-⚖️ Polity
-</button>
-
-<button class="revision-btn">
-🌍 Geography
-</button>
-
-<button class="revision-btn">
-🔬 Science
-</button>
-
-<button class="revision-btn">
-💻 Computer
-</button>
-
-<button class="revision-btn">
-🧩 Reasoning
-</button>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-GENIUS AI SUGGESTIONS
-========================================== -->
-
-<section class="ai-suggestion-section">
-
-<h2>
-
-🤖 Ask GENIUS AI
-
-</h2>
-
-<div class="ai-suggestion-card">
-
-<p>
-
-Need help with any Government Exam topic?
-
-</p>
-
-<div class="ai-question-list">
-
-<button class="ai-btn">
-
-📰 Today's Current Affairs
-
-</button>
-
-<button class="ai-btn">
-
-📖 Explain Indian Constitution
-
-</button>
-
-<button class="ai-btn">
-
-📝 Generate 20 TNUSRB MCQs
-
-</button>
-
-<button class="ai-btn">
-
-📅 Create My Study Plan
-
-</button>
-
-</div>
-
-<button
-class="primary-btn"
-onclick="location.href='genius-ai.html'">
-
-Open GENIUS AI
-
-</button>
-
-</div>
-
-</section>
-<!-- ==========================================
-DASHBOARD HTML v6.0
-PART 7 / 8
-========================================== -->
-
-<!-- ==========================================
-SETTINGS
-========================================== -->
-
-<section class="settings-section">
-
-<h2>
-
-⚙️ Settings
-
-</h2>
-
-<div class="settings-card">
-
-<button
-class="setting-btn"
-onclick="location.href='profile.html'">
-
-👤 My Profile
-
-</button>
-
-<button
-class="setting-btn"
-onclick="location.href='history.html'">
-
-📜 Learning History
-
-</button>
-
-<button
-class="setting-btn"
-onclick="location.href='certificate.html'">
-
-🏆 Certificates
-
-</button>
-
-<button
-class="setting-btn"
-onclick="location.href='about.html'">
-
-ℹ️ About G THE GENIUS
-
-</button>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-HELP & SUPPORT
-========================================== -->
-
-<section class="support-section">
-
-<h2>
-
-🆘 Help & Support
-
-</h2>
-
-<div class="support-card">
-
-<p>
-
-Need help? Contact G THE GENIUS Team.
-
-</p>
-
-<div class="support-buttons">
-
-<button
-class="support-btn"
-onclick="window.open('https://youtube.com')">
-
-▶ YouTube
-
-</button>
-
-<button
-class="support-btn"
-onclick="window.open('https://t.me')">
-
-📢 Telegram
-
-</button>
-
-<button
-class="support-btn"
-onclick="location.href='mailto:support@gthegenius.in'">
-
-✉️ Email
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ==========================================
-FOOTER
-========================================== -->
-
-<footer class="dashboard-footer">
-
-<img
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="footer-logo"
-alt="Logo">
-
-<h3>
-
-G THE GENIUS
-
-</h3>
-
-<p>
-
-Government Exam Learning Platform
-
-</p>
-
-<p>
-
-© 2026 G THE GENIUS
-All Rights Reserved.
-
-</p>
-
-</footer>
-
-<!-- ==========================================
-BOTTOM NAVIGATION
-========================================== -->
-
-<nav class="bottom-nav">
-
-<a
-href="dashboard.html"
-class="nav-item active">
-
-🏠
-
-<span>
-
-Home
-
-</span>
-
-</a>
-
-<a
-href="learning.html"
-class="nav-item">
-
-📚
-
-<span>
-
-Learning
-
-</span>
-
-</a>
-
-<a href="genius-ai.html" class="nav-item ai">
-🤖
-</a>
-
-<a
-href="mocktest.html"
-class="nav-item">
-
-📝
-
-<span>
-
-Tests
-
-</span>
-
-</a>
-
-<a
-href="profile.html"
-class="nav-item">
-
-👤
-
-<span>
-
-Profile
-
-</span>
-
-</a>
-
-</nav>
-<!-- ==========================================
-DASHBOARD HTML v6.0
-PART 8 / 8 FINAL
-G THE GENIUS
-========================================== -->
-
-<!-- ==========================================
-LOADING OVERLAY
-========================================== -->
-
-<div id="loadingOverlay" class="loading-overlay">
-
-    <div class="loader"></div>
-
-    <h3>Loading Dashboard...</h3>
-
-</div>
-
-<!-- ==========================================
-TOAST MESSAGE
-========================================== -->
-
-<div id="toast" class="toast-message"></div>
-
-<!-- ==========================================
-FIREBASE CONFIG
-========================================== -->
-
-<script type="module" src="firebase-config.js"></script>
-
-<!-- ==========================================
-DASHBOARD JS
-========================================== -->
-
-<script type="module" src="dashboard.js"></script>
-
-<!-- ==========================================
-GENIUS AI SHORTCUT
-========================================== -->
-
-<script>
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const aiButtons = document.querySelectorAll(".ai-btn");
-
-    aiButtons.forEach(btn => {
-
-        btn.addEventListener("click", () => {
-
-            const question = btn.innerText;
-
-            localStorage.setItem(
-                "genius_ai_question",
-                question
-            );
-
-            window.location.href = "genius-ai.html";
-
-        });
-
-    });
-
-});
-
-</script>
-
-<!-- ==========================================
-END
-========================================== -->
-
-</div>
+    <script type="module"
+        src="js/dashboard.js"></script>
 
 </body>
 
 </html>
-    
-    
-    
