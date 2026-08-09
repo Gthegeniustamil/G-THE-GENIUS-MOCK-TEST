@@ -1,879 +1,1287 @@
-// ======================================================
-// G THE GENIUS
-// PROFILE JS
-// Mobile App Profile + Firebase
-// ======================================================
+<!DOCTYPE html>
+<html lang="en">
 
-import {
-    auth,
-    db
-} from "../firebase-config.js";
+<head>
+    <meta charset="UTF-8">
 
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-import {
-    doc,
-    getDoc,
-    collection,
-    getDocs,
-    query,
-    orderBy
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    <meta name="theme-color"
+          content="#081229">
 
+    <title>G THE GENIUS - Profile</title>
 
-// ======================================================
-// ELEMENTS
-// ======================================================
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-const studentName =
-    document.getElementById("studentName");
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-const studentDistrict =
-    document.getElementById("studentDistrict");
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-const totalTests =
-    document.getElementById("totalTests");
+    <link rel="stylesheet"
+          href="profile.css">
 
-const totalMarks =
-    document.getElementById("totalMarks");
+</head>
 
-const bestScore =
-    document.getElementById("bestScore");
 
-const overallRank =
-    document.getElementById("overallRank");
+<body>
 
-const districtRank =
-    document.getElementById("districtRank");
 
-const profileHistory =
-    document.getElementById("profileHistory");
+<!-- ================================
+     LOADER
+================================ -->
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
+<div id="pageLoader"
+     class="page-loader">
 
-const editProfileBtn =
-    document.getElementById("editProfileBtn");
+    <div class="loader-logo">
+        G
+    </div>
 
+    <div class="loader-spinner"></div>
 
-// ======================================================
-// AUTH CHECK
-// ======================================================
+    <p>
+        Loading Profile...
+    </p>
 
-onAuthStateChanged(
-    auth,
-    async (user) => {
+</div>
 
-        if (!user) {
 
-            window.location.href =
-                "../login.html";
 
-            return;
+<!-- ================================
+     MAIN APP
+================================ -->
 
-        }
+<div id="profilePage"
+     class="app-container">
 
 
-        await loadProfile(user);
+    <!-- ============================
+         HEADER
+    ============================= -->
 
-    }
-);
+    <header class="top-header">
 
 
-// ======================================================
-// LOAD PROFILE
-// ======================================================
+        <button
+            type="button"
+            class="back-btn"
+            id="backBtn">
 
-async function loadProfile(user) {
+            ←
 
-    try {
+        </button>
 
-        // ==============================================
-        // STUDENT DOCUMENT
-        // ==============================================
 
-        const studentRef =
-            doc(
-                db,
-                "students",
-                user.uid
-            );
+        <div class="header-title">
 
+            <h1>
+                My Profile
+            </h1>
 
-        const studentSnap =
-            await getDoc(studentRef);
+            <span>
+                G THE GENIUS
+            </span>
 
+        </div>
 
-        let studentData = {};
 
+        <button
+            type="button"
+            class="refresh-btn"
+            id="refreshBtn">
 
-        if (studentSnap.exists()) {
+            ↻
 
-            studentData =
-                studentSnap.data();
+        </button>
 
-        }
 
+    </header>
 
-        const name =
-            studentData.name ||
-            user.displayName ||
-            "Student";
 
 
-        const district =
-            studentData.district ||
-            "-";
+    <!-- ============================
+         PROFILE HERO
+    ============================= -->
 
+    <section class="profile-hero">
 
-        // ==============================================
-        // DISPLAY STUDENT DATA
-        // ==============================================
 
-        studentName.textContent =
-            name;
+        <div class="profile-avatar-wrapper">
 
+            <div
+                class="profile-avatar"
+                id="profileAvatar">
 
-        studentDistrict.textContent =
-            "📍 " + district;
+                G
 
+            </div>
 
-        // ==============================================
-        // LOCAL STORAGE
-        // ==============================================
+            <div class="online-dot"></div>
 
-        localStorage.setItem(
-            "studentName",
-            name
-        );
+        </div>
 
 
-        localStorage.setItem(
-            "district",
-            district
-        );
 
+        <div class="profile-main-info">
 
-        // ==============================================
-        // LOAD RESULTS
-        // ==============================================
+            <h2 id="profileName">
+                Student
+            </h2>
 
-        await loadResults(
-            name,
-            district
-        );
+            <p id="profileDistrict">
+                📍 District
+            </p>
 
-    }
+            <p
+                class="profile-email"
+                id="profileEmail">
 
-    catch (error) {
+                📧 Email
 
-        console.error(
-            "Profile Load Error:",
-            error
-        );
+            </p>
 
+        </div>
 
-        studentName.textContent =
-            "Student";
 
 
-        studentDistrict.textContent =
-            "District unavailable";
+        <button
+            type="button"
+            class="edit-profile-btn"
+            id="editProfileBtn">
 
-    }
+            ✏️ Edit Profile
 
-}
+        </button>
 
 
-// ======================================================
-// LOAD TEST RESULTS
-// ======================================================
+    </section>
 
-async function loadResults(
-    name,
-    district
-) {
 
-    try {
 
-        const resultsRef =
-            collection(
-                db,
-                "results"
-            );
+    <!-- ============================
+         PERSONAL INFORMATION
+    ============================= -->
 
+    <section class="section-card">
 
-        const snapshot =
-            await getDocs(
-                resultsRef
-            );
 
+        <div class="section-heading">
 
-        let results = [];
+            <div>
 
+                <span class="section-icon">
+                    👤
+                </span>
 
-        snapshot.forEach(
-            (resultDoc) => {
+                <div>
 
-                const data =
-                    resultDoc.data();
+                    <h3>
+                        Personal Information
+                    </h3>
 
+                    <p>
+                        Your account details
+                    </p>
 
-                if (
-                    data.studentName === name
-                ) {
+                </div>
 
-                    results.push({
+            </div>
 
-                        id:
-                            resultDoc.id,
+        </div>
 
-                        studentName:
-                            data.studentName ||
-                            "",
 
-                        district:
-                            data.district ||
-                            "",
 
-                        score:
-                            Number(
-                                data.score
-                            ) || 0,
+        <div class="info-grid">
 
-                        totalQuestions:
-                            Number(
-                                data.totalQuestions
-                            ) || 0,
 
-                        testType:
-                            data.testType ||
-                            "daily",
+            <div class="info-item">
 
-                        percentage:
-                            Number(
-                                data.percentage
-                            ) || 0,
+                <span class="info-label">
+                    Full Name
+                </span>
 
-                        createdAt:
-                            data.createdAt ||
-                            null
+                <strong id="infoName">
+                    —
+                </strong>
 
-                    });
+            </div>
 
-                }
 
-            }
-        );
 
+            <div class="info-item">
 
-        // ==============================================
-        // TOTAL TESTS
-        // ==============================================
+                <span class="info-label">
+                    District
+                </span>
 
-        totalTests.textContent =
-            results.length;
+                <strong id="infoDistrict">
+                    —
+                </strong>
 
+            </div>
 
-        // ==============================================
-        // TOTAL MARKS
-        // ==============================================
 
-        const marks =
-            results.reduce(
-                (sum, item) =>
-                    sum + item.score,
-                0
-            );
 
+            <div class="info-item">
 
-        totalMarks.textContent =
-            marks;
+                <span class="info-label">
+                    Email
+                </span>
 
+                <strong id="infoEmail">
+                    —
+                </strong>
 
-        // ==============================================
-        // BEST SCORE
-        // ==============================================
+            </div>
 
-        let best = 0;
 
 
-        results.forEach(
-            item => {
+            <div class="info-item">
 
-                if (
-                    item.score > best
-                ) {
+                <span class="info-label">
+                    User ID
+                </span>
 
-                    best =
-                        item.score;
+                <strong
+                    id="infoUserId"
+                    class="small-value">
 
-                }
+                    —
 
-            }
-        );
+                </strong>
 
+            </div>
 
-        bestScore.textContent =
-            best;
 
+        </div>
 
-        // ==============================================
-        // TEST HISTORY
-        // ==============================================
 
-        displayHistory(
-            results
-        );
+    </section>
+    <!-- ============================
+         PERFORMANCE OVERVIEW
+    ============================= -->
 
+    <section class="section-card">
 
-        // ==============================================
-        // RANKS
-        // ==============================================
+        <div class="section-heading">
 
-        await calculateRanks(
-            name,
-            district
-        );
+            <div>
 
-    }
+                <span class="section-icon">
+                    📊
+                </span>
 
-    catch (error) {
+                <div>
 
-        console.error(
-            "Results Error:",
-            error
-        );
+                    <h3>
+                        Performance Overview
+                    </h3>
 
+                    <p>
+                        Your overall test performance
+                    </p>
 
-        totalTests.textContent =
-            "0";
+                </div>
 
-        totalMarks.textContent =
-            "0";
+            </div>
 
-        bestScore.textContent =
-            "0";
+        </div>
 
-        profileHistory.innerHTML =
-            "<p>No test history</p>";
 
-    }
+        <div class="stats-grid">
 
-}
 
+            <!-- TOTAL TESTS -->
 
-// ======================================================
-// TEST HISTORY
-// ======================================================
+            <div class="stat-card">
 
-function displayHistory(
-    results
-) {
+                <div class="stat-icon total">
+                    📝
+                </div>
 
-    if (
-        results.length === 0
-    ) {
+                <div>
 
-        profileHistory.innerHTML =
-            "<p>No test history yet 📚</p>";
+                    <span>
+                        Total Tests
+                    </span>
 
-        return;
-
-    }
-
-
-    // Newest first
-
-    results.sort(
-        (a, b) => {
-
-            const dateA =
-                a.createdAt?.seconds ||
-                0;
-
-            const dateB =
-                b.createdAt?.seconds ||
-                0;
-
-            return dateB - dateA;
-
-        }
-    );
-
-
-    // Last 10 tests
-
-    const latest =
-        results.slice(0, 10);
-
-
-    profileHistory.innerHTML =
-        "";
-
-
-    latest.forEach(
-        (item) => {
-
-            let testName =
-                "Daily Mock Test";
-
-
-            let icon =
-                "🟢";
-
-
-            if (
-                item.testType ===
-                "weekly"
-            ) {
-
-                testName =
-                    "Weekly Mock Test";
-
-                icon =
-                    "🟡";
-
-            }
-
-
-            else if (
-                item.testType ===
-                "monthly"
-            ) {
-
-                testName =
-                    "Monthly Grand Test";
-
-                icon =
-                    "🔴";
-
-            }
-
-
-            const percentage =
-                item.totalQuestions > 0
-                ?
-                Math.round(
-                    (
-                        item.score /
-                        item.totalQuestions
-                    ) * 100
-                )
-                :
-                0;
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "history-card";
-
-
-            card.innerHTML = `
-
-                <div class="history-left">
-
-                    <strong>
-                        ${icon} ${testName}
+                    <strong id="totalTests">
+                        0
                     </strong>
 
-                    <small>
-                        ${formatDate(item.createdAt)}
-                    </small>
+                </div>
+
+            </div>
+
+
+
+            <!-- CORRECT -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon correct">
+                    ✅
+                </div>
+
+                <div>
+
+                    <span>
+                        Correct
+                    </span>
+
+                    <strong id="totalCorrect">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- WRONG -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon wrong">
+                    ❌
+                </div>
+
+                <div>
+
+                    <span>
+                        Wrong
+                    </span>
+
+                    <strong id="totalWrong">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SKIPPED -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon skipped">
+                    ⏭️
+                </div>
+
+                <div>
+
+                    <span>
+                        Skipped
+                    </span>
+
+                    <strong id="totalSkipped">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BEST SCORE -->
+
+            <div class="stat-card featured">
+
+                <div class="stat-icon best">
+                    🏆
+                </div>
+
+                <div>
+
+                    <span>
+                        Best Score
+                    </span>
+
+                    <strong id="bestScore">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- AVERAGE SCORE -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon average">
+                    🎯
+                </div>
+
+                <div>
+
+                    <span>
+                        Average Score
+                    </span>
+
+                    <strong id="averageScore">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         TEST PERFORMANCE
+    ============================= -->
+
+    <section class="section-card">
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-icon">
+                    🎯
+                </span>
+
+                <div>
+
+                    <h3>
+                        Test Performance
+                    </h3>
+
+                    <p>
+                        Performance by test type
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="test-type-grid">
+
+
+            <!-- DAILY -->
+
+            <div class="test-type-card">
+
+                <div class="test-type-top">
+
+                    <span class="type-icon daily">
+                        🟢
+                    </span>
+
+                    <div>
+
+                        <h4>
+                            Daily
+                        </h4>
+
+                        <span>
+                            Mock Test
+                        </span>
+
+                    </div>
 
                 </div>
 
 
-                <div class="history-right">
+                <div class="type-score">
 
-                    <strong>
-                        ${item.score}/${item.totalQuestions}
+                    <strong id="dailyTests">
+                        0
                     </strong>
 
-                    <small>
-                        ${percentage}%
-                    </small>
+                    <span>
+                        Attempts
+                    </span>
 
                 </div>
 
-            `;
+            </div>
 
 
-            profileHistory.appendChild(
-                card
-            );
 
-        }
-    );
+            <!-- WEEKLY -->
 
-}
+            <div class="test-type-card">
 
+                <div class="test-type-top">
 
-// ======================================================
-// DATE FORMAT
-// ======================================================
+                    <span class="type-icon weekly">
+                        🟡
+                    </span>
 
-function formatDate(
-    timestamp
-) {
+                    <div>
 
-    if (
-        !timestamp
-    ) {
+                        <h4>
+                            Weekly
+                        </h4>
 
-        return "Recent test";
+                        <span>
+                            Mock Test
+                        </span>
 
-    }
+                    </div>
 
+                </div>
 
-    try {
 
-        const date =
-            new Date(
-                timestamp.seconds * 1000
-            );
+                <div class="type-score">
 
+                    <strong id="weeklyTests">
+                        0
+                    </strong>
 
-        return date.toLocaleDateString(
-            "en-IN",
-            {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
-            }
-        );
+                    <span>
+                        Attempts
+                    </span>
 
-    }
+                </div>
 
-    catch (error) {
+            </div>
 
-        return "Recent test";
 
-    }
 
-}
+            <!-- MONTHLY -->
 
+            <div class="test-type-card">
 
-// ======================================================
-// CALCULATE RANKS
-// ======================================================
+                <div class="test-type-top">
 
-async function calculateRanks(
-    name,
-    district
-) {
+                    <span class="type-icon monthly">
+                        🔴
+                    </span>
 
-    try {
+                    <div>
 
-        const resultsSnapshot =
-            await getDocs(
-                collection(
-                    db,
-                    "results"
-                )
-            );
+                        <h4>
+                            Monthly
+                        </h4>
 
+                        <span>
+                            Grand Test
+                        </span>
 
-        let students = [];
+                    </div>
 
+                </div>
 
-        resultsSnapshot.forEach(
-            (resultDoc) => {
 
-                const data =
-                    resultDoc.data();
+                <div class="type-score">
 
+                    <strong id="monthlyTests">
+                        0
+                    </strong>
 
-                const score =
-                    Number(
-                        data.score
-                    ) || 0;
+                    <span>
+                        Attempts
+                    </span>
 
+                </div>
 
-                const total =
-                    Number(
-                        data.totalQuestions
-                    ) || 0;
+            </div>
 
 
-                if (
-                    total === 0
-                ) {
 
-                    return;
+            <!-- PRACTICE -->
 
-                }
+            <div class="test-type-card">
 
+                <div class="test-type-top">
 
-                students.push({
+                    <span class="type-icon practice">
+                        🔵
+                    </span>
 
-                    name:
-                        data.studentName ||
-                        "",
+                    <div>
 
-                    district:
-                        data.district ||
-                        "",
+                        <h4>
+                            Practice
+                        </h4>
 
-                    score:
-                        score,
+                        <span>
+                            Subject / Topic
+                        </span>
 
-                    total:
-                        total,
+                    </div>
 
-                    percentage:
-                        score / total
+                </div>
 
-                });
 
-            }
-        );
+                <div class="type-score">
 
+                    <strong id="practiceTests">
+                        0
+                    </strong>
 
-        // ==============================================
-        // BEST RESULT PER STUDENT
-        // ==============================================
+                    <span>
+                        Attempts
+                    </span>
 
-        const studentMap =
-            new Map();
+                </div>
 
+            </div>
 
-        students.forEach(
-            student => {
 
-                const existing =
-                    studentMap.get(
-                        student.name
-                    );
+        </div>
 
+                </section>
 
-                if (
-                    !existing ||
-                    student.percentage >
-                    existing.percentage
-                ) {
+        <!-- ============================
+         ACHIEVEMENTS
+    ============================= -->
 
-                    studentMap.set(
-                        student.name,
-                        student
-                    );
+    <section class="section-card">
 
-                }
+        <div class="section-heading">
 
-            }
-        );
+            <div>
 
+                <span class="section-icon">
+                    🏆
+                </span>
 
-        const uniqueStudents =
-            Array.from(
-                studentMap.values()
-            );
+                <div>
 
+                    <h3>
+                        Achievements
+                    </h3>
 
-        // ==============================================
-        // OVERALL RANK
-        // ==============================================
+                    <p>
+                        Your learning milestones
+                    </p>
 
-        uniqueStudents.sort(
-            (a, b) =>
-                b.percentage -
-                a.percentage
-        );
+                </div>
 
+            </div>
 
-        const overallIndex =
-            uniqueStudents.findIndex(
-                student =>
-                    student.name ===
-                    name
-            );
+        </div>
 
 
-        if (
-            overallIndex !== -1
-        ) {
+        <div
+            class="achievement-grid"
+            id="achievementGrid">
 
-            overallRank.textContent =
-                "#" +
-                (overallIndex + 1);
 
-        }
+            <!-- FIRST TEST -->
 
-        else {
+            <div
+                class="achievement-card locked"
+                id="achievementFirst">
 
-            overallRank.textContent =
-                "--";
+                <div class="achievement-icon">
+                    🚀
+                </div>
 
-        }
+                <div>
 
+                    <h4>
+                        First Step
+                    </h4>
 
-        // ==============================================
-        // DISTRICT RANK
-        // ==============================================
+                    <p>
+                        Complete your first test
+                    </p>
 
-        const districtStudents =
-            uniqueStudents.filter(
-                student =>
-                    student.district ===
-                    district
-            );
+                </div>
 
+            </div>
 
-        districtStudents.sort(
-            (a, b) =>
-                b.percentage -
-                a.percentage
-        );
 
 
-        const districtIndex =
-            districtStudents.findIndex(
-                student =>
-                    student.name ===
-                    name
-            );
+            <!-- 10 TESTS -->
 
+            <div
+                class="achievement-card locked"
+                id="achievement10">
 
-        if (
-            districtIndex !== -1
-        ) {
+                <div class="achievement-icon">
+                    🔥
+                </div>
 
-            districtRank.textContent =
-                "#" +
-                (districtIndex + 1);
+                <div>
 
-        }
+                    <h4>
+                        Getting Started
+                    </h4>
 
-        else {
+                    <p>
+                        Complete 10 tests
+                    </p>
 
-            districtRank.textContent =
-                "--";
+                </div>
 
-        }
+            </div>
 
-    }
 
-    catch (error) {
 
-        console.error(
-            "Rank Error:",
-            error
-        );
+            <!-- 50 TESTS -->
 
+            <div
+                class="achievement-card locked"
+                id="achievement50">
 
-        overallRank.textContent =
-            "--";
+                <div class="achievement-icon">
+                    💪
+                </div>
 
+                <div>
 
-        districtRank.textContent =
-            "--";
+                    <h4>
+                        Dedicated Learner
+                    </h4>
 
-    }
+                    <p>
+                        Complete 50 tests
+                    </p>
 
-}
+                </div>
 
+            </div>
 
-// ======================================================
-// EDIT PROFILE
-// ======================================================
 
-editProfileBtn.addEventListener(
-    "click",
-    () => {
 
-        alert(
-            "Profile editing will be available soon ✏️"
-        );
+            <!-- 100 TESTS -->
 
-    }
-);
+            <div
+                class="achievement-card locked"
+                id="achievement100">
 
+                <div class="achievement-icon">
+                    👑
+                </div>
 
-// ======================================================
-// LOGOUT
-// ======================================================
+                <div>
 
-logoutBtn.addEventListener(
-    "click",
-    async () => {
+                    <h4>
+                        Genius Champion
+                    </h4>
 
-        const confirmLogout =
-            confirm(
-                "Are you sure you want to logout?"
-            );
+                    <p>
+                        Complete 100 tests
+                    </p>
 
+                </div>
 
-        if (
-            !confirmLogout
-        ) {
+            </div>
 
-            return;
 
-        }
+        </div>
 
+    </section>
 
-        try {
 
-            await signOut(
-                auth
-            );
 
+    <!-- ============================
+         ACCOUNT ACTIONS
+    ============================= -->
 
-            localStorage.removeItem(
-                "student"
-            );
+    <section class="section-card actions-card">
 
 
-            localStorage.removeItem(
-                "studentName"
-            );
+        <!-- TEST HISTORY -->
 
+        <button
+            type="button"
+            class="action-btn"
+            id="historyBtn">
 
-            localStorage.removeItem(
-                "district"
-            );
 
+            <span class="action-icon">
+                📜
+            </span>
 
-            localStorage.removeItem(
-                "email"
-            );
 
+            <span class="action-content">
 
-            window.location.href =
-                "../login.html";
+                <strong>
+                    Test History
+                </strong>
 
-        }
+                <small>
+                    View your previous test results
+                </small>
 
-        catch (error) {
+            </span>
 
-            console.error(
-                "Logout Error:",
-                error
-            );
 
+            <span class="action-arrow">
+                →
+            </span>
 
-            alert(
-                "Logout failed. Please try again."
-            );
 
-        }
+        </button>
 
-    }
-);
 
 
-// ======================================================
-// CONSOLE
-// ======================================================
+        <!-- DASHBOARD -->
 
-console.log(
-    "G THE GENIUS Profile Loaded"
-);
+        <button
+            type="button"
+            class="action-btn"
+            id="dashboardBtn">
+
+
+            <span class="action-icon">
+                🏠
+            </span>
+
+
+            <span class="action-content">
+
+                <strong>
+                    Dashboard
+                </strong>
+
+                <small>
+                    Go back to your dashboard
+                </small>
+
+            </span>
+
+
+            <span class="action-arrow">
+                →
+            </span>
+
+
+        </button>
+
+
+
+        <!-- LOGOUT -->
+
+        <button
+            type="button"
+            class="action-btn logout-action"
+            id="logoutBtn">
+
+
+            <span class="action-icon">
+                🚪
+            </span>
+
+
+            <span class="action-content">
+
+                <strong>
+                    Logout
+                </strong>
+
+                <small>
+                    Sign out from your account
+                </small>
+
+            </span>
+
+
+            <span class="action-arrow">
+                →
+            </span>
+
+
+        </button>
+
+
+    </section>
+        <!-- ============================
+         EDIT PROFILE MODAL
+    ============================= -->
+
+    <div
+        id="editModal"
+        class="modal-overlay">
+
+
+        <div class="modal-box">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>
+                        ✏️ Edit Profile
+                    </h3>
+
+                    <p>
+                        Update your profile information
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    id="closeModalBtn">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+
+            <!-- PROFILE FORM -->
+
+            <form
+                id="profileForm"
+                autocomplete="off">
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="editName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editName"
+                        placeholder="Enter your name"
+                        maxlength="60">
+
+                </div>
+
+
+
+                <!-- DISTRICT -->
+
+                <div class="form-group">
+
+                    <label for="editDistrict">
+                        District
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editDistrict"
+                        placeholder="Enter your district"
+                        maxlength="50">
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="editEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="editEmail"
+                        placeholder="Enter your email"
+                        maxlength="100">
+
+                </div>
+
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="profileFormMessage"
+                    class="form-message">
+                </div>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelEditBtn">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn">
+
+                        💾 Save Changes
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================
+         LOGOUT CONFIRMATION MODAL
+    ============================= -->
+
+    <div
+        id="logoutModal"
+        class="modal-overlay">
+
+
+        <div class="confirm-box">
+
+
+            <div class="confirm-icon">
+                🚪
+            </div>
+
+
+            <h3>
+                Logout?
+            </h3>
+
+
+            <p>
+                Are you sure you want to logout
+                from G THE GENIUS?
+            </p>
+
+
+
+            <div class="modal-actions">
+
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelLogoutBtn">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="logout-confirm-btn"
+                    id="confirmLogoutBtn">
+
+                    Logout
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+        <!-- ============================
+         BOTTOM NAVIGATION
+    ============================= -->
+
+    <nav class="bottom-nav">
+
+
+        <!-- HOME -->
+
+        <button
+            type="button"
+            class="nav-item"
+            id="homeNav">
+
+            <span>
+                🏠
+            </span>
+
+            <small>
+                Home
+            </small>
+
+        </button>
+
+
+
+        <!-- PRACTICE -->
+
+        <button
+            type="button"
+            class="nav-item"
+            id="practiceNav">
+
+            <span>
+                📚
+            </span>
+
+            <small>
+                Practice
+            </small>
+
+        </button>
+
+
+
+        <!-- LEADERBOARD -->
+
+        <button
+            type="button"
+            class="nav-item"
+            id="leaderboardNav">
+
+            <span>
+                🏆
+            </span>
+
+            <small>
+                Rank
+            </small>
+
+        </button>
+
+
+
+        <!-- PROFILE -->
+
+        <button
+            type="button"
+            class="nav-item active"
+            id="profileNav">
+
+            <span>
+                👤
+            </span>
+
+            <small>
+                Profile
+            </small>
+
+        </button>
+
+
+    </nav>
+
+
+
+    <!-- ============================
+         FOOTER
+    ============================= -->
+
+    <footer class="app-footer">
+
+
+        <div class="footer-brand">
+
+            <strong>
+                G THE GENIUS
+            </strong>
+
+            <span>
+                Learn to Lead
+            </span>
+
+        </div>
+
+
+
+        <p>
+            © 2026 G THE GENIUS.
+            All Rights Reserved.
+        </p>
+
+
+
+        <div class="footer-links">
+
+
+            <a
+                href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                ▶️ YouTube
+
+            </a>
+
+
+
+            <a
+                href="https://t.me/gthegenius"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                ✈️ Telegram
+
+            </a>
+
+
+
+            <a
+                href="mailto:gthegenius7@gmail.com">
+
+                📧 Email
+
+            </a>
+
+
+        </div>
+
+
+    </footer>
+
+
+
+</div>
+
+
+<!-- ============================
+     PROFILE JAVASCRIPT
+============================= -->
+
+<script
+    type="module"
+    src="profile.js">
+</script>
+
+
+</body>
+
+</html>
+    
+
+
+                
