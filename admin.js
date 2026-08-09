@@ -1,7 +1,8 @@
 // ============================================================
 // G THE GENIUS
-// ADMIN PANEL JS - FINAL
+// ADMIN PANEL JS
 // Firebase v10.12.2
+// FULL VERSION
 // ============================================================
 
 import {
@@ -30,86 +31,109 @@ import {
 
 let allQuestions = [];
 let allResults = [];
+let allStudents = [];
+
+let currentUser = null;
 
 
 // ============================================================
-// DOM READY
+// ELEMENTS
 // ============================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+const questionForm =
+    document.getElementById("questionForm");
 
-    console.log("🚀 G THE GENIUS Admin JS Started");
+const questionMessage =
+    document.getElementById("questionMessage");
 
-    initializeAdminMenu();
-    initializeBulkUpload();
-    initializeAddQuestion();
-    initializeLogout();
-    initializeFilters();
-
-});
+const bulkMessage =
+    document.getElementById("bulkMessage");
 
 
 // ============================================================
-// ADMIN AUTH
+// SAFE ELEMENT HELPER
+// ============================================================
+
+function getElement(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+// ============================================================
+// NORMALIZE TEXT
+// ============================================================
+
+function normalizeText(text) {
+
+    return String(text || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+
+}
+
+
+// ============================================================
+// ADMIN AUTH CHECK
 // ============================================================
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
 
-        console.log("❌ User not logged in");
+        console.log("No logged-in user.");
 
         window.location.href = "login.html";
 
         return;
+
     }
+
+
+    currentUser = user;
+
+
+    console.log(
+        "Logged in user:",
+        user.uid,
+        user.email
+    );
+
 
     try {
 
-        console.log("Checking admin:", user.uid);
-
-        const studentsSnapshot =
-            await getDocs(
-                collection(db, "students")
-            );
-
-        let adminFound = false;
-
-        studentsSnapshot.forEach((studentDoc) => {
-
-            const data = studentDoc.data();
-
-            if (
-                studentDoc.id === user.uid &&
-                data.role === "admin"
-            ) {
-
-                adminFound = true;
-
-            }
-
-        });
+        const isAdmin =
+            await checkAdminAccess(user);
 
 
-        if (!adminFound) {
+        if (!isAdmin) {
 
             alert(
-                "Access Denied ❌\nAdmin account required."
+                "Access Denied ❌\n\nAdmin account required."
             );
+
 
             await signOut(auth);
 
+
             window.location.href =
                 "login.html";
+
 
             return;
 
         }
 
 
-        console.log("✅ Admin Access Granted");
+        console.log(
+            "Admin Access Granted ✅"
+        );
 
-        loadDashboardStats();
+
+        await loadDashboardStats();
+
 
     }
 
@@ -120,12 +144,11 @@ onAuthStateChanged(auth, async (user) => {
             error
         );
 
-        alert(
-            "Unable to verify admin account."
-        );
 
-        window.location.href =
-            "login.html";
+        alert(
+            "Unable to verify admin account.\n\n" +
+            error.message
+        );
 
     }
 
@@ -133,147 +156,122 @@ onAuthStateChanged(auth, async (user) => {
 
 
 // ============================================================
-// ADMIN MENU
+// CHECK ADMIN ACCESS
 // ============================================================
 
-function initializeAdminMenu() {
+async function checkAdminAccess(user) {
 
-    const menuCards =
-        document.querySelectorAll(".menu-card");
-
-    const sections =
-        document.querySelectorAll(".admin-section");
+    let adminFound = false;
 
 
-    console.log(
-        "Menu Buttons:",
-        menuCards.length
-    );
+    // ========================================================
+    // METHOD 1
+    // students/{uid}
+    // ========================================================
 
-    console.log(
-        "Admin Sections:",
-        sections.length
-    );
+    try {
 
-
-    if (!menuCards.length) {
-
-        console.error(
-            "❌ Menu cards not found"
-        );
-
-        return;
-
-    }
-
-
-    menuCards.forEach((button) => {
-
-        button.addEventListener("click", async () => {
-
-            const target =
-                button.dataset.section;
-
-
-            console.log(
-                "📌 Menu clicked:",
-                target
+        const studentsSnapshot =
+            await getDocs(
+                collection(db, "students")
             );
 
 
-            // Remove active from buttons
+        studentsSnapshot.forEach((studentDoc) => {
 
-            menuCards.forEach((btn) => {
-
-                btn.classList.remove("active");
-
-            });
-
-
-            // Add active
-
-            button.classList.add("active");
-
-
-            // Hide all sections
-
-            sections.forEach((section) => {
-
-                section.classList.remove(
-                    "active-section"
-                );
-
-                section.style.display =
-                    "none";
-
-            });
-
-
-            // Find target
-
-            const targetSection =
-                document.getElementById(target);
-
-
-            if (!targetSection) {
-
-                console.error(
-                    "❌ Section not found:",
-                    target
-                );
-
-                return;
-
-            }
-
-
-            // Show target
-
-            targetSection.classList.add(
-                "active-section"
-            );
-
-            targetSection.style.display =
-                "block";
-
-
-            // Scroll to section
-
-            targetSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
-
-            // Load section data
-
-            if (
-                target ===
-                "manageQuestionsSection"
-            ) {
-
-                await loadQuestions();
-
-            }
+            const data =
+                studentDoc.data();
 
 
             if (
-                target ===
-                "resultsSection"
+                studentDoc.id === user.uid &&
+                String(data.role || "")
+                    .toLowerCase()
+                    .trim() === "admin"
             ) {
 
-                await loadResults();
+                adminFound = true;
 
             }
 
         });
 
-    });
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Students admin check failed:",
+            error
+        );
+
+    }
 
 
-    console.log(
-        "✅ Admin Menu Initialized"
-    );
+    // ========================================================
+    // METHOD 2
+    // admins collection
+    // ========================================================
+
+    if (!adminFound) {
+
+        try {
+
+            const adminsSnapshot =
+                await getDocs(
+                    collection(db, "admins")
+                );
+
+
+            adminsSnapshot.forEach((adminDoc) => {
+
+                const data =
+                    adminDoc.data();
+
+
+                const emailMatch =
+                    data.email &&
+                    String(data.email)
+                        .toLowerCase()
+                        .trim() ===
+                    String(user.email || "")
+                        .toLowerCase()
+                        .trim();
+
+
+                const uidMatch =
+                    adminDoc.id === user.uid ||
+                    data.uid === user.uid;
+
+
+                if (
+                    uidMatch ||
+                    emailMatch
+                ) {
+
+                    adminFound = true;
+
+                }
+
+            });
+
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                "Admins collection check failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    return adminFound;
 
 }
 
@@ -282,18 +280,13 @@ function initializeAdminMenu() {
 // LOGOUT
 // ============================================================
 
-function initializeLogout() {
-
-    const logoutBtn =
-        document.getElementById(
-            "adminLogoutBtn"
-        );
+const logoutButton =
+    getElement("adminLogoutBtn");
 
 
-    if (!logoutBtn) return;
+if (logoutButton) {
 
-
-    logoutBtn.addEventListener(
+    logoutButton.addEventListener(
         "click",
         async () => {
 
@@ -310,10 +303,13 @@ function initializeLogout() {
 
                 await signOut(auth);
 
+
                 localStorage.clear();
+
 
                 window.location.href =
                     "login.html";
+
 
             }
 
@@ -324,8 +320,9 @@ function initializeLogout() {
                     error
                 );
 
+
                 alert(
-                    "Logout failed."
+                    "Logout failed.\nPlease try again."
                 );
 
             }
@@ -334,6 +331,147 @@ function initializeLogout() {
     );
 
 }
+
+
+// ============================================================
+// ADMIN MENU
+// ============================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const menuCards =
+            document.querySelectorAll(
+                ".menu-card"
+            );
+
+
+        const adminSections =
+            document.querySelectorAll(
+                ".admin-section"
+            );
+
+
+        menuCards.forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                async () => {
+
+                    const target =
+                        button.getAttribute(
+                            "data-section"
+                        );
+
+
+                    console.log(
+                        "Admin Menu:",
+                        target
+                    );
+
+
+                    // Remove active
+
+                    menuCards.forEach(
+                        (btn) => {
+
+                            btn.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    // Add active
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    // Hide sections
+
+                    adminSections.forEach(
+                        (section) => {
+
+                            section.classList.remove(
+                                "active-section"
+                            );
+
+                            section.style.display =
+                                "none";
+
+                        }
+                    );
+
+
+                    // Target section
+
+                    const targetSection =
+                        document.getElementById(
+                            target
+                        );
+
+
+                    if (!targetSection) {
+
+                        console.error(
+                            "Section not found:",
+                            target
+                        );
+
+                        return;
+
+                    }
+
+
+                    targetSection.classList.add(
+                        "active-section"
+                    );
+
+
+                    targetSection.style.display =
+                        "block";
+
+
+                    // Load questions
+
+                    if (
+                        target ===
+                        "manageQuestionsSection"
+                    ) {
+
+                        await loadQuestions();
+
+                    }
+
+
+                    // Load results
+
+                    if (
+                        target ===
+                        "resultsSection"
+                    ) {
+
+                        await loadResults();
+
+                    }
+
+                }
+            );
+
+        });
+
+
+        console.log(
+            "Admin Menu Initialized:",
+            menuCards.length
+        );
+
+    }
+);
 
 
 // ============================================================
@@ -351,48 +489,34 @@ async function loadDashboardStats() {
         ] = await Promise.all([
 
             getDocs(
-                collection(
-                    db,
-                    "questions"
-                )
+                collection(db, "questions")
             ),
 
             getDocs(
-                collection(
-                    db,
-                    "students"
-                )
+                collection(db, "students")
             ),
 
             getDocs(
-                collection(
-                    db,
-                    "results"
-                )
+                collection(db, "results")
             )
 
         ]);
 
 
         const totalQuestions =
-            document.getElementById(
-                "totalQuestions"
-            );
+            getElement("totalQuestions");
+
 
         const totalStudents =
-            document.getElementById(
-                "totalStudents"
-            );
+            getElement("totalStudents");
+
 
         const totalResults =
-            document.getElementById(
-                "totalResults"
-            );
+            getElement("totalResults");
+
 
         const testsToday =
-            document.getElementById(
-                "testsToday"
-            );
+            getElement("testsToday");
 
 
         if (totalQuestions) {
@@ -419,43 +543,73 @@ async function loadDashboardStats() {
         }
 
 
-        // Tests today
+        // ====================================================
+        // TESTS TODAY
+        // ====================================================
 
         let todayCount = 0;
 
-        const today =
-            new Date().toDateString();
+
+        const now =
+            new Date();
 
 
-        resultsSnapshot.forEach((resultDoc) => {
-
-            const data =
-                resultDoc.data();
+        const todayYear =
+            now.getFullYear();
 
 
-            if (
-                data.createdAt &&
-                typeof data.createdAt.toDate ===
-                    "function"
-            ) {
-
-                const resultDate =
-                    data.createdAt
-                        .toDate()
-                        .toDateString();
+        const todayMonth =
+            now.getMonth();
 
 
-                if (
-                    resultDate === today
-                ) {
+        const todayDate =
+            now.getDate();
 
-                    todayCount++;
+
+        resultsSnapshot.forEach(
+            (resultDoc) => {
+
+                const data =
+                    resultDoc.data();
+
+
+                if (!data.createdAt) return;
+
+
+                try {
+
+                    const resultDate =
+                        data.createdAt.toDate();
+
+
+                    if (
+                        resultDate.getFullYear() ===
+                            todayYear &&
+
+                        resultDate.getMonth() ===
+                            todayMonth &&
+
+                        resultDate.getDate() ===
+                            todayDate
+                    ) {
+
+                        todayCount++;
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.warn(
+                        "Date conversion error:",
+                        error
+                    );
 
                 }
 
             }
-
-        });
+        );
 
 
         if (testsToday) {
@@ -483,91 +637,72 @@ async function loadDashboardStats() {
 // ADD QUESTION
 // ============================================================
 
-function initializeAddQuestion() {
+if (questionForm) {
 
-    const form =
-        document.getElementById(
-            "questionForm"
-        );
-
-
-    if (!form) {
-
-        console.error(
-            "❌ Question form not found"
-        );
-
-        return;
-
-    }
-
-
-    form.addEventListener(
+    questionForm.addEventListener(
         "submit",
         async (event) => {
 
             event.preventDefault();
 
 
-            const message =
-                document.getElementById(
-                    "questionMessage"
-                );
-
-
             const subject =
-                document.getElementById(
+                getElement(
                     "questionSubject"
                 ).value.trim();
 
 
             const topic =
-                document.getElementById(
+                getElement(
                     "questionTopic"
                 ).value.trim();
 
 
             const question =
-                document.getElementById(
+                getElement(
                     "questionText"
                 ).value.trim();
 
 
             const optionA =
-                document.getElementById(
+                getElement(
                     "optionA"
                 ).value.trim();
 
 
             const optionB =
-                document.getElementById(
+                getElement(
                     "optionB"
                 ).value.trim();
 
 
             const optionC =
-                document.getElementById(
+                getElement(
                     "optionC"
                 ).value.trim();
 
 
             const optionD =
-                document.getElementById(
+                getElement(
                     "optionD"
                 ).value.trim();
 
 
-            const correctValue =
-                document.getElementById(
+            const correctAnswerValue =
+                getElement(
                     "correctAnswer"
                 ).value;
 
 
             const explanation =
-                document.getElementById(
+                getElement(
                     "questionExplanation"
                 ).value.trim();
 
+
+            // =================================================
+            // VALIDATION
+            // =================================================
 
             if (
                 !subject ||
@@ -577,10 +712,10 @@ function initializeAddQuestion() {
                 !optionB ||
                 !optionC ||
                 !optionD ||
-                correctValue === ""
+                correctAnswerValue === ""
             ) {
 
-                message.textContent =
+                questionMessage.textContent =
                     "⚠️ Please fill all required fields.";
 
                 return;
@@ -588,52 +723,63 @@ function initializeAddQuestion() {
             }
 
 
-            message.textContent =
-                "⏳ Checking duplicate...";
+            const answer =
+                Number(
+                    correctAnswerValue
+                );
+
+
+            questionMessage.textContent =
+                "🔍 Checking duplicate...";
 
 
             try {
 
-                const snapshot =
+                // =================================================
+                // DUPLICATE CHECK
+                // =================================================
+
+                const existingSnapshot =
                     await getDocs(
-                        collection(
-                            db,
-                            "questions"
-                        )
+                        collection(db, "questions")
                     );
 
 
-                const normalized =
+                const normalizedQuestion =
                     normalizeText(
                         question
                     );
 
 
-                let duplicate = false;
+                let duplicate =
+                    false;
 
 
-                snapshot.forEach((questionDoc) => {
+                existingSnapshot.forEach(
+                    (questionDoc) => {
 
-                    const data =
-                        questionDoc.data();
+                        const data =
+                            questionDoc.data();
 
 
-                    if (
-                        normalizeText(
-                            data.question || ""
-                        ) === normalized
-                    ) {
+                        if (
+                            normalizeText(
+                                data.question
+                            ) ===
+                            normalizedQuestion
+                        ) {
 
-                        duplicate = true;
+                            duplicate = true;
+
+                        }
 
                     }
-
-                });
+                );
 
 
                 if (duplicate) {
 
-                    message.textContent =
+                    questionMessage.textContent =
                         "⚠️ This question already exists.";
 
                     return;
@@ -641,9 +787,13 @@ function initializeAddQuestion() {
                 }
 
 
-                message.textContent =
+                questionMessage.textContent =
                     "⏳ Adding question...";
 
+
+                // =================================================
+                // ADD FIRESTORE
+                // =================================================
 
                 await addDoc(
                     collection(
@@ -665,7 +815,7 @@ function initializeAddQuestion() {
                         ],
 
                         answer:
-                            Number(correctValue),
+                            answer,
 
                         subject:
                             subject,
@@ -683,14 +833,15 @@ function initializeAddQuestion() {
                 );
 
 
-                message.textContent =
+                questionMessage.textContent =
                     "✅ Question added successfully!";
 
 
-                form.reset();
+                questionForm.reset();
 
 
                 await loadDashboardStats();
+
 
             }
 
@@ -701,8 +852,10 @@ function initializeAddQuestion() {
                     error
                 );
 
-                message.textContent =
-                    "❌ Failed to add question.";
+
+                questionMessage.textContent =
+                    "❌ Failed to add question: " +
+                    error.message;
 
             }
 
@@ -713,767 +866,534 @@ function initializeAddQuestion() {
 
 
 // ============================================================
-// NORMALIZE TEXT
+// BULK JSON
+// COPY / PASTE
 // ============================================================
 
-function normalizeText(text) {
-
-    return String(text || "")
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, " ");
-
-}
+const bulkUploadButton =
+    getElement("bulkUploadBtn");
 
 
-// ============================================================
-// BULK UPLOAD INITIALIZE
-// ============================================================
+if (bulkUploadButton) {
 
-function initializeBulkUpload() {
-
-    const bulkFile =
-        document.getElementById(
-            "bulkFile"
-        );
-
-    const bulkButton =
-        document.getElementById(
-            "bulkUploadBtn"
-        );
-
-
-    if (!bulkFile) {
-
-        console.error(
-            "❌ bulkFile not found"
-        );
-
-        return;
-
-    }
-
-
-    if (!bulkButton) {
-
-        console.error(
-            "❌ bulkUploadBtn not found"
-        );
-
-        return;
-
-    }
-
-
-    console.log(
-        "✅ Bulk Upload Initialized"
-    );
-
-
-    // File selected
-
-    bulkFile.addEventListener(
-        "change",
-        () => {
-
-            const file =
-                bulkFile.files[0];
-
-
-            const selectedFile =
-                document.getElementById(
-                    "selectedFile"
-                );
-
-
-            if (file) {
-
-                selectedFile.textContent =
-                    `📄 ${file.name} (${formatFileSize(file.size)})`;
-
-            }
-
-            else {
-
-                selectedFile.textContent =
-                    "No file selected";
-
-            }
-
-        }
-    );
-
-
-    // Upload button
-
-    bulkButton.addEventListener(
+    bulkUploadButton.addEventListener(
         "click",
-        uploadBulkQuestions
-    );
+        async () => {
 
-}
+            const subject =
+                getElement(
+                    "bulkSubject"
+                ).value.trim();
 
 
-// ============================================================
-// FILE SIZE
-// ============================================================
+            const topic =
+                getElement(
+                    "bulkTopic"
+                ).value.trim();
 
-function formatFileSize(bytes) {
 
-    if (bytes < 1024) {
+            const jsonText =
+                getElement(
+                    "bulkJson"
+                ).value.trim();
 
-        return bytes + " B";
 
-    }
-
-    if (bytes < 1024 * 1024) {
-
-        return (
-            (bytes / 1024).toFixed(1) +
-            " KB"
-        );
-
-    }
-
-    return (
-        (bytes / (1024 * 1024))
-            .toFixed(1) +
-        " MB"
-    );
-
-}
-
-
-// ============================================================
-// BULK UPLOAD QUESTIONS
-// ============================================================
-
-async function uploadBulkQuestions() {
-
-    const bulkFile =
-        document.getElementById(
-            "bulkFile"
-        );
-
-
-    const bulkMessage =
-        document.getElementById(
-            "bulkMessage"
-        );
-
-
-    const file =
-        bulkFile.files[0];
-
-
-    const subject =
-        document.getElementById(
-            "bulkSubject"
-        ).value.trim();
-
-
-    const topic =
-        document.getElementById(
-            "bulkTopic"
-        ).value.trim();
-
-
-    // -------------------------
-    // VALIDATION
-    // -------------------------
-
-    if (!file) {
-
-        bulkMessage.textContent =
-            "⚠️ Please select a JSON file.";
-
-        return;
-
-    }
-
-
-    if (!file.name.toLowerCase().endsWith(".json")) {
-
-        bulkMessage.textContent =
-            "❌ Please select a .json file.";
-
-        return;
-
-    }
-
-
-    if (!subject) {
-
-        bulkMessage.textContent =
-            "⚠️ Please select a subject.";
-
-        return;
-
-    }
-
-
-    if (!topic) {
-
-        bulkMessage.textContent =
-            "⚠️ Please enter a topic.";
-
-        return;
-
-    }
-
-
-    try {
-
-        bulkMessage.textContent =
-            "⏳ Reading JSON file...";
-
-
-        // -------------------------
-        // READ FILE
-        // -------------------------
-
-        const text =
-            await file.text();
-
-
-        let questions;
-
-
-        try {
-
-            questions =
-                JSON.parse(text);
-
-        }
-
-        catch (jsonError) {
-
-            throw new Error(
-                "Invalid JSON format."
-            );
-
-        }
-
-
-        // -------------------------
-        // ARRAY CHECK
-        // -------------------------
-
-        if (!Array.isArray(questions)) {
-
-            throw new Error(
-                "JSON must contain an array of questions."
-            );
-
-        }
-
-
-        if (questions.length === 0) {
-
-            throw new Error(
-                "JSON file contains no questions."
-            );
-
-        }
-
-
-        console.log(
-            "Questions in JSON:",
-            questions.length
-        );
-
-
-        // -------------------------
-        // PROGRESS ELEMENTS
-        // -------------------------
-
-        const progressContainer =
-            document.getElementById(
-                "uploadProgressContainer"
-            );
-
-
-        const progressBar =
-            document.getElementById(
-                "uploadProgress"
-            );
-
-
-        const percent =
-            document.getElementById(
-                "uploadPercent"
-            );
-
-
-        const status =
-            document.getElementById(
-                "uploadStatus"
-            );
-
-
-        progressContainer.style.display =
-            "block";
-
-
-        progressBar.style.width =
-            "0%";
-
-
-        percent.textContent =
-            "0%";
-
-
-        status.textContent =
-            "Checking existing questions...";
-
-
-        // -------------------------
-        // EXISTING QUESTIONS
-        // -------------------------
-
-        const existingSnapshot =
-            await getDocs(
-                collection(
-                    db,
-                    "questions"
-                )
-            );
-
-
-        const existingQuestions =
-            new Set();
-
-
-        existingSnapshot.forEach((questionDoc) => {
-
-            const data =
-                questionDoc.data();
-
-
-            const normalized =
-                normalizeText(
-                    data.question || ""
+            const message =
+                getElement(
+                    "bulkMessage"
                 );
 
 
-            if (normalized) {
-
-                existingQuestions.add(
-                    normalized
+            const progressContainer =
+                getElement(
+                    "uploadProgressContainer"
                 );
 
-            }
 
-        });
-
-
-        // -------------------------
-        // UPLOAD
-        // -------------------------
-
-        let uploaded = 0;
-        let skipped = 0;
-        let invalid = 0;
-
-
-        const total =
-            questions.length;
-
-
-        for (
-            let i = 0;
-            i < total;
-            i++
-        ) {
-
-            const q =
-                questions[i];
-
-
-            if (
-                !q ||
-                typeof q !== "object"
-            ) {
-
-                invalid++;
-
-                updateUploadProgress(
-                    i + 1,
-                    total,
-                    progressBar,
-                    percent,
-                    status
+            const progressBar =
+                getElement(
+                    "uploadProgress"
                 );
 
-                continue;
+
+            const percent =
+                getElement(
+                    "uploadPercent"
+                );
+
+
+            const status =
+                getElement(
+                    "uploadStatus"
+                );
+
+
+            // =================================================
+            // VALIDATION
+            // =================================================
+
+            if (!subject) {
+
+                message.textContent =
+                    "⚠️ Please select a subject.";
+
+                return;
 
             }
 
 
-            const questionText =
-                String(
-                    q.question || ""
-                ).trim();
- if (!questionText) {
+            if (!topic) {
 
-                invalid++;
+                message.textContent =
+                    "⚠️ Please enter a topic.";
 
-                updateUploadProgress(
-                    i + 1,
-                    total,
-                    progressBar,
-                    percent,
-                    status
-                );
-
-                continue;
+                return;
 
             }
 
 
-            const normalized =
-                normalizeText(
-                    questionText
-                );
+            if (!jsonText) {
 
+                message.textContent =
+                    "⚠️ Please paste JSON questions.";
 
-            // -------------------------
-            // DUPLICATE
-            // -------------------------
-
-            if (
-                existingQuestions.has(
-                    normalized
-                )
-            ) {
-
-                skipped++;
-
-                updateUploadProgress(
-                    i + 1,
-                    total,
-                    progressBar,
-                    percent,
-                    status
-                );
-
-                continue;
+                return;
 
             }
 
 
-            // -------------------------
-            // OPTIONS
-            // -------------------------
+            try {
 
-            let options = [];
-
-
-            if (
-                Array.isArray(q.options)
-            ) {
-
-                options =
-                    q.options.map(
-                        option =>
-                            String(
-                                option ?? ""
-                            ).trim()
-                    );
-
-            }
-
-            else {
-
-                options = [
-
-                    String(
-                        q.optionA ?? ""
-                    ).trim(),
-
-                    String(
-                        q.optionB ?? ""
-                    ).trim(),
-
-                    String(
-                        q.optionC ?? ""
-                    ).trim(),
-
-                    String(
-                        q.optionD ?? ""
-                    ).trim()
-
-                ];
-
-            }
+                message.textContent =
+                    "⏳ Reading JSON...";
 
 
-            // Need exactly 4 options
+                // =================================================
+                // PARSE JSON
+                // =================================================
 
-            if (
-                options.length !== 4 ||
-                options.some(
-                    option => !option
-                )
-            ) {
-
-                invalid++;
-
-                updateUploadProgress(
-                    i + 1,
-                    total,
-                    progressBar,
-                    percent,
-                    status
-                );
-
-                continue;
-
-            }
+                let questions;
 
 
-            // -------------------------
-            // ANSWER
-            // -------------------------
+                try {
 
-            let answer =
-                Number(
-                    q.answer
-                );
-
-
-            // Support A/B/C/D
-
-            if (
-                typeof q.answer ===
-                "string"
-            ) {
-
-                const answerText =
-                    q.answer
-                        .trim()
-                        .toUpperCase();
-
-
-                if (
-                    answerText === "A"
-                ) answer = 0;
-
-
-                if (
-                    answerText === "B"
-                ) answer = 1;
-
-
-                if (
-                    answerText === "C"
-                ) answer = 2;
-
-
-                if (
-                    answerText === "D"
-                ) answer = 3;
-
-            }
-
-
-            if (
-                !Number.isInteger(answer) ||
-                answer < 0 ||
-                answer > 3
-            ) {
-
-                invalid++;
-
-                updateUploadProgress(
-                    i + 1,
-                    total,
-                    progressBar,
-                    percent,
-                    status
-                );
-
-                continue;
-
-            }
-
-
-            // -------------------------
-            // FIRESTORE ADD
-            // -------------------------
-
-            await addDoc(
-                collection(
-                    db,
-                    "questions"
-                ),
-                {
-
-                    question:
-                        questionText,
-
-                    options:
-                        options,
-
-                    answer:
-                        answer,
-
-                    subject:
-                        q.subject
-                            ? String(q.subject)
-                            : subject,
-
-                    topic:
-                        q.topic
-                            ? String(q.topic)
-                            : topic,
-
-                    explanation:
-                        q.explanation
-                            ? String(q.explanation)
-                            : "",
-
-                    createdAt:
-                        serverTimestamp()
+                    questions =
+                        JSON.parse(
+                            jsonText
+                        );
 
                 }
-            );
+
+                catch (jsonError) {
+
+                    message.textContent =
+                        "❌ Invalid JSON format.";
+
+                    console.error(
+                        "JSON Error:",
+                        jsonError
+                    );
+
+                    return;
+
+                }
 
 
-            existingQuestions.add(
-                normalized
-            );
+                // =================================================
+                // ARRAY CHECK
+                // =================================================
+
+                if (
+                    !Array.isArray(
+                        questions
+                    )
+                ) {
+
+                    message.textContent =
+                        "❌ JSON must contain an array of questions.";
+
+                    return;
+
+              }
 
 
-            uploaded++;
+                // =================================================
+                // LOAD EXISTING QUESTIONS
+                // =================================================
+
+                message.textContent =
+                    "🔍 Checking existing questions...";
 
 
-            // -------------------------
-            // PROGRESS
-            // -------------------------
-
-            updateUploadProgress(
-                i + 1,
-                total,
-                progressBar,
-                percent,
-                status
-            );
-
-        }
+                const existingSnapshot =
+                    await getDocs(
+                        collection(db, "questions")
+                    );
 
 
-        // -------------------------
-        // COMPLETE
-        // -------------------------
-
-        progressBar.style.width =
-            "100%";
-
-        percent.textContent =
-            "100%";
+                const existingQuestions =
+                    [];
 
 
-        status.textContent =
-            "✅ Upload completed";
+                existingSnapshot.forEach(
+                    (questionDoc) => {
+
+                        const data =
+                            questionDoc.data();
 
 
-        bulkMessage.textContent =
-            `✅ Complete! ${uploaded} uploaded, ${skipped} duplicates skipped, ${invalid} invalid skipped.`;
+                        existingQuestions.push(
+                            normalizeText(
+                                data.question ||
+                                ""
+                            )
+                        );
+
+                    }
+                );
 
 
-        console.log(
-            "Bulk upload completed",
-            {
-                uploaded,
-                skipped,
-                invalid
+                // =================================================
+                // PROGRESS
+                // =================================================
+
+                progressContainer.style.display =
+                    "block";
+
+
+                progressBar.style.width =
+                    "0%";
+
+
+                percent.textContent =
+                    "0%";
+
+
+                status.textContent =
+                    "Starting upload...";
+
+
+                // =================================================
+                // COUNTERS
+                // =================================================
+
+                let uploaded = 0;
+
+                let skipped = 0;
+
+                let invalid = 0;
+
+
+                const total =
+                    questions.length;
+
+
+                // =================================================
+                // PROCESS QUESTIONS
+                // =================================================
+
+                for (
+                    let i = 0;
+                    i < questions.length;
+                    i++
+                ) {
+
+                    const q =
+                        questions[i];
+
+
+                    // ---------------------------------------------
+                    // QUESTION TEXT
+                    // ---------------------------------------------
+
+                    const questionText =
+                        String(
+                            q.question ||
+                            ""
+                        ).trim();
+
+
+                    if (!questionText) {
+
+                        invalid++;
+
+                    }
+
+                    else {
+
+                        const normalizedQuestion =
+                            normalizeText(
+                                questionText
+                            );
+
+
+                        // -----------------------------------------
+                        // DUPLICATE
+                        // -----------------------------------------
+
+                        if (
+                            existingQuestions.includes(
+                                normalizedQuestion
+                            )
+                        ) {
+
+                            skipped++;
+
+                        }
+
+                        else {
+
+                            // -------------------------------------
+                            // OPTIONS
+                            // -------------------------------------
+
+                            let options = [];
+
+
+                            if (
+                                Array.isArray(
+                                    q.options
+                                )
+                            ) {
+
+                                options =
+                                    q.options.map(
+                                        option =>
+                                            String(
+                                                option ||
+                                                ""
+                                            ).trim()
+                                    );
+
+                            }
+
+                            else {
+
+                                options = [
+
+                                    String(
+                                        q.optionA ||
+                                        ""
+                                    ).trim(),
+
+                                    String(
+                                        q.optionB ||
+                                        ""
+                                    ).trim(),
+
+                                    String(
+                                        q.optionC ||
+                                        ""
+                                    ).trim(),
+
+                                    String(
+                                        q.optionD ||
+                                        ""
+                                    ).trim()
+
+                                ];
+
+                            }
+
+
+                            // -------------------------------------
+                            // OPTION VALIDATION
+                            // -------------------------------------
+
+                            if (
+                                options.length !== 4 ||
+                                options.some(
+                                    option =>
+                                        !option
+                                )
+                            ) {
+
+                                invalid++;
+
+                            }
+
+                            else {
+
+                                // ---------------------------------
+                                // ANSWER
+                                // ---------------------------------
+
+                                const answer =
+                                    Number(
+                                        q.answer
+                                    );
+
+
+                                if (
+                                    ![
+                                        0,
+                                        1,
+                                        2,
+                                        3
+                                    ].includes(
+                                        answer
+                                    )
+                                ) {
+
+                                    invalid++;
+
+                                }
+
+                                else {
+
+                                    // -----------------------------
+                                    // ADD FIRESTORE
+                                    // -----------------------------
+
+                                    await addDoc(
+                                        collection(
+                                            db,
+                                            "questions"
+                                        ),
+                                        {
+
+                                            question:
+                                                questionText,
+
+                                            options:
+                                                options,
+
+                                            answer:
+                                                answer,
+
+                                            subject:
+                                                String(
+                                                    q.subject ||
+                                                    subject
+                                                ).trim(),
+
+                                            topic:
+                                                String(
+                                                    q.topic ||
+                                                    topic
+                                                ).trim(),
+
+                                            explanation:
+                                                String(
+                                                    q.explanation ||
+                                                    ""
+                                                ).trim(),
+
+                                            createdAt:
+                                                serverTimestamp()
+
+                                        }
+                                    );
+
+
+                                    existingQuestions.push(
+                                        normalizedQuestion
+                                    );
+
+
+                                    uploaded++;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+
+                    // =================================================
+                    // UPDATE PROGRESS
+                    // =================================================
+
+                    const current =
+                        i + 1;
+
+
+                    const progress =
+                        Math.round(
+                            (
+                                current /
+                                total
+                            ) * 100
+                        );
+
+
+                    progressBar.style.width =
+                        progress + "%";
+
+
+                    percent.textContent =
+                        progress + "%";
+
+
+                    status.textContent =
+                        `Processing ${current} / ${total} questions...`;
+
+                }
+
+
+                // =================================================
+                // COMPLETE
+                // =================================================
+
+                progressBar.style.width =
+                    "100%";
+
+
+                percent.textContent =
+                    "100%";
+
+
+                status.textContent =
+                    "Upload completed successfully.";
+
+
+                message.textContent =
+                    `✅ Upload Complete! ${uploaded} added, ${skipped} duplicate, ${invalid} invalid.`;
+
+
+                // Clear JSON
+
+                getElement(
+                    "bulkJson"
+                ).value = "";
+
+
+                // Update dashboard
+
+                await loadDashboardStats();
+
+
             }
-        );
+
+            catch (error) {
+
+                console.error(
+                    "Bulk upload error:",
+                    error
+                );
 
 
-        // Reset file
-
-        bulkFile.value = "";
-
-
-        document.getElementById(
-            "selectedFile"
-        ).textContent =
-            "No file selected";
+                message.textContent =
+                    "❌ Bulk upload failed: " +
+                    error.message;
 
 
-        // Update dashboard
+                if (status) {
 
-        await loadDashboardStats();
+                    status.textContent =
+                        "Upload failed.";
 
+                }
 
-        // Refresh questions if manage page exists
-
-        if (
-            document.getElementById(
-                "manageQuestionsSection"
-            ).classList.contains(
-                "active-section"
-            )
-        ) {
-
-            await loadQuestions();
+            }
 
         }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "❌ Bulk upload error:",
-            error
-        );
-
-
-        bulkMessage.textContent =
-            "❌ " +
-            (
-                error.message ||
-                "Bulk upload failed."
-            );
-
-    }
+    );
 
 }
 
-
-// ============================================================
-// UPDATE UPLOAD PROGRESS
-// ============================================================
-
-function updateUploadProgress(
-    current,
-    total,
-    progressBar,
-    percent,
-    status
-) {
-
-    const progress =
-        Math.round(
-            (current / total) * 100
-        );
-
-
-    progressBar.style.width =
-        progress + "%";
-
-
-    percent.textContent =
-        progress + "%";
-
-
-    status.textContent =
-        `Processing ${current} / ${total} questions...`;
-
-    }
 
 // ============================================================
 // LOAD QUESTIONS
@@ -1482,7 +1402,7 @@ function updateUploadProgress(
 async function loadQuestions() {
 
     const list =
-        document.getElementById(
+        getElement(
             "questionList"
         );
 
@@ -1502,31 +1422,31 @@ async function loadQuestions() {
 
         const snapshot =
             await getDocs(
-                collection(
-                    db,
-                    "questions"
-                )
+                collection(db, "questions")
             );
 
 
         allQuestions = [];
 
 
-        snapshot.forEach((questionDoc) => {
+        snapshot.forEach(
+            (questionDoc) => {
 
-            allQuestions.push({
+                allQuestions.push({
 
-                id:
-                    questionDoc.id,
+                    id:
+                        questionDoc.id,
 
-                ...questionDoc.data()
+                    ...questionDoc.data()
 
-            });
+                });
 
-        });
+            }
+        );
 
 
         renderQuestions();
+
 
     }
 
@@ -1556,7 +1476,7 @@ async function loadQuestions() {
 function renderQuestions() {
 
     const list =
-        document.getElementById(
+        getElement(
             "questionList"
         );
 
@@ -1564,63 +1484,73 @@ function renderQuestions() {
     if (!list) return;
 
 
+    const searchInput =
+        getElement(
+            "questionSearch"
+        );
+
+
+    const subjectFilter =
+        getElement(
+            "filterSubject"
+        );
+
+
     const search =
-        (
-            document.getElementById(
-                "questionSearch"
-            )?.value || ""
-        )
-            .trim()
-            .toLowerCase();
+        searchInput
+            ? normalizeText(
+                searchInput.value
+            )
+            : "";
 
 
     const subject =
-        document.getElementById(
-            "filterSubject"
-        )?.value || "all";
+        subjectFilter
+            ? subjectFilter.value
+            : "all";
 
 
     const filtered =
-        allQuestions.filter((q) => {
+        allQuestions.filter(
+            (q) => {
 
-            const question =
-                String(
-                    q.question || ""
-                ).toLowerCase();
-
-
-            const topic =
-                String(
-                    q.topic || ""
-                ).toLowerCase();
+                const questionText =
+                    normalizeText(
+                        q.question
+                    );
 
 
-            const qSubject =
-                String(
-                    q.subject || ""
+                const topic =
+                    normalizeText(
+                        q.topic
+                    );
+
+
+                const matchesSearch =
+                    !search ||
+                    questionText.includes(
+                        search
+                    ) ||
+                    topic.includes(
+                        search
+                    );
+
+
+                const matchesSubject =
+                    subject === "all" ||
+                    q.subject === subject;
+
+
+                return (
+                    matchesSearch &&
+                    matchesSubject
                 );
 
-
-            const matchesSearch =
-                !search ||
-                question.includes(search) ||
-                topic.includes(search);
+            }
+        );
 
 
-            const matchesSubject =
-                subject === "all" ||
-                qSubject === subject;
-
-
-            return (
-                matchesSearch &&
-                matchesSubject
-            );
-
-        });
-
-
-    if (!filtered.length) {
+    if (filtered.length === 0) {
 
         list.innerHTML = `
             <div class="empty-box">
@@ -1636,124 +1566,138 @@ function renderQuestions() {
     list.innerHTML = "";
 
 
-    filtered.forEach((q, index) => {
+    filtered.forEach(
+        (q, index) => {
 
-        const card =
-            document.createElement(
-                "div"
-            );
-
-
-        card.className =
-            "question-admin-card";
+            const card =
+                document.createElement(
+                    "div"
+                );
 
 
-        const options =
-            Array.isArray(q.options)
-                ? q.options
-                : [];
+            card.className =
+                "question-admin-card";
 
 
-        let optionsHTML = "";
+            const options =
+                Array.isArray(q.options)
+                    ? q.options
+                    : [];
 
 
-        options.forEach(
-            (option, optionIndex) => {
-
-                const isCorrect =
-                    Number(q.answer) ===
-                    optionIndex;
+            const answer =
+                Number(
+                    q.answer
+                );
 
 
-                optionsHTML += `
-                    <div class="${
-                        isCorrect
-                            ? "correct-option"
-                            : ""
-                    }">
-                        ${
-                            String.fromCharCode(
-                                65 + optionIndex
-                            )
-                        }. ${
-                            escapeHTML(
-                                option
-                            )
-                        }
-                    </div>
-                `;
+            card.innerHTML = `
 
-            }
-        );
+                <div class="question-card-top">
+
+                    <span class="question-index">
+                        #${index + 1}
+                    </span>
+
+                    <span class="subject-badge">
+                        ${escapeHTML(
+                            q.subject ||
+                            "General"
+                        )}
+                    </span>
+
+                </div>
 
 
-        card.innerHTML = `
-
-            <div class="question-card-top">
-
-                <span class="question-index">
-                    #${index + 1}
-                </span>
-
-                <span class="subject-badge">
+                <h3>
                     ${escapeHTML(
-                        q.subject || "-"
+                        q.question ||
+                        "Question"
                     )}
-                </span>
-
-            </div>
-
-            <h3>
-                ${escapeHTML(
-                    q.question || "-"
-                )}
-            </h3>
-
-            <div class="admin-options">
-                ${optionsHTML}
-            </div>
-
-            <p class="topic-text">
-                📌 Topic:
-                ${escapeHTML(
-                    q.topic || "-"
-                )}
-            </p>
-
-            <button
-                class="delete-question-btn"
-                data-id="${q.id}">
-                🗑️ Delete Question
-            </button>
-
-        `;
+                </h3>
 
 
-        list.appendChild(card);
+                <div class="admin-options">
 
-    });
+                    ${options.map(
+                        (option, optionIndex) => `
+
+                        <div
+                            class="${
+                                optionIndex === answer
+                                    ? "correct-option"
+                                    : ""
+                            }">
+
+                            ${String.fromCharCode(
+                                65 +
+                                optionIndex
+                            )}.
+                            ${escapeHTML(
+                                option
+                            )}
+
+                        </div>
+
+                    `).join("")}
+
+                </div>
 
 
-    // Delete buttons
+                <p class="topic-text">
+                    📌 Topic:
+                    ${escapeHTML(
+                        q.topic ||
+                        "-"
+                    )}
+                </p>
+
+
+                <button
+                    class="delete-question-btn"
+                    data-id="${q.id}">
+
+                    🗑️ Delete Question
+
+                </button>
+
+            `;
+
+
+            list.appendChild(card);
+
+        }
+    );
+    // ========================================================
+    // DELETE BUTTONS
+    // ========================================================
 
     list
         .querySelectorAll(
             ".delete-question-btn"
         )
-        .forEach((button) => {
+        .forEach(
+            (button) => {
 
-            button.addEventListener(
-                "click",
-                async () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    await deleteQuestion(
-                        button.dataset.id
-                    );
+                        const id =
+                            button.getAttribute(
+                                "data-id"
+                            );
 
-                }
-            );
 
-        });
+                        await deleteQuestion(
+                            id
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 }
 
@@ -1785,13 +1729,15 @@ async function deleteQuestion(id) {
 
 
         alert(
-            "✅ Question deleted successfully."
+            "Question deleted successfully ✅"
         );
 
 
         await loadQuestions();
 
+
         await loadDashboardStats();
+
 
     }
 
@@ -1804,7 +1750,8 @@ async function deleteQuestion(id) {
 
 
         alert(
-            "❌ Failed to delete question."
+            "Failed to delete question.\n\n" +
+            error.message
         );
 
     }
@@ -1813,73 +1760,49 @@ async function deleteQuestion(id) {
 
 
 // ============================================================
-// FILTERS
+// QUESTION SEARCH
 // ============================================================
 
-function initializeFilters() {
-
-    const questionSearch =
-        document.getElementById(
-            "questionSearch"
-        );
+const questionSearch =
+    getElement(
+        "questionSearch"
+    );
 
 
-    const filterSubject =
-        document.getElementById(
-            "filterSubject"
-        );
+if (questionSearch) {
+
+    questionSearch.addEventListener(
+        "input",
+        () => {
+
+            renderQuestions();
+
+        }
+    );
+
+}
 
 
-    if (questionSearch) {
+// ============================================================
+// SUBJECT FILTER
+// ============================================================
 
-        questionSearch.addEventListener(
-            "input",
-            renderQuestions
-        );
-
-    }
-
-
-    if (filterSubject) {
-
-        filterSubject.addEventListener(
-            "change",
-            renderQuestions
-        );
-
-    }
+const filterSubject =
+    getElement(
+        "filterSubject"
+    );
 
 
-    const resultSearch =
-        document.getElementById(
-            "resultSearch"
-        );
+if (filterSubject) {
 
+    filterSubject.addEventListener(
+        "change",
+        () => {
 
-    const resultTestType =
-        document.getElementById(
-            "resultTestType"
-        );
+            renderQuestions();
 
-
-    if (resultSearch) {
-
-        resultSearch.addEventListener(
-            "input",
-            renderResults
-        );
-
-    }
-
-
-    if (resultTestType) {
-
-        resultTestType.addEventListener(
-            "change",
-            renderResults
-        );
-
-    }
+        }
+    );
 
 }
 
@@ -1891,7 +1814,7 @@ function initializeFilters() {
 async function loadResults() {
 
     const list =
-        document.getElementById(
+        getElement(
             "resultsList"
         );
 
@@ -1911,43 +1834,50 @@ async function loadResults() {
 
         const snapshot =
             await getDocs(
-                collection(
-                    db,
-                    "results"
-                )
+                collection(db, "results")
             );
 
 
         allResults = [];
 
 
-        snapshot.forEach((resultDoc) => {
+        snapshot.forEach(
+            (resultDoc) => {
 
-            allResults.push({
+                allResults.push({
 
-                id:
-                    resultDoc.id,
+                    id:
+                        resultDoc.id,
 
-                ...resultDoc.data()
+                    ...resultDoc.data()
 
-            });
+                });
 
-        });
+            }
+        );
 
 
         // Latest first
 
-        allResults.sort((a, b) => {
+        allResults.sort(
+            (a, b) => {
 
-            const aTime =
-                a.createdAt?.toMillis?.() || 0;
+                const aTime =
+                    a.createdAt
+                        ? a.createdAt.toMillis()
+                        : 0;
 
-            const bTime =
-                b.createdAt?.toMillis?.() || 0;
 
-            return bTime - aTime;
+                const bTime =
+                    b.createdAt
+                        ? b.createdAt.toMillis()
+                        : 0;
 
-        });
+
+                return bTime - aTime;
+
+            }
+        );
 
 
         renderResults();
@@ -1980,7 +1910,7 @@ async function loadResults() {
 function renderResults() {
 
     const list =
-        document.getElementById(
+        getElement(
             "resultsList"
         );
 
@@ -1988,57 +1918,73 @@ function renderResults() {
     if (!list) return;
 
 
+    const searchInput =
+        getElement(
+            "resultSearch"
+        );
+
+
+    const typeFilter =
+        getElement(
+            "resultTestType"
+        );
+
+
     const search =
-        (
-            document.getElementById(
-                "resultSearch"
-            )?.value || ""
-        )
-            .trim()
-            .toLowerCase();
+        searchInput
+            ? normalizeText(
+                searchInput.value
+            )
+            : "";
 
 
     const testType =
-        document.getElementById(
-            "resultTestType"
-        )?.value || "all";
+        typeFilter
+            ? typeFilter.value
+            : "all";
 
 
     const filtered =
-        allResults.filter((result) => {
+        allResults.filter(
+            (result) => {
 
-            const name =
-                String(
-                    result.studentName || ""
-                ).toLowerCase();
-
-
-            const district =
-                String(
-                    result.district || ""
-                ).toLowerCase();
+                const studentName =
+                    normalizeText(
+                        result.studentName
+                    );
 
 
-            const matchesSearch =
-                !search ||
-                name.includes(search) ||
-                district.includes(search);
+                const district =
+                    normalizeText(
+                        result.district
+                    );
 
 
-            const matchesType =
-                testType === "all" ||
-                result.testType === testType;
+                const matchesSearch =
+                    !search ||
+                    studentName.includes(
+                        search
+                    ) ||
+                    district.includes(
+                        search
+                    );
 
 
-            return (
-                matchesSearch &&
-                matchesType
-            );
-
-        });
+                const matchesType =
+                    testType === "all" ||
+                    result.testType === testType;
 
 
-    if (!filtered.length) {
+                return (
+                    matchesSearch &&
+                    matchesType
+                );
+
+            }
+        );
+
+
+    if (filtered.length === 0) {
 
         list.innerHTML = `
             <div class="empty-box">
@@ -2054,111 +2000,193 @@ function renderResults() {
     list.innerHTML = "";
 
 
-    filtered.forEach((result) => {
+    filtered.forEach(
+        (result) => {
 
-        const card =
-            document.createElement(
-                "div"
-            );
-
-
-        card.className =
-            "result-admin-card";
+            const card =
+                document.createElement(
+                    "div"
+                );
 
 
-        const score =
-            Number(
-                result.score || 0
-            );
+            card.className =
+                "result-admin-card";
 
 
-        const total =
-            Number(
-                result.totalQuestions || 0
-            );
+            const score =
+                Number(
+                    result.score || 0
+                );
 
 
-        const percentage =
-            total > 0
-                ? Math.round(
-                    (score / total) * 100
+            const total =
+                Number(
+                    result.totalQuestions || 0
+                );
+
+
+            let percentage =
+                Number(
+                    result.percentage
+                );
+
+
+            if (
+                !Number.isFinite(
+                    percentage
                 )
-                : 0;
+            ) {
+
+                percentage =
+                    total > 0
+                        ? Math.round(
+                            (
+                                score /
+                                total
+                            ) * 100
+                        )
+                        : 0;
+
+            }
 
 
-        let dateText =
-            "-";
+            let dateText =
+                "-";
 
 
-        if (
-            result.createdAt &&
-            typeof result.createdAt.toDate ===
-                "function"
-        ) {
-
-            dateText =
+            if (
                 result.createdAt
-                    .toDate()
-                    .toLocaleString();
+            ) {
 
-        }
+                try {
+
+                    dateText =
+                        result.createdAt
+                            .toDate()
+                            .toLocaleString();
+
+                }
+
+                catch {
+
+                    dateText =
+                        "-";
+
+                }
+
+            }
 
 
-        card.innerHTML = `
+            card.innerHTML = `
 
-            <div class="result-top">
+                <div class="result-top">
 
-                <div>
+                    <div>
 
-                    <h3>
+                        <h3>
+                            ${escapeHTML(
+                                result.studentName ||
+                                "Student"
+                            )}
+                        </h3>
+
+                        <p>
+                            📍
+                            ${escapeHTML(
+                                result.district ||
+                                "-"
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <span class="test-type-badge">
+
                         ${escapeHTML(
-                            result.studentName ||
-                            "Student"
-                        )}
-                    </h3>
+                            result.testType ||
+                            "Test"
+                        ).toUpperCase()}
 
-                    <p>
-                        📍 ${escapeHTML(
-                            result.district ||
-                            "-"
-                        )}
-                    </p>
+                    </span>
 
                 </div>
 
-                <span class="test-type-badge">
-                    ${escapeHTML(
-                        String(
-                            result.testType ||
-                            "-"
-                        ).toUpperCase()
+
+                <div class="result-score">
+
+                    <strong>
+                        ${score} / ${total}
+                    </strong>
+
+                    <span>
+                        ${percentage}%
+                    </span>
+
+                </div>
+
+
+                <small>
+                    🕒 ${escapeHTML(
+                        dateText
                     )}
-                </span>
+                </small>
 
-            </div>
-
-            <div class="result-score">
-
-                <strong>
-                    ${score} / ${total}
-                </strong>
-
-                <span>
-                    ${percentage}%
-                </span>
-
-            </div>
-
-            <small>
-                🕒 ${escapeHTML(dateText)}
-            </small>
-
-        `;
+            `;
 
 
-        list.appendChild(card);
+            list.appendChild(card);
 
-    });
+        }
+    );
+
+}
+
+
+// ============================================================
+// RESULT SEARCH
+// ============================================================
+
+const resultSearch =
+    getElement(
+        "resultSearch"
+    );
+
+
+if (resultSearch) {
+
+    resultSearch.addEventListener(
+        "input",
+        () => {
+
+            renderResults();
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// RESULT TEST TYPE FILTER
+// ============================================================
+
+const resultTestType =
+    getElement(
+        "resultTestType"
+    );
+
+
+if (resultTestType) {
+
+    resultTestType.addEventListener(
+        "change",
+        () => {
+
+            renderResults();
+
+        }
+    );
 
 }
 
@@ -2170,22 +2198,34 @@ function renderResults() {
 function escapeHTML(value) {
 
     return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
 // ============================================================
-// END
+// INITIAL DASHBOARD LOAD
 // ============================================================
 
 console.log(
-    "✅ G THE GENIUS ADMIN PANEL JS LOADED"
+    "🚀 G THE GENIUS Admin JS Loaded"
 );
-
-            
-            
