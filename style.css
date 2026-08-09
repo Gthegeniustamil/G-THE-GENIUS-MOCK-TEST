@@ -1,855 +1,1722 @@
-/* ==========================================
+/* =========================================================
    G THE GENIUS
-   MAIN GLOBAL STYLE CSS
-   PREMIUM DARK BLUE + GOLD THEME
-   PART 1
-========================================== */
+   GLOBAL MOBILE APP DESIGN SYSTEM
+   PREMIUM DARK BLUE + GOLD
+   ========================================================= */
 
+:root {
+    --primary: #081229;
+    --primary-2: #0d1b3d;
+    --secondary: #102452;
+    --gold: #ffd700;
+    --gold-light: #ffe66d;
 
-:root{
+    --white: #ffffff;
+    --text: #d7def2;
+    --muted: #9ca8c5;
 
-    --primary:#081229;
+    --card: rgba(255, 255, 255, 0.075);
+    --card-strong: rgba(255, 255, 255, 0.11);
 
-    --secondary:#102452;
+    --border: rgba(255, 255, 255, 0.13);
 
-    --gold:#FFD700;
+    --success: #19e68c;
+    --danger: #ff5c70;
+    --info: #4da6ff;
 
-    --white:#ffffff;
+    --shadow:
+        0 18px 45px rgba(0, 0, 0, 0.35);
 
-    --text:#cfd6ee;
-
-    --card:rgba(255,255,255,.08);
-
-    --border:rgba(255,255,255,.15);
-
-    --shadow:0 15px 40px rgba(0,0,0,.4);
-
+    --radius: 22px;
 }
 
 
+/* =========================================================
+   RESET
+   ========================================================= */
 
-*{
-
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 
-
-html{
-
-    scroll-behavior:smooth;
-
+html {
+    scroll-behavior: smooth;
 }
 
 
-
-body{
-
-    font-family:'Poppins',sans-serif;
+body {
+    font-family: "Poppins", sans-serif;
 
     background:
+        radial-gradient(
+            circle at top,
+            rgba(255, 215, 0, 0.07),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #061025 0%,
+            #081229 45%,
+            #0d1b3d 100%
+        );
 
-    linear-gradient(
-        180deg,
-        var(--primary),
-        var(--secondary)
-    );
+    color: var(--white);
 
-    color:var(--white);
+    min-height: 100vh;
 
-    min-height:100vh;
+    overflow-x: hidden;
+}
+
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    width: 300px;
+    height: 300px;
+
+    top: -150px;
+    right: -120px;
+
+    background: rgba(255, 215, 0, 0.06);
+
+    filter: blur(80px);
+
+    pointer-events: none;
+}
+
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 250px;
+    height: 250px;
+
+    bottom: -120px;
+    left: -100px;
+
+    background: rgba(30, 100, 255, 0.08);
+
+    filter: blur(80px);
+
+    pointer-events: none;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+button,
+input,
+select,
+textarea {
+    font-family: "Poppins", sans-serif;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   APP CONTAINER
+   ========================================================= */
+
+.app-container,
+.container {
+
+    width: 100%;
+
+    max-width: 680px;
+
+    margin: auto;
+
+    padding: 18px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   GLOBAL HEADER
+   ========================================================= */
+
+.app-header {
+
+    text-align: center;
+
+    padding: 20px 10px 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
 
 }
 
 
+.logo-box {
 
+    width: 108px;
+    height: 108px;
 
+    border-radius: 50%;
 
-a{
+    padding: 5px;
 
-    text-decoration:none;
+    background:
+        linear-gradient(
+            145deg,
+            var(--gold),
+            #fff3a1,
+            var(--gold)
+        );
 
-    color:inherit;
+    box-shadow:
+        0 0 0 6px rgba(255, 215, 0, 0.08),
+        0 15px 35px rgba(0, 0, 0, 0.4);
 
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 15px;
 }
 
 
+.app-logo {
 
+    width: 100%;
+    height: 100%;
 
+    border-radius: 50%;
 
-button{
+    object-fit: cover;
 
-    font-family:'Poppins',sans-serif;
-
-    cursor:pointer;
-
+    background: white;
 }
 
 
+.brand-text h1 {
 
+    font-size: 25px;
 
+    font-weight: 800;
 
-/* ==========================
-   Main Container
-========================== */
+    letter-spacing: 1px;
 
-
-.container{
-
-    width:100%;
-
-    max-width:650px;
-
-    margin:auto;
-
-    padding:18px;
-
+    color: var(--gold);
 }
 
 
+.brand-text p {
 
+    margin-top: 5px;
 
+    font-size: 11px;
 
-/* ==========================
-   Glass Card
-========================== */
+    color: var(--muted);
 
-
-.glass-card{
-
-    background:var(--card);
-
-    border:
-
-    1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:20px;
-
-    backdrop-filter:blur(15px);
-
-    box-shadow:var(--shadow);
-
+    letter-spacing: 1px;
 }
 
 
+/* =========================================================
+   HERO
+   ========================================================= */
 
+.hero-section {
 
-
-/* ==========================
-   Logo Common
-========================== */
-
-
-.logo{
-
-    width:85px;
-
-    height:85px;
-
-    object-fit:contain;
-
-    background:#fff;
-
-    padding:8px;
-
-    border-radius:50%;
-
-    border:3px solid var(--gold);
-
-    box-shadow:var(--shadow);
-
+    margin-bottom: 25px;
 }
 
 
+.hero-card {
 
+    padding: 28px 22px;
 
+    border-radius: 28px;
 
-/* ==========================
-   Headings
-========================== */
+    text-align: center;
 
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.11),
+            rgba(255, 255, 255, 0.045)
+        );
 
-h1,h2,h3{
+    border: 1px solid var(--border);
 
-    font-weight:800;
+    box-shadow: var(--shadow);
 
+    backdrop-filter: blur(20px);
 }
 
 
+.hero-card h2 {
 
-.gold-text{
+    font-size: 24px;
 
-    color:var(--gold);
+    line-height: 1.35;
 
+    margin-bottom: 12px;
 }
 
 
+.hero-card p {
 
+    color: var(--text);
 
+    font-size: 14px;
 
-/* ==========================
-   Premium Button
-========================== */
+    line-height: 1.7;
 
-
-.primary-btn{
-
-    background:var(--gold);
-
-    color:#081229;
-
-    border:none;
-
-    padding:14px 25px;
-
-    border-radius:50px;
-
-    font-weight:800;
-
-    transition:.3s;
-
+    margin-bottom: 22px;
 }
 
 
+.hero-buttons {
 
-.primary-btn:hover{
+    display: flex;
 
-    transform:translateY(-3px);
+    gap: 10px;
 
-    box-shadow:0 10px 25px rgba(255,215,0,.35);
-
-}
-/* ==========================================
-   G THE GENIUS
-   MAIN GLOBAL STYLE CSS
-   PART 2
-========================================== */
-
-
-
-/* ==========================
-   Secondary Button
-========================== */
-
-
-.secondary-btn{
-
-    background:transparent;
-
-    color:var(--gold);
-
-    border:1px solid var(--gold);
-
-    padding:14px 25px;
-
-    border-radius:50px;
-
-    font-weight:700;
-
-    transition:.3s;
-
+    justify-content: center;
 }
 
 
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
-.secondary-btn:hover{
+.btn,
+.primary-btn,
+.secondary-btn {
 
-    background:var(--gold);
+    min-height: 48px;
 
-    color:#081229;
+    padding: 13px 24px;
 
+    border-radius: 15px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: 700;
+
+    transition: 0.25s ease;
 }
 
 
+.primary-btn {
 
+    background:
+        linear-gradient(
+            135deg,
+            #ffe66d,
+            var(--gold)
+        );
 
+    color: #081229;
 
+    border: none;
 
-/* ==========================
-   Section Title
-========================== */
-
-
-.section-title{
-
-    margin:25px 0 15px;
-
+    box-shadow:
+        0 8px 22px rgba(255, 215, 0, 0.22);
 }
 
 
+.secondary-btn {
 
-.section-title h2{
+    background: transparent;
 
-    color:var(--gold);
+    color: var(--gold);
 
-    font-size:22px;
-
+    border: 1px solid rgba(255, 215, 0, 0.55);
 }
 
 
+.primary-btn:hover,
+.secondary-btn:hover,
+.btn:hover {
 
-.section-title p{
-
-    color:var(--text);
-
-    font-size:14px;
-
+    transform: translateY(-2px);
 }
 
 
+.primary-btn:active,
+.secondary-btn:active,
+.btn:active {
 
-
-
-
-/* ==========================
-   Dashboard Cards
-========================== */
-
-
-.dashboard-card,
-.test-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:20px;
-
-    margin-bottom:15px;
-
-    box-shadow:var(--shadow);
-
-    backdrop-filter:blur(15px);
-
-    transition:.3s;
-
+    transform: scale(0.97);
 }
 
 
+/* =========================================================
+   SECTION
+   ========================================================= */
 
-.dashboard-card:hover,
-.test-card:hover{
+section {
 
-    transform:translateY(-4px);
-
+    margin-bottom: 30px;
 }
 
 
+.feature-section h2,
+.test-section h2,
+.subject-section h2,
+.leader-preview-section h2,
+.benefit-section h2,
+.app-flow-section h2 {
 
+    font-size: 20px;
 
+    margin-bottom: 15px;
 
-
-/* ==========================
-   Mock Test Card
-========================== */
-
-
-.test-card{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
+    color: var(--white);
 }
 
 
+.feature-section h2::after,
+.test-section h2::after,
+.subject-section h2::after {
 
-.test-card h3{
+    content: "";
 
-    color:var(--gold);
+    display: block;
 
-    font-size:18px;
+    width: 42px;
 
+    height: 3px;
+
+    background: var(--gold);
+
+    border-radius: 10px;
+
+    margin-top: 7px;
 }
 
 
+/* =========================================================
+   FEATURE CARDS
+   ========================================================= */
 
-.test-card p,
-.test-card span{
+.feature-grid {
 
-    color:var(--text);
+    display: grid;
 
-    font-size:13px;
+    grid-template-columns:
+        repeat(3, 1fr);
 
-    display:block;
-
-    margin-top:6px;
-
+    gap: 10px;
 }
 
 
+.feature-card {
 
+    padding: 17px 10px;
 
+    text-align: center;
 
+    background: var(--card);
 
-/* ==========================
-   Bottom Navigation
-========================== */
+    border: 1px solid var(--border);
 
+    border-radius: 20px;
 
-.bottom-navigation,
-.bottom-nav{
+    backdrop-filter: blur(15px);
 
-    position:fixed;
+    box-shadow: var(--shadow);
 
-    bottom:15px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:92%;
-
-    max-width:620px;
-
-    background:rgba(8,18,41,.95);
-
-    border:1px solid var(--border);
-
-    border-radius:30px;
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-    padding:12px;
-
-    backdrop-filter:blur(20px);
-
-    box-shadow:var(--shadow);
-
-    z-index:999;
-
+    transition: 0.25s;
 }
 
 
+.feature-card:hover {
 
-.nav-item{
+    transform: translateY(-4px);
 
-    color:var(--text);
-
-    text-align:center;
-
-    font-size:12px;
-
+    border-color:
+        rgba(255, 215, 0, 0.35);
 }
 
 
+.feature-icon {
 
-.nav-item span{
+    font-size: 27px;
 
-    display:block;
-
-    margin-top:4px;
-
+    margin-bottom: 8px;
 }
 
 
+.feature-card h3 {
 
-.nav-item.active{
+    font-size: 13px;
 
-    color:var(--gold);
+    color: var(--gold);
 
+    margin-bottom: 5px;
 }
 
 
+.feature-card p {
+
+    font-size: 10px;
+
+    color: var(--muted);
+
+    line-height: 1.5;
+}
 
 
+/* =========================================================
+   TEST CARDS
+   ========================================================= */
 
-/* ==========================
-   Forms
-========================== */
+.test-grid {
 
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+
+.test-card {
+
+    position: relative;
+
+    padding: 20px;
+
+    border-radius: 23px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+
+    transition: 0.25s;
+}
+
+
+.test-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: var(--gold);
+}
+
+
+.test-card:hover {
+
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(255, 215, 0, 0.3);
+}
+
+
+.test-icon {
+
+    font-size: 28px;
+
+    margin-bottom: 7px;
+}
+
+
+.test-card h3 {
+
+    font-size: 18px;
+
+    color: var(--white);
+
+    margin-bottom: 7px;
+}
+
+
+.test-card p {
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    margin-bottom: 14px;
+}
+
+
+.test-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 10px 20px;
+
+    border-radius: 13px;
+
+    background: var(--gold);
+
+    color: #081229;
+
+    font-weight: 800;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SUBJECT CARDS
+   ========================================================= */
+
+.subject-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 11px;
+}
+
+
+.subject-card {
+
+    padding: 18px;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    transition: 0.25s;
+}
+
+
+.subject-card:hover {
+
+    transform: translateY(-3px);
+}
+
+
+.subject-card span {
+
+    font-size: 28px;
+}
+
+
+.subject-card h3 {
+
+    margin-top: 8px;
+
+    font-size: 14px;
+
+    color: var(--gold);
+}
+
+
+.subject-card p {
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SMART LEARNING
+   ========================================================= */
+
+.smart-card {
+
+    padding: 22px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 215, 0, 0.12),
+            rgba(255, 255, 255, 0.05)
+        );
+
+    border: 1px solid
+        rgba(255, 215, 0, 0.25);
+
+    box-shadow: var(--shadow);
+}
+
+
+.smart-card h2 {
+
+    color: var(--gold);
+
+    font-size: 19px;
+
+    margin-bottom: 14px;
+}
+
+
+.smart-card ul {
+
+    list-style: none;
+}
+
+
+.smart-card li {
+
+    padding: 8px 0;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.06);
+}
+
+
+/* =========================================================
+   PODIUM
+   ========================================================= */
+
+.podium-container {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+
+.podium-card {
+
+    flex: 1;
+
+    min-height: 150px;
+
+    padding: 15px 8px;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.podium-card.first {
+
+    min-height: 175px;
+
+    border-color:
+        rgba(255, 215, 0, 0.45);
+}
+
+
+.rank-number {
+
+    font-size: 28px;
+
+    margin-bottom: 7px;
+}
+
+
+.podium-card h3 {
+
+    font-size: 13px;
+
+    color: var(--gold);
+}
+
+
+.podium-card p {
+
+    font-size: 11px;
+
+    color: var(--text);
+
+    margin: 5px 0;
+}
+
+
+.podium-card span {
+
+    font-size: 11px;
+
+    color: var(--muted);
+}
+
+
+.view-btn {
+
+    display: block;
+
+    margin: 15px auto 0;
+
+    width: fit-content;
+
+    color: var(--gold);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   BENEFITS
+   ========================================================= */
+
+.benefit-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+
+.benefit-card {
+
+    padding: 17px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 19px;
+}
+
+
+.benefit-card h3 {
+
+    font-size: 14px;
+
+    color: var(--gold);
+
+    margin-bottom: 6px;
+}
+
+
+.benefit-card p {
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SOCIAL
+   ========================================================= */
+
+.social-section {
+
+    text-align: center;
+
+    padding: 23px 15px;
+
+    border-radius: 24px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+
+.social-section h2 {
+
+    font-size: 19px;
+
+    margin-bottom: 15px;
+}
+
+
+.social-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+
+.social-btn {
+
+    padding: 10px 15px;
+
+    border-radius: 13px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    border: 1px solid var(--border);
+
+    background: rgba(255,255,255,.05);
+
+    transition: .25s;
+}
+
+
+.social-btn:hover {
+
+    transform: translateY(-2px);
+
+    border-color: var(--gold);
+}
+
+
+.social-btn.youtube {
+
+    color: #ff7777;
+}
+
+
+.social-btn.telegram {
+
+    color: #65bfff;
+}
+
+
+.social-btn.email {
+
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+
+.flow-container {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 11px;
+}
+
+
+.flow-card {
+
+    padding: 18px;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+
+.flow-number {
+
+    width: 34px;
+
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--gold);
+
+    color: #081229;
+
+    font-weight: 800;
+
+    margin-bottom: 10px;
+}
+
+
+.flow-card h3 {
+
+    font-size: 14px;
+
+    color: var(--white);
+
+    margin-bottom: 5px;
+}
+
+
+.flow-card p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   ADMIN / SECURITY
+   ========================================================= */
+
+.admin-card,
+.security-card {
+
+    padding: 22px;
+
+    text-align: center;
+
+    border-radius: 24px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+
+.admin-card h2,
+.security-card h2 {
+
+    color: var(--gold);
+
+    font-size: 19px;
+
+    margin-bottom: 10px;
+}
+
+
+.admin-card p,
+.security-card p {
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    margin-bottom: 17px;
+}
+
+
+.admin-btn {
+
+    display: inline-flex;
+
+    padding: 12px 22px;
+
+    border-radius: 13px;
+
+    background: var(--gold);
+
+    color: #081229;
+
+    font-weight: 800;
+}
+
+
+.security-items {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+.security-items span {
+
+    padding: 8px 11px;
+
+    border-radius: 10px;
+
+    background: rgba(25,230,140,.08);
+
+    border: 1px solid rgba(25,230,140,.2);
+
+    color: var(--success);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   FORM ELEMENTS
+   ========================================================= */
 
 input,
 select,
-textarea{
+textarea {
 
-    width:100%;
+    width: 100%;
 
-    padding:14px;
+    min-height: 48px;
 
-    border-radius:15px;
+    padding: 13px 15px;
 
-    border:1px solid var(--border);
+    border-radius: 14px;
 
-    background:rgba(255,255,255,.08);
+    border: 1px solid var(--border);
 
-    color:white;
+    background: rgba(255,255,255,.07);
 
-    outline:none;
+    color: var(--white);
 
+    outline: none;
+
+    transition: .25s;
 }
 
+
+input:focus,
+select:focus,
+textarea:focus {
+
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 3px rgba(255,215,0,.08);
+}
 
 
 input::placeholder,
-textarea::placeholder{
+textarea::placeholder {
 
-    color:#aab3cc;
-
+    color: #8995b1;
 }
 
 
+select option {
+
+    background: #081229;
+
+    color: white;
+}
 
 
+/* =========================================================
+   GLASS CARD
+   ========================================================= */
 
-/* ==========================
-   Footer
-========================== */
+.glass-card,
+.dashboard-card {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 20px;
+
+    backdrop-filter: blur(18px);
+
+    box-shadow: var(--shadow);
+}
 
 
+/* =========================================================
+   BADGE
+   ========================================================= */
+
+.badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 12px;
+
+    border-radius: 50px;
+
+    background: rgba(255,215,0,.1);
+
+    color: var(--gold);
+
+    border: 1px solid
+        rgba(255,215,0,.4);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RANK CARD
+   ========================================================= */
+
+.rank-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    border-radius: 18px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+
+.rank-number {
+
+    width: 43px;
+
+    height: 43px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--gold);
+
+    color: #081229;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile-avatar {
+
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    padding: 5px;
+
+    background: white;
+
+    border: 3px solid var(--gold);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.app-footer,
 .dashboard-footer,
-.footer{
+.footer {
 
-    margin-top:40px;
+    margin-top: 35px;
 
-    padding:25px;
+    padding: 28px 18px 100px;
 
-    text-align:center;
+    text-align: center;
 
-    background:var(--card);
-
-    border-radius:25px;
-
-    border:1px solid var(--border);
-
+    border-top:
+        1px solid rgba(255,255,255,.08);
 }
 
 
-
+.app-footer h3,
 .dashboard-footer h3,
-.footer h3{
+.footer h3 {
 
-    color:var(--gold);
+    color: var(--gold);
 
+    font-size: 18px;
 }
 
 
-
+.app-footer p,
 .dashboard-footer p,
-.footer p{
+.footer p {
 
-    color:var(--text);
+    color: var(--muted);
 
-    font-size:14px;
+    font-size: 11px;
 
-                         }
-
-
-/* ==========================================
-   G THE GENIUS
-   MAIN GLOBAL STYLE CSS
-   PART 3 FINAL
-========================================== */
-
-
-
-/* ==========================
-   Badge Styles
-========================== */
-
-
-.badge{
-
-    display:inline-block;
-
-    padding:6px 14px;
-
-    border-radius:50px;
-
-    background:rgba(255,215,0,.15);
-
-    color:var(--gold);
-
-    border:1px solid var(--gold);
-
-    font-size:12px;
-
-    font-weight:700;
-
+    margin-top: 5px;
 }
 
 
+.footer-links {
 
+    display: flex;
 
+    justify-content: center;
 
-/* ==========================
-   Rank Cards
-========================== */
+    flex-wrap: wrap;
 
+    gap: 15px;
 
-.rank-card{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:22px;
-
-    padding:18px;
-
-    margin-bottom:12px;
-
-    box-shadow:var(--shadow);
-
+    margin: 17px 0;
 }
 
 
+.footer-links a {
 
-.rank-number{
+    color: var(--text);
 
-    width:45px;
-
-    height:45px;
-
-    border-radius:50%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:var(--gold);
-
-    color:#081229;
-
-    font-weight:800;
-
+    font-size: 11px;
 }
 
 
+.footer-links a:hover {
 
-
-
-/* ==========================
-   Profile Avatar
-========================== */
-
-
-.profile-avatar{
-
-    width:90px;
-
-    height:90px;
-
-    border-radius:50%;
-
-    background:white;
-
-    padding:8px;
-
-    border:3px solid var(--gold);
-
+    color: var(--gold);
 }
 
 
+.copyright {
 
+    color: #68748f !important;
 
+    font-size: 10px !important;
 
-/* ==========================
-   Loading Animation
-========================== */
-
-
-.loader{
-
-    width:45px;
-
-    height:45px;
-
-    border-radius:50%;
-
-    border:5px solid rgba(255,255,255,.2);
-
-    border-top-color:var(--gold);
-
-    animation:spin 1s linear infinite;
-
-    margin:auto;
-
+    line-height: 1.7;
 }
 
 
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
 
-@keyframes spin{
+.bottom-navigation,
+.bottom-nav {
 
-    100%{
+    position: fixed;
 
-        transform:rotate(360deg);
+    left: 50%;
 
+    bottom: 12px;
+
+    transform: translateX(-50%);
+
+    width: calc(100% - 24px);
+
+    max-width: 650px;
+
+    min-height: 64px;
+
+    padding: 8px 5px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-around;
+
+    background:
+        rgba(6,16,37,.94);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.45);
+
+    z-index: 9999;
+}
+
+
+.nav-item {
+
+    flex: 1;
+
+    text-align: center;
+
+    color: #8793af;
+
+    font-size: 19px;
+
+    transition: .25s;
+}
+
+
+.nav-item span {
+
+    display: block;
+
+    font-size: 9px;
+
+    margin-top: 3px;
+}
+
+
+.nav-item.active {
+
+    color: var(--gold);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+
+.loader {
+
+    width: 45px;
+
+    height: 45px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    border:
+        4px solid rgba(255,255,255,.15);
+
+    border-top-color: var(--gold);
+
+    animation:
+        spin 0.8s linear infinite;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
     }
 
 }
 
 
+/* =========================================================
+   ALERT
+   ========================================================= */
 
+.alert {
 
+    padding: 13px;
 
+    border-radius: 14px;
 
-/* ==========================
-   Alert Box
-========================== */
+    text-align: center;
 
+    font-size: 12px;
 
-.alert{
+    background: var(--card);
 
-    padding:15px;
+    border: 1px solid var(--border);
 
-    border-radius:15px;
+    color: var(--text);
 
-    background:rgba(255,255,255,.08);
-
-    border:1px solid var(--border);
-
-    color:var(--text);
-
-    text-align:center;
-
-    margin:15px 0;
-
+    margin: 12px 0;
 }
 
 
+.alert.success {
 
+    color: var(--success);
 
-
-.alert.success{
-
-    border-color:#00ff99;
-
-    color:#00ff99;
-
+    border-color:
+        rgba(25,230,140,.35);
 }
 
 
+.alert.error {
 
-.alert.error{
+    color: var(--danger);
 
-    border-color:#ff5555;
-
-    color:#ff5555;
-
+    border-color:
+        rgba(255,92,112,.35);
 }
 
 
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
 
+::-webkit-scrollbar {
 
-
-/* ==========================
-   Scrollbar
-========================== */
-
-
-::-webkit-scrollbar{
-
-    width:6px;
-
+    width: 5px;
 }
 
 
+::-webkit-scrollbar-track {
 
-::-webkit-scrollbar-track{
-
-    background:#081229;
-
+    background: #061025;
 }
 
 
+::-webkit-scrollbar-thumb {
 
-::-webkit-scrollbar-thumb{
+    background: var(--gold);
 
-    background:var(--gold);
-
-    border-radius:20px;
-
+    border-radius: 20px;
 }
 
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
+@media (max-width: 480px) {
 
+    .app-container,
+    .container {
 
-/* ==========================
-   Mobile Responsive
-========================== */
-
-
-@media(max-width:480px){
-
-
-    .container{
-
-        padding:15px;
+        padding: 13px;
 
     }
 
 
+    .logo-box {
 
-    h1{
-
-        font-size:26px;
-
-    }
-
-
-
-    h2{
-
-        font-size:20px;
+        width: 92px;
+        height: 92px;
 
     }
 
 
+    .brand-text h1 {
 
-    .test-card{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
-        gap:15px;
+        font-size: 22px;
 
     }
 
+
+    .hero-card {
+
+        padding: 23px 17px;
+
+    }
+
+
+    .hero-card h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .hero-buttons {
+
+        flex-direction: column;
+
+    }
 
 
     .primary-btn,
-    .secondary-btn{
+    .secondary-btn {
 
-        width:100%;
+        width: 100%;
 
     }
 
+
+    .feature-grid {
+
+        gap: 7px;
+
+    }
+
+
+    .feature-card {
+
+        padding: 14px 7px;
+
+    }
+
+
+    .feature-card h3 {
+
+        font-size: 11px;
+
+    }
+
+
+    .feature-card p {
+
+        font-size: 9px;
+
+    }
+
+
+    .subject-grid,
+    .benefit-grid,
+    .flow-container {
+
+        gap: 8px;
+
+    }
+
+
+    .subject-card,
+    .benefit-card,
+    .flow-card {
+
+        padding: 14px;
+
+    }
+
+
+    .podium-card {
+
+        padding: 12px 5px;
+
+    }
+
+
+    .podium-card.first {
+
+        min-height: 160px;
+
+    }
+
+
+    .podium-card.second,
+    .podium-card.third {
+
+        min-height: 135px;
+
+    }
+
+
+    .social-buttons {
+
+        flex-direction: column;
+
+    }
+
+
+    .social-btn {
+
+        width: 100%;
+
+    }
 
 
     .bottom-navigation,
-    .bottom-nav{
+    .bottom-nav {
 
-        width:95%;
+        width: calc(100% - 18px);
 
-        bottom:10px;
+        bottom: 9px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / DESKTOP
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+    .app-container,
+    .container {
+
+        max-width: 720px;
 
     }
 
 
-       }
+    .test-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+
+    .test-card {
+
+        min-height: 230px;
+
+    }
+
+}
