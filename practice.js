@@ -1,92 +1,8 @@
 // ============================================================
-// G THE GENIUS - PRACTICE TEST
-// SUBJECT ONLY VERSION
+// G THE GENIUS
+// UNIVERSAL RESULT PAGE
+// Practice + Daily + Weekly + Monthly
 // ============================================================
-
-import { db } from "./firebase-config.js";
-
-import {
-    collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-// ============================================================
-// VARIABLES
-// ============================================================
-
-let allQuestions = [];
-let practiceQuestions = [];
-let selectedAnswers = [];
-let currentIndex = 0;
-
-let timerInterval = null;
-let timeLeft = 300;
-
-
-// ============================================================
-// DOM
-// ============================================================
-
-const selectionArea =
-    document.getElementById("selectionArea");
-
-const testArea =
-    document.getElementById("testArea");
-
-const loadingBox =
-    document.getElementById("loadingBox");
-
-const subjectSelect =
-    document.getElementById("subjectSelect");
-
-const questionCount =
-    document.getElementById("questionCount");
-
-const startBtn =
-    document.getElementById("startPracticeBtn");
-
-const message =
-    document.getElementById("selectionMessage");
-
-const currentQuestionNumber =
-    document.getElementById("currentQuestionNumber");
-
-const totalQuestionNumber =
-    document.getElementById("totalQuestionNumber");
-
-const timerElement =
-    document.getElementById("timer");
-
-const progressFill =
-    document.getElementById("progressFill");
-
-const questionNumber =
-    document.getElementById("questionNumber");
-
-const questionSubject =
-    document.getElementById("questionSubject");
-
-const questionText =
-    document.getElementById("questionText");
-
-const optionsContainer =
-    document.getElementById("optionsContainer");
-
-const previousBtn =
-    document.getElementById("previousBtn");
-
-const nextBtn =
-    document.getElementById("nextBtn");
-
-const submitBtn =
-    document.getElementById("submitBtn");
-
-const questionPalette =
-    document.getElementById("questionPalette");
-
-const backBtn =
-    document.getElementById("backBtn");
 
 
 // ============================================================
@@ -97,176 +13,212 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        console.log(
-            "Practice JS loaded successfully"
-        );
+        initializeResultPage();
 
     }
 );
 
 
 // ============================================================
-// LOAD FIRESTORE QUESTIONS
+// INITIALIZE
 // ============================================================
 
-loadQuestions();
+function initializeResultPage() {
+
+    const resultData =
+        findResultData();
 
 
-async function loadQuestions() {
+    console.log(
+        "FINAL RESULT DATA:",
+        resultData
+    );
 
-    if (loadingBox) {
-        loadingBox.style.display = "block";
+
+    if (!resultData) {
+
+        showNoResult();
+
+        return;
+
     }
 
-    if (startBtn) {
-        startBtn.disabled = true;
-        startBtn.style.opacity = "0.5";
-    }
+
+    const result =
+        normalizeResult(
+            resultData
+        );
 
 
-    try {
+    displaySummary(
+        result
+    );
 
-        const snapshot =
-            await getDocs(
-                collection(
-                    db,
-                    "questions"
-                )
+
+    displayResultMessage(
+        result.correct,
+        result.total
+    );
+
+
+    displayQuestions(
+        result.questions,
+        "all"
+    );
+
+
+    setupFilters(
+        result.questions
+    );
+
+
+    setupButtons(
+        result
+    );
+
+}
+
+
+// ============================================================
+// FIND RESULT
+// ============================================================
+
+function findResultData() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const type =
+        (
+            params.get("type") ||
+            ""
+        ).toLowerCase();
+
+
+    // ========================================================
+    // PRACTICE RESULT
+    // ========================================================
+
+    if (
+        type === "practice"
+    ) {
+
+        const practice =
+            getLocalStorageObject(
+                "practiceResult"
             );
-
-
-        allQuestions = [];
-
-
-        snapshot.forEach(
-            doc => {
-
-                const data =
-                    doc.data();
-
-
-                const options =
-                    Array.isArray(
-                        data.options
-                    )
-                        ? data.options
-                        : [
-                            data.optionA || "",
-                            data.optionB || "",
-                            data.optionC || "",
-                            data.optionD || ""
-                        ];
-
-
-                const subject =
-                    data.subject ||
-                    data.Subject ||
-                    data.category ||
-                    data.Category ||
-                    "";
-
-
-                const answer =
-                    data.correctAnswer !== undefined
-                        ? data.correctAnswer
-                        : data.answer !== undefined
-                            ? data.answer
-                            : data.correct !== undefined
-                                ? data.correct
-                                : 0;
-
-
-                allQuestions.push({
-
-                    id:
-                        doc.id,
-
-                    question:
-                        data.question ||
-                        data.questionText ||
-                        data.text ||
-                        "",
-
-                    options:
-                        options,
-
-                    answer:
-                        convertAnswer(
-                            answer
-                        ),
-
-                    subject:
-                        String(
-                            subject
-                        ).trim(),
-
-                    explanation:
-                        data.explanation ||
-                        data.Explanation ||
-                        ""
-
-                });
-
-            }
-        );
-
-
-        console.log(
-            "Firestore Questions:",
-            allQuestions.length
-        );
 
 
         if (
-            allQuestions.length === 0
+            isValidResult(
+                practice
+            )
         ) {
 
-            showMessage(
-                "❌ Firestore-ல் questions இல்லை."
+            return practice;
+
+        }
+
+    }
+
+
+    // ========================================================
+    // MOCK RESULT
+    // ========================================================
+
+    if (
+        type === "daily" ||
+        type === "weekly" ||
+        type === "monthly"
+    ) {
+
+        const mock =
+            getLocalStorageObject(
+                "mockTestResult"
             );
 
-            return;
+
+        if (
+            isValidResult(
+                mock
+            )
+        ) {
+
+            return mock;
 
         }
 
-
-        if (startBtn) {
-
-            startBtn.disabled =
-                false;
-
-            startBtn.style.opacity =
-                "1";
-
-        }
+    }
 
 
-        showMessage(
-            `✅ ${allQuestions.length} questions ready`
+    // ========================================================
+    // LAST RESULT FALLBACK
+    // ========================================================
+
+    const last =
+        getLocalStorageObject(
+            "lastResult"
         );
 
+
+    if (
+        isValidResult(
+            last
+        )
+    ) {
+
+        return last;
+
+    }
+
+
+    return null;
+
+}
+
+
+// ============================================================
+// GET LOCAL STORAGE OBJECT
+// ============================================================
+
+function getLocalStorageObject(
+    key
+) {
+
+    try {
+
+        const value =
+            localStorage.getItem(
+                key
+            );
+
+
+        if (!value) {
+
+            return null;
+
+        }
+
+
+        return JSON.parse(
+            value
+        );
 
     }
 
     catch (error) {
 
         console.error(
-            "QUESTION LOAD ERROR:",
+            "Storage Parse Error:",
+            key,
             error
         );
 
 
-        showMessage(
-            "❌ Questions load ஆகவில்லை. Console error check செய்யுங்கள்."
-        );
-
-    }
-
-    finally {
-
-        if (loadingBox) {
-            loadingBox.style.display = "none";
-        }
+        return null;
 
     }
 
@@ -274,215 +226,37 @@ async function loadQuestions() {
 
 
 // ============================================================
-// START BUTTON
+// VALID RESULT
 // ============================================================
 
-if (startBtn) {
-
-    startBtn.addEventListener(
-        "click",
-        startPractice
-    );
-
-}
-
-
-function startPractice() {
-
-    console.log(
-        "START BUTTON CLICKED"
-    );
-
-
-    const subject =
-        String(
-            subjectSelect.value
-        ).trim();
-
-
-    const count =
-        Number(
-            questionCount.value
-        );
-
-
-    if (!subject) {
-
-        showMessage(
-            "⚠️ முதலில் Subject select செய்யுங்கள்."
-        );
-
-        return;
-
-    }
-
-
-    if (
-        allQuestions.length === 0
-    ) {
-
-        showMessage(
-            "⏳ Questions இன்னும் load ஆகவில்லை."
-        );
-
-        return;
-
-    }
-
-
-    // ========================================================
-    // SUBJECT MATCH
-    // ========================================================
-
-    let filtered =
-        allQuestions.filter(
-            q => {
-
-                return subjectsMatch(
-                    q.subject,
-                    subject
-                );
-
-            }
-        );
-
-
-    console.log(
-        "Selected:",
-        subject
-    );
-
-    console.log(
-        "Matching:",
-        filtered.length
-    );
-
-
-    // ========================================================
-    // NO MATCH
-    // ========================================================
-
-    if (
-        filtered.length === 0
-    ) {
-
-        showMessage(
-            `❌ "${subject}" Subject-ல் questions இல்லை.`
-        );
-
-        return;
-
-    }
-
-
-    // ========================================================
-    // SHUFFLE
-    // ========================================================
-
-    filtered =
-        shuffle(
-            filtered
-        );
-
-
-    // ========================================================
-    // SELECT QUESTIONS
-    // ========================================================
-
-    practiceQuestions =
-        filtered.slice(
-            0,
-            Math.min(
-                count,
-                filtered.length
-            )
-        );
-
-
-    selectedAnswers =
-        new Array(
-            practiceQuestions.length
-        ).fill(null);
-
-
-    currentIndex = 0;
-
-
-    // ========================================================
-    // TIMER
-    // ========================================================
-
-    timeLeft =
-        getTimeLimit(
-            practiceQuestions.length
-        );
-
-
-    // ========================================================
-    // SHOW TEST
-    // ========================================================
-
-    selectionArea.style.display =
-        "none";
-
-    testArea.style.display =
-        "block";
-
-
-    totalQuestionNumber.textContent =
-        practiceQuestions.length;
-
-
-    createPalette();
-
-    displayQuestion();
-
-    startTimer();
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-// ============================================================
-// SUBJECT MATCH
-// ============================================================
-
-function subjectsMatch(
-    firestoreSubject,
-    selectedSubject
+function isValidResult(
+    data
 ) {
 
-    const a =
-        normalize(
-            firestoreSubject
-        );
+    if (!data) {
 
-    const b =
-        normalize(
-            selectedSubject
-        );
+        return false;
 
-
-    if (a === b) {
-        return true;
     }
 
 
-    // GK variations
+    if (
+        Array.isArray(
+            data.questions
+        ) &&
+        data.questions.length > 0
+    ) {
+
+        return true;
+
+    }
+
 
     if (
+        data.score !== undefined &&
         (
-            a === "gk" ||
-            a === "general knowledge"
-        ) &&
-        (
-            b === "gk" ||
-            b === "general knowledge"
+            data.total !== undefined ||
+            data.totalQuestions !== undefined
         )
     ) {
 
@@ -497,311 +271,80 @@ function subjectsMatch(
 
 
 // ============================================================
-// DISPLAY QUESTION
+// NORMALIZE RESULT
 // ============================================================
 
-function displayQuestion() {
+function normalizeResult(
+    data
+) {
 
-    const q =
-        practiceQuestions[
-            currentIndex
-        ];
-
-
-    if (!q) return;
-
-
-    currentQuestionNumber.textContent =
-        currentIndex + 1;
+    let questions =
+        Array.isArray(
+            data.questions
+        )
+            ? data.questions
+            : [];
 
 
-    questionNumber.textContent =
-        `Question ${currentIndex + 1}`;
+    // ========================================================
+    // QUESTIONS
+    // ========================================================
 
-
-    questionSubject.textContent =
-        q.subject || "General";
-
-
-    questionText.textContent =
-        q.question;
-
-
-    progressFill.style.width =
-        (
+    questions =
+        questions.map(
             (
-                currentIndex + 1
-            ) /
-            practiceQuestions.length
-        ) *
-        100 +
-        "%";
-
-
-    optionsContainer.innerHTML =
-        "";
-
-
-    const letters = [
-        "A",
-        "B",
-        "C",
-        "D"
-    ];
-
-
-    q.options.forEach(
-        (
-            option,
-            index
-        ) => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.type =
-                "button";
-
-
-            button.className =
-                "option";
-
-
-            if (
-                selectedAnswers[
-                    currentIndex
-                ] === index
-            ) {
-
-                button.classList.add(
-                    "selected"
-                );
-
-            }
-
-
-            button.innerHTML = `
-
-                <span class="option-letter">
-                    ${letters[index] || index + 1}
-                </span>
-
-                <span>
-                    ${escapeHTML(option)}
-                </span>
-
-            `;
-
-
-            button.onclick =
-                () => {
-
-                    selectedAnswers[
-                        currentIndex
-                    ] = index;
-
-                    displayQuestion();
-
-                };
-
-
-            optionsContainer.appendChild(
-                button
-            );
-
-        }
-    );
-
-
-    previousBtn.disabled =
-        currentIndex === 0;
-
-
-    previousBtn.style.opacity =
-        currentIndex === 0
-            ? "0.45"
-            : "1";
-
-
-    if (
-        currentIndex ===
-        practiceQuestions.length - 1
-    ) {
-
-        nextBtn.style.display =
-            "none";
-
-    }
-
-    else {
-
-        nextBtn.style.display =
-            "block";
-
-    }
-
-
-    updatePalette();
-
-}
-
-
-// ============================================================
-// NEXT
-// ============================================================
-
-nextBtn.onclick =
-    () => {
-
-        if (
-            currentIndex <
-            practiceQuestions.length - 1
-        ) {
-
-            currentIndex++;
-
-            displayQuestion();
-
-        }
-
-    };
-
-
-// ============================================================
-// PREVIOUS
-// ============================================================
-
-previousBtn.onclick =
-    () => {
-
-        if (
-            currentIndex > 0
-        ) {
-
-            currentIndex--;
-
-            displayQuestion();
-
-        }
-
-    };
-
-
-// ============================================================
-// SUBMIT
-// ============================================================
-
-submitBtn.onclick =
-    () => {
-
-        const answered =
-            selectedAnswers.filter(
-                answer =>
-                    answer !== null
-            ).length;
-
-
-        const skipped =
-            practiceQuestions.length -
-            answered;
-
-
-        const ok =
-            confirm(
-                `Test Submit செய்யவா?\n\n` +
-                `Answered : ${answered}\n` +
-                `Skipped : ${skipped}`
-            );
-
-
-        if (!ok) {
-            return;
-        }
-
-
-        submitTest();
-
-    };
-
-
-// ============================================================
-// SUBMIT TEST
-// ============================================================
-
-function submitTest() {
-
-    stopTimer();
-
-
-    let correct = 0;
-    let wrong = 0;
-    let skipped = 0;
-
-
-    const resultQuestions =
-        practiceQuestions.map(
-            (
-                q,
-                index
+                question
             ) => {
 
+                const options =
+                    getOptions(
+                        question
+                    );
+
+
+                const correctAnswer =
+                    getCorrectAnswer(
+                        question
+                    );
+
+
                 const userAnswer =
-                    selectedAnswers[
-                        index
-                    ];
-
-
-                if (
-                    userAnswer === null
-                ) {
-
-                    skipped++;
-
-                }
-
-                else if (
-                    Number(userAnswer) ===
-                    Number(q.answer)
-                ) {
-
-                    correct++;
-
-                }
-
-                else {
-
-                    wrong++;
-
-                }
+                    getUserAnswer(
+                        question
+                    );
 
 
                 return {
 
                     id:
-                        q.id,
+                        question.id ||
+                        "",
 
                     question:
-                        q.question,
+                        question.question ||
+                        question.questionText ||
+                        question.text ||
+                        "",
 
                     options:
-                        q.options,
+                        options,
 
                     correctAnswer:
-                        Number(
-                            q.answer
-                        ),
+                        correctAnswer,
 
                     userAnswer:
                         userAnswer,
 
                     explanation:
-                        q.explanation,
+                        question.explanation ||
+                        question.Explanation ||
+                        question.answerExplanation ||
+                        "இந்த கேள்விக்கு explanation வழங்கப்படவில்லை.",
 
                     subject:
-                        q.subject
+                        question.subject ||
+                        question.Subject ||
+                        ""
 
                 };
 
@@ -809,28 +352,114 @@ function submitTest() {
         );
 
 
-    const resultData = {
+    // ========================================================
+    // CALCULATE
+    // ========================================================
 
-        testType:
-            "practice",
+    let correct = 0;
 
-        type:
-            "practice",
+    let wrong = 0;
 
-        subject:
-            subjectSelect.value,
+    let skipped = 0;
+
+
+    questions.forEach(
+        (
+            question
+        ) => {
+
+            if (
+                question.userAnswer === null ||
+                question.userAnswer === undefined ||
+                question.userAnswer === ""
+            ) {
+
+                skipped++;
+
+            }
+
+            else if (
+                Number(
+                    question.userAnswer
+                ) ===
+                Number(
+                    question.correctAnswer
+                )
+            ) {
+
+                correct++;
+
+            }
+
+            else {
+
+                wrong++;
+
+            }
+
+        }
+    );
+
+
+    // ========================================================
+    // FALLBACK SUMMARY
+    // ========================================================
+
+    if (
+        questions.length === 0
+    ) {
+
+        correct =
+            Number(
+                data.correct ||
+                0
+            );
+
+
+        wrong =
+            Number(
+                data.wrong ||
+                0
+            );
+
+
+        skipped =
+            Number(
+                data.skipped ||
+                0
+            );
+
+    }
+
+
+    const total =
+        Number(
+            data.total ||
+            data.totalQuestions ||
+            questions.length ||
+            (
+                correct +
+                wrong +
+                skipped
+            )
+        );
+
+
+    const score =
+        Number(
+            data.score ??
+            data.marks ??
+            correct
+        );
+
+
+    return {
 
         score:
-            correct,
-
-        marks:
-            correct,
+            score,
 
         total:
-            practiceQuestions.length,
-
-        totalQuestions:
-            practiceQuestions.length,
+            total,
 
         correct:
             correct,
@@ -842,169 +471,361 @@ function submitTest() {
             skipped,
 
         questions:
-            resultQuestions,
+            questions,
 
-        createdAt:
-            new Date().toISOString()
+        testType:
+            data.testType ||
+            data.type ||
+            "mock"
 
     };
 
+}
 
-    // ========================================================
-    // SAVE RESULT
-    // ========================================================
 
-    localStorage.setItem(
-        "practiceResult",
-        JSON.stringify(
-            resultData
+// ============================================================
+// GET OPTIONS
+// ============================================================
+
+function getOptions(
+    question
+) {
+
+    if (
+        Array.isArray(
+            question.options
         )
-    );
+    ) {
+
+        return question.options;
+
+    }
 
 
-    localStorage.setItem(
-        "lastResult",
-        JSON.stringify(
-            resultData
-        )
-    );
+    return [
 
+        question.optionA || "",
 
-    console.log(
-        "RESULT SAVED:",
-        resultData
-    );
+        question.optionB || "",
 
+        question.optionC || "",
 
-    // ========================================================
-    // OPEN RESULT
-    // ========================================================
+        question.optionD || ""
 
-    window.location.href =
-        "result.html?type=practice";
+    ];
 
 }
 
 
 // ============================================================
-// TIMER
+// GET CORRECT ANSWER
 // ============================================================
 
-function getTimeLimit(count) {
+function getCorrectAnswer(
+    question
+) {
+
+    let answer =
+        question.correctAnswer;
+
 
     if (
-        count <= 10
+        answer === undefined
     ) {
 
-        return 5 * 60;
+        answer =
+            question.answer;
 
     }
 
 
     if (
-        count <= 25
+        answer === undefined
     ) {
 
-        return 10 * 60;
+        answer =
+            question.correct;
 
     }
 
 
     if (
-        count <= 50
+        typeof answer === "string"
     ) {
 
-        return 20 * 60;
+        const text =
+            answer.trim()
+                .toUpperCase();
+
+
+        const letters = {
+
+            A: 0,
+
+            B: 1,
+
+            C: 2,
+
+            D: 3
+
+        };
+
+
+        if (
+            letters[text] !== undefined
+        ) {
+
+            return letters[text];
+
+        }
+
+
+        if (
+            !isNaN(
+                Number(text)
+            )
+        ) {
+
+            return Number(text);
+
+        }
 
     }
 
 
-    return 30 * 60;
+    return Number(
+        answer ?? 0
+    );
 
 }
 
 
-function startTimer() {
+// ============================================================
+// GET USER ANSWER
+// ============================================================
 
-    stopTimer();
-
-    updateTimer();
-
-
-    timerInterval =
-        setInterval(
-            () => {
-
-                timeLeft--;
-
-                updateTimer();
-
-
-                if (
-                    timeLeft <= 0
-                ) {
-
-                    stopTimer();
-
-                    submitTest();
-
-                }
-
-            },
-            1000
-        );
-
-}
-
-
-function stopTimer() {
+function getUserAnswer(
+    question
+) {
 
     if (
-        timerInterval
+        question.userAnswer !== undefined
     ) {
 
-        clearInterval(
-            timerInterval
-        );
-
-        timerInterval = null;
+        return question.userAnswer;
 
     }
 
-}
 
+    if (
+        question.selectedAnswer !== undefined
+    ) {
 
-function updateTimer() {
+        return question.selectedAnswer;
 
-    const minutes =
-        Math.floor(
-            timeLeft / 60
-        );
-
-
-    const seconds =
-        timeLeft % 60;
-
-
-    timerElement.textContent =
-        `⏰ ${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
 
 
     if (
-        timeLeft <= 60
+        question.selected !== undefined
     ) {
 
-        timerElement.classList.add(
-            "warning"
+        return question.selected;
+
+    }
+
+
+    return null;
+
+}
+
+
+// ============================================================
+// DISPLAY SUMMARY
+// ============================================================
+
+function displaySummary(
+    result
+) {
+
+    setText(
+        "scoreValue",
+        result.score
+    );
+
+
+    setText(
+        "totalCount",
+        result.total
+    );
+
+
+    setText(
+        "correctCount",
+        result.correct
+    );
+
+
+    setText(
+        "wrongCount",
+        result.wrong
+    );
+
+
+    setText(
+        "skippedCount",
+        result.skipped
+    );
+
+
+    // ========================================================
+    // TEST NAME
+    // ========================================================
+
+    let title =
+        "Mock Test Result";
+
+
+    if (
+        result.testType ===
+        "practice"
+    ) {
+
+        title =
+            "Practice Test Result";
+
+    }
+
+    else if (
+        result.testType ===
+        "daily"
+    ) {
+
+        title =
+            "Daily Mock Test Result";
+
+    }
+
+    else if (
+        result.testType ===
+        "weekly"
+    ) {
+
+        title =
+            "Weekly Mock Test Result";
+
+    }
+
+    else if (
+        result.testType ===
+        "monthly"
+    ) {
+
+        title =
+            "Monthly Grand Test Result";
+
+    }
+
+
+    setText(
+        "resultTitle",
+        title
+    );
+
+}
+
+
+// ============================================================
+// RESULT MESSAGE
+// ============================================================
+
+function displayResultMessage(
+    correct,
+    total
+) {
+
+    const icon =
+        document.getElementById(
+            "resultIcon"
         );
+
+
+    const title =
+        document.getElementById(
+            "resultTitle"
+        );
+
+
+    const subtitle =
+        document.getElementById(
+            "resultSubtitle"
+        );
+
+
+    if (
+        total > 0 &&
+        correct === total
+    ) {
+
+        if (icon)
+            icon.textContent =
+                "🏆";
+
+
+        if (subtitle)
+            subtitle.textContent =
+                "🔥 Perfect Score! Excellent performance.";
+
+    }
+
+    else if (
+        total > 0 &&
+        correct >=
+        Math.ceil(
+            total * 0.75
+        )
+    ) {
+
+        if (icon)
+            icon.textContent =
+                "🎉";
+
+
+        if (subtitle)
+            subtitle.textContent =
+                "💪 Excellent Performance!";
+
+    }
+
+    else if (
+        total > 0 &&
+        correct >=
+        Math.ceil(
+            total * 0.50
+        )
+    ) {
+
+        if (icon)
+            icon.textContent =
+                "👍";
+
+
+        if (subtitle)
+            subtitle.textContent =
+                "📚 Good Attempt! இன்னும் practice செய்யுங்கள்.";
 
     }
 
     else {
 
-        timerElement.classList.remove(
-            "warning"
-        );
+        if (icon)
+            icon.textContent =
+                "📖";
+
+
+        if (subtitle)
+            subtitle.textContent =
+                "🔥 Keep Practicing! மீண்டும் முயற்சி செய்யுங்கள்.";
 
     }
 
@@ -1012,103 +833,504 @@ function updateTimer() {
 
 
 // ============================================================
-// QUESTION PALETTE
+// DISPLAY QUESTIONS
 // ============================================================
 
-function createPalette() {
+function displayQuestions(
+    questions,
+    filter
+) {
 
-    questionPalette.innerHTML =
+    const reviewList =
+        document.getElementById(
+            "reviewList"
+        );
+
+
+    if (!reviewList) {
+
+        return;
+
+    }
+
+
+    reviewList.innerHTML =
         "";
 
 
-    practiceQuestions.forEach(
+    let count = 0;
+
+
+    questions.forEach(
         (
-            _,
+            question,
             index
         ) => {
 
-            const button =
-                document.createElement(
-                    "button"
+            const status =
+                getStatus(
+                    question
                 );
 
 
-            button.type =
-                "button";
+            if (
+                filter !== "all" &&
+                filter !== status
+            ) {
+
+                return;
+
+            }
 
 
-            button.textContent =
-                index + 1;
+            count++;
 
 
-            button.onclick =
-                () => {
-
-                    currentIndex =
-                        index;
-
-                    displayQuestion();
-
-                };
+            const card =
+                createQuestionCard(
+                    question,
+                    index,
+                    status
+                );
 
 
-            questionPalette.appendChild(
-                button
+            reviewList.appendChild(
+                card
             );
 
         }
     );
 
 
-    updatePalette();
+    if (
+        count === 0
+    ) {
+
+        reviewList.innerHTML = `
+
+            <div class="empty-review">
+
+                📭 இந்த category-ல்
+                questions இல்லை.
+
+            </div>
+
+        `;
+
+    }
 
 }
 
 
-function updatePalette() {
+// ============================================================
+// STATUS
+// ============================================================
+
+function getStatus(
+    question
+) {
+
+    if (
+        question.userAnswer === null ||
+        question.userAnswer === undefined ||
+        question.userAnswer === ""
+    ) {
+
+        return "skipped";
+
+    }
+
+
+    if (
+        Number(
+            question.userAnswer
+        ) ===
+        Number(
+            question.correctAnswer
+        )
+    ) {
+
+        return "correct";
+
+    }
+
+
+    return "wrong";
+
+}
+
+
+// ============================================================
+// QUESTION CARD
+// ============================================================
+
+function createQuestionCard(
+    question,
+    index,
+    status
+) {
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        `review-card ${status}`;
+
+
+    let statusText =
+        "🟡 Skipped";
+
+
+    let statusClass =
+        "status-skipped";
+
+
+    if (
+        status === "correct"
+    ) {
+
+        statusText =
+            "✅ Correct";
+
+        statusClass =
+            "status-correct";
+
+    }
+
+
+    else if (
+        status === "wrong"
+    ) {
+
+        statusText =
+            "❌ Wrong";
+
+        statusClass =
+            "status-wrong";
+
+    }
+
+
+    const options =
+        question.options || [];
+
+
+    const correctAnswer =
+        Number(
+            question.correctAnswer
+        );
+
+
+    const userAnswer =
+        question.userAnswer;
+
+
+    const letters = [
+        "A",
+        "B",
+        "C",
+        "D"
+    ];
+
+
+    let optionsHTML =
+        "";
+
+
+    options.forEach(
+        (
+            option,
+            optionIndex
+        ) => {
+
+            const isCorrect =
+                optionIndex ===
+                correctAnswer;
+
+
+            const isUser =
+                userAnswer !== null &&
+                userAnswer !== undefined &&
+                userAnswer !== "" &&
+                Number(
+                    userAnswer
+                ) ===
+                optionIndex;
+
+
+            let className =
+                "review-option";
+
+
+            if (
+                isCorrect &&
+                isUser
+            ) {
+
+                className +=
+                    " user-correct";
+
+            }
+
+            else if (
+                isCorrect
+            ) {
+
+                className +=
+                    " correct-answer";
+
+            }
+
+            else if (
+                isUser
+            ) {
+
+                className +=
+                    " user-answer";
+
+            }
+
+
+            let marker = "";
+
+
+            if (
+                isCorrect &&
+                isUser
+            ) {
+
+                marker =
+                    " ✓ Your Answer • Correct";
+
+            }
+
+            else if (
+                isCorrect
+            ) {
+
+                marker =
+                    " ✓ Correct Answer";
+
+            }
+
+            else if (
+                isUser
+            ) {
+
+                marker =
+                    " ✕ Your Answer";
+
+            }
+
+
+            optionsHTML += `
+
+                <div class="${className}">
+
+                    <strong>
+                        ${letters[optionIndex] || optionIndex + 1}.
+                    </strong>
+
+                    ${escapeHTML(option)}
+
+                    <span>
+                        ${marker}
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    const correctText =
+        options[
+            correctAnswer
+        ] ||
+        "Answer not available";
+
+
+    let userText =
+        "Not Answered";
+
+
+    if (
+        userAnswer !== null &&
+        userAnswer !== undefined &&
+        userAnswer !== ""
+    ) {
+
+        userText =
+            options[
+                Number(
+                    userAnswer
+                )
+            ] ||
+            "Answer not available";
+
+    }
+
+
+    const explanation =
+        question.explanation &&
+        String(
+            question.explanation
+        ).trim()
+            ? question.explanation
+            : "இந்த கேள்விக்கு explanation வழங்கப்படவில்லை.";
+
+
+    card.innerHTML = `
+
+        <div class="review-top">
+
+            <div class="review-number">
+
+                Question ${index + 1}
+
+            </div>
+
+            <div class="status-badge ${statusClass}">
+
+                ${statusText}
+
+            </div>
+
+        </div>
+
+
+        <div class="review-question">
+
+            ${escapeHTML(
+                question.question
+            )}
+
+        </div>
+
+
+        <div class="review-options">
+
+            ${optionsHTML}
+
+        </div>
+
+
+        <div class="answer-info">
+
+            <div class="answer-box">
+
+                <span>
+                    👤 Your Answer
+                </span>
+
+                <strong>
+
+                    ${
+                        status === "skipped"
+                            ? "Not Answered"
+                            : escapeHTML(
+                                userText
+                            )
+                    }
+
+                </strong>
+
+            </div>
+
+
+            <div class="answer-box">
+
+                <span>
+                    ✅ Correct Answer
+                </span>
+
+                <strong>
+
+                    ${escapeHTML(
+                        correctText
+                    )}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="explanation">
+
+            <div class="explanation-title">
+
+                💡 Explanation
+
+            </div>
+
+            <p>
+
+                ${escapeHTML(
+                    explanation
+                )}
+
+            </p>
+
+        </div>
+
+    `;
+
+
+    return card;
+
+}
+
+
+// ============================================================
+// FILTER BUTTONS
+// ============================================================
+
+function setupFilters(
+    questions
+) {
 
     const buttons =
-        questionPalette.querySelectorAll(
-            "button"
+        document.querySelectorAll(
+            ".filter-btn"
         );
 
 
     buttons.forEach(
         (
-            button,
-            index
+            button
         ) => {
 
-            button.classList.remove(
-                "current"
+            button.addEventListener(
+                "click",
+                () => {
+
+                    buttons.forEach(
+                        btn =>
+                            btn.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    displayQuestions(
+                        questions,
+                        button.dataset.filter
+                    );
+
+                }
             );
-
-            button.classList.remove(
-                "answered"
-            );
-
-
-            if (
-                index === currentIndex
-            ) {
-
-                button.classList.add(
-                    "current"
-                );
-
-            }
-
-
-            if (
-                selectedAnswers[index] !==
-                null
-            ) {
-
-                button.classList.add(
-                    "answered"
-                );
-
-            }
 
         }
     );
@@ -1117,167 +1339,278 @@ function updatePalette() {
 
 
 // ============================================================
-// BACK
+// BUTTONS
 // ============================================================
 
-if (backBtn) {
+function setupButtons(
+    result
+) {
 
-    backBtn.onclick =
-        () => {
-
-            stopTimer();
-
-            window.location.href =
-                "dashboard.html";
-
-        };
-
-}
-
-
-// ============================================================
-// HELPERS
-// ============================================================
-
-function normalize(value) {
-
-    return String(
-        value || ""
-    )
-        .trim()
-        .toLowerCase()
-        .replace(
-            /\s+/g,
-            " "
+    const retryBtn =
+        document.getElementById(
+            "retryBtn"
         );
 
+
+    const dashboardBtn =
+        document.getElementById(
+            "dashboardBtn"
+        );
+
+
+    const homeBtn =
+        document.getElementById(
+            "homeBtn"
+        );
+
+
+    // ========================================================
+    // RETRY
+    // ========================================================
+
+    if (retryBtn) {
+
+        retryBtn.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    result.testType ===
+                    "practice"
+                ) {
+
+                    window.location.href =
+                        "practice.html";
+
+                }
+
+                else {
+
+                    window.location.href =
+                        "mocktest.html?type=" +
+                        encodeURIComponent(
+                            result.testType
+                        );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // ========================================================
+    // DASHBOARD
+    // ========================================================
+
+    if (dashboardBtn) {
+
+        dashboardBtn.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+        );
+
+    }
+
+
+    // ========================================================
+    // HOME
+    // ========================================================
+
+    if (homeBtn) {
+
+        homeBtn.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+        );
+
+    }
+
 }
 
 
-function convertAnswer(answer) {
+// ============================================================
+// NO RESULT
+// ============================================================
 
-    if (
-        typeof answer === "number"
-    ) {
+function showNoResult() {
 
-        return answer;
+    setText(
+        "scoreValue",
+        "0"
+    );
+
+
+    setText(
+        "totalCount",
+        "0"
+    );
+
+
+    setText(
+        "correctCount",
+        "0"
+    );
+
+
+    setText(
+        "wrongCount",
+        "0"
+    );
+
+
+    setText(
+        "skippedCount",
+        "0"
+    );
+
+
+    const icon =
+        document.getElementById(
+            "resultIcon"
+        );
+
+
+    const title =
+        document.getElementById(
+            "resultTitle"
+        );
+
+
+    const subtitle =
+        document.getElementById(
+            "resultSubtitle"
+        );
+
+
+    if (icon)
+        icon.textContent =
+            "⚠️";
+
+
+    if (title)
+        title.textContent =
+            "Result Not Found";
+
+
+    if (subtitle)
+        subtitle.textContent =
+            "Test result கிடைக்கவில்லை.";
+
+
+    const reviewList =
+        document.getElementById(
+            "reviewList"
+        );
+
+
+    if (reviewList) {
+
+        reviewList.innerHTML = `
+
+            <div class="empty-review">
+
+                <div style="
+                    font-size:45px;
+                    margin-bottom:15px;
+                ">
+
+                    📭
+
+                </div>
+
+                Result data கிடைக்கவில்லை.
+
+                <div style="
+                    margin-top:8px;
+                    font-size:12px;
+                ">
+
+                    தயவுசெய்து Test-ஐ
+                    மீண்டும் attempt செய்யுங்கள்.
+
+                </div>
+
+            </div>
+
+        `;
 
     }
-
-
-    const text =
-        String(
-            answer || ""
-        )
-        .trim()
-        .toUpperCase();
-
-
-    const letters = {
-        A: 0,
-        B: 1,
-        C: 2,
-        D: 3
-    };
-
-
-    if (
-        letters[text] !== undefined
-    ) {
-
-        return letters[text];
-
-    }
-
-
-    if (
-        !isNaN(Number(text)
-        )
-    ) {
-
-        return Number(text);
-
-    }
-
-
-    return 0;
 
 }
 
 
-function shuffle(array) {
+// ============================================================
+// SET TEXT
+// ============================================================
 
-    const copy =
-        [...array];
+function setText(
+    id,
+    value
+) {
 
-
-    for (
-        let i = copy.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
+    const element =
+        document.getElementById(
+            id
+        );
 
 
-        [
-            copy[i],
-            copy[j]
-        ] =
-        [
-            copy[j],
-            copy[i]
-        ];
+    if (element) {
+
+        element.textContent =
+            value;
 
     }
-
-
-    return copy;
 
 }
 
 
-function escapeHTML(value) {
+// ============================================================
+// ESCAPE HTML
+// ============================================================
+
+function escapeHTML(
+    value
+) {
 
     return String(
         value ?? ""
     )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
 
-}
+    .replace(
+        /&/g,
+        "&amp;"
+    )
 
+    .replace(
+        /</g,
+        "&lt;"
+    )
 
-function showMessage(text) {
+    .replace(
+        />/g,
+        "&gt;"
+    )
 
-    if (message) {
+    .replace(
+        /"/g,
+        "&quot;"
+    )
 
-        message.textContent =
-            text;
-
-    }
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
             }
-         
