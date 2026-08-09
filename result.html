@@ -6,77 +6,832 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0">
 
+<meta name="theme-color"
+      content="#081229">
+
+<meta name="description"
+      content="G THE GENIUS Mock Test Result">
 
 <title>
 Result | G THE GENIUS
 </title>
 
 
-<meta name="theme-color"
-content="#081229">
+<!-- FAVICON -->
+
+<link rel="icon"
+      href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 
+<!-- FONT -->
 
 <link rel="preconnect"
-href="https://fonts.googleapis.com">
-
+      href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
 
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
-
-
+<!-- RESULT CSS -->
 
 <link rel="stylesheet"
-href="css/result.css">
+      href="result.css">
 
+
+<style>
+
+/* ==================================================
+   RESULT MOBILE APP UI
+================================================== */
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    font-family:'Poppins',sans-serif;
+
+    background:
+    linear-gradient(
+        180deg,
+        #081229 0%,
+        #102452 100%
+    );
+
+    color:#ffffff;
+}
+
+
+.result-container{
+
+    width:100%;
+
+    max-width:620px;
+
+    margin:auto;
+
+    padding:15px;
+
+    padding-bottom:110px;
+
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.result-header{
+
+    text-align:center;
+
+    padding:15px 5px 20px;
+
+}
+
+
+.result-logo{
+
+    width:78px;
+
+    height:78px;
+
+    object-fit:contain;
+
+    background:#ffffff;
+
+    padding:6px;
+
+    border-radius:50%;
+
+    border:3px solid #FFD700;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.4);
+
+}
+
+
+.result-header h1{
+
+    color:#FFD700;
+
+    font-size:23px;
+
+    margin:10px 0 3px;
+
+}
+
+
+.result-header p{
+
+    color:#aeb8d4;
+
+    font-size:12px;
+
+    margin:0;
+
+}
+
+
+/* ==================================================
+   RESULT HERO
+================================================== */
+
+.result-hero{
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,215,0,.16),
+        rgba(255,255,255,.06)
+    );
+
+    border:
+    1px solid rgba(255,215,0,.35);
+
+    border-radius:25px;
+
+    padding:25px 18px;
+
+    text-align:center;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.35);
+
+}
+
+
+.result-icon{
+
+    font-size:45px;
+
+    margin-bottom:5px;
+
+}
+
+
+.result-hero h2{
+
+    margin:5px 0;
+
+    color:#ffffff;
+
+    font-size:21px;
+
+}
+
+
+.result-hero p{
+
+    margin:4px 0;
+
+    color:#aeb8d4;
+
+    font-size:12px;
+
+}
+
+
+/* ==================================================
+   SCORE
+================================================== */
+
+.score-circle{
+
+    width:150px;
+
+    height:150px;
+
+    margin:20px auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:
+    6px solid #FFD700;
+
+    background:
+    rgba(8,18,41,.8);
+
+    box-shadow:
+    0 0 30px rgba(255,215,0,.18);
+
+}
+
+
+#scoreDisplay{
+
+    color:#FFD700;
+
+    font-size:35px;
+
+    font-weight:800;
+
+}
+
+
+.score-label{
+
+    color:#aeb8d4;
+
+    font-size:11px;
+
+}
+
+
+/* ==================================================
+   TEST TYPE
+================================================== */
+
+.test-type-badge{
+
+    display:inline-block;
+
+    padding:7px 15px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,215,0,.12);
+
+    border:
+    1px solid rgba(255,215,0,.4);
+
+    color:#FFD700;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+
+/* ==================================================
+   STAT CARDS
+================================================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:9px;
+
+    margin-top:15px;
+
+}
+
+
+.stat-card{
+
+    padding:15px 5px;
+
+    text-align:center;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,.07);
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+}
+
+
+.stat-icon{
+
+    font-size:20px;
+
+}
+
+
+.stat-value{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:19px;
+
+    font-weight:800;
+
+}
+
+
+.stat-name{
+
+    display:block;
+
+    color:#aeb8d4;
+
+    font-size:10px;
+
+}
+
+
+.correct{
+
+    color:#00e676;
+
+}
+
+
+.wrong{
+
+    color:#ff5c5c;
+
+}
+
+
+.skipped{
+
+    color:#FFD700;
+
+}
+
+
+/* ==================================================
+   RANK CARD
+================================================== */
+
+.rank-section{
+
+    margin-top:15px;
+
+}
+
+
+.rank-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px;
+
+    background:
+    rgba(255,255,255,.07);
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    border-radius:20px;
+
+}
+
+
+.rank-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+.rank-icon{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#FFD700;
+
+    color:#081229;
+
+    font-size:23px;
+
+}
+
+
+.rank-left h3{
+
+    margin:0;
+
+    font-size:15px;
+
+}
+
+
+.rank-left p{
+
+    margin:3px 0 0;
+
+    color:#aeb8d4;
+
+    font-size:10px;
+
+}
+
+
+#rankDisplay{
+
+    color:#FFD700;
+
+    font-size:24px;
+
+    font-weight:800;
+
+}
+
+
+/* ==================================================
+   STUDENT INFO
+================================================== */
+
+.student-card{
+
+    margin-top:15px;
+
+    padding:18px;
+
+    background:
+    rgba(255,255,255,.07);
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    border-radius:20px;
+
+}
+
+
+.student-card h3{
+
+    margin:0 0 12px;
+
+    color:#FFD700;
+
+    font-size:15px;
+
+}
+
+
+.student-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:7px 0;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.06);
+
+}
+
+
+.student-row:last-child{
+
+    border-bottom:none;
+
+}
+
+
+.student-row span:first-child{
+
+    color:#8e9ab8;
+
+    font-size:11px;
+
+}
+
+
+.student-row span:last-child{
+
+    color:#ffffff;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+
+/* ==================================================
+   ACTION BUTTONS
+================================================== */
+
+.action-buttons{
+
+    margin-top:20px;
+
+    display:grid;
+
+    gap:10px;
+
+}
+
+
+.action-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:17px;
+
+    font-family:'Poppins',sans-serif;
+
+    font-weight:700;
+
+    font-size:13px;
+
+    cursor:pointer;
+
+}
+
+
+.retry-btn{
+
+    background:#FFD700;
+
+    color:#081229;
+
+}
+
+
+.dashboard-btn{
+
+    background:
+    rgba(255,255,255,.1);
+
+    color:#ffffff;
+
+    border:
+    1px solid rgba(255,255,255,.15);
+
+}
+
+
+.share-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #1da1f2,
+        #1778b5
+    );
+
+    color:#ffffff;
+
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.result-footer{
+
+    margin-top:30px;
+
+    padding:25px 10px;
+
+    text-align:center;
+
+    border-top:
+    1px solid rgba(255,255,255,.1);
+
+}
+
+
+.result-footer h3{
+
+    color:#FFD700;
+
+    margin:0 0 4px;
+
+    font-size:17px;
+
+}
+
+
+.result-footer p{
+
+    color:#8e9ab8;
+
+    font-size:11px;
+
+}
+
+
+.social-links{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:9px;
+
+    margin:15px 0;
+
+}
+
+
+.social-links a{
+
+    color:#ffffff;
+
+    font-size:10px;
+
+    padding:8px 12px;
+
+    border:
+    1px solid rgba(255,255,255,.15);
+
+    border-radius:20px;
+
+}
+
+
+.social-links a:hover{
+
+    color:#FFD700;
+
+    border-color:#FFD700;
+
+}
+
+
+.copyright{
+
+    color:#66728f !important;
+
+    font-size:9px !important;
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media(max-width:380px){
+
+    .result-container{
+
+        padding:12px;
+
+    }
+
+    .score-circle{
+
+        width:135px;
+
+        height:135px;
+
+    }
+
+    #scoreDisplay{
+
+        font-size:30px;
+
+    }
+
+}
+
+
+/* ==================================================
+   BOTTOM NAV
+================================================== */
+
+.bottom-navigation{
+
+    position:fixed;
+
+    bottom:10px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:94%;
+
+    max-width:620px;
+
+    padding:9px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    background:
+    rgba(8,18,41,.96);
+
+    border:
+    1px solid rgba(255,255,255,.15);
+
+    border-radius:25px;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.5);
+
+    z-index:9999;
+
+}
+
+
+.bottom-navigation a{
+
+    text-align:center;
+
+    color:#aeb8d4;
+
+    font-size:10px;
+
+    padding:5px;
+
+}
+
+
+.bottom-navigation span{
+
+    display:block;
+
+    margin-top:3px;
+
+}
+
+
+.bottom-navigation a.active{
+
+    color:#FFD700;
+
+}
+
+</style>
 
 </head>
-
 
 
 <body>
 
 
-
 <div class="result-container">
 
 
-
-
-
-<!-- =========================
-     Header
-========================= -->
-
+<!-- ==================================================
+     HEADER
+================================================== -->
 
 <header class="result-header">
 
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="logo"
-alt="G THE GENIUS Logo">
-
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo"
+class="result-logo">
 
 
 <h1>
-
-🎉 Test Result
-
+G THE GENIUS
 </h1>
 
 
-
 <p>
-
-Learn • Practice • Succeed
-
+Government Exam Mock Test Portal
 </p>
 
 
@@ -84,453 +839,396 @@ Learn • Practice • Succeed
 
 
 
+<!-- ==================================================
+     RESULT HERO
+================================================== -->
+
+<section class="result-hero">
 
 
+<div class="result-icon">
+🎉
+</div>
 
 
-<!-- =========================
-     Student Result Card
-========================= -->
-
-
-<section class="result-card">
-
-
-
-<h2 id="studentName">
-
-Student Name
-
+<h2>
+Test Completed!
 </h2>
 
 
+<p id="resultMessage">
+Great effort! Keep practicing.
+</p>
 
-<p id="testName">
+
+<div
+class="score-circle">
+
+
+<span id="scoreDisplay">
+0 / 0
+</span>
+
+
+<span class="score-label">
+MARKS
+</span>
+
+
+</div>
+
+
+<div
+id="testTypeDisplay"
+class="test-type-badge">
 
 Mock Test
 
-</p>
-
-
-
-
-<div class="main-score">
-
-
-<h1 id="marks">
-
-0
-
-</h1>
-
-
-
-<span>
-
-Marks
-
-</span>
-
-
 </div>
-
- <!-- =========================
-     Answer Summary
-========================= -->
-
-
-<div class="answer-summary">
-
-
-
-<div class="summary-box correct-box">
-
-
-<h3>
-
-✅
-
-</h3>
-
-
-<p>
-
-Correct
-
-</p>
-
-
-<span id="correctCount">
-
-0
-
-</span>
-
-
-</div>
-
-
-
-
-
-<div class="summary-box wrong-box">
-
-
-<h3>
-
-❌
-
-</h3>
-
-
-<p>
-
-Wrong
-
-</p>
-
-
-<span id="wrongCount">
-
-0
-
-</span>
-
-
-</div>
-
-
-
-
-
-<div class="summary-box skipped-box">
-
-
-<h3>
-
-⏭
-
-</h3>
-
-
-<p>
-
-Skipped
-
-</p>
-
-
-<span id="skippedCount">
-
-0
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- =========================
-     Rank Section
-========================= -->
-
-
-<div class="rank-result-card">
-
-
-
-<h2>
-
-🏆 Your Rank
-
-</h2>
-
-
-
-<div class="rank-item">
-
-
-<p>
-
-Overall Rank
-
-</p>
-
-
-<h3 id="overallRank">
-
-Loading...
-
-</h3>
-
-
-</div>
-
-
-
-
-
-<div class="rank-item">
-
-
-<p>
-
-District Rank
-
-</p>
-
-
-<h3 id="districtRank">
-
-Loading...
-
-</h3>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- =========================
-     Action Buttons
-========================= -->
-
-
-<div class="result-actions">
-
-
-
-<button id="shareBtn"
-class="share-btn">
-
-
-📤 Share Result
-
-
-</button>
-
-
-
-
-
-<button onclick="location.href='mocktest.html?type=daily'"
-class="retry-btn">
-
-
-🔄 Retry Test
-
-
-</button>
-
-
-
-</div>
-
- <!-- =========================
-     Test History
-========================= -->
-
-
-<section class="history-section">
-
-
-<h2>
-
-📚 Test History
-
-</h2>
-
-
-
-<div id="historyList">
-
-
-<p>
-
-No history available
-
-</p>
-
-
-</div>
-
 
 
 </section>
 
 
 
+<!-- ==================================================
+     STATISTICS
+================================================== -->
+
+<section class="stats-grid">
 
 
+<div class="stat-card">
 
+<div class="stat-icon">
+✅
+</div>
 
+<span
+id="correctDisplay"
+class="stat-value correct">
 
-<!-- =========================
-     Bottom Navigation
-========================= -->
+0
 
-
-<nav class="bottom-navigation">
-
-
-<a href="dashboard.html"
-class="nav-item">
-
-
-🏠
-
-<span>
-Home
 </span>
 
+<span class="stat-name">
+Correct
+</span>
 
-</a>
-
-
-
-
-
-<a href="mocktest.html?type=daily"
-class="nav-item">
+</div>
 
 
-📝
+
+<div class="stat-card">
+
+<div class="stat-icon">
+❌
+</div>
+
+<span
+id="wrongDisplay"
+class="stat-value wrong">
+
+0
+
+</span>
+
+<span class="stat-name">
+Wrong
+</span>
+
+</div>
+
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+⏭️
+</div>
+
+<span
+id="skippedDisplay"
+class="stat-value skipped">
+
+0
+
+</span>
+
+<span class="stat-name">
+Skipped
+</span>
+
+</div>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     RANK
+================================================== -->
+
+<section class="rank-section">
+
+
+<div class="rank-card">
+
+
+<div class="rank-left">
+
+
+<div class="rank-icon">
+🏆
+</div>
+
+
+<div>
+
+<h3>
+Overall Rank
+</h3>
+
+<p>
+Your position among students
+</p>
+
+</div>
+
+
+</div>
+
+
+<strong id="rankDisplay">
+--
+</strong>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     STUDENT INFO
+================================================== -->
+
+<section class="student-card">
+
+
+<h3>
+👤 Student Details
+</h3>
+
+
+<div class="student-row">
+
+<span>
+Name
+</span>
+
+<span id="studentName">
+Student
+</span>
+
+</div>
+
+
+<div class="student-row">
+
+<span>
+District
+</span>
+
+<span id="studentDistrict">
+-
+</span>
+
+</div>
+
+
+<div class="student-row">
 
 <span>
 Test
 </span>
 
+<span id="testName">
+Mock Test
+</span>
+
+</div>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     ACTION BUTTONS
+================================================== -->
+
+<section class="action-buttons">
+
+
+<button
+id="retryBtn"
+class="action-btn retry-btn">
+
+🔄 Retry Test
+
+</button>
+
+
+<button
+id="dashboardBtn"
+class="action-btn dashboard-btn">
+
+🏠 Go To Dashboard
+
+</button>
+
+
+<button
+id="shareBtn"
+class="action-btn share-btn">
+
+📤 Share Result
+
+</button>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="result-footer">
+
+
+<h3>
+G THE GENIUS
+</h3>
+
+
+<p>
+ALL GOVERNMENT EXAM MOCK TEST
+</p>
+
+
+<div class="social-links">
+
+
+<a
+href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank"
+rel="noopener">
+
+▶ YouTube
 
 </a>
 
 
+<a
+href="https://t.me/gthegenius"
+target="_blank"
+rel="noopener">
+
+✈ Telegram
+
+</a>
+
+
+<a
+href="mailto:gthegenius7@gmail.com">
+
+✉ Email
+
+</a>
+
+
+</div>
+
+
+<p class="copyright">
+
+© 2026 G THE GENIUS
+<br>
+All Rights Reserved.
+
+</p>
+
+
+</footer>
+
+
+</div>
 
 
 
-<a href="practice.html"
-class="nav-item">
+<!-- ==================================================
+     BOTTOM NAVIGATION
+================================================== -->
 
+<nav class="bottom-navigation">
+
+
+<a href="dashboard.html">
+
+🏠
+<span>
+Home
+</span>
+
+</a>
+
+
+<a href="learning.html">
 
 📚
+<span>
+Learning
+</span>
 
+</a>
+
+
+<a href="practice.html">
+
+📝
 <span>
 Practice
 </span>
 
-
 </a>
 
 
-
-
-
-<a href="leaderboard.html"
-class="nav-item">
-
+<a href="leaderboard.html">
 
 🏆
-
 <span>
 Rank
 </span>
 
-
 </a>
-
 
 
 </nav>
 
 
 
+<!-- RESULT JS -->
 
-
-
-
-<!-- =========================
-     Footer
-========================= -->
-
-
-<footer class="result-footer">
-
-
-
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS Logo">
-
-
-
-
-
-<h3>
-
-G THE GENIUS
-
-</h3>
-
-
-
-
-
-<p>
-
-Learn • Practice • Succeed
-
-</p>
-
-
-
-
-
-<small>
-
-© 2026 G THE GENIUS
-<br>
-All Rights Reserved.
-
-</small>
-
-
-
-</footer>
-
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-<script type="module"
-src="js/result.js"></script>
-
+<script
+type="module"
+src="result.js">
+</script>
 
 
 </body>
