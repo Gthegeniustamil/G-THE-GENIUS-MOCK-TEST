@@ -1,534 +1,879 @@
-<!DOCTYPE html>
-<html lang="en">
+// ======================================================
+// G THE GENIUS
+// PROFILE JS
+// Mobile App Profile + Firebase
+// ======================================================
 
-<head>
+import {
+    auth,
+    db
+} from "../firebase-config.js";
 
-<meta charset="UTF-8">
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+import {
+    doc,
+    getDoc,
+    collection,
+    getDocs,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-<title>
-Profile | G THE GENIUS
-</title>
+// ======================================================
+// ELEMENTS
+// ======================================================
 
+const studentName =
+    document.getElementById("studentName");
 
-<meta name="theme-color"
-content="#081229">
+const studentDistrict =
+    document.getElementById("studentDistrict");
 
+const totalTests =
+    document.getElementById("totalTests");
 
+const totalMarks =
+    document.getElementById("totalMarks");
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
+const bestScore =
+    document.getElementById("bestScore");
 
+const overallRank =
+    document.getElementById("overallRank");
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+const districtRank =
+    document.getElementById("districtRank");
 
+const profileHistory =
+    document.getElementById("profileHistory");
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
+const editProfileBtn =
+    document.getElementById("editProfileBtn");
 
 
-<link rel="stylesheet"
-href="css/profile.css">
+// ======================================================
+// AUTH CHECK
+// ======================================================
 
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
-</head>
+        if (!user) {
 
+            window.location.href =
+                "../login.html";
 
+            return;
 
-<body>
+        }
 
 
+        await loadProfile(user);
 
-<div class="profile-container">
+    }
+);
 
 
+// ======================================================
+// LOAD PROFILE
+// ======================================================
 
+async function loadProfile(user) {
 
+    try {
 
-<!-- =========================
-     Header
-========================= -->
+        // ==============================================
+        // STUDENT DOCUMENT
+        // ==============================================
 
+        const studentRef =
+            doc(
+                db,
+                "students",
+                user.uid
+            );
 
-<header class="profile-header">
 
+        const studentSnap =
+            await getDoc(studentRef);
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="logo"
-alt="G THE GENIUS Logo">
 
+        let studentData = {};
 
 
-<h1>
+        if (studentSnap.exists()) {
 
-👤 My Profile
+            studentData =
+                studentSnap.data();
 
-</h1>
+        }
 
 
+        const name =
+            studentData.name ||
+            user.displayName ||
+            "Student";
 
-<p>
 
-Learn • Practice • Succeed
+        const district =
+            studentData.district ||
+            "-";
 
-</p>
 
+        // ==============================================
+        // DISPLAY STUDENT DATA
+        // ==============================================
 
-</header>
+        studentName.textContent =
+            name;
 
 
+        studentDistrict.textContent =
+            "📍 " + district;
 
 
+        // ==============================================
+        // LOCAL STORAGE
+        // ==============================================
 
+        localStorage.setItem(
+            "studentName",
+            name
+        );
 
 
+        localStorage.setItem(
+            "district",
+            district
+        );
 
-<!-- =========================
-     Profile Card
-========================= -->
 
+        // ==============================================
+        // LOAD RESULTS
+        // ==============================================
 
-<section class="profile-card">
+        await loadResults(
+            name,
+            district
+        );
 
+    }
 
+    catch (error) {
 
-<div class="profile-image">
+        console.error(
+            "Profile Load Error:",
+            error
+        );
 
 
-<img id="studentImage"
+        studentName.textContent =
+            "Student";
 
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 
-alt="Student">
+        studentDistrict.textContent =
+            "District unavailable";
 
+    }
 
-</div>
+}
 
 
+// ======================================================
+// LOAD TEST RESULTS
+// ======================================================
 
+async function loadResults(
+    name,
+    district
+) {
 
+    try {
 
-<h2 id="studentName">
+        const resultsRef =
+            collection(
+                db,
+                "results"
+            );
 
-Student Name
 
-</h2>
+        const snapshot =
+            await getDocs(
+                resultsRef
+            );
 
 
+        let results = [];
 
-<p id="studentDistrict">
 
-District
+        snapshot.forEach(
+            (resultDoc) => {
 
-</p>
+                const data =
+                    resultDoc.data();
 
-<!-- =========================
-     Performance Summary
-========================= -->
 
+                if (
+                    data.studentName === name
+                ) {
 
-<div class="performance-grid">
+                    results.push({
 
+                        id:
+                            resultDoc.id,
 
+                        studentName:
+                            data.studentName ||
+                            "",
 
-<div class="performance-card">
+                        district:
+                            data.district ||
+                            "",
 
+                        score:
+                            Number(
+                                data.score
+                            ) || 0,
 
-<h3>
+                        totalQuestions:
+                            Number(
+                                data.totalQuestions
+                            ) || 0,
 
-📝
+                        testType:
+                            data.testType ||
+                            "daily",
 
-</h3>
+                        percentage:
+                            Number(
+                                data.percentage
+                            ) || 0,
 
+                        createdAt:
+                            data.createdAt ||
+                            null
 
-<p>
+                    });
 
-Total Tests
+                }
 
-</p>
+            }
+        );
 
 
-<span id="totalTests">
+        // ==============================================
+        // TOTAL TESTS
+        // ==============================================
 
-0
+        totalTests.textContent =
+            results.length;
 
-</span>
 
+        // ==============================================
+        // TOTAL MARKS
+        // ==============================================
 
-</div>
+        const marks =
+            results.reduce(
+                (sum, item) =>
+                    sum + item.score,
+                0
+            );
 
 
+        totalMarks.textContent =
+            marks;
 
 
+        // ==============================================
+        // BEST SCORE
+        // ==============================================
 
-<div class="performance-card">
+        let best = 0;
 
 
-<h3>
+        results.forEach(
+            item => {
 
-⭐
+                if (
+                    item.score > best
+                ) {
 
-</h3>
+                    best =
+                        item.score;
 
+                }
 
-<p>
+            }
+        );
 
-Total Marks
 
-</p>
+        bestScore.textContent =
+            best;
 
 
-<span id="totalMarks">
+        // ==============================================
+        // TEST HISTORY
+        // ==============================================
 
-0
+        displayHistory(
+            results
+        );
 
-</span>
 
+        // ==============================================
+        // RANKS
+        // ==============================================
 
-</div>
+        await calculateRanks(
+            name,
+            district
+        );
 
+    }
 
+    catch (error) {
 
+        console.error(
+            "Results Error:",
+            error
+        );
 
 
-<div class="performance-card">
+        totalTests.textContent =
+            "0";
 
+        totalMarks.textContent =
+            "0";
 
-<h3>
+        bestScore.textContent =
+            "0";
 
-🏆
+        profileHistory.innerHTML =
+            "<p>No test history</p>";
 
-</h3>
+    }
 
+}
 
-<p>
 
-Best Score
+// ======================================================
+// TEST HISTORY
+// ======================================================
 
-</p>
+function displayHistory(
+    results
+) {
 
+    if (
+        results.length === 0
+    ) {
 
-<span id="bestScore">
+        profileHistory.innerHTML =
+            "<p>No test history yet 📚</p>";
 
-0
+        return;
 
-</span>
+    }
 
 
-</div>
+    // Newest first
 
+    results.sort(
+        (a, b) => {
 
+            const dateA =
+                a.createdAt?.seconds ||
+                0;
 
-</div>
+            const dateB =
+                b.createdAt?.seconds ||
+                0;
 
+            return dateB - dateA;
 
+        }
+    );
 
 
+    // Last 10 tests
 
+    const latest =
+        results.slice(0, 10);
 
 
+    profileHistory.innerHTML =
+        "";
 
-<!-- =========================
-     Rank Summary
-========================= -->
 
+    latest.forEach(
+        (item) => {
 
-<div class="profile-rank-card">
+            let testName =
+                "Daily Mock Test";
 
 
+            let icon =
+                "🟢";
 
-<h2>
 
-🏅 Rank Summary
+            if (
+                item.testType ===
+                "weekly"
+            ) {
 
-</h2>
+                testName =
+                    "Weekly Mock Test";
 
+                icon =
+                    "🟡";
 
+            }
 
 
-<div class="rank-row">
+            else if (
+                item.testType ===
+                "monthly"
+            ) {
 
+                testName =
+                    "Monthly Grand Test";
 
-<p>
+                icon =
+                    "🔴";
 
-Overall Rank
+            }
 
-</p>
 
+            const percentage =
+                item.totalQuestions > 0
+                ?
+                Math.round(
+                    (
+                        item.score /
+                        item.totalQuestions
+                    ) * 100
+                )
+                :
+                0;
 
-<strong id="overallRank">
 
-Loading...
+            const card =
+                document.createElement(
+                    "div"
+                );
 
-</strong>
 
+            card.className =
+                "history-card";
 
-</div>
 
+            card.innerHTML = `
 
+                <div class="history-left">
 
+                    <strong>
+                        ${icon} ${testName}
+                    </strong>
 
+                    <small>
+                        ${formatDate(item.createdAt)}
+                    </small>
 
-<div class="rank-row">
+                </div>
 
 
-<p>
+                <div class="history-right">
 
-District Rank
+                    <strong>
+                        ${item.score}/${item.totalQuestions}
+                    </strong>
 
-</p>
+                    <small>
+                        ${percentage}%
+                    </small>
 
+                </div>
 
-<strong id="districtRank">
+            `;
 
-Loading...
 
-</strong>
+            profileHistory.appendChild(
+                card
+            );
 
+        }
+    );
 
-</div>
+}
 
 
+// ======================================================
+// DATE FORMAT
+// ======================================================
 
-</div>
+function formatDate(
+    timestamp
+) {
 
-<!-- =========================
-     Test History
-========================= -->
+    if (
+        !timestamp
+    ) {
 
+        return "Recent test";
 
-<section class="profile-history">
+    }
 
 
-<h2>
+    try {
 
-📚 Test History
+        const date =
+            new Date(
+                timestamp.seconds * 1000
+            );
 
-</h2>
 
+        return date.toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
 
+    }
 
-<div id="profileHistory">
+    catch (error) {
 
+        return "Recent test";
 
-<p>
+    }
 
-No test history
+}
 
-</p>
 
+// ======================================================
+// CALCULATE RANKS
+// ======================================================
 
-</div>
+async function calculateRanks(
+    name,
+    district
+) {
 
+    try {
 
+        const resultsSnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "results"
+                )
+            );
 
-</section>
 
+        let students = [];
 
 
+        resultsSnapshot.forEach(
+            (resultDoc) => {
 
+                const data =
+                    resultDoc.data();
 
 
+                const score =
+                    Number(
+                        data.score
+                    ) || 0;
 
 
-<!-- =========================
-     Action Buttons
-========================= -->
+                const total =
+                    Number(
+                        data.totalQuestions
+                    ) || 0;
 
 
-<div class="profile-actions">
+                if (
+                    total === 0
+                ) {
 
+                    return;
 
+                }
 
-<button id="editProfileBtn"
-class="edit-btn">
 
+                students.push({
 
-✏️ Edit Profile
+                    name:
+                        data.studentName ||
+                        "",
 
+                    district:
+                        data.district ||
+                        "",
 
-</button>
+                    score:
+                        score,
 
+                    total:
+                        total,
 
+                    percentage:
+                        score / total
 
+                });
 
+            }
+        );
 
-<button id="logoutBtn"
-class="logout-btn">
 
+        // ==============================================
+        // BEST RESULT PER STUDENT
+        // ==============================================
 
-🚪 Logout
+        const studentMap =
+            new Map();
 
 
-</button>
+        students.forEach(
+            student => {
 
+                const existing =
+                    studentMap.get(
+                        student.name
+                    );
 
 
-</div>
+                if (
+                    !existing ||
+                    student.percentage >
+                    existing.percentage
+                ) {
 
+                    studentMap.set(
+                        student.name,
+                        student
+                    );
 
+                }
 
+            }
+        );
 
 
+        const uniqueStudents =
+            Array.from(
+                studentMap.values()
+            );
 
 
+        // ==============================================
+        // OVERALL RANK
+        // ==============================================
 
-<!-- =========================
-     Bottom Navigation
-========================= -->
+        uniqueStudents.sort(
+            (a, b) =>
+                b.percentage -
+                a.percentage
+        );
 
 
-<nav class="bottom-navigation">
+        const overallIndex =
+            uniqueStudents.findIndex(
+                student =>
+                    student.name ===
+                    name
+            );
 
 
-<a href="dashboard.html"
-class="nav-item">
+        if (
+            overallIndex !== -1
+        ) {
 
+            overallRank.textContent =
+                "#" +
+                (overallIndex + 1);
 
-🏠
+        }
 
-<span>
-Home
-</span>
+        else {
 
+            overallRank.textContent =
+                "--";
 
-</a>
+        }
 
 
+        // ==============================================
+        // DISTRICT RANK
+        // ==============================================
 
+        const districtStudents =
+            uniqueStudents.filter(
+                student =>
+                    student.district ===
+                    district
+            );
 
 
-<a href="mocktest.html?type=daily"
-class="nav-item">
+        districtStudents.sort(
+            (a, b) =>
+                b.percentage -
+                a.percentage
+        );
 
 
-📝
+        const districtIndex =
+            districtStudents.findIndex(
+                student =>
+                    student.name ===
+                    name
+            );
 
-<span>
-Test
-</span>
 
+        if (
+            districtIndex !== -1
+        ) {
 
-</a>
+            districtRank.textContent =
+                "#" +
+                (districtIndex + 1);
 
+        }
 
+        else {
 
+            districtRank.textContent =
+                "--";
 
+        }
 
-<a href="leaderboard.html"
-class="nav-item">
+    }
 
+    catch (error) {
 
-🏆
+        console.error(
+            "Rank Error:",
+            error
+        );
 
-<span>
-Rank
-</span>
 
+        overallRank.textContent =
+            "--";
 
-</a>
 
+        districtRank.textContent =
+            "--";
 
+    }
 
+}
 
 
-<a href="profile.html"
-class="nav-item active">
+// ======================================================
+// EDIT PROFILE
+// ======================================================
 
+editProfileBtn.addEventListener(
+    "click",
+    () => {
 
-👤
+        alert(
+            "Profile editing will be available soon ✏️"
+        );
 
-<span>
-Profile
-</span>
+    }
+);
 
 
-</a>
+// ======================================================
+// LOGOUT
+// ======================================================
 
+logoutBtn.addEventListener(
+    "click",
+    async () => {
 
+        const confirmLogout =
+            confirm(
+                "Are you sure you want to logout?"
+            );
 
-</nav>
 
+        if (
+            !confirmLogout
+        ) {
 
+            return;
 
+        }
 
 
+        try {
 
+            await signOut(
+                auth
+            );
 
-<!-- =========================
-     Footer
-========================= -->
 
+            localStorage.removeItem(
+                "student"
+            );
 
-<footer class="profile-footer">
 
+            localStorage.removeItem(
+                "studentName"
+            );
 
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS Logo">
+            localStorage.removeItem(
+                "district"
+            );
 
 
+            localStorage.removeItem(
+                "email"
+            );
 
 
+            window.location.href =
+                "../login.html";
 
-<h3>
+        }
 
-G THE GENIUS
+        catch (error) {
 
-</h3>
+            console.error(
+                "Logout Error:",
+                error
+            );
 
 
+            alert(
+                "Logout failed. Please try again."
+            );
 
+        }
 
+    }
+);
 
-<p>
 
-Learn • Practice • Succeed
+// ======================================================
+// CONSOLE
+// ======================================================
 
-</p>
-
-
-
-
-
-<small>
-
-© 2026 G THE GENIUS
-<br>
-All Rights Reserved.
-
-</small>
-
-
-
-</footer>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-<script type="module"
-src="js/profile.js"></script>
-
-
-
-</body>
-
-</html>
- 
+console.log(
+    "G THE GENIUS Profile Loaded"
+);
