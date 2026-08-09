@@ -1,809 +1,725 @@
-/* ==========================================
-   G THE GENIUS
-   Result JavaScript
-   Part 1
+// ======================================================
+// G THE GENIUS
+// RESULT JS
+// MOBILE APP RESULT SYSTEM
+// ======================================================
 
-   Features:
-   - Firebase Connect
-   - Load Latest Result
-   - Student Data
-========================================== */
-
-
-
-/* ==========================================
-   Firebase Imports
-========================================== */
-
+import { db } from "./firebase-config.js";
 
 import {
-
-    db
-
-}
-
-from "./firebase-config.js";
-
-
-
-import {
-
     collection,
-
     getDocs,
-
     query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    where,
 
-    orderBy,
+// ======================================================
+// GET STORED TEST DATA
+// ======================================================
 
-    limit
+const score =
+    Number(localStorage.getItem("score")) || 0;
+
+const totalQuestions =
+    Number(localStorage.getItem("totalQuestions")) || 0;
+
+const testType =
+    localStorage.getItem("testType") || "daily";
+
+const questions =
+    JSON.parse(
+        localStorage.getItem("questions") || "[]"
+    );
+
+const userAnswers =
+    JSON.parse(
+        localStorage.getItem("userAnswers") || "[]"
+    );
+
+
+// ======================================================
+// STUDENT DATA
+// ======================================================
+
+let student = {};
+
+try {
+
+    student =
+        JSON.parse(
+            localStorage.getItem("student") || "{}"
+        );
 
 }
+catch(error){
 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-
-
-/* ==========================================
-   Variables
-========================================== */
-
-
-let resultData = null;
-
-let allResults = [];
-
-
-
-
-
-
-
-/* ==========================================
-   Student Details
-========================================== */
-
-
-function getStudentInfo(){
-
-
-    return {
-
-
-        name:
-
-        localStorage.getItem(
-            "studentName"
-        )
-        ||
-        "Student",
-
-
-
-
-        district:
-
-        localStorage.getItem(
-            "district"
-        )
-        ||
-        "Tamil Nadu"
-
-
-
-    };
-
+    console.log(
+        "Student data error:",
+        error
+    );
 
 }
 
 
+// ======================================================
+// STUDENT NAME / DISTRICT
+// ======================================================
+
+const studentName =
+    student.name ||
+    localStorage.getItem("studentName") ||
+    "Student";
 
 
+const studentDistrict =
+    student.district ||
+    localStorage.getItem("district") ||
+    "-";
 
 
+document.getElementById(
+    "studentName"
+).textContent = studentName;
 
-/* ==========================================
-   Load Latest Result
-========================================== */
+
+document.getElementById(
+    "studentDistrict"
+).textContent = studentDistrict;
 
 
-async function loadResult(){
+// ======================================================
+// CALCULATE CORRECT / WRONG / SKIPPED
+// ======================================================
+
+let correct = 0;
+
+let wrong = 0;
+
+let skipped = 0;
+
+
+questions.forEach((question, index) => {
+
+    const answer =
+        userAnswers[index];
+
+
+    // Not answered
+    if (
+        answer === null ||
+        answer === undefined
+    ){
+
+        skipped++;
+
+        return;
+
+    }
+
+
+    // Correct
+    if (
+        Number(answer) ===
+        Number(question.answer)
+    ){
+
+        correct++;
+
+    }
+
+    // Wrong
+    else{
+
+        wrong++;
+
+    }
+
+});
+
+
+// ======================================================
+// FALLBACK
+// ======================================================
+
+if (
+    correct === 0 &&
+    score > 0
+){
+
+    correct = score;
+
+}
+
+
+if (
+    totalQuestions > 0 &&
+    correct + wrong + skipped >
+    totalQuestions
+){
+
+    skipped = 0;
+
+}
+
+
+// ======================================================
+// SCORE DISPLAY
+// ======================================================
+
+document.getElementById(
+    "scoreDisplay"
+).textContent =
+
+`${score} / ${totalQuestions}`;
+
+
+// ======================================================
+// STATISTICS
+// ======================================================
+
+document.getElementById(
+    "correctDisplay"
+).textContent = correct;
+
+
+document.getElementById(
+    "wrongDisplay"
+).textContent = wrong;
+
+
+document.getElementById(
+    "skippedDisplay"
+).textContent = skipped;
+
+
+// ======================================================
+// TEST TYPE
+// ======================================================
+
+let testName = "Daily Mock Test";
+
+
+if(testType === "daily"){
+
+    testName =
+        "🟢 Daily Mock Test";
+
+}
+
+
+else if(testType === "weekly"){
+
+    testName =
+        "🟡 Weekly Mock Test";
+
+}
+
+
+else if(testType === "monthly"){
+
+    testName =
+        "🔴 Monthly Grand Test";
+
+}
+
+
+else{
+
+    testName =
+        "📝 Mock Test";
+
+}
+
+
+document.getElementById(
+    "testTypeDisplay"
+).textContent =
+testName;
+
+
+document.getElementById(
+    "testName"
+).textContent =
+testName;
+
+
+// ======================================================
+// RESULT MESSAGE
+// ======================================================
+
+const resultMessage =
+document.getElementById(
+    "resultMessage"
+);
+
+
+if(totalQuestions === 0){
+
+    resultMessage.textContent =
+        "Test result not available.";
+
+}
+
+else{
+
+    const percentage =
+        Math.round(
+            (score / totalQuestions) * 100
+        );
+
+
+    if(percentage >= 90){
+
+        resultMessage.textContent =
+            "🔥 Outstanding! You are exam ready!";
+
+    }
+
+    else if(percentage >= 75){
+
+        resultMessage.textContent =
+            "🏆 Excellent performance! Keep going!";
+
+    }
+
+    else if(percentage >= 50){
+
+        resultMessage.textContent =
+            "💪 Good effort! Practice more and improve!";
+
+    }
+
+    else{
+
+        resultMessage.textContent =
+            "📚 Keep practicing. Your next attempt can be better!";
+
+    }
+
+}
+
+
+// ======================================================
+// LOAD OVERALL RANK
+// ======================================================
+
+async function loadRank(){
+
+    const rankDisplay =
+        document.getElementById(
+            "rankDisplay"
+        );
+
+
+    rankDisplay.textContent =
+        "Loading...";
 
 
     try{
 
-
-        const student =
-            getStudentInfo();
-
-
-
-
-        const resultRef =
+        const resultsRef =
             collection(
                 db,
                 "results"
             );
 
 
-
-
-        const q =
-            query(
-
-                resultRef,
-
-                where(
-                    "name",
-                    "==",
-                    student.name
-                ),
-
-                orderBy(
-                    "createdAt",
-                    "desc"
-                ),
-
-                limit(1)
-
-            );
-
-
-
-
-
-        const snapshot =
-            await getDocs(q);
-
-
-
-
-
-        snapshot.forEach(
-            (doc)=>{
-
-
-            resultData = {
-
-                id:doc.id,
-
-                ...doc.data()
-
-            };
-
-
-        });
-
-
-
-
-
-        if(resultData){
-
-
-            showBasicResult();
-
-
-        }
-
-
-
-    }
-
-
-    catch(error){
-
-
-        console.log(
-            "Result Load Error:",
-            error
-        );
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Display Basic Result
-========================================== */
-
-
-function showBasicResult(){
-
-
-    document.getElementById(
-        "studentName"
-    ).textContent =
-        resultData.name;
-
-
-
-
-    document.getElementById(
-        "testName"
-    ).textContent =
-        resultData.testName;
-
-
-
-
-    document.getElementById(
-        "marks"
-    ).textContent =
-        resultData.marks;
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Page Load
-========================================== */
-
-
-window.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-    loadResult();
-
-
-}
-
-);
-
-/* ==========================================
-   G THE GENIUS
-   Result JavaScript
-   Part 2
-
-   Features:
-   - Answer Summary
-   - Overall Rank
-   - District Rank
-========================================== */
-
-
-
-/* ==========================================
-   Load All Results
-========================================== */
-
-
-async function loadAllResults(){
-
-
-    try{
-
-
         const snapshot =
             await getDocs(
-                collection(
-                    db,
-                    "results"
-                )
+                resultsRef
             );
 
 
+        let results = [];
 
-        allResults = [];
 
-
-
-        snapshot.forEach(
-            (doc)=>{
-
-
-            allResults.push({
-
-                id:doc.id,
-
-                ...doc.data()
-
-            });
-
-
-
-        });
-
-
-
-
-        calculateRanks();
-
-
-    }
-
-
-    catch(error){
-
-
-        console.log(
-            "All Results Error:",
-            error
-        );
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Show Answer Summary
-========================================== */
-
-
-function showAnswerSummary(){
-
-
-    if(!resultData)
-        return;
-
-
-
-    document.getElementById(
-        "correctCount"
-    ).textContent =
-        resultData.correct || 0;
-
-
-
-
-    document.getElementById(
-        "wrongCount"
-    ).textContent =
-        resultData.wrong || 0;
-
-
-
-
-    document.getElementById(
-        "skippedCount"
-    ).textContent =
-        resultData.skipped || 0;
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Calculate Rank
-========================================== */
-
-
-function calculateRanks(){
-
-
-    if(!resultData)
-        return;
-
-
-
-    let sorted =
-
-    [...allResults].sort(
-
-        (a,b)=>
-
-        b.marks - a.marks
-
-    );
-
-
-
-
-
-    const overallIndex =
-
-    sorted.findIndex(
-
-        item=>
-
-        item.id === resultData.id
-
-    );
-
-
-
-
-
-    document.getElementById(
-        "overallRank"
-    ).textContent =
-
-
-    overallIndex >= 0
-
-    ?
-
-    "#"+(overallIndex+1)
-
-    :
-
-    "N/A";
-
-
-
-
-
-
-
-    const districtResults =
-
-    sorted.filter(
-
-        item =>
-
-        item.district === resultData.district
-
-    );
-
-
-
-
-
-
-    const districtIndex =
-
-    districtResults.findIndex(
-
-        item =>
-
-        item.id === resultData.id
-
-    );
-
-
-
-
-
-    document.getElementById(
-        "districtRank"
-    ).textContent =
-
-
-    districtIndex >= 0
-
-    ?
-
-    "#"+(districtIndex+1)
-
-    :
-
-    "N/A";
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Connect Functions
-========================================== */
-
-
-const oldShowBasicResult =
-    showBasicResult;
-
-
-
-showBasicResult = function(){
-
-
-    oldShowBasicResult();
-
-
-
-    showAnswerSummary();
-
-
-
-    loadAllResults();
-
-
-
-};
-
-/* ==========================================
-   G THE GENIUS
-   Result JavaScript
-   Part 3 Final
-
-   Features:
-   - Share Result
-   - Test History
-   - Retry Handling
-   - Final UI Connection
-========================================== */
-
-
-
-/* ==========================================
-   Share Result
-========================================== */
-
-
-const shareBtn =
-    document.getElementById(
-        "shareBtn"
-    );
-
-
-
-
-if(shareBtn){
-
-
-shareBtn.onclick = async ()=>{
-
-
-    if(!resultData)
-        return;
-
-
-
-    const shareText = `
-
-🏆 G THE GENIUS Result
-
-👤 Name: ${resultData.name}
-
-📝 Test: ${resultData.testName}
-
-⭐ Marks: ${resultData.marks}
-
-✅ Correct: ${resultData.correct}
-
-❌ Wrong: ${resultData.wrong}
-
-🔥 Keep Learning!
-
-`;
-
-
-
-    if(
-        navigator.share
-    ){
-
-
-        await navigator.share({
-
-            title:
-            "G THE GENIUS Result",
-
-            text:
-            shareText
-
-        });
-
-
-    }
-
-    else{
-
-
-        navigator.clipboard.writeText(
-            shareText
-        );
-
-
-        alert(
-            "Result copied!"
-        );
-
-
-    }
-
-
-
-};
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Load History
-========================================== */
-
-
-async function loadHistory(){
-
-
-    try{
-
-
-        const student =
-            getStudentInfo();
-
-
-
-
-        const q =
-            query(
-
-                collection(
-                    db,
-                    "results"
-                ),
-
-
-                where(
-                    "name",
-                    "==",
-                    student.name
-                ),
-
-
-                orderBy(
-                    "createdAt",
-                    "desc"
-                )
-
-            );
-
-
-
-
-
-        const snapshot =
-            await getDocs(q);
-
-
-
-
-
-        const historyList =
-            document.getElementById(
-                "historyList"
-            );
-
-
-
-
-
-        if(!historyList)
-            return;
-
-
-
-
-
-        historyList.innerHTML="";
-
-
-
-
-
-        snapshot.forEach(
-            (doc)=>{
-
+        snapshot.forEach(doc => {
 
             const data =
                 doc.data();
 
 
+            results.push({
 
+                id:doc.id,
 
-            historyList.innerHTML += `
+                score:
+                    Number(data.score) || 0,
 
+                totalQuestions:
+                    Number(
+                        data.totalQuestions
+                    ) || 0,
 
-            <div class="history-item">
+                testType:
+                    data.testType || "daily",
 
+                studentName:
+                    data.studentName || "",
 
-            <strong>
+                createdAt:
+                    data.createdAt || null
 
-            ${data.testName || "Mock Test"}
-
-            </strong>
-
-
-
-            <span>
-
-            ${data.marks} Marks
-
-            </span>
-
-
-            </div>
-
-
-            `;
-
-
+            });
 
         });
 
 
+        // ==================================================
+        // SAME TEST TYPE RANK
+        // ==================================================
 
-    }
+        results =
+            results.filter(
+                item =>
+                    item.testType ===
+                    testType
+            );
 
 
-    catch(error){
+        // ==================================================
+        // SORT HIGH SCORE FIRST
+        // ==================================================
+
+        results.sort(
+            (a,b) => {
+
+                const aPercentage =
+                    a.totalQuestions > 0
+                    ?
+                    a.score /
+                    a.totalQuestions
+                    :
+                    0;
 
 
-        console.log(
-            "History Error:",
-            error
+                const bPercentage =
+                    b.totalQuestions > 0
+                    ?
+                    b.score /
+                    b.totalQuestions
+                    :
+                    0;
+
+
+                if(
+                    bPercentage !==
+                    aPercentage
+                ){
+
+                    return (
+                        bPercentage -
+                        aPercentage
+                    );
+
+                }
+
+
+                return b.score - a.score;
+
+            }
+        );
+
+
+        // ==================================================
+        // CURRENT RESULT RANK
+        // ==================================================
+
+        let rank = 1;
+
+
+        /*
+         * Current test result is identified
+         * using score + student name + test type.
+         */
+
+        let foundIndex =
+            results.findIndex(
+                item =>
+
+                    item.score === score &&
+
+                    item.studentName ===
+                    studentName &&
+
+                    item.testType ===
+                    testType
+
+            );
+
+
+        if(foundIndex !== -1){
+
+            rank =
+                foundIndex + 1;
+
+        }
+
+
+        // If result is not found
+        // calculate approximate rank
+
+        else{
+
+            rank =
+                results.filter(
+                    item => {
+
+                        if(
+                            item.totalQuestions === 0
+                        ){
+
+                            return false;
+
+                        }
+
+
+                        return (
+
+                            item.score /
+                            item.totalQuestions
+
+                        ) >
+
+                        (
+
+                            score /
+                            totalQuestions
+
+                        );
+
+                    }
+                ).length + 1;
+
+        }
+
+
+        rankDisplay.textContent =
+            "#" + rank;
+
+
+        localStorage.setItem(
+            "rank",
+            rank
         );
 
 
     }
 
+    catch(error){
+
+        console.error(
+            "Rank Error:",
+            error
+        );
+
+
+        rankDisplay.textContent =
+            "--";
+
+    }
 
 }
 
 
+// ======================================================
+// LOAD RANK
+// ======================================================
+
+loadRank();
+
+
+// ======================================================
+// RETRY TEST
+// ======================================================
+
+document.getElementById(
+    "retryBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        let url =
+            "mocktest.html?type=" +
+            encodeURIComponent(
+                testType
+            );
+
+
+        window.location.href =
+            url;
+
+    }
+);
+
+
+// ======================================================
+// DASHBOARD
+// ======================================================
+
+document.getElementById(
+    "dashboardBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+);
+
+
+// ======================================================
+// SHARE RESULT
+// ======================================================
+
+document.getElementById(
+    "shareBtn"
+).addEventListener(
+    "click",
+    async () => {
+
+
+        const rank =
+            localStorage.getItem(
+                "rank"
+            ) || "--";
+
+
+        const shareText =
+
+`🎯 G THE GENIUS MOCK TEST
+
+👤 ${studentName}
+
+📝 ${testName}
+
+🏆 Score: ${score}/${totalQuestions}
+
+✅ Correct: ${correct}
+
+❌ Wrong: ${wrong}
+
+⏭️ Skipped: ${skipped}
+
+🏅 Rank: #${rank}
+
+🔥 Keep Learning!
+G THE GENIUS`;
 
 
 
+        // Native Share
+        if(
+            navigator.share
+        ){
+
+            try{
+
+                await navigator.share({
+
+                    title:
+                        "G THE GENIUS Result",
+
+                    text:
+                        shareText
+
+                });
+
+            }
+
+            catch(error){
+
+                console.log(
+                    "Share cancelled"
+                );
+
+            }
+
+        }
 
 
-/* ==========================================
-   Final Page Load
-========================================== */
+        // Clipboard fallback
 
+        else{
+
+            try{
+
+                await navigator.clipboard.writeText(
+                    shareText
+                );
+
+
+                alert(
+                    "Result copied! 📋"
+                );
+
+            }
+
+            catch(error){
+
+                alert(
+                    shareText
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+// ======================================================
+// PREVENT BACK BUTTON CONFUSION
+// ======================================================
 
 window.addEventListener(
+    "pageshow",
+    () => {
 
-"DOMContentLoaded",
+        window.scrollTo(
+            0,
+            0
+        );
 
-()=>{
-
-
-    loadResult();
-
-
-    loadHistory();
+    }
+);
 
 
-}
+// ======================================================
+// CONSOLE
+// ======================================================
 
+console.log(
+    "G THE GENIUS Result Loaded"
+);
+
+console.log(
+    "Test Type:",
+    testType
+);
+
+console.log(
+    "Score:",
+    score,
+    "/",
+    totalQuestions
+);
+
+console.log(
+    "Correct:",
+    correct
+);
+
+console.log(
+    "Wrong:",
+    wrong
+);
+
+console.log(
+    "Skipped:",
+    skipped
 );
