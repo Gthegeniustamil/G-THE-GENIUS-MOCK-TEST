@@ -161,65 +161,99 @@ document
 
     });
 
-
 // ============================================================
-// ADMIN MENU
+// ADMIN MENU - FIXED
 // ============================================================
 
-document
-    .querySelectorAll(".menu-card")
-    .forEach((button) => {
+document.addEventListener("DOMContentLoaded", () => {
 
-        button.addEventListener("click", () => {
+    const menuCards =
+        document.querySelectorAll(".menu-card");
+
+    const adminSections =
+        document.querySelectorAll(".admin-section");
+
+
+    menuCards.forEach((button) => {
+
+        button.addEventListener("click", async () => {
 
             const target =
-                button.dataset.section;
+                button.getAttribute("data-section");
+
+            console.log("Admin Menu Clicked:", target);
 
 
-            document
-                .querySelectorAll(".menu-card")
-                .forEach((btn) => {
+            // -----------------------------
+            // REMOVE ACTIVE FROM ALL BUTTONS
+            // -----------------------------
 
-                    btn.classList.remove("active");
+            menuCards.forEach((btn) => {
 
-                });
+                btn.classList.remove("active");
 
+            });
+
+
+            // -----------------------------
+            // ADD ACTIVE TO CLICKED BUTTON
+            // -----------------------------
 
             button.classList.add("active");
 
 
-            document
-                .querySelectorAll(".admin-section")
-                .forEach((section) => {
+            // -----------------------------
+            // HIDE ALL SECTIONS
+            // -----------------------------
 
-                    section.classList.remove(
-                        "active-section"
-                    );
+            adminSections.forEach((section) => {
 
-                });
+                section.classList.remove(
+                    "active-section"
+                );
 
+                section.style.display = "none";
+
+            });
+
+
+            // -----------------------------
+            // SHOW TARGET SECTION
+            // -----------------------------
 
             const targetSection =
                 document.getElementById(target);
 
 
-            if (targetSection) {
+            if (!targetSection) {
 
-                targetSection.classList.add(
-                    "active-section"
+                console.error(
+                    "Section not found:",
+                    target
                 );
+
+                return;
 
             }
 
 
-            // Load data when section opens
+            targetSection.classList.add(
+                "active-section"
+            );
+
+            targetSection.style.display = "block";
+
+
+            // -----------------------------
+            // LOAD DATA
+            // -----------------------------
 
             if (
                 target ===
                 "manageQuestionsSection"
             ) {
 
-                loadQuestions();
+                await loadQuestions();
 
             }
 
@@ -229,13 +263,23 @@ document
                 "resultsSection"
             ) {
 
-                loadResults();
+                await loadResults();
 
             }
 
         });
 
     });
+
+
+    console.log(
+        "✅ Admin Menu Initialized:",
+        menuCards.length,
+        "menu buttons"
+    );
+
+});
+
 
 
 // ============================================================
