@@ -1,7 +1,5 @@
 // ============================================================
-// G THE GENIUS
-// PRACTICE TEST JS
-// Firebase v10.12.2
+// G THE GENIUS - SUBJECT ONLY PRACTICE TEST
 // ============================================================
 
 import {
@@ -20,12 +18,13 @@ import {
 
 
 // ============================================================
-// GLOBAL VARIABLES
+// VARIABLES
 // ============================================================
 
 let currentUser = null;
 
 let allQuestions = [];
+
 let practiceQuestions = [];
 
 let selectedAnswers = [];
@@ -34,13 +33,13 @@ let currentIndex = 0;
 
 let timerInterval = null;
 
-let timeLeft = 15 * 60;
+let timeLeft = 300;
 
 let testStarted = false;
 
 
 // ============================================================
-// DOM ELEMENTS
+// DOM
 // ============================================================
 
 const selectionArea =
@@ -55,9 +54,6 @@ const loadingBox =
 const subjectSelect =
     document.getElementById("subjectSelect");
 
-const topicSelect =
-    document.getElementById("topicSelect");
-
 const questionCount =
     document.getElementById("questionCount");
 
@@ -68,14 +64,10 @@ const selectionMessage =
     document.getElementById("selectionMessage");
 
 const currentQuestionNumber =
-    document.getElementById(
-        "currentQuestionNumber"
-    );
+    document.getElementById("currentQuestionNumber");
 
 const totalQuestionNumber =
-    document.getElementById(
-        "totalQuestionNumber"
-    );
+    document.getElementById("totalQuestionNumber");
 
 const timerElement =
     document.getElementById("timer");
@@ -86,16 +78,14 @@ const progressFill =
 const questionNumber =
     document.getElementById("questionNumber");
 
-const questionTopic =
-    document.getElementById("questionTopic");
+const questionSubject =
+    document.getElementById("questionSubject");
 
 const questionText =
     document.getElementById("questionText");
 
 const optionsContainer =
-    document.getElementById(
-        "optionsContainer"
-    );
+    document.getElementById("optionsContainer");
 
 const previousBtn =
     document.getElementById("previousBtn");
@@ -107,50 +97,40 @@ const submitBtn =
     document.getElementById("submitBtn");
 
 const questionPalette =
-    document.getElementById(
-        "questionPalette"
-    );
+    document.getElementById("questionPalette");
 
 const backBtn =
     document.getElementById("backBtn");
 
 
 // ============================================================
-// AUTH CHECK
+// AUTH
 // ============================================================
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
 
-        alert(
-            "Please login to use Practice Test."
-        );
+        alert("Please login to use Practice Test.");
 
         window.location.href =
             "login.html";
 
         return;
-
     }
 
     currentUser = user;
 
-    console.log(
-        "Practice User:",
-        user.uid
-    );
-
-    await loadAllQuestions();
+    await loadQuestions();
 
 });
 
 
 // ============================================================
-// LOAD ALL QUESTIONS
+// LOAD QUESTIONS
 // ============================================================
 
-async function loadAllQuestions() {
+async function loadQuestions() {
 
     loadingBox.style.display = "block";
 
@@ -166,15 +146,13 @@ async function loadAllQuestions() {
 
         allQuestions = [];
 
-        snapshot.forEach((questionDoc) => {
+        snapshot.forEach((doc) => {
 
-            const data =
-                questionDoc.data();
+            const data = doc.data();
 
             allQuestions.push({
 
-                id:
-                    questionDoc.id,
+                id: doc.id,
 
                 question:
                     data.question || "",
@@ -185,18 +163,16 @@ async function loadAllQuestions() {
                         : [],
 
                 answer:
-                    Number(
-                        data.answer ?? 0
-                    ),
+                    Number(data.answer ?? 0),
 
                 subject:
-                    data.subject || "",
-
-                topic:
-                    data.topic || "",
+                    data.subject ||
+                    data.Subject ||
+                    "",
 
                 explanation:
-                    data.explanation || ""
+                    data.explanation ||
+                    ""
 
             });
 
@@ -204,7 +180,7 @@ async function loadAllQuestions() {
 
 
         console.log(
-            "Questions Loaded:",
+            "Questions loaded:",
             allQuestions.length
         );
 
@@ -218,18 +194,17 @@ async function loadAllQuestions() {
 
         }
 
-
     }
 
     catch (error) {
 
         console.error(
-            "Question loading error:",
+            "Firestore error:",
             error
         );
 
         selectionMessage.textContent =
-            "❌ Failed to load questions.";
+            "❌ Questions load ஆகவில்லை.";
 
     }
 
@@ -243,100 +218,6 @@ async function loadAllQuestions() {
 
 
 // ============================================================
-// SUBJECT CHANGE
-// ============================================================
-
-subjectSelect.addEventListener(
-    "change",
-    () => {
-
-        const subject =
-            subjectSelect.value.trim();
-
-        topicSelect.innerHTML = `
-            <option value="">
-                Select Topic
-            </option>
-        `;
-
-
-        if (!subject) return;
-
-
-        const topics = new Set();
-
-
-        allQuestions.forEach((q) => {
-
-            if (
-                normalize(q.subject) ===
-                normalize(subject)
-            ) {
-
-                if (q.topic) {
-
-                    topics.add(
-                        q.topic.trim()
-                    );
-
-                }
-
-            }
-
-        });
-
-
-        const sortedTopics =
-            [...topics].sort();
-
-
-        if (
-            sortedTopics.length > 0
-        ) {
-
-            const allOption =
-                document.createElement(
-                    "option"
-                );
-
-            allOption.value = "All";
-
-            allOption.textContent =
-                "All Topics";
-
-            topicSelect.appendChild(
-                allOption
-            );
-
-
-            sortedTopics.forEach(
-                (topic) => {
-
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
-
-                    option.value =
-                        topic;
-
-                    option.textContent =
-                        topic;
-
-                    topicSelect.appendChild(
-                        option
-                    );
-
-                }
-            );
-
-        }
-
-    }
-);
-
-
-// ============================================================
 // START PRACTICE
 // ============================================================
 
@@ -346,13 +227,10 @@ startPracticeBtn.addEventListener(
 );
 
 
-async function startPractice() {
+function startPractice() {
 
     const subject =
         subjectSelect.value.trim();
-
-    const topic =
-        topicSelect.value.trim();
 
     const count =
         Number(
@@ -363,17 +241,7 @@ async function startPractice() {
     if (!subject) {
 
         selectionMessage.textContent =
-            "⚠️ Please select a subject.";
-
-        return;
-
-    }
-
-
-    if (!topic) {
-
-        selectionMessage.textContent =
-            "⚠️ Please select a topic.";
+            "⚠️ முதலில் Subject select செய்யுங்கள்.";
 
         return;
 
@@ -392,30 +260,11 @@ async function startPractice() {
 
 
     if (
-        topic !== "All"
-    ) {
-
-        filteredQuestions =
-            filteredQuestions.filter(
-                (q) => {
-
-                    return (
-                        normalize(q.topic) ===
-                        normalize(topic)
-                    );
-
-                }
-            );
-
-    }
-
-
-    if (
         filteredQuestions.length === 0
     ) {
 
         selectionMessage.textContent =
-            "❌ இந்த Subject / Topic-ல் questions இல்லை.";
+            "❌ இந்த Subject-ல் questions இல்லை.";
 
         return;
 
@@ -430,7 +279,7 @@ async function startPractice() {
         );
 
 
-    // Number of questions
+    // Select questions
 
     practiceQuestions =
         filteredQuestions.slice(
@@ -483,7 +332,7 @@ async function startPractice() {
 
 
 // ============================================================
-// TIME LIMIT
+// TIME
 // ============================================================
 
 function getTimeLimit(count) {
@@ -511,15 +360,13 @@ function getTimeLimit(count) {
 
 function displayQuestion() {
 
-    if (
-        !practiceQuestions.length
-    ) return;
-
-
     const q =
         practiceQuestions[
             currentIndex
         ];
+
+
+    if (!q) return;
 
 
     currentQuestionNumber.textContent =
@@ -530,8 +377,8 @@ function displayQuestion() {
         `Question ${currentIndex + 1}`;
 
 
-    questionTopic.textContent =
-        q.topic || "General";
+    questionSubject.textContent =
+        q.subject || "General";
 
 
     questionText.textContent =
@@ -540,13 +387,9 @@ function displayQuestion() {
 
     progressFill.style.width =
         (
-            (
-                currentIndex + 1
-            ) /
+            (currentIndex + 1) /
             practiceQuestions.length
-        ) *
-        100 +
-        "%";
+        ) * 100 + "%";
 
 
     optionsContainer.innerHTML =
@@ -573,7 +416,6 @@ function displayQuestion() {
             button.type =
                 "button";
 
-
             button.className =
                 "option";
 
@@ -592,6 +434,7 @@ function displayQuestion() {
 
 
             button.innerHTML = `
+
                 <span class="option-letter">
                     ${letters[index] || index + 1}
                 </span>
@@ -599,6 +442,7 @@ function displayQuestion() {
                 <span>
                     ${escapeHTML(optionText)}
                 </span>
+
             `;
 
 
@@ -623,7 +467,6 @@ function displayQuestion() {
     previousBtn.disabled =
         currentIndex === 0;
 
-
     previousBtn.style.opacity =
         currentIndex === 0
             ? "0.45"
@@ -638,17 +481,11 @@ function displayQuestion() {
         nextBtn.style.display =
             "none";
 
-        submitBtn.style.display =
-            "block";
-
     }
 
     else {
 
         nextBtn.style.display =
-            "block";
-
-        submitBtn.style.display =
             "block";
 
     }
@@ -660,7 +497,7 @@ function displayQuestion() {
 
 
 // ============================================================
-// SELECT ANSWER
+// ANSWER
 // ============================================================
 
 function selectAnswer(index) {
@@ -668,7 +505,6 @@ function selectAnswer(index) {
     selectedAnswers[
         currentIndex
     ] = index;
-
 
     displayQuestion();
 
@@ -738,66 +574,42 @@ submitBtn.addEventListener(
     "click",
     () => {
 
-        submitPractice(
-            false
-        );
-
-    }
-);
-
-
-function submitPractice(
-    autoSubmit
-) {
-
-    if (
-        !practiceQuestions.length
-    ) return;
-
-
-    if (!autoSubmit) {
-
         const answered =
             selectedAnswers.filter(
-                (answer) =>
-                    answer !== null
+                (x) => x !== null
             ).length;
-
 
         const skipped =
             practiceQuestions.length -
             answered;
 
 
-        const confirmed =
+        const confirmSubmit =
             confirm(
-                `Test complete?\n\n` +
+                `Test submit செய்யவா?\n\n` +
                 `Answered: ${answered}\n` +
                 `Skipped: ${skipped}`
             );
 
 
-        if (!confirmed) return;
+        if (!confirmSubmit) return;
+
+
+        submitPractice();
 
     }
+);
 
+
+function submitPractice() {
 
     stopTimer();
 
 
-    calculateResult();
-
-}
-
-
-// ============================================================
-// CALCULATE RESULT
-// ============================================================
-
-function calculateResult() {
-
     let correct = 0;
+
     let wrong = 0;
+
     let skipped = 0;
 
 
@@ -809,8 +621,7 @@ function calculateResult() {
 
 
             if (
-                userAnswer === null ||
-                userAnswer === undefined
+                userAnswer === null
             ) {
 
                 skipped++;
@@ -836,10 +647,6 @@ function calculateResult() {
     );
 
 
-    const score =
-        correct;
-
-
     const resultData = {
 
         testType:
@@ -848,11 +655,8 @@ function calculateResult() {
         subject:
             subjectSelect.value,
 
-        topic:
-            topicSelect.value,
-
         score:
-            score,
+            correct,
 
         correct:
             correct,
@@ -897,10 +701,6 @@ function calculateResult() {
 
                         subject:
                             q.subject ||
-                            "",
-
-                        topic:
-                            q.topic ||
                             ""
 
                     };
@@ -914,30 +714,10 @@ function calculateResult() {
     };
 
 
-    // Save locally for result page
-
     localStorage.setItem(
         "practiceResult",
         JSON.stringify(
             resultData
-        )
-    );
-
-
-    // Also save selected answers separately
-
-    localStorage.setItem(
-        "practiceSelectedAnswers",
-        JSON.stringify(
-            selectedAnswers
-        )
-    );
-
-
-    localStorage.setItem(
-        "practiceQuestions",
-        JSON.stringify(
-            practiceQuestions
         )
     );
 
@@ -975,12 +755,10 @@ function startTimer() {
                     stopTimer();
 
                     alert(
-                        "⏰ Time's up!\nYour test will be submitted automatically."
+                        "⏰ Time's up! Test automatically submitted."
                     );
 
-                    submitPractice(
-                        true
-                    );
+                    submitPractice();
 
                 }
 
@@ -993,16 +771,13 @@ function startTimer() {
 
 function stopTimer() {
 
-    if (
-        timerInterval
-    ) {
+    if (timerInterval) {
 
         clearInterval(
             timerInterval
         );
 
-        timerInterval =
-            null;
+        timerInterval = null;
 
     }
 
@@ -1021,13 +796,7 @@ function updateTimer() {
 
 
     timerElement.textContent =
-        `⏰ ${
-            String(minutes)
-                .padStart(2, "0")
-        }:${
-            String(seconds)
-                .padStart(2, "0")
-        }`;
+        `⏰ ${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
 
     if (
@@ -1052,7 +821,7 @@ function updateTimer() {
 
 
 // ============================================================
-// QUESTION PALETTE
+// PALETTE
 // ============================================================
 
 function createPalette() {
@@ -1070,12 +839,11 @@ function createPalette() {
                 );
 
 
-            button.textContent =
-                index + 1;
-
-
             button.type =
                 "button";
+
+            button.textContent =
+                index + 1;
 
 
             button.addEventListener(
@@ -1158,7 +926,7 @@ function updatePalette() {
 
 
 // ============================================================
-// BACK BUTTON
+// BACK
 // ============================================================
 
 backBtn.addEventListener(
@@ -1169,7 +937,7 @@ backBtn.addEventListener(
 
             const leave =
                 confirm(
-                    "Test is in progress. Are you sure you want to leave?"
+                    "Test இன்னும் நடக்கிறது. வெளியேறவா?"
                 );
 
             if (!leave) return;
@@ -1181,23 +949,6 @@ backBtn.addEventListener(
 
         window.location.href =
             "dashboard.html";
-
-    }
-);
-// ============================================================
-// PREVENT ACCIDENTAL REFRESH
-// ============================================================
-
-window.addEventListener(
-    "beforeunload",
-    (event) => {
-
-        if (!testStarted) return;
-
-
-        event.preventDefault();
-
-        event.returnValue = "";
 
     }
 );
@@ -1257,32 +1008,16 @@ function shuffleArray(array) {
 
 
 // ============================================================
-// HTML ESCAPE
+// ESCAPE HTML
 // ============================================================
 
 function escapeHTML(value) {
 
-    return String(value || "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-}
-
+        }
