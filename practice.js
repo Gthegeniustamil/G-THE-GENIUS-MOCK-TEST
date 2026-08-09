@@ -1,15 +1,9 @@
 // ============================================================
-// G THE GENIUS - SUBJECT ONLY PRACTICE TEST
+// G THE GENIUS - PRACTICE TEST
+// SUBJECT ONLY VERSION
 // ============================================================
 
-import {
-    auth,
-    db
-} from "./firebase-config.js";
-
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { db } from "./firebase-config.js";
 
 import {
     collection,
@@ -21,21 +15,13 @@ import {
 // VARIABLES
 // ============================================================
 
-let currentUser = null;
-
 let allQuestions = [];
-
 let practiceQuestions = [];
-
 let selectedAnswers = [];
-
 let currentIndex = 0;
 
 let timerInterval = null;
-
 let timeLeft = 300;
-
-let testStarted = false;
 
 
 // ============================================================
@@ -57,10 +43,10 @@ const subjectSelect =
 const questionCount =
     document.getElementById("questionCount");
 
-const startPracticeBtn =
+const startBtn =
     document.getElementById("startPracticeBtn");
 
-const selectionMessage =
+const message =
     document.getElementById("selectionMessage");
 
 const currentQuestionNumber =
@@ -104,35 +90,39 @@ const backBtn =
 
 
 // ============================================================
-// AUTH
+// PAGE LOAD
 // ============================================================
 
-onAuthStateChanged(auth, async (user) => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    if (!user) {
+        console.log(
+            "Practice JS loaded successfully"
+        );
 
-        alert("Please login to use Practice Test.");
-
-        window.location.href =
-            "login.html";
-
-        return;
     }
-
-    currentUser = user;
-
-    await loadQuestions();
-
-});
+);
 
 
 // ============================================================
-// LOAD QUESTIONS
+// LOAD FIRESTORE QUESTIONS
 // ============================================================
+
+loadQuestions();
+
 
 async function loadQuestions() {
 
-    loadingBox.style.display = "block";
+    if (loadingBox) {
+        loadingBox.style.display = "block";
+    }
+
+    if (startBtn) {
+        startBtn.disabled = true;
+        startBtn.style.opacity = "0.5";
+    }
+
 
     try {
 
@@ -144,43 +134,85 @@ async function loadQuestions() {
                 )
             );
 
+
         allQuestions = [];
 
-        snapshot.forEach((doc) => {
 
-            const data = doc.data();
+        snapshot.forEach(
+            doc => {
 
-            allQuestions.push({
+                const data =
+                    doc.data();
 
-                id: doc.id,
 
-                question:
-                    data.question || "",
-
-                options:
-                    Array.isArray(data.options)
+                const options =
+                    Array.isArray(
+                        data.options
+                    )
                         ? data.options
-                        : [],
+                        : [
+                            data.optionA || "",
+                            data.optionB || "",
+                            data.optionC || "",
+                            data.optionD || ""
+                        ];
 
-                answer:
-                    Number(data.answer ?? 0),
 
-                subject:
+                const subject =
                     data.subject ||
                     data.Subject ||
-                    "",
+                    data.category ||
+                    data.Category ||
+                    "";
 
-                explanation:
-                    data.explanation ||
-                    ""
 
-            });
+                const answer =
+                    data.correctAnswer !== undefined
+                        ? data.correctAnswer
+                        : data.answer !== undefined
+                            ? data.answer
+                            : data.correct !== undefined
+                                ? data.correct
+                                : 0;
 
-        });
+
+                allQuestions.push({
+
+                    id:
+                        doc.id,
+
+                    question:
+                        data.question ||
+                        data.questionText ||
+                        data.text ||
+                        "",
+
+                    options:
+                        options,
+
+                    answer:
+                        convertAnswer(
+                            answer
+                        ),
+
+                    subject:
+                        String(
+                            subject
+                        ).trim(),
+
+                    explanation:
+                        data.explanation ||
+                        data.Explanation ||
+                        ""
+
+                });
+
+            }
+        );
 
 
         console.log(
-            "Questions loaded:",
+            "Firestore Questions:",
             allQuestions.length
         );
 
@@ -189,124 +221,183 @@ async function loadQuestions() {
             allQuestions.length === 0
         ) {
 
-            selectionMessage.textContent =
-                "❌ Questions not found.";
+            showMessage(
+                "❌ Firestore-ல் questions இல்லை."
+            );
+
+            return;
 
         }
+
+
+        if (startBtn) {
+
+            startBtn.disabled =
+                false;
+
+            startBtn.style.opacity =
+                "1";
+
+        }
+
+
+        showMessage(
+            `✅ ${allQuestions.length} questions ready`
+        );
+
 
     }
 
     catch (error) {
 
         console.error(
-            "Firestore error:",
+            "QUESTION LOAD ERROR:",
             error
         );
 
-        selectionMessage.textContent =
-            "❌ Questions load ஆகவில்லை.";
+
+        showMessage(
+            "❌ Questions load ஆகவில்லை. Console error check செய்யுங்கள்."
+        );
 
     }
 
     finally {
 
-        loadingBox.style.display = "none";
+        if (loadingBox) {
+            loadingBox.style.display = "none";
+        }
 
     }
 
 }
 
+
 // ============================================================
-// START PRACTICE - FIXED VERSION
+// START BUTTON
 // ============================================================
+
+if (startBtn) {
+
+    startBtn.addEventListener(
+        "click",
+        startPractice
+    );
+
+}
+
 
 function startPractice() {
 
-    const subject =
-        subjectSelect.value.trim();
-
-    const count =
-        Number(questionCount.value);
-
-
-    console.log("Selected Subject:", subject);
-    console.log("Total Questions:", allQuestions.length);
-
-
-    // Subject check
-
-    if (!subject) {
-
-        selectionMessage.textContent =
-            "⚠️ முதலில் Subject select செய்யுங்கள்.";
-
-        return;
-    }
-
-
-    // Filter questions
-
-    let filteredQuestions =
-        allQuestions.filter((q) => {
-
-            const firestoreSubject =
-                String(
-                    q.subject || ""
-                ).trim();
-
-            console.log(
-                "Firestore Subject:",
-                firestoreSubject
-            );
-
-            return (
-                firestoreSubject.toLowerCase() ===
-                subject.toLowerCase()
-            );
-
-        });
-
-
     console.log(
-        "Filtered Questions:",
-        filteredQuestions.length
+        "START BUTTON CLICKED"
     );
 
 
-    // No questions
+    const subject =
+        String(
+            subjectSelect.value
+        ).trim();
 
-    if (
-        filteredQuestions.length === 0
-    ) {
 
-        selectionMessage.textContent =
-            `❌ "${subject}" Subject-ல் questions கிடைக்கவில்லை.`;
+    const count =
+        Number(
+            questionCount.value
+        );
+
+
+    if (!subject) {
+
+        showMessage(
+            "⚠️ முதலில் Subject select செய்யுங்கள்."
+        );
 
         return;
+
     }
 
 
-    // Shuffle
+    if (
+        allQuestions.length === 0
+    ) {
 
-    filteredQuestions =
-        shuffleArray(
-            filteredQuestions
+        showMessage(
+            "⏳ Questions இன்னும் load ஆகவில்லை."
+        );
+
+        return;
+
+    }
+
+
+    // ========================================================
+    // SUBJECT MATCH
+    // ========================================================
+
+    let filtered =
+        allQuestions.filter(
+            q => {
+
+                return subjectsMatch(
+                    q.subject,
+                    subject
+                );
+
+            }
         );
 
 
-    // Select questions
+    console.log(
+        "Selected:",
+        subject
+    );
+
+    console.log(
+        "Matching:",
+        filtered.length
+    );
+
+
+    // ========================================================
+    // NO MATCH
+    // ========================================================
+
+    if (
+        filtered.length === 0
+    ) {
+
+        showMessage(
+            `❌ "${subject}" Subject-ல் questions இல்லை.`
+        );
+
+        return;
+
+    }
+
+
+    // ========================================================
+    // SHUFFLE
+    // ========================================================
+
+    filtered =
+        shuffle(
+            filtered
+        );
+
+
+    // ========================================================
+    // SELECT QUESTIONS
+    // ========================================================
 
     practiceQuestions =
-        filteredQuestions.slice(
+        filtered.slice(
             0,
             Math.min(
                 count,
-                filteredQuestions.length
+                filtered.length
             )
         );
 
-
-    // Answers reset
 
     selectedAnswers =
         new Array(
@@ -317,7 +408,9 @@ function startPractice() {
     currentIndex = 0;
 
 
-    // Timer
+    // ========================================================
+    // TIMER
+    // ========================================================
 
     timeLeft =
         getTimeLimit(
@@ -325,43 +418,27 @@ function startPractice() {
         );
 
 
-    testStarted = true;
-
-
-    // Hide selection
+    // ========================================================
+    // SHOW TEST
+    // ========================================================
 
     selectionArea.style.display =
         "none";
-
-
-    // Show test
 
     testArea.style.display =
         "block";
 
 
-    // Total questions
-
     totalQuestionNumber.textContent =
         practiceQuestions.length;
 
 
-    // Create palette
-
     createPalette();
-
-
-    // Display first question
 
     displayQuestion();
 
-
-    // Start timer
-
     startTimer();
 
-
-    // Scroll top
 
     window.scrollTo({
         top: 0,
@@ -371,16 +448,52 @@ function startPractice() {
 }
 
 
-
-
 // ============================================================
-// TIME
+// SUBJECT MATCH
 // ============================================================
 
-function getTimeLimit(count) {
+function subjectsMatch(
+    firestoreSubject,
+    selectedSubject
+) {
 
-    if (count <= 10) {
+    const a =
+        normalize(
+            firestoreSubject
+        );
 
+    const b =
+        normalize(
+            selectedSubject
+        );
+
+
+    if (a === b) {
+        return true;
+    }
+
+
+    // GK variations
+
+    if (
+        (
+            a === "gk" ||
+            a === "general knowledge"
+        ) &&
+        (
+            b === "gk" ||
+            b === "general knowledge"
+        )
+    ) {
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
 
 
 // ============================================================
@@ -416,9 +529,13 @@ function displayQuestion() {
 
     progressFill.style.width =
         (
-            (currentIndex + 1) /
+            (
+                currentIndex + 1
+            ) /
             practiceQuestions.length
-        ) * 100 + "%";
+        ) *
+        100 +
+        "%";
 
 
     optionsContainer.innerHTML =
@@ -434,7 +551,10 @@ function displayQuestion() {
 
 
     q.options.forEach(
-        (optionText, index) => {
+        (
+            option,
+            index
+        ) => {
 
             const button =
                 document.createElement(
@@ -444,6 +564,7 @@ function displayQuestion() {
 
             button.type =
                 "button";
+
 
             button.className =
                 "option";
@@ -469,20 +590,22 @@ function displayQuestion() {
                 </span>
 
                 <span>
-                    ${escapeHTML(optionText)}
+                    ${escapeHTML(option)}
                 </span>
 
             `;
 
 
-            button.addEventListener(
-                "click",
+            button.onclick =
                 () => {
 
-                    selectAnswer(index);
+                    selectedAnswers[
+                        currentIndex
+                    ] = index;
 
-                }
-            );
+                    displayQuestion();
+
+                };
 
 
             optionsContainer.appendChild(
@@ -495,6 +618,7 @@ function displayQuestion() {
 
     previousBtn.disabled =
         currentIndex === 0;
+
 
     previousBtn.style.opacity =
         currentIndex === 0
@@ -526,26 +650,10 @@ function displayQuestion() {
 
 
 // ============================================================
-// ANSWER
-// ============================================================
-
-function selectAnswer(index) {
-
-    selectedAnswers[
-        currentIndex
-    ] = index;
-
-    displayQuestion();
-
-}
-
-
-// ============================================================
 // NEXT
 // ============================================================
 
-nextBtn.addEventListener(
-    "click",
+nextBtn.onclick =
     () => {
 
         if (
@@ -557,23 +665,16 @@ nextBtn.addEventListener(
 
             displayQuestion();
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
         }
 
-    }
-);
+    };
 
 
 // ============================================================
 // PREVIOUS
 // ============================================================
 
-previousBtn.addEventListener(
-    "click",
+previousBtn.onclick =
     () => {
 
         if (
@@ -584,96 +685,128 @@ previousBtn.addEventListener(
 
             displayQuestion();
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
         }
 
-    }
-);
+    };
 
 
 // ============================================================
 // SUBMIT
 // ============================================================
 
-submitBtn.addEventListener(
-    "click",
+submitBtn.onclick =
     () => {
 
         const answered =
             selectedAnswers.filter(
-                (x) => x !== null
+                answer =>
+                    answer !== null
             ).length;
+
 
         const skipped =
             practiceQuestions.length -
             answered;
 
 
-        const confirmSubmit =
+        const ok =
             confirm(
-                `Test submit செய்யவா?\n\n` +
-                `Answered: ${answered}\n` +
-                `Skipped: ${skipped}`
+                `Test Submit செய்யவா?\n\n` +
+                `Answered : ${answered}\n` +
+                `Skipped : ${skipped}`
             );
 
 
-        if (!confirmSubmit) return;
+        if (!ok) {
+            return;
+        }
 
 
-        submitPractice();
+        submitTest();
 
-    }
-);
+    };
 
 
-function submitPractice() {
+// ============================================================
+// SUBMIT TEST
+// ============================================================
+
+function submitTest() {
 
     stopTimer();
 
 
     let correct = 0;
-
     let wrong = 0;
-
     let skipped = 0;
 
 
-    practiceQuestions.forEach(
-        (q, index) => {
+    const resultQuestions =
+        practiceQuestions.map(
+            (
+                q,
+                index
+            ) => {
 
-            const userAnswer =
-                selectedAnswers[index];
+                const userAnswer =
+                    selectedAnswers[
+                        index
+                    ];
 
 
-            if (
-                userAnswer === null
-            ) {
+                if (
+                    userAnswer === null
+                ) {
 
-                skipped++;
+                    skipped++;
+
+                }
+
+                else if (
+                    Number(userAnswer) ===
+                    Number(q.answer)
+                ) {
+
+                    correct++;
+
+                }
+
+                else {
+
+                    wrong++;
+
+                }
+
+
+                return {
+
+                    id:
+                        q.id,
+
+                    question:
+                        q.question,
+
+                    options:
+                        q.options,
+
+                    correctAnswer:
+                        Number(
+                            q.answer
+                        ),
+
+                    userAnswer:
+                        userAnswer,
+
+                    explanation:
+                        q.explanation,
+
+                    subject:
+                        q.subject
+
+                };
 
             }
-
-            else if (
-                Number(userAnswer) ===
-                Number(q.answer)
-            ) {
-
-                correct++;
-
-            }
-
-            else {
-
-                wrong++;
-
-            }
-
-        }
-    );
+        );
 
 
     const resultData = {
@@ -681,11 +814,23 @@ function submitPractice() {
         testType:
             "practice",
 
+        type:
+            "practice",
+
         subject:
             subjectSelect.value,
 
         score:
             correct,
+
+        marks:
+            correct,
+
+        total:
+            practiceQuestions.length,
+
+        totalQuestions:
+            practiceQuestions.length,
 
         correct:
             correct,
@@ -696,52 +841,18 @@ function submitPractice() {
         skipped:
             skipped,
 
-        total:
-            practiceQuestions.length,
-
         questions:
-            practiceQuestions.map(
-                (q, index) => {
-
-                    return {
-
-                        id:
-                            q.id,
-
-                        question:
-                            q.question,
-
-                        options:
-                            q.options,
-
-                        correctAnswer:
-                            Number(
-                                q.answer
-                            ),
-
-                        userAnswer:
-                            selectedAnswers[
-                                index
-                            ],
-
-                        explanation:
-                            q.explanation ||
-                            "",
-
-                        subject:
-                            q.subject ||
-                            ""
-
-                    };
-
-                }
-            ),
+            resultQuestions,
 
         createdAt:
             new Date().toISOString()
 
     };
 
+
+    // ========================================================
+    // SAVE RESULT
+    // ========================================================
 
     localStorage.setItem(
         "practiceResult",
@@ -750,6 +861,24 @@ function submitPractice() {
         )
     );
 
+
+    localStorage.setItem(
+        "lastResult",
+        JSON.stringify(
+            resultData
+        )
+    );
+
+
+    console.log(
+        "RESULT SAVED:",
+        resultData
+    );
+
+
+    // ========================================================
+    // OPEN RESULT
+    // ========================================================
 
     window.location.href =
         "result.html?type=practice";
@@ -760,6 +889,40 @@ function submitPractice() {
 // ============================================================
 // TIMER
 // ============================================================
+
+function getTimeLimit(count) {
+
+    if (
+        count <= 10
+    ) {
+
+        return 5 * 60;
+
+    }
+
+
+    if (
+        count <= 25
+    ) {
+
+        return 10 * 60;
+
+    }
+
+
+    if (
+        count <= 50
+    ) {
+
+        return 20 * 60;
+
+    }
+
+
+    return 30 * 60;
+
+}
+
 
 function startTimer() {
 
@@ -783,11 +946,7 @@ function startTimer() {
 
                     stopTimer();
 
-                    alert(
-                        "⏰ Time's up! Test automatically submitted."
-                    );
-
-                    submitPractice();
+                    submitTest();
 
                 }
 
@@ -800,7 +959,9 @@ function startTimer() {
 
 function stopTimer() {
 
-    if (timerInterval) {
+    if (
+        timerInterval
+    ) {
 
         clearInterval(
             timerInterval
@@ -819,6 +980,7 @@ function updateTimer() {
         Math.floor(
             timeLeft / 60
         );
+
 
     const seconds =
         timeLeft % 60;
@@ -850,7 +1012,7 @@ function updateTimer() {
 
 
 // ============================================================
-// PALETTE
+// QUESTION PALETTE
 // ============================================================
 
 function createPalette() {
@@ -860,7 +1022,10 @@ function createPalette() {
 
 
     practiceQuestions.forEach(
-        (_, index) => {
+        (
+            _,
+            index
+        ) => {
 
             const button =
                 document.createElement(
@@ -871,12 +1036,12 @@ function createPalette() {
             button.type =
                 "button";
 
+
             button.textContent =
                 index + 1;
 
 
-            button.addEventListener(
-                "click",
+            button.onclick =
                 () => {
 
                     currentIndex =
@@ -884,13 +1049,7 @@ function createPalette() {
 
                     displayQuestion();
 
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
-                    });
-
-                }
-            );
+                };
 
 
             questionPalette.appendChild(
@@ -915,7 +1074,10 @@ function updatePalette() {
 
 
     buttons.forEach(
-        (button, index) => {
+        (
+            button,
+            index
+        ) => {
 
             button.classList.remove(
                 "current"
@@ -958,50 +1120,92 @@ function updatePalette() {
 // BACK
 // ============================================================
 
-backBtn.addEventListener(
-    "click",
-    () => {
+if (backBtn) {
 
-        if (testStarted) {
-
-            const leave =
-                confirm(
-                    "Test இன்னும் நடக்கிறது. வெளியேறவா?"
-                );
-
-            if (!leave) return;
+    backBtn.onclick =
+        () => {
 
             stopTimer();
 
-        }
+            window.location.href =
+                "dashboard.html";
 
-
-        window.location.href =
-            "dashboard.html";
-
-    }
-);
-
-
-// ============================================================
-// NORMALIZE
-// ============================================================
-
-function normalize(text) {
-
-    return String(text || "")
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, " ");
+        };
 
 }
 
 
 // ============================================================
-// SHUFFLE
+// HELPERS
 // ============================================================
 
-function shuffleArray(array) {
+function normalize(value) {
+
+    return String(
+        value || ""
+    )
+        .trim()
+        .toLowerCase()
+        .replace(
+            /\s+/g,
+            " "
+        );
+
+}
+
+
+function convertAnswer(answer) {
+
+    if (
+        typeof answer === "number"
+    ) {
+
+        return answer;
+
+    }
+
+
+    const text =
+        String(
+            answer || ""
+        )
+        .trim()
+        .toUpperCase();
+
+
+    const letters = {
+        A: 0,
+        B: 1,
+        C: 2,
+        D: 3
+    };
+
+
+    if (
+        letters[text] !== undefined
+    ) {
+
+        return letters[text];
+
+    }
+
+
+    if (
+        !isNaN(Number(text)
+        )
+    ) {
+
+        return Number(text);
+
+    }
+
+
+    return 0;
+
+}
+
+
+function shuffle(array) {
 
     const copy =
         [...array];
@@ -1023,7 +1227,8 @@ function shuffleArray(array) {
         [
             copy[i],
             copy[j]
-        ] = [
+        ] =
+        [
             copy[j],
             copy[i]
         ];
@@ -1036,17 +1241,43 @@ function shuffleArray(array) {
 }
 
 
-// ============================================================
-// ESCAPE HTML
-// ============================================================
-
 function escapeHTML(value) {
 
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
-        }
+}
+
+
+function showMessage(text) {
+
+    if (message) {
+
+        message.textContent =
+            text;
+
+    }
+
+            }
+         
