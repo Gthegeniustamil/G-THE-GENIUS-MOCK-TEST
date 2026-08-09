@@ -1,807 +1,851 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta name="theme-color"
-      content="#081229">
+    <title>G THE GENIUS - Result</title>
 
-<meta name="description"
-      content="G THE GENIUS Mock Test Result">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
-<title>
-Result | G THE GENIUS
-</title>
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-<!-- FAVICON -->
+    <style>
 
-<link rel="icon"
-      href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
 
-<!-- FONT -->
+            min-height: 100vh;
 
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
+            font-family:
+                'Poppins',
+                Arial,
+                sans-serif;
 
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
+            color: white;
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet">
+            background:
+                radial-gradient(
+                    circle at top,
+                    #172d63 0%,
+                    transparent 38%
+                ),
+                linear-gradient(
+                    180deg,
+                    #081229,
+                    #102452
+                );
 
+        }
 
-<!-- RESULT CSS -->
+        .result-container {
 
-<link rel="stylesheet"
-      href="result.css">
+            width: 100%;
+            max-width: 900px;
 
+            margin: auto;
 
-<style>
+            padding: 15px;
 
-/* ==================================================
-   RESULT MOBILE APP UI
-================================================== */
+            padding-bottom: 50px;
 
-*{
-    box-sizing:border-box;
-}
+        }
 
-body{
 
-    margin:0;
+        /* HEADER */
 
-    min-height:100vh;
+        .result-header {
 
-    font-family:'Poppins',sans-serif;
+            display: flex;
 
-    background:
-    linear-gradient(
-        180deg,
-        #081229 0%,
-        #102452 100%
-    );
+            justify-content: space-between;
 
-    color:#ffffff;
-}
+            align-items: center;
 
+            gap: 10px;
 
-.result-container{
+            padding: 10px 0 18px;
 
-    width:100%;
+        }
 
-    max-width:620px;
+        .brand {
 
-    margin:auto;
+            display: flex;
 
-    padding:15px;
+            align-items: center;
 
-    padding-bottom:110px;
+            gap: 10px;
 
-}
+        }
 
+        .brand img {
 
-/* ==================================================
-   HEADER
-================================================== */
+            width: 50px;
+            height: 50px;
 
-.result-header{
+            object-fit: cover;
 
-    text-align:center;
+            border-radius: 50%;
 
-    padding:15px 5px 20px;
+            background: white;
 
-}
+            padding: 3px;
 
+            border: 2px solid #FFD700;
 
-.result-logo{
+        }
 
-    width:78px;
+        .brand h1 {
 
-    height:78px;
+            color: #FFD700;
 
-    object-fit:contain;
+            font-size: 18px;
 
-    background:#ffffff;
+            font-weight: 800;
 
-    padding:6px;
+        }
 
-    border-radius:50%;
+        .brand p {
 
-    border:3px solid #FFD700;
+            color: #aeb8d5;
 
-    box-shadow:
-    0 8px 25px rgba(0,0,0,.4);
+            font-size: 9px;
 
-}
+        }
 
+        .home-btn {
 
-.result-header h1{
+            padding: 8px 13px;
 
-    color:#FFD700;
+            border-radius: 25px;
 
-    font-size:23px;
+            border: 1px solid
+                rgba(255,255,255,.16);
 
-    margin:10px 0 3px;
+            background:
+                rgba(255,255,255,.07);
 
-}
+            color: white;
 
+            font-family: inherit;
 
-.result-header p{
+            font-size: 11px;
 
-    color:#aeb8d4;
+            cursor: pointer;
 
-    font-size:12px;
+        }
 
-    margin:0;
 
-}
+        /* RESULT HERO */
 
+        .result-hero {
 
-/* ==================================================
-   RESULT HERO
-================================================== */
+            text-align: center;
 
-.result-hero{
+            padding: 28px 18px;
 
-    background:
-    linear-gradient(
-        145deg,
-        rgba(255,215,0,.16),
-        rgba(255,255,255,.06)
-    );
+            border-radius: 28px;
 
-    border:
-    1px solid rgba(255,215,0,.35);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,215,0,.15),
+                    rgba(255,255,255,.06)
+                );
 
-    border-radius:25px;
+            border: 1px solid
+                rgba(255,215,0,.25);
 
-    padding:25px 18px;
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,.35);
 
-    text-align:center;
+            margin-bottom: 18px;
 
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.35);
+        }
 
-}
+        .result-icon {
 
+            font-size: 42px;
 
-.result-icon{
+            margin-bottom: 8px;
 
-    font-size:45px;
+        }
 
-    margin-bottom:5px;
+        .result-hero h2 {
 
-}
+            color: #FFD700;
 
+            font-size: 24px;
 
-.result-hero h2{
+            margin-bottom: 4px;
 
-    margin:5px 0;
+        }
 
-    color:#ffffff;
+        .result-hero p {
 
-    font-size:21px;
+            color: #aeb8d5;
 
-}
+            font-size: 11px;
 
+        }
 
-.result-hero p{
 
-    margin:4px 0;
+        /* SCORE */
 
-    color:#aeb8d4;
+        .score-box {
 
-    font-size:12px;
+            margin: 20px auto 0;
 
-}
+            width: 150px;
+            height: 150px;
 
+            border-radius: 50%;
 
-/* ==================================================
-   SCORE
-================================================== */
+            display: flex;
 
-.score-circle{
+            flex-direction: column;
 
-    width:150px;
+            justify-content: center;
 
-    height:150px;
+            align-items: center;
 
-    margin:20px auto;
+            background:
+                rgba(255,215,0,.08);
 
-    border-radius:50%;
+            border: 5px solid #FFD700;
 
-    display:flex;
+            box-shadow:
+                0 0 35px
+                rgba(255,215,0,.14);
 
-    flex-direction:column;
+        }
 
-    justify-content:center;
+        .score-box strong {
 
-    align-items:center;
+            color: #FFD700;
 
-    border:
-    6px solid #FFD700;
+            font-size: 38px;
 
-    background:
-    rgba(8,18,41,.8);
+            line-height: 1;
 
-    box-shadow:
-    0 0 30px rgba(255,215,0,.18);
+        }
 
-}
+        .score-box span {
 
+            color: #cfd6ee;
 
-#scoreDisplay{
+            font-size: 10px;
 
-    color:#FFD700;
+            margin-top: 6px;
 
-    font-size:35px;
+        }
 
-    font-weight:800;
 
-}
+        /* SUMMARY */
 
+        .summary-grid {
 
-.score-label{
+            display: grid;
 
-    color:#aeb8d4;
+            grid-template-columns:
+                repeat(4, 1fr);
 
-    font-size:11px;
+            gap: 10px;
 
-}
+            margin-bottom: 25px;
 
+        }
 
-/* ==================================================
-   TEST TYPE
-================================================== */
+        .summary-card {
 
-.test-type-badge{
+            text-align: center;
 
-    display:inline-block;
+            padding: 16px 8px;
 
-    padding:7px 15px;
+            border-radius: 18px;
 
-    border-radius:30px;
+            background:
+                rgba(255,255,255,.06);
 
-    background:
-    rgba(255,215,0,.12);
+            border: 1px solid
+                rgba(255,255,255,.12);
 
-    border:
-    1px solid rgba(255,215,0,.4);
+        }
 
-    color:#FFD700;
+        .summary-card span {
 
-    font-size:12px;
+            display: block;
 
-    font-weight:700;
+            color: #aeb8d5;
 
-}
+            font-size: 9px;
 
+            margin-bottom: 5px;
 
-/* ==================================================
-   STAT CARDS
-================================================== */
+        }
 
-.stats-grid{
+        .summary-card strong {
 
-    display:grid;
+            font-size: 21px;
 
-    grid-template-columns:
-    repeat(3,1fr);
+        }
 
-    gap:9px;
+        .correct-count {
 
-    margin-top:15px;
+            color: #00e676;
 
-}
+        }
 
+        .wrong-count {
 
-.stat-card{
+            color: #ff5252;
 
-    padding:15px 5px;
+        }
 
-    text-align:center;
+        .skipped-count {
 
-    border-radius:18px;
+            color: #ffb300;
 
-    background:
-    rgba(255,255,255,.07);
+        }
 
-    border:
-    1px solid rgba(255,255,255,.12);
+        .total-count {
 
-}
+            color: #FFD700;
 
+        }
 
-.stat-icon{
 
-    font-size:20px;
+        /* REVIEW HEADER */
 
-}
+        .review-header {
 
+            display: flex;
 
-.stat-value{
+            justify-content: space-between;
 
-    display:block;
+            align-items: center;
 
-    margin-top:4px;
+            gap: 10px;
 
-    font-size:19px;
+            margin-bottom: 14px;
 
-    font-weight:800;
+        }
 
-}
+        .review-header h2 {
 
+            color: #FFD700;
 
-.stat-name{
+            font-size: 19px;
 
-    display:block;
+        }
 
-    color:#aeb8d4;
+        .review-header p {
 
-    font-size:10px;
+            color: #8f9abb;
 
-}
+            font-size: 9px;
 
+        }
 
-.correct{
 
-    color:#00e676;
+        /* FILTER */
 
-}
+        .review-filter {
 
+            display: flex;
 
-.wrong{
+            gap: 7px;
 
-    color:#ff5c5c;
+            flex-wrap: wrap;
 
-}
+            margin-bottom: 15px;
 
+        }
 
-.skipped{
+        .filter-btn {
 
-    color:#FFD700;
+            padding: 8px 13px;
 
-}
+            border-radius: 20px;
 
+            border: 1px solid
+                rgba(255,255,255,.13);
 
-/* ==================================================
-   RANK CARD
-================================================== */
+            background:
+                rgba(255,255,255,.05);
 
-.rank-section{
+            color: #cfd6ee;
 
-    margin-top:15px;
+            font-family: inherit;
 
-}
+            font-size: 10px;
 
+            cursor: pointer;
 
-.rank-card{
+        }
 
-    display:flex;
+        .filter-btn.active {
 
-    justify-content:space-between;
+            color: #081229;
 
-    align-items:center;
+            background: #FFD700;
 
-    padding:18px;
+            border-color: #FFD700;
 
-    background:
-    rgba(255,255,255,.07);
+            font-weight: 800;
 
-    border:
-    1px solid rgba(255,255,255,.12);
+        }
 
-    border-radius:20px;
 
-}
+        /* REVIEW CARD */
 
+        .review-list {
 
-.rank-left{
+            display: flex;
 
-    display:flex;
+            flex-direction: column;
 
-    align-items:center;
+            gap: 14px;
 
-    gap:12px;
+        }
 
-}
+        .review-card {
 
+            padding: 18px;
 
-.rank-icon{
+            border-radius: 22px;
 
-    width:48px;
+            background:
+                rgba(255,255,255,.06);
 
-    height:48px;
+            border: 1px solid
+                rgba(255,255,255,.12);
 
-    border-radius:50%;
+        }
 
-    display:flex;
+        .review-card.correct {
 
-    align-items:center;
+            border-left: 4px solid
+                #00e676;
 
-    justify-content:center;
+        }
 
-    background:#FFD700;
+        .review-card.wrong {
 
-    color:#081229;
+            border-left: 4px solid
+                #ff5252;
 
-    font-size:23px;
+        }
 
-}
+        .review-card.skipped {
 
+            border-left: 4px solid
+                #ffb300;
 
-.rank-left h3{
+        }
 
-    margin:0;
 
-    font-size:15px;
+        .review-top {
 
-}
+            display: flex;
 
+            justify-content: space-between;
 
-.rank-left p{
+            align-items: center;
 
-    margin:3px 0 0;
+            gap: 10px;
 
-    color:#aeb8d4;
+            margin-bottom: 10px;
 
-    font-size:10px;
+        }
 
-}
+        .review-number {
 
+            color: #FFD700;
 
-#rankDisplay{
+            font-size: 11px;
 
-    color:#FFD700;
+            font-weight: 800;
 
-    font-size:24px;
+        }
 
-    font-weight:800;
+        .status-badge {
 
-}
+            padding: 5px 9px;
 
+            border-radius: 20px;
 
-/* ==================================================
-   STUDENT INFO
-================================================== */
+            font-size: 9px;
 
-.student-card{
+            font-weight: 800;
 
-    margin-top:15px;
+        }
 
-    padding:18px;
+        .status-correct {
 
-    background:
-    rgba(255,255,255,.07);
+            color: #00e676;
 
-    border:
-    1px solid rgba(255,255,255,.12);
+            background:
+                rgba(0,230,118,.09);
 
-    border-radius:20px;
+        }
 
-}
+        .status-wrong {
 
+            color: #ff7777;
 
-.student-card h3{
+            background:
+                rgba(255,82,82,.09);
 
-    margin:0 0 12px;
+        }
 
-    color:#FFD700;
+        .status-skipped {
 
-    font-size:15px;
+            color: #ffb300;
 
-}
+            background:
+                rgba(255,179,0,.09);
 
+        }
 
-.student-row{
 
-    display:flex;
+        .review-question {
 
-    justify-content:space-between;
+            font-size: 14px;
 
-    padding:7px 0;
+            line-height: 1.7;
 
-    border-bottom:
-    1px solid rgba(255,255,255,.06);
+            font-weight: 600;
 
-}
+            margin-bottom: 14px;
 
+        }
 
-.student-row:last-child{
 
-    border-bottom:none;
+        /* OPTIONS */
 
-}
+        .review-options {
 
+            display: flex;
 
-.student-row span:first-child{
+            flex-direction: column;
 
-    color:#8e9ab8;
+            gap: 7px;
 
-    font-size:11px;
+            margin-bottom: 14px;
 
-}
+        }
 
+        .review-option {
 
-.student-row span:last-child{
+            padding: 9px 11px;
 
-    color:#ffffff;
+            border-radius: 11px;
 
-    font-size:12px;
+            background:
+                rgba(255,255,255,.035);
 
-    font-weight:600;
+            border: 1px solid
+                rgba(255,255,255,.08);
 
-}
+            color: #cfd6ee;
 
+            font-size: 10px;
 
-/* ==================================================
-   ACTION BUTTONS
-================================================== */
+        }
 
-.action-buttons{
+        .review-option.user-answer {
 
-    margin-top:20px;
+            border-color:
+                rgba(255,82,82,.5);
 
-    display:grid;
+            background:
+                rgba(255,82,82,.08);
 
-    gap:10px;
+            color: #ff9999;
 
-}
+        }
 
+        .review-option.correct-answer {
 
-.action-btn{
+            border-color:
+                rgba(0,230,118,.5);
 
-    width:100%;
+            background:
+                rgba(0,230,118,.08);
 
-    padding:14px;
+            color: #00e676;
 
-    border:none;
+        }
 
-    border-radius:17px;
+        .review-option.user-correct {
 
-    font-family:'Poppins',sans-serif;
+            border-color:
+                rgba(0,230,118,.6);
 
-    font-weight:700;
+            background:
+                rgba(0,230,118,.12);
 
-    font-size:13px;
+            color: #00e676;
 
-    cursor:pointer;
+        }
 
-}
 
+        /* ANSWER BOX */
 
-.retry-btn{
+        .answer-info {
 
-    background:#FFD700;
+            display: grid;
 
-    color:#081229;
+            grid-template-columns:
+                repeat(2, 1fr);
 
-}
+            gap: 8px;
 
+            margin-bottom: 12px;
 
-.dashboard-btn{
+        }
 
-    background:
-    rgba(255,255,255,.1);
+        .answer-box {
 
-    color:#ffffff;
+            padding: 10px;
 
-    border:
-    1px solid rgba(255,255,255,.15);
+            border-radius: 12px;
 
-}
+            background:
+                rgba(255,255,255,.04);
 
+        }
 
-.share-btn{
+        .answer-box span {
 
-    background:
-    linear-gradient(
-        135deg,
-        #1da1f2,
-        #1778b5
-    );
+            display: block;
 
-    color:#ffffff;
+            color: #8f9abb;
 
-}
+            font-size: 8px;
 
+            margin-bottom: 4px;
 
-/* ==================================================
-   FOOTER
-================================================== */
+        }
 
-.result-footer{
+        .answer-box strong {
 
-    margin-top:30px;
+            font-size: 10px;
 
-    padding:25px 10px;
+            line-height: 1.5;
 
-    text-align:center;
+        }
 
-    border-top:
-    1px solid rgba(255,255,255,.1);
+        .your-answer {
 
-}
+            color: #ff9999;
 
+        }
 
-.result-footer h3{
+        .correct-answer-text {
 
-    color:#FFD700;
+            color: #00e676;
 
-    margin:0 0 4px;
+        }
 
-    font-size:17px;
+        .not-answered {
 
-}
+            color: #ffb300;
 
+        }
 
-.result-footer p{
 
-    color:#8e9ab8;
+        /* EXPLANATION */
 
-    font-size:11px;
+        .explanation {
 
-}
+            padding: 12px;
 
+            border-radius: 14px;
 
-.social-links{
+            background:
+                rgba(255,215,0,.06);
 
-    display:flex;
+            border: 1px solid
+                rgba(255,215,0,.14);
 
-    justify-content:center;
+        }
 
-    flex-wrap:wrap;
+        .explanation-title {
 
-    gap:9px;
+            color: #FFD700;
 
-    margin:15px 0;
+            font-size: 10px;
 
-}
+            font-weight: 800;
 
+            margin-bottom: 5px;
 
-.social-links a{
+        }
 
-    color:#ffffff;
+        .explanation p {
 
-    font-size:10px;
+            color: #cfd6ee;
 
-    padding:8px 12px;
+            font-size: 10px;
 
-    border:
-    1px solid rgba(255,255,255,.15);
+            line-height: 1.7;
 
-    border-radius:20px;
+        }
 
-}
 
+        /* BUTTONS */
 
-.social-links a:hover{
+        .bottom-actions {
 
-    color:#FFD700;
+            display: grid;
 
-    border-color:#FFD700;
+            grid-template-columns:
+                repeat(2, 1fr);
 
-}
+            gap: 10px;
 
+            margin-top: 25px;
 
-.copyright{
+        }
 
-    color:#66728f !important;
+        .action-btn {
 
-    font-size:9px !important;
+            padding: 13px;
 
-}
+            border-radius: 28px;
 
+            font-family: inherit;
 
-/* ==================================================
-   MOBILE
-================================================== */
+            font-size: 11px;
 
-@media(max-width:380px){
+            font-weight: 800;
 
-    .result-container{
+            cursor: pointer;
 
-        padding:12px;
+        }
 
-    }
+        .retry-btn {
 
-    .score-circle{
+            border: none;
 
-        width:135px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #FFD700,
+                    #FFE98A
+                );
 
-        height:135px;
+            color: #081229;
 
-    }
+        }
 
-    #scoreDisplay{
+        .dashboard-btn {
 
-        font-size:30px;
+            border: 1px solid
+                rgba(255,255,255,.15);
 
-    }
+            background:
+                rgba(255,255,255,.06);
 
-}
+            color: white;
 
+        }
 
-/* ==================================================
-   BOTTOM NAV
-================================================== */
 
-.bottom-navigation{
+        /* EMPTY */
 
-    position:fixed;
+        .empty-review {
 
-    bottom:10px;
+            text-align: center;
 
-    left:50%;
+            padding: 40px 15px;
 
-    transform:translateX(-50%);
+            color: #8f9abb;
 
-    width:94%;
+            font-size: 11px;
 
-    max-width:620px;
+            background:
+                rgba(255,255,255,.04);
 
-    padding:9px;
+            border-radius: 20px;
 
-    display:grid;
+        }
 
-    grid-template-columns:
-    repeat(4,1fr);
 
-    background:
-    rgba(8,18,41,.96);
+        @media(max-width:600px) {
 
-    border:
-    1px solid rgba(255,255,255,.15);
+            .result-container {
+                padding: 10px;
+            }
 
-    border-radius:25px;
+            .brand img {
+                width: 44px;
+                height: 44px;
+            }
 
-    backdrop-filter:blur(20px);
+            .brand h1 {
+                font-size: 15px;
+            }
 
-    box-shadow:
-    0 10px 35px rgba(0,0,0,.5);
+            .brand p {
+                font-size: 8px;
+            }
 
-    z-index:9999;
+            .summary-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
 
-}
+            .score-box {
+                width: 130px;
+                height: 130px;
+            }
 
+            .score-box strong {
+                font-size: 32px;
+            }
 
-.bottom-navigation a{
+            .review-question {
+                font-size: 13px;
+            }
 
-    text-align:center;
+            .answer-info {
+                grid-template-columns: 1fr;
+            }
 
-    color:#aeb8d4;
+            .bottom-actions {
+                grid-template-columns: 1fr;
+            }
 
-    font-size:10px;
+        }
 
-    padding:5px;
-
-}
-
-
-.bottom-navigation span{
-
-    display:block;
-
-    margin-top:3px;
-
-}
-
-
-.bottom-navigation a.active{
-
-    color:#FFD700;
-
-}
-
-</style>
+    </style>
 
 </head>
 
@@ -812,424 +856,234 @@ body{
 <div class="result-container">
 
 
-<!-- ==================================================
-     HEADER
-================================================== -->
+    <!-- HEADER -->
 
-<header class="result-header">
+    <header class="result-header">
 
+        <div class="brand">
 
-<img
-src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-alt="G THE GENIUS Logo"
-class="result-logo">
+            <img
+                src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+                alt="G The Genius"
+            >
 
+            <div>
 
-<h1>
-G THE GENIUS
-</h1>
+                <h1>G THE GENIUS</h1>
 
+                <p>
+                    TNUSRB • RESULT
+                </p>
 
-<p>
-Government Exam Mock Test Portal
-</p>
+            </div>
 
+        </div>
 
-</header>
 
+        <button
+            class="home-btn"
+            id="homeBtn"
+        >
+            🏠 Dashboard
+        </button>
 
+    </header>
 
-<!-- ==================================================
-     RESULT HERO
-================================================== -->
 
-<section class="result-hero">
+    <!-- RESULT HERO -->
 
+    <section class="result-hero">
 
-<div class="result-icon">
-🎉
-</div>
+        <div
+            class="result-icon"
+            id="resultIcon"
+        >
+            🏆
+        </div>
 
+        <h2 id="resultTitle">
+            Practice Test Completed!
+        </h2>
 
-<h2>
-Test Completed!
-</h2>
+        <p id="resultSubtitle">
+            உங்கள் Result Review கீழே உள்ளது.
+        </p>
 
 
-<p id="resultMessage">
-Great effort! Keep practicing.
-</p>
+        <div class="score-box">
 
+            <strong id="scoreValue">
+                0
+            </strong>
 
-<div
-class="score-circle">
+            <span>
+                MARKS
+            </span>
 
+        </div>
 
-<span id="scoreDisplay">
-0 / 0
-</span>
+    </section>
 
 
-<span class="score-label">
-MARKS
-</span>
+    <!-- SUMMARY -->
 
+    <section class="summary-grid">
 
-</div>
+        <div class="summary-card">
 
+            <span>
+                TOTAL
+            </span>
 
-<div
-id="testTypeDisplay"
-class="test-type-badge">
+            <strong
+                class="total-count"
+                id="totalCount"
+            >
+                0
+            </strong>
 
-Mock Test
+        </div>
 
-</div>
 
+        <div class="summary-card">
 
-</section>
+            <span>
+                CORRECT
+            </span>
 
+            <strong
+                class="correct-count"
+                id="correctCount"
+            >
+                0
+            </strong>
 
+        </div>
 
-<!-- ==================================================
-     STATISTICS
-================================================== -->
 
-<section class="stats-grid">
+        <div class="summary-card">
 
+            <span>
+                WRONG
+            </span>
 
-<div class="stat-card">
+            <strong
+                class="wrong-count"
+                id="wrongCount"
+            >
+                0
+            </strong>
 
-<div class="stat-icon">
-✅
-</div>
+        </div>
 
-<span
-id="correctDisplay"
-class="stat-value correct">
 
-0
+        <div class="summary-card">
 
-</span>
+            <span>
+                SKIPPED
+            </span>
 
-<span class="stat-name">
-Correct
-</span>
+            <strong
+                class="skipped-count"
+                id="skippedCount"
+            >
+                0
+            </strong>
 
-</div>
+        </div>
 
+    </section>
 
 
-<div class="stat-card">
+    <!-- REVIEW -->
 
-<div class="stat-icon">
-❌
-</div>
+    <section>
 
-<span
-id="wrongDisplay"
-class="stat-value wrong">
+        <div class="review-header">
 
-0
+            <div>
 
-</span>
+                <h2>
+                    📚 Question Review
+                </h2>
 
-<span class="stat-name">
-Wrong
-</span>
+                <p>
+                    ஒவ்வொரு கேள்வியையும் சரிபார்க்கலாம்
+                </p>
 
-</div>
+            </div>
 
+        </div>
 
 
-<div class="stat-card">
+        <!-- FILTER -->
 
-<div class="stat-icon">
-⏭️
-</div>
+        <div class="review-filter">
 
-<span
-id="skippedDisplay"
-class="stat-value skipped">
+            <button
+                class="filter-btn active"
+                data-filter="all"
+            >
+                All
+            </button>
 
-0
+            <button
+                class="filter-btn"
+                data-filter="correct"
+            >
+                🟢 Correct
+            </button>
 
-</span>
+            <button
+                class="filter-btn"
+                data-filter="wrong"
+            >
+                🔴 Wrong
+            </button>
 
-<span class="stat-name">
-Skipped
-</span>
+            <button
+                class="filter-btn"
+                data-filter="skipped"
+            >
+                🟡 Skipped
+            </button>
 
-</div>
+        </div>
 
 
-</section>
+        <div
+            class="review-list"
+            id="reviewList"
+        ></div>
 
+    </section>
 
 
-<!-- ==================================================
-     RANK
-================================================== -->
+    <!-- ACTIONS -->
 
-<section class="rank-section">
+    <div class="bottom-actions">
 
+        <button
+            class="action-btn retry-btn"
+            id="retryBtn"
+        >
+            🔄 Retry Practice
+        </button>
 
-<div class="rank-card">
+        <button
+            class="action-btn dashboard-btn"
+            id="dashboardBtn"
+        >
+            🏠 Go to Dashboard
+        </button>
 
-
-<div class="rank-left">
-
-
-<div class="rank-icon">
-🏆
-</div>
-
-
-<div>
-
-<h3>
-Overall Rank
-</h3>
-
-<p>
-Your position among students
-</p>
-
-</div>
-
-
-</div>
-
-
-<strong id="rankDisplay">
---
-</strong>
-
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     STUDENT INFO
-================================================== -->
-
-<section class="student-card">
-
-
-<h3>
-👤 Student Details
-</h3>
-
-
-<div class="student-row">
-
-<span>
-Name
-</span>
-
-<span id="studentName">
-Student
-</span>
-
-</div>
-
-
-<div class="student-row">
-
-<span>
-District
-</span>
-
-<span id="studentDistrict">
--
-</span>
-
-</div>
-
-
-<div class="student-row">
-
-<span>
-Test
-</span>
-
-<span id="testName">
-Mock Test
-</span>
-
-</div>
-
-
-</section>
-
-
-
-<!-- ==================================================
-     ACTION BUTTONS
-================================================== -->
-
-<section class="action-buttons">
-
-
-<button
-id="retryBtn"
-class="action-btn retry-btn">
-
-🔄 Retry Test
-
-</button>
-
-
-<button
-id="dashboardBtn"
-class="action-btn dashboard-btn">
-
-🏠 Go To Dashboard
-
-</button>
-
-
-<button
-id="shareBtn"
-class="action-btn share-btn">
-
-📤 Share Result
-
-</button>
-
-
-</section>
-
-
-
-<!-- ==================================================
-     FOOTER
-================================================== -->
-
-<footer class="result-footer">
-
-
-<h3>
-G THE GENIUS
-</h3>
-
-
-<p>
-ALL GOVERNMENT EXAM MOCK TEST
-</p>
-
-
-<div class="social-links">
-
-
-<a
-href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
-target="_blank"
-rel="noopener">
-
-▶ YouTube
-
-</a>
-
-
-<a
-href="https://t.me/gthegenius"
-target="_blank"
-rel="noopener">
-
-✈ Telegram
-
-</a>
-
-
-<a
-href="mailto:gthegenius7@gmail.com">
-
-✉ Email
-
-</a>
+    </div>
 
 
 </div>
 
 
-<p class="copyright">
-
-© 2026 G THE GENIUS
-<br>
-All Rights Reserved.
-
-</p>
-
-
-</footer>
-
-
-</div>
-
-
-
-<!-- ==================================================
-     BOTTOM NAVIGATION
-================================================== -->
-
-<nav class="bottom-navigation">
-
-
-<a href="dashboard.html">
-
-🏠
-<span>
-Home
-</span>
-
-</a>
-
-
-<a href="learning.html">
-
-📚
-<span>
-Learning
-</span>
-
-</a>
-
-
-<a href="practice.html">
-
-📝
-<span>
-Practice
-</span>
-
-</a>
-
-
-<a href="leaderboard.html">
-
-🏆
-<span>
-Rank
-</span>
-
-</a>
-
-
-</nav>
-
-
-
-<!-- RESULT JS -->
-
-<script
-type="module"
-src="result.js">
-</script>
-
+<script src="result.js"></script>
 
 </body>
 
