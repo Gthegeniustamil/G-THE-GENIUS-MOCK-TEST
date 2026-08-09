@@ -1,80 +1,93 @@
-/* ==========================================
+/* ==================================================
    G THE GENIUS
-   Leaderboard CSS
-   Part 1
-
-   Premium Dark Blue + Gold Theme
-========================================== */
-
+   LEADERBOARD CSS
+   PREMIUM MOBILE APP DESIGN
+   DARK BLUE + GOLD
+================================================== */
 
 :root{
 
-    --bg:#081229;
-
-    --card:rgba(255,255,255,.08);
+    --primary:#081229;
+    --secondary:#102452;
 
     --gold:#FFD700;
-
-    --gold2:#ffb800;
+    --gold-light:#FFE98A;
 
     --white:#ffffff;
+    --text:#C9D2EA;
+    --muted:#8995B3;
 
-    --muted:#b7bfd8;
+    --card:rgba(255,255,255,.07);
+    --card-strong:rgba(255,255,255,.11);
 
-    --border:rgba(255,255,255,.15);
+    --border:rgba(255,215,0,.20);
 
-    --shadow:0 10px 30px rgba(0,0,0,.35);
-
-    --radius:22px;
+    --shadow:
+        0 12px 35px rgba(0,0,0,.35);
 
 }
-
-
-
 
 
 *{
 
     margin:0;
-
     padding:0;
-
     box-sizing:border-box;
 
 }
 
 
+html{
 
-
-
-body{
-
-    font-family:'Poppins',sans-serif;
-
-    background:linear-gradient(
-        180deg,
-        #081229,
-        #102452
-    );
-
-    color:var(--white);
-
-    min-height:100vh;
-
-    padding-bottom:90px;
+    scroll-behavior:smooth;
 
 }
 
 
+body{
+
+    min-height:100vh;
+
+    font-family:
+        'Poppins',
+        Arial,
+        sans-serif;
+
+    color:var(--white);
+
+    background:
+
+        radial-gradient(
+            circle at top,
+            #142b59 0%,
+            #081229 42%,
+            #050b1c 100%
+        );
+
+}
 
 
+a{
 
-/* ==========================================
-   Container
-========================================== */
+    text-decoration:none;
+    color:inherit;
+
+}
 
 
-.leader-container{
+button,
+input{
+
+    font-family:inherit;
+
+}
+
+
+/* ==================================================
+   MAIN CONTAINER
+================================================== */
+
+.leaderboard-container{
 
     width:100%;
 
@@ -82,411 +95,592 @@ body{
 
     margin:auto;
 
-    padding:18px;
+    padding:
+
+        18px
+
+        18px
+
+        120px;
 
 }
 
 
+/* ==================================================
+   HEADER
+================================================== */
 
-
-
-/* ==========================================
-   Header
-========================================== */
-
-
-.leader-header{
+.leaderboard-header{
 
     text-align:center;
 
-    margin-bottom:25px;
+    padding:12px 0 25px;
 
 }
 
 
+.leaderboard-logo{
 
-
-
-.leader-header .logo{
-
-    width:90px;
-
-    height:90px;
+    width:82px;
+    height:82px;
 
     object-fit:contain;
 
+    background:#ffffff;
+
+    padding:7px;
+
     border-radius:50%;
-
-    background:#fff;
-
-    padding:8px;
 
     border:3px solid var(--gold);
 
-    box-shadow:var(--shadow);
+    box-shadow:
+
+        0 0 0 5px
+        rgba(255,215,0,.08),
+
+        0 10px 30px
+        rgba(0,0,0,.4);
 
 }
 
 
+.leaderboard-header h1{
 
-
-
-.leader-header h1{
-
-    margin-top:15px;
+    margin-top:14px;
 
     color:var(--gold);
 
-    font-size:28px;
+    font-size:27px;
+
+    font-weight:800;
 
 }
 
 
+.leaderboard-header p{
 
+    margin-top:4px;
 
+    color:var(--text);
 
-.leader-header p{
-
-    color:var(--muted);
-
-    font-size:14px;
-
-}
-
-
-
-
-
-/* ==========================================
-   Podium Section
-========================================== */
-
-
-.podium-section{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:22px;
-
-    backdrop-filter:blur(18px);
-
-    box-shadow:var(--shadow);
+    font-size:13px;
 
 }
 
 
+/* ==================================================
+   MY RANK CARD
+================================================== */
 
+.my-rank-card{
 
+    display:flex;
 
-.podium-section h2{
+    align-items:center;
 
-    text-align:center;
+    justify-content:space-between;
 
-    color:var(--gold);
+    gap:15px;
+
+    padding:17px;
 
     margin-bottom:25px;
 
-}
+    border-radius:22px;
 
+    background:
 
+        linear-gradient(
+            135deg,
+            rgba(255,215,0,.13),
+            rgba(255,255,255,.05)
+        );
 
-
-
-.podium-container{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:end;
-
-    gap:12px;
-
-}
-
-
-
-
-
-.podium-card{
-
-    flex:1;
-
-    text-align:center;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:18px 10px;
-
-}
-
-
-
-
-
-.podium-card .rank{
-
-    font-size:35px;
-
-    margin-bottom:10px;
-
-}
-
-
-
-
-
-.podium-card h3{
-
-    font-size:14px;
-
-    color:#fff;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    white-space:nowrap;
-
-}
-
-
-
-
-
-.podium-card p{
-
-    margin-top:8px;
-
-    color:var(--gold);
-
-    font-weight:700;
-
-}
-
-/* ==========================================
-   G THE GENIUS
-   Leaderboard CSS
-   Part 2
-
-   Podium Highlight + Rank Cards
-========================================== */
-
-
-
-/* ==========================================
-   Podium Highlight
-========================================== */
-
-
-.podium-card.first{
-
-    transform:translateY(-15px);
-
-    border:2px solid var(--gold);
-
-    box-shadow:
-    0 10px 30px rgba(255,215,0,.25);
-
-}
-
-
-
-
-
-.podium-card.second{
-
-    border-color:#c0c0c0;
-
-}
-
-
-
-
-
-.podium-card.third{
-
-    border-color:#cd7f32;
-
-}
-
-
-
-
-
-/* ==========================================
-   Rank Section
-========================================== */
-
-
-.rank-section{
-
-    margin-top:25px;
-
-}
-
-
-
-
-
-.rank-section h2{
-
-    color:var(--gold);
-
-    text-align:center;
-
-    margin-bottom:18px;
-
-}
-
-
-
-
-
-/* ==========================================
-   Rank Card
-========================================== */
-
-
-.rank-card{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:15px;
-
-    margin-bottom:12px;
-
-    backdrop-filter:blur(15px);
+    border:1px solid
+        rgba(255,215,0,.25);
 
     box-shadow:var(--shadow);
 
 }
 
 
-
-
-
-.rank-card:hover{
-
-    transform:translateY(-3px);
-
-    border-color:var(--gold);
-
-}
-
-
-
-
-
-.rank-number{
-
-    width:45px;
-
-    height:45px;
-
-    border-radius:50%;
+.my-rank-left{
 
     display:flex;
 
     align-items:center;
 
+    gap:12px;
+
+}
+
+
+.my-avatar{
+
+    width:48px;
+    height:48px;
+
+    display:flex;
+
+    align-items:center;
     justify-content:center;
+
+    border-radius:50%;
 
     background:var(--gold);
 
     color:#081229;
 
-    font-weight:800;
+    font-size:22px;
 
 }
 
 
-
-
-
-.student-info{
-
-    flex:1;
-
-}
-
-
-
-
-
-.student-info h3{
-
-    color:#fff;
+.my-rank-left h3{
 
     font-size:15px;
 
+    font-weight:700;
+
 }
 
 
+.my-rank-left p{
 
-
-
-.student-info p{
+    margin-top:2px;
 
     color:var(--muted);
 
     font-size:12px;
 
-    margin-top:5px;
-
 }
 
 
-
-
-
-.marks-box{
+.my-rank-right{
 
     text-align:center;
 
-    min-width:55px;
+    min-width:65px;
 
 }
 
 
-
-
-
-.marks-box span{
+.my-rank-right span{
 
     display:block;
 
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+.my-rank-right strong{
+
+    display:block;
+
+    margin-top:2px;
+
     color:var(--gold);
 
-    font-size:20px;
+    font-size:24px;
 
     font-weight:800;
 
 }
 
 
+/* ==================================================
+   FILTER SECTION
+================================================== */
+
+.filter-section{
+
+    margin-bottom:25px;
+
+}
 
 
+.filter-section h2{
 
-.marks-box small{
+    margin-bottom:12px;
+
+    font-size:18px;
+
+    font-weight:800;
+
+}
+
+
+.filter-buttons{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:7px;
+
+}
+
+
+.filter-btn{
+
+    min-height:42px;
+
+    border:1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:14px;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    font-size:11px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+.filter-btn:hover{
+
+    border-color:var(--gold);
+
+    color:var(--gold);
+
+}
+
+
+.filter-btn.active{
+
+    background:var(--gold);
+
+    border-color:var(--gold);
+
+    color:#081229;
+
+    font-weight:800;
+
+    box-shadow:
+        0 6px 18px
+        rgba(255,215,0,.2);
+
+}
+
+
+/* ==================================================
+   PODIUM SECTION
+================================================== */
+
+.podium-section{
+
+    margin-bottom:25px;
+
+}
+
+
+.podium-section > h2{
+
+    margin-bottom:20px;
+
+    font-size:19px;
+
+    font-weight:800;
+
+}
+
+
+.podium{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1.15fr 1fr;
+
+    align-items:end;
+
+    gap:8px;
+
+}
+
+
+.podium-card{
+
+    position:relative;
+
+    text-align:center;
+
+    padding:
+
+        15px
+
+        8px
+
+        16px;
+
+    border-radius:20px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.045)
+        );
+
+    border:1px solid
+        rgba(255,255,255,.12);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.podium-card.first{
+
+    min-height:225px;
+
+    border-color:
+        rgba(255,215,0,.5);
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(255,215,0,.16),
+            rgba(255,255,255,.05)
+        );
+
+}
+
+
+.podium-card.second{
+
+    min-height:195px;
+
+}
+
+
+.podium-card.third{
+
+    min-height:175px;
+
+}
+
+
+.crown{
+
+    position:absolute;
+
+    top:-19px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:25px;
+
+}
+
+
+.podium-medal{
+
+    font-size:28px;
+
+    margin-bottom:7px;
+
+}
+
+
+.podium-avatar{
+
+    width:52px;
+    height:52px;
+
+    margin:0 auto 8px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--gold),
+            #fff1a6
+        );
+
+    color:#081229;
+
+    font-size:22px;
+
+    border:2px solid
+        rgba(255,255,255,.6);
+
+}
+
+
+.podium-card h3{
+
+    font-size:13px;
+
+    font-weight:800;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+.podium-card p{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+.podium-card strong{
+
+    display:block;
+
+    margin-top:10px;
+
+    color:var(--gold);
+
+    font-size:17px;
+
+}
+
+
+.podium-card span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:var(--text);
+
+    font-size:9px;
+
+}
+
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+.search-section{
+
+    margin-bottom:20px;
+
+}
+
+
+#searchInput{
+
+    width:100%;
+
+    padding:14px 17px;
+
+    border-radius:17px;
+
+    border:1px solid
+        rgba(255,255,255,.12);
+
+    outline:none;
+
+    background:
+        rgba(255,255,255,.07);
+
+    color:white;
+
+    font-size:13px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.2);
+
+}
+
+
+#searchInput::placeholder{
+
+    color:#8995B3;
+
+}
+
+
+#searchInput:focus{
+
+    border-color:var(--gold);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,215,0,.08);
+
+}
+
+
+/* ==================================================
+   RANKING SECTION
+================================================== */
+
+.ranking-section{
+
+    margin-bottom:30px;
+
+}
+
+
+.section-heading{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:14px;
+
+}
+
+
+.section-heading h2{
+
+    font-size:19px;
+
+}
+
+
+.section-heading p{
+
+    margin-top:3px;
 
     color:var(--muted);
 
@@ -494,159 +688,519 @@ body{
 
 }
 
-/* ==========================================
-   G THE GENIUS
-   Leaderboard CSS
-   Part 3 Final
 
-   Navigation + Footer + Responsive
-========================================== */
+#studentCount{
 
+    color:var(--gold);
 
+    font-size:11px;
 
-/* ==========================================
-   Bottom Navigation
-========================================== */
-
-
-.bottom-navigation{
-
-    position:fixed;
-
-    bottom:12px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:calc(100% - 30px);
-
-    max-width:600px;
-
-    background:rgba(8,18,41,.95);
-
-    backdrop-filter:blur(20px);
-
-    border:1px solid var(--border);
-
-    border-radius:25px;
-
-    padding:12px 8px;
-
-    display:flex;
-
-    justify-content:space-around;
-
-    z-index:1000;
+    font-weight:700;
 
 }
 
 
+/* ==================================================
+   RANKING CARD
+================================================== */
 
-
-
-.nav-item{
-
-    text-decoration:none;
-
-    color:var(--muted);
+.leaderboard-list{
 
     display:flex;
 
     flex-direction:column;
 
+    gap:10px;
+
+}
+
+
+.ranking-card{
+
+    display:flex;
+
     align-items:center;
 
-    gap:4px;
+    gap:12px;
+
+    padding:13px;
+
+    min-height:68px;
+
+    border-radius:18px;
+
+    background:var(--card);
+
+    border:1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+        0 7px 20px
+        rgba(0,0,0,.18);
+
+    transition:.25s;
+
+}
+
+
+.ranking-card:hover{
+
+    transform:translateY(-2px);
+
+    border-color:
+        rgba(255,215,0,.25);
+
+}
+
+
+.ranking-card.my-ranking{
+
+    border-color:var(--gold);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,215,0,.13),
+            rgba(255,255,255,.05)
+        );
+
+}
+
+
+.rank-badge{
+
+    width:42px;
+    height:42px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,215,0,.12);
+
+    border:1px solid
+        rgba(255,215,0,.2);
+
+    color:var(--gold);
+
+    font-size:15px;
+
+    font-weight:800;
+
+}
+
+
+.student-info{
+
+    min-width:0;
+
+    flex:1;
+
+}
+
+
+.student-info h3{
+
+    font-size:13px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+.student-info p{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+.you-badge{
+
+    display:inline-block;
+
+    margin-left:5px;
+
+    padding:2px 6px;
+
+    border-radius:7px;
+
+    background:var(--gold);
+
+    color:#081229;
+
+    font-size:7px;
+
+    font-weight:800;
+
+    vertical-align:middle;
+
+}
+
+
+.student-score{
+
+    text-align:right;
+
+    flex-shrink:0;
+
+}
+
+
+.student-score strong{
+
+    color:var(--gold);
+
+    font-size:19px;
+
+    font-weight:800;
+
+}
+
+
+.student-score span{
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+/* ==================================================
+   LOADING
+================================================== */
+
+.loading-box{
+
+    text-align:center;
+
+    padding:45px 20px;
+
+    color:var(--text);
+
+}
+
+
+.loader{
+
+    width:38px;
+    height:38px;
+
+    margin:0 auto 12px;
+
+    border-radius:50%;
+
+    border:4px solid
+        rgba(255,255,255,.15);
+
+    border-top-color:var(--gold);
+
+    animation:
+        leaderboardSpin
+        1s linear infinite;
+
+}
+
+
+@keyframes leaderboardSpin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ==================================================
+   EMPTY STATE
+================================================== */
+
+.empty-state{
+
+    text-align:center;
+
+    padding:40px 20px;
+
+    border-radius:20px;
+
+    background:var(--card);
+
+    border:1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.empty-state > div{
+
+    font-size:40px;
+
+    margin-bottom:10px;
+
+}
+
+
+.empty-state h3{
+
+    color:var(--gold);
+
+    font-size:16px;
+
+}
+
+
+.empty-state p{
+
+    margin-top:6px;
+
+    color:var(--muted);
 
     font-size:12px;
 
 }
 
 
+/* ==================================================
+   SOCIAL SECTION
+================================================== */
 
+.social-section{
 
+    margin-top:30px;
 
-.nav-item.active,
-.nav-item:hover{
-
-    color:var(--gold);
-
-}
-
-
-
-
-
-/* ==========================================
-   Footer
-========================================== */
-
-
-.dashboard-footer{
-
-    margin-top:35px;
-
-    padding:25px 18px;
+    padding:20px;
 
     text-align:center;
 
+    border-radius:22px;
+
     background:var(--card);
 
-    border:1px solid var(--border);
-
-    border-radius:25px;
+    border:1px solid
+        rgba(255,255,255,.08);
 
 }
 
 
+.social-section h2{
+
+    color:var(--gold);
+
+    font-size:17px;
+
+    margin-bottom:15px;
+
+}
 
 
+.social-buttons{
 
-.dashboard-footer img{
+    display:grid;
 
-    width:75px;
+    grid-template-columns:
+        repeat(3,1fr);
 
-    height:75px;
+    gap:8px;
+
+}
+
+
+.social-buttons a{
+
+    padding:11px 5px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:1px solid
+        rgba(255,255,255,.1);
+
+    color:var(--text);
+
+    font-size:10px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+
+.social-buttons a:hover{
+
+    color:#081229;
+
+    background:var(--gold);
+
+}
+
+
+/* ==================================================
+   BOTTOM NAVIGATION
+================================================== */
+
+.bottom-navigation{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:12px;
+
+    transform:translateX(-50%);
+
+    width:94%;
+
+    max-width:620px;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    padding:9px 8px;
+
+    border-radius:24px;
+
+    background:
+        rgba(5,11,28,.95);
+
+    border:1px solid
+        rgba(255,255,255,.12);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,.55);
+
+    z-index:1000;
+
+}
+
+
+.nav-item{
+
+    min-width:60px;
+
+    padding:5px;
+
+    text-align:center;
+
+    color:#8995B3;
+
+    font-size:19px;
+
+    border-radius:14px;
+
+    transition:.25s;
+
+}
+
+
+.nav-item span{
+
+    display:block;
+
+    margin-top:2px;
+
+    font-size:9px;
+
+    font-weight:600;
+
+}
+
+
+.nav-item.active{
+
+    color:var(--gold);
+
+    background:
+        rgba(255,215,0,.08);
+
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.leaderboard-footer{
+
+    margin-top:30px;
+
+    padding:28px 20px 20px;
+
+    text-align:center;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.leaderboard-footer img{
+
+    width:58px;
+    height:58px;
 
     object-fit:contain;
 
-    border-radius:50%;
-
     background:#fff;
 
-    padding:6px;
+    padding:5px;
+
+    border-radius:50%;
 
     border:2px solid var(--gold);
 
 }
 
 
+.leaderboard-footer h3{
 
-
-
-.dashboard-footer h3{
+    margin-top:10px;
 
     color:var(--gold);
 
-    margin-top:12px;
+    font-size:16px;
 
 }
 
 
+.leaderboard-footer p{
 
-
-
-.dashboard-footer p{
+    margin-top:3px;
 
     color:var(--muted);
 
-    font-size:13px;
+    font-size:10px;
 
 }
-
-
-
 
 
 .footer-links{
@@ -655,139 +1209,140 @@ body{
 
     justify-content:center;
 
-    flex-wrap:wrap;
+    gap:15px;
 
-    gap:10px;
-
-    margin:18px 0;
+    margin:14px 0;
 
 }
-
-
-
 
 
 .footer-links a{
 
-    text-decoration:none;
+    color:var(--text);
 
-    color:#fff;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid var(--border);
-
-    padding:10px 15px;
-
-    border-radius:50px;
+    font-size:10px;
 
 }
-
-
-
 
 
 .footer-links a:hover{
 
-    background:var(--gold);
-
-    color:#081229;
+    color:var(--gold);
 
 }
 
 
+.leaderboard-footer small{
+
+    color:#68738f;
+
+    font-size:9px;
+
+    line-height:1.7;
+
+}
 
 
+/* ==================================================
+   TABLET / DESKTOP
+================================================== */
 
-/* ==========================================
-   Mobile Responsive
-========================================== */
+@media(min-width:700px){
 
+    .leaderboard-container{
 
-@media(max-width:480px){
-
-
-    .leader-container{
-
-        padding:15px;
+        padding-left:25px;
+        padding-right:25px;
 
     }
 
 
+    .leaderboard-header{
 
-    .podium-container{
-
-        gap:8px;
+        padding-top:25px;
 
     }
 
+
+    .ranking-card{
+
+        padding:15px 18px;
+
+    }
+
+}
+
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media(max-width:380px){
+
+    .leaderboard-container{
+
+        padding-left:12px;
+        padding-right:12px;
+
+    }
+
+
+    .filter-buttons{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+
+    .podium{
+
+        gap:5px;
+
+    }
 
 
     .podium-card{
 
-        padding:14px 6px;
+        padding-left:5px;
+        padding-right:5px;
 
     }
 
 
+    .podium-card.first{
 
-    .podium-card .rank{
-
-        font-size:28px;
-
-    }
-
-
-
-    .podium-card h3{
-
-        font-size:12px;
+        min-height:210px;
 
     }
 
 
+    .podium-card.second{
 
-    .rank-card{
-
-        padding:12px;
-
-    }
-
-
-
-    .rank-number{
-
-        width:38px;
-
-        height:38px;
-
-        font-size:13px;
+        min-height:180px;
 
     }
 
 
+    .podium-card.third{
 
-    .bottom-navigation{
-
-        width:calc(100% - 20px);
-
-    }
-
-
-
-    .footer-links{
-
-        flex-direction:column;
+        min-height:165px;
 
     }
 
 
+    .podium-avatar{
 
-    .footer-links a{
-
-        width:100%;
+        width:46px;
+        height:46px;
 
     }
 
 
-}
+    .social-buttons{
+
+        grid-template-columns:1fr;
+
+    }
+
+   }
