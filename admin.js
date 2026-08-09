@@ -1005,5 +1005,885 @@ function renderQuestions() {
                 !search ||
                 String(
                     q.question || ""
+                                    ).toLowerCase();
+
+
+                const qSubject =
+                    String(
+                        q.subject || ""
+                    );
+
+
+                const qTopic =
+                    String(
+                        q.topic || ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    question.includes(search) ||
+                    qTopic.includes(search);
+
+
+                const matchesSubject =
+                    subject === "all" ||
+                    qSubject === subject;
+
+
+                return (
+                    matchesSearch &&
+                    matchesSubject
+                );
+
+            }
+        );
+
+
+    if (filtered.length === 0) {
+
+        list.innerHTML = `
+
+            <div class="empty-box">
+
+                📚 No questions found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    filtered.forEach(
+        (q, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "question-card";
+
+
+            const options =
+                Array.isArray(q.options)
+                    ? q.options
+                    : [];
+
+
+            const answerIndex =
+                Number(q.answer);
+
+
+            const answerLetter =
+                answerIndex >= 0 &&
+                answerIndex <= 3
+                    ? String.fromCharCode(
+                        65 + answerIndex
+                    )
+                    : "-";
+
+
+            card.innerHTML = `
+
+                <div class="question-card-header">
+
+                    <div>
+
+                        <span class="question-number">
+
+                            Q${index + 1}
+
+                        </span>
+
+                        <span class="question-subject">
+
+                            ${escapeHTML(
+                                q.subject || "-"
+                            )}
+
+                        </span>
+
+                        <span class="question-topic">
+
+                            ${escapeHTML(
+                                q.topic || "-"
+                            )}
+
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="delete-question-btn"
+                        data-id="${q.id}">
+
+                        🗑️ Delete
+
+                    </button>
+
+                </div>
+
+
+                <div class="question-card-body">
+
+                    <h3>
+
+                        ${escapeHTML(
+                            q.question || ""
+                        )}
+
+                    </h3>
+
+
+                    <div class="admin-options">
+
+                        ${options.map(
+                            (option, optionIndex) => `
+
+                            <div
+                                class="${
+                                    optionIndex === answerIndex
+                                        ? "correct-option"
+                                        : ""
+                                }">
+
+                                <strong>
+                                    ${String.fromCharCode(
+                                        65 + optionIndex
+                                    )}.
+                                </strong>
+
+                                ${escapeHTML(
+                                    option
+                                )}
+
+                                ${
+                                    optionIndex ===
+                                    answerIndex
+                                        ? " ✅"
+                                        : ""
+                                }
+
+                            </div>
+
+                        `
+                        ).join("")}
+
+                    </div>
+
+
+                    ${
+                        q.explanation
+                            ? `
+                                <div class="question-explanation">
+
+                                    💡
+                                    ${escapeHTML(
+                                        q.explanation
+                                    )}
+
+                                </div>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    // ------------------------------------------------
+    // DELETE EVENTS
+    // ------------------------------------------------
+
+    document
+        .querySelectorAll(
+            ".delete-question-btn"
+        )
+        .forEach(
+            (button) => {
+
+                button.addEventListener(
+                    "click",
+                    async () => {
+
+                        const id =
+                            button.dataset.id;
+
+
+                        await deleteQuestion(
+                            id
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+// ============================================================
+// DELETE QUESTION
+// ============================================================
+
+async function deleteQuestion(id) {
+
+    if (!id) {
+
+        return;
+
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this question?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "questions",
+                id
+            )
+        );
+
+
+        alert(
+            "✅ Question deleted successfully."
+        );
+
+
+        await loadQuestions();
+
+        await loadDashboardStats();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Delete Question Error:",
+            error
+        );
+
+
+        alert(
+            "❌ Failed to delete question."
+        );
+
+    }
+
+}
+
+
+// ============================================================
+// QUESTION SEARCH
+// ============================================================
+
+const questionSearch =
+    getElement(
+        "questionSearch"
+    );
+
+
+if (questionSearch) {
+
+    questionSearch.addEventListener(
+        "input",
+        renderQuestions
+    );
+
+}
+
+
+// ============================================================
+// SUBJECT FILTER
+// ============================================================
+
+const filterSubject =
+    getElement(
+        "filterSubject"
+    );
+
+
+if (filterSubject) {
+
+    filterSubject.addEventListener(
+        "change",
+        renderQuestions
+    );
+
+}
+
+
+// ============================================================
+// LOAD RESULTS
+// ============================================================
+
+async function loadResults() {
+
+    const list =
+        getElement(
+            "resultsList"
+        );
+
+
+    if (!list) {
+
+        return;
+
+    }
+
+
+    list.innerHTML = `
+
+        <div class="loading-box">
+
+            <div class="loader"></div>
+
+            <p>
+                Loading Results...
+            </p>
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "results"
                 )
+            );
+
+
+        allResults = [];
+
+
+        snapshot.forEach(
+            (resultDoc) => {
+
+                allResults.push({
+
+                    id:
+                        resultDoc.id,
+
+                    ...resultDoc.data()
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Results Loaded:",
+            allResults.length
+        );
+
+
+        renderResults();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load Results Error:",
+            error
+        );
+
+
+        list.innerHTML = `
+
+            <div class="empty-box">
+
+                ❌ Failed to load results.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// ============================================================
+// RENDER RESULTS
+// ============================================================
+
+function renderResults() {
+
+    const list =
+        getElement(
+            "resultsList"
+        );
+
+
+    if (!list) {
+
+        return;
+
+    }
+
+
+    const searchInput =
+        getElement(
+            "resultSearch"
+        );
+
+
+    const typeFilter =
+        getElement(
+            "resultTestType"
+        );
+
+
+    const search =
+        searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : "";
+
+
+    const testType =
+        typeFilter
+            ? typeFilter.value
+            : "all";
+
+
+    let filtered =
+        allResults.filter(
+            (result) => {
+
+                const name =
+                    String(
+                        result.studentName || ""
+                    ).toLowerCase();
+
+
+                const district =
+                    String(
+                        result.district || ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    name.includes(search) ||
+                    district.includes(search);
+
+
+                const matchesType =
+                    testType === "all" ||
+                    result.testType === testType;
+
+
+                return (
+                    matchesSearch &&
+                    matchesType
+                );
+
+            }
+        );
+
+
+    // Newest first
+
+    filtered.sort(
+        (a, b) => {
+
+            const aTime =
+                a.createdAt?.seconds || 0;
+
+
+            const bTime =
+                b.createdAt?.seconds || 0;
+
+
+            return bTime - aTime;
+
+        }
+    );
+
+
+    if (filtered.length === 0) {
+
+        list.innerHTML = `
+
+            <div class="empty-box">
+
+                📊 No results found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    filtered.forEach(
+        (result, index) => {
+
+            const score =
+                Number(
+                    result.score || 0
+                );
+
+
+            const total =
+                Number(
+                    result.totalQuestions || 0
+                );
+
+
+            const percentage =
+                total > 0
+                    ? Math.round(
+                        (
+                            score /
+                            total
+                        ) * 100
+                    )
+                    : 0;
+
+
+            let testName =
+                "Daily Mock Test";
+
+
+            let icon =
+                "🟢";
+
+
+            if (
+                result.testType ===
+                "weekly"
+            ) {
+
+                testName =
+                    "Weekly Mock Test";
+
+                icon =
+                    "🟡";
+
+            }
+
+
+            else if (
+                result.testType ===
+                "monthly"
+            ) {
+
+                testName =
+                    "Monthly Grand Test";
+
+                icon =
+                    "🔴";
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "result-card";
+
+
+            card.innerHTML = `
+
+                <div>
+
+                    <strong>
+
+                        ${escapeHTML(
+                            result.studentName ||
+                            "Student"
+                        )}
+
+                    </strong>
+
+                    <small>
+
+                        📍
+                        ${escapeHTML(
+                            result.district ||
+                            "-"
+                        )}
+
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+
+                        ${icon}
+                        ${testName}
+
+                    </span>
+
+                    <strong>
+
+                        ${score}/${total}
+
+                    </strong>
+
+                    <small>
+
+                        ${percentage}%
+
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+
+                        ${formatDate(
+                            result.createdAt
+                        )}
+
+                    </small>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// RESULT SEARCH
+// ============================================================
+
+const resultSearch =
+    getElement(
+        "resultSearch"
+    );
+
+
+if (resultSearch) {
+
+    resultSearch.addEventListener(
+        "input",
+        renderResults
+    );
+
+}
+
+
+// ============================================================
+// RESULT TEST TYPE FILTER
+// ============================================================
+
+const resultTestType =
+    getElement(
+        "resultTestType"
+    );
+
+
+if (resultTestType) {
+
+    resultTestType.addEventListener(
+        "change",
+        renderResults
+    );
+
+}
+
+
+// ============================================================
+// FORMAT DATE
+// ============================================================
+
+function formatDate(timestamp) {
+
+    if (!timestamp) {
+
+        return "Recent";
+
+    }
+
+
+    try {
+
+        let date;
+
+
+        if (
+            timestamp.seconds
+        ) {
+
+            date =
+                new Date(
+                    timestamp.seconds *
+                    1000
+                );
+
+        }
+
+        else if (
+            timestamp.toDate
+        ) {
+
+            date =
+                timestamp.toDate();
+
+        }
+
+        else {
+
+            return "Recent";
+
+        }
+
+
+        return date.toLocaleDateString(
+            "en-IN",
+            {
+                day:
+                    "2-digit",
+
+                month:
+                    "short",
+
+                year:
+                    "numeric"
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        return "Recent";
+
+    }
+
+}
+
+
+// ============================================================
+// ESCAPE HTML
+// ============================================================
+
+function escapeHTML(value) {
+
+    return String(
+        value || ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+// ============================================================
+// CONSOLE
+// ============================================================
+
+console.log(
+    "======================================"
+);
+
+console.log(
+    "G THE GENIUS ADMIN PANEL LOADED ✅"
+);
+
+console.log(
+    "Firebase v10.12.2"
+);
+
+console.log(
+    "Bulk Upload System: READY"
+);
+
+console.log(
+    "Duplicate Check: ENABLED"
+);
+
+console.log(
+    "Firestore Batch Upload: ENABLED"
+);
+
+console.log(
+    "======================================"
+);
             
