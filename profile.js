@@ -1,188 +1,305 @@
-// ======================================================
-// G THE GENIUS
-// PROFILE JS
-// Mobile App Profile + Firebase
-// ======================================================
+// ==========================================
+// G THE GENIUS - PROFILE JS
+// v5.0
+// ==========================================
+
+import { db, auth } from "./firebase-config.js";
 
 import {
-    auth,
-    db
-} from "../firebase-config.js";
+    collection,
+    getDocs,
+    doc,
+    setDoc,
+    query,
+    where
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
     onAuthStateChanged,
-    signOut
+    signOut,
+    updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import {
-    doc,
-    getDoc,
-    collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ==========================================
+// VARIABLES
+// ==========================================
+
+let currentUser = null;
+let profileResults = [];
 
 
-// ======================================================
-// ELEMENTS
-// ======================================================
+// ==========================================
+// ELEMENT HELPER
+// ==========================================
 
-const studentName =
-    document.getElementById("studentName");
-
-const studentDistrict =
-    document.getElementById("studentDistrict");
-
-const totalTests =
-    document.getElementById("totalTests");
-
-const totalMarks =
-    document.getElementById("totalMarks");
-
-const bestScore =
-    document.getElementById("bestScore");
-
-const overallRank =
-    document.getElementById("overallRank");
-
-const districtRank =
-    document.getElementById("districtRank");
-
-const profileHistory =
-    document.getElementById("profileHistory");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-const editProfileBtn =
-    document.getElementById("editProfileBtn");
+function el(id) {
+    return document.getElementById(id);
+}
 
 
-// ======================================================
-// AUTH CHECK
-// ======================================================
+// ==========================================
+// GET LOCAL STUDENT
+// ==========================================
 
-onAuthStateChanged(auth, async (user) => {
-
-    if (!user) {
-
-        window.location.href =
-            "login.html";
-
-        return;
-
-    }
-
-    await loadProfile(user);
-
-});
-
-
-// ======================================================
-// LOAD PROFILE
-// ======================================================
-
-async function loadProfile(user) {
+function getLocalStudent() {
 
     try {
 
-        const studentRef =
-            doc(
-                db,
-                "students",
-                user.uid
-            );
-
-        const studentSnap =
-            await getDoc(studentRef);
-
-        let data = {};
-
-        if (studentSnap.exists()) {
-
-            data =
-                studentSnap.data();
-
-        }
-
-        const name =
-            data.name ||
-            user.displayName ||
-            "Student";
-
-        const district =
-            data.district ||
-            "-";
-
-
-        // Display
-
-        studentName.textContent =
-            name;
-
-        studentDistrict.textContent =
-            "📍 " + district;
-
-
-        // Local storage
-
-        localStorage.setItem(
-            "studentName",
-            name
+        return JSON.parse(
+            localStorage.getItem("student") || "{}"
         );
 
-        localStorage.setItem(
-            "district",
-            district
-        );
-
-
-        // Load results
-
-        await loadResults(
-            name,
-            district
-        );
-
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
-            "Profile Error:",
+            "Student LocalStorage Error:",
             error
         );
 
-        studentName.textContent =
-            "Student";
-
-        studentDistrict.textContent =
-            "📍 -";
+        return {};
 
     }
 
 }
 
 
-// ======================================================
-// LOAD RESULTS
-// ======================================================
+// ==========================================
+// GET STUDENT NAME
+// ==========================================
 
-async function loadResults(
-    name,
-    district
-) {
+function getStudentName() {
+
+    const student = getLocalStudent();
+
+    return (
+        localStorage.getItem("studentName") ||
+        student.name ||
+        currentUser?.displayName ||
+        "Student"
+    );
+
+}
+
+
+// ==========================================
+// GET DISTRICT
+// ==========================================
+
+function getDistrict() {
+
+    const student = getLocalStudent();
+
+    return (
+        localStorage.getItem("district") ||
+        student.district ||
+        "-"
+    );
+
+}
+
+
+// ==========================================
+// GET EMAIL
+// ==========================================
+
+function getEmail() {
+
+    const student = getLocalStudent();
+
+    return (
+        student.email ||
+        currentUser?.email ||
+        "-"
+    );
+
+}
+
+
+// ==========================================
+// UPDATE PROFILE UI
+// ==========================================
+
+function updateProfileUI() {
+
+    const name =
+        getStudentName();
+
+    const district =
+        getDistrict();
+
+    const email =
+        getEmail();
+
+
+    // Hero
+
+    if (el("profileName")) {
+
+        el("profileName").textContent =
+            name;
+
+    }
+
+
+    if (el("profileDistrict")) {
+
+        el("profileDistrict").textContent =
+            `📍 ${district}`;
+
+    }
+
+
+    if (el("profileEmail")) {
+
+        el("profileEmail").textContent =
+            `📧 ${email}`;
+
+    }
+
+
+    // Personal information
+
+    if (el("infoName")) {
+
+        el("infoName").textContent =
+            name;
+
+    }
+
+
+    if (el("infoDistrict")) {
+
+        el("infoDistrict").textContent =
+            district;
+
+    }
+
+
+    if (el("infoEmail")) {
+
+        el("infoEmail").textContent =
+            email;
+
+    }
+
+
+    // User ID
+
+    if (el("infoUserId")) {
+
+        el("infoUserId").textContent =
+            currentUser?.uid ||
+            "Guest";
+
+    }
+
+
+    // Avatar
+
+    if (el("profileAvatar")) {
+
+        const firstLetter =
+            name
+                .trim()
+                .charAt(0)
+                .toUpperCase() || "G";
+
+        el("profileAvatar").textContent =
+            firstLetter;
+
+    }
+
+
+    // Edit fields
+
+    if (el("editName")) {
+
+        el("editName").value =
+            name === "Student" ? "" : name;
+
+    }
+
+
+    if (el("editDistrict")) {
+
+        el("editDistrict").value =
+            district === "-" ? "" : district;
+
+    }
+
+
+    if (el("editEmail")) {
+
+        el("editEmail").value =
+            email === "-" ? "" : email;
+
+    }
+
+}
+
+
+// ==========================================
+// LOAD PAGE
+// ==========================================
+
+function hideLoader() {
+
+    const loader =
+        el("pageLoader");
+
+    if (!loader) return;
+
+    loader.classList.add("hidden");
+
+    setTimeout(() => {
+
+        loader.style.display =
+            "none";
+
+    }, 400);
+
+}
+
+
+// ==========================================
+// FIREBASE AUTH
+// ==========================================
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        currentUser = user;
+
+        updateProfileUI();
+
+        await loadResults();
+
+        updateStatistics();
+
+        updateAchievements();
+
+        hideLoader();
+
+    }
+);
+
+// ==========================================
+// LOAD RESULTS FROM FIRESTORE
+// ==========================================
+
+async function loadResults() {
 
     try {
 
         const snapshot =
             await getDocs(
-                collection(
-                    db,
-                    "results"
-                )
+                collection(db, "results")
             );
 
-        let results = [];
+
+        profileResults = [];
 
 
         snapshot.forEach((resultDoc) => {
@@ -191,41 +308,40 @@ async function loadResults(
                 resultDoc.data();
 
 
-            // Match by student name
+            // ----------------------------------
+            // Only current student's results
+            // ----------------------------------
 
-            if (
-                data.studentName === name
-            ) {
+            const studentName =
+                data.studentName || "";
 
-                results.push({
 
-                    id:
-                        resultDoc.id,
+            const currentName =
+                getStudentName();
 
-                    studentName:
-                        data.studentName || "",
 
-                    district:
-                        data.district || "",
+            const uid =
+                data.uid || "";
 
-                    score:
-                        Number(
-                            data.score
-                        ) || 0,
 
-                    totalQuestions:
-                        Number(
-                            data.totalQuestions
-                        ) || 0,
+            const matchesUID =
+                currentUser &&
+                uid &&
+                uid === currentUser.uid;
 
-                    testType:
-                        data.testType ||
-                        "daily",
 
-                    createdAt:
-                        data.createdAt ||
-                        null
+            const matchesName =
+                studentName &&
+                currentName &&
+                studentName.toLowerCase() ===
+                currentName.toLowerCase();
 
+
+            if (matchesUID || matchesName) {
+
+                profileResults.push({
+                    id: resultDoc.id,
+                    ...data
                 });
 
             }
@@ -233,561 +349,1061 @@ async function loadResults(
         });
 
 
-        // ==================================================
-        // TOTAL TESTS
-        // ==================================================
-
-        totalTests.textContent =
-            results.length;
-
-
-        // ==================================================
-        // TOTAL MARKS
-        // ==================================================
-
-        const marks =
-            results.reduce(
-                (sum, item) =>
-                    sum + item.score,
-                0
-            );
-
-        totalMarks.textContent =
-            marks;
-
-
-        // ==================================================
-        // BEST SCORE
-        // ==================================================
-
-        let best = 0;
-
-        results.forEach(item => {
-
-            if (
-                item.score > best
-            ) {
-
-                best =
-                    item.score;
-
-            }
-
-        });
-
-        bestScore.textContent =
-            best;
-
-
-        // ==================================================
-        // HISTORY
-        // ==================================================
-
-        displayHistory(
-            results
+        console.log(
+            "Profile Results:",
+            profileResults.length
         );
 
 
-        // ==================================================
-        // RANK
-        // ==================================================
-
-        await calculateRanks(
-            name,
-            district
-        );
-
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
-            "Result Error:",
+            "Profile Results Loading Error:",
             error
         );
 
-        totalTests.textContent =
-            "0";
-
-        totalMarks.textContent =
-            "0";
-
-        bestScore.textContent =
-            "0";
-
-        profileHistory.innerHTML =
-            "<p>No test history yet 📚</p>";
+        profileResults = [];
 
     }
 
 }
 
 
-// ======================================================
-// DISPLAY HISTORY
-// ======================================================
+// ==========================================
+// UPDATE STATISTICS
+// ==========================================
 
-function displayHistory(results) {
+function updateStatistics() {
 
-    if (
-        results.length === 0
-    ) {
+    const totalTests =
+        profileResults.length;
 
-        profileHistory.innerHTML =
-            "<p>No test history yet 📚</p>";
+
+    let totalCorrect = 0;
+    let totalWrong = 0;
+    let totalSkipped = 0;
+
+    let bestScore = 0;
+    let totalScore = 0;
+
+
+    // ======================================
+    // CALCULATE EACH RESULT
+    // ======================================
+
+    profileResults.forEach((result) => {
+
+        const score =
+            Number(result.score || 0);
+
+
+        const total =
+            Number(
+                result.totalQuestions ||
+                result.total ||
+                0
+            );
+
+
+        totalScore += score;
+
+
+        if (score > bestScore) {
+
+            bestScore =
+                score;
+
+        }
+
+
+        // ----------------------------------
+        // Correct
+        // ----------------------------------
+
+        totalCorrect +=
+            score;
+
+
+        // ----------------------------------
+        // Wrong / Skipped
+        // ----------------------------------
+
+        if (result.correct !== undefined) {
+
+            totalCorrect =
+                totalCorrect -
+                score +
+                Number(result.correct || 0);
+
+        }
+
+
+        if (result.wrong !== undefined) {
+
+            totalWrong +=
+                Number(result.wrong || 0);
+
+        }
+
+
+        if (result.skipped !== undefined) {
+
+            totalSkipped +=
+                Number(result.skipped || 0);
+
+        }
+        else {
+
+            const answered =
+                Number(
+                    result.correct ||
+                    score ||
+                    0
+                ) +
+                Number(
+                    result.wrong || 0
+                );
+
+
+            const skipped =
+                total -
+                answered;
+
+
+            if (skipped > 0) {
+
+                totalSkipped +=
+                    skipped;
+
+            }
+
+        }
+
+    });
+
+
+    // ======================================
+    // AVERAGE SCORE
+    // ======================================
+
+    let averageScore = 0;
+
+
+    if (totalTests > 0) {
+
+        averageScore =
+            Math.round(
+                totalScore /
+                totalTests
+            );
+
+    }
+
+
+    // ======================================
+    // DISPLAY
+    // ======================================
+
+    if (el("totalTests")) {
+
+        el("totalTests").textContent =
+            totalTests;
+
+    }
+
+
+    if (el("totalCorrect")) {
+
+        el("totalCorrect").textContent =
+            totalCorrect;
+
+    }
+
+
+    if (el("totalWrong")) {
+
+        el("totalWrong").textContent =
+            totalWrong;
+
+    }
+
+
+    if (el("totalSkipped")) {
+
+        el("totalSkipped").textContent =
+            totalSkipped;
+
+    }
+
+
+    if (el("bestScore")) {
+
+        el("bestScore").textContent =
+            bestScore;
+
+    }
+
+
+    if (el("averageScore")) {
+
+        el("averageScore").textContent =
+            averageScore;
+
+    }
+
+
+    // ======================================
+    // TEST TYPE COUNTS
+    // ======================================
+
+    let daily = 0;
+    let weekly = 0;
+    let monthly = 0;
+    let practice = 0;
+
+
+    profileResults.forEach((result) => {
+
+        const type =
+            String(
+                result.testType ||
+                result.type ||
+                ""
+            ).toLowerCase();
+
+
+        if (type === "daily") {
+
+            daily++;
+
+        }
+        else if (type === "weekly") {
+
+            weekly++;
+
+        }
+        else if (type === "monthly") {
+
+            monthly++;
+
+        }
+        else if (
+            type === "practice" ||
+            type === "subject" ||
+            type === "topic"
+        ) {
+
+            practice++;
+
+        }
+
+    });
+
+
+    if (el("dailyTests")) {
+
+        el("dailyTests").textContent =
+            daily;
+
+    }
+
+
+    if (el("weeklyTests")) {
+
+        el("weeklyTests").textContent =
+            weekly;
+
+    }
+
+
+    if (el("monthlyTests")) {
+
+        el("monthlyTests").textContent =
+            monthly;
+
+    }
+
+
+    if (el("practiceTests")) {
+
+        el("practiceTests").textContent =
+            practice;
+
+    }
+
+
+    console.log(
+        "Profile Statistics Updated"
+    );
+
+}
+
+
+// ==========================================
+// ACHIEVEMENTS
+// ==========================================
+
+function updateAchievements() {
+
+    const totalTests =
+        profileResults.length;
+
+
+    unlockAchievement(
+        "achievementFirst",
+        totalTests >= 1
+    );
+
+
+    unlockAchievement(
+        "achievement10",
+        totalTests >= 10
+    );
+
+
+    unlockAchievement(
+        "achievement50",
+        totalTests >= 50
+    );
+
+
+    unlockAchievement(
+        "achievement100",
+        totalTests >= 100
+    );
+
+}
+
+
+// ==========================================
+// UNLOCK ACHIEVEMENT
+// ==========================================
+
+function unlockAchievement(
+    id,
+    unlocked
+) {
+
+    const achievement =
+        el(id);
+
+
+    if (!achievement) return;
+
+
+    if (unlocked) {
+
+        achievement.classList.remove(
+            "locked"
+        );
+
+        achievement.classList.add(
+            "unlocked"
+        );
+
+    }
+    else {
+
+        achievement.classList.add(
+            "locked"
+        );
+
+        achievement.classList.remove(
+            "unlocked"
+        );
+
+    }
+
+}
+
+// ==========================================
+// EDIT PROFILE
+// ==========================================
+
+function openEditModal() {
+
+    updateProfileUI();
+
+    const modal =
+        el("editModal");
+
+    if (!modal) return;
+
+    modal.classList.add("show");
+
+}
+
+
+// ==========================================
+// CLOSE EDIT MODAL
+// ==========================================
+
+function closeEditModal() {
+
+    const modal =
+        el("editModal");
+
+    if (!modal) return;
+
+    modal.classList.remove("show");
+
+    if (el("profileFormMessage")) {
+
+        el("profileFormMessage").textContent =
+            "";
+
+    }
+
+}
+
+
+// ==========================================
+// SAVE PROFILE
+// ==========================================
+
+async function saveProfile(event) {
+
+    event.preventDefault();
+
+
+    const name =
+        el("editName")?.value.trim() || "";
+
+
+    const district =
+        el("editDistrict")?.value.trim() || "";
+
+
+    const email =
+        el("editEmail")?.value.trim() || "";
+
+
+    const message =
+        el("profileFormMessage");
+
+
+    if (!name) {
+
+        if (message) {
+
+            message.textContent =
+                "⚠️ Please enter your name.";
+
+        }
 
         return;
 
     }
 
 
-    results.sort((a, b) => {
+    if (!district) {
 
-        const dateA =
-            a.createdAt?.seconds || 0;
+        if (message) {
 
-        const dateB =
-            b.createdAt?.seconds || 0;
-
-        return dateB - dateA;
-
-    });
-
-
-    // Show latest 10
-
-    const latest =
-        results.slice(0, 10);
-
-
-    profileHistory.innerHTML =
-        "";
-
-
-    latest.forEach(item => {
-
-        let icon =
-            "🟢";
-
-        let title =
-            "Daily Mock Test";
-
-
-        if (
-            item.testType ===
-            "weekly"
-        ) {
-
-            icon = "🟡";
-
-            title =
-                "Weekly Mock Test";
+            message.textContent =
+                "⚠️ Please enter your district.";
 
         }
 
-
-        else if (
-            item.testType ===
-            "monthly"
-        ) {
-
-            icon = "🔴";
-
-            title =
-                "Monthly Grand Test";
-
-        }
-
-
-        const card =
-            document.createElement(
-                "div"
-            );
-
-
-        card.className =
-            "history-card";
-
-
-        const percentage =
-            item.totalQuestions > 0
-            ?
-            Math.round(
-                (
-                    item.score /
-                    item.totalQuestions
-                ) * 100
-            )
-            :
-            0;
-
-
-        card.innerHTML = `
-
-            <div class="history-left">
-
-                <strong>
-                    ${icon} ${title}
-                </strong>
-
-                <small>
-                    ${formatDate(item.createdAt)}
-                </small>
-
-            </div>
-
-            <div class="history-right">
-
-                <strong>
-                    ${item.score}/${item.totalQuestions}
-                </strong>
-
-                <small>
-                    ${percentage}%
-                </small>
-
-            </div>
-
-        `;
-
-
-        profileHistory.appendChild(
-            card
-        );
-
-    });
-
-}
-
-
-// ======================================================
-// DATE FORMAT
-// ======================================================
-
-function formatDate(timestamp) {
-
-    if (
-        !timestamp ||
-        !timestamp.seconds
-    ) {
-
-        return "Recent Test";
+        return;
 
     }
 
-
-    const date =
-        new Date(
-            timestamp.seconds * 1000
-        );
-
-
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
-
-}
-
-
-// ======================================================
-// RANK CALCULATION
-// ======================================================
-
-async function calculateRanks(
-    name,
-    district
-) {
 
     try {
 
-        const snapshot =
-            await getDocs(
-                collection(
-                    db,
-                    "results"
-                )
-            );
+        // ----------------------------------
+        // Save LocalStorage
+        // ----------------------------------
+
+        localStorage.setItem(
+            "studentName",
+            name
+        );
 
 
-        let students = [];
+        localStorage.setItem(
+            "district",
+            district
+        );
 
 
-        snapshot.forEach(resultDoc => {
-
-            const data =
-                resultDoc.data();
+        const student =
+            getLocalStudent();
 
 
-            const score =
-                Number(
-                    data.score
-                ) || 0;
+        student.name =
+            name;
 
 
-            const total =
-                Number(
-                    data.totalQuestions
-                ) || 0;
+        student.district =
+            district;
 
 
-            if (
-                total === 0
-            ) {
+        if (email) {
 
-                return;
+            student.email =
+                email;
 
-            }
-
-
-            students.push({
-
-                name:
-                    data.studentName ||
-                    "",
-
-                district:
-                    data.district ||
-                    "",
-
-                score:
-                    score,
-
-                total:
-                    total,
-
-                percentage:
-                    score / total
-
-            });
-
-        });
+        }
 
 
-        // ==================================================
-        // BEST RESULT FOR EACH STUDENT
-        // ==================================================
-
-        const studentMap =
-            new Map();
+        localStorage.setItem(
+            "student",
+            JSON.stringify(student)
+        );
 
 
-        students.forEach(student => {
+        // ----------------------------------
+        // Firebase User Profile
+        // ----------------------------------
 
-            const existing =
-                studentMap.get(
-                    student.name
+        if (currentUser) {
+
+            try {
+
+                await updateProfile(
+                    currentUser,
+                    {
+                        displayName: name
+                    }
                 );
 
+            } catch (profileError) {
 
-            if (
-                !existing ||
-                student.percentage >
-                existing.percentage
-            ) {
-
-                studentMap.set(
-                    student.name,
-                    student
+                console.warn(
+                    "Firebase Profile Update:",
+                    profileError
                 );
 
             }
 
-        });
-
-
-        const uniqueStudents =
-            Array.from(
-                studentMap.values()
-            );
-
-
-        // ==================================================
-        // OVERALL RANK
-        // ==================================================
-
-        uniqueStudents.sort(
-            (a, b) =>
-                b.percentage -
-                a.percentage
-        );
-
-
-        const overallIndex =
-            uniqueStudents.findIndex(
-                student =>
-                    student.name === name
-            );
-
-
-        if (
-            overallIndex >= 0
-        ) {
-
-            overallRank.textContent =
-                "#" +
-                (overallIndex + 1);
-
-        }
-
-        else {
-
-            overallRank.textContent =
-                "--";
-
         }
 
 
-        // ==================================================
-        // DISTRICT RANK
-        // ==================================================
+        // ----------------------------------
+        // Firestore Student Profile
+        // ----------------------------------
 
-        const districtStudents =
-            uniqueStudents.filter(
-                student =>
-                    student.district ===
-                    district
-            );
+        if (currentUser) {
 
+            try {
 
-        districtStudents.sort(
-            (a, b) =>
-                b.percentage -
-                a.percentage
-        );
+                await setDoc(
+                    doc(
+                        db,
+                        "students",
+                        currentUser.uid
+                    ),
+                    {
+                        uid:
+                            currentUser.uid,
 
+                        name:
+                            name,
 
-        const districtIndex =
-            districtStudents.findIndex(
-                student =>
-                    student.name === name
-            );
+                        district:
+                            district,
 
+                        email:
+                            email ||
+                            currentUser.email ||
+                            "",
 
-        if (
-            districtIndex >= 0
-        ) {
+                        updatedAt:
+                            new Date()
+                    },
+                    {
+                        merge: true
+                    }
+                );
 
-            districtRank.textContent =
-                "#" +
-                (districtIndex + 1);
+            } catch (firestoreError) {
+
+                console.warn(
+                    "Firestore Profile Save:",
+                    firestoreError
+                );
+
+            }
 
         }
 
-        else {
 
-            districtRank.textContent =
-                "--";
+        // ----------------------------------
+        // Update UI
+        // ----------------------------------
+
+        updateProfileUI();
+
+
+        if (message) {
+
+            message.textContent =
+                "✅ Profile updated successfully!";
+
+            message.classList.add(
+                "success"
+            );
 
         }
 
-    }
 
-    catch (error) {
+        setTimeout(() => {
+
+            closeEditModal();
+
+        }, 900);
+
+
+    } catch (error) {
 
         console.error(
-            "Rank Error:",
+            "Profile Save Error:",
             error
         );
 
-        overallRank.textContent =
-            "--";
 
-        districtRank.textContent =
-            "--";
+        if (message) {
+
+            message.textContent =
+                "❌ Unable to save profile.";
+
+        }
 
     }
 
 }
 
 
-// ======================================================
-// EDIT PROFILE
-// ======================================================
+// ==========================================
+// LOGOUT MODAL
+// ==========================================
 
-editProfileBtn.addEventListener(
-    "click",
-    () => {
+function openLogoutModal() {
+
+    const modal =
+        el("logoutModal");
+
+    if (!modal) return;
+
+    modal.classList.add("show");
+
+}
+
+
+// ==========================================
+// CLOSE LOGOUT MODAL
+// ==========================================
+
+function closeLogoutModal() {
+
+    const modal =
+        el("logoutModal");
+
+    if (!modal) return;
+
+    modal.classList.remove("show");
+
+}
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+async function logoutUser() {
+
+    try {
+
+        await signOut(auth);
+
+
+        // Clear login related data
+
+        localStorage.removeItem(
+            "studentName"
+        );
+
+        localStorage.removeItem(
+            "district"
+        );
+
+        localStorage.removeItem(
+            "student"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+
+    } catch (error) {
+
+        console.error(
+            "Logout Error:",
+            error
+        );
+
 
         alert(
-            "Profile editing will be available soon ✏️"
+            "❌ Logout failed. Please try again."
         );
 
     }
-);
+
+}
 
 
-// ======================================================
-// LOGOUT
-// ======================================================
+// ==========================================
+// NAVIGATION
+// ==========================================
 
-logoutBtn.addEventListener(
-    "click",
-    async () => {
+function goToPage(page) {
 
-        const confirmLogout =
-            confirm(
-                "Are you sure you want to logout?"
-            );
+    window.location.href =
+        page;
+
+}
 
 
-        if (!confirmLogout) {
-
-            return;
-
-        }
+// ==========================================
+// EVENT LISTENERS
+// ==========================================
 
 
-        try {
+// ------------------------------------------
+// Back
+// ------------------------------------------
 
-            await signOut(
-                auth
-            );
+if (el("backBtn")) {
+
+    el("backBtn")
+        .addEventListener(
+            "click",
+            () => {
+
+                if (
+                    document.referrer &&
+                    document.referrer !==
+                    window.location.href
+                ) {
+
+                    history.back();
+
+                }
+                else {
+
+                    goToPage(
+                        "dashboard.html"
+                    );
+
+                }
+
+            }
+        );
+
+}
 
 
-            localStorage.removeItem(
-                "student"
-            );
+// ------------------------------------------
+// Refresh
+// ------------------------------------------
 
-            localStorage.removeItem(
-                "studentName"
-            );
+if (el("refreshBtn")) {
 
-            localStorage.removeItem(
-                "district"
-            );
+    el("refreshBtn")
+        .addEventListener(
+            "click",
+            async () => {
 
-            localStorage.removeItem(
-                "email"
-            );
+                el("refreshBtn").textContent =
+                    "⏳";
 
 
-            window.location.href =
-                "login.html";
+                await loadResults();
 
-        }
+                updateStatistics();
 
-        catch (error) {
+                updateAchievements();
 
-            console.error(
-                "Logout Error:",
-                error
-            );
+                updateProfileUI();
 
-            alert(
-                "Logout failed. Please try again."
-            );
 
-        }
+                el("refreshBtn").textContent =
+                    "↻";
 
-    }
-);
+            }
+        );
 
+}
+
+
+// ------------------------------------------
+// Edit Profile
+// ------------------------------------------
+
+if (el("editProfileBtn")) {
+
+    el("editProfileBtn")
+        .addEventListener(
+            "click",
+            openEditModal
+        );
+
+}
+
+
+// ------------------------------------------
+// Close Edit
+// ------------------------------------------
+
+if (el("closeModalBtn")) {
+
+    el("closeModalBtn")
+        .addEventListener(
+            "click",
+            closeEditModal
+        );
+
+}
+
+
+if (el("cancelEditBtn")) {
+
+    el("cancelEditBtn")
+        .addEventListener(
+            "click",
+            closeEditModal
+        );
+
+}
+
+
+// ------------------------------------------
+// Profile Form
+// ------------------------------------------
+
+if (el("profileForm")) {
+
+    el("profileForm")
+        .addEventListener(
+            "submit",
+            saveProfile
+        );
+
+}
+
+
+// ------------------------------------------
+// Logout Button
+// ------------------------------------------
+
+if (el("logoutBtn")) {
+
+    el("logoutBtn")
+        .addEventListener(
+            "click",
+            openLogoutModal
+        );
+
+}
+
+
+// ------------------------------------------
+// Cancel Logout
+// ------------------------------------------
+
+if (el("cancelLogoutBtn")) {
+
+    el("cancelLogoutBtn")
+        .addEventListener(
+            "click",
+            closeLogoutModal
+        );
+
+}
+
+
+// ------------------------------------------
+// Confirm Logout
+// ------------------------------------------
+
+if (el("confirmLogoutBtn")) {
+
+    el("confirmLogoutBtn")
+        .addEventListener(
+            "click",
+            logoutUser
+        );
+
+}
+
+
+// ==========================================
+// PAGE NAVIGATION
+// ==========================================
+
+if (el("dashboardBtn")) {
+
+    el("dashboardBtn")
+        .addEventListener(
+            "click",
+            () => {
+
+                goToPage(
+                    "dashboard.html"
+                );
+
+            }
+        );
+
+}
+
+
+if (el("homeNav")) {
+
+    el("homeNav")
+        .addEventListener(
+            "click",
+            () => {
+
+                goToPage(
+                    "dashboard.html"
+                );
+
+            }
+        );
+
+}
+
+
+if (el("practiceNav")) {
+
+    el("practiceNav")
+        .addEventListener(
+            "click",
+            () => {
+
+                goToPage(
+                    "practice.html"
+                );
+
+            }
+        );
+
+}
+
+
+if (el("leaderboardNav")) {
+
+    el("leaderboardNav")
+        .addEventListener(
+            "click",
+            () => {
+
+                goToPage(
+                    "leaderboard.html"
+                );
+
+            }
+        );
+
+}
+
+
+if (el("profileNav")) {
+
+    el("profileNav")
+        .addEventListener(
+            "click",
+            () => {
+
+                goToPage(
+                    "profile.html"
+                );
+
+            }
+        );
+
+}
+
+
+// ------------------------------------------
+// Test History
+// ------------------------------------------
+
+if (el("historyBtn")) {
+
+    el("historyBtn")
+        .addEventListener(
+            "click",
+            () => {
+
+                goToPage(
+                    "history.html"
+                );
+
+            }
+        );
+
+}
+
+
+// ==========================================
+// CLOSE MODALS WHEN CLICKING OUTSIDE
+// ==========================================
+
+if (el("editModal")) {
+
+    el("editModal")
+        .addEventListener(
+            "click",
+            (event) => {
+
+                if (
+                    event.target ===
+                    el("editModal")
+                ) {
+
+                    closeEditModal();
+
+                }
+
+            }
+        );
+
+}
+
+
+if (el("logoutModal")) {
+
+    el("logoutModal")
+        .addEventListener(
+            "click",
+            (event) => {
+
+                if (
+                    event.target ===
+                    el("logoutModal")
+                ) {
+
+                    closeLogoutModal();
+
+                }
+
+            }
+        );
+
+}
+
+
+// ==========================================
+// INITIAL UI
+// ==========================================
+
+updateProfileUI();
 
 console.log(
-    "G THE GENIUS Profile Ready"
+    "G THE GENIUS Profile JS Loaded Successfully"
 );
