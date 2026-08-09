@@ -1,725 +1,857 @@
-// ======================================================
-// G THE GENIUS
-// RESULT JS
-// MOBILE APP RESULT SYSTEM
-// ======================================================
+// ============================================================
+// G THE GENIUS - RESULT PAGE JS
+// Practice Test Result + Full Question Review
+// ============================================================
 
-import { db } from "./firebase-config.js";
+document.addEventListener("DOMContentLoaded", () => {
 
-import {
-    collection,
-    getDocs,
-    query,
-    orderBy
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    // ========================================================
+    // DOM
+    // ========================================================
 
+    const scoreValue =
+        document.getElementById("scoreValue");
 
-// ======================================================
-// GET STORED TEST DATA
-// ======================================================
+    const totalCount =
+        document.getElementById("totalCount");
 
-const score =
-    Number(localStorage.getItem("score")) || 0;
+    const correctCount =
+        document.getElementById("correctCount");
 
-const totalQuestions =
-    Number(localStorage.getItem("totalQuestions")) || 0;
+    const wrongCount =
+        document.getElementById("wrongCount");
 
-const testType =
-    localStorage.getItem("testType") || "daily";
+    const skippedCount =
+        document.getElementById("skippedCount");
 
-const questions =
-    JSON.parse(
-        localStorage.getItem("questions") || "[]"
-    );
+    const reviewList =
+        document.getElementById("reviewList");
 
-const userAnswers =
-    JSON.parse(
-        localStorage.getItem("userAnswers") || "[]"
-    );
+    const resultTitle =
+        document.getElementById("resultTitle");
 
+    const resultSubtitle =
+        document.getElementById("resultSubtitle");
 
-// ======================================================
-// STUDENT DATA
-// ======================================================
+    const resultIcon =
+        document.getElementById("resultIcon");
 
-let student = {};
+    const retryBtn =
+        document.getElementById("retryBtn");
 
-try {
+    const dashboardBtn =
+        document.getElementById("dashboardBtn");
 
-    student =
-        JSON.parse(
-            localStorage.getItem("student") || "{}"
+    const homeBtn =
+        document.getElementById("homeBtn");
+
+    const filterButtons =
+        document.querySelectorAll(
+            ".filter-btn"
         );
 
-}
-catch(error){
 
-    console.log(
-        "Student data error:",
-        error
-    );
+    // ========================================================
+    // GET RESULT
+    // ========================================================
 
-}
+    let resultData = null;
 
+    try {
 
-// ======================================================
-// STUDENT NAME / DISTRICT
-// ======================================================
+        const savedResult =
+            localStorage.getItem(
+                "practiceResult"
+            );
 
-const studentName =
-    student.name ||
-    localStorage.getItem("studentName") ||
-    "Student";
+        if (savedResult) {
 
+            resultData =
+                JSON.parse(
+                    savedResult
+                );
 
-const studentDistrict =
-    student.district ||
-    localStorage.getItem("district") ||
-    "-";
+        }
 
+    }
 
-document.getElementById(
-    "studentName"
-).textContent = studentName;
+    catch (error) {
 
+        console.error(
+            "Result data error:",
+            error
+        );
 
-document.getElementById(
-    "studentDistrict"
-).textContent = studentDistrict;
+    }
 
 
-// ======================================================
-// CALCULATE CORRECT / WRONG / SKIPPED
-// ======================================================
+    // ========================================================
+    // NO RESULT
+    // ========================================================
 
-let correct = 0;
-
-let wrong = 0;
-
-let skipped = 0;
-
-
-questions.forEach((question, index) => {
-
-    const answer =
-        userAnswers[index];
-
-
-    // Not answered
     if (
-        answer === null ||
-        answer === undefined
-    ){
+        !resultData ||
+        !Array.isArray(
+            resultData.questions
+        )
+    ) {
 
-        skipped++;
+        showNoResult();
 
         return;
 
     }
 
 
-    // Correct
+    // ========================================================
+    // RESULT VALUES
+    // ========================================================
+
+    const total =
+        Number(
+            resultData.total ||
+            resultData.questions.length
+        );
+
+    const correct =
+        Number(
+            resultData.correct || 0
+        );
+
+    const wrong =
+        Number(
+            resultData.wrong || 0
+        );
+
+    const skipped =
+        Number(
+            resultData.skipped || 0
+        );
+
+    const score =
+        Number(
+            resultData.score ||
+            correct
+        );
+
+
+    // ========================================================
+    // DISPLAY SUMMARY
+    // ========================================================
+
+    scoreValue.textContent =
+        score;
+
+    totalCount.textContent =
+        total;
+
+    correctCount.textContent =
+        correct;
+
+    wrongCount.textContent =
+        wrong;
+
+    skippedCount.textContent =
+        skipped;
+
+
+    // ========================================================
+    // RESULT MESSAGE
+    // ========================================================
+
     if (
-        Number(answer) ===
-        Number(question.answer)
-    ){
+        total > 0 &&
+        correct === total
+    ) {
 
-        correct++;
+        resultIcon.textContent =
+            "🏆";
 
-    }
+        resultTitle.textContent =
+            "Perfect Score!";
 
-    // Wrong
-    else{
-
-        wrong++;
-
-    }
-
-});
-
-
-// ======================================================
-// FALLBACK
-// ======================================================
-
-if (
-    correct === 0 &&
-    score > 0
-){
-
-    correct = score;
-
-}
-
-
-if (
-    totalQuestions > 0 &&
-    correct + wrong + skipped >
-    totalQuestions
-){
-
-    skipped = 0;
-
-}
-
-
-// ======================================================
-// SCORE DISPLAY
-// ======================================================
-
-document.getElementById(
-    "scoreDisplay"
-).textContent =
-
-`${score} / ${totalQuestions}`;
-
-
-// ======================================================
-// STATISTICS
-// ======================================================
-
-document.getElementById(
-    "correctDisplay"
-).textContent = correct;
-
-
-document.getElementById(
-    "wrongDisplay"
-).textContent = wrong;
-
-
-document.getElementById(
-    "skippedDisplay"
-).textContent = skipped;
-
-
-// ======================================================
-// TEST TYPE
-// ======================================================
-
-let testName = "Daily Mock Test";
-
-
-if(testType === "daily"){
-
-    testName =
-        "🟢 Daily Mock Test";
-
-}
-
-
-else if(testType === "weekly"){
-
-    testName =
-        "🟡 Weekly Mock Test";
-
-}
-
-
-else if(testType === "monthly"){
-
-    testName =
-        "🔴 Monthly Grand Test";
-
-}
-
-
-else{
-
-    testName =
-        "📝 Mock Test";
-
-}
-
-
-document.getElementById(
-    "testTypeDisplay"
-).textContent =
-testName;
-
-
-document.getElementById(
-    "testName"
-).textContent =
-testName;
-
-
-// ======================================================
-// RESULT MESSAGE
-// ======================================================
-
-const resultMessage =
-document.getElementById(
-    "resultMessage"
-);
-
-
-if(totalQuestions === 0){
-
-    resultMessage.textContent =
-        "Test result not available.";
-
-}
-
-else{
-
-    const percentage =
-        Math.round(
-            (score / totalQuestions) * 100
-        );
-
-
-    if(percentage >= 90){
-
-        resultMessage.textContent =
-            "🔥 Outstanding! You are exam ready!";
+        resultSubtitle.textContent =
+            "🔥 Excellent! எல்லா கேள்விகளுக்கும் சரியான பதில்.";
 
     }
 
-    else if(percentage >= 75){
+    else if (
+        total > 0 &&
+        correct >=
+        Math.ceil(total * 0.75)
+    ) {
 
-        resultMessage.textContent =
-            "🏆 Excellent performance! Keep going!";
+        resultIcon.textContent =
+            "🎉";
 
-    }
+        resultTitle.textContent =
+            "Excellent Performance!";
 
-    else if(percentage >= 50){
-
-        resultMessage.textContent =
-            "💪 Good effort! Practice more and improve!";
-
-    }
-
-    else{
-
-        resultMessage.textContent =
-            "📚 Keep practicing. Your next attempt can be better!";
+        resultSubtitle.textContent =
+            "💪 உங்கள் preparation மிகவும் நல்ல நிலையில் உள்ளது.";
 
     }
 
-}
+    else if (
+        total > 0 &&
+        correct >=
+        Math.ceil(total * 0.50)
+    ) {
+
+        resultIcon.textContent =
+            "👍";
+
+        resultTitle.textContent =
+            "Good Attempt!";
+
+        resultSubtitle.textContent =
+            "📚 இன்னும் கொஞ்சம் practice செய்தால் score அதிகரிக்கும்.";
+
+    }
+
+    else {
+
+        resultIcon.textContent =
+            "📖";
+
+        resultTitle.textContent =
+            "Keep Practicing!";
+
+        resultSubtitle.textContent =
+            "🔥 தவறுகளை review செய்து மீண்டும் முயற்சி செய்யுங்கள்.";
+
+    }
 
 
-// ======================================================
-// LOAD OVERALL RANK
-// ======================================================
+    // ========================================================
+    // STORE QUESTIONS
+    // ========================================================
 
-async function loadRank(){
-
-    const rankDisplay =
-        document.getElementById(
-            "rankDisplay"
-        );
+    const questions =
+        resultData.questions;
 
 
-    rankDisplay.textContent =
-        "Loading...";
+    // ========================================================
+    // INITIAL REVIEW
+    // ========================================================
+
+    renderQuestions(
+        questions,
+        "all"
+    );
 
 
-    try{
+    // ========================================================
+    // FILTER
+    // ========================================================
 
-        const resultsRef =
-            collection(
-                db,
-                "results"
-            );
+    filterButtons.forEach(
+        (button) => {
 
+            button.addEventListener(
+                "click",
+                () => {
 
-        const snapshot =
-            await getDocs(
-                resultsRef
-            );
+                    filterButtons.forEach(
+                        (btn) => {
 
+                            btn.classList.remove(
+                                "active"
+                            );
 
-        let results = [];
-
-
-        snapshot.forEach(doc => {
-
-            const data =
-                doc.data();
-
-
-            results.push({
-
-                id:doc.id,
-
-                score:
-                    Number(data.score) || 0,
-
-                totalQuestions:
-                    Number(
-                        data.totalQuestions
-                    ) || 0,
-
-                testType:
-                    data.testType || "daily",
-
-                studentName:
-                    data.studentName || "",
-
-                createdAt:
-                    data.createdAt || null
-
-            });
-
-        });
-
-
-        // ==================================================
-        // SAME TEST TYPE RANK
-        // ==================================================
-
-        results =
-            results.filter(
-                item =>
-                    item.testType ===
-                    testType
-            );
-
-
-        // ==================================================
-        // SORT HIGH SCORE FIRST
-        // ==================================================
-
-        results.sort(
-            (a,b) => {
-
-                const aPercentage =
-                    a.totalQuestions > 0
-                    ?
-                    a.score /
-                    a.totalQuestions
-                    :
-                    0;
-
-
-                const bPercentage =
-                    b.totalQuestions > 0
-                    ?
-                    b.score /
-                    b.totalQuestions
-                    :
-                    0;
-
-
-                if(
-                    bPercentage !==
-                    aPercentage
-                ){
-
-                    return (
-                        bPercentage -
-                        aPercentage
+                        }
                     );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    const filter =
+                        button.dataset.filter;
+
+
+                    renderQuestions(
+                        questions,
+                        filter
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    // ========================================================
+    // RENDER QUESTIONS
+    // ========================================================
+
+    function renderQuestions(
+        questionArray,
+        filter
+    ) {
+
+        reviewList.innerHTML =
+            "";
+
+
+        let displayedCount =
+            0;
+
+
+        questionArray.forEach(
+            (q, index) => {
+
+                const status =
+                    getQuestionStatus(
+                        q
+                    );
+
+
+                if (
+                    filter !== "all" &&
+                    status !== filter
+                ) {
+
+                    return;
 
                 }
 
 
-                return b.score - a.score;
+                displayedCount++;
+
+
+                const card =
+                    createReviewCard(
+                        q,
+                        index,
+                        status
+                    );
+
+
+                reviewList.appendChild(
+                    card
+                );
 
             }
         );
 
 
-        // ==================================================
-        // CURRENT RESULT RANK
-        // ==================================================
+        if (
+            displayedCount === 0
+        ) {
 
-        let rank = 1;
+            reviewList.innerHTML = `
+                <div class="empty-review">
+                    இந்த category-ல் questions இல்லை.
+                </div>
+            `;
+
+        }
+
+    }
 
 
-        /*
-         * Current test result is identified
-         * using score + student name + test type.
-         */
+    // ========================================================
+    // QUESTION STATUS
+    // ========================================================
 
-        let foundIndex =
-            results.findIndex(
-                item =>
+    function getQuestionStatus(q) {
 
-                    item.score === score &&
+        const userAnswer =
+            q.userAnswer;
 
-                    item.studentName ===
-                    studentName &&
 
-                    item.testType ===
-                    testType
-
+        const correctAnswer =
+            Number(
+                q.correctAnswer
             );
 
 
-        if(foundIndex !== -1){
+        // SKIPPED
 
-            rank =
-                foundIndex + 1;
+        if (
+            userAnswer === null ||
+            userAnswer === undefined ||
+            userAnswer === ""
+        ) {
+
+            return "skipped";
 
         }
 
 
-        // If result is not found
-        // calculate approximate rank
+        // CORRECT
 
-        else{
+        if (
+            Number(userAnswer) ===
+            correctAnswer
+        ) {
 
-            rank =
-                results.filter(
-                    item => {
+            return "correct";
 
-                        if(
-                            item.totalQuestions === 0
-                        ){
+        }
 
-                            return false;
 
+        // WRONG
+
+        return "wrong";
+
+    }
+
+
+    // ========================================================
+    // CREATE REVIEW CARD
+    // ========================================================
+
+    function createReviewCard(
+        q,
+        originalIndex,
+        status
+    ) {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            `review-card ${status}`;
+
+
+        // ----------------------------------------------------
+        // STATUS
+        // ----------------------------------------------------
+
+        let statusText = "";
+        let statusClass = "";
+
+
+        if (
+            status === "correct"
+        ) {
+
+            statusText =
+                "✓ Correct";
+
+            statusClass =
+                "status-correct";
+
+        }
+
+        else if (
+            status === "wrong"
+        ) {
+
+            statusText =
+                "✕ Wrong";
+
+            statusClass =
+                "status-wrong";
+
+        }
+
+        else {
+
+            statusText =
+                "— Skipped";
+
+            statusClass =
+                "status-skipped";
+
+        }
+
+
+        // ----------------------------------------------------
+        // ANSWERS
+        // ----------------------------------------------------
+
+        const userAnswer =
+            q.userAnswer;
+
+
+        const correctAnswer =
+            Number(
+                q.correctAnswer
+            );
+
+
+        const options =
+            Array.isArray(q.options)
+                ? q.options
+                : [];
+
+
+        const correctText =
+            options[correctAnswer] ??
+            "Answer not available";
+
+
+        let userText =
+            "Not Answered";
+
+
+        if (
+            userAnswer !== null &&
+            userAnswer !== undefined &&
+            userAnswer !== ""
+        ) {
+
+            userText =
+                options[
+                    Number(userAnswer)
+                ] ??
+                "Answer not available";
+
+        }
+
+
+        // ----------------------------------------------------
+        // OPTIONS HTML
+        // ----------------------------------------------------
+
+        const letters = [
+            "A",
+            "B",
+            "C",
+            "D"
+        ];
+
+
+        let optionsHTML =
+            "";
+
+
+        options.forEach(
+            (option, optionIndex) => {
+
+                let optionClass =
+                    "review-option";
+
+
+                const isCorrect =
+                    optionIndex ===
+                    correctAnswer;
+
+
+                const isUserAnswer =
+                    userAnswer !== null &&
+                    userAnswer !== undefined &&
+                    userAnswer !== "" &&
+                    Number(userAnswer) ===
+                    optionIndex;
+
+
+                if (
+                    isCorrect &&
+                    isUserAnswer
+                ) {
+
+                    optionClass +=
+                        " user-correct";
+
+                }
+
+                else if (
+                    isCorrect
+                ) {
+
+                    optionClass +=
+                        " correct-answer";
+
+                }
+
+                else if (
+                    isUserAnswer
+                ) {
+
+                    optionClass +=
+                        " user-answer";
+
+                }
+
+
+                let marker = "";
+
+
+                if (
+                    isCorrect &&
+                    isUserAnswer
+                ) {
+
+                    marker =
+                        " ✓ Your Answer • Correct";
+
+                }
+
+                else if (
+                    isCorrect
+                ) {
+
+                    marker =
+                        " ✓ Correct Answer";
+
+                }
+
+                else if (
+                    isUserAnswer
+                ) {
+
+                    marker =
+                        " ✕ Your Answer";
+
+                }
+
+
+                optionsHTML += `
+                    <div class="${optionClass}">
+                        <strong>
+                            ${letters[optionIndex] || optionIndex + 1}.
+                        </strong>
+                        ${escapeHTML(option)}
+                        <span>
+                            ${marker}
+                        </span>
+                    </div>
+                `;
+
+            }
+        );
+
+
+        // ----------------------------------------------------
+        // EXPLANATION
+        // ----------------------------------------------------
+
+        const explanation =
+            q.explanation &&
+            String(
+                q.explanation
+            ).trim()
+                ? q.explanation
+                : "இந்த கேள்விக்கு explanation வழங்கப்படவில்லை.";
+
+
+        // ----------------------------------------------------
+        // CARD
+        // ----------------------------------------------------
+
+        card.innerHTML = `
+
+            <div class="review-top">
+
+                <div class="review-number">
+                    Question ${originalIndex + 1}
+                </div>
+
+                <div class="status-badge ${statusClass}">
+                    ${statusText}
+                </div>
+
+            </div>
+
+
+            <div class="review-question">
+                ${escapeHTML(q.question)}
+            </div>
+
+
+            <div class="review-options">
+                ${optionsHTML}
+            </div>
+
+
+            <div class="answer-info">
+
+                <div class="answer-box">
+
+                    <span>
+                        👤 Your Answer
+                    </span>
+
+                    <strong
+                        class="${
+                            status === "skipped"
+                                ? "not-answered"
+                                : "your-answer"
+                        }"
+                    >
+                        ${
+                            status === "skipped"
+                                ? "Not Answered"
+                                : escapeHTML(userText)
                         }
+                    </strong>
+
+                </div>
 
 
-                        return (
+                <div class="answer-box">
 
-                            item.score /
-                            item.totalQuestions
+                    <span>
+                        ✅ Correct Answer
+                    </span>
 
-                        ) >
+                    <strong class="correct-answer-text">
+                        ${escapeHTML(correctText)}
+                    </strong>
 
-                        (
+                </div>
 
-                            score /
-                            totalQuestions
+            </div>
 
-                        );
 
-                    }
-                ).length + 1;
+            <div class="explanation">
+
+                <div class="explanation-title">
+                    💡 Explanation
+                </div>
+
+                <p>
+                    ${escapeHTML(explanation)}
+                </p>
+
+            </div>
+
+        `;
+
+
+        return card;
+
+    }
+
+
+    // ========================================================
+    // RETRY
+    // ========================================================
+
+    retryBtn.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "practice.html";
 
         }
+    );
 
 
-        rankDisplay.textContent =
-            "#" + rank;
+    // ========================================================
+    // DASHBOARD
+    // ========================================================
+
+    dashboardBtn.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+    );
 
 
-        localStorage.setItem(
-            "rank",
-            rank
-        );
+    homeBtn.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+    );
 
 
-    }
+    // ========================================================
+    // ESCAPE HTML
+    // ========================================================
 
-    catch(error){
+    function escapeHTML(value) {
 
-        console.error(
-            "Rank Error:",
-            error
-        );
-
-
-        rankDisplay.textContent =
-            "--";
-
-    }
-
-}
-
-
-// ======================================================
-// LOAD RANK
-// ======================================================
-
-loadRank();
-
-
-// ======================================================
-// RETRY TEST
-// ======================================================
-
-document.getElementById(
-    "retryBtn"
-).addEventListener(
-    "click",
-    () => {
-
-        let url =
-            "mocktest.html?type=" +
-            encodeURIComponent(
-                testType
+        return String(
+            value ?? ""
+        )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
             );
 
+    }
 
-        window.location.href =
-            url;
+
+    // ========================================================
+    // NO RESULT
+    // ========================================================
+
+    function showNoResult() {
+
+        scoreValue.textContent =
+            "0";
+
+        totalCount.textContent =
+            "0";
+
+        correctCount.textContent =
+            "0";
+
+        wrongCount.textContent =
+            "0";
+
+        skippedCount.textContent =
+            "0";
+
+
+        resultIcon.textContent =
+            "⚠️";
+
+        resultTitle.textContent =
+            "Result Not Found";
+
+        resultSubtitle.textContent =
+            "Practice Test result கிடைக்கவில்லை.";
+
+
+        reviewList.innerHTML = `
+
+            <div class="empty-review">
+
+                <div
+                    style="
+                        font-size:35px;
+                        margin-bottom:10px;
+                    "
+                >
+                    📭
+                </div>
+
+                Result data கிடைக்கவில்லை.<br>
+
+                தயவுசெய்து Practice Test-ஐ
+                மீண்டும் attempt செய்யுங்கள்.
+
+            </div>
+
+        `;
 
     }
-);
 
-
-// ======================================================
-// DASHBOARD
-// ======================================================
-
-document.getElementById(
-    "dashboardBtn"
-).addEventListener(
-    "click",
-    () => {
-
-        window.location.href =
-            "dashboard.html";
-
-    }
-);
-
-
-// ======================================================
-// SHARE RESULT
-// ======================================================
-
-document.getElementById(
-    "shareBtn"
-).addEventListener(
-    "click",
-    async () => {
-
-
-        const rank =
-            localStorage.getItem(
-                "rank"
-            ) || "--";
-
-
-        const shareText =
-
-`🎯 G THE GENIUS MOCK TEST
-
-👤 ${studentName}
-
-📝 ${testName}
-
-🏆 Score: ${score}/${totalQuestions}
-
-✅ Correct: ${correct}
-
-❌ Wrong: ${wrong}
-
-⏭️ Skipped: ${skipped}
-
-🏅 Rank: #${rank}
-
-🔥 Keep Learning!
-G THE GENIUS`;
-
-
-
-        // Native Share
-        if(
-            navigator.share
-        ){
-
-            try{
-
-                await navigator.share({
-
-                    title:
-                        "G THE GENIUS Result",
-
-                    text:
-                        shareText
-
-                });
-
-            }
-
-            catch(error){
-
-                console.log(
-                    "Share cancelled"
-                );
-
-            }
-
-        }
-
-
-        // Clipboard fallback
-
-        else{
-
-            try{
-
-                await navigator.clipboard.writeText(
-                    shareText
-                );
-
-
-                alert(
-                    "Result copied! 📋"
-                );
-
-            }
-
-            catch(error){
-
-                alert(
-                    shareText
-                );
-
-            }
-
-        }
-
-    }
-);
-
-
-// ======================================================
-// PREVENT BACK BUTTON CONFUSION
-// ======================================================
-
-window.addEventListener(
-    "pageshow",
-    () => {
-
-        window.scrollTo(
-            0,
-            0
-        );
-
-    }
-);
-
-
-// ======================================================
-// CONSOLE
-// ======================================================
-
-console.log(
-    "G THE GENIUS Result Loaded"
-);
-
-console.log(
-    "Test Type:",
-    testType
-);
-
-console.log(
-    "Score:",
-    score,
-    "/",
-    totalQuestions
-);
-
-console.log(
-    "Correct:",
-    correct
-);
-
-console.log(
-    "Wrong:",
-    wrong
-);
-
-console.log(
-    "Skipped:",
-    skipped
-);
+});
