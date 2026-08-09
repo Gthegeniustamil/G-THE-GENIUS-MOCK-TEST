@@ -1,6 +1,6 @@
 // ============================================================
 // G THE GENIUS
-// ADMIN PANEL JS
+// ADMIN PANEL JS - FINAL
 // Firebase v10.12.2
 // ============================================================
 
@@ -30,30 +30,34 @@ import {
 
 let allQuestions = [];
 let allResults = [];
-let allStudents = [];
 
 
 // ============================================================
-// ELEMENTS
+// DOM READY
 // ============================================================
 
-const questionForm =
-    document.getElementById("questionForm");
+document.addEventListener("DOMContentLoaded", () => {
 
-const questionMessage =
-    document.getElementById("questionMessage");
+    console.log("🚀 G THE GENIUS Admin JS Started");
 
-const bulkMessage =
-    document.getElementById("bulkMessage");
+    initializeAdminMenu();
+    initializeBulkUpload();
+    initializeAddQuestion();
+    initializeLogout();
+    initializeFilters();
+
+});
 
 
 // ============================================================
-// ADMIN AUTH CHECK
+// ADMIN AUTH
 // ============================================================
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
+
+        console.log("❌ User not logged in");
 
         window.location.href = "login.html";
 
@@ -62,8 +66,12 @@ onAuthStateChanged(auth, async (user) => {
 
     try {
 
+        console.log("Checking admin:", user.uid);
+
         const studentsSnapshot =
-            await getDocs(collection(db, "students"));
+            await getDocs(
+                collection(db, "students")
+            );
 
         let adminFound = false;
 
@@ -91,14 +99,15 @@ onAuthStateChanged(auth, async (user) => {
 
             await signOut(auth);
 
-            window.location.href = "login.html";
+            window.location.href =
+                "login.html";
 
             return;
 
         }
 
 
-        console.log("Admin Access Granted ✅");
+        console.log("✅ Admin Access Granted");
 
         loadDashboardStats();
 
@@ -116,7 +125,7 @@ onAuthStateChanged(auth, async (user) => {
         );
 
         window.location.href =
-            "dashboard.html";
+            "login.html";
 
     }
 
@@ -124,54 +133,38 @@ onAuthStateChanged(auth, async (user) => {
 
 
 // ============================================================
-// ADMIN LOGOUT
+// ADMIN MENU
 // ============================================================
 
-document
-    .getElementById("adminLogoutBtn")
-    .addEventListener("click", async () => {
-
-        const confirmLogout =
-            confirm(
-                "Are you sure you want to logout?"
-            );
-
-        if (!confirmLogout) return;
-
-        try {
-
-            await signOut(auth);
-
-            localStorage.clear();
-
-            window.location.href =
-                "login.html";
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-            alert(
-                "Logout failed. Please try again."
-            );
-
-        }
-
-    });
-
-// ============================================================
-// ADMIN MENU - FIXED
-// ============================================================
-
-document.addEventListener("DOMContentLoaded", () => {
+function initializeAdminMenu() {
 
     const menuCards =
         document.querySelectorAll(".menu-card");
 
-    const adminSections =
+    const sections =
         document.querySelectorAll(".admin-section");
+
+
+    console.log(
+        "Menu Buttons:",
+        menuCards.length
+    );
+
+    console.log(
+        "Admin Sections:",
+        sections.length
+    );
+
+
+    if (!menuCards.length) {
+
+        console.error(
+            "❌ Menu cards not found"
+        );
+
+        return;
+
+    }
 
 
     menuCards.forEach((button) => {
@@ -179,14 +172,16 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", async () => {
 
             const target =
-                button.getAttribute("data-section");
-
-            console.log("Admin Menu Clicked:", target);
+                button.dataset.section;
 
 
-            // -----------------------------
-            // REMOVE ACTIVE FROM ALL BUTTONS
-            // -----------------------------
+            console.log(
+                "📌 Menu clicked:",
+                target
+            );
+
+
+            // Remove active from buttons
 
             menuCards.forEach((btn) => {
 
@@ -195,31 +190,26 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
 
-            // -----------------------------
-            // ADD ACTIVE TO CLICKED BUTTON
-            // -----------------------------
+            // Add active
 
             button.classList.add("active");
 
 
-            // -----------------------------
-            // HIDE ALL SECTIONS
-            // -----------------------------
+            // Hide all sections
 
-            adminSections.forEach((section) => {
+            sections.forEach((section) => {
 
                 section.classList.remove(
                     "active-section"
                 );
 
-                section.style.display = "none";
+                section.style.display =
+                    "none";
 
             });
 
 
-            // -----------------------------
-            // SHOW TARGET SECTION
-            // -----------------------------
+            // Find target
 
             const targetSection =
                 document.getElementById(target);
@@ -228,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!targetSection) {
 
                 console.error(
-                    "Section not found:",
+                    "❌ Section not found:",
                     target
                 );
 
@@ -237,16 +227,25 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            // Show target
+
             targetSection.classList.add(
                 "active-section"
             );
 
-            targetSection.style.display = "block";
+            targetSection.style.display =
+                "block";
 
 
-            // -----------------------------
-            // LOAD DATA
-            // -----------------------------
+            // Scroll to section
+
+            targetSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+
+            // Load section data
 
             if (
                 target ===
@@ -273,13 +272,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     console.log(
-        "✅ Admin Menu Initialized:",
-        menuCards.length,
-        "menu buttons"
+        "✅ Admin Menu Initialized"
     );
 
-});
+}
 
+
+// ============================================================
+// LOGOUT
+// ============================================================
+
+function initializeLogout() {
+
+    const logoutBtn =
+        document.getElementById(
+            "adminLogoutBtn"
+        );
+
+
+    if (!logoutBtn) return;
+
+
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
+
+            const confirmLogout =
+                confirm(
+                    "Are you sure you want to logout?"
+                );
+
+
+            if (!confirmLogout) return;
+
+
+            try {
+
+                await signOut(auth);
+
+                localStorage.clear();
+
+                window.location.href =
+                    "login.html";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+                alert(
+                    "Logout failed."
+                );
+
+            }
+
+        }
+    );
+
+}
 
 
 // ============================================================
@@ -297,45 +351,80 @@ async function loadDashboardStats() {
         ] = await Promise.all([
 
             getDocs(
-                collection(db, "questions")
+                collection(
+                    db,
+                    "questions"
+                )
             ),
 
             getDocs(
-                collection(db, "students")
+                collection(
+                    db,
+                    "students"
+                )
             ),
 
             getDocs(
-                collection(db, "results")
+                collection(
+                    db,
+                    "results"
+                )
             )
 
         ]);
 
 
-        document
-            .getElementById("totalQuestions")
-            .textContent =
-            questionsSnapshot.size;
+        const totalQuestions =
+            document.getElementById(
+                "totalQuestions"
+            );
+
+        const totalStudents =
+            document.getElementById(
+                "totalStudents"
+            );
+
+        const totalResults =
+            document.getElementById(
+                "totalResults"
+            );
+
+        const testsToday =
+            document.getElementById(
+                "testsToday"
+            );
 
 
-        document
-            .getElementById("totalStudents")
-            .textContent =
-            studentsSnapshot.size;
+        if (totalQuestions) {
+
+            totalQuestions.textContent =
+                questionsSnapshot.size;
+
+        }
 
 
-        document
-            .getElementById("totalResults")
-            .textContent =
-            resultsSnapshot.size;
+        if (totalStudents) {
+
+            totalStudents.textContent =
+                studentsSnapshot.size;
+
+        }
+
+
+        if (totalResults) {
+
+            totalResults.textContent =
+                resultsSnapshot.size;
+
+        }
 
 
         // Tests today
 
+        let todayCount = 0;
+
         const today =
-            new Date().toLocaleDateString();
-
-
-        let testsToday = 0;
+            new Date().toDateString();
 
 
         resultsSnapshot.forEach((resultDoc) => {
@@ -344,28 +433,37 @@ async function loadDashboardStats() {
                 resultDoc.data();
 
 
-            if (!data.createdAt) return;
+            if (
+                data.createdAt &&
+                typeof data.createdAt.toDate ===
+                    "function"
+            ) {
+
+                const resultDate =
+                    data.createdAt
+                        .toDate()
+                        .toDateString();
 
 
-            const date =
-                data.createdAt
-                    .toDate()
-                    .toLocaleDateString();
+                if (
+                    resultDate === today
+                ) {
 
+                    todayCount++;
 
-            if (date === today) {
-
-                testsToday++;
+                }
 
             }
 
         });
 
 
-        document
-            .getElementById("testsToday")
-            .textContent =
-            testsToday;
+        if (testsToday) {
+
+            testsToday.textContent =
+                todayCount;
+
+        }
 
     }
 
@@ -385,116 +483,136 @@ async function loadDashboardStats() {
 // ADD QUESTION
 // ============================================================
 
-questionForm.addEventListener(
-    "submit",
-    async (event) => {
+function initializeAddQuestion() {
 
-        event.preventDefault();
-
-
-        const subject =
-            document
-                .getElementById("questionSubject")
-                .value
-                .trim();
+    const form =
+        document.getElementById(
+            "questionForm"
+        );
 
 
-        const topic =
-            document
-                .getElementById("questionTopic")
-                .value
-                .trim();
+    if (!form) {
+
+        console.error(
+            "❌ Question form not found"
+        );
+
+        return;
+
+    }
 
 
-        const question =
-            document
-                .getElementById("questionText")
-                .value
-                .trim();
+    form.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
 
 
-        const optionA =
-            document
-                .getElementById("optionA")
-                .value
-                .trim();
-
-
-        const optionB =
-            document
-                .getElementById("optionB")
-                .value
-                .trim();
-
-
-        const optionC =
-            document
-                .getElementById("optionC")
-                .value
-                .trim();
-
-
-        const optionD =
-            document
-                .getElementById("optionD")
-                .value
-                .trim();
-
-
-        const answer =
-            Number(
-                document
-                    .getElementById("correctAnswer")
-                    .value
-            );
-
-
-        const explanation =
-            document
-                .getElementById("questionExplanation")
-                .value
-                .trim();
-
-
-        if (!subject ||
-            !topic ||
-            !question ||
-            !optionA ||
-            !optionB ||
-            !optionC ||
-            !optionD) {
-
-            questionMessage.textContent =
-                "Please fill all required fields.";
-
-            return;
-
-        }
-
-
-        questionMessage.textContent =
-            "Checking duplicate...";
-
-
-        try {
-
-            // Duplicate check
-
-            const existingSnapshot =
-                await getDocs(
-                    collection(db, "questions")
+            const message =
+                document.getElementById(
+                    "questionMessage"
                 );
 
 
-            const normalizedQuestion =
-                normalizeText(question);
+            const subject =
+                document.getElementById(
+                    "questionSubject"
+                ).value.trim();
 
 
-            let duplicate = false;
+            const topic =
+                document.getElementById(
+                    "questionTopic"
+                ).value.trim();
 
 
-            existingSnapshot.forEach(
-                (questionDoc) => {
+            const question =
+                document.getElementById(
+                    "questionText"
+                ).value.trim();
+
+
+            const optionA =
+                document.getElementById(
+                    "optionA"
+                ).value.trim();
+
+
+            const optionB =
+                document.getElementById(
+                    "optionB"
+                ).value.trim();
+
+
+            const optionC =
+                document.getElementById(
+                    "optionC"
+                ).value.trim();
+
+
+            const optionD =
+                document.getElementById(
+                    "optionD"
+                ).value.trim();
+
+
+            const correctValue =
+                document.getElementById(
+                    "correctAnswer"
+                ).value;
+
+
+            const explanation =
+                document.getElementById(
+                    "questionExplanation"
+                ).value.trim();
+
+
+            if (
+                !subject ||
+                !topic ||
+                !question ||
+                !optionA ||
+                !optionB ||
+                !optionC ||
+                !optionD ||
+                correctValue === ""
+            ) {
+
+                message.textContent =
+                    "⚠️ Please fill all required fields.";
+
+                return;
+
+            }
+
+
+            message.textContent =
+                "⏳ Checking duplicate...";
+
+
+            try {
+
+                const snapshot =
+                    await getDocs(
+                        collection(
+                            db,
+                            "questions"
+                        )
+                    );
+
+
+                const normalized =
+                    normalizeText(
+                        question
+                    );
+
+
+                let duplicate = false;
+
+
+                snapshot.forEach((questionDoc) => {
 
                     const data =
                         questionDoc.data();
@@ -503,87 +621,95 @@ questionForm.addEventListener(
                     if (
                         normalizeText(
                             data.question || ""
-                        ) === normalizedQuestion
+                        ) === normalized
                     ) {
 
                         duplicate = true;
 
                     }
 
+                });
+
+
+                if (duplicate) {
+
+                    message.textContent =
+                        "⚠️ This question already exists.";
+
+                    return;
+
                 }
-            );
 
 
-            if (duplicate) {
+                message.textContent =
+                    "⏳ Adding question...";
 
-                questionMessage.textContent =
-                    "⚠️ This question already exists.";
 
-                return;
+                await addDoc(
+                    collection(
+                        db,
+                        "questions"
+                    ),
+                    {
+
+                        question:
+                            question,
+
+                        options: [
+
+                            optionA,
+                            optionB,
+                            optionC,
+                            optionD
+
+                        ],
+
+                        answer:
+                            Number(correctValue),
+
+                        subject:
+                            subject,
+
+                        topic:
+                            topic,
+
+                        explanation:
+                            explanation,
+
+                        createdAt:
+                            serverTimestamp()
+
+                    }
+                );
+
+
+                message.textContent =
+                    "✅ Question added successfully!";
+
+
+                form.reset();
+
+
+                await loadDashboardStats();
 
             }
 
+            catch (error) {
 
-            questionMessage.textContent =
-                "Adding question...";
+                console.error(
+                    "Add question error:",
+                    error
+                );
 
+                message.textContent =
+                    "❌ Failed to add question.";
 
-            await addDoc(
-                collection(db, "questions"),
-                {
-
-                    question: question,
-
-                    options: [
-                        optionA,
-                        optionB,
-                        optionC,
-                        optionD
-                    ],
-
-                    answer: answer,
-
-                    subject: subject,
-
-                    topic: topic,
-
-                    explanation:
-                        explanation,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            questionMessage.textContent =
-                "✅ Question added successfully!";
-
-
-            questionForm.reset();
-
-
-            await loadDashboardStats();
-
+            }
 
         }
+    );
 
-        catch (error) {
-
-            console.error(
-                "Add question error:",
-                error
-            );
-
-
-            questionMessage.textContent =
-                "❌ Failed to add question.";
-
-        }
-
-    }
-);
+}
 
 
 // ============================================================
@@ -592,8 +718,7 @@ questionForm.addEventListener(
 
 function normalizeText(text) {
 
-    return text
-        .toString()
+    return String(text || "")
         .trim()
         .toLowerCase()
         .replace(/\s+/g, " ");
@@ -602,353 +727,753 @@ function normalizeText(text) {
 
 
 // ============================================================
-// BULK FILE SELECT
+// BULK UPLOAD INITIALIZE
 // ============================================================
 
-const bulkFile =
-    document.getElementById("bulkFile");
+function initializeBulkUpload() {
+
+    const bulkFile =
+        document.getElementById(
+            "bulkFile"
+        );
+
+    const bulkButton =
+        document.getElementById(
+            "bulkUploadBtn"
+        );
 
 
-bulkFile.addEventListener(
-    "change",
-    () => {
+    if (!bulkFile) {
 
-        const file =
-            bulkFile.files[0];
+        console.error(
+            "❌ bulkFile not found"
+        );
 
-
-        document
-            .getElementById("selectedFile")
-            .textContent =
-            file
-                ? file.name
-                : "No file selected";
+        return;
 
     }
-);
 
 
-// ============================================================
-// BULK UPLOAD
-// ============================================================
+    if (!bulkButton) {
 
-document
-    .getElementById("bulkUploadBtn")
-    .addEventListener(
-        "click",
-        async () => {
+        console.error(
+            "❌ bulkUploadBtn not found"
+        );
+
+        return;
+
+    }
+
+
+    console.log(
+        "✅ Bulk Upload Initialized"
+    );
+
+
+    // File selected
+
+    bulkFile.addEventListener(
+        "change",
+        () => {
 
             const file =
                 bulkFile.files[0];
 
 
-            const subject =
-                document
-                    .getElementById("bulkSubject")
-                    .value
-                    .trim();
-
-
-            const topic =
-                document
-                    .getElementById("bulkTopic")
-                    .value
-                    .trim();
-
-
-            if (!file) {
-
-                bulkMessage.textContent =
-                    "Please select a JSON file.";
-
-                return;
-
-            }
-
-
-            if (!subject) {
-
-                bulkMessage.textContent =
-                    "Please select a subject.";
-
-                return;
-
-            }
-
-
-            if (!topic) {
-
-                bulkMessage.textContent =
-                    "Please enter a topic.";
-
-                return;
-
-            }
-
-
-            try {
-
-                bulkMessage.textContent =
-                    "Reading JSON file...";
-
-
-                const text =
-                    await file.text();
-
-
-                const questions =
-                    JSON.parse(text);
-
-
-                if (!Array.isArray(questions)) {
-
-                    throw new Error(
-                        "JSON must contain an array."
-                    );
-
-                }
-
-
-                if (questions.length === 0) {
-
-                    bulkMessage.textContent =
-                        "No questions found.";
-
-                    return;
-
-                }
-
-
-                // Load existing questions
-
-                const existingSnapshot =
-                    await getDocs(
-                        collection(db, "questions")
-                    );
-
-
-                const existingQuestions =
-                    [];
-
-
-                existingSnapshot.forEach(
-                    (questionDoc) => {
-
-                        const data =
-                            questionDoc.data();
-
-
-                        existingQuestions.push(
-                            normalizeText(
-                                data.question || ""
-                            )
-                        );
-
-                    }
+            const selectedFile =
+                document.getElementById(
+                    "selectedFile"
                 );
 
 
-                const total =
-                    questions.length;
+            if (file) {
 
-
-                let uploaded = 0;
-
-                let skipped = 0;
-
-
-                const progressContainer =
-                    document
-                        .getElementById(
-                            "uploadProgressContainer"
-                        );
-
-
-                const progressBar =
-                    document
-                        .getElementById(
-                            "uploadProgress"
-                        );
-
-
-                const percent =
-                    document
-                        .getElementById(
-                            "uploadPercent"
-                        );
-
-
-                const status =
-                    document
-                        .getElementById(
-                            "uploadStatus"
-                        );
-
-
-                progressContainer.style.display =
-                    "block";
-
-
-                for (
-                    let i = 0;
-                    i < questions.length;
-                    i++
-                ) {
-
-                    const q =
-                        questions[i];
-
-
-                    const questionText =
-                        String(
-                            q.question || ""
-                        ).trim();
-
-
-                    if (!questionText) {
-
-                        skipped++;
-
-                        continue;
-
-                    }
-
-
-                    const normalized =
-                        normalizeText(
-                            questionText
-                        );
-
-
-                    // Duplicate check
-
-                    if (
-                        existingQuestions.includes(
-                            normalized
-                        )
-                    ) {
-
-                        skipped++;
-
-                    }
-
-                    else {
-
-                        const options =
-                            Array.isArray(q.options)
-                                ? q.options
-                                : [
-                                    q.optionA || "",
-                                    q.optionB || "",
-                                    q.optionC || "",
-                                    q.optionD || ""
-                                ];
-
-
-                        const answer =
-                            Number(
-                                q.answer ?? 0
-                            );
-
-
-                        await addDoc(
-                            collection(
-                                db,
-                                "questions"
-                            ),
-                            {
-
-                                question:
-                                    questionText,
-
-                                options:
-                                    options,
-
-                                answer:
-                                    answer,
-
-                                subject:
-                                    q.subject ||
-                                    subject,
-
-                                topic:
-                                    q.topic ||
-                                    topic,
-
-                                explanation:
-                                    q.explanation ||
-                                    "",
-
-                                createdAt:
-                                    serverTimestamp()
-
-                            }
-                        );
-
-
-                        existingQuestions.push(
-                            normalized
-                        );
-
-
-                        uploaded++;
-
-                    }
-
-
-                    const current =
-                        i + 1;
-
-
-                    const progress =
-                        Math.round(
-                            (current / total) * 100
-                        );
-
-
-                    progressBar.style.width =
-                        progress + "%";
-
-
-                    percent.textContent =
-                        progress + "%";
-
-
-                    status.textContent =
-                        `Processing ${current} / ${total} questions...`;
-
-                }
-
-
-                status.textContent =
-                    `Completed: ${uploaded} uploaded, ${skipped} skipped.`;
-
-
-                bulkMessage.textContent =
-                    `✅ Upload complete! ${uploaded} added, ${skipped} duplicates/invalid skipped.`;
-
-
-                await loadDashboardStats();
-
+                selectedFile.textContent =
+                    `📄 ${file.name} (${formatFileSize(file.size)})`;
 
             }
 
-            catch (error) {
+            else {
 
-                console.error(
-                    "Bulk upload error:",
-                    error
-                );
-
-
-                bulkMessage.textContent =
-                    "❌ Invalid JSON or upload failed.";
+                selectedFile.textContent =
+                    "No file selected";
 
             }
 
         }
     );
 
+
+    // Upload button
+
+    bulkButton.addEventListener(
+        "click",
+        uploadBulkQuestions
+    );
+
+}
+
+
+// ============================================================
+// FILE SIZE
+// ============================================================
+
+function formatFileSize(bytes) {
+
+    if (bytes < 1024) {
+
+        return bytes + " B";
+
+    }
+
+    if (bytes < 1024 * 1024) {
+
+        return (
+            (bytes / 1024).toFixed(1) +
+            " KB"
+        );
+
+    }
+
+    return (
+        (bytes / (1024 * 1024))
+            .toFixed(1) +
+        " MB"
+    );
+
+}
+
+
+// ============================================================
+// BULK UPLOAD QUESTIONS
+// ============================================================
+
+async function uploadBulkQuestions() {
+
+    const bulkFile =
+        document.getElementById(
+            "bulkFile"
+        );
+
+
+    const bulkMessage =
+        document.getElementById(
+            "bulkMessage"
+        );
+
+
+    const file =
+        bulkFile.files[0];
+
+
+    const subject =
+        document.getElementById(
+            "bulkSubject"
+        ).value.trim();
+
+
+    const topic =
+        document.getElementById(
+            "bulkTopic"
+        ).value.trim();
+
+
+    // -------------------------
+    // VALIDATION
+    // -------------------------
+
+    if (!file) {
+
+        bulkMessage.textContent =
+            "⚠️ Please select a JSON file.";
+
+        return;
+
+    }
+
+
+    if (!file.name.toLowerCase().endsWith(".json")) {
+
+        bulkMessage.textContent =
+            "❌ Please select a .json file.";
+
+        return;
+
+    }
+
+
+    if (!subject) {
+
+        bulkMessage.textContent =
+            "⚠️ Please select a subject.";
+
+        return;
+
+    }
+
+
+    if (!topic) {
+
+        bulkMessage.textContent =
+            "⚠️ Please enter a topic.";
+
+        return;
+
+    }
+
+
+    try {
+
+        bulkMessage.textContent =
+            "⏳ Reading JSON file...";
+
+
+        // -------------------------
+        // READ FILE
+        // -------------------------
+
+        const text =
+            await file.text();
+
+
+        let questions;
+
+
+        try {
+
+            questions =
+                JSON.parse(text);
+
+        }
+
+        catch (jsonError) {
+
+            throw new Error(
+                "Invalid JSON format."
+            );
+
+        }
+
+
+        // -------------------------
+        // ARRAY CHECK
+        // -------------------------
+
+        if (!Array.isArray(questions)) {
+
+            throw new Error(
+                "JSON must contain an array of questions."
+            );
+
+        }
+
+
+        if (questions.length === 0) {
+
+            throw new Error(
+                "JSON file contains no questions."
+            );
+
+        }
+
+
+        console.log(
+            "Questions in JSON:",
+            questions.length
+        );
+
+
+        // -------------------------
+        // PROGRESS ELEMENTS
+        // -------------------------
+
+        const progressContainer =
+            document.getElementById(
+                "uploadProgressContainer"
+            );
+
+
+        const progressBar =
+            document.getElementById(
+                "uploadProgress"
+            );
+
+
+        const percent =
+            document.getElementById(
+                "uploadPercent"
+            );
+
+
+        const status =
+            document.getElementById(
+                "uploadStatus"
+            );
+
+
+        progressContainer.style.display =
+            "block";
+
+
+        progressBar.style.width =
+            "0%";
+
+
+        percent.textContent =
+            "0%";
+
+
+        status.textContent =
+            "Checking existing questions...";
+
+
+        // -------------------------
+        // EXISTING QUESTIONS
+        // -------------------------
+
+        const existingSnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "questions"
+                )
+            );
+
+
+        const existingQuestions =
+            new Set();
+
+
+        existingSnapshot.forEach((questionDoc) => {
+
+            const data =
+                questionDoc.data();
+
+
+            const normalized =
+                normalizeText(
+                    data.question || ""
+                );
+
+
+            if (normalized) {
+
+                existingQuestions.add(
+                    normalized
+                );
+
+            }
+
+        });
+
+
+        // -------------------------
+        // UPLOAD
+        // -------------------------
+
+        let uploaded = 0;
+        let skipped = 0;
+        let invalid = 0;
+
+
+        const total =
+            questions.length;
+
+
+        for (
+            let i = 0;
+            i < total;
+            i++
+        ) {
+
+            const q =
+                questions[i];
+
+
+            if (
+                !q ||
+                typeof q !== "object"
+            ) {
+
+                invalid++;
+
+                updateUploadProgress(
+                    i + 1,
+                    total,
+                    progressBar,
+                    percent,
+                    status
+                );
+
+                continue;
+
+            }
+
+
+            const questionText =
+                String(
+                    q.question || ""
+                ).trim();
+ if (!questionText) {
+
+                invalid++;
+
+                updateUploadProgress(
+                    i + 1,
+                    total,
+                    progressBar,
+                    percent,
+                    status
+                );
+
+                continue;
+
+            }
+
+
+            const normalized =
+                normalizeText(
+                    questionText
+                );
+
+
+            // -------------------------
+            // DUPLICATE
+            // -------------------------
+
+            if (
+                existingQuestions.has(
+                    normalized
+                )
+            ) {
+
+                skipped++;
+
+                updateUploadProgress(
+                    i + 1,
+                    total,
+                    progressBar,
+                    percent,
+                    status
+                );
+
+                continue;
+
+            }
+
+
+            // -------------------------
+            // OPTIONS
+            // -------------------------
+
+            let options = [];
+
+
+            if (
+                Array.isArray(q.options)
+            ) {
+
+                options =
+                    q.options.map(
+                        option =>
+                            String(
+                                option ?? ""
+                            ).trim()
+                    );
+
+            }
+
+            else {
+
+                options = [
+
+                    String(
+                        q.optionA ?? ""
+                    ).trim(),
+
+                    String(
+                        q.optionB ?? ""
+                    ).trim(),
+
+                    String(
+                        q.optionC ?? ""
+                    ).trim(),
+
+                    String(
+                        q.optionD ?? ""
+                    ).trim()
+
+                ];
+
+            }
+
+
+            // Need exactly 4 options
+
+            if (
+                options.length !== 4 ||
+                options.some(
+                    option => !option
+                )
+            ) {
+
+                invalid++;
+
+                updateUploadProgress(
+                    i + 1,
+                    total,
+                    progressBar,
+                    percent,
+                    status
+                );
+
+                continue;
+
+            }
+
+
+            // -------------------------
+            // ANSWER
+            // -------------------------
+
+            let answer =
+                Number(
+                    q.answer
+                );
+
+
+            // Support A/B/C/D
+
+            if (
+                typeof q.answer ===
+                "string"
+            ) {
+
+                const answerText =
+                    q.answer
+                        .trim()
+                        .toUpperCase();
+
+
+                if (
+                    answerText === "A"
+                ) answer = 0;
+
+
+                if (
+                    answerText === "B"
+                ) answer = 1;
+
+
+                if (
+                    answerText === "C"
+                ) answer = 2;
+
+
+                if (
+                    answerText === "D"
+                ) answer = 3;
+
+            }
+
+
+            if (
+                !Number.isInteger(answer) ||
+                answer < 0 ||
+                answer > 3
+            ) {
+
+                invalid++;
+
+                updateUploadProgress(
+                    i + 1,
+                    total,
+                    progressBar,
+                    percent,
+                    status
+                );
+
+                continue;
+
+            }
+
+
+            // -------------------------
+            // FIRESTORE ADD
+            // -------------------------
+
+            await addDoc(
+                collection(
+                    db,
+                    "questions"
+                ),
+                {
+
+                    question:
+                        questionText,
+
+                    options:
+                        options,
+
+                    answer:
+                        answer,
+
+                    subject:
+                        q.subject
+                            ? String(q.subject)
+                            : subject,
+
+                    topic:
+                        q.topic
+                            ? String(q.topic)
+                            : topic,
+
+                    explanation:
+                        q.explanation
+                            ? String(q.explanation)
+                            : "",
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            existingQuestions.add(
+                normalized
+            );
+
+
+            uploaded++;
+
+
+            // -------------------------
+            // PROGRESS
+            // -------------------------
+
+            updateUploadProgress(
+                i + 1,
+                total,
+                progressBar,
+                percent,
+                status
+            );
+
+        }
+
+
+        // -------------------------
+        // COMPLETE
+        // -------------------------
+
+        progressBar.style.width =
+            "100%";
+
+        percent.textContent =
+            "100%";
+
+
+        status.textContent =
+            "✅ Upload completed";
+
+
+        bulkMessage.textContent =
+            `✅ Complete! ${uploaded} uploaded, ${skipped} duplicates skipped, ${invalid} invalid skipped.`;
+
+
+        console.log(
+            "Bulk upload completed",
+            {
+                uploaded,
+                skipped,
+                invalid
+            }
+        );
+
+
+        // Reset file
+
+        bulkFile.value = "";
+
+
+        document.getElementById(
+            "selectedFile"
+        ).textContent =
+            "No file selected";
+
+
+        // Update dashboard
+
+        await loadDashboardStats();
+
+
+        // Refresh questions if manage page exists
+
+        if (
+            document.getElementById(
+                "manageQuestionsSection"
+            ).classList.contains(
+                "active-section"
+            )
+        ) {
+
+            await loadQuestions();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "❌ Bulk upload error:",
+            error
+        );
+
+
+        bulkMessage.textContent =
+            "❌ " +
+            (
+                error.message ||
+                "Bulk upload failed."
+            );
+
+    }
+
+}
+
+
+// ============================================================
+// UPDATE UPLOAD PROGRESS
+// ============================================================
+
+function updateUploadProgress(
+    current,
+    total,
+    progressBar,
+    percent,
+    status
+) {
+
+    const progress =
+        Math.round(
+            (current / total) * 100
+        );
+
+
+    progressBar.style.width =
+        progress + "%";
+
+
+    percent.textContent =
+        progress + "%";
+
+
+    status.textContent =
+        `Processing ${current} / ${total} questions...`;
+
+    }
 
 // ============================================================
 // LOAD QUESTIONS
@@ -962,18 +1487,25 @@ async function loadQuestions() {
         );
 
 
-    list.innerHTML =
-        `<div class="loading-box">
+    if (!list) return;
+
+
+    list.innerHTML = `
+        <div class="loading-box">
             <div class="loader"></div>
             <p>Loading Questions...</p>
-        </div>`;
+        </div>
+    `;
 
 
     try {
 
         const snapshot =
             await getDocs(
-                collection(db, "questions")
+                collection(
+                    db,
+                    "questions"
+                )
             );
 
 
@@ -1000,12 +1532,17 @@ async function loadQuestions() {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Load questions error:",
+            error
+        );
 
-        list.innerHTML =
-            `<div class="empty-box">
+
+        list.innerHTML = `
+            <div class="empty-box">
                 ❌ Failed to load questions.
-            </div>`;
+            </div>
+        `;
 
     }
 
@@ -1024,76 +1561,71 @@ function renderQuestions() {
         );
 
 
+    if (!list) return;
+
+
     const search =
-        document
-            .getElementById(
+        (
+            document.getElementById(
                 "questionSearch"
-            )
-            .value
+            )?.value || ""
+        )
             .trim()
             .toLowerCase();
 
 
     const subject =
-        document
-            .getElementById(
-                "filterSubject"
-            )
-            .value;
+        document.getElementById(
+            "filterSubject"
+        )?.value || "all";
 
 
     const filtered =
         allQuestions.filter((q) => {
 
-            const matchesSearch =
-                !search ||
+            const question =
                 String(
                     q.question || ""
-                                    ).toLowerCase();
+                ).toLowerCase();
 
 
-                const qSubject =
-                    String(
-                        q.subject || ""
-                    );
+            const topic =
+                String(
+                    q.topic || ""
+                ).toLowerCase();
 
 
-                const qTopic =
-                    String(
-                        q.topic || ""
-                    ).toLowerCase();
-
-
-                const matchesSearch =
-                    !search ||
-                    question.includes(search) ||
-                    qTopic.includes(search);
-
-
-                const matchesSubject =
-                    subject === "all" ||
-                    qSubject === subject;
-
-
-                return (
-                    matchesSearch &&
-                    matchesSubject
+            const qSubject =
+                String(
+                    q.subject || ""
                 );
 
-            }
-        );
+
+            const matchesSearch =
+                !search ||
+                question.includes(search) ||
+                topic.includes(search);
 
 
-    if (filtered.length === 0) {
+            const matchesSubject =
+                subject === "all" ||
+                qSubject === subject;
+
+
+            return (
+                matchesSearch &&
+                matchesSubject
+            );
+
+        });
+
+
+    if (!filtered.length) {
 
         list.innerHTML = `
-
             <div class="empty-box">
-
-                📚 No questions found.
-
+                📭 No questions found.
             </div>
-
         `;
 
         return;
@@ -1104,184 +1636,124 @@ function renderQuestions() {
     list.innerHTML = "";
 
 
-    filtered.forEach(
-        (q, index) => {
+    filtered.forEach((q, index) => {
 
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "question-card";
-
-
-            const options =
-                Array.isArray(q.options)
-                    ? q.options
-                    : [];
-
-
-            const answerIndex =
-                Number(q.answer);
-
-
-            const answerLetter =
-                answerIndex >= 0 &&
-                answerIndex <= 3
-                    ? String.fromCharCode(
-                        65 + answerIndex
-                    )
-                    : "-";
-
-
-            card.innerHTML = `
-
-                <div class="question-card-header">
-
-                    <div>
-
-                        <span class="question-number">
-
-                            Q${index + 1}
-
-                        </span>
-
-                        <span class="question-subject">
-
-                            ${escapeHTML(
-                                q.subject || "-"
-                            )}
-
-                        </span>
-
-                        <span class="question-topic">
-
-                            ${escapeHTML(
-                                q.topic || "-"
-                            )}
-
-                        </span>
-
-                    </div>
-
-                    <button
-                        type="button"
-                        class="delete-question-btn"
-                        data-id="${q.id}">
-
-                        🗑️ Delete
-
-                    </button>
-
-                </div>
-
-
-                <div class="question-card-body">
-
-                    <h3>
-
-                        ${escapeHTML(
-                            q.question || ""
-                        )}
-
-                    </h3>
-
-
-                    <div class="admin-options">
-
-                        ${options.map(
-                            (option, optionIndex) => `
-
-                            <div
-                                class="${
-                                    optionIndex === answerIndex
-                                        ? "correct-option"
-                                        : ""
-                                }">
-
-                                <strong>
-                                    ${String.fromCharCode(
-                                        65 + optionIndex
-                                    )}.
-                                </strong>
-
-                                ${escapeHTML(
-                                    option
-                                )}
-
-                                ${
-                                    optionIndex ===
-                                    answerIndex
-                                        ? " ✅"
-                                        : ""
-                                }
-
-                            </div>
-
-                        `
-                        ).join("")}
-
-                    </div>
-
-
-                    ${
-                        q.explanation
-                            ? `
-                                <div class="question-explanation">
-
-                                    💡
-                                    ${escapeHTML(
-                                        q.explanation
-                                    )}
-
-                                </div>
-                              `
-                            : ""
-                    }
-
-                </div>
-
-            `;
-
-
-            list.appendChild(
-                card
+        const card =
+            document.createElement(
+                "div"
             );
 
-        }
-    );
+
+        card.className =
+            "question-admin-card";
 
 
-    // ------------------------------------------------
-    // DELETE EVENTS
-    // ------------------------------------------------
-
-    document
-        .querySelectorAll(
-            ".delete-question-btn"
-        )
-        .forEach(
-            (button) => {
-
-                button.addEventListener(
-                    "click",
-                    async () => {
-
-                        const id =
-                            button.dataset.id;
+        const options =
+            Array.isArray(q.options)
+                ? q.options
+                : [];
 
 
-                        await deleteQuestion(
-                            id
-                        );
+        let optionsHTML = "";
 
-                    }
-                );
+
+        options.forEach(
+            (option, optionIndex) => {
+
+                const isCorrect =
+                    Number(q.answer) ===
+                    optionIndex;
+
+
+                optionsHTML += `
+                    <div class="${
+                        isCorrect
+                            ? "correct-option"
+                            : ""
+                    }">
+                        ${
+                            String.fromCharCode(
+                                65 + optionIndex
+                            )
+                        }. ${
+                            escapeHTML(
+                                option
+                            )
+                        }
+                    </div>
+                `;
 
             }
         );
+
+
+        card.innerHTML = `
+
+            <div class="question-card-top">
+
+                <span class="question-index">
+                    #${index + 1}
+                </span>
+
+                <span class="subject-badge">
+                    ${escapeHTML(
+                        q.subject || "-"
+                    )}
+                </span>
+
+            </div>
+
+            <h3>
+                ${escapeHTML(
+                    q.question || "-"
+                )}
+            </h3>
+
+            <div class="admin-options">
+                ${optionsHTML}
+            </div>
+
+            <p class="topic-text">
+                📌 Topic:
+                ${escapeHTML(
+                    q.topic || "-"
+                )}
+            </p>
+
+            <button
+                class="delete-question-btn"
+                data-id="${q.id}">
+                🗑️ Delete Question
+            </button>
+
+        `;
+
+
+        list.appendChild(card);
+
+    });
+
+
+    // Delete buttons
+
+    list
+        .querySelectorAll(
+            ".delete-question-btn"
+        )
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                async () => {
+
+                    await deleteQuestion(
+                        button.dataset.id
+                    );
+
+                }
+            );
+
+        });
 
 }
 
@@ -1292,24 +1764,13 @@ function renderQuestions() {
 
 async function deleteQuestion(id) {
 
-    if (!id) {
-
-        return;
-
-    }
-
-
     const confirmDelete =
         confirm(
             "Are you sure you want to delete this question?"
         );
 
 
-    if (!confirmDelete) {
-
-        return;
-
-    }
+    if (!confirmDelete) return;
 
 
     try {
@@ -1337,7 +1798,7 @@ async function deleteQuestion(id) {
     catch (error) {
 
         console.error(
-            "Delete Question Error:",
+            "Delete question error:",
             error
         );
 
@@ -1352,41 +1813,73 @@ async function deleteQuestion(id) {
 
 
 // ============================================================
-// QUESTION SEARCH
+// FILTERS
 // ============================================================
 
-const questionSearch =
-    getElement(
-        "questionSearch"
-    );
+function initializeFilters() {
+
+    const questionSearch =
+        document.getElementById(
+            "questionSearch"
+        );
 
 
-if (questionSearch) {
-
-    questionSearch.addEventListener(
-        "input",
-        renderQuestions
-    );
-
-}
+    const filterSubject =
+        document.getElementById(
+            "filterSubject"
+        );
 
 
-// ============================================================
-// SUBJECT FILTER
-// ============================================================
+    if (questionSearch) {
 
-const filterSubject =
-    getElement(
-        "filterSubject"
-    );
+        questionSearch.addEventListener(
+            "input",
+            renderQuestions
+        );
+
+    }
 
 
-if (filterSubject) {
+    if (filterSubject) {
 
-    filterSubject.addEventListener(
-        "change",
-        renderQuestions
-    );
+        filterSubject.addEventListener(
+            "change",
+            renderQuestions
+        );
+
+    }
+
+
+    const resultSearch =
+        document.getElementById(
+            "resultSearch"
+        );
+
+
+    const resultTestType =
+        document.getElementById(
+            "resultTestType"
+        );
+
+
+    if (resultSearch) {
+
+        resultSearch.addEventListener(
+            "input",
+            renderResults
+        );
+
+    }
+
+
+    if (resultTestType) {
+
+        resultTestType.addEventListener(
+            "change",
+            renderResults
+        );
+
+    }
 
 }
 
@@ -1398,30 +1891,19 @@ if (filterSubject) {
 async function loadResults() {
 
     const list =
-        getElement(
+        document.getElementById(
             "resultsList"
         );
 
 
-    if (!list) {
-
-        return;
-
-    }
+    if (!list) return;
 
 
     list.innerHTML = `
-
         <div class="loading-box">
-
             <div class="loader"></div>
-
-            <p>
-                Loading Results...
-            </p>
-
+            <p>Loading Results...</p>
         </div>
-
     `;
 
 
@@ -1439,26 +1921,33 @@ async function loadResults() {
         allResults = [];
 
 
-        snapshot.forEach(
-            (resultDoc) => {
+        snapshot.forEach((resultDoc) => {
 
-                allResults.push({
+            allResults.push({
 
-                    id:
-                        resultDoc.id,
+                id:
+                    resultDoc.id,
 
-                    ...resultDoc.data()
+                ...resultDoc.data()
 
-                });
+            });
 
-            }
-        );
+        });
 
 
-        console.log(
-            "Results Loaded:",
-            allResults.length
-        );
+        // Latest first
+
+        allResults.sort((a, b) => {
+
+            const aTime =
+                a.createdAt?.toMillis?.() || 0;
+
+            const bTime =
+                b.createdAt?.toMillis?.() || 0;
+
+            return bTime - aTime;
+
+        });
 
 
         renderResults();
@@ -1468,19 +1957,15 @@ async function loadResults() {
     catch (error) {
 
         console.error(
-            "Load Results Error:",
+            "Load results error:",
             error
         );
 
 
         list.innerHTML = `
-
             <div class="empty-box">
-
                 ❌ Failed to load results.
-
             </div>
-
         `;
 
     }
@@ -1495,109 +1980,70 @@ async function loadResults() {
 function renderResults() {
 
     const list =
-        getElement(
+        document.getElementById(
             "resultsList"
         );
 
 
-    if (!list) {
-
-        return;
-
-    }
-
-
-    const searchInput =
-        getElement(
-            "resultSearch"
-        );
-
-
-    const typeFilter =
-        getElement(
-            "resultTestType"
-        );
+    if (!list) return;
 
 
     const search =
-        searchInput
-            ? searchInput.value
-                .trim()
-                .toLowerCase()
-            : "";
+        (
+            document.getElementById(
+                "resultSearch"
+            )?.value || ""
+        )
+            .trim()
+            .toLowerCase();
 
 
     const testType =
-        typeFilter
-            ? typeFilter.value
-            : "all";
+        document.getElementById(
+            "resultTestType"
+        )?.value || "all";
 
 
-    let filtered =
-        allResults.filter(
-            (result) => {
+    const filtered =
+        allResults.filter((result) => {
 
-                const name =
-                    String(
-                        result.studentName || ""
-                    ).toLowerCase();
-
-
-                const district =
-                    String(
-                        result.district || ""
-                    ).toLowerCase();
+            const name =
+                String(
+                    result.studentName || ""
+                ).toLowerCase();
 
 
-                const matchesSearch =
-                    !search ||
-                    name.includes(search) ||
-                    district.includes(search);
+            const district =
+                String(
+                    result.district || ""
+                ).toLowerCase();
 
 
-                const matchesType =
-                    testType === "all" ||
-                    result.testType === testType;
+            const matchesSearch =
+                !search ||
+                name.includes(search) ||
+                district.includes(search);
 
 
-                return (
-                    matchesSearch &&
-                    matchesType
-                );
-
-            }
-        );
+            const matchesType =
+                testType === "all" ||
+                result.testType === testType;
 
 
-    // Newest first
+            return (
+                matchesSearch &&
+                matchesType
+            );
 
-    filtered.sort(
-        (a, b) => {
-
-            const aTime =
-                a.createdAt?.seconds || 0;
-
-
-            const bTime =
-                b.createdAt?.seconds || 0;
+        });
 
 
-            return bTime - aTime;
-
-        }
-    );
-
-
-    if (filtered.length === 0) {
+    if (!filtered.length) {
 
         list.innerHTML = `
-
             <div class="empty-box">
-
-                📊 No results found.
-
+                📭 No results found.
             </div>
-
         `;
 
         return;
@@ -1608,260 +2054,111 @@ function renderResults() {
     list.innerHTML = "";
 
 
-    filtered.forEach(
-        (result, index) => {
+    filtered.forEach((result) => {
 
-            const score =
-                Number(
-                    result.score || 0
-                );
-
-
-            const total =
-                Number(
-                    result.totalQuestions || 0
-                );
+        const card =
+            document.createElement(
+                "div"
+            );
 
 
-            const percentage =
-                total > 0
-                    ? Math.round(
-                        (
-                            score /
-                            total
-                        ) * 100
-                    )
-                    : 0;
+        card.className =
+            "result-admin-card";
 
 
-            let testName =
-                "Daily Mock Test";
+        const score =
+            Number(
+                result.score || 0
+            );
 
 
-            let icon =
-                "🟢";
+        const total =
+            Number(
+                result.totalQuestions || 0
+            );
 
 
-            if (
-                result.testType ===
-                "weekly"
-            ) {
-
-                testName =
-                    "Weekly Mock Test";
-
-                icon =
-                    "🟡";
-
-            }
+        const percentage =
+            total > 0
+                ? Math.round(
+                    (score / total) * 100
+                )
+                : 0;
 
 
-            else if (
-                result.testType ===
-                "monthly"
-            ) {
-
-                testName =
-                    "Monthly Grand Test";
-
-                icon =
-                    "🔴";
-
-            }
+        let dateText =
+            "-";
 
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+        if (
+            result.createdAt &&
+            typeof result.createdAt.toDate ===
+                "function"
+        ) {
+
+            dateText =
+                result.createdAt
+                    .toDate()
+                    .toLocaleString();
+
+        }
 
 
-            card.className =
-                "result-card";
+        card.innerHTML = `
 
-
-            card.innerHTML = `
+            <div class="result-top">
 
                 <div>
 
-                    <strong>
-
+                    <h3>
                         ${escapeHTML(
                             result.studentName ||
                             "Student"
                         )}
+                    </h3>
 
-                    </strong>
-
-                    <small>
-
-                        📍
-                        ${escapeHTML(
+                    <p>
+                        📍 ${escapeHTML(
                             result.district ||
                             "-"
                         )}
-
-                    </small>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-
-                        ${icon}
-                        ${testName}
-
-                    </span>
-
-                    <strong>
-
-                        ${score}/${total}
-
-                    </strong>
-
-                    <small>
-
-                        ${percentage}%
-
-                    </small>
+                    </p>
 
                 </div>
 
+                <span class="test-type-badge">
+                    ${escapeHTML(
+                        String(
+                            result.testType ||
+                            "-"
+                        ).toUpperCase()
+                    )}
+                </span>
 
-                <div>
+            </div>
 
-                    <small>
+            <div class="result-score">
 
-                        ${formatDate(
-                            result.createdAt
-                        )}
+                <strong>
+                    ${score} / ${total}
+                </strong>
 
-                    </small>
+                <span>
+                    ${percentage}%
+                </span>
 
-                </div>
+            </div>
 
-            `;
+            <small>
+                🕒 ${escapeHTML(dateText)}
+            </small>
 
-
-            list.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-// ============================================================
-// RESULT SEARCH
-// ============================================================
-
-const resultSearch =
-    getElement(
-        "resultSearch"
-    );
+        `;
 
 
-if (resultSearch) {
+        list.appendChild(card);
 
-    resultSearch.addEventListener(
-        "input",
-        renderResults
-    );
-
-}
-
-
-// ============================================================
-// RESULT TEST TYPE FILTER
-// ============================================================
-
-const resultTestType =
-    getElement(
-        "resultTestType"
-    );
-
-
-if (resultTestType) {
-
-    resultTestType.addEventListener(
-        "change",
-        renderResults
-    );
-
-}
-
-
-// ============================================================
-// FORMAT DATE
-// ============================================================
-
-function formatDate(timestamp) {
-
-    if (!timestamp) {
-
-        return "Recent";
-
-    }
-
-
-    try {
-
-        let date;
-
-
-        if (
-            timestamp.seconds
-        ) {
-
-            date =
-                new Date(
-                    timestamp.seconds *
-                    1000
-                );
-
-        }
-
-        else if (
-            timestamp.toDate
-        ) {
-
-            date =
-                timestamp.toDate();
-
-        }
-
-        else {
-
-            return "Recent";
-
-        }
-
-
-        return date.toLocaleDateString(
-            "en-IN",
-            {
-                day:
-                    "2-digit",
-
-                month:
-                    "short",
-
-                year:
-                    "numeric"
-            }
-        );
-
-    }
-
-    catch (error) {
-
-        return "Recent";
-
-    }
+    });
 
 }
 
@@ -1872,62 +2169,23 @@ function formatDate(timestamp) {
 
 function escapeHTML(value) {
 
-    return String(
-        value || ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
 // ============================================================
-// CONSOLE
+// END
 // ============================================================
 
 console.log(
-    "======================================"
+    "✅ G THE GENIUS ADMIN PANEL JS LOADED"
 );
 
-console.log(
-    "G THE GENIUS ADMIN PANEL LOADED ✅"
-);
-
-console.log(
-    "Firebase v10.12.2"
-);
-
-console.log(
-    "Bulk Upload System: READY"
-);
-
-console.log(
-    "Duplicate Check: ENABLED"
-);
-
-console.log(
-    "Firestore Batch Upload: ENABLED"
-);
-
-console.log(
-    "======================================"
-);
+            
             
