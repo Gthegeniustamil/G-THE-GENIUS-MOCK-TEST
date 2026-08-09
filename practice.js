@@ -1,922 +1,1372 @@
-<!DOCTYPE html>
-<html lang="ta">
-<head>
-    <meta charset="UTF-8">
+// ============================================================
+// G THE GENIUS
+// PRACTICE TEST
+// Firebase v10.12.2
+// ============================================================
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+import {
+    auth,
+    db
+} from "./firebase-config.js";
 
-    <title>G THE GENIUS - Practice Test</title>
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+import {
+    collection,
+    getDocs,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    <style>
 
-        :root{
-            --primary:#081229;
-            --secondary:#102452;
-            --card:rgba(255,255,255,.08);
-            --border:rgba(255,255,255,.14);
-            --gold:#FFD700;
-            --gold-light:#FFE98A;
-            --white:#fff;
-            --text:#cfd6ee;
-            --muted:#8f9abb;
-            --success:#00e676;
-            --danger:#ff5252;
-            --warning:#ffb300;
-        }
+// ============================================================
+// GLOBAL VARIABLES
+// ============================================================
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+let allQuestions = [];
 
-        body{
-            min-height:100vh;
-            font-family:'Poppins',Arial,sans-serif;
-            color:var(--white);
-            background:
-                radial-gradient(
-                    circle at top,
-                    #16295a 0%,
-                    transparent 35%
-                ),
-                linear-gradient(
-                    180deg,
-                    var(--primary),
-                    var(--secondary)
+let practiceQuestions = [];
+
+let selectedAnswers = [];
+
+let currentQuestion = 0;
+
+let timerInterval = null;
+
+let timeLeft = 600;
+
+let currentUser = null;
+
+
+// ============================================================
+// ELEMENTS
+// ============================================================
+
+const setupArea =
+    document.getElementById("setupArea");
+
+const testArea =
+    document.getElementById("testArea");
+
+const resultArea =
+    document.getElementById("resultArea");
+
+const subjectSelect =
+    document.getElementById("subjectSelect");
+
+const topicSelect =
+    document.getElementById("topicSelect");
+
+const questionCount =
+    document.getElementById("questionCount");
+
+const setupMessage =
+    document.getElementById("setupMessage");
+
+const questionText =
+    document.getElementById("questionText");
+
+const optionsContainer =
+    document.getElementById("optionsContainer");
+
+const questionNumber =
+    document.getElementById("questionNumber");
+
+const questionCounter =
+    document.getElementById("questionCounter");
+
+const palette =
+    document.getElementById("palette");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const timer =
+    document.getElementById("timer");
+
+
+// ============================================================
+// AUTH
+// ============================================================
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        currentUser = user || null;
+
+        console.log(
+            "Practice User:",
+            currentUser
+                ? currentUser.email
+                : "Guest"
+        );
+
+    }
+);
+
+
+// ============================================================
+// LOAD QUESTIONS
+// ============================================================
+
+async function loadQuestions() {
+
+    setupMessage.textContent =
+        "Loading questions...";
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "questions"
+                )
+            );
+
+
+        allQuestions = [];
+
+
+        snapshot.forEach(
+            (questionDoc) => {
+
+                const data =
+                    questionDoc.data();
+
+
+                if (
+                    data.question &&
+                    Array.isArray(
+                        data.options
+                    ) &&
+                    data.options.length >= 4
+                ) {
+
+                    allQuestions.push({
+
+                        id:
+                            questionDoc.id,
+
+                        question:
+                            data.question,
+
+                        options:
+                            data.options,
+
+                        answer:
+                            Number(
+                                data.answer
+                            ),
+
+                        subject:
+                            data.subject ||
+                            "General",
+
+                        topic:
+                            data.topic ||
+                            "General",
+
+                        explanation:
+                            data.explanation ||
+                            ""
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        populateSubjects();
+
+
+        setupMessage.textContent =
+            `${allQuestions.length} questions ready ✅`;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Question loading error:",
+            error
+        );
+
+        setupMessage.textContent =
+            "❌ Questions load ஆகவில்லை.";
+
+    }
+
+}
+
+
+// ============================================================
+// POPULATE SUBJECTS
+// ============================================================
+
+function populateSubjects() {
+
+    subjectSelect.innerHTML =
+        `<option value="">
+            Select Subject
+        </option>`;
+
+
+    const subjects =
+        [
+            ...new Set(
+                allQuestions
+                    .map(
+                        q => q.subject
+                    )
+                    .filter(Boolean)
+            )
+        ]
+        .sort();
+
+
+    subjects.forEach(
+        (subject) => {
+
+            const option =
+                document.createElement(
+                    "option"
                 );
-        }
 
-        .container{
-            width:100%;
-            max-width:1000px;
-            margin:auto;
-            padding:16px;
-        }
 
-        /* HEADER */
+            option.value =
+                subject;
 
-        .header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:15px;
-            margin-bottom:18px;
-        }
+            option.textContent =
+                subject;
 
-        .brand{
-            display:flex;
-            align-items:center;
-            gap:10px;
-        }
 
-        .brand img{
-            width:50px;
-            height:50px;
-            object-fit:cover;
-            border-radius:50%;
-            background:white;
-            padding:3px;
-            border:2px solid var(--gold);
-        }
-
-        .brand h1{
-            color:var(--gold);
-            font-size:19px;
-            font-weight:800;
-        }
-
-        .brand p{
-            color:var(--muted);
-            font-size:9px;
-        }
-
-        .back-btn{
-            border:1px solid var(--border);
-            background:var(--card);
-            color:white;
-            padding:9px 14px;
-            border-radius:25px;
-            cursor:pointer;
-            font-family:inherit;
-            font-weight:600;
-        }
-
-        /* SETUP */
-
-        .setup-card{
-            background:var(--card);
-            border:1px solid var(--border);
-            border-radius:28px;
-            padding:28px;
-            box-shadow:0 15px 40px rgba(0,0,0,.35);
-            backdrop-filter:blur(15px);
-        }
-
-        .setup-title{
-            text-align:center;
-            margin-bottom:25px;
-        }
-
-        .setup-title .icon{
-            font-size:45px;
-            margin-bottom:8px;
-        }
-
-        .setup-title h2{
-            color:var(--gold);
-            font-size:24px;
-        }
-
-        .setup-title p{
-            color:var(--muted);
-            font-size:12px;
-            margin-top:4px;
-        }
-
-        .form-group{
-            margin-bottom:17px;
-        }
-
-        .form-group label{
-            display:block;
-            color:var(--text);
-            font-size:12px;
-            font-weight:600;
-            margin-bottom:7px;
-        }
-
-        select{
-            width:100%;
-            padding:13px 14px;
-            border-radius:15px;
-            border:1px solid var(--border);
-            background:rgba(255,255,255,.06);
-            color:white;
-            outline:none;
-            font-family:inherit;
-        }
-
-        select:focus{
-            border-color:var(--gold);
-        }
-
-        select option{
-            background:#101d3d;
-            color:white;
-        }
-
-        .start-btn{
-            width:100%;
-            padding:15px;
-            border:none;
-            border-radius:30px;
-            background:linear-gradient(
-                135deg,
-                var(--gold),
-                var(--gold-light)
+            subjectSelect.appendChild(
+                option
             );
-            color:#081229;
-            font-family:inherit;
-            font-weight:800;
-            font-size:15px;
-            cursor:pointer;
-            margin-top:8px;
+
         }
+    );
 
-        .message{
-            text-align:center;
-            color:var(--gold);
-            font-size:12px;
-            min-height:20px;
-            margin-top:12px;
-        }
+}
 
-        /* TEST */
 
-        #testArea{
-            display:none;
-        }
+// ============================================================
+// SUBJECT CHANGE
+// ============================================================
 
-        .test-header{
-            background:var(--card);
-            border:1px solid var(--border);
-            border-radius:22px;
-            padding:15px;
-            margin-bottom:15px;
-        }
+subjectSelect.addEventListener(
+    "change",
+    () => {
 
-        .test-info{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:10px;
-        }
+        const subject =
+            subjectSelect.value;
 
-        .test-title{
-            color:var(--gold);
-            font-size:15px;
-            font-weight:700;
-        }
 
-        .timer{
-            padding:8px 14px;
-            border-radius:25px;
-            background:rgba(255,215,0,.1);
-            border:1px solid rgba(255,215,0,.3);
-            color:var(--gold);
-            font-weight:800;
-            font-size:13px;
-        }
+        topicSelect.innerHTML =
+            `<option value="">
+                Select Topic
+            </option>`;
 
-        .timer.danger{
-            color:var(--danger);
-            border-color:rgba(255,82,82,.4);
-            background:rgba(255,82,82,.08);
-        }
 
-        .progress{
-            height:7px;
-            background:rgba(255,255,255,.08);
-            border-radius:20px;
-            overflow:hidden;
-            margin-top:13px;
-        }
+        if (!subject) return;
 
-        #progressBar{
-            width:0%;
-            height:100%;
-            background:linear-gradient(
-                90deg,
-                var(--gold),
-                var(--gold-light)
+
+        const topics =
+            [
+                ...new Set(
+                    allQuestions
+                        .filter(
+                            q =>
+                                q.subject ===
+                                subject
+                        )
+                        .map(
+                            q =>
+                                q.topic
+                        )
+                        .filter(Boolean)
+                )
+            ]
+            .sort();
+
+
+        topics.forEach(
+            (topic) => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    topic;
+
+                option.textContent =
+                    topic;
+
+
+                topicSelect.appendChild(
+                    option
+                );
+
+            }
+        );
+
+    }
+);
+
+
+// ============================================================
+// START PRACTICE
+// ============================================================
+
+document
+    .getElementById(
+        "startPracticeBtn"
+    )
+    .addEventListener(
+        "click",
+        startPractice
+    );
+
+
+function startPractice() {
+
+    const subject =
+        subjectSelect.value;
+
+
+    const topic =
+        topicSelect.value;
+
+
+    const count =
+        Number(
+            questionCount.value
+        );
+
+
+    if (!subject) {
+
+        setupMessage.textContent =
+            "⚠️ முதலில் Subject தேர்வு செய்யுங்கள்.";
+
+        return;
+
+    }
+
+
+    if (!topic) {
+
+        setupMessage.textContent =
+            "⚠️ Topic தேர்வு செய்யுங்கள்.";
+
+        return;
+
+    }
+
+
+    const filtered =
+        allQuestions.filter(
+            q =>
+                q.subject === subject &&
+                q.topic === topic
+        );
+
+
+    if (filtered.length === 0) {
+
+        setupMessage.textContent =
+            "❌ இந்த Topic-ல் questions இல்லை.";
+
+        return;
+
+    }
+
+
+    practiceQuestions =
+        shuffle(
+            filtered
+        ).slice(
+            0,
+            Math.min(
+                count,
+                filtered.length
+            )
+        );
+
+
+    selectedAnswers =
+        new Array(
+            practiceQuestions.length
+        ).fill(null);
+
+
+    currentQuestion = 0;
+
+
+    timeLeft =
+        practiceQuestions.length <= 10
+            ? 600
+            : practiceQuestions.length <= 20
+                ? 900
+                : 1800;
+
+
+    setupArea.style.display =
+        "none";
+
+    resultArea.style.display =
+        "none";
+
+    testArea.style.display =
+        "block";
+
+
+    document.getElementById(
+        "testTitle"
+    ).textContent =
+        `${subject} • ${topic}`;
+
+
+    renderPalette();
+
+    showQuestion();
+
+    startTimer();
+
+}
+
+
+// ============================================================
+// SHUFFLE
+// ============================================================
+
+function shuffle(array) {
+
+    const result =
+        [...array];
+
+
+    for (
+        let i = result.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
             );
-            transition:.3s;
-        }
 
-        .question-card{
-            background:var(--card);
-            border:1px solid var(--border);
-            border-radius:25px;
-            padding:22px;
-            box-shadow:0 15px 40px rgba(0,0,0,.3);
-        }
 
-        .question-number{
-            color:var(--muted);
-            font-size:11px;
-            margin-bottom:9px;
-        }
+        [
+            result[i],
+            result[j]
+        ] =
+        [
+            result[j],
+            result[i]
+        ];
 
-        .question-text{
-            font-size:17px;
-            line-height:1.7;
-            font-weight:600;
-            margin-bottom:20px;
-        }
+    }
 
-        .options{
-            display:flex;
-            flex-direction:column;
-            gap:11px;
-        }
 
-        .option{
-            width:100%;
-            padding:14px;
-            border-radius:15px;
-            border:1px solid var(--border);
-            background:rgba(255,255,255,.045);
-            color:var(--text);
-            text-align:left;
-            font-family:inherit;
-            cursor:pointer;
-            transition:.2s;
-        }
+    return result;
 
-        .option:hover{
-            border-color:rgba(255,215,0,.5);
-        }
+}
 
-        .option.selected{
-            border-color:var(--gold);
-            background:rgba(255,215,0,.12);
-            color:white;
-        }
 
-        .option-letter{
-            display:inline-flex;
-            width:27px;
-            height:27px;
-            justify-content:center;
-            align-items:center;
-            border-radius:50%;
-            background:rgba(255,255,255,.08);
-            color:var(--gold);
-            margin-right:9px;
-            font-size:11px;
-            font-weight:800;
-        }
+// ============================================================
+// SHOW QUESTION
+// ============================================================
 
-        /* NAVIGATION */
+function showQuestion() {
 
-        .navigation{
-            display:flex;
-            justify-content:space-between;
-            gap:10px;
-            margin-top:17px;
-        }
+    const q =
+        practiceQuestions[
+            currentQuestion
+        ];
 
-        .nav-btn{
-            flex:1;
-            padding:13px;
-            border-radius:25px;
-            border:1px solid var(--border);
-            background:var(--card);
-            color:white;
-            font-family:inherit;
-            font-weight:700;
-            cursor:pointer;
-        }
 
-        .nav-btn.submit{
-            background:var(--gold);
-            color:#081229;
-            border-color:var(--gold);
-        }
+    if (!q) return;
 
-        /* PALETTE */
 
-        .palette-card{
-            margin-top:17px;
-            background:var(--card);
-            border:1px solid var(--border);
-            border-radius:22px;
-            padding:17px;
-        }
+    const total =
+        practiceQuestions.length;
 
-        .palette-title{
-            color:var(--gold);
-            font-size:13px;
-            margin-bottom:12px;
-        }
 
-        .palette{
-            display:grid;
-            grid-template-columns:repeat(10,1fr);
-            gap:7px;
-        }
+    questionNumber.textContent =
+        `Question ${currentQuestion + 1}`;
 
-        .palette button{
-            height:35px;
-            border-radius:9px;
-            border:1px solid var(--border);
-            background:rgba(255,255,255,.05);
-            color:white;
-            cursor:pointer;
-            font-family:inherit;
-            font-size:10px;
-        }
 
-        .palette button.current{
-            border-color:var(--gold);
-            background:rgba(255,215,0,.15);
-            color:var(--gold);
-        }
+    questionCounter.textContent =
+        `Question ${
+            currentQuestion + 1
+        } / ${total}`;
 
-        .palette button.answered{
-            background:rgba(0,230,118,.15);
-            border-color:rgba(0,230,118,.4);
-            color:var(--success);
-        }
 
-        /* RESULT */
+    questionText.textContent =
+        q.question;
 
-        #resultArea{
-            display:none;
-        }
 
-        .result-card{
-            background:var(--card);
-            border:1px solid var(--border);
-            border-radius:28px;
-            padding:28px;
-            text-align:center;
-        }
+    optionsContainer.innerHTML =
+        "";
 
-        .result-icon{
-            font-size:55px;
-        }
 
-        .result-card h2{
-            color:var(--gold);
-            margin-top:8px;
-        }
+    q.options
+        .slice(0,4)
+        .forEach(
+            (optionText,index) => {
 
-        .score{
-            font-size:42px;
-            font-weight:800;
-            color:white;
-            margin:12px 0;
-        }
+                const button =
+                    document.createElement(
+                        "button"
+                    );
 
-        .result-grid{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:10px;
-            margin-top:20px;
-        }
 
-        .result-item{
-            padding:15px 8px;
-            border-radius:16px;
-            background:rgba(255,255,255,.05);
-        }
+                button.className =
+                    "option";
 
-        .result-item span{
-            display:block;
-            color:var(--muted);
-            font-size:10px;
-        }
 
-        .result-item strong{
-            display:block;
-            font-size:20px;
-            margin-top:3px;
-        }
+                if (
+                    selectedAnswers[
+                        currentQuestion
+                    ] === index
+                ) {
 
-        .correct{
-            color:var(--success);
-        }
+                    button.classList.add(
+                        "selected"
+                    );
 
-        .wrong{
-            color:var(--danger);
-        }
+                }
 
-        .skipped{
-            color:var(--warning);
-        }
 
-        .review{
-            text-align:left;
-            margin-top:25px;
-        }
+                button.innerHTML =
+                    `
+                    <span class="option-letter">
+                        ${String.fromCharCode(
+                            65 + index
+                        )}
+                    </span>
+                    ${escapeHTML(
+                        optionText
+                    )}
+                    `;
 
-        .review h3{
-            color:var(--gold);
-            margin-bottom:12px;
-        }
 
-        .review-card{
-            padding:15px;
-            border:1px solid var(--border);
-            border-radius:16px;
-            margin-bottom:10px;
-            background:rgba(255,255,255,.04);
-        }
+                button.addEventListener(
+                    "click",
+                    () => {
 
-        .review-card h4{
-            font-size:12px;
-            line-height:1.6;
-            margin-bottom:8px;
-        }
+                        selectAnswer(
+                            index
+                        );
 
-        .review-card p{
-            color:var(--text);
-            font-size:11px;
-            line-height:1.6;
-        }
+                    }
+                );
 
-        .review-correct{
-            color:var(--success)!important;
-        }
 
-        .review-wrong{
-            color:var(--danger)!important;
-        }
+                optionsContainer.appendChild(
+                    button
+                );
 
-        .restart-btn{
-            width:100%;
-            margin-top:18px;
-            padding:14px;
-            border:none;
-            border-radius:30px;
-            background:var(--gold);
-            color:#081229;
-            font-family:inherit;
-            font-weight:800;
-            cursor:pointer;
-        }
-
-        .loading{
-            text-align:center;
-            padding:35px;
-            color:var(--muted);
-        }
-
-        .loader{
-            width:38px;
-            height:38px;
-            border:4px solid rgba(255,255,255,.12);
-            border-top-color:var(--gold);
-            border-radius:50%;
-            animation:spin .8s linear infinite;
-            margin:0 auto 12px;
-        }
-
-        @keyframes spin{
-            to{
-                transform:rotate(360deg);
             }
-        }
+        );
 
-        @media(max-width:600px){
 
-            .container{
-                padding:11px;
+    const progress =
+        (
+            (currentQuestion + 1) /
+            total
+        ) * 100;
+
+
+    progressBar.style.width =
+        `${progress}%`;
+
+
+    document.getElementById(
+        "previousBtn"
+    ).disabled =
+        currentQuestion === 0;
+
+
+    document.getElementById(
+        "nextBtn"
+    ).style.display =
+        currentQuestion === total - 1
+            ? "none"
+            : "block";
+
+
+    renderPalette();
+
+}
+
+
+// ============================================================
+// SELECT ANSWER
+// ============================================================
+
+function selectAnswer(index) {
+
+    selectedAnswers[
+        currentQuestion
+    ] = index;
+
+
+    showQuestion();
+
+}
+
+
+// ============================================================
+// PALETTE
+// ============================================================
+
+function renderPalette() {
+
+    palette.innerHTML =
+        "";
+
+
+    practiceQuestions.forEach(
+        (_, index) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.textContent =
+                index + 1;
+
+
+            if (
+                index ===
+                currentQuestion
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
             }
 
-            .setup-card,
-            .question-card,
-            .result-card{
-                padding:18px;
-                border-radius:22px;
+
+            if (
+                selectedAnswers[index] !==
+                null
+            ) {
+
+                button.classList.add(
+                    "answered"
+                );
+
             }
 
-            .question-text{
-                font-size:15px;
-            }
 
-            .palette{
-                grid-template-columns:repeat(5,1fr);
-            }
+            button.addEventListener(
+                "click",
+                () => {
 
-            .result-grid{
-                grid-template-columns:repeat(3,1fr);
-            }
+                    currentQuestion =
+                        index;
 
-            .brand h1{
-                font-size:16px;
-            }
+                    showQuestion();
 
-            .back-btn{
-                font-size:10px;
-                padding:8px 10px;
-            }
+                }
+            );
+
+
+            palette.appendChild(
+                button
+            );
+
         }
+    );
 
-    </style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <!-- HEADER -->
-
-    <header class="header">
-
-        <div class="brand">
-
-            <img
-                src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-                alt="G The Genius"
-            >
-
-            <div>
-                <h1>G THE GENIUS</h1>
-                <p>TNUSRB PRACTICE TEST</p>
-            </div>
-
-        </div>
-
-        <button
-            class="back-btn"
-            id="backBtn"
-        >
-            ← Back
-        </button>
-
-    </header>
+}
 
 
-    <!-- SETUP AREA -->
+// ============================================================
+// PREVIOUS
+// ============================================================
 
-    <section id="setupArea">
+document
+    .getElementById(
+        "previousBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
-        <div class="setup-card">
+            if (
+                currentQuestion > 0
+            ) {
 
-            <div class="setup-title">
+                currentQuestion--;
 
-                <div class="icon">🎯</div>
+                showQuestion();
 
-                <h2>Practice Test</h2>
+            }
 
-                <p>
-                    Subject & Topic தேர்வு செய்து Practice செய்யுங்கள்
+        }
+    );
+
+
+// ============================================================
+// NEXT
+// ============================================================
+
+document
+    .getElementById(
+        "nextBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            if (
+                currentQuestion <
+                practiceQuestions.length - 1
+            ) {
+
+                currentQuestion++;
+
+                showQuestion();
+
+            }
+
+        }
+    );
+
+
+// ============================================================
+// TIMER
+// ============================================================
+
+function startTimer() {
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    updateTimer();
+
+
+    timerInterval =
+        setInterval(
+            () => {
+
+                timeLeft--;
+
+
+                updateTimer();
+
+
+                if (
+                    timeLeft <= 0
+                ) {
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+
+                    alert(
+                        "⏰ Time Over!"
+                    );
+
+
+                    submitPractice();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+// ============================================================
+// UPDATE TIMER
+// ============================================================
+
+function updateTimer() {
+
+    const minutes =
+        Math.floor(
+            timeLeft / 60
+        );
+
+
+    const seconds =
+        timeLeft % 60;
+
+
+    timer.textContent =
+        `⏰ ${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+
+    if (
+        timeLeft <= 60
+    ) {
+
+        timer.classList.add(
+            "danger"
+        );
+
+    }
+
+    else {
+
+        timer.classList.remove(
+            "danger"
+        );
+
+    }
+
+}
+
+
+// ============================================================
+// SUBMIT
+// ============================================================
+
+document
+    .getElementById(
+        "submitBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            const unanswered =
+                selectedAnswers.filter(
+                    answer =>
+                        answer === null
+                ).length;
+
+
+            let message =
+                "Are you sure you want to submit?";
+
+
+            if (
+                unanswered > 0
+            ) {
+
+                message +=
+                    `\n\n${unanswered} question(s) unanswered.`;
+
+            }
+
+
+            if (
+                confirm(message)
+            ) {
+
+                submitPractice();
+
+            }
+
+        }
+    );
+
+
+// ============================================================
+// SUBMIT PRACTICE
+// ============================================================
+
+async function submitPractice() {
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    let correct = 0;
+
+    let wrong = 0;
+
+    let skipped = 0;
+
+
+    practiceQuestions.forEach(
+        (q,index) => {
+
+            const selected =
+                selectedAnswers[index];
+
+
+            if (
+                selected === null
+            ) {
+
+                skipped++;
+
+            }
+
+            else if (
+                selected ===
+                Number(q.answer)
+            ) {
+
+                correct++;
+
+            }
+
+            else {
+
+                wrong++;
+
+            }
+
+        }
+    );
+
+
+    const score =
+        correct;
+
+
+    const total =
+        practiceQuestions.length;
+
+
+    await savePracticeResult(
+        score,
+        total,
+        correct,
+        wrong,
+        skipped
+    );
+
+
+    showResult(
+        score,
+        total,
+        correct,
+        wrong,
+        skipped
+    );
+
+}
+
+
+// ============================================================
+// SAVE RESULT
+// ============================================================
+
+async function savePracticeResult(
+    score,
+    total,
+    correct,
+    wrong,
+    skipped
+) {
+
+    try {
+
+        await addDoc(
+            collection(
+                db,
+                "results"
+            ),
+            {
+
+                userId:
+                    currentUser
+                        ? currentUser.uid
+                        : null,
+
+                userEmail:
+                    currentUser
+                        ? currentUser.email
+                        : null,
+
+                name:
+                    currentUser
+                        ? (
+                            currentUser.displayName ||
+                            currentUser.email
+                        )
+                        : "Guest",
+
+                testType:
+                    "practice",
+
+                subject:
+                    subjectSelect.value,
+
+                topic:
+                    topicSelect.value,
+
+                score:
+                    score,
+
+                totalQuestions:
+                    total,
+
+                correct:
+                    correct,
+
+                wrong:
+                    wrong,
+
+                skipped:
+                    skipped,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        console.log(
+            "Practice result saved ✅"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Result save error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ============================================================
+// SHOW RESULT
+// ============================================================
+
+function showResult(
+    score,
+    total,
+    correct,
+    wrong,
+    skipped
+) {
+
+    testArea.style.display =
+        "none";
+
+
+    resultArea.style.display =
+        "block";
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        `${score} / ${total}`;
+
+
+    document.getElementById(
+        "correctCount"
+    ).textContent =
+        correct;
+
+
+    document.getElementById(
+        "wrongCount"
+    ).textContent =
+        wrong;
+
+
+    document.getElementById(
+        "skippedCount"
+    ).textContent =
+        skipped;
+
+
+    renderReview();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+// ============================================================
+// REVIEW
+// ============================================================
+
+function renderReview() {
+
+    const container =
+        document.getElementById(
+            "reviewContainer"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    practiceQuestions.forEach(
+        (q,index) => {
+
+            const selected =
+                selectedAnswers[index];
+
+
+            const correctAnswer =
+                Number(q.answer);
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "review-card";
+
+
+            let statusText = "";
+
+            let statusClass = "";
+
+
+            if (selected === null
+            ) {
+
+                statusText =
+                    "⏭ Skipped";
+
+                statusClass =
+                    "skipped";
+
+            }
+
+            else if (
+                selected ===
+                correctAnswer
+            ) {
+
+                statusText =
+                    "✅ Correct";
+
+                statusClass =
+                    "review-correct";
+
+            }
+
+            else {
+
+                statusText =
+                    "❌ Wrong";
+
+                statusClass =
+                    "review-wrong";
+
+            }
+
+
+            const selectedText =
+                selected === null
+                    ? "Not answered"
+                    : q.options[selected];
+
+
+            card.innerHTML =
+                `
+                <h4>
+                    ${index + 1}. ${escapeHTML(
+                        q.question
+                    )}
+                </h4>
+
+                <p class="${statusClass}">
+                    ${statusText}
                 </p>
 
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    📚 Subject
-                </label>
-
-                <select id="subjectSelect">
-
-                    <option value="">
-                        Select Subject
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    📖 Topic
-                </label>
-
-                <select id="topicSelect">
-
-                    <option value="">
-                        Select Topic
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    🔢 Number of Questions
-                </label>
-
-                <select id="questionCount">
-
-                    <option value="10">
-                        10 Questions
-                    </option>
-
-                    <option value="20">
-                        20 Questions
-                    </option>
-
-                    <option value="30">
-                        30 Questions
-                    </option>
-
-                    <option value="50">
-                        50 Questions
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <button
-                class="start-btn"
-                id="startPracticeBtn"
-            >
-                🚀 Start Practice
-            </button>
-
-
-            <div
-                class="message"
-                id="setupMessage"
-            ></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- TEST AREA -->
-
-    <section id="testArea">
-
-        <div class="test-header">
-
-            <div class="test-info">
-
-                <div>
-
-                    <div
-                        class="test-title"
-                        id="testTitle"
-                    >
-                        Practice Test
-                    </div>
-
-                    <small
-                        id="questionCounter"
-                        style="color:var(--muted);font-size:10px;"
-                    >
-                        Question 1 / 10
-                    </small>
-
-                </div>
-
-
-                <div
-                    class="timer"
-                    id="timer"
-                >
-                    ⏰ 10:00
-                </div>
-
-            </div>
-
-
-            <div class="progress">
-
-                <div id="progressBar"></div>
-
-            </div>
-
-        </div>
-
-
-        <div class="question-card">
-
-            <div
-                class="question-number"
-                id="questionNumber"
-            >
-                Question 1
-            </div>
-
-
-            <div
-                class="question-text"
-                id="questionText"
-            ></div>
-
-
-            <div
-                class="options"
-                id="optionsContainer"
-            ></div>
-
-
-            <div class="navigation">
-
-                <button
-                    class="nav-btn"
-                    id="previousBtn"
-                >
-                    ← Previous
-                </button>
-
-                <button
-                    class="nav-btn"
-                    id="nextBtn"
-                >
-                    Next →
-                </button>
-
-                <button
-                    class="nav-btn submit"
-                    id="submitBtn"
-                >
-                    Submit
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="palette-card">
-
-            <div class="palette-title">
-                📝 Question Palette
-            </div>
-
-            <div
-                class="palette"
-                id="palette"
-            ></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- RESULT AREA -->
-
-    <section id="resultArea">
-
-        <div class="result-card">
-
-            <div class="result-icon">
-                🏆
-            </div>
-
-            <h2>
-                Practice Completed!
-            </h2>
-
-            <div
-                class="score"
-                id="finalScore"
-            >
-                0 / 10
-            </div>
-
-
-            <div class="result-grid">
-
-                <div class="result-item">
-
-                    <span>Correct</span>
-
-                    <strong
-                        class="correct"
-                        id="correctCount"
-                    >
-                        0
+                <p>
+                    Your Answer:
+                    <strong>
+                        ${escapeHTML(
+                            selectedText
+                        )}
                     </strong>
+                </p>
 
-                </div>
-
-
-                <div class="result-item">
-
-                    <span>Wrong</span>
-
-                    <strong
-                        class="wrong"
-                        id="wrongCount"
-                    >
-                        0
+                <p>
+                    Correct Answer:
+                    <strong>
+                        ${escapeHTML(
+                            q.options[correctAnswer]
+                        )}
                     </strong>
+                </p>
 
-                </div>
-
-
-                <div class="result-item">
-
-                    <span>Skipped</span>
-
-                    <strong
-                        class="skipped"
-                        id="skippedCount"
-                    >
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
+                ${
+                    q.explanation
+                        ? `
+                        <p>
+                            💡
+                            ${escapeHTML(
+                                q.explanation
+                            )}
+                        </p>
+                        `
+                        : ""
+                }
+                `;
 
 
-            <div class="review">
+            container.appendChild(
+                card
+            );
 
-                <h3>
-                    📖 Answer Review
-                </h3>
+        }
+    );
 
-                <div id="reviewContainer"></div>
-
-            </div>
-
-
-            <button
-                class="restart-btn"
-                id="restartBtn"
-            >
-                🔄 Practice Again
-            </button>
-
-        </div>
-
-    </section>
-
-</div>
+}
 
 
-<script
-    type="module"
-    src="./practice.js"
-></script>
+// ============================================================
+// RESTART
+// ============================================================
 
-</body>
-</html>
+document
+    .getElementById(
+        "restartBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            clearInterval(
+                timerInterval
+            );
+
+
+            resultArea.style.display =
+                "none";
+
+
+            setupArea.style.display =
+                "block";
+
+
+            setupMessage.textContent =
+                "";
+
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+    );
+
+
+// ============================================================
+// BACK BUTTON
+// ============================================================
+
+document
+    .getElementById(
+        "backBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            if (
+                testArea.style.display ===
+                "block"
+            ) {
+
+                if (
+                    confirm(
+                        "Practice test-ல் இருந்து வெளியேற வேண்டுமா?"
+                    )
+                ) {
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+                    testArea.style.display =
+                        "none";
+
+                    setupArea.style.display =
+                        "block";
+
+                }
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+    );
+
+
+// ============================================================
+// ESCAPE HTML
+// ============================================================
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// ============================================================
+// INITIAL LOAD
+// ============================================================
+
+loadQuestions();
+               
