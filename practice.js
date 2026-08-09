@@ -216,16 +216,9 @@ async function loadQuestions() {
 
 }
 
-
 // ============================================================
-// START PRACTICE
+// START PRACTICE - FIXED VERSION
 // ============================================================
-
-startPracticeBtn.addEventListener(
-    "click",
-    startPractice
-);
-
 
 function startPractice() {
 
@@ -233,10 +226,14 @@ function startPractice() {
         subjectSelect.value.trim();
 
     const count =
-        Number(
-            questionCount.value
-        );
+        Number(questionCount.value);
 
+
+    console.log("Selected Subject:", subject);
+    console.log("Total Questions:", allQuestions.length);
+
+
+    // Subject check
 
     if (!subject) {
 
@@ -244,30 +241,48 @@ function startPractice() {
             "⚠️ முதலில் Subject select செய்யுங்கள்.";
 
         return;
-
     }
 
+
+    // Filter questions
 
     let filteredQuestions =
         allQuestions.filter((q) => {
 
+            const firestoreSubject =
+                String(
+                    q.subject || ""
+                ).trim();
+
+            console.log(
+                "Firestore Subject:",
+                firestoreSubject
+            );
+
             return (
-                normalize(q.subject) ===
-                normalize(subject)
+                firestoreSubject.toLowerCase() ===
+                subject.toLowerCase()
             );
 
         });
 
+
+    console.log(
+        "Filtered Questions:",
+        filteredQuestions.length
+    );
+
+
+    // No questions
 
     if (
         filteredQuestions.length === 0
     ) {
 
         selectionMessage.textContent =
-            "❌ இந்த Subject-ல் questions இல்லை.";
+            `❌ "${subject}" Subject-ல் questions கிடைக்கவில்லை.`;
 
         return;
-
     }
 
 
@@ -291,6 +306,8 @@ function startPractice() {
         );
 
 
+    // Answers reset
+
     selectedAnswers =
         new Array(
             practiceQuestions.length
@@ -311,24 +328,49 @@ function startPractice() {
     testStarted = true;
 
 
+    // Hide selection
+
     selectionArea.style.display =
         "none";
+
+
+    // Show test
 
     testArea.style.display =
         "block";
 
 
+    // Total questions
+
     totalQuestionNumber.textContent =
         practiceQuestions.length;
 
 
+    // Create palette
+
     createPalette();
+
+
+    // Display first question
 
     displayQuestion();
 
+
+    // Start timer
+
     startTimer();
 
+
+    // Scroll top
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
 }
+
+
 
 
 // ============================================================
@@ -339,19 +381,6 @@ function getTimeLimit(count) {
 
     if (count <= 10) {
 
-        return 5 * 60;
-
-    }
-
-    if (count <= 25) {
-
-        return 10 * 60;
-
-    }
-
-    return 20 * 60;
-
-}
 
 
 // ============================================================
