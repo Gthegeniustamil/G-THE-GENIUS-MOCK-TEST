@@ -8,310 +8,424 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-
 <title>
 Leaderboard | G THE GENIUS
 </title>
 
-
 <meta name="theme-color"
 content="#081229">
 
+<meta name="description"
+content="G THE GENIUS Government Exam Mock Test Leaderboard">
 
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 <link rel="preconnect"
 href="https://fonts.googleapis.com">
-
 
 <link rel="preconnect"
 href="https://fonts.gstatic.com"
 crossorigin>
 
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
 rel="stylesheet">
 
-
-
 <link rel="stylesheet"
-href="css/leaderboard.css">
-
+href="leaderboard.css">
 
 </head>
-
 
 
 <body>
 
 
-
-<div class="leader-container">
-
+<div class="leaderboard-container">
 
 
+<!-- ==================================================
+     HEADER
+================================================== -->
 
+<header class="leaderboard-header">
 
-<!-- =========================
-     Header
-========================= -->
-
-
-<header class="leader-header">
-
-
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="logo"
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="leaderboard-logo"
 alt="G THE GENIUS Logo">
 
-
-
 <h1>
-
 🏆 Leaderboard
-
 </h1>
 
-
-
 <p>
-
-Compete • Improve • Succeed
-
+Compete • Improve • Lead
 </p>
-
-
 
 </header>
 
 
+<!-- ==================================================
+     CURRENT STUDENT
+================================================== -->
+
+<section class="my-rank-card">
+
+<div class="my-rank-left">
+
+<div class="my-avatar">
+👤
+</div>
+
+<div>
+
+<h3 id="myStudentName">
+Student
+</h3>
+
+<p id="myStudentDistrict">
+District
+</p>
+
+</div>
+
+</div>
 
 
+<div class="my-rank-right">
+
+<span>
+Your Rank
+</span>
+
+<strong id="myRank">
+--
+</strong>
+
+</div>
+
+</section>
 
 
+<!-- ==================================================
+     TEST FILTER
+================================================== -->
+
+<section class="filter-section">
+
+<h2>
+📊 Choose Test
+</h2>
 
 
-<!-- =========================
-     Top 3 Podium
-========================= -->
+<div class="filter-buttons">
 
+<button
+class="filter-btn active"
+data-type="all">
+
+🏆 Overall
+
+</button>
+
+
+<button
+class="filter-btn"
+data-type="daily">
+
+🟢 Daily
+
+</button>
+
+
+<button
+class="filter-btn"
+data-type="weekly">
+
+🟡 Weekly
+
+</button>
+
+
+<button
+class="filter-btn"
+data-type="monthly">
+
+🔴 Monthly
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     TOP 3 PODIUM
+================================================== -->
 
 <section class="podium-section">
 
-
-
 <h2>
-
-🔥 Top Performers
-
+🥇 Top Rankers
 </h2>
 
 
+<div class="podium">
 
 
-<div class="podium-container">
-
+<!-- RANK 2 -->
 
 <div class="podium-card second">
 
-
-<div class="rank">
-
+<div class="podium-medal">
 🥈
+</div>
+
+<div
+class="podium-avatar"
+id="rank2Avatar">
+
+👤
 
 </div>
 
-
-<h3 id="secondName">
-
-Loading...
-
+<h3 id="rank2Name">
+--
 </h3>
 
-
-<p id="secondMark">
-
-0 Marks
-
+<p id="rank2District">
+--
 </p>
 
+<strong id="rank2Score">
+--
+</strong>
+
+<span>
+Rank 2
+</span>
 
 </div>
 
 
-
-
+<!-- RANK 1 -->
 
 <div class="podium-card first">
 
+<div class="crown">
+👑
+</div>
 
-<div class="rank">
-
+<div class="podium-medal">
 🥇
+</div>
+
+<div
+class="podium-avatar"
+id="rank1Avatar">
+
+👤
 
 </div>
 
-
-<h3 id="firstName">
-
-Loading...
-
+<h3 id="rank1Name">
+--
 </h3>
 
-
-<p id="firstMark">
-
-0 Marks
-
+<p id="rank1District">
+--
 </p>
 
+<strong id="rank1Score">
+--
+</strong>
+
+<span>
+Rank 1
+</span>
 
 </div>
 
 
-
-
+<!-- RANK 3 -->
 
 <div class="podium-card third">
 
-
-<div class="rank">
-
+<div class="podium-medal">
 🥉
+</div>
+
+<div
+class="podium-avatar"
+id="rank3Avatar">
+
+👤
 
 </div>
 
-
-<h3 id="thirdName">
-
-Loading...
-
+<h3 id="rank3Name">
+--
 </h3>
 
-
-<p id="thirdMark">
-
-0 Marks
-
+<p id="rank3District">
+--
 </p>
 
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-<!-- =========================
-     Rank List Start
-========================= -->
-
-
-<section class="rank-section">
-
-
-<h2>
-
-📊 All Rankings
-
-</h2>
-
-
-
-<div id="leaderboardList">
-
-  <!-- =========================
-     Ranking Card Template
-========================= -->
-
-
-<div class="rank-card">
-
-
-<div class="rank-number">
-
-#1
-
-</div>
-
-
-
-<div class="student-info">
-
-
-<h3>
-
-Student Name
-
-</h3>
-
-
-
-<p>
-
-District • Test Type
-
-</p>
-
-
-
-</div>
-
-
-
-
-<div class="marks-box">
-
+<strong id="rank3Score">
+--
+</strong>
 
 <span>
-
-0
-
+Rank 3
 </span>
 
-
-<small>
-
-Marks
-
-</small>
-
-
 </div>
 
-
-
 </div>
-
- </div>
 
 </section>
 
 
+<!-- ==================================================
+     SEARCH
+================================================== -->
+
+<section class="search-section">
+
+<input
+type="search"
+id="searchInput"
+placeholder="🔍 Search student name...">
+
+</section>
 
 
+<!-- ==================================================
+     LEADERBOARD LIST
+================================================== -->
+
+<section class="ranking-section">
+
+<div class="section-heading">
+
+<div>
+
+<h2>
+🏅 Rankings
+</h2>
+
+<p id="rankingSubtitle">
+All Test Results
+</p>
+
+</div>
+
+<span id="studentCount">
+0 Students
+</span>
+
+</div>
 
 
+<div
+id="leaderboardList"
+class="leaderboard-list">
 
-<!-- =========================
-     Bottom Navigation
-========================= -->
 
+<div class="loading-box">
+
+<div class="loader"></div>
+
+<p>
+Loading Rankings...
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     EMPTY STATE
+================================================== -->
+
+<section
+id="emptyState"
+class="empty-state"
+style="display:none;">
+
+<div>
+📚
+</div>
+
+<h3>
+No Rankings Found
+</h3>
+
+<p>
+Complete a mock test to appear on the leaderboard.
+</p>
+
+</section>
+
+
+<!-- ==================================================
+     SOCIAL
+================================================== -->
+
+<section class="social-section">
+
+<h2>
+Connect With G THE GENIUS
+</h2>
+
+<div class="social-buttons">
+
+<a
+href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank"
+rel="noopener">
+
+▶ YouTube
+
+</a>
+
+
+<a
+href="https://t.me/gthegenius"
+target="_blank"
+rel="noopener">
+
+✈ Telegram
+
+</a>
+
+
+<a
+href="mailto:gthegenius7@gmail.com">
+
+✉ Email
+
+</a>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     BOTTOM NAVIGATION
+================================================== -->
 
 <nav class="bottom-navigation">
 
 
-<a href="dashboard.html"
+<a
+href="dashboard.html"
 class="nav-item">
-
 
 🏠
 
@@ -319,16 +433,12 @@ class="nav-item">
 Home
 </span>
 
-
 </a>
 
 
-
-
-
-<a href="mocktest.html?type=daily"
+<a
+href="mocktest.html?type=daily"
 class="nav-item">
-
 
 📝
 
@@ -336,33 +446,12 @@ class="nav-item">
 Test
 </span>
 
-
 </a>
 
 
-
-
-
-<a href="practice.html"
-class="nav-item">
-
-
-📚
-
-<span>
-Practice
-</span>
-
-
-</a>
-
-
-
-
-
-<a href="leaderboard.html"
+<a
+href="leaderboard.html"
 class="nav-item active">
-
 
 🏆
 
@@ -370,126 +459,86 @@ class="nav-item active">
 Rank
 </span>
 
-
 </a>
 
 
+<a
+href="profile.html"
+class="nav-item">
+
+👤
+
+<span>
+Profile
+</span>
+
+</a>
 
 </nav>
 
 
+<!-- ==================================================
+     FOOTER
+================================================== -->
 
+<footer class="leaderboard-footer">
 
-
-
-
-
-<!-- =========================
-     Footer
-========================= -->
-
-
-<footer class="dashboard-footer">
-
-
-
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 alt="G THE GENIUS Logo">
 
-
-
-
-
 <h3>
-
 G THE GENIUS
-
 </h3>
 
-
-
-
-
 <p>
-
 Learn • Practice • Succeed
-
 </p>
-
-
-
-
 
 <div class="footer-links">
 
+<a href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank"
+rel="noopener">
 
-<a href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
-target="_blank">
-
-📺 YouTube
+YouTube
 
 </a>
-
-
-
-
 
 <a href="https://t.me/gthegenius"
-target="_blank">
+target="_blank"
+rel="noopener">
 
-📢 Telegram
+Telegram
 
 </a>
-
-
-
-
 
 <a href="mailto:gthegenius7@gmail.com">
 
-📧 Email
+Email
 
 </a>
 
-
-
 </div>
 
-
-
-
-
 <small>
-
 © 2026 G THE GENIUS
 <br>
 All Rights Reserved.
-
 </small>
-
-
 
 </footer>
 
 
-
-
-
-
 </div>
 
 
-
-
-
-
-
-
-<script type="module"
-src="js/leaderboard.js"></script>
-
+<script
+type="module"
+src="leaderboard.js">
+</script>
 
 
 </body>
 
-</html>   
+</html>
