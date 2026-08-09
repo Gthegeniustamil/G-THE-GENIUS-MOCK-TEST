@@ -8,12 +8,9 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>
-Admin Panel | G THE GENIUS
-</title>
+<title>Admin Panel | G THE GENIUS</title>
 
-<meta name="theme-color"
-content="#081229">
+<meta name="theme-color" content="#081229">
 
 <meta name="description"
 content="G THE GENIUS Mock Test Admin Panel">
@@ -58,13 +55,9 @@ alt="G THE GENIUS Logo">
 
 <div>
 
-<h1>
-G THE GENIUS
-</h1>
+<h1>G THE GENIUS</h1>
 
-<p>
-Admin Control Panel
-</p>
+<p>Admin Control Panel</p>
 
 </div>
 
@@ -83,7 +76,7 @@ class="logout-btn">
 
 
 <!-- ==================================================
-     ADMIN WELCOME
+     WELCOME
 ================================================== -->
 
 <section class="welcome-card">
@@ -117,29 +110,20 @@ Manage questions, tests and student results from one place.
 
 <section class="stats-section">
 
-<h2>
-📊 Dashboard Overview
-</h2>
-
+<h2>📊 Dashboard Overview</h2>
 
 <div class="stats-grid">
 
 
 <div class="stat-card">
 
-<div class="stat-icon">
-📚
-</div>
+<div class="stat-icon">📚</div>
 
 <div>
 
-<span>
-Total Questions
-</span>
+<span>Total Questions</span>
 
-<strong id="totalQuestions">
-0
-</strong>
+<strong id="totalQuestions">0</strong>
 
 </div>
 
@@ -148,19 +132,13 @@ Total Questions
 
 <div class="stat-card">
 
-<div class="stat-icon">
-👨‍🎓
-</div>
+<div class="stat-icon">👨‍🎓</div>
 
 <div>
 
-<span>
-Students
-</span>
+<span>Students</span>
 
-<strong id="totalStudents">
-0
-</strong>
+<strong id="totalStudents">0</strong>
 
 </div>
 
@@ -169,19 +147,13 @@ Students
 
 <div class="stat-card">
 
-<div class="stat-icon">
-📝
-</div>
+<div class="stat-icon">📝</div>
 
 <div>
 
-<span>
-Test Results
-</span>
+<span>Test Results</span>
 
-<strong id="totalResults">
-0
-</strong>
+<strong id="totalResults">0</strong>
 
 </div>
 
@@ -190,23 +162,18 @@ Test Results
 
 <div class="stat-card">
 
-<div class="stat-icon">
-🏆
-</div>
+<div class="stat-icon">🏆</div>
 
 <div>
 
-<span>
-Tests Today
-</span>
+<span>Tests Today</span>
 
-<strong id="testsToday">
-0
-</strong>
+<strong id="testsToday">0</strong>
 
 </div>
 
 </div>
+
 
 </div>
 
@@ -219,9 +186,7 @@ Tests Today
 
 <section class="admin-menu-section">
 
-<h2>
-🛠️ Admin Tools
-</h2>
+<h2>🛠️ Admin Tools</h2>
 
 
 <div class="admin-menu-grid">
@@ -231,17 +196,11 @@ Tests Today
 class="menu-card active"
 data-section="addQuestionSection">
 
-<span>
-➕
-</span>
+<span>➕</span>
 
-<strong>
-Add Question
-</strong>
+<strong>Add Question</strong>
 
-<small>
-Create a new question
-</small>
+<small>Create a new question</small>
 
 </button>
 
@@ -250,17 +209,11 @@ Create a new question
 class="menu-card"
 data-section="bulkUploadSection">
 
-<span>
-📤
-</span>
+<span>📋</span>
 
-<strong>
-Bulk Upload
-</strong>
+<strong>Bulk Upload</strong>
 
-<small>
-Upload multiple questions
-</small>
+<small>Copy & paste questions</small>
 
 </button>
 
@@ -269,17 +222,11 @@ Upload multiple questions
 class="menu-card"
 data-section="manageQuestionsSection">
 
-<span>
-📚
-</span>
+<span>📚</span>
 
-<strong>
-Manage Questions
-</strong>
+<strong>Manage Questions</strong>
 
-<small>
-View or delete questions
-</small>
+<small>View or delete questions</small>
 
 </button>
 
@@ -288,19 +235,14 @@ View or delete questions
 class="menu-card"
 data-section="resultsSection">
 
-<span>
-📊
-</span>
+<span>📊</span>
 
-<strong>
-Student Results
-</strong>
+<strong>Student Results</strong>
 
-<small>
-View exam performance
-</small>
+<small>View exam performance</small>
 
 </button>
+
 
 </div>
 
@@ -315,13 +257,12 @@ View exam performance
 id="addQuestionSection"
 class="admin-section active-section">
 
+
 <div class="section-header">
 
 <div>
 
-<h2>
-➕ Add Question
-</h2>
+<h2>➕ Add Question</h2>
 
 <p>
 Add a new question to the question bank.
@@ -337,54 +278,31 @@ Add a new question to the question bank.
 
 <div class="form-group">
 
-<label>
-Subject
-</label>
+<label>Subject</label>
 
-<select
-id="questionSubject"
-required>
+<select id="questionSubject" required>
 
 <option value="">
 Select Subject
 </option>
 
-<option value="Tamil">
-Tamil
-</option>
-
-<option value="English">
-English
-</option>
-
+<option value="Tamil">Tamil</option>
+<option value="English">English</option>
 <option value="General Knowledge">
 General Knowledge
 </option>
-
 <option value="Indian Polity">
 Indian Polity
 </option>
-
-<option value="History">
-History
-</option>
-
-<option value="Geography">
-Geography
-</option>
-
+<option value="History">History</option>
+<option value="Geography">Geography</option>
 <option value="General Science">
 General Science
 </option>
-
-<option value="Economics">
-Economics
-</option>
-
+<option value="Economics">Economics</option>
 <option value="Current Affairs">
 Current Affairs
 </option>
-
 <option value="Mathematics">
 Mathematics
 </option>
@@ -396,9 +314,7 @@ Mathematics
 
 <div class="form-group">
 
-<label>
-Topic
-</label>
+<label>Topic</label>
 
 <input
 type="text"
@@ -411,9 +327,7 @@ required>
 
 <div class="form-group">
 
-<label>
-Question
-</label>
+<label>Question</label>
 
 <textarea
 id="questionText"
@@ -426,11 +340,10 @@ required></textarea>
 
 <div class="options-grid">
 
+
 <div class="form-group">
 
-<label>
-Option A
-</label>
+<label>Option A</label>
 
 <input
 type="text"
@@ -443,9 +356,7 @@ required>
 
 <div class="form-group">
 
-<label>
-Option B
-</label>
+<label>Option B</label>
 
 <input
 type="text"
@@ -458,9 +369,7 @@ required>
 
 <div class="form-group">
 
-<label>
-Option C
-</label>
+<label>Option C</label>
 
 <input
 type="text"
@@ -473,9 +382,7 @@ required>
 
 <div class="form-group">
 
-<label>
-Option D
-</label>
+<label>Option D</label>
 
 <input
 type="text"
@@ -485,14 +392,13 @@ required>
 
 </div>
 
+
 </div>
 
 
 <div class="form-group">
 
-<label>
-Correct Answer
-</label>
+<label>Correct Answer</label>
 
 <select
 id="correctAnswer"
@@ -502,21 +408,10 @@ required>
 Select Correct Option
 </option>
 
-<option value="0">
-Option A
-</option>
-
-<option value="1">
-Option B
-</option>
-
-<option value="2">
-Option C
-</option>
-
-<option value="3">
-Option D
-</option>
+<option value="0">Option A</option>
+<option value="1">Option B</option>
+<option value="2">Option C</option>
+<option value="3">Option D</option>
 
 </select>
 
@@ -525,9 +420,7 @@ Option D
 
 <div class="form-group">
 
-<label>
-Explanation
-</label>
+<label>Explanation</label>
 
 <textarea
 id="questionExplanation"
@@ -551,6 +444,7 @@ id="questionMessage"
 class="admin-message">
 </p>
 
+
 </form>
 
 </section>
@@ -569,117 +463,188 @@ class="admin-section">
 
 <div>
 
-<h2>
-📤 Bulk Upload
-</h2>
+<h2>📋 Bulk Upload</h2>
 
 <p>
-Upload multiple questions at once.
+Copy and paste multiple questions at once.
 </p>
 
 </div>
 
 </div>
 
+
+<!-- INFO -->
 
 <div class="upload-info">
 
-<h3>
-📌 Required Format
-</h3>
+<h3>📌 How to Upload?</h3>
 
 <p>
-Upload a JSON file containing question data.
+Select Subject and Topic, then paste your questions below.
 </p>
 
-<code>
-question, options, answer, subject, topic, explanation
-</code>
+<p>
+You can upload multiple questions together.
+Duplicate questions will automatically be skipped.
+</p>
 
 </div>
 
 
+<!-- SUBJECT -->
+
 <div class="form-group">
 
-<label>
-Subject
-</label>
+<label>Subject</label>
 
-<select
-id="bulkSubject">
+<select id="bulkSubject">
 
 <option value="">
 Select Subject
 </option>
 
-<option>Tamil</option>
-<option>English</option>
-<option>General Knowledge</option>
-<option>Indian Polity</option>
-<option>History</option>
-<option>Geography</option>
-<option>General Science</option>
-<option>Economics</option>
-<option>Current Affairs</option>
-<option>Mathematics</option>
+<option value="Tamil">Tamil</option>
+
+<option value="English">English</option>
+
+<option value="General Knowledge">
+General Knowledge
+</option>
+
+<option value="Indian Polity">
+Indian Polity
+</option>
+
+<option value="History">History</option>
+
+<option value="Geography">Geography</option>
+
+<option value="General Science">
+General Science
+</option>
+
+<option value="Economics">Economics</option>
+
+<option value="Current Affairs">
+Current Affairs
+</option>
+
+<option value="Mathematics">
+Mathematics
+</option>
 
 </select>
 
 </div>
 
 
+<!-- TOPIC -->
+
 <div class="form-group">
 
-<label>
-Topic
-</label>
+<label>Topic</label>
 
 <input
 type="text"
 id="bulkTopic"
-placeholder="Enter topic">
+placeholder="Example: Indian Constitution">
 
 </div>
 
 
-<div class="file-upload-box">
+<!-- COPY PASTE -->
 
-<input
-type="file"
-id="bulkFile"
-accept=".json">
+<div class="form-group">
 
-<label
-for="bulkFile"
-class="file-label">
-
-📁 Choose JSON File
-
+<label>
+📋 Paste Questions JSON
 </label>
 
-<p id="selectedFile">
-No file selected
+<textarea
+id="bulkJson"
+rows="15"
+placeholder='Paste JSON here...
+
+Example:
+
+[
+  {
+    "question": "இந்தியாவின் தலைநகர் எது?",
+    "options": [
+      "சென்னை",
+      "மும்பை",
+      "புதுடெல்லி",
+      "கொல்கத்தா"
+    ],
+    "answer": 2,
+    "explanation": "இந்தியாவின் தலைநகர் புதுடெல்லி."
+  },
+
+  {
+    "question": "இந்திய அரசியலமைப்பு எப்போது ஏற்றுக்கொள்ளப்பட்டது?",
+    "options": [
+      "1947",
+      "1949",
+      "1950",
+      "1952"
+    ],
+    "answer": 1,
+    "explanation": "1949 நவம்பர் 26 அன்று ஏற்றுக்கொள்ளப்பட்டது."
+  }
+]'></textarea>
+
+</div>
+
+
+<!-- FORMAT INFO -->
+
+<div class="upload-info">
+
+<h3>✅ JSON Format</h3>
+
+<code>
+[
+  {
+    "question": "Question here",
+    "options": [
+      "Option A",
+      "Option B",
+      "Option C",
+      "Option D"
+    ],
+    "answer": 0,
+    "explanation": "Explanation here"
+  }
+]
+</code>
+
+<p style="margin-top:10px;">
+<strong>answer:</strong>
+0 = A, 1 = B, 2 = C, 3 = D
 </p>
 
 </div>
 
+
+<!-- PROGRESS -->
 
 <div
 class="upload-progress-container"
 id="uploadProgressContainer"
 style="display:none;">
 
+
 <div class="progress-header">
 
-<span>
-Upload Progress
-</span>
+<span>Upload Progress</span>
 
 <strong id="uploadPercent">
 0%
 </strong>
 
 </div>
+
 
 <div class="progress-bar">
 
@@ -689,12 +654,15 @@ id="uploadProgress">
 
 </div>
 
+
 <p id="uploadStatus">
 Preparing upload...
 </p>
 
 </div>
 
+
+<!-- UPLOAD BUTTON -->
 
 <button
 id="bulkUploadBtn"
@@ -710,6 +678,7 @@ type="button">
 id="bulkMessage"
 class="admin-message">
 </p>
+
 
 </section>
 
@@ -727,9 +696,7 @@ class="admin-section">
 
 <div>
 
-<h2>
-📚 Manage Questions
-</h2>
+<h2>📚 Manage Questions</h2>
 
 <p>
 Search and manage your question bank.
@@ -741,6 +708,7 @@ Search and manage your question bank.
 
 
 <div class="question-filters">
+
 
 <input
 type="search"
@@ -767,6 +735,7 @@ All Subjects
 
 </select>
 
+
 </div>
 
 
@@ -774,15 +743,15 @@ All Subjects
 id="questionList"
 class="question-list">
 
+
 <div class="loading-box">
 
 <div class="loader"></div>
 
-<p>
-Loading Questions...
-</p>
+<p>Loading Questions...</p>
 
 </div>
+
 
 </div>
 
@@ -802,9 +771,7 @@ class="admin-section">
 
 <div>
 
-<h2>
-📊 Student Results
-</h2>
+<h2>📊 Student Results</h2>
 
 <p>
 Monitor student test performance.
@@ -816,6 +783,7 @@ Monitor student test performance.
 
 
 <div class="result-filters">
+
 
 <input
 type="search"
@@ -843,6 +811,7 @@ Monthly
 
 </select>
 
+
 </div>
 
 
@@ -850,15 +819,15 @@ Monthly
 id="resultsList"
 class="results-list">
 
+
 <div class="loading-box">
 
 <div class="loader"></div>
 
-<p>
-Loading Results...
-</p>
+<p>Loading Results...</p>
 
 </div>
+
 
 </div>
 
@@ -866,7 +835,7 @@ Loading Results...
 
 
 <!-- ==================================================
-     ADMIN FOOTER
+     FOOTER
 ================================================== -->
 
 <footer class="admin-footer">
@@ -877,17 +846,13 @@ src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
 alt="G THE GENIUS Logo">
 
 
-<h3>
-G THE GENIUS
-</h3>
+<h3>G THE GENIUS</h3>
 
-
-<p>
-Admin Control Panel
-</p>
+<p>Admin Control Panel</p>
 
 
 <div class="footer-links">
+
 
 <a
 href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
@@ -916,6 +881,7 @@ href="mailto:gthegenius7@gmail.com">
 
 </a>
 
+
 </div>
 
 
@@ -926,6 +892,7 @@ href="mailto:gthegenius7@gmail.com">
 All Rights Reserved.
 
 </small>
+
 
 </footer>
 
