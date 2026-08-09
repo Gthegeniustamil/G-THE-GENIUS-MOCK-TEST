@@ -1,6 +1,6 @@
 // ============================================================
 // G THE GENIUS
-// PRACTICE TEST
+// PRACTICE TEST JS
 // Firebase v10.12.2
 // ============================================================
 
@@ -15,9 +15,7 @@ import {
 
 import {
     collection,
-    getDocs,
-    addDoc,
-    serverTimestamp
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -25,33 +23,34 @@ import {
 // GLOBAL VARIABLES
 // ============================================================
 
-let allQuestions = [];
+let currentUser = null;
 
+let allQuestions = [];
 let practiceQuestions = [];
 
 let selectedAnswers = [];
 
-let currentQuestion = 0;
+let currentIndex = 0;
 
 let timerInterval = null;
 
-let timeLeft = 600;
+let timeLeft = 15 * 60;
 
-let currentUser = null;
+let testStarted = false;
 
 
 // ============================================================
-// ELEMENTS
+// DOM ELEMENTS
 // ============================================================
 
-const setupArea =
-    document.getElementById("setupArea");
+const selectionArea =
+    document.getElementById("selectionArea");
 
 const testArea =
     document.getElementById("testArea");
 
-const resultArea =
-    document.getElementById("resultArea");
+const loadingBox =
+    document.getElementById("loadingBox");
 
 const subjectSelect =
     document.getElementById("subjectSelect");
@@ -62,60 +61,98 @@ const topicSelect =
 const questionCount =
     document.getElementById("questionCount");
 
-const setupMessage =
-    document.getElementById("setupMessage");
+const startPracticeBtn =
+    document.getElementById("startPracticeBtn");
+
+const selectionMessage =
+    document.getElementById("selectionMessage");
+
+const currentQuestionNumber =
+    document.getElementById(
+        "currentQuestionNumber"
+    );
+
+const totalQuestionNumber =
+    document.getElementById(
+        "totalQuestionNumber"
+    );
+
+const timerElement =
+    document.getElementById("timer");
+
+const progressFill =
+    document.getElementById("progressFill");
+
+const questionNumber =
+    document.getElementById("questionNumber");
+
+const questionTopic =
+    document.getElementById("questionTopic");
 
 const questionText =
     document.getElementById("questionText");
 
 const optionsContainer =
-    document.getElementById("optionsContainer");
+    document.getElementById(
+        "optionsContainer"
+    );
 
-const questionNumber =
-    document.getElementById("questionNumber");
+const previousBtn =
+    document.getElementById("previousBtn");
 
-const questionCounter =
-    document.getElementById("questionCounter");
+const nextBtn =
+    document.getElementById("nextBtn");
 
-const palette =
-    document.getElementById("palette");
+const submitBtn =
+    document.getElementById("submitBtn");
 
-const progressBar =
-    document.getElementById("progressBar");
+const questionPalette =
+    document.getElementById(
+        "questionPalette"
+    );
 
-const timer =
-    document.getElementById("timer");
+const backBtn =
+    document.getElementById("backBtn");
 
 
 // ============================================================
-// AUTH
+// AUTH CHECK
 // ============================================================
 
-onAuthStateChanged(
-    auth,
-    (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-        currentUser = user || null;
+    if (!user) {
 
-        console.log(
-            "Practice User:",
-            currentUser
-                ? currentUser.email
-                : "Guest"
+        alert(
+            "Please login to use Practice Test."
         );
 
+        window.location.href =
+            "login.html";
+
+        return;
+
     }
-);
+
+    currentUser = user;
+
+    console.log(
+        "Practice User:",
+        user.uid
+    );
+
+    await loadAllQuestions();
+
+});
 
 
 // ============================================================
-// LOAD QUESTIONS
+// LOAD ALL QUESTIONS
 // ============================================================
 
-async function loadQuestions() {
+async function loadAllQuestions() {
 
-    setupMessage.textContent =
-        "Loading questions...";
+    loadingBox.style.display = "block";
 
     try {
 
@@ -127,66 +164,60 @@ async function loadQuestions() {
                 )
             );
 
-
         allQuestions = [];
 
+        snapshot.forEach((questionDoc) => {
 
-        snapshot.forEach(
-            (questionDoc) => {
+            const data =
+                questionDoc.data();
 
-                const data =
-                    questionDoc.data();
+            allQuestions.push({
+
+                id:
+                    questionDoc.id,
+
+                question:
+                    data.question || "",
+
+                options:
+                    Array.isArray(data.options)
+                        ? data.options
+                        : [],
+
+                answer:
+                    Number(
+                        data.answer ?? 0
+                    ),
+
+                subject:
+                    data.subject || "",
+
+                topic:
+                    data.topic || "",
+
+                explanation:
+                    data.explanation || ""
+
+            });
+
+        });
 
 
-                if (
-                    data.question &&
-                    Array.isArray(
-                        data.options
-                    ) &&
-                    data.options.length >= 4
-                ) {
-
-                    allQuestions.push({
-
-                        id:
-                            questionDoc.id,
-
-                        question:
-                            data.question,
-
-                        options:
-                            data.options,
-
-                        answer:
-                            Number(
-                                data.answer
-                            ),
-
-                        subject:
-                            data.subject ||
-                            "General",
-
-                        topic:
-                            data.topic ||
-                            "General",
-
-                        explanation:
-                            data.explanation ||
-                            ""
-
-                    });
-
-                }
-
-            }
+        console.log(
+            "Questions Loaded:",
+            allQuestions.length
         );
 
 
-        populateSubjects();
+        if (
+            allQuestions.length === 0
+        ) {
 
+            selectionMessage.textContent =
+                "❌ Questions not found.";
 
-        setupMessage.textContent =
-            `${allQuestions.length} questions ready ✅`;
+        }
+
 
     }
 
@@ -197,61 +228,16 @@ async function loadQuestions() {
             error
         );
 
-        setupMessage.textContent =
-            "❌ Questions load ஆகவில்லை.";
+        selectionMessage.textContent =
+            "❌ Failed to load questions.";
 
     }
 
-}
+    finally {
 
+        loadingBox.style.display = "none";
 
-// ============================================================
-// POPULATE SUBJECTS
-// ============================================================
-
-function populateSubjects() {
-
-    subjectSelect.innerHTML =
-        `<option value="">
-            Select Subject
-        </option>`;
-
-
-    const subjects =
-        [
-            ...new Set(
-                allQuestions
-                    .map(
-                        q => q.subject
-                    )
-                    .filter(Boolean)
-            )
-        ]
-        .sort();
-
-
-    subjects.forEach(
-        (subject) => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                subject;
-
-            option.textContent =
-                subject;
-
-
-            subjectSelect.appendChild(
-                option
-            );
-
-        }
-    );
+    }
 
 }
 
@@ -265,59 +251,86 @@ subjectSelect.addEventListener(
     () => {
 
         const subject =
-            subjectSelect.value;
+            subjectSelect.value.trim();
 
-
-        topicSelect.innerHTML =
-            `<option value="">
+        topicSelect.innerHTML = `
+            <option value="">
                 Select Topic
-            </option>`;
+            </option>
+        `;
 
 
         if (!subject) return;
 
 
-        const topics =
-            [
-                ...new Set(
-                    allQuestions
-                        .filter(
-                            q =>
-                                q.subject ===
-                                subject
-                        )
-                        .map(
-                            q =>
-                                q.topic
-                        )
-                        .filter(Boolean)
-                )
-            ]
-            .sort();
+        const topics = new Set();
 
 
-        topics.forEach(
-            (topic) => {
+        allQuestions.forEach((q) => {
 
-                const option =
-                    document.createElement(
-                        "option"
+            if (
+                normalize(q.subject) ===
+                normalize(subject)
+            ) {
+
+                if (q.topic) {
+
+                    topics.add(
+                        q.topic.trim()
                     );
 
-
-                option.value =
-                    topic;
-
-                option.textContent =
-                    topic;
-
-
-                topicSelect.appendChild(
-                    option
-                );
+                }
 
             }
-        );
+
+        });
+
+
+        const sortedTopics =
+            [...topics].sort();
+
+
+        if (
+            sortedTopics.length > 0
+        ) {
+
+            const allOption =
+                document.createElement(
+                    "option"
+                );
+
+            allOption.value = "All";
+
+            allOption.textContent =
+                "All Topics";
+
+            topicSelect.appendChild(
+                allOption
+            );
+
+
+            sortedTopics.forEach(
+                (topic) => {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+                    option.value =
+                        topic;
+
+                    option.textContent =
+                        topic;
+
+                    topicSelect.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+        }
 
     }
 );
@@ -327,25 +340,19 @@ subjectSelect.addEventListener(
 // START PRACTICE
 // ============================================================
 
-document
-    .getElementById(
-        "startPracticeBtn"
-    )
-    .addEventListener(
-        "click",
-        startPractice
-    );
+startPracticeBtn.addEventListener(
+    "click",
+    startPractice
+);
 
 
-function startPractice() {
+async function startPractice() {
 
     const subject =
-        subjectSelect.value;
-
+        subjectSelect.value.trim();
 
     const topic =
-        topicSelect.value;
-
+        topicSelect.value.trim();
 
     const count =
         Number(
@@ -355,8 +362,8 @@ function startPractice() {
 
     if (!subject) {
 
-        setupMessage.textContent =
-            "⚠️ முதலில் Subject தேர்வு செய்யுங்கள்.";
+        selectionMessage.textContent =
+            "⚠️ Please select a subject.";
 
         return;
 
@@ -365,40 +372,72 @@ function startPractice() {
 
     if (!topic) {
 
-        setupMessage.textContent =
-            "⚠️ Topic தேர்வு செய்யுங்கள்.";
+        selectionMessage.textContent =
+            "⚠️ Please select a topic.";
 
         return;
 
     }
 
 
-    const filtered =
-        allQuestions.filter(
-            q =>
-                q.subject === subject &&
-                q.topic === topic
+    let filteredQuestions =
+        allQuestions.filter((q) => {
+
+            return (
+                normalize(q.subject) ===
+                normalize(subject)
+            );
+
+        });
+
+
+    if (
+        topic !== "All"
+    ) {
+
+        filteredQuestions =
+            filteredQuestions.filter(
+                (q) => {
+
+                    return (
+                        normalize(q.topic) ===
+                        normalize(topic)
+                    );
+
+                }
+            );
+
+    }
+
+
+    if (
+        filteredQuestions.length === 0
+    ) {
+
+        selectionMessage.textContent =
+            "❌ இந்த Subject / Topic-ல் questions இல்லை.";
+
+        return;
+
+    }
+
+
+    // Shuffle
+
+    filteredQuestions =
+        shuffleArray(
+            filteredQuestions
         );
 
 
-    if (filtered.length === 0) {
-
-        setupMessage.textContent =
-            "❌ இந்த Topic-ல் questions இல்லை.";
-
-        return;
-
-    }
-
+    // Number of questions
 
     practiceQuestions =
-        shuffle(
-            filtered
-        ).slice(
+        filteredQuestions.slice(
             0,
             Math.min(
                 count,
-                filtered.length
+                filteredQuestions.length
             )
         );
 
@@ -409,36 +448,34 @@ function startPractice() {
         ).fill(null);
 
 
-    currentQuestion = 0;
+    currentIndex = 0;
 
+
+    // Timer
 
     timeLeft =
-        practiceQuestions.length <= 10
-            ? 600
-            : practiceQuestions.length <= 20
-                ? 900
-                : 1800;
+        getTimeLimit(
+            practiceQuestions.length
+        );
 
 
-    setupArea.style.display =
-        "none";
+    testStarted = true;
 
-    resultArea.style.display =
+
+    selectionArea.style.display =
         "none";
 
     testArea.style.display =
         "block";
 
 
-    document.getElementById(
-        "testTitle"
-    ).textContent =
-        `${subject} • ${topic}`;
+    totalQuestionNumber.textContent =
+        practiceQuestions.length;
 
 
-    renderPalette();
+    createPalette();
 
-    showQuestion();
+    displayQuestion();
 
     startTimer();
 
@@ -446,169 +483,178 @@ function startPractice() {
 
 
 // ============================================================
-// SHUFFLE
+// TIME LIMIT
 // ============================================================
 
-function shuffle(array) {
+function getTimeLimit(count) {
 
-    const result =
-        [...array];
+    if (count <= 10) {
 
-
-    for (
-        let i = result.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
-
-
-        [
-            result[i],
-            result[j]
-        ] =
-        [
-            result[j],
-            result[i]
-        ];
+        return 5 * 60;
 
     }
 
+    if (count <= 25) {
 
-    return result;
+        return 10 * 60;
+
+    }
+
+    return 20 * 60;
 
 }
 
 
 // ============================================================
-// SHOW QUESTION
+// DISPLAY QUESTION
 // ============================================================
 
-function showQuestion() {
+function displayQuestion() {
+
+    if (
+        !practiceQuestions.length
+    ) return;
+
 
     const q =
         practiceQuestions[
-            currentQuestion
+            currentIndex
         ];
 
 
-    if (!q) return;
-
-
-    const total =
-        practiceQuestions.length;
+    currentQuestionNumber.textContent =
+        currentIndex + 1;
 
 
     questionNumber.textContent =
-        `Question ${currentQuestion + 1}`;
+        `Question ${currentIndex + 1}`;
 
 
-    questionCounter.textContent =
-        `Question ${
-            currentQuestion + 1
-        } / ${total}`;
+    questionTopic.textContent =
+        q.topic || "General";
 
 
     questionText.textContent =
         q.question;
 
 
+    progressFill.style.width =
+        (
+            (
+                currentIndex + 1
+            ) /
+            practiceQuestions.length
+        ) *
+        100 +
+        "%";
+
+
     optionsContainer.innerHTML =
         "";
 
 
-    q.options
-        .slice(0,4)
-        .forEach(
-            (optionText,index) => {
-
-                const button =
-                    document.createElement(
-                        "button"
-                    );
+    const letters = [
+        "A",
+        "B",
+        "C",
+        "D"
+    ];
 
 
-                button.className =
-                    "option";
+    q.options.forEach(
+        (optionText, index) => {
 
-
-                if (
-                    selectedAnswers[
-                        currentQuestion
-                    ] === index
-                ) {
-
-                    button.classList.add(
-                        "selected"
-                    );
-
-                }
-
-
-                button.innerHTML =
-                    `
-                    <span class="option-letter">
-                        ${String.fromCharCode(
-                            65 + index
-                        )}
-                    </span>
-                    ${escapeHTML(
-                        optionText
-                    )}
-                    `;
-
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        selectAnswer(
-                            index
-                        );
-
-                    }
+            const button =
+                document.createElement(
+                    "button"
                 );
 
 
-                optionsContainer.appendChild(
-                    button
+            button.type =
+                "button";
+
+
+            button.className =
+                "option";
+
+
+            if (
+                selectedAnswers[
+                    currentIndex
+                ] === index
+            ) {
+
+                button.classList.add(
+                    "selected"
                 );
 
             }
-        );
 
 
-    const progress =
-        (
-            (currentQuestion + 1) /
-            total
-        ) * 100;
+            button.innerHTML = `
+                <span class="option-letter">
+                    ${letters[index] || index + 1}
+                </span>
+
+                <span>
+                    ${escapeHTML(optionText)}
+                </span>
+            `;
 
 
-    progressBar.style.width =
-        `${progress}%`;
+            button.addEventListener(
+                "click",
+                () => {
+
+                    selectAnswer(index);
+
+                }
+            );
 
 
-    document.getElementById(
-        "previousBtn"
-    ).disabled =
-        currentQuestion === 0;
+            optionsContainer.appendChild(
+                button
+            );
+
+        }
+    );
 
 
-    document.getElementById(
-        "nextBtn"
-    ).style.display =
-        currentQuestion === total - 1
-            ? "none"
-            : "block";
+    previousBtn.disabled =
+        currentIndex === 0;
 
 
-    renderPalette();
+    previousBtn.style.opacity =
+        currentIndex === 0
+            ? "0.45"
+            : "1";
+
+
+    if (
+        currentIndex ===
+        practiceQuestions.length - 1
+    ) {
+
+        nextBtn.style.display =
+            "none";
+
+        submitBtn.style.display =
+            "block";
+
+    }
+
+    else {
+
+        nextBtn.style.display =
+            "block";
+
+        submitBtn.style.display =
+            "block";
+
+    }
+
+
+    updatePalette();
 
 }
 
@@ -620,300 +666,151 @@ function showQuestion() {
 function selectAnswer(index) {
 
     selectedAnswers[
-        currentQuestion
+        currentIndex
     ] = index;
 
 
-    showQuestion();
+    displayQuestion();
 
 }
-
-
-// ============================================================
-// PALETTE
-// ============================================================
-
-function renderPalette() {
-
-    palette.innerHTML =
-        "";
-
-
-    practiceQuestions.forEach(
-        (_, index) => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.textContent =
-                index + 1;
-
-
-            if (
-                index ===
-                currentQuestion
-            ) {
-
-                button.classList.add(
-                    "current"
-                );
-
-            }
-
-
-            if (
-                selectedAnswers[index] !==
-                null
-            ) {
-
-                button.classList.add(
-                    "answered"
-                );
-
-            }
-
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    currentQuestion =
-                        index;
-
-                    showQuestion();
-
-                }
-            );
-
-
-            palette.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-
-// ============================================================
-// PREVIOUS
-// ============================================================
-
-document
-    .getElementById(
-        "previousBtn"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            if (
-                currentQuestion > 0
-            ) {
-
-                currentQuestion--;
-
-                showQuestion();
-
-            }
-
-        }
-    );
 
 
 // ============================================================
 // NEXT
 // ============================================================
 
-document
-    .getElementById(
-        "nextBtn"
-    )
-    .addEventListener(
-        "click",
-        () => {
+nextBtn.addEventListener(
+    "click",
+    () => {
 
-            if (
-                currentQuestion <
-                practiceQuestions.length - 1
-            ) {
+        if (
+            currentIndex <
+            practiceQuestions.length - 1
+        ) {
 
-                currentQuestion++;
+            currentIndex++;
 
-                showQuestion();
+            displayQuestion();
 
-            }
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
 
         }
-    );
-
-
-// ============================================================
-// TIMER
-// ============================================================
-
-function startTimer() {
-
-    clearInterval(
-        timerInterval
-    );
-
-
-    updateTimer();
-
-
-    timerInterval =
-        setInterval(
-            () => {
-
-                timeLeft--;
-
-
-                updateTimer();
-
-
-                if (
-                    timeLeft <= 0
-                ) {
-
-                    clearInterval(
-                        timerInterval
-                    );
-
-
-                    alert(
-                        "⏰ Time Over!"
-                    );
-
-
-                    submitPractice();
-
-                }
-
-            },
-            1000
-        );
-
-}
-
-
-// ============================================================
-// UPDATE TIMER
-// ============================================================
-
-function updateTimer() {
-
-    const minutes =
-        Math.floor(
-            timeLeft / 60
-        );
-
-
-    const seconds =
-        timeLeft % 60;
-
-
-    timer.textContent =
-        `⏰ ${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
-
-
-    if (
-        timeLeft <= 60
-    ) {
-
-        timer.classList.add(
-            "danger"
-        );
 
     }
+);
 
-    else {
 
-        timer.classList.remove(
-            "danger"
-        );
+// ============================================================
+// PREVIOUS
+// ============================================================
+
+previousBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            currentIndex > 0
+        ) {
+
+            currentIndex--;
+
+            displayQuestion();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
 
     }
-
-}
+);
 
 
 // ============================================================
 // SUBMIT
 // ============================================================
 
-document
-    .getElementById(
-        "submitBtn"
-    )
-    .addEventListener(
-        "click",
-        () => {
+submitBtn.addEventListener(
+    "click",
+    () => {
 
-            const unanswered =
-                selectedAnswers.filter(
-                    answer =>
-                        answer === null
-                ).length;
+        submitPractice(
+            false
+        );
+
+    }
+);
 
 
-            let message =
-                "Are you sure you want to submit?";
+function submitPractice(
+    autoSubmit
+) {
+
+    if (
+        !practiceQuestions.length
+    ) return;
 
 
-            if (
-                unanswered > 0
-            ) {
+    if (!autoSubmit) {
 
-                message +=
-                    `\n\n${unanswered} question(s) unanswered.`;
+        const answered =
+            selectedAnswers.filter(
+                (answer) =>
+                    answer !== null
+            ).length;
 
-            }
+
+        const skipped =
+            practiceQuestions.length -
+            answered;
 
 
-            if (
-                confirm(message)
-            ) {
+        const confirmed =
+            confirm(
+                `Test complete?\n\n` +
+                `Answered: ${answered}\n` +
+                `Skipped: ${skipped}`
+            );
 
-                submitPractice();
 
-            }
+        if (!confirmed) return;
 
-        }
-    );
+    }
+
+
+    stopTimer();
+
+
+    calculateResult();
+
+}
 
 
 // ============================================================
-// SUBMIT PRACTICE
+// CALCULATE RESULT
 // ============================================================
 
-async function submitPractice() {
-
-    clearInterval(
-        timerInterval
-    );
-
+function calculateResult() {
 
     let correct = 0;
-
     let wrong = 0;
-
     let skipped = 0;
 
 
     practiceQuestions.forEach(
-        (q,index) => {
+        (q, index) => {
 
-            const selected =
+            const userAnswer =
                 selectedAnswers[index];
 
 
             if (
-                selected === null
+                userAnswer === null ||
+                userAnswer === undefined
             ) {
 
                 skipped++;
@@ -921,7 +818,7 @@ async function submitPractice() {
             }
 
             else if (
-                selected ===
+                Number(userAnswer) ===
                 Number(q.answer)
             ) {
 
@@ -943,111 +840,210 @@ async function submitPractice() {
         correct;
 
 
-    const total =
-        practiceQuestions.length;
+    const resultData = {
 
+        testType:
+            "practice",
 
-    await savePracticeResult(
-        score,
-        total,
-        correct,
-        wrong,
-        skipped
-    );
+        subject:
+            subjectSelect.value,
 
+        topic:
+            topicSelect.value,
 
-    showResult(
-        score,
-        total,
-        correct,
-        wrong,
-        skipped
-    );
+        score:
+            score,
 
-}
+        correct:
+            correct,
 
+        wrong:
+            wrong,
 
-// ============================================================
-// SAVE RESULT
-// ============================================================
+        skipped:
+            skipped,
 
-async function savePracticeResult(
-    score,
-    total,
-    correct,
-    wrong,
-    skipped
-) {
+        total:
+            practiceQuestions.length,
 
-    try {
+        questions:
+            practiceQuestions.map(
+                (q, index) => {
 
-        await addDoc(
-            collection(
-                db,
-                "results"
+                    return {
+
+                        id:
+                            q.id,
+
+                        question:
+                            q.question,
+
+                        options:
+                            q.options,
+
+                        correctAnswer:
+                            Number(
+                                q.answer
+                            ),
+
+                        userAnswer:
+                            selectedAnswers[
+                                index
+                            ],
+
+                        explanation:
+                            q.explanation ||
+                            "",
+
+                        subject:
+                            q.subject ||
+                            "",
+
+                        topic:
+                            q.topic ||
+                            ""
+
+                    };
+
+                }
             ),
-            {
 
-                userId:
-                    currentUser
-                        ? currentUser.uid
-                        : null,
+        createdAt:
+            new Date().toISOString()
 
-                userEmail:
-                    currentUser
-                        ? currentUser.email
-                        : null,
+    };
 
-                name:
-                    currentUser
-                        ? (
-                            currentUser.displayName ||
-                            currentUser.email
-                        )
-                        : "Guest",
 
-                testType:
-                    "practice",
+    // Save locally for result page
 
-                subject:
-                    subjectSelect.value,
+    localStorage.setItem(
+        "practiceResult",
+        JSON.stringify(
+            resultData
+        )
+    );
 
-                topic:
-                    topicSelect.value,
 
-                score:
-                    score,
+    // Also save selected answers separately
 
-                totalQuestions:
-                    total,
+    localStorage.setItem(
+        "practiceSelectedAnswers",
+        JSON.stringify(
+            selectedAnswers
+        )
+    );
 
-                correct:
-                    correct,
 
-                wrong:
-                    wrong,
+    localStorage.setItem(
+        "practiceQuestions",
+        JSON.stringify(
+            practiceQuestions
+        )
+    );
 
-                skipped:
-                    skipped,
 
-                createdAt:
-                    serverTimestamp()
+    window.location.href =
+        "result.html?type=practice";
 
-            }
+}
+
+
+// ============================================================
+// TIMER
+// ============================================================
+
+function startTimer() {
+
+    stopTimer();
+
+    updateTimer();
+
+
+    timerInterval =
+        setInterval(
+            () => {
+
+                timeLeft--;
+
+                updateTimer();
+
+
+                if (
+                    timeLeft <= 0
+                ) {
+
+                    stopTimer();
+
+                    alert(
+                        "⏰ Time's up!\nYour test will be submitted automatically."
+                    );
+
+                    submitPractice(
+                        true
+                    );
+
+                }
+
+            },
+            1000
         );
 
+}
 
-        console.log(
-            "Practice result saved ✅"
+
+function stopTimer() {
+
+    if (
+        timerInterval
+    ) {
+
+        clearInterval(
+            timerInterval
+        );
+
+        timerInterval =
+            null;
+
+    }
+
+}
+
+
+function updateTimer() {
+
+    const minutes =
+        Math.floor(
+            timeLeft / 60
+        );
+
+    const seconds =
+        timeLeft % 60;
+
+
+    timerElement.textContent =
+        `⏰ ${
+            String(minutes)
+                .padStart(2, "0")
+        }:${
+            String(seconds)
+                .padStart(2, "0")
+        }`;
+
+
+    if (
+        timeLeft <= 60
+    ) {
+
+        timerElement.classList.add(
+            "warning"
         );
 
     }
 
-    catch (error) {
+    else {
 
-        console.error(
-            "Result save error:",
-            error
+        timerElement.classList.remove(
+            "warning"
         );
 
     }
@@ -1056,290 +1052,217 @@ async function savePracticeResult(
 
 
 // ============================================================
-// SHOW RESULT
+// QUESTION PALETTE
 // ============================================================
 
-function showResult(
-    score,
-    total,
-    correct,
-    wrong,
-    skipped
-) {
+function createPalette() {
 
-    testArea.style.display =
-        "none";
-
-
-    resultArea.style.display =
-        "block";
-
-
-    document.getElementById(
-        "finalScore"
-    ).textContent =
-        `${score} / ${total}`;
-
-
-    document.getElementById(
-        "correctCount"
-    ).textContent =
-        correct;
-
-
-    document.getElementById(
-        "wrongCount"
-    ).textContent =
-        wrong;
-
-
-    document.getElementById(
-        "skippedCount"
-    ).textContent =
-        skipped;
-
-
-    renderReview();
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-// ============================================================
-// REVIEW
-// ============================================================
-
-function renderReview() {
-
-    const container =
-        document.getElementById(
-            "reviewContainer"
-        );
-
-
-    container.innerHTML =
+    questionPalette.innerHTML =
         "";
 
 
     practiceQuestions.forEach(
-        (q,index) => {
+        (_, index) => {
 
-            const selected =
-                selectedAnswers[index];
-
-
-            const correctAnswer =
-                Number(q.answer);
-
-
-            const card =
+            const button =
                 document.createElement(
-                    "div"
+                    "button"
                 );
 
 
-            card.className =
-                "review-card";
+            button.textContent =
+                index + 1;
 
 
-            let statusText = "";
-
-            let statusClass = "";
-
-
-            if (selected === null
-            ) {
-
-                statusText =
-                    "⏭ Skipped";
-
-                statusClass =
-                    "skipped";
-
-            }
-
-            else if (
-                selected ===
-                correctAnswer
-            ) {
-
-                statusText =
-                    "✅ Correct";
-
-                statusClass =
-                    "review-correct";
-
-            }
-
-            else {
-
-                statusText =
-                    "❌ Wrong";
-
-                statusClass =
-                    "review-wrong";
-
-            }
+            button.type =
+                "button";
 
 
-            const selectedText =
-                selected === null
-                    ? "Not answered"
-                    : q.options[selected];
+            button.addEventListener(
+                "click",
+                () => {
 
+                    currentIndex =
+                        index;
 
-            card.innerHTML =
-                `
-                <h4>
-                    ${index + 1}. ${escapeHTML(
-                        q.question
-                    )}
-                </h4>
+                    displayQuestion();
 
-                <p class="${statusClass}">
-                    ${statusText}
-                </p>
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
 
-                <p>
-                    Your Answer:
-                    <strong>
-                        ${escapeHTML(
-                            selectedText
-                        )}
-                    </strong>
-                </p>
-
-                <p>
-                    Correct Answer:
-                    <strong>
-                        ${escapeHTML(
-                            q.options[correctAnswer]
-                        )}
-                    </strong>
-                </p>
-
-                ${
-                    q.explanation
-                        ? `
-                        <p>
-                            💡
-                            ${escapeHTML(
-                                q.explanation
-                            )}
-                        </p>
-                        `
-                        : ""
                 }
-                `;
-
-
-            container.appendChild(
-                card
             );
+
+
+            questionPalette.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    updatePalette();
+
+}
+
+
+function updatePalette() {
+
+    const buttons =
+        questionPalette.querySelectorAll(
+            "button"
+        );
+
+
+    buttons.forEach(
+        (button, index) => {
+
+            button.classList.remove(
+                "current"
+            );
+
+            button.classList.remove(
+                "answered"
+            );
+
+
+            if (
+                index === currentIndex
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            if (
+                selectedAnswers[index] !==
+                null
+            ) {
+
+                button.classList.add(
+                    "answered"
+                );
+
+            }
 
         }
     );
 
 }
-
-
-// ============================================================
-// RESTART
-// ============================================================
-
-document
-    .getElementById(
-        "restartBtn"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            clearInterval(
-                timerInterval
-            );
-
-
-            resultArea.style.display =
-                "none";
-
-
-            setupArea.style.display =
-                "block";
-
-
-            setupMessage.textContent =
-                "";
-
-
-            window.scrollTo({
-                top:0,
-                behavior:"smooth"
-            });
-
-        }
-    );
 
 
 // ============================================================
 // BACK BUTTON
 // ============================================================
 
-document
-    .getElementById(
-        "backBtn"
-    )
-    .addEventListener(
-        "click",
-        () => {
+backBtn.addEventListener(
+    "click",
+    () => {
 
-            if (
-                testArea.style.display ===
-                "block"
-            ) {
+        if (testStarted) {
 
-                if (
-                    confirm(
-                        "Practice test-ல் இருந்து வெளியேற வேண்டுமா?"
-                    )
-                ) {
+            const leave =
+                confirm(
+                    "Test is in progress. Are you sure you want to leave?"
+                );
 
-                    clearInterval(
-                        timerInterval
-                    );
+            if (!leave) return;
 
-                    testArea.style.display =
-                        "none";
-
-                    setupArea.style.display =
-                        "block";
-
-                }
-
-                return;
-
-            }
-
-
-            window.location.href =
-                "dashboard.html";
+            stopTimer();
 
         }
-    );
+
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+);
+// ============================================================
+// PREVENT ACCIDENTAL REFRESH
+// ============================================================
+
+window.addEventListener(
+    "beforeunload",
+    (event) => {
+
+        if (!testStarted) return;
+
+
+        event.preventDefault();
+
+        event.returnValue = "";
+
+    }
+);
 
 
 // ============================================================
-// ESCAPE HTML
+// NORMALIZE
+// ============================================================
+
+function normalize(text) {
+
+    return String(text || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+
+}
+
+
+// ============================================================
+// SHUFFLE
+// ============================================================
+
+function shuffleArray(array) {
+
+    const copy =
+        [...array];
+
+
+    for (
+        let i = copy.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            copy[i],
+            copy[j]
+        ] = [
+            copy[j],
+            copy[i]
+        ];
+
+    }
+
+
+    return copy;
+
+}
+
+
+// ============================================================
+// HTML ESCAPE
 // ============================================================
 
 function escapeHTML(value) {
 
-    return String(value)
+    return String(value || "")
         .replace(
             /&/g,
             "&amp;"
@@ -1363,10 +1286,3 @@ function escapeHTML(value) {
 
 }
 
-
-// ============================================================
-// INITIAL LOAD
-// ============================================================
-
-loadQuestions();
-               
