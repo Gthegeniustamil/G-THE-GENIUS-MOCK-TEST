@@ -8,628 +8,941 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-
 <title>
 Admin Panel | G THE GENIUS
 </title>
 
-
 <meta name="theme-color"
 content="#081229">
 
+<meta name="description"
+content="G THE GENIUS Mock Test Admin Panel">
 
+<link rel="icon"
+href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 <link rel="preconnect"
 href="https://fonts.googleapis.com">
-
 
 <link rel="preconnect"
 href="https://fonts.gstatic.com"
 crossorigin>
 
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
 rel="stylesheet">
 
-
-
 <link rel="stylesheet"
-href="css/admin.css">
-
+href="admin.css">
 
 </head>
-
 
 
 <body>
 
 
-
 <div class="admin-container">
 
 
-
-
-
-<!-- =========================
-     Admin Header
-========================= -->
-
+<!-- ==================================================
+     HEADER
+================================================== -->
 
 <header class="admin-header">
 
+<div class="admin-brand">
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
-class="logo"
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+class="admin-logo"
 alt="G THE GENIUS Logo">
 
-
-
-
+<div>
 
 <h1>
-
-⚡ Admin Panel
-
+G THE GENIUS
 </h1>
 
-
-
-
 <p>
-
-Manage G THE GENIUS Mock Test System
-
+Admin Control Panel
 </p>
 
+</div>
+
+</div>
+
+
+<button
+id="adminLogoutBtn"
+class="logout-btn">
+
+🚪 Logout
+
+</button>
 
 </header>
 
 
+<!-- ==================================================
+     ADMIN WELCOME
+================================================== -->
 
+<section class="welcome-card">
 
+<div>
 
-
-
-<!-- =========================
-     Admin Status
-========================= -->
-
-
-<section class="admin-card">
-
-
+<span class="admin-badge">
+⚙️ ADMIN
+</span>
 
 <h2>
-
-🔐 Admin Dashboard
-
+Welcome, Admin 👋
 </h2>
 
-
-
-<p id="adminStatus">
-
-Checking Access...
-
+<p>
+Manage questions, tests and student results from one place.
 </p>
 
+</div>
 
+<div class="admin-icon">
+🛡️
+</div>
 
 </section>
-<!-- =========================
-     Add Question Section
-========================= -->
 
 
-<section class="admin-card question-section">
+<!-- ==================================================
+     DASHBOARD STATISTICS
+================================================== -->
 
-
+<section class="stats-section">
 
 <h2>
-
-➕ Add New Question
-
+📊 Dashboard Overview
 </h2>
 
 
+<div class="stats-grid">
 
+
+<div class="stat-card">
+
+<div class="stat-icon">
+📚
+</div>
+
+<div>
+
+<span>
+Total Questions
+</span>
+
+<strong id="totalQuestions">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+👨‍🎓
+</div>
+
+<div>
+
+<span>
+Students
+</span>
+
+<strong id="totalStudents">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+📝
+</div>
+
+<div>
+
+<span>
+Test Results
+</span>
+
+<strong id="totalResults">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+🏆
+</div>
+
+<div>
+
+<span>
+Tests Today
+</span>
+
+<strong id="testsToday">
+0
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     ADMIN MENU
+================================================== -->
+
+<section class="admin-menu-section">
+
+<h2>
+🛠️ Admin Tools
+</h2>
+
+
+<div class="admin-menu-grid">
+
+
+<button
+class="menu-card active"
+data-section="addQuestionSection">
+
+<span>
+➕
+</span>
+
+<strong>
+Add Question
+</strong>
+
+<small>
+Create a new question
+</small>
+
+</button>
+
+
+<button
+class="menu-card"
+data-section="bulkUploadSection">
+
+<span>
+📤
+</span>
+
+<strong>
+Bulk Upload
+</strong>
+
+<small>
+Upload multiple questions
+</small>
+
+</button>
+
+
+<button
+class="menu-card"
+data-section="manageQuestionsSection">
+
+<span>
+📚
+</span>
+
+<strong>
+Manage Questions
+</strong>
+
+<small>
+View or delete questions
+</small>
+
+</button>
+
+
+<button
+class="menu-card"
+data-section="resultsSection">
+
+<span>
+📊
+</span>
+
+<strong>
+Student Results
+</strong>
+
+<small>
+View exam performance
+</small>
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     ADD QUESTION
+================================================== -->
+
+<section
+id="addQuestionSection"
+class="admin-section active-section">
+
+<div class="section-header">
+
+<div>
+
+<h2>
+➕ Add Question
+</h2>
+
+<p>
+Add a new question to the question bank.
+</p>
+
+</div>
+
+</div>
+
+
+<form id="questionForm">
 
 
 <div class="form-group">
 
-
 <label>
-
 Subject
-
 </label>
 
-
-
-<select id="subjectSelect">
-
+<select
+id="questionSubject"
+required>
 
 <option value="">
-
 Select Subject
-
 </option>
-
 
 <option value="Tamil">
-
 Tamil
-
 </option>
 
+<option value="English">
+English
+</option>
 
 <option value="General Knowledge">
-
 General Knowledge
-
 </option>
 
+<option value="Indian Polity">
+Indian Polity
+</option>
 
 <option value="History">
-
 History
-
 </option>
-
 
 <option value="Geography">
-
 Geography
-
 </option>
 
-
-<option value="Polity">
-
-Polity
-
+<option value="General Science">
+General Science
 </option>
 
-
-<option value="Science">
-
-Science
-
+<option value="Economics">
+Economics
 </option>
 
+<option value="Current Affairs">
+Current Affairs
+</option>
+
+<option value="Mathematics">
+Mathematics
+</option>
 
 </select>
-
 
 </div>
 
 
-
-
-
-
-
-
 <div class="form-group">
 
-
 <label>
-
 Topic
-
 </label>
 
-
-
-<select id="topicSelect">
-
-
-<option value="">
-
-Select Topic
-
-</option>
-
-
-</select>
-
+<input
+type="text"
+id="questionTopic"
+placeholder="Example: Indian Constitution"
+required>
 
 </div>
 
 
-
-
-
-
-
 <div class="form-group">
 
-
 <label>
-
 Question
-
 </label>
 
-
-
-<textarea id="questionText"
-placeholder="Enter question">
-
-</textarea>
-
+<textarea
+id="questionText"
+rows="4"
+placeholder="Enter question..."
+required></textarea>
 
 </div>
 
 
-
-
-
-
+<div class="options-grid">
 
 <div class="form-group">
 
-
 <label>
-
 Option A
-
 </label>
 
-
-
-<input type="text"
+<input
+type="text"
 id="optionA"
-placeholder="Option A">
-
+placeholder="Enter option A"
+required>
 
 </div>
 
 
-
-
-
-
-
 <div class="form-group">
 
-
 <label>
-
 Option B
-
 </label>
 
-
-
-<input type="text"
+<input
+type="text"
 id="optionB"
-placeholder="Option B">
-
+placeholder="Enter option B"
+required>
 
 </div>
 
 
-
-
-
-
-
 <div class="form-group">
 
-
 <label>
-
 Option C
-
 </label>
 
-
-
-<input type="text"
+<input
+type="text"
 id="optionC"
-placeholder="Option C">
-
+placeholder="Enter option C"
+required>
 
 </div>
 
 
-
-
-
-
-
 <div class="form-group">
 
-
 <label>
-
 Option D
-
 </label>
 
-
-
-<input type="text"
+<input
+type="text"
 id="optionD"
-placeholder="Option D">
-
+placeholder="Enter option D"
+required>
 
 </div>
 
- <!-- =========================
-     Answer & Save Section
-========================= -->
+</div>
 
 
 <div class="form-group">
 
-
 <label>
-
 Correct Answer
-
 </label>
 
-
-
-<select id="correctAnswer">
-
+<select
+id="correctAnswer"
+required>
 
 <option value="">
-
-Select Answer
-
+Select Correct Option
 </option>
 
-
-<option value="A">
-
-A
-
+<option value="0">
+Option A
 </option>
 
-
-<option value="B">
-
-B
-
+<option value="1">
+Option B
 </option>
 
-
-<option value="C">
-
-C
-
+<option value="2">
+Option C
 </option>
 
-
-<option value="D">
-
-D
-
+<option value="3">
+Option D
 </option>
-
 
 </select>
 
-
 </div>
-
-
-
-
-
 
 
 <div class="form-group">
 
-
 <label>
-
 Explanation
-
 </label>
 
-
-
-<textarea id="explanation"
-placeholder="Enter explanation">
-
-</textarea>
-
+<textarea
+id="questionExplanation"
+rows="3"
+placeholder="Enter explanation..."></textarea>
 
 </div>
 
 
-
-
-
-
-
-<button id="addQuestionBtn"
-class="admin-btn">
-
+<button
+type="submit"
+class="primary-admin-btn">
 
 ➕ Add Question
 
-
 </button>
 
 
+<p
+id="questionMessage"
+class="admin-message">
+</p>
 
+</form>
 
 </section>
 
 
+<!-- ==================================================
+     BULK UPLOAD
+================================================== -->
+
+<section
+id="bulkUploadSection"
+class="admin-section">
 
 
+<div class="section-header">
 
-
-
-
-<!-- =========================
-     Bulk Upload Section
-========================= -->
-
-
-<section class="admin-card">
-
-
+<div>
 
 <h2>
-
-📤 Smart Bulk Upload
-
+📤 Bulk Upload
 </h2>
 
-
-
 <p>
-
-Upload multiple questions easily
-
+Upload multiple questions at once.
 </p>
 
-
-
-
-<input type="file"
-id="bulkFile"
-accept=".json,.csv">
-
-
-
-
-
-<button id="uploadBtn"
-class="admin-btn">
-
-
-⬆️ Upload Questions
-
-
-</button>
-
-
-
-<div id="uploadStatus">
+</div>
 
 </div>
 
 
+<div class="upload-info">
+
+<h3>
+📌 Required Format
+</h3>
+
+<p>
+Upload a JSON file containing question data.
+</p>
+
+<code>
+question, options, answer, subject, topic, explanation
+</code>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Subject
+</label>
+
+<select
+id="bulkSubject">
+
+<option value="">
+Select Subject
+</option>
+
+<option>Tamil</option>
+<option>English</option>
+<option>General Knowledge</option>
+<option>Indian Polity</option>
+<option>History</option>
+<option>Geography</option>
+<option>General Science</option>
+<option>Economics</option>
+<option>Current Affairs</option>
+<option>Mathematics</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Topic
+</label>
+
+<input
+type="text"
+id="bulkTopic"
+placeholder="Enter topic">
+
+</div>
+
+
+<div class="file-upload-box">
+
+<input
+type="file"
+id="bulkFile"
+accept=".json">
+
+<label
+for="bulkFile"
+class="file-label">
+
+📁 Choose JSON File
+
+</label>
+
+<p id="selectedFile">
+No file selected
+</p>
+
+</div>
+
+
+<div
+class="upload-progress-container"
+id="uploadProgressContainer"
+style="display:none;">
+
+<div class="progress-header">
+
+<span>
+Upload Progress
+</span>
+
+<strong id="uploadPercent">
+0%
+</strong>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+id="uploadProgress">
+</div>
+
+</div>
+
+<p id="uploadStatus">
+Preparing upload...
+</p>
+
+</div>
+
+
+<button
+id="bulkUploadBtn"
+class="primary-admin-btn"
+type="button">
+
+📤 Upload Questions
+
+</button>
+
+
+<p
+id="bulkMessage"
+class="admin-message">
+</p>
 
 </section>
 
 
+<!-- ==================================================
+     MANAGE QUESTIONS
+================================================== -->
+
+<section
+id="manageQuestionsSection"
+class="admin-section">
 
 
+<div class="section-header">
 
-
-
-
-<!-- =========================
-     Manage Section
-========================= -->
-
-
-<section class="admin-card">
-
-
+<div>
 
 <h2>
-
-📚 Manage Data
-
+📚 Manage Questions
 </h2>
 
+<p>
+Search and manage your question bank.
+</p>
+
+</div>
+
+</div>
 
 
-<button class="admin-btn"
-onclick="location.href='questions.html'">
+<div class="question-filters">
+
+<input
+type="search"
+id="questionSearch"
+placeholder="🔍 Search questions...">
 
 
-Manage Questions
+<select id="filterSubject">
+
+<option value="all">
+All Subjects
+</option>
+
+<option>Tamil</option>
+<option>English</option>
+<option>General Knowledge</option>
+<option>Indian Polity</option>
+<option>History</option>
+<option>Geography</option>
+<option>General Science</option>
+<option>Economics</option>
+<option>Current Affairs</option>
+<option>Mathematics</option>
+
+</select>
+
+</div>
 
 
-</button>
+<div
+id="questionList"
+class="question-list">
 
+<div class="loading-box">
 
+<div class="loader"></div>
 
+<p>
+Loading Questions...
+</p>
 
+</div>
 
-<button class="admin-btn"
-onclick="location.href='results.html'">
-
-
-View Results
-
-
-</button>
-
-
+</div>
 
 </section>
 
 
+<!-- ==================================================
+     STUDENT RESULTS
+================================================== -->
+
+<section
+id="resultsSection"
+class="admin-section">
 
 
+<div class="section-header">
+
+<div>
+
+<h2>
+📊 Student Results
+</h2>
+
+<p>
+Monitor student test performance.
+</p>
+
+</div>
+
+</div>
 
 
+<div class="result-filters">
+
+<input
+type="search"
+id="resultSearch"
+placeholder="🔍 Search student...">
 
 
-<!-- =========================
-     Footer
-========================= -->
+<select id="resultTestType">
 
+<option value="all">
+All Tests
+</option>
+
+<option value="daily">
+Daily
+</option>
+
+<option value="weekly">
+Weekly
+</option>
+
+<option value="monthly">
+Monthly
+</option>
+
+</select>
+
+</div>
+
+
+<div
+id="resultsList"
+class="results-list">
+
+<div class="loading-box">
+
+<div class="loader"></div>
+
+<p>
+Loading Results...
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     ADMIN FOOTER
+================================================== -->
 
 <footer class="admin-footer">
 
 
-
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png">
-
+<img
+src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+alt="G THE GENIUS Logo">
 
 
 <h3>
-
 G THE GENIUS
-
 </h3>
 
 
-
 <p>
-
-Admin Management System
-
+Admin Control Panel
 </p>
 
 
+<div class="footer-links">
+
+<a
+href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+target="_blank"
+rel="noopener">
+
+▶ YouTube
+
+</a>
+
+
+<a
+href="https://t.me/gthegenius"
+target="_blank"
+rel="noopener">
+
+✈ Telegram
+
+</a>
+
+
+<a
+href="mailto:gthegenius7@gmail.com">
+
+✉ Email
+
+</a>
+
+</div>
+
+
+<small>
+
+© 2026 G THE GENIUS
+<br>
+All Rights Reserved.
+
+</small>
 
 </footer>
-
-
-
-
-
 
 
 </div>
 
 
+<!-- ==================================================
+     ADMIN JS
+================================================== -->
 
-
-
-
-
-<script type="module"
-src="js/admin.js"></script>
-
+<script
+type="module"
+src="admin.js">
+</script>
 
 
 </body>
 
-</html>
- 
+     </html>
