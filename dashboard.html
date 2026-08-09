@@ -1,1 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+Dashboard | G THE GENIUS
+</title>
+
+<meta name="theme-color"
+      content="#081229">
+
+<meta name="description"
+      content="G THE GENIUS Government Exam Mock Test Dashboard">
+
+
+<!-- LOGO -->
+
+<link rel="icon"
+      href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+
+
+<!-- GOOGLE FONT -->
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+
+<!-- GLOBAL CSS -->
+
+<link rel="stylesheet"
+      href="style.css">
+
+
+<style>
+
+/* =====================================================
+   DASHBOARD PAGE
+===================================================== */
+
+.dashboard-page {
+
+    min-height: 100vh;
+
+    max-width: 650px;
+
+    margin: auto;
+
+    padding:
+        18px
+        15px
+        115px;
+
+}
+
+
+/* =====================================================
+   TOP LOGO
+===================================================== */
+
+.dashboard-top {
+
+    text-align: center;
+
+    padding:
+        8px
+        0
+        18px;
+
+}
+
+
+.dashboard-logo {
+
+    width: 82px;
+
+    height: 82px;
+
+    object-fit: cover;
+
+    padding: 5px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    border: 3px solid #ffd700;
+
+    box-shadow:
+        0 0 0 6px
+        rgba(255,215,0,.06),
+        0 12px 30px
+        rgba(0,0,0,.35);
+
+}
+
+
+.dashboard-brand {
+
+    margin-top: 9px;
+
+}
+
+
+.dashboard-brand h1 {
+
+    margin: 0;
+
+    color: #ffd700;
+
+    font-size: 19px;
+
+    font-weight: 800;
+
+}
+
+
+.dashboard-brand p {
+
+    margin: 3px 0 0;
+
+    color: #8d99b5;
+
+    font-size: 9px;
+
+    letter-spacing: .5px;
+
+}
+
+
+/* =====================================================
+   WELCOME CARD
+===================================================== */
+
+.welcome-card {
+
+    padding: 20px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,215,0,.13),
+            rgba(255,255,255,.055)
+        );
+
+    border:
+        1px solid
+        rgba(255,215,0,.20);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.25);
+
+}
+
+
+.welcome-card .small-text {
+
+    color: #9ba7c2;
+
+    font-size: 11px;
+
+}
+
+
+.welcome-card h2 {
+
+    margin: 5px 0;
+
+    color: #ffffff;
+
+    font-size: 22px;
+
+}
+
+
+.welcome-card h2 span {
+
+    color: #ffd700;
+
+}
+
+
+.welcome-card .district {
+
+    color: #b8c1d8;
+
+    font-size: 11px;
+
+}
+
+
+.student-badge {
+
+    display: inline-flex;
+
+    margin-top: 12px;
+
+    padding: 6px 12px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,215,0,.10);
+
+    border:
+        1px solid
+        rgba(255,215,0,.25);
+
+    color: #ffd700;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.dashboard-section {
+
+    margin-top: 25px;
+
+}
+
+
+.section-heading {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+
+}
+
+
+.section-heading h2 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+}
+
+
+.section-heading span {
+
+    color: #ffd700;
+
+    font-size: 10px;
+
+}
+
+
+/* =====================================================
+   TEST CARDS
+===================================================== */
+
+.test-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+
+.dashboard-test-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 17px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.065);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.22);
+
+}
+
+
+.dashboard-test-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+
+    height: 90px;
+
+    right: -35px;
+
+    top: -35px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,215,0,.05);
+
+}
+
+
+.test-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 17px;
+
+    font-size: 25px;
+
+}
+
+
+.daily .test-icon {
+
+    background:
+        rgba(0,255,130,.10);
+
+}
+
+
+.weekly .test-icon {
+
+    background:
+        rgba(255,210,0,.10);
+
+}
+
+
+.monthly .test-icon {
+
+    background:
+        rgba(255,70,70,.10);
+
+}
+
+
+.test-content {
+
+    flex: 1;
+
+}
+
+
+.test-content h3 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+}
+
+
+.test-content p {
+
+    margin: 4px 0 7px;
+
+    color: #8995b0;
+
+    font-size: 9px;
+
+}
+
+
+.test-meta {
+
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.test-meta span {
+
+    padding: 4px 7px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    color: #b9c3d9;
+
+    font-size: 8px;
+
+}
+
+
+.start-test-btn {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding: 9px 12px;
+
+    border-radius: 12px;
+
+    background: #ffd700;
+
+    color: #081229;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+/* =====================================================
+   SCHEDULE CARD
+===================================================== */
+
+.schedule-card {
+
+    padding: 15px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+}
+
+
+.schedule-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px 0;
+
+}
+
+
+.schedule-row + .schedule-row {
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+}
+
+
+.schedule-icon {
+
+    font-size: 18px;
+
+}
+
+
+.schedule-info {
+
+    flex: 1;
+
+}
+
+
+.schedule-info strong {
+
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+}
+
+
+.schedule-info span {
+
+    color: #7f8ba8;
+
+    font-size: 8px;
+
+}
+
+
+/* =====================================================
+   QUICK MENU
+===================================================== */
+
+.quick-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 9px;
+
+}
+
+
+.quick-card {
+
+    padding: 14px 5px;
+
+    text-align: center;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.quick-card .icon {
+
+    font-size: 21px;
+
+}
+
+
+.quick-card span {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #aeb8cf;
+
+    font-size: 8px;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+}
+
+
+.stat-card {
+
+    padding: 15px 8px;
+
+    text-align: center;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.stat-card strong {
+
+    display: block;
+
+    color: #ffd700;
+
+    font-size: 20px;
+
+}
+
+
+.stat-card span {
+
+    color: #7f8ba8;
+
+    font-size: 8px;
+
+}
+
+
+/* =====================================================
+   SOCIAL
+===================================================== */
+
+.dashboard-social {
+
+    margin-top: 28px;
+
+    text-align: center;
+
+}
+
+
+.dashboard-social h3 {
+
+    color: #ffd700;
+
+    font-size: 13px;
+
+}
+
+
+.dashboard-social p {
+
+    color: #77839e;
+
+    font-size: 9px;
+
+}
+
+
+.social-row {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+}
+
+
+.social-row a {
+
+    flex: 1;
+
+    padding: 10px 5px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color: #b9c3d9;
+
+    font-size: 9px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.dashboard-footer {
+
+    margin-top: 25px;
+
+    padding:
+        20px
+        15px;
+
+    text-align: center;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.dashboard-footer h3 {
+
+    margin: 0;
+
+    color: #ffd700;
+
+    font-size: 14px;
+
+}
+
+
+.dashboard-footer p {
+
+    margin: 5px 0;
+
+    color: #77839e;
+
+    font-size: 8px;
+
+}
+
+
+.dashboard-footer small {
+
+    color: #505c75;
+
+    font-size: 7px;
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.logout-btn {
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 11px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        rgba(255,80,80,.25);
+
+    background:
+        rgba(255,60,60,.06);
+
+    color: #ff8585;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:480px) {
+
+    .dashboard-page {
+
+        padding:
+            12px
+            12px
+            105px;
+
+    }
+
+
+    .dashboard-logo {
+
+        width: 75px;
+
+        height: 75px;
+
+    }
+
+
+    .dashboard-test-card {
+
+        padding: 14px;
+
+    }
+
+
+    .test-icon {
+
+        width: 47px;
+
+        height: 47px;
+
+        font-size: 22px;
+
+    }
+
+
+    .start-test-btn {
+
+        padding:
+            8px
+            9px;
+
+        font-size: 8px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<main class="dashboard-page">
+
+
+<!-- =================================================
+     TOP LOGO
+================================================= -->
+
+<header class="dashboard-top">
+
+    <img
+        src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+        alt="G THE GENIUS Logo"
+        class="dashboard-logo">
+
+
+    <div class="dashboard-brand">
+
+        <h1>
+            G THE GENIUS
+        </h1>
+
+        <p>
+            LEARN • PRACTICE • SUCCEED
+        </p>
+
+    </div>
+
+</header>
+
+
+<!-- =================================================
+     WELCOME
+================================================= -->
+
+<section class="welcome-card">
+
+    <div class="small-text">
+        Welcome back 👋
+    </div>
+
+    <h2>
+        Hello, <span id="studentName">
+            Student
+        </span>
+    </h2>
+
+    <div class="district">
+        📍 <span id="studentDistrict">
+            -
+        </span>
+    </div>
+
+    <div class="student-badge">
+        🎓 Government Exam Aspirant
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     MOCK TESTS
+================================================= -->
+
+<section class="dashboard-section">
+
+    <div class="section-heading">
+
+        <h2>
+            🎯 Mock Tests
+        </h2>
+
+        <span>
+            Practice Daily
+        </span>
+
+    </div>
+
+
+    <div class="test-list">
+
+
+        <!-- DAILY -->
+
+        <div class="dashboard-test-card daily">
+
+            <div class="test-icon">
+                🟢
+            </div>
+
+
+            <div class="test-content">
+
+                <h3>
+                    Daily Mock Test
+                </h3>
+
+                <p>
+                    Daily compulsory practice
+                </p>
+
+                <div class="test-meta">
+
+                    <span>
+                        📝 15 Questions
+                    </span>
+
+                    <span>
+                        ⏱️ 10 Minutes
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="mocktest.html?type=daily"
+                class="start-test-btn">
+
+                Start
+
+            </a>
+
+        </div>
+
+
+
+        <!-- WEEKLY -->
+
+        <div class="dashboard-test-card weekly">
+
+            <div class="test-icon">
+                🟡
+            </div>
+
+
+            <div class="test-content">
+
+                <h3>
+                    Weekly Test
+                </h3>
+
+                <p>
+                    Every Sunday compulsory exam
+                </p>
+
+                <div class="test-meta">
+
+                    <span>
+                        📝 25 Questions
+                    </span>
+
+                    <span>
+                        ⏱️ 15 Minutes
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="mocktest.html?type=weekly"
+                class="start-test-btn">
+
+                Start
+
+            </a>
+
+        </div>
+
+
+
+        <!-- MONTHLY -->
+
+        <div class="dashboard-test-card monthly">
+
+            <div class="test-icon">
+                🔴
+            </div>
+
+
+            <div class="test-content">
+
+                <h3>
+                    Monthly Grand Test
+                </h3>
+
+                <p>
+                    1st & 15th of every month
+                </p>
+
+                <div class="test-meta">
+
+                    <span>
+                        📝 100 Questions
+                    </span>
+
+                    <span>
+                        ⏱️ 20 Minutes
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="mocktest.html?type=monthly"
+                class="start-test-btn">
+
+                Start
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     TEST SCHEDULE
+================================================= -->
+
+<section class="dashboard-section">
+
+    <div class="section-heading">
+
+        <h2>
+            📅 Test Schedule
+        </h2>
+
+    </div>
+
+
+    <div class="schedule-card">
+
+
+        <div class="schedule-row">
+
+            <div class="schedule-icon">
+                🟢
+            </div>
+
+            <div class="schedule-info">
+
+                <strong>
+                    Daily Test
+                </strong>
+
+                <span>
+                    Available every day
+                </span>
+
+            </div>
+
+            <span>
+                15 Q
+            </span>
+
+        </div>
+
+
+
+        <div class="schedule-row">
+
+            <div class="schedule-icon">
+                🟡
+            </div>
+
+            <div class="schedule-info">
+
+                <strong>
+                    Weekly Exam
+                </strong>
+
+                <span>
+                    Every Sunday
+                </span>
+
+            </div>
+
+            <span>
+                25 Q
+            </span>
+
+        </div>
+
+
+
+        <div class="schedule-row">
+
+            <div class="schedule-icon">
+                🔴
+            </div>
+
+            <div class="schedule-info">
+
+                <strong>
+                    Monthly Grand Test
+                </strong>
+
+                <span>
+                    Every 1st & 15th
+                </span>
+
+            </div>
+
+            <span>
+                100 Q
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     QUICK MENU
+================================================= -->
+
+<section class="dashboard-section">
+
+    <div class="section-heading">
+
+        <h2>
+            ⚡ Quick Access
+        </h2>
+
+    </div>
+
+
+    <div class="quick-grid">
+
+
+        <a
+            href="practice.html"
+            class="quick-card">
+
+            <div class="icon">
+                📝
+            </div>
+
+            <span>
+                Practice
+            </span>
+
+        </a>
+
+
+        <a
+            href="learning.html"
+            class="quick-card">
+
+            <div class="icon">
+                📚
+            </div>
+
+            <span>
+                Learning
+            </span>
+
+        </a>
+
+
+        <a
+            href="leaderboard.html"
+            class="quick-card">
+
+            <div class="icon">
+                🏆
+            </div>
+
+            <span>
+                Rank
+            </span>
+
+        </a>
+
+
+        <a
+            href="profile.html"
+            class="quick-card">
+
+            <div class="icon">
+                👤
+            </div>
+
+            <span>
+                Profile
+            </span>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     STUDENT STATS
+================================================= -->
+
+<section class="dashboard-section">
+
+    <div class="section-heading">
+
+        <h2>
+            📊 My Progress
+        </h2>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <strong id="testsTaken">
+                0
+            </strong>
+
+            <span>
+                Tests Taken
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <strong id="bestScore">
+                0
+            </strong>
+
+            <span>
+                Best Score
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <strong id="streak">
+                0
+            </strong>
+
+            <span>
+                Day Streak
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     LOGOUT
+================================================= -->
+
+<button
+    id="logoutBtn"
+    class="logout-btn">
+
+    🚪 Logout
+
+</button>
+
+
+<!-- =================================================
+     SOCIAL
+================================================= -->
+
+<section class="dashboard-social">
+
+    <h3>
+        G THE GENIUS
+    </h3>
+
+    <p>
+        Connect with us
+    </p>
+
+
+    <div class="social-row">
+
+
+        <a
+            href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+            target="_blank">
+
+            ▶ YouTube
+
+        </a>
+
+
+        <a
+            href="https://t.me/gthegenius"
+            target="_blank">
+
+            ✈ Telegram
+
+        </a>
+
+
+        <a
+            href="mailto:gthegenius7@gmail.com">
+
+            ✉ Email
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     FOOTER
+================================================= -->
+
+<footer class="dashboard-footer">
+
+    <h3>
+        G THE GENIUS
+    </h3>
+
+    <p>
+        Learn • Practice • Succeed
+    </p>
+
+    <small>
+        © 2026 G THE GENIUS
+        <br>
+        All Rights Reserved.
+    </small>
+
+</footer>
+
+
+</main>
+
+
+<!-- =================================================
+     BOTTOM NAVIGATION
+================================================= -->
+
+<nav class="bottom-navigation">
+
+
+    <a
+        href="dashboard.html"
+        class="nav-item active">
+
+        🏠
+
+        <span>
+            Home
+        </span>
+
+    </a>
+
+
+    <a
+        href="learning.html"
+        class="nav-item">
+
+        📚
+
+        <span>
+            Learning
+        </span>
+
+    </a>
+
+
+    <a
+        href="practice.html"
+        class="nav-item">
+
+        📝
+
+        <span>
+            Practice
+        </span>
+
+    </a>
+
+
+    <a
+        href="leaderboard.html"
+        class="nav-item">
+
+        🏆
+
+        <span>
+            Rank
+        </span>
+
+    </a>
+
+
+    <a
+        href="profile.html"
+        class="nav-item">
+
+        👤
+
+        <span>
+            Profile
+        </span>
+
+    </a>
+
+
+</nav>
+
+
+<!-- =================================================
+     DASHBOARD JS
+================================================= -->
+
+<script
+    type="module"
+    src="dashboard.js">
+</script>
+
+
+</body>
+
+              </html>
