@@ -1,6 +1,6 @@
 // ============================================================
-// G THE GENIUS - RESULT PAGE JS
-// Practice Test Result + Full Question Review
+// G THE GENIUS - UNIVERSAL RESULT PAGE
+// Practice + Daily + Weekly + Monthly Mock Test
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,92 +9,34 @@ document.addEventListener("DOMContentLoaded", () => {
     // DOM
     // ========================================================
 
-    const scoreValue =
-        document.getElementById("scoreValue");
+    const scoreValue = document.getElementById("scoreValue");
+    const totalCount = document.getElementById("totalCount");
+    const correctCount = document.getElementById("correctCount");
+    const wrongCount = document.getElementById("wrongCount");
+    const skippedCount = document.getElementById("skippedCount");
 
-    const totalCount =
-        document.getElementById("totalCount");
+    const reviewList = document.getElementById("reviewList");
 
-    const correctCount =
-        document.getElementById("correctCount");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultSubtitle = document.getElementById("resultSubtitle");
+    const resultIcon = document.getElementById("resultIcon");
 
-    const wrongCount =
-        document.getElementById("wrongCount");
-
-    const skippedCount =
-        document.getElementById("skippedCount");
-
-    const reviewList =
-        document.getElementById("reviewList");
-
-    const resultTitle =
-        document.getElementById("resultTitle");
-
-    const resultSubtitle =
-        document.getElementById("resultSubtitle");
-
-    const resultIcon =
-        document.getElementById("resultIcon");
-
-    const retryBtn =
-        document.getElementById("retryBtn");
-
-    const dashboardBtn =
-        document.getElementById("dashboardBtn");
-
-    const homeBtn =
-        document.getElementById("homeBtn");
+    const retryBtn = document.getElementById("retryBtn");
+    const dashboardBtn = document.getElementById("dashboardBtn");
+    const homeBtn = document.getElementById("homeBtn");
 
     const filterButtons =
-        document.querySelectorAll(
-            ".filter-btn"
-        );
+        document.querySelectorAll(".filter-btn");
 
 
     // ========================================================
-    // GET RESULT
+    // FIND RESULT
     // ========================================================
 
-    let resultData = null;
-
-    try {
-
-        const savedResult =
-            localStorage.getItem(
-                "practiceResult"
-            );
-
-        if (savedResult) {
-
-            resultData =
-                JSON.parse(
-                    savedResult
-                );
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Result data error:",
-            error
-        );
-
-    }
+    const resultData = findResultData();
 
 
-    // ========================================================
-    // NO RESULT
-    // ========================================================
-
-    if (
-        !resultData ||
-        !Array.isArray(
-            resultData.questions
-        )
-    ) {
+    if (!resultData) {
 
         showNoResult();
 
@@ -103,36 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    console.log(
+        "G THE GENIUS Result:",
+        resultData
+    );
+
+
     // ========================================================
-    // RESULT VALUES
+    // NORMALIZE RESULT
     // ========================================================
 
-    const total =
-        Number(
-            resultData.total ||
-            resultData.questions.length
-        );
-
-    const correct =
-        Number(
-            resultData.correct || 0
-        );
-
-    const wrong =
-        Number(
-            resultData.wrong || 0
-        );
-
-    const skipped =
-        Number(
-            resultData.skipped || 0
-        );
-
-    const score =
-        Number(
-            resultData.score ||
-            correct
-        );
+    const normalized =
+        normalizeResult(resultData);
 
 
     // ========================================================
@@ -140,141 +64,86 @@ document.addEventListener("DOMContentLoaded", () => {
     // ========================================================
 
     scoreValue.textContent =
-        score;
+        normalized.score;
 
     totalCount.textContent =
-        total;
+        normalized.total;
 
     correctCount.textContent =
-        correct;
+        normalized.correct;
 
     wrongCount.textContent =
-        wrong;
+        normalized.wrong;
 
     skippedCount.textContent =
-        skipped;
+        normalized.skipped;
 
 
     // ========================================================
     // RESULT MESSAGE
     // ========================================================
 
+    showResultMessage(
+        normalized.correct,
+        normalized.total
+    );
+
+
+    // ========================================================
+    // QUESTIONS
+    // ========================================================
+
+    const questions =
+        normalized.questions;
+
+
     if (
-        total > 0 &&
-        correct === total
+        questions.length > 0
     ) {
 
-        resultIcon.textContent =
-            "🏆";
-
-        resultTitle.textContent =
-            "Perfect Score!";
-
-        resultSubtitle.textContent =
-            "🔥 Excellent! எல்லா கேள்விகளுக்கும் சரியான பதில்.";
-
-    }
-
-    else if (
-        total > 0 &&
-        correct >=
-        Math.ceil(total * 0.75)
-    ) {
-
-        resultIcon.textContent =
-            "🎉";
-
-        resultTitle.textContent =
-            "Excellent Performance!";
-
-        resultSubtitle.textContent =
-            "💪 உங்கள் preparation மிகவும் நல்ல நிலையில் உள்ளது.";
-
-    }
-
-    else if (
-        total > 0 &&
-        correct >=
-        Math.ceil(total * 0.50)
-    ) {
-
-        resultIcon.textContent =
-            "👍";
-
-        resultTitle.textContent =
-            "Good Attempt!";
-
-        resultSubtitle.textContent =
-            "📚 இன்னும் கொஞ்சம் practice செய்தால் score அதிகரிக்கும்.";
+        renderQuestions(
+            questions,
+            "all"
+        );
 
     }
 
     else {
 
-        resultIcon.textContent =
-            "📖";
-
-        resultTitle.textContent =
-            "Keep Practicing!";
-
-        resultSubtitle.textContent =
-            "🔥 தவறுகளை review செய்து மீண்டும் முயற்சி செய்யுங்கள்.";
+        reviewList.innerHTML = `
+            <div class="empty-review">
+                📭 Question review data கிடைக்கவில்லை.
+            </div>
+        `;
 
     }
 
 
     // ========================================================
-    // STORE QUESTIONS
-    // ========================================================
-
-    const questions =
-        resultData.questions;
-
-
-    // ========================================================
-    // INITIAL REVIEW
-    // ========================================================
-
-    renderQuestions(
-        questions,
-        "all"
-    );
-
-
-    // ========================================================
-    // FILTER
+    // FILTER BUTTONS
     // ========================================================
 
     filterButtons.forEach(
-        (button) => {
+        button => {
 
             button.addEventListener(
                 "click",
                 () => {
 
                     filterButtons.forEach(
-                        (btn) => {
-
+                        btn =>
                             btn.classList.remove(
                                 "active"
-                            );
-
-                        }
+                            )
                     );
-
 
                     button.classList.add(
                         "active"
                     );
 
-
-                    const filter =
-                        button.dataset.filter;
-
-
                     renderQuestions(
                         questions,
-                        filter
+                        button.dataset.filter
                     );
 
                 }
@@ -285,11 +154,690 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ========================================================
+    // RETRY
+    // ========================================================
+
+    if (retryBtn) {
+
+        retryBtn.addEventListener(
+            "click",
+            () => {
+
+                const testType =
+                    normalized.testType;
+
+                if (
+                    testType === "practice"
+                ) {
+
+                    window.location.href =
+                        "practice.html";
+
+                }
+
+                else {
+
+                    window.location.href =
+                        "mocktest.html";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // ========================================================
+    // DASHBOARD
+    // ========================================================
+
+    if (dashboardBtn) {
+
+        dashboardBtn.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+        );
+
+    }
+
+
+    if (homeBtn) {
+
+        homeBtn.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+        );
+
+    }
+
+
+    // ========================================================
+    // FIND RESULT DATA
+    // ========================================================
+
+    function findResultData() {
+
+        // ----------------------------------------------------
+        // 1. Practice result
+        // ----------------------------------------------------
+
+        const practice =
+            getLocalStorageObject(
+                "practiceResult"
+            );
+
+        if (
+            isValidResult(practice)
+        ) {
+
+            return practice;
+
+        }
+
+
+        // ----------------------------------------------------
+        // 2. Common result keys
+        // ----------------------------------------------------
+
+        const possibleKeys = [
+
+            "mockTestResult",
+            "mocktestResult",
+            "testResult",
+            "resultData",
+            "lastResult",
+            "latestResult",
+            "result",
+            "mockResult",
+            "examResult"
+
+        ];
+
+
+        for (
+            const key of possibleKeys
+        ) {
+
+            const data =
+                getLocalStorageObject(
+                    key
+                );
+
+            if (
+                isValidResult(data)
+            ) {
+
+                return data;
+
+            }
+
+        }
+
+
+        // ----------------------------------------------------
+        // 3. Search every localStorage item
+        // ----------------------------------------------------
+
+        for (
+            let i = 0;
+            i < localStorage.length;
+            i++
+        ) {
+
+            const key =
+                localStorage.key(i);
+
+            if (!key) continue;
+
+
+            const data =
+                getLocalStorageObject(
+                    key
+                );
+
+
+            if (
+                isValidResult(data)
+            ) {
+
+                return data;
+
+            }
+
+        }
+
+
+        return null;
+
+    }
+
+
+    // ========================================================
+    // LOCAL STORAGE OBJECT
+    // ========================================================
+
+    function getLocalStorageObject(key) {
+
+        try {
+
+            const value =
+                localStorage.getItem(
+                    key
+                );
+
+            if (!value) {
+
+                return null;
+
+            }
+
+
+            return JSON.parse(
+                value
+            );
+
+        }
+
+        catch (error) {
+
+            return null;
+
+        }
+
+    }
+
+
+    // ========================================================
+    // VALID RESULT
+    // ========================================================
+
+    function isValidResult(data) {
+
+        if (!data) {
+
+            return false;
+
+        }
+
+
+        // Questions array
+
+        if (
+            Array.isArray(
+                data.questions
+            ) &&
+            data.questions.length > 0
+        ) {
+
+            return true;
+
+        }
+
+
+        // Score based result
+
+        if (
+            data.score !== undefined &&
+            (
+                data.total !== undefined ||
+                data.correct !== undefined
+            )
+        ) {
+
+            return true;
+
+        }
+
+
+        return false;
+
+    }
+
+
+    // ========================================================
+    // NORMALIZE RESULT
+    // ========================================================
+
+    function normalizeResult(data) {
+
+        let questions =
+            Array.isArray(
+                data.questions
+            )
+                ? data.questions
+                : [];
+
+
+        // ----------------------------------------------------
+        // If questions are stored separately
+        // ----------------------------------------------------
+
+        if (
+            questions.length === 0
+        ) {
+
+            const storedQuestions =
+                getQuestionsFromStorage();
+
+            if (
+                storedQuestions.length > 0
+            ) {
+
+                questions =
+                    storedQuestions;
+
+            }
+
+        }
+
+
+        // ----------------------------------------------------
+        // Convert question format
+        // ----------------------------------------------------
+
+        questions =
+            questions.map(
+                (q, index) => {
+
+                    const correctAnswer =
+                        getCorrectAnswer(q);
+
+                    const userAnswer =
+                        getUserAnswer(q, index);
+
+
+                    return {
+
+                        question:
+                            q.question ||
+                            q.text ||
+                            q.questionText ||
+                            "",
+
+                        options:
+                            getOptions(q),
+
+                        correctAnswer:
+                            correctAnswer,
+
+                        userAnswer:
+                            userAnswer,
+
+                        explanation:
+                            q.explanation ||
+                            q.Explanation ||
+                            q.answerExplanation ||
+                            "",
+
+                        subject:
+                            q.subject ||
+                            q.Subject ||
+                            ""
+
+                    };
+
+                }
+            );
+
+
+        // ----------------------------------------------------
+        // Calculate counts from questions
+        // ----------------------------------------------------
+
+        let correct =
+            0;
+
+        let wrong =
+            0;
+
+        let skipped =
+            0;
+
+
+        questions.forEach(
+            q => {
+
+                if (
+                    q.userAnswer === null ||
+                    q.userAnswer === undefined ||
+                    q.userAnswer === ""
+                ) {
+
+                    skipped++;
+
+                }
+
+                else if (
+                    Number(q.userAnswer) ===
+                    Number(q.correctAnswer)
+                ) {
+
+                    correct++;
+
+                }
+
+                else {
+
+                    wrong++;
+
+                }
+
+            }
+        );
+
+
+        // ----------------------------------------------------
+        // If stored summary exists
+        // ----------------------------------------------------
+
+        if (
+            questions.length === 0
+        ) {
+
+            correct =
+                Number(
+                    data.correct ||
+                    data.correctAnswers ||
+                    0
+                );
+
+            wrong =
+                Number(
+                    data.wrong ||
+                    data.wrongAnswers ||
+                    0
+                );
+
+            skipped =
+                Number(
+                    data.skipped ||
+                    data.unanswered ||
+                    0
+                );
+
+        }
+
+
+        const total =
+            Number(
+                data.total ||
+                data.totalQuestions ||
+                questions.length ||
+                (
+                    correct +
+                    wrong +
+                    skipped
+                )
+            );
+
+
+        const score =
+            Number(
+                data.score ??
+                data.marks ??
+                correct
+            );
+
+
+        return {
+
+            score:
+                score,
+
+            total:
+                total,
+
+            correct:
+                correct,
+
+            wrong:
+                wrong,
+
+            skipped:
+                skipped,
+
+            questions:
+                questions,
+
+            testType:
+                data.testType ||
+                data.type ||
+                getTestTypeFromURL()
+
+        };
+
+    }
+
+
+    // ========================================================
+    // GET OPTIONS
+    // ========================================================
+
+    function getOptions(q) {
+
+        if (
+            Array.isArray(q.options)
+        ) {
+
+            return q.options;
+
+        }
+
+
+        if (
+            Array.isArray(q.choices)
+        ) {
+
+            return q.choices;
+
+        }
+
+
+        return [
+
+            q.optionA || "",
+            q.optionB || "",
+            q.optionC || "",
+            q.optionD || ""
+
+        ];
+
+    }
+
+
+    // ========================================================
+    // GET CORRECT ANSWER
+    // ========================================================
+
+    function getCorrectAnswer(q) {
+
+        let answer =
+            q.correctAnswer;
+
+
+        if (
+            answer === undefined
+        ) {
+
+            answer =
+                q.answer;
+
+        }
+
+
+        if (
+            answer === undefined
+        ) {
+
+            answer =
+                q.correct;
+
+        }
+
+
+        if (
+            typeof answer === "string"
+        ) {
+
+            const text =
+                answer.trim();
+
+
+            // A / B / C / D
+
+            const letters = {
+                A: 0,
+                B: 1,
+                C: 2,
+                D: 3
+            };
+
+
+            if (
+                letters[
+                    text.toUpperCase()
+                ] !== undefined
+            ) {
+
+                return letters[
+                    text.toUpperCase()
+                ];
+
+            }
+
+
+            // Number stored as string
+
+            if (
+                !isNaN(
+                    Number(text)
+                )
+            ) {
+
+                return Number(text);
+
+            }
+
+        }
+
+
+        return Number(
+            answer ?? 0
+        );
+
+    }
+
+
+    // ========================================================
+    // GET USER ANSWER
+    // ========================================================
+
+    function getUserAnswer(
+        q,
+        index
+    ) {
+
+        if (
+            q.userAnswer !== undefined
+        ) {
+
+            return q.userAnswer;
+
+        }
+
+
+        if (
+            q.selectedAnswer !== undefined
+        ) {
+
+            return q.selectedAnswer;
+
+        }
+
+
+        if (
+            q.selected !== undefined
+        ) {
+
+            return q.selected;
+
+        }
+
+
+        if (
+            q.userAnswers !== undefined
+        ) {
+
+            return q.userAnswers;
+
+        }
+
+
+        return null;
+
+    }
+
+
+    // ========================================================
+    // GET QUESTIONS FROM STORAGE
+    // ========================================================
+
+    function getQuestionsFromStorage() {
+
+        const keys = [
+
+            "questions",
+            "mockQuestions",
+            "practiceQuestions",
+            "testQuestions"
+
+        ];
+
+
+        for (
+            const key of keys
+        ) {
+
+            const data =
+                getLocalStorageObject(
+                    key
+                );
+
+
+            if (
+                Array.isArray(data) &&
+                data.length > 0
+            ) {
+
+                return data;
+
+            }
+
+        }
+
+
+        return [];
+
+    }
+
+
+    // ========================================================
     // RENDER QUESTIONS
     // ========================================================
 
     function renderQuestions(
-        questionArray,
+        questions,
         filter
     ) {
 
@@ -297,22 +845,20 @@ document.addEventListener("DOMContentLoaded", () => {
             "";
 
 
-        let displayedCount =
+        let count =
             0;
 
 
-        questionArray.forEach(
+        questions.forEach(
             (q, index) => {
 
                 const status =
-                    getQuestionStatus(
-                        q
-                    );
+                    getStatus(q);
 
 
                 if (
                     filter !== "all" &&
-                    status !== filter
+                    filter !== status
                 ) {
 
                     return;
@@ -320,19 +866,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                displayedCount++;
-
-
-                const card =
-                    createReviewCard(
-                        q,
-                        index,
-                        status
-                    );
+                count++;
 
 
                 reviewList.appendChild(
-                    card
+                    createQuestionCard(
+                        q,
+                        index,
+                        status
+                    )
                 );
 
             }
@@ -340,13 +882,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (
-            displayedCount === 0
+            count === 0
         ) {
 
             reviewList.innerHTML = `
+
                 <div class="empty-review">
-                    இந்த category-ல் questions இல்லை.
+
+                    📭 இந்த category-ல்
+                    questions இல்லை.
+
                 </div>
+
             `;
 
         }
@@ -355,27 +902,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ========================================================
-    // QUESTION STATUS
+    // STATUS
     // ========================================================
 
-    function getQuestionStatus(q) {
-
-        const userAnswer =
-            q.userAnswer;
-
-
-        const correctAnswer =
-            Number(
-                q.correctAnswer
-            );
-
-
-        // SKIPPED
+    function getStatus(q) {
 
         if (
-            userAnswer === null ||
-            userAnswer === undefined ||
-            userAnswer === ""
+            q.userAnswer === null ||
+            q.userAnswer === undefined ||
+            q.userAnswer === ""
         ) {
 
             return "skipped";
@@ -383,11 +918,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        // CORRECT
-
         if (
-            Number(userAnswer) ===
-            correctAnswer
+            Number(q.userAnswer) ===
+            Number(q.correctAnswer)
         ) {
 
             return "correct";
@@ -395,20 +928,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        // WRONG
-
         return "wrong";
 
     }
 
 
     // ========================================================
-    // CREATE REVIEW CARD
+    // QUESTION CARD
     // ========================================================
 
-    function createReviewCard(
+    function createQuestionCard(
         q,
-        originalIndex,
+        index,
         status
     ) {
 
@@ -422,12 +953,11 @@ document.addEventListener("DOMContentLoaded", () => {
             `review-card ${status}`;
 
 
-        // ----------------------------------------------------
-        // STATUS
-        // ----------------------------------------------------
+        let statusText =
+            "— Skipped";
 
-        let statusText = "";
-        let statusClass = "";
+        let statusClass =
+            "status-skipped";
 
 
         if (
@@ -454,23 +984,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-        else {
 
-            statusText =
-                "— Skipped";
-
-            statusClass =
-                "status-skipped";
-
-        }
-
-
-        // ----------------------------------------------------
-        // ANSWERS
-        // ----------------------------------------------------
-
-        const userAnswer =
-            q.userAnswer;
+        const options =
+            q.options || [];
 
 
         const correctAnswer =
@@ -479,39 +995,9 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        const options =
-            Array.isArray(q.options)
-                ? q.options
-                : [];
+        const userAnswer =
+            q.userAnswer;
 
-
-        const correctText =
-            options[correctAnswer] ??
-            "Answer not available";
-
-
-        let userText =
-            "Not Answered";
-
-
-        if (
-            userAnswer !== null &&
-            userAnswer !== undefined &&
-            userAnswer !== ""
-        ) {
-
-            userText =
-                options[
-                    Number(userAnswer)
-                ] ??
-                "Answer not available";
-
-        }
-
-
-        // ----------------------------------------------------
-        // OPTIONS HTML
-        // ----------------------------------------------------
 
         const letters = [
             "A",
@@ -528,16 +1014,12 @@ document.addEventListener("DOMContentLoaded", () => {
         options.forEach(
             (option, optionIndex) => {
 
-                let optionClass =
-                    "review-option";
-
-
                 const isCorrect =
                     optionIndex ===
                     correctAnswer;
 
 
-                const isUserAnswer =
+                const isUser =
                     userAnswer !== null &&
                     userAnswer !== undefined &&
                     userAnswer !== "" &&
@@ -545,12 +1027,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     optionIndex;
 
 
+                let className =
+                    "review-option";
+
+
                 if (
                     isCorrect &&
-                    isUserAnswer
+                    isUser
                 ) {
 
-                    optionClass +=
+                    className +=
                         " user-correct";
 
                 }
@@ -559,27 +1045,28 @@ document.addEventListener("DOMContentLoaded", () => {
                     isCorrect
                 ) {
 
-                    optionClass +=
+                    className +=
                         " correct-answer";
 
                 }
 
                 else if (
-                    isUserAnswer
+                    isUser
                 ) {
 
-                    optionClass +=
+                    className +=
                         " user-answer";
 
                 }
 
 
-                let marker = "";
+                let marker =
+                    "";
 
 
                 if (
                     isCorrect &&
-                    isUserAnswer
+                    isUser
                 ) {
 
                     marker =
@@ -597,7 +1084,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 else if (
-                    isUserAnswer
+                    isUser
                 ) {
 
                     marker =
@@ -607,24 +1094,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 optionsHTML += `
-                    <div class="${optionClass}">
+
+                    <div class="${className}">
+
                         <strong>
                             ${letters[optionIndex] || optionIndex + 1}.
                         </strong>
+
                         ${escapeHTML(option)}
+
                         <span>
                             ${marker}
                         </span>
+
                     </div>
+
                 `;
 
             }
         );
 
 
-        // ----------------------------------------------------
-        // EXPLANATION
-        // ----------------------------------------------------
+        const correctText =
+            options[correctAnswer] ||
+            "Answer not available";
+
+
+        let userText =
+            "Not Answered";
+
+
+        if (
+            userAnswer !== null &&
+            userAnswer !== undefined &&
+            userAnswer !== ""
+        ) {
+
+            userText =
+                options[
+                    Number(userAnswer)
+                ] ||
+                "Answer not available";
+
+        }
+
 
         const explanation =
             q.explanation &&
@@ -635,16 +1148,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "இந்த கேள்விக்கு explanation வழங்கப்படவில்லை.";
 
 
-        // ----------------------------------------------------
-        // CARD
-        // ----------------------------------------------------
-
         card.innerHTML = `
 
             <div class="review-top">
 
                 <div class="review-number">
-                    Question ${originalIndex + 1}
+                    Question ${index + 1}
                 </div>
 
                 <div class="status-badge ${statusClass}">
@@ -655,12 +1164,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             <div class="review-question">
+
                 ${escapeHTML(q.question)}
+
             </div>
 
 
             <div class="review-options">
+
                 ${optionsHTML}
+
             </div>
 
 
@@ -672,18 +1185,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         👤 Your Answer
                     </span>
 
-                    <strong
-                        class="${
-                            status === "skipped"
-                                ? "not-answered"
-                                : "your-answer"
-                        }"
-                    >
+                    <strong>
+
                         ${
                             status === "skipped"
                                 ? "Not Answered"
                                 : escapeHTML(userText)
                         }
+
                     </strong>
 
                 </div>
@@ -695,8 +1204,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         ✅ Correct Answer
                     </span>
 
-                    <strong class="correct-answer-text">
+                    <strong>
+
                         ${escapeHTML(correctText)}
+
                     </strong>
 
                 </div>
@@ -707,11 +1218,15 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="explanation">
 
                 <div class="explanation-title">
+
                     💡 Explanation
+
                 </div>
 
                 <p>
+
                     ${escapeHTML(explanation)}
+
                 </p>
 
             </div>
@@ -725,44 +1240,178 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ========================================================
-    // RETRY
+    // RESULT MESSAGE
     // ========================================================
 
-    retryBtn.addEventListener(
-        "click",
-        () => {
+    function showResultMessage(
+        correct,
+        total
+    ) {
 
-            window.location.href =
-                "practice.html";
+        if (
+            total > 0 &&
+            correct === total
+        ) {
+
+            if (resultIcon)
+                resultIcon.textContent = "🏆";
+
+            if (resultTitle)
+                resultTitle.textContent =
+                    "Perfect Score!";
+
+            if (resultSubtitle)
+                resultSubtitle.textContent =
+                    "🔥 Excellent! எல்லா கேள்விகளுக்கும் சரியான பதில்.";
 
         }
-    );
+
+        else if (
+            total > 0 &&
+            correct >=
+            Math.ceil(total * 0.75)
+        ) {
+
+            if (resultIcon)
+                resultIcon.textContent = "🎉";
+
+            if (resultTitle)
+                resultTitle.textContent =
+                    "Excellent Performance!";
+
+            if (resultSubtitle)
+                resultSubtitle.textContent =
+                    "💪 உங்கள் preparation மிகவும் நல்ல நிலையில் உள்ளது.";
+
+        }
+
+        else if (
+            total > 0 &&
+            correct >=
+            Math.ceil(total * 0.50)
+        ) {
+
+            if (resultIcon)
+                resultIcon.textContent = "👍";
+
+            if (resultTitle)
+                resultTitle.textContent =
+                    "Good Attempt!";
+
+            if (resultSubtitle)
+                resultSubtitle.textContent =
+                    "📚 இன்னும் கொஞ்சம் practice செய்தால் score அதிகரிக்கும்.";
+
+        }
+
+        else {
+
+            if (resultIcon)
+                resultIcon.textContent = "📖";
+
+            if (resultTitle)
+                resultTitle.textContent =
+                    "Keep Practicing!";
+
+            if (resultSubtitle)
+                resultSubtitle.textContent =
+                    "🔥 தவறுகளை review செய்து மீண்டும் முயற்சி செய்யுங்கள்.";
+
+        }
+
+    }
 
 
     // ========================================================
-    // DASHBOARD
+    // NO RESULT
     // ========================================================
 
-    dashboardBtn.addEventListener(
-        "click",
-        () => {
+    function showNoResult() {
 
-            window.location.href =
-                "dashboard.html";
+        if (scoreValue)
+            scoreValue.textContent = "0";
 
-        }
-    );
+        if (totalCount)
+            totalCount.textContent = "0";
+
+        if (correctCount)
+            correctCount.textContent = "0";
+
+        if (wrongCount)
+            wrongCount.textContent = "0";
+
+        if (skippedCount)
+            skippedCount.textContent = "0";
 
 
-    homeBtn.addEventListener(
-        "click",
-        () => {
+        if (resultIcon)
+            resultIcon.textContent = "⚠️";
 
-            window.location.href =
-                "dashboard.html";
+        if (resultTitle)
+            resultTitle.textContent =
+                "Result Not Found";
 
-        }
-    );
+        if (resultSubtitle)
+            resultSubtitle.textContent =
+                "Test result கிடைக்கவில்லை.";
+
+
+        reviewList.innerHTML = `
+
+            <div class="empty-review">
+
+                <div
+                    style="
+                        font-size:45px;
+                        margin-bottom:15px;
+                    "
+                >
+                    📭
+                </div>
+
+                <div>
+
+                    Result data கிடைக்கவில்லை.
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:8px;
+                        font-size:12px;
+                    "
+                >
+
+                    தயவுசெய்து Test-ஐ
+                    மீண்டும் attempt செய்யுங்கள்.
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    // ========================================================
+    // TEST TYPE FROM URL
+    // ========================================================
+
+    function getTestTypeFromURL() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        return (
+            params.get("type") ||
+            "mock"
+        );
+
+    }
 
 
     // ========================================================
@@ -774,83 +1423,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return String(
             value ?? ""
         )
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
 
-    }
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-    // ========================================================
-    // NO RESULT
-    // ========================================================
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-    function showNoResult() {
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        scoreValue.textContent =
-            "0";
-
-        totalCount.textContent =
-            "0";
-
-        correctCount.textContent =
-            "0";
-
-        wrongCount.textContent =
-            "0";
-
-        skippedCount.textContent =
-            "0";
-
-
-        resultIcon.textContent =
-            "⚠️";
-
-        resultTitle.textContent =
-            "Result Not Found";
-
-        resultSubtitle.textContent =
-            "Practice Test result கிடைக்கவில்லை.";
-
-
-        reviewList.innerHTML = `
-
-            <div class="empty-review">
-
-                <div
-                    style="
-                        font-size:35px;
-                        margin-bottom:10px;
-                    "
-                >
-                    📭
-                </div>
-
-                Result data கிடைக்கவில்லை.<br>
-
-                தயவுசெய்து Practice Test-ஐ
-                மீண்டும் attempt செய்யுங்கள்.
-
-            </div>
-
-        `;
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
     }
 
