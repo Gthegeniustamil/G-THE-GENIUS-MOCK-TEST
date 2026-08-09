@@ -1,663 +1,953 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
-
 
 <meta charset="UTF-8">
 
-
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-
+      content="width=device-width, initial-scale=1.0">
 
 <title>
 Login | G THE GENIUS
 </title>
 
-
-
-
 <meta name="theme-color"
-content="#081229">
-
-
+      content="#081229">
 
 <meta name="description"
-content="Login to G THE GENIUS Mock Test Portal">
+      content="Login to G THE GENIUS Government Exam Mock Test Portal">
 
 
-
-
-
-
-<!-- Logo -->
+<!-- LOGO -->
 
 <link rel="icon"
-href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
+      href="assets/file_00000000711871f8a9ea3ee0524225cb.png">
 
 
+<!-- GOOGLE FONT -->
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
 
 
-
-<!-- Main CSS -->
+<!-- GLOBAL CSS -->
 
 <link rel="stylesheet"
-href="style.css">
-
-
-
-
+      href="style.css">
 
 
 <style>
 
+/* =====================================================
+   LOGIN PAGE
+===================================================== */
 
-.login-page{
+.login-page {
 
-    min-height:100vh;
+    min-height: 100vh;
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
-    align-items:center;
+    align-items: center;
 
-    padding:20px;
-
-}
-
-
-
-
-
-.login-card{
-
-
-    width:100%;
-
-    max-width:420px;
-
-
-    background:rgba(255,255,255,0.08);
-
-
-    border:1px solid rgba(255,255,255,0.15);
-
-
-    border-radius:25px;
-
-
-    padding:30px 20px;
-
-
-    backdrop-filter:blur(15px);
-
-
-    box-shadow:0 8px 25px rgba(0,0,0,0.35);
-
-
+    padding: 25px 15px 120px;
 
 }
 
 
+/* =====================================================
+   LOGIN CARD
+===================================================== */
 
+.login-card {
 
+    width: 100%;
 
+    max-width: 430px;
 
-.login-logo{
+    padding: 30px 22px;
 
+    border-radius: 28px;
 
-    width:90px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.045)
+        );
 
+    border:
+        1px solid
+        rgba(255,255,255,.14);
 
-    height:90px;
+    backdrop-filter: blur(20px);
 
-
-    border-radius:50%;
-
-
-    object-fit:cover;
-
-
-    display:block;
-
-
-    margin:auto;
-
-
-    border:3px solid #f5c542;
-
-
-}
-
-
-
-
-
-
-.login-card h1{
-
-
-    text-align:center;
-
-
-    color:#f5c542;
-
-
-    margin-top:15px;
-
-
-    font-size:26px;
-
+    box-shadow:
+        0 20px 55px
+        rgba(0,0,0,.45);
 
 }
 
 
+/* =====================================================
+   LOGO
+===================================================== */
 
+.login-logo {
 
-.login-card p{
+    display: block;
 
+    width: 92px;
 
-    text-align:center;
+    height: 92px;
 
+    margin: 0 auto 15px;
 
-    color:#d8def0;
+    padding: 5px;
 
+    object-fit: cover;
 
-    font-size:13px;
+    border-radius: 50%;
 
+    background: #ffffff;
 
-    margin-bottom:25px;
+    border: 3px solid #ffd700;
 
-
-}
-
-
-
-
-
-
-
-.login-input{
-
-
-    margin-bottom:15px;
-
-
-}
-
- 
-.login-input label{
-
-
-    display:block;
-
-
-    color:white;
-
-
-    font-size:13px;
-
-
-    margin-bottom:6px;
-
+    box-shadow:
+        0 0 0 6px
+        rgba(255,215,0,.07),
+        0 12px 30px
+        rgba(0,0,0,.35);
 
 }
 
 
+/* =====================================================
+   TITLE
+===================================================== */
 
+.login-card h1 {
 
+    text-align: center;
 
-.login-input input{
+    margin: 0;
 
+    color: #ffd700;
 
-    width:100%;
+    font-size: 26px;
 
-
-    padding:13px;
-
-
-    border-radius:15px;
-
-
-    border:1px solid rgba(255,255,255,0.2);
-
-
-    background:rgba(255,255,255,0.1);
-
-
-    color:white;
-
-
-    outline:none;
-
-
+    font-weight: 800;
 
 }
 
 
+.login-card .subtitle {
 
+    text-align: center;
 
+    margin: 7px 0 25px;
 
+    color: #aab5cf;
 
-.login-btn{
+    font-size: 12px;
 
-
-    width:100%;
-
-
-    padding:14px;
-
-
-    border:none;
-
-
-    border-radius:30px;
-
-
-    background:#f5c542;
-
-
-    color:#081229;
-
-
-    font-size:16px;
-
-
-    font-weight:700;
-
-
-    cursor:pointer;
-
-
-    margin-top:10px;
-
-
-    transition:0.3s;
-
-
+    line-height: 1.6;
 
 }
 
 
+/* =====================================================
+   INPUT GROUP
+===================================================== */
 
-.login-btn:hover{
+.login-input {
 
-
-    transform:translateY(-2px);
-
-
-}
-
-
-
-
-
-#loginMessage{
-
-
-    text-align:center;
-
-
-    margin-top:15px;
-
-
-    color:#ffd86b;
-
-
-    font-size:13px;
-
+    margin-bottom: 16px;
 
 }
 
 
+.login-input label {
 
+    display: block;
 
+    margin-bottom: 7px;
 
+    color: #ffffff;
 
+    font-size: 12px;
 
-.forgot-link{
-
-
-    text-align:right;
-
-
-    margin-top:10px;
-
+    font-weight: 600;
 
 }
 
 
+.login-input input {
 
-.forgot-link a{
+    width: 100%;
 
+    height: 50px;
 
-    color:#f5c542;
+    padding: 0 15px;
 
+    border-radius: 15px;
 
-    font-size:13px;
+    border:
+        1px solid
+        rgba(255,255,255,.14);
 
+    outline: none;
 
-    text-decoration:none;
+    background:
+        rgba(255,255,255,.065);
 
+    color: #ffffff;
 
-}
+    font-family: inherit;
 
+    font-size: 13px;
 
-
-
-
-
-
-.register-link{
-
-
-    text-align:center;
-
-
-    margin-top:20px;
-
-
-    color:#d8def0;
-
-
-    font-size:14px;
-
+    transition: .2s;
 
 }
 
 
+.login-input input:focus {
 
-.register-link a{
+    border-color: #ffd700;
 
-
-    color:#f5c542;
-
-
-    text-decoration:none;
-
-
-    font-weight:600;
-
+    box-shadow:
+        0 0 0 3px
+        rgba(255,215,0,.08);
 
 }
 
 
+.login-input input::placeholder {
+
+    color: #7f8ba8;
+
+}
+
+
+/* =====================================================
+   PASSWORD WRAPPER
+===================================================== */
+
+.password-wrapper {
+
+    position: relative;
+
+}
+
+
+.password-wrapper input {
+
+    padding-right: 48px;
+
+}
+
+
+.password-toggle {
+
+    position: absolute;
+
+    right: 8px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 38px;
+
+    height: 38px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #aab5cf;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+}
+
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+.forgot-link {
+
+    text-align: right;
+
+    margin-top: -5px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.forgot-link a {
+
+    color: #ffd700;
+
+    font-size: 11px;
+
+    text-decoration: none;
+
+}
+
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+.login-btn {
+
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe66d,
+            #ffd700
+        );
+
+    color: #081229;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px
+        rgba(255,215,0,.16);
+
+    transition: .2s;
+
+}
+
+
+.login-btn:hover {
+
+    transform: translateY(-2px);
+
+}
+
+
+.login-btn:active {
+
+    transform: scale(.98);
+
+}
+
+
+.login-btn.loading {
+
+    opacity: .65;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+#loginMessage {
+
+    min-height: 20px;
+
+    margin: 12px 0 0;
+
+    text-align: center;
+
+    color: #ffd700;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.login-divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 22px 0;
+
+    color: #69758f;
+
+    font-size: 10px;
+
+}
+
+
+.login-divider::before,
+.login-divider::after {
+
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,.10);
+
+}
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
+
+.register-link {
+
+    text-align: center;
+
+    color: #aab5cf;
+
+    font-size: 12px;
+
+}
+
+
+.register-link a {
+
+    color: #ffd700;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+}
+
+
+/* =====================================================
+   SOCIAL
+===================================================== */
+
+.login-social {
+
+    margin-top: 22px;
+
+    text-align: center;
+
+}
+
+
+.login-social-title {
+
+    color: #7f8ba8;
+
+    font-size: 10px;
+
+    margin-bottom: 11px;
+
+}
+
+
+.social-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 8px;
+
+}
+
+
+.social-btn {
+
+    flex: 1;
+
+    min-height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color: #d7def2;
+
+    font-size: 10px;
+
+    transition: .2s;
+
+}
+
+
+.social-btn:hover {
+
+    border-color: #ffd700;
+
+    color: #ffd700;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.app-footer {
+
+    width: 100%;
+
+    padding:
+        20px
+        15px
+        30px;
+
+    text-align: center;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.app-footer h3 {
+
+    color: #ffd700;
+
+    font-size: 16px;
+
+}
+
+
+.app-footer p {
+
+    margin-top: 4px;
+
+    color: #7f8ba8;
+
+    font-size: 10px;
+
+}
+
+
+.app-footer .copyright {
+
+    margin-top: 12px;
+
+    color: #5f6b85;
+
+    font-size: 9px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .login-page {
+
+        padding:
+            18px
+            12px
+            45px;
+
+        align-items: flex-start;
+
+    }
+
+
+    .login-card {
+
+        margin-top: 18px;
+
+        padding:
+            27px
+            17px;
+
+        border-radius: 25px;
+
+    }
+
+
+    .login-logo {
+
+        width: 82px;
+
+        height: 82px;
+
+    }
+
+
+    .login-card h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .login-card .subtitle {
+
+        font-size: 11px;
+
+    }
+
+
+    .social-btn {
+
+        font-size: 9px;
+
+    }
+
+}
 
 </style>
 
-
 </head>
-
-
-
 
 
 <body>
 
 
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
-<div class="login-page">
+<main class="login-page">
 
 
+    <section class="login-card">
 
-<div class="login-card">
 
+        <!-- LOGO -->
 
+        <img
+            src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+            alt="G THE GENIUS Logo"
+            class="login-logo">
 
 
+        <!-- TITLE -->
 
+        <h1>
+            Welcome Back 👋
+        </h1>
 
-<!-- LOGO -->
 
+        <p class="subtitle">
 
-<img src="assets/file_00000000711871f8a9ea3ee0524225cb.png"
+            Login to continue your
+            government exam preparation.
 
-alt="G THE GENIUS Logo"
+        </p>
 
-class="login-logo">
 
 
+        <!-- FORM -->
 
+        <form id="loginForm">
 
 
+            <!-- EMAIL -->
 
+            <div class="login-input">
 
-<h1>
+                <label for="email">
+                    📧 Email Address
+                </label>
 
-Welcome Back
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required>
 
-</h1>
+            </div>
 
 
 
-<p>
+            <!-- PASSWORD -->
 
-Login to Continue Your Exam Preparation
+            <div class="login-input">
 
-</p>
+                <label for="password">
+                    🔐 Password
+                </label>
 
 
+                <div class="password-wrapper">
 
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
 
 
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        id="passwordToggle"
+                        aria-label="Show password">
 
+                        👁️
 
+                    </button>
 
-<form id="loginForm">
+                </div>
 
+            </div>
 
 
 
+            <!-- FORGOT -->
 
+            <div class="forgot-link">
 
-<div class="login-input">
+                <a
+                    href="#"
+                    id="forgotPassword">
 
+                    Forgot Password?
 
-<label>
+                </a>
 
-Email Address
+            </div>
 
-</label>
 
 
-<input type="email"
+            <!-- LOGIN -->
 
-id="email"
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginBtn">
 
-placeholder="Enter your email"
+                Login 🚀
 
-required>
+            </button>
 
 
-</div>
+            <p id="loginMessage"></p>
 
 
+        </form>
 
 
 
+        <!-- DIVIDER -->
 
+        <div class="login-divider">
 
-<div class="login-input">
+            OR
 
+        </div>
 
-<label>
 
-Password
 
-</label>
+        <!-- REGISTER -->
 
+        <div class="register-link">
 
+            Don't have an account?
 
-<input type="password"
+            <a href="register.html">
+                Register Now
+            </a>
 
-id="password"
+        </div>
 
-placeholder="Enter your password"
 
-required>
 
+        <!-- SOCIAL -->
 
-</div>
+        <div class="login-social">
 
-  
+            <div class="login-social-title">
 
+                Connect With G THE GENIUS
 
+            </div>
 
-<button type="submit"
 
-class="login-btn">
+            <div class="social-buttons">
 
 
-Login
+                <a
+                    href="https://youtube.com/@gthegeniustamil?si=i7kSyD_2rmnE7zH7"
+                    target="_blank"
+                    class="social-btn">
 
+                    ▶ YouTube
 
-</button>
+                </a>
 
 
+                <a
+                    href="https://t.me/gthegenius"
+                    target="_blank"
+                    class="social-btn">
 
+                    ✈ Telegram
 
+                </a>
 
 
+                <a
+                    href="mailto:gthegenius7@gmail.com"
+                    class="social-btn">
 
-<p id="loginMessage"></p>
+                    ✉ Email
 
+                </a>
 
 
+            </div>
 
+        </div>
 
 
-</form>
+    </section>
 
+</main>
 
 
 
-
-
-
-
-<div class="forgot-link">
-
-
-<a href="#"
-
-id="forgotPassword">
-
-
-Forgot Password?
-
-
-</a>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="register-link">
-
-
-Don't have an account?
-
-
-<a href="register.html">
-
-Register Now
-
-</a>
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- FOOTER -->
-
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer class="app-footer">
 
 
-<h3>
-
-G THE GENIUS
-
-</h3>
+    <h3>
+        G THE GENIUS
+    </h3>
 
 
-
-<p>
-
-ALL GOVERNMENT EXAM MOCK TEST
-
-</p>
+    <p>
+        Learn • Practice • Succeed
+    </p>
 
 
+    <p class="copyright">
 
+        © 2026 G THE GENIUS
+        <br>
+        All Rights Reserved.
 
-<p class="copyright">
-
-
-© 2026 G THE GENIUS.
-All Rights Reserved.
-
-
-</p>
-
+    </p>
 
 
 </footer>
 
 
 
+<!-- =====================================================
+     LOGIN JS
+===================================================== -->
+
+<script
+    type="module"
+    src="login.js">
+</script>
 
 
+<!-- PASSWORD TOGGLE -->
+
+<script>
+
+const passwordInput =
+    document.getElementById("password");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
 
 
+if (
+    passwordInput &&
+    passwordToggle
+) {
+
+    passwordToggle.addEventListener(
+        "click",
+        () => {
+
+            const isPassword =
+                passwordInput.type === "password";
 
 
-<!-- LOGIN JS -->
+            passwordInput.type =
+                isPassword
+                    ? "text"
+                    : "password";
 
 
-<script type="module"
+            passwordToggle.textContent =
+                isPassword
+                    ? "🙈"
+                    : "👁️";
 
-src="login.js">
+        }
+    );
+
+}
 
 </script>
 
 
-
-
-
-
-
 </body>
-
 
 </html>
