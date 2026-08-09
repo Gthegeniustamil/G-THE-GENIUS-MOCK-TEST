@@ -1,812 +1,793 @@
-/* ==========================================
-   G THE GENIUS
-   Profile JavaScript
-   Part 1
-
-   Features:
-   - Firebase Connect
-   - Load Student Details
-   - Display Profile
-========================================== */
-
-
-
-/* ==========================================
-   Firebase Imports
-========================================== */
-
+// ======================================================
+// G THE GENIUS
+// PROFILE JS
+// Mobile App Profile + Firebase
+// ======================================================
 
 import {
-
+    auth,
     db
-
-}
-
-from "./firebase-config.js";
-
-
+} from "../firebase-config.js";
 
 import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+    doc,
+    getDoc,
     collection,
-
-    getDocs,
-
-    query,
-
-    where
-
-}
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+// ======================================================
+// ELEMENTS
+// ======================================================
+
+const studentName =
+    document.getElementById("studentName");
+
+const studentDistrict =
+    document.getElementById("studentDistrict");
+
+const totalTests =
+    document.getElementById("totalTests");
+
+const totalMarks =
+    document.getElementById("totalMarks");
+
+const bestScore =
+    document.getElementById("bestScore");
+
+const overallRank =
+    document.getElementById("overallRank");
+
+const districtRank =
+    document.getElementById("districtRank");
+
+const profileHistory =
+    document.getElementById("profileHistory");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const editProfileBtn =
+    document.getElementById("editProfileBtn");
 
 
+// ======================================================
+// AUTH CHECK
+// ======================================================
 
+onAuthStateChanged(auth, async (user) => {
 
+    if (!user) {
 
-/* ==========================================
-   Student Data
-========================================== */
+        window.location.href =
+            "login.html";
 
-
-let studentData = {
-
-    name:"Student",
-
-    district:"Tamil Nadu"
-
-};
-
-
-
-
-
-
-
-/* ==========================================
-   Get Local Student Info
-========================================== */
-
-
-function getStudentInfo(){
-
-
-    studentData.name =
-
-    localStorage.getItem(
-        "studentName"
-    )
-    ||
-    "Student";
-
-
-
-
-    studentData.district =
-
-    localStorage.getItem(
-        "district"
-    )
-    ||
-    "Tamil Nadu";
-
-
-
-    showProfile();
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Show Profile
-========================================== */
-
-
-function showProfile(){
-
-
-    const name =
-        document.getElementById(
-            "studentName"
-        );
-
-
-
-    const district =
-        document.getElementById(
-            "studentDistrict"
-        );
-
-
-
-
-    if(name){
-
-        name.textContent =
-            studentData.name;
+        return;
 
     }
 
+    await loadProfile(user);
+
+});
 
 
+// ======================================================
+// LOAD PROFILE
+// ======================================================
 
-    if(district){
+async function loadProfile(user) {
 
-        district.textContent =
-            studentData.district;
+    try {
+
+        const studentRef =
+            doc(
+                db,
+                "students",
+                user.uid
+            );
+
+        const studentSnap =
+            await getDoc(studentRef);
+
+        let data = {};
+
+        if (studentSnap.exists()) {
+
+            data =
+                studentSnap.data();
+
+        }
+
+        const name =
+            data.name ||
+            user.displayName ||
+            "Student";
+
+        const district =
+            data.district ||
+            "-";
+
+
+        // Display
+
+        studentName.textContent =
+            name;
+
+        studentDistrict.textContent =
+            "📍 " + district;
+
+
+        // Local storage
+
+        localStorage.setItem(
+            "studentName",
+            name
+        );
+
+        localStorage.setItem(
+            "district",
+            district
+        );
+
+
+        // Load results
+
+        await loadResults(
+            name,
+            district
+        );
 
     }
 
+    catch (error) {
+
+        console.error(
+            "Profile Error:",
+            error
+        );
+
+        studentName.textContent =
+            "Student";
+
+        studentDistrict.textContent =
+            "📍 -";
+
+    }
 
 }
 
 
+// ======================================================
+// LOAD RESULTS
+// ======================================================
 
+async function loadResults(
+    name,
+    district
+) {
 
-
-
-
-/* ==========================================
-   Page Load
-========================================== */
-
-
-window.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-    getStudentInfo();
-
-
-}
-
-);
-
-/* ==========================================
-   G THE GENIUS
-   Profile JavaScript
-   Part 2
-
-   Features:
-   - Load Test Results
-   - Total Tests
-   - Total Marks
-   - Best Score
-   - History Display
-========================================== */
-
-
-
-/* ==========================================
-   Load Student Results
-========================================== */
-
-
-let studentResults = [];
-
-
-
-
-
-async function loadProfileResults(){
-
-
-    try{
-
+    try {
 
         const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "results"
+                )
+            );
 
-        await getDocs(
-
-            collection(
-                db,
-                "results"
-            )
-
-        );
-
+        let results = [];
 
 
-
-
-        studentResults = [];
-
-
-
-
-        snapshot.forEach(
-            (doc)=>{
-
+        snapshot.forEach((resultDoc) => {
 
             const data =
-                doc.data();
+                resultDoc.data();
 
 
+            // Match by student name
 
-            if(
+            if (
+                data.studentName === name
+            ) {
 
-                data.name ===
-                studentData.name
+                results.push({
 
-            ){
+                    id:
+                        resultDoc.id,
 
+                    studentName:
+                        data.studentName || "",
 
-                studentResults.push({
+                    district:
+                        data.district || "",
 
-                    id:doc.id,
+                    score:
+                        Number(
+                            data.score
+                        ) || 0,
 
-                    ...data
+                    totalQuestions:
+                        Number(
+                            data.totalQuestions
+                        ) || 0,
+
+                    testType:
+                        data.testType ||
+                        "daily",
+
+                    createdAt:
+                        data.createdAt ||
+                        null
 
                 });
 
-
             }
-
-
 
         });
 
 
+        // ==================================================
+        // TOTAL TESTS
+        // ==================================================
+
+        totalTests.textContent =
+            results.length;
 
 
+        // ==================================================
+        // TOTAL MARKS
+        // ==================================================
 
-        calculatePerformance();
+        const marks =
+            results.reduce(
+                (sum, item) =>
+                    sum + item.score,
+                0
+            );
+
+        totalMarks.textContent =
+            marks;
 
 
-        displayHistory();
+        // ==================================================
+        // BEST SCORE
+        // ==================================================
+
+        let best = 0;
+
+        results.forEach(item => {
+
+            if (
+                item.score > best
+            ) {
+
+                best =
+                    item.score;
+
+            }
+
+        });
+
+        bestScore.textContent =
+            best;
 
 
+        // ==================================================
+        // HISTORY
+        // ==================================================
 
-    }
-
-
-    catch(error){
-
-
-        console.log(
-            "Profile Result Error:",
-            error
+        displayHistory(
+            results
         );
 
 
+        // ==================================================
+        // RANK
+        // ==================================================
+
+        await calculateRanks(
+            name,
+            district
+        );
+
     }
 
+    catch (error) {
+
+        console.error(
+            "Result Error:",
+            error
+        );
+
+        totalTests.textContent =
+            "0";
+
+        totalMarks.textContent =
+            "0";
+
+        bestScore.textContent =
+            "0";
+
+        profileHistory.innerHTML =
+            "<p>No test history yet 📚</p>";
+
+    }
 
 }
 
 
+// ======================================================
+// DISPLAY HISTORY
+// ======================================================
+
+function displayHistory(results) {
+
+    if (
+        results.length === 0
+    ) {
+
+        profileHistory.innerHTML =
+            "<p>No test history yet 📚</p>";
+
+        return;
+
+    }
 
 
+    results.sort((a, b) => {
 
+        const dateA =
+            a.createdAt?.seconds || 0;
 
+        const dateB =
+            b.createdAt?.seconds || 0;
 
-/* ==========================================
-   Calculate Performance
-========================================== */
-
-
-function calculatePerformance(){
-
-
-
-    let totalTests =
-        studentResults.length;
-
-
-
-
-    let totalMarks = 0;
-
-
-
-    let bestScore = 0;
-
-
-
-
-
-    studentResults.forEach(
-
-        result=>{
-
-
-        totalMarks +=
-
-        Number(
-            result.marks || 0
-        );
-
-
-
-        if(
-
-            result.marks >
-
-            bestScore
-
-        ){
-
-            bestScore =
-                result.marks;
-
-        }
-
-
+        return dateB - dateA;
 
     });
 
 
+    // Show latest 10
 
+    const latest =
+        results.slice(0, 10);
 
 
+    profileHistory.innerHTML =
+        "";
 
 
-    document.getElementById(
-        "totalTests"
-    ).textContent =
+    latest.forEach(item => {
 
-    totalTests;
+        let icon =
+            "🟢";
 
+        let title =
+            "Daily Mock Test";
 
 
+        if (
+            item.testType ===
+            "weekly"
+        ) {
 
+            icon = "🟡";
 
+            title =
+                "Weekly Mock Test";
 
-    document.getElementById(
-        "totalMarks"
-    ).textContent =
+        }
 
-    totalMarks;
 
+        else if (
+            item.testType ===
+            "monthly"
+        ) {
 
+            icon = "🔴";
 
+            title =
+                "Monthly Grand Test";
 
+        }
 
 
-    document.getElementById(
-        "bestScore"
-    ).textContent =
+        const card =
+            document.createElement(
+                "div"
+            );
 
-    bestScore;
 
+        card.className =
+            "history-card";
 
 
-}
+        const percentage =
+            item.totalQuestions > 0
+            ?
+            Math.round(
+                (
+                    item.score /
+                    item.totalQuestions
+                ) * 100
+            )
+            :
+            0;
 
 
+        card.innerHTML = `
 
+            <div class="history-left">
 
+                <strong>
+                    ${icon} ${title}
+                </strong>
 
+                <small>
+                    ${formatDate(item.createdAt)}
+                </small>
 
+            </div>
 
-/* ==========================================
-   Display History
-========================================== */
+            <div class="history-right">
 
+                <strong>
+                    ${item.score}/${item.totalQuestions}
+                </strong>
 
-function displayHistory(){
+                <small>
+                    ${percentage}%
+                </small>
 
-
-    const history =
-
-    document.getElementById(
-        "profileHistory"
-    );
-
-
-
-    if(!history)
-        return;
-
-
-
-
-    history.innerHTML = "";
-
-
-
-
-    studentResults.forEach(
-
-        result=>{
-
-
-
-        history.innerHTML += `
-
-
-        <div class="history-card">
-
-
-            <strong>
-
-            ${result.testName || "Mock Test"}
-
-            </strong>
-
-
-
-            <span>
-
-            ${result.marks || 0} Marks
-
-            </span>
-
-
-
-        </div>
-
+            </div>
 
         `;
 
 
+        profileHistory.appendChild(
+            card
+        );
 
     });
-
 
 }
 
 
+// ======================================================
+// DATE FORMAT
+// ======================================================
+
+function formatDate(timestamp) {
+
+    if (
+        !timestamp ||
+        !timestamp.seconds
+    ) {
+
+        return "Recent Test";
+
+    }
 
 
-
-
-
-/* ==========================================
-   Connect After Profile Load
-========================================== */
-
-
-const oldGetStudentInfo =
-    getStudentInfo;
-
-
-
-getStudentInfo = function(){
-
-
-    oldGetStudentInfo();
-
-
-
-    loadProfileResults();
-
-
-};
-
-/* ==========================================
-   G THE GENIUS
-   Profile JavaScript
-   Part 3 Final
-
-   Features:
-   - Rank Calculation
-   - Edit Profile
-   - Logout
-   - Final Connection
-========================================== */
-
-
-
-/* ==========================================
-   Calculate Rank
-========================================== */
-
-
-async function calculateProfileRank(){
-
-
-    try{
-
-
-        const snapshot =
-
-        await getDocs(
-
-            collection(
-                db,
-                "results"
-            )
-
+    const date =
+        new Date(
+            timestamp.seconds * 1000
         );
 
 
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
 
 
-        let allData = [];
+// ======================================================
+// RANK CALCULATION
+// ======================================================
+
+async function calculateRanks(
+    name,
+    district
+) {
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "results"
+                )
+            );
 
 
+        let students = [];
 
 
-        snapshot.forEach(
-            (doc)=>{
+        snapshot.forEach(resultDoc => {
+
+            const data =
+                resultDoc.data();
 
 
-            allData.push({
+            const score =
+                Number(
+                    data.score
+                ) || 0;
 
-                id:doc.id,
 
-                ...doc.data()
+            const total =
+                Number(
+                    data.totalQuestions
+                ) || 0;
+
+
+            if (
+                total === 0
+            ) {
+
+                return;
+
+            }
+
+
+            students.push({
+
+                name:
+                    data.studentName ||
+                    "",
+
+                district:
+                    data.district ||
+                    "",
+
+                score:
+                    score,
+
+                total:
+                    total,
+
+                percentage:
+                    score / total
 
             });
-
-
 
         });
 
 
+        // ==================================================
+        // BEST RESULT FOR EACH STUDENT
+        // ==================================================
+
+        const studentMap =
+            new Map();
 
 
+        students.forEach(student => {
 
-        allData.sort(
+            const existing =
+                studentMap.get(
+                    student.name
+                );
 
-            (a,b)=>
 
-            b.marks - a.marks
+            if (
+                !existing ||
+                student.percentage >
+                existing.percentage
+            ) {
 
+                studentMap.set(
+                    student.name,
+                    student
+                );
+
+            }
+
+        });
+
+
+        const uniqueStudents =
+            Array.from(
+                studentMap.values()
+            );
+
+
+        // ==================================================
+        // OVERALL RANK
+        // ==================================================
+
+        uniqueStudents.sort(
+            (a, b) =>
+                b.percentage -
+                a.percentage
         );
-
-
-
 
 
         const overallIndex =
-
-        allData.findIndex(
-
-            item =>
-
-            item.name ===
-            studentData.name
-
-        );
+            uniqueStudents.findIndex(
+                student =>
+                    student.name === name
+            );
 
 
-
-
-
-        const overallRank =
-
-        document.getElementById(
-            "overallRank"
-        );
-
-
-
-        if(overallRank){
-
+        if (
+            overallIndex >= 0
+        ) {
 
             overallRank.textContent =
+                "#" +
+                (overallIndex + 1);
 
-            overallIndex >= 0
+        }
 
-            ?
+        else {
 
-            "#"+(overallIndex+1)
-
-            :
-
-            "N/A";
-
+            overallRank.textContent =
+                "--";
 
         }
 
 
+        // ==================================================
+        // DISTRICT RANK
+        // ==================================================
+
+        const districtStudents =
+            uniqueStudents.filter(
+                student =>
+                    student.district ===
+                    district
+            );
 
 
-
-
-        const districtData =
-
-        allData.filter(
-
-            item =>
-
-            item.district ===
-            studentData.district
-
+        districtStudents.sort(
+            (a, b) =>
+                b.percentage -
+                a.percentage
         );
-
-
-
 
 
         const districtIndex =
-
-        districtData.findIndex(
-
-            item =>
-
-            item.name ===
-            studentData.name
-
-        );
+            districtStudents.findIndex(
+                student =>
+                    student.name === name
+            );
 
 
-
-
-
-
-        const districtRank =
-
-        document.getElementById(
-            "districtRank"
-        );
-
-
-
-        if(districtRank){
-
+        if (
+            districtIndex >= 0
+        ) {
 
             districtRank.textContent =
-
-            districtIndex >=0
-
-            ?
-
-            "#"+(districtIndex+1)
-
-            :
-
-            "N/A";
-
+                "#" +
+                (districtIndex + 1);
 
         }
 
+        else {
 
+            districtRank.textContent =
+                "--";
 
+        }
 
     }
 
+    catch (error) {
 
-    catch(error){
-
-
-        console.log(
+        console.error(
             "Rank Error:",
             error
         );
 
+        overallRank.textContent =
+            "--";
+
+        districtRank.textContent =
+            "--";
 
     }
-
 
 }
 
 
+// ======================================================
+// EDIT PROFILE
+// ======================================================
 
+editProfileBtn.addEventListener(
+    "click",
+    () => {
 
-
-
-
-/* ==========================================
-   Edit Profile
-========================================== */
-
-
-const editProfileBtn =
-
-document.getElementById(
-    "editProfileBtn"
-);
-
-
-
-
-if(editProfileBtn){
-
-
-editProfileBtn.onclick = ()=>{
-
-
-    const newName =
-
-    prompt(
-
-        "Enter Student Name",
-
-        studentData.name
-
-    );
-
-
-
-    if(newName){
-
-
-        localStorage.setItem(
-
-            "studentName",
-
-            newName
-
+        alert(
+            "Profile editing will be available soon ✏️"
         );
 
-
-
-        location.reload();
-
-
     }
-
-
-};
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   Logout
-========================================== */
-
-
-const logoutBtn =
-
-document.getElementById(
-    "logoutBtn"
 );
 
 
+// ======================================================
+// LOGOUT
+// ======================================================
+
+logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+        const confirmLogout =
+            confirm(
+                "Are you sure you want to logout?"
+            );
 
 
-if(logoutBtn){
+        if (!confirmLogout) {
+
+            return;
+
+        }
 
 
-logoutBtn.onclick = ()=>{
+        try {
+
+            await signOut(
+                auth
+            );
 
 
-    localStorage.clear();
+            localStorage.removeItem(
+                "student"
+            );
+
+            localStorage.removeItem(
+                "studentName"
+            );
+
+            localStorage.removeItem(
+                "district"
+            );
+
+            localStorage.removeItem(
+                "email"
+            );
 
 
+            window.location.href =
+                "login.html";
 
-    location.href =
-        "login.html";
+        }
 
+        catch (error) {
 
-};
+            console.error(
+                "Logout Error:",
+                error
+            );
 
+            alert(
+                "Logout failed. Please try again."
+            );
 
-}
+        }
 
-
-
-
-
-
-
-/* ==========================================
-   Final Page Load
-========================================== */
-
-
-window.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
+    }
+);
 
 
-    calculateProfileRank();
-
-
-}
-
+console.log(
+    "G THE GENIUS Profile Ready"
 );
