@@ -2230,43 +2230,33 @@ function setupNavigation() {
     // --------------------------------------
 
     const backBtn =
-        document.getElementById(
-            "backBtn"
-        );
+    document.getElementById("backBtn");
 
+if (backBtn) {
 
-    if (backBtn) {
+    backBtn.addEventListener(
+        "click",
+        () => {
 
-        backBtn.addEventListener(
-            "click",
-            () => {
+            // Learning question page open
+            if (
+                selectedSubject &&
+                subjectQuestions.length > 0
+            ) {
 
-                // If question page is open
-                if (
-                    selectedSubject &&
-                    !document
-                        .getElementById(
-                            "learningSection"
-                        )
-                        ?.classList.contains(
-                            "hidden"
-                        )
-                ) {
+                showSubjects();
 
-                    showSubjects();
-
-                    return;
-
-                }
-
-
-                // Otherwise dashboard
-                goToDashboard();
-
+                return;
             }
-        );
 
-    }
+            // Already on subject page
+            // Go directly to dashboard
+            window.location.href = "index.html";
+
+        }
+    );
+
+}
 
 
     // --------------------------------------
