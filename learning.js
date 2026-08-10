@@ -181,6 +181,7 @@ async function initializeLearning() {
     subjects = [...subjectConfig];
 
     setupNavigation();
+    setupTopButtons();
 
     setupSubjectBackButton();
 
@@ -783,14 +784,45 @@ function showLearningQuestion() {
     // ======================================
 
     const correctAnswer =
-        getCorrectAnswer(question);
+    getCorrectAnswer(question);
 
-    setText(
-        "learningImportant",
-        correctAnswer
-            ? `✅ சரியான பதில்: ${correctAnswer}`
-            : ""
-    );
+const options =
+    getQuestionOptions(question);
+
+let correctText = "";
+
+if (
+    correctAnswer !== "" &&
+    options.length > 0
+) {
+
+    const answerIndex =
+        Number(correctAnswer);
+
+    if (
+        Number.isInteger(answerIndex) &&
+        answerIndex >= 0 &&
+        answerIndex < options.length
+    ) {
+
+        correctText =
+            options[answerIndex].label;
+
+    } else {
+
+        correctText =
+            correctAnswer;
+
+    }
+
+}
+
+setText(
+    "learningImportant",
+    correctText
+        ? `✅ சரியான பதில்: ${correctText}`
+        : ""
+);
 
 
     // ======================================
@@ -1787,7 +1819,50 @@ function setupNavigation() {
     }
 
 }
+// ==========================================
+// TOP BACK + REFRESH BUTTONS
+// ==========================================
 
+function setupTopButtons() {
+
+    const backButton =
+        document.getElementById("backBtn");
+
+    if (backButton) {
+
+        backButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                showSubjects();
+
+            }
+        );
+
+    }
+
+
+    const refreshButton =
+        document.getElementById("refreshBtn");
+
+    if (refreshButton) {
+
+        refreshButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                location.reload();
+
+            }
+        );
+
+    }
+
+                    }
 
 // ==========================================
 // LOADER
