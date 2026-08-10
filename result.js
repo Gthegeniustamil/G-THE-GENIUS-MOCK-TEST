@@ -445,12 +445,7 @@ function normalizeResult(
         );
 
 
-    const score =
-        Number(
-            data.score ??
-            data.marks ??
-            correct
-        );
+    const score = correct;
 
 
     return {
