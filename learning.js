@@ -1692,15 +1692,9 @@ function showSubjects() {
 
 function setupNavigation() {
 
-    // --------------------------------------
-    // Home / Subject navigation
-    // --------------------------------------
-
+    // HOME
     const homeButton =
-        document.getElementById(
-            "learningHomeBtn"
-        );
-
+        document.getElementById("homeNav");
 
     if (homeButton) {
 
@@ -1708,7 +1702,8 @@ function setupNavigation() {
             "click",
             function () {
 
-                showSubjects();
+                window.location.href =
+                    "index.html";
 
             }
         );
@@ -1716,19 +1711,32 @@ function setupNavigation() {
     }
 
 
-    // --------------------------------------
-    // Bottom subject button
-    // --------------------------------------
+    // PRACTICE
+    const practiceButton =
+        document.getElementById("practiceNav");
 
-    const subjectButton =
-        document.getElementById(
-            "bottomSubjectsBtn"
+    if (practiceButton) {
+
+        practiceButton.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "practice.html";
+
+            }
         );
 
+    }
 
-    if (subjectButton) {
 
-        subjectButton.addEventListener(
+    // LEARNING
+    const learningButton =
+        document.getElementById("learningNav");
+
+    if (learningButton) {
+
+        learningButton.addEventListener(
             "click",
             function () {
 
@@ -1740,29 +1748,43 @@ function setupNavigation() {
     }
 
 
-    // --------------------------------------
-    // Browser back support
-    // --------------------------------------
+    // PROFILE
+    const profileButton =
+        document.getElementById("profileNav");
 
-    window.addEventListener(
-        "popstate",
-        function () {
+    if (profileButton) {
 
-            if (
-                document
-                    .getElementById(
-                        "learningSection"
-                    )
-                    ?.classList
-                    .contains("hidden") === false
-            ) {
+        profileButton.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "profile.html";
+
+            }
+        );
+
+    }
+
+
+    // TOP BACK BUTTON
+    const backButton =
+        document.getElementById("backBtn");
+
+    if (backButton) {
+
+        backButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
 
                 showSubjects();
 
             }
+        );
 
-        }
-    );
+    }
 
 }
 
