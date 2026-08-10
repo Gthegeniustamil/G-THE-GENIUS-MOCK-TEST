@@ -1087,12 +1087,17 @@ function showLearningQuestion() {
         );
 
 
-    setText(
-        "learningImportant",
-        correctAnswer
-            ? `✅ சரியான பதில்: ${correctAnswer}`
-            : "✅ Answer available"
+    const correctAnswer =
+    getCorrectAnswer(
+        question
     );
+
+setText(
+    "learningImportant",
+    correctAnswer
+        ? `✅ சரியான பதில்: ${correctAnswer}`
+        : "✅ Answer available"
+);
 
 
     // ======================================
