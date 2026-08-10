@@ -1086,12 +1086,6 @@ function showLearningQuestion() {
             question
         );
 
-
-    const correctAnswer =
-    getCorrectAnswer(
-        question
-    );
-
 setText(
     "learningImportant",
     correctAnswer
