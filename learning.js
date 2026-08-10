@@ -1,8 +1,8 @@
 // ==========================================
 // G THE GENIUS
 // LEARNING ZONE JS
-// Subject → Topic → Lesson → Quick Test
-// Firebase Firestore
+// SUBJECT → EXISTING QUESTIONS
+// FIREBASE FIRESTORE
 // ==========================================
 
 import { db } from "./firebase-config.js";
@@ -17,18 +17,14 @@ import {
 // VARIABLES
 // ==========================================
 
-let allLearningData = [];
-
+let allQuestions = [];
 let subjects = [];
-let topics = [];
-let lessons = [];
 
 let selectedSubject = null;
-let selectedTopic = null;
+let subjectQuestions = [];
 
-let currentLesson = 0;
-
-let searchText = "";
+let currentQuestion = 0;
+let answerShown = false;
 
 
 // ==========================================
@@ -139,7 +135,7 @@ async function initializeLearning() {
 
     setupButtons();
 
-    await loadLearningData();
+    await loadQuestions();
 
     hideLoader();
 
@@ -147,50 +143,58 @@ async function initializeLearning() {
 
 
 // ==========================================
-// LOAD FIREBASE DATA
+// LOAD QUESTIONS FROM FIRESTORE
 // ==========================================
 
-async function loadLearningData() {
+async function loadQuestions() {
 
     try {
 
-        showSubjectLoading();
+        showLoading();
+
 
         const snapshot =
             await getDocs(
-                collection(db, "learning")
+                collection(db, "questions")
             );
 
 
-        allLearningData = [];
+        allQuestions = [];
 
 
         snapshot.forEach((doc) => {
 
-            allLearningData.push({
+            allQuestions.push({
+
                 id: doc.id,
+
                 ...doc.data()
+
             });
 
         });
 
 
         console.log(
-            "Learning documents:",
-            allLearningData.length
+            "Learning Questions Loaded:",
+            allQuestions.length
         );
 
 
-        if (allLearningData.length > 0) {
+        if (
+            allQuestions.length === 0
+        ) {
 
-            buildSubjectsFromFirebase();
+            subjects = [];
 
-        } else {
+            renderSubjects();
 
-            subjects =
-                [...defaultSubjects];
+            return;
 
         }
+
+
+        buildSubjects();
 
 
         renderSubjects();
@@ -199,15 +203,46 @@ async function loadLearningData() {
     } catch (error) {
 
         console.error(
-            "Learning Load Error:",
+            "Learning Question Load Error:",
             error
         );
 
 
-        subjects =
-            [...defaultSubjects];
+        subjects = [];
+
 
         renderSubjects();
+
+
+        const grid =
+            document.getElementById(
+                "subjectGrid"
+            );
+
+
+        if (grid) {
+
+            grid.innerHTML = `
+
+                <div class="loading-card">
+
+                    <div style="font-size:32px;">
+                        ❌
+                    </div>
+
+                    <p>
+                        Questions load ஆகவில்லை.
+                    </p>
+
+                    <small>
+                        Please try again.
+                    </small>
+
+                </div>
+
+            `;
+
+        }
 
     }
 
@@ -215,66 +250,92 @@ async function loadLearningData() {
 
 
 // ==========================================
-// BUILD SUBJECTS
+// BUILD SUBJECTS FROM QUESTIONS
 // ==========================================
 
-function buildSubjectsFromFirebase() {
+function buildSubjects() {
 
-    const subjectMap = new Map();
-
-
-    allLearningData.forEach((item) => {
-
-        const subjectId =
-            item.subjectId ||
-            item.subject ||
-            item.category;
+    const subjectMap =
+        new Map();
 
 
-        const subjectName =
-            item.subjectName ||
-            item.subjectTitle ||
-            item.subject;
+    allQuestions.forEach(
+        (question) => {
+
+            const rawSubject =
+                question.subject ||
+                question.subjectId ||
+                question.category ||
+                question.subjectName;
 
 
-        if (!subjectId) return;
+            if (!rawSubject) return;
 
 
-        if (!subjectMap.has(subjectId)) {
+            const subjectValue =
+                String(rawSubject)
+                    .trim();
+
+
+            if (!subjectValue) return;
+
+
+            const normalizedId =
+                normalizeSubjectId(
+                    subjectValue
+                );
+
+
+            if (
+                subjectMap.has(
+                    normalizedId
+                )
+            ) {
+
+                return;
+
+            }
+
 
             const defaultSubject =
                 defaultSubjects.find(
-                    s => s.id === subjectId
+                    subject =>
+                        normalizeSubjectId(
+                            subject.id
+                        ) ===
+                        normalizedId
                 );
 
 
             subjectMap.set(
-                subjectId,
+                normalizedId,
                 {
 
-                    id: subjectId,
+                    id:
+                        normalizedId,
+
+                    firestoreValue:
+                        subjectValue,
 
                     name:
-                        subjectName ||
                         defaultSubject?.name ||
-                        subjectId,
+                        subjectValue,
 
                     icon:
-                        item.subjectIcon ||
                         defaultSubject?.icon ||
-                        "📚",
+                        getSubjectIcon(
+                            subjectValue
+                        ),
 
                     description:
-                        item.subjectDescription ||
                         defaultSubject?.description ||
-                        "Important exam learning"
+                        `${subjectValue} முக்கியமான கேள்விகள்`
 
                 }
             );
 
         }
-
-    });
+    );
 
 
     subjects =
@@ -283,13 +344,146 @@ function buildSubjectsFromFirebase() {
         );
 
 
-    // If Firebase has incomplete subject data
-    if (subjects.length === 0) {
+    subjects.sort(
+        (a, b) =>
+            a.name.localeCompare(
+                b.name,
+                "ta"
+            )
+    );
 
-        subjects =
-            [...defaultSubjects];
+
+    console.log(
+        "Learning Subjects:",
+        subjects
+    );
+
+}
+
+
+// ==========================================
+// NORMALIZE SUBJECT ID
+// ==========================================
+
+function normalizeSubjectId(value) {
+
+    return String(value)
+        .trim()
+        .toLowerCase()
+        .replace(
+            /\s+/g,
+            "-"
+        )
+        .replace(
+            /[^a-z0-9\u0B80-\u0BFF-]/g,
+            ""
+        );
+
+}
+
+
+// ==========================================
+// SUBJECT ICON
+// ==========================================
+
+function getSubjectIcon(subject) {
+
+    const value =
+        String(subject)
+            .toLowerCase();
+
+
+    if (
+        value.includes("history") ||
+        value.includes("வரலாறு")
+    ) {
+
+        return "🏛️";
 
     }
+
+
+    if (
+        value.includes("tamil") ||
+        value.includes("தமிழ்")
+    ) {
+
+        return "📖";
+
+    }
+
+
+    if (
+        value.includes("science") ||
+        value.includes("அறிவியல்")
+    ) {
+
+        return "🔬";
+
+    }
+
+
+    if (
+        value.includes("geography") ||
+        value.includes("புவியியல்")
+    ) {
+
+        return "🌍";
+
+    }
+
+
+    if (
+        value.includes("polity") ||
+        value.includes("அரசியல்")
+    ) {
+
+        return "🇮🇳";
+
+    }
+
+
+    if (
+        value.includes("economics") ||
+        value.includes("பொருளாதாரம்")
+    ) {
+
+        return "💰";
+
+    }
+
+
+    if (
+        value.includes("math") ||
+        value.includes("கணிதம்")
+    ) {
+
+        return "➗";
+
+    }
+
+
+    if (
+        value.includes("reasoning") ||
+        value.includes("தர்க்கம்")
+    ) {
+
+        return "🧩";
+
+    }
+
+
+    if (
+        value.includes("current") ||
+        value.includes("நடப்பு")
+    ) {
+
+        return "📰";
+
+    }
+
+
+    return "📚";
 
 }
 
@@ -317,8 +511,12 @@ function renderSubjects(
     if (!grid) return;
 
 
-    count.textContent =
-        `${filteredSubjects.length} Subjects`;
+    if (count) {
+
+        count.textContent =
+            `${filteredSubjects.length} Subjects`;
+
+    }
 
 
     grid.innerHTML = "";
@@ -339,7 +537,7 @@ function renderSubjects(
 
 
     filteredSubjects.forEach(
-        (subject, index) => {
+        (subject) => {
 
             const card =
                 document.createElement(
@@ -358,18 +556,22 @@ function renderSubjects(
                 </span>
 
                 <div class="subject-icon">
-                    ${escapeHTML(subject.icon)}
+                    ${escapeHTML(
+                        subject.icon
+                    )}
                 </div>
 
                 <div>
 
                     <h4>
-                        ${escapeHTML(subject.name)}
+                        ${escapeHTML(
+                            subject.name
+                        )}
                     </h4>
 
                     <p>
                         ${escapeHTML(
-                            subject.description || ""
+                            subject.description
                         )}
                     </p>
 
@@ -382,7 +584,9 @@ function renderSubjects(
                 "click",
                 () => {
 
-                    openSubject(subject);
+                    openSubject(
+                        subject
+                    );
 
                 }
             );
@@ -406,192 +610,264 @@ function openSubject(subject) {
         subject;
 
 
-    currentLesson = 0;
+    currentQuestion = 0;
+
+    answerShown = false;
 
 
-    document.getElementById(
-        "selectedSubjectTitle"
-    ).textContent =
-        subject.name;
+    subjectQuestions =
+        allQuestions.filter(
+            question => {
+
+                const rawSubject =
+                    question.subject ||
+                    question.subjectId ||
+                    question.category ||
+                    question.subjectName;
 
 
-    document.getElementById(
-        "selectedSubjectName"
-    ).textContent =
-        subject.name;
+                if (!rawSubject) {
+                    return false;
+                }
 
 
-    document.getElementById(
-        "selectedSubjectIcon"
-    ).textContent =
-        subject.icon;
+                return (
+                    normalizeSubjectId(
+                        rawSubject
+                    ) ===
+                    normalizeSubjectId(
+                        subject.firestoreValue
+                    )
+                );
+
+            }
+        );
 
 
-    document.getElementById(
-        "learningSubjectName"
-    ).textContent =
-        subject.name;
+    console.log(
+        "Selected Subject:",
+        subject.name
+    );
 
 
-    loadTopics();
+    console.log(
+        "Questions:",
+        subjectQuestions.length
+    );
+
+
+    const subjectIcon =
+        document.getElementById(
+            "selectedSubjectIcon"
+        );
+
+
+    const subjectName =
+        document.getElementById(
+            "selectedSubjectName"
+        );
+
+
+    if (subjectIcon) {
+
+        subjectIcon.textContent =
+            subject.icon;
+
+    }
+
+
+    if (subjectName) {
+
+        subjectName.textContent =
+            subject.name;
+
+    }
+
+
+    const count =
+        document.getElementById(
+            "questionCount"
+        );
+
+
+    if (count) {
+
+        count.textContent =
+            `${subjectQuestions.length} Questions`;
+
+    }
 
 
     document.getElementById(
         "subjectSection"
-    ).classList.add("hidden");
+    ).classList.add(
+        "hidden"
+    );
 
 
     document.getElementById(
-        "topicSection"
-    ).classList.remove("hidden");
+        "questionSection"
+    ).classList.remove(
+        "hidden"
+    );
 
 
-    document.getElementById(
-        "learningSection"
-    ).classList.add("hidden");
+    if (
+        subjectQuestions.length === 0
+    ) {
+
+        showNoQuestions();
+
+    } else {
+
+        showQuestion();
+
+    }
 
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
 
 }
 
 
 // ==========================================
-// LOAD TOPICS
+// SHOW QUESTION
 // ==========================================
 
-function loadTopics() {
+function showQuestion() {
 
-    if (!selectedSubject) return;
+    if (
+        !subjectQuestions.length
+    ) {
+
+        showNoQuestions();
+
+        return;
+
+    }
 
 
-    const subjectId =
-        selectedSubject.id;
+    const question =
+        subjectQuestions[
+            currentQuestion
+        ];
 
 
-    const firebaseItems =
-        allLearningData.filter(
-            item => {
+    answerShown = false;
 
-                const id =
-                    item.subjectId ||
-                    item.subject ||
-                    item.category;
 
-                return String(id)
-                    .toLowerCase() ===
-                    String(subjectId)
-                        .toLowerCase();
-
-            }
+    const questionNumber =
+        document.getElementById(
+            "questionNumber"
         );
 
 
-    const topicMap =
-        new Map();
+    const questionIndicator =
+        document.getElementById(
+            "questionIndicator"
+        );
 
 
-    firebaseItems.forEach(
-        (item) => {
+    if (questionNumber) {
 
-            const topicId =
-                item.topicId ||
-                item.topic ||
-                item.topicName;
+        questionNumber.textContent =
+            `Question ${currentQuestion + 1}`;
 
-
-            if (!topicId) return;
+    }
 
 
-            if (!topicMap.has(topicId)) {
+    if (questionIndicator) {
 
-                topicMap.set(
-                    topicId,
-                    {
+        questionIndicator.textContent =
+            `${currentQuestion + 1} / ${subjectQuestions.length}`;
 
-                        id: topicId,
+    }
 
-                        name:
-                            item.topicName ||
-                            item.topicTitle ||
-                            item.topic ||
-                            topicId,
 
-                        description:
-                            item.topicDescription ||
-                            "Important exam topic"
+    const questionText =
+        document.getElementById(
+            "learningQuestion"
+        );
 
-                    }
-                );
 
-            }
+    if (questionText) {
 
-        }
+        questionText.innerHTML =
+            formatLearningText(
+                question.question ||
+                question.questionText ||
+                question.title ||
+                "Question not available"
+            );
+
+    }
+
+
+    renderOptions(
+        question
     );
 
 
-    topics =
-        Array.from(
-            topicMap.values()
+    hideAnswer();
+
+
+    updateProgress();
+
+
+    updateNavigation();
+
+
+    const status =
+        document.getElementById(
+            "questionStatus"
         );
 
 
-    renderTopics();
+    if (status) {
+
+        status.textContent =
+            "📖 Learn";
+
+    }
 
 }
 
 
 // ==========================================
-// RENDER TOPICS
+// RENDER OPTIONS
 // ==========================================
 
-function renderTopics(
-    filteredTopics = topics
-) {
+function renderOptions(question) {
 
-    const grid =
+    const container =
         document.getElementById(
-            "topicGrid"
+            "learningOptions"
         );
 
 
-    const count =
-        document.getElementById(
-            "topicCount"
-        );
+    if (!container) return;
 
 
-    count.textContent =
-        `${filteredTopics.length} Topics`;
-
-
-    grid.innerHTML = "";
+    container.innerHTML = "";
 
 
     if (
-        filteredTopics.length === 0
+        !Array.isArray(
+            question.options
+        )
     ) {
 
-        grid.innerHTML = `
+        container.innerHTML = `
 
             <div class="loading-card">
 
-                <div
-                    style="
-                        font-size:28px;
-                    "
-                >
-                    📚
-                </div>
-
-                <p>
-                    இந்த Subject-க்கு
-                    Learning Topics இன்னும்
-                    சேர்க்கப்படவில்லை.
-                </p>
+                ❌ Options not available
 
             </div>
 
@@ -602,453 +878,637 @@ function renderTopics(
     }
 
 
-    filteredTopics.forEach(
-        (topic, index) => {
+    question.options.forEach(
+        (option, index) => {
 
-            const card =
+            const button =
                 document.createElement(
-                    "div"
+                    "button"
                 );
 
 
-            card.className =
-                "topic-card";
+            button.type =
+                "button";
 
 
-            card.innerHTML = `
+            button.className =
+                "learning-option";
 
-                <div class="topic-number">
-                    ${index + 1}
-                </div>
 
-                <div class="topic-info">
+            button.innerHTML = `
 
-                    <h4>
-                        ${escapeHTML(
-                            topic.name
-                        )}
-                    </h4>
+                <span class="option-letter">
+                    ${String.fromCharCode(
+                        65 + index
+                    )}
+                </span>
 
-                    <p>
-                        ${escapeHTML(
-                            topic.description || ""
-                        )}
-                    </p>
-
-                </div>
-
-                <div class="topic-arrow">
-                    →
-                </div>
+                <span class="option-text">
+                    ${escapeHTML(
+                        option
+                    )}
+                </span>
 
             `;
 
 
-            card.addEventListener(
+            button.addEventListener(
                 "click",
                 () => {
 
-                    openTopic(topic);
+                    revealAnswer(
+                        question,
+                        index
+                    );
 
                 }
             );
 
 
-            grid.appendChild(card);
+            container.appendChild(
+                button
+            );
 
         }
     );
+
+        }
+// ==========================================
+// REVEAL ANSWER
+// ==========================================
+
+function revealAnswer(question, selectedIndex) {
+
+    const correctIndex =
+        getCorrectAnswerIndex(question);
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".learning-option"
+        );
+
+
+    buttons.forEach(
+        (button, index) => {
+
+            button.disabled = true;
+
+            button.classList.remove(
+                "correct",
+                "wrong"
+            );
+
+
+            if (
+                index === correctIndex
+            ) {
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if (
+                index === selectedIndex &&
+                index !== correctIndex
+            ) {
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    answerShown = true;
+
+
+    const correctAnswer =
+        document.getElementById(
+            "correctAnswer"
+        );
+
+
+    if (correctAnswer) {
+
+        correctAnswer.textContent =
+            getCorrectAnswerText(
+                question,
+                correctIndex
+            );
+
+    }
+
+
+    const explanationBox =
+        document.getElementById(
+            "explanationBox"
+        );
+
+
+    const answerBox =
+        document.getElementById(
+            "answerBox"
+        );
+
+
+    if (answerBox) {
+
+        answerBox.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    if (explanationBox) {
+
+        explanationBox.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    const explanation =
+        document.getElementById(
+            "learningExplanation"
+        );
+
+
+    if (explanation) {
+
+        explanation.innerHTML =
+            formatLearningText(
+                question.explanation ||
+                question.answerExplanation ||
+                question.description ||
+                "இந்த கேள்விக்கான விளக்கம் Admin Panel-ல் இன்னும் சேர்க்கப்படவில்லை."
+            );
+
+    }
+
+
+    const status =
+        document.getElementById(
+            "questionStatus"
+        );
+
+
+    if (status) {
+
+        if (
+            selectedIndex === correctIndex
+        ) {
+
+            status.textContent =
+                "✅ Correct";
+
+        } else {
+
+            status.textContent =
+                "❌ Wrong";
+
+        }
+
+    }
 
 }
 
 
 // ==========================================
-// OPEN TOPIC
+// GET CORRECT ANSWER INDEX
 // ==========================================
 
-function openTopic(topic) {
+function getCorrectAnswerIndex(question) {
 
-    selectedTopic =
-        topic;
-
-
-    currentLesson = 0;
-
-
-    document.getElementById(
-        "learningTopicName"
-    ).textContent =
-        topic.name;
+    const answer =
+        question.answer ??
+        question.correctAnswer ??
+        question.correctOption ??
+        question.correctIndex;
 
 
-    loadLessons();
+    if (
+        typeof answer === "number"
+    ) {
+
+        return answer;
+
+    }
 
 
-    document.getElementById(
-        "subjectSection"
-    ).classList.add("hidden");
+    if (
+        typeof answer === "string"
+    ) {
+
+        const value =
+            answer.trim();
 
 
-    document.getElementById(
-        "topicSection"
-    ).classList.add("hidden");
+        // A / B / C / D
+
+        if (
+            /^[A-Da-d]$/.test(value)
+        ) {
+
+            return (
+                value
+                    .toUpperCase()
+                    .charCodeAt(0) -
+                65
+            );
+
+        }
 
 
-    document.getElementById(
-        "learningSection"
-    ).classList.remove("hidden");
+        // Numeric answer
+
+        if (
+            !isNaN(
+                Number(value)
+            )
+        ) {
+
+            return Number(value);
+
+        }
+
+
+        // Answer text
+
+        if (
+            Array.isArray(
+                question.options
+            )
+        ) {
+
+            const found =
+                question.options.findIndex(
+                    option =>
+                        String(option)
+                            .trim()
+                            .toLowerCase() ===
+                        value.toLowerCase()
+                );
+
+
+            if (found !== -1) {
+
+                return found;
+
+            }
+
+        }
+
+    }
+
+
+    return 0;
+
+}
+
+
+// ==========================================
+// GET CORRECT ANSWER TEXT
+// ==========================================
+
+function getCorrectAnswerText(
+    question,
+    index
+) {
+
+    if (
+        Array.isArray(
+            question.options
+        ) &&
+        question.options[index] !== undefined
+    ) {
+
+        return (
+            `${String.fromCharCode(
+                65 + index
+            )}. ${question.options[index]}`
+        );
+
+    }
+
+
+    const answer =
+        question.answer ??
+        question.correctAnswer ??
+        "Answer not available";
+
+
+    return String(answer);
+
+}
+
+
+// ==========================================
+// HIDE ANSWER
+// ==========================================
+
+function hideAnswer() {
+
+    const answerBox =
+        document.getElementById(
+            "answerBox"
+        );
+
+
+    const explanationBox =
+        document.getElementById(
+            "explanationBox"
+        );
+
+
+    if (answerBox) {
+
+        answerBox.classList.add(
+            "hidden"
+        );
+
+    }
+
+
+    if (explanationBox) {
+
+        explanationBox.classList.add(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// UPDATE PROGRESS
+// ==========================================
+
+function updateProgress() {
+
+    if (
+        !subjectQuestions.length
+    ) return;
+
+
+    const progress =
+        (
+            (currentQuestion + 1) /
+            subjectQuestions.length
+        ) * 100;
+
+
+    const progressFill =
+        document.getElementById(
+            "learningProgressFill"
+        );
+
+
+    const progressText =
+        document.getElementById(
+            "learningProgressText"
+        );
+
+
+    if (progressFill) {
+
+        progressFill.style.width =
+            `${progress}%`;
+
+    }
+
+
+    if (progressText) {
+
+        progressText.textContent =
+            `${Math.round(
+                progress
+            )}%`;
+
+    }
+
+}
+
+
+// ==========================================
+// UPDATE NAVIGATION
+// ==========================================
+
+function updateNavigation() {
+
+    const previousBtn =
+        document.getElementById(
+            "previousQuestionBtn"
+        );
+
+
+    const nextBtn =
+        document.getElementById(
+            "nextQuestionBtn"
+        );
+
+
+    if (!previousBtn || !nextBtn) {
+        return;
+    }
+
+
+    previousBtn.disabled =
+        currentQuestion === 0;
+
+
+    if (
+        currentQuestion ===
+        subjectQuestions.length - 1
+    ) {
+
+        nextBtn.textContent =
+            "Completed ✓";
+
+        nextBtn.disabled = true;
+
+    } else {
+
+        nextBtn.textContent =
+            "Next →";
+
+        nextBtn.disabled = false;
+
+    }
+
+}
+
+
+// ==========================================
+// PREVIOUS QUESTION
+// ==========================================
+
+function previousQuestion() {
+
+    if (
+        currentQuestion <= 0
+    ) return;
+
+
+    currentQuestion--;
+
+    showQuestion();
 
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
 
 }
 
 
 // ==========================================
-// LOAD LESSONS
+// NEXT QUESTION
 // ==========================================
 
-function loadLessons() {
+function nextQuestion() {
 
     if (
-        !selectedSubject ||
-        !selectedTopic
-    ) return;
-
-
-    const subjectId =
-        selectedSubject.id;
-
-
-    const topicId =
-        selectedTopic.id;
-
-
-    lessons =
-        allLearningData.filter(
-            item => {
-
-                const itemSubject =
-                    item.subjectId ||
-                    item.subject ||
-                    item.category;
-
-
-                const itemTopic =
-                    item.topicId ||
-                    item.topic ||
-                    item.topicName;
-
-
-                return (
-
-                    String(itemSubject)
-                        .toLowerCase() ===
-                    String(subjectId)
-                        .toLowerCase()
-
-                    &&
-
-                    String(itemTopic)
-                        .toLowerCase() ===
-                    String(topicId)
-                        .toLowerCase()
-
-                );
-
-            }
-        );
-
-
-    lessons.sort(
-        (a, b) => {
-
-            const orderA =
-                Number(
-                    a.order ||
-                    a.lessonNumber ||
-                    0
-                );
-
-
-            const orderB =
-                Number(
-                    b.order ||
-                    b.lessonNumber ||
-                    0
-                );
-
-
-            return orderA - orderB;
-
-        }
-    );
-
-
-    if (lessons.length === 0) {
-
-        lessons = [
-
-            {
-
-                title:
-                    selectedTopic.name,
-
-                keyPoint:
-                    "இந்த topic-க்கான முக்கியமான தகவல்களை படிக்கவும்.",
-
-                explanation:
-                    "இந்த topic-க்கான learning content இன்னும் Admin Panel மூலம் சேர்க்கப்படவில்லை.",
-
-                important:
-                    "இந்த topic-ல் முக்கியமான exam points சேர்க்கப்படும்.",
-
-                remember:
-                    "முக்கியமான facts-ஐ note செய்து revision செய்யுங்கள்.",
-
-                example:
-                    "இந்த topic முடிந்ததும் Quick Test மூலம் உங்கள் preparation-ஐ check செய்யலாம்."
-
-            }
-
-        ];
-
-    }
-
-
-    showLesson();
-
-}
-
-
-// ==========================================
-// SHOW LESSON
-// ==========================================
-
-function showLesson() {
-
-    if (
-        !lessons.length
-    ) return;
-
-
-    const lesson =
-        lessons[currentLesson];
-
-
-    document.getElementById(
-        "learningTitle"
-    ).textContent =
-        lesson.title ||
-        lesson.name ||
-        "Learning Lesson";
-
-
-    document.getElementById(
-        "learningKeyPoint"
-    ).textContent =
-        lesson.keyPoint ||
-        lesson.keypoint ||
-        lesson.key_point ||
-        "Important key point";
-
-
-    document.getElementById(
-        "learningExplanation"
-    ).innerHTML =
-        formatLearningText(
-            lesson.explanation ||
-            lesson.content ||
-            lesson.description ||
-            "Explanation not available."
-        );
-
-
-    document.getElementById(
-        "learningImportant"
-    ).textContent =
-        lesson.important ||
-        lesson.examPoint ||
-        lesson.examImportant ||
-        "Important for exam";
-
-
-    document.getElementById(
-        "learningRemember"
-    ).textContent =
-        lesson.remember ||
-        lesson.rememberThis ||
-        lesson.memory ||
-        "Remember this point";
-
-
-    document.getElementById(
-        "learningExample"
-    ).textContent =
-        lesson.example ||
-        lesson.exampleQuestion ||
-        "Review this topic and test yourself.";
-
-
-    document.getElementById(
-        "learningNumber"
-    ).textContent =
-        `${currentLesson + 1} / ${lessons.length}`;
-
-
-    document.getElementById(
-        "lessonIndicator"
-    ).textContent =
-        `${currentLesson + 1} / ${lessons.length}`;
-
-
-    document.getElementById(
-        "learningProgressText"
-    ).textContent =
-        `${Math.round(
-            ((currentLesson + 1) /
-            lessons.length) * 100
-        )}%`;
-
-
-    document.getElementById(
-        "learningProgressFill"
-    ).style.width =
-        `${(
-            (currentLesson + 1) /
-            lessons.length
-        ) * 100}%`;
-
-
-    updateLessonButtons();
-
-}
-
-
-// ==========================================
-// FORMAT LEARNING TEXT
-// ==========================================
-
-function formatLearningText(text) {
-
-    if (!text) return "";
-
-
-    const safeText =
-        escapeHTML(
-            String(text)
-        );
-
-
-    return safeText
-        .replace(/\n\n/g, "<p></p>")
-        .replace(/\n/g, "<br>");
-}
-
-
-// ==========================================
-// LESSON BUTTONS
-// ==========================================
-
-function updateLessonButtons() {
-
-    const previous =
-        document.getElementById(
-            "previousLessonBtn"
-        );
-
-
-    const next =
-        document.getElementById(
-            "nextLessonBtn"
-        );
-
-
-    previous.disabled =
-        currentLesson === 0;
-
-
-    next.disabled =
-        currentLesson ===
-        lessons.length - 1;
-
-
-    if (
-        currentLesson ===
-        lessons.length - 1
+        currentQuestion >=
+        subjectQuestions.length - 1
     ) {
 
-        next.textContent =
-            "Completed ✓";
-
-    } else {
-
-        next.textContent =
-            "Next →";
+        return;
 
     }
+
+
+    currentQuestion++;
+
+    showQuestion();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
 
 }
 
 
 // ==========================================
-// PREVIOUS LESSON
+// NO QUESTIONS
 // ==========================================
 
-document.getElementById(
-    "previousLessonBtn"
-).addEventListener(
-    "click",
-    () => {
+function showNoQuestions() {
 
-        if (currentLesson > 0) {
+    const questionCard =
+        document.getElementById(
+            "learningQuestionCard"
+        );
 
-            currentLesson--;
 
-            showLesson();
+    if (!questionCard) return;
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
 
-        }
+    questionCard.innerHTML = `
+
+        <div
+            style="
+                text-align:center;
+                padding:45px 20px;
+            "
+        >
+
+            <div
+                style="
+                    font-size:50px;
+                    margin-bottom:15px;
+                "
+            >
+                📚
+            </div>
+
+            <h3>
+                Questions இல்லை
+            </h3>
+
+            <p>
+                இந்த Subject-க்கு
+                questions இன்னும்
+                upload செய்யப்படவில்லை.
+            </p>
+
+        </div>
+
+    `;
+
+
+    const previousBtn =
+        document.getElementById(
+            "previousQuestionBtn"
+        );
+
+
+    const nextBtn =
+        document.getElementById(
+            "nextQuestionBtn"
+        );
+
+
+    if (previousBtn) {
+
+        previousBtn.disabled = true;
 
     }
-);
 
 
-// ==========================================
-// NEXT LESSON
-// ==========================================
+    if (nextBtn) {
 
-document.getElementById(
-    "nextLessonBtn"
-).addEventListener(
-    "click",
-    () => {
-
-        if (
-            currentLesson <
-            lessons.length - 1
-        ) {
-
-            currentLesson++;
-
-            showLesson();
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }
+        nextBtn.disabled = true;
 
     }
-);
+
+
+    const count =
+        document.getElementById(
+            "questionCount"
+        );
+
+
+    if (count) {
+
+        count.textContent =
+            "0 Questions";
+
+    }
+
+
+    const indicator =
+        document.getElementById(
+            "questionIndicator"
+        );
+
+
+    if (indicator) {
+
+        indicator.textContent =
+            "0 / 0";
+
+    }
+
+}
 
 
 // ==========================================
@@ -1069,144 +1529,76 @@ function setupSearch() {
         );
 
 
+    if (!input) return;
+
+
     input.addEventListener(
         "input",
         () => {
 
-            searchText =
+            const value =
                 input.value
                     .trim()
                     .toLowerCase();
 
 
-            clearBtn.style.display =
-                searchText
-                    ? "block"
-                    : "none";
+            if (clearBtn) {
+
+                clearBtn.style.display =
+                    value
+                        ? "block"
+                        : "none";
+
+            }
 
 
-            performSearch();
+            const filtered =
+                subjects.filter(
+                    subject => {
+
+                        return (
+
+                            subject.name
+                                .toLowerCase()
+                                .includes(value)
+
+                            ||
+
+                            subject.description
+                                .toLowerCase()
+                                .includes(value)
+
+                        );
+
+                    }
+                );
+
+
+            renderSubjects(
+                filtered
+            );
 
         }
     );
 
 
-    clearBtn.addEventListener(
-        "click",
-        () => {
+    if (clearBtn) {
 
-            input.value = "";
+        clearBtn.addEventListener(
+            "click",
+            () => {
 
-            searchText = "";
-
-            clearBtn.style.display =
-                "none";
-
-            performSearch();
-
-        }
-    );
-
-}
+                input.value = "";
 
 
-// ==========================================
-// PERFORM SEARCH
-// ==========================================
-
-function performSearch() {
-
-    if (
-        !searchText
-    ) {
-
-        if (
-            !document.getElementById(
-                "subjectSection"
-            ).classList.contains("hidden")
-        ) {
-
-            renderSubjects();
-
-        } else if (
-            !document.getElementById(
-                "topicSection"
-            ).classList.contains("hidden")
-        ) {
-
-            renderTopics();
-
-        }
-
-        return;
-
-    }
+                clearBtn.style.display =
+                    "none";
 
 
-    if (
-        !document.getElementById(
-            "subjectSection"
-        ).classList.contains("hidden")
-    ) {
+                renderSubjects();
 
-        const filtered =
-            subjects.filter(
-                subject => {
-
-                    return (
-
-                        subject.name
-                            .toLowerCase()
-                            .includes(searchText)
-
-                        ||
-
-                        subject.description
-                            .toLowerCase()
-                            .includes(searchText)
-
-                    );
-
-                }
-            );
-
-
-        renderSubjects(filtered);
-
-    }
-
-
-    else if (
-        !document.getElementById(
-            "topicSection"
-        ).classList.contains("hidden")
-    ) {
-
-        const filtered =
-            topics.filter(
-                topic => {
-
-                    return (
-
-                        topic.name
-                            .toLowerCase()
-                            .includes(searchText)
-
-                        ||
-
-                        (
-                            topic.description || ""
-                        )
-                        .toLowerCase()
-                        .includes(searchText)
-
-                    );
-
-                }
-            );
-
-
-        renderTopics(filtered);
+            }
+        );
 
     }
 
@@ -1219,48 +1611,88 @@ function performSearch() {
 
 function setupButtons() {
 
-    document.getElementById(
-        "backToSubjectsBtn"
-    ).addEventListener(
-        "click",
-        () => {
-
-            showSubjects();
-
-        }
-    );
+    const backToSubjectsBtn =
+        document.getElementById(
+            "backToSubjectsBtn"
+        );
 
 
-    document.getElementById(
-        "backToTopicsBtn"
-    ).addEventListener(
-        "click",
-        () => {
+    if (backToSubjectsBtn) {
 
-            showTopics();
+        backToSubjectsBtn.addEventListener(
+            "click",
+            showSubjects
+        );
 
-        }
-    );
+    }
 
 
-    document.getElementById(
-        "refreshBtn"
-    ).addEventListener(
-        "click",
-        () => {
-
-            location.reload();
-
-        }
-    );
+    const previousBtn =
+        document.getElementById(
+            "previousQuestionBtn"
+        );
 
 
-    document.getElementById(
-        "startQuickTestBtn"
-    ).addEventListener(
-        "click",
-        startQuickTest
-    );
+    if (previousBtn) {
+
+        previousBtn.addEventListener(
+            "click",
+            previousQuestion
+        );
+
+    }
+
+
+    const nextBtn =
+        document.getElementById(
+            "nextQuestionBtn"
+        );
+
+
+    if (nextBtn) {
+
+        nextBtn.addEventListener(
+            "click",
+            nextQuestion
+        );
+
+    }
+
+
+    const practiceBtn =
+        document.getElementById(
+            "startPracticeBtn"
+        );
+
+
+    if (practiceBtn) {
+
+        practiceBtn.addEventListener(
+            "click",
+            startPractice
+        );
+
+    }
+
+
+    const refreshBtn =
+        document.getElementById(
+            "refreshBtn"
+        );
+
+
+    if (refreshBtn) {
+
+        refreshBtn.addEventListener(
+            "click",
+            () => {
+
+                location.reload();
+
+            }
+        );
+
+    }
 
 }
 
@@ -1273,79 +1705,53 @@ function showSubjects() {
 
     selectedSubject = null;
 
-    selectedTopic = null;
+    subjectQuestions = [];
 
-    currentLesson = 0;
+    currentQuestion = 0;
+
+    answerShown = false;
+
 
     document.getElementById(
         "subjectSection"
-    ).classList.remove("hidden");
+    ).classList.remove(
+        "hidden"
+    );
 
 
     document.getElementById(
-        "topicSection"
-    ).classList.add("hidden");
-
-
-    document.getElementById(
-        "learningSection"
-    ).classList.add("hidden");
+        "questionSection"
+    ).classList.add(
+        "hidden"
+    );
 
 
     renderSubjects();
 
+
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
 
 }
 
 
 // ==========================================
-// SHOW TOPICS
+// START PRACTICE
 // ==========================================
 
-function showTopics() {
-
-    document.getElementById(
-        "subjectSection"
-    ).classList.add("hidden");
-
-
-    document.getElementById(
-        "topicSection"
-    ).classList.remove("hidden");
-
-
-    document.getElementById(
-        "learningSection"
-    ).classList.add("hidden");
-
-
-    renderTopics();
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-// ==========================================
-// QUICK TEST
-// ==========================================
-
-function startQuickTest() {
+function startPractice() {
 
     if (
-        !selectedSubject ||
-        !selectedTopic
+        !selectedSubject
     ) {
 
         alert(
-            "Please select a topic first."
+            "Please select a subject first."
         );
 
         return;
@@ -1353,32 +1759,24 @@ function startQuickTest() {
     }
 
 
+    const subject =
+        encodeURIComponent(
+            selectedSubject.firestoreValue ||
+            selectedSubject.name
+        );
+
+
     /*
-        Quick Test can use the existing
-        Practice Test page.
+       Existing Practice page
+       will receive subject.
 
-        URL parameters:
-        subject + topic
-
-        Your practice.js can read these
-        parameters and filter questions.
+       Example:
+       practice.html?subject=History
     */
 
 
-    const subject =
-        encodeURIComponent(
-            selectedSubject.id
-        );
-
-
-    const topic =
-        encodeURIComponent(
-            selectedTopic.id
-        );
-
-
     window.location.href =
-        `practice.html?subject=${subject}&topic=${topic}`;
+        `practice.html?subject=${subject}`;
 
 }
 
@@ -1389,93 +1787,123 @@ function startQuickTest() {
 
 function setupNavigation() {
 
-    document.getElementById(
-        "backBtn"
-    ).addEventListener(
-        "click",
-        () => {
+    const backBtn =
+        document.getElementById(
+            "backBtn"
+        );
 
-            if (
-                !document.getElementById(
-                    "learningSection"
-                ).classList.contains("hidden")
-            ) {
 
-                showTopics();
+    if (backBtn) {
 
-                return;
+        backBtn.addEventListener(
+            "click",
+            () => {
+
+                const questionSection =
+                    document.getElementById(
+                        "questionSection"
+                    );
+
+
+                if (
+                    questionSection &&
+                    !questionSection.classList.contains(
+                        "hidden"
+                    )
+                ) {
+
+                    showSubjects();
+
+                    return;
+
+                }
+
+
+                window.history.back();
 
             }
+        );
+
+    }
 
 
-            if (
-                !document.getElementById(
-                    "topicSection"
-                ).classList.contains("hidden")
-            ) {
+    const homeNav =
+        document.getElementById(
+            "homeNav"
+        );
 
-                showSubjects();
 
-                return;
+    if (homeNav) {
+
+        homeNav.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "index.html";
 
             }
+        );
+
+    }
 
 
-            window.history.back();
-
-        }
-    );
-
-
-    document.getElementById(
-        "homeNav"
-    ).addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "index.html";
-
-        }
-    );
+    const practiceNav =
+        document.getElementById(
+            "practiceNav"
+        );
 
 
-    document.getElementById(
-        "practiceNav"
-    ).addEventListener(
-        "click",
-        () => {
+    if (practiceNav) {
 
-            window.location.href =
-                "practice.html";
+        practiceNav.addEventListener(
+            "click",
+            () => {
 
-        }
-    );
+                window.location.href =
+                    "practice.html";
 
+            }
+        );
 
-    document.getElementById(
-        "learningNav"
-    ).addEventListener(
-        "click",
-        () => {
-
-            showSubjects();
-
-        }
-    );
+    }
 
 
-    document.getElementById(
-        "profileNav"
-    ).addEventListener(
-        "click",
-        () => {
+    const learningNav =
+        document.getElementById(
+            "learningNav"
+        );
 
-            window.location.href =
-                "profile.html";
 
-        }
-    );
+    if (learningNav) {
+
+        learningNav.addEventListener(
+            "click",
+            showSubjects
+        );
+
+    }
+
+
+    const profileNav =
+        document.getElementById(
+            "profileNav"
+        );
+
+
+    if (profileNav) {
+
+        profileNav.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "profile.html";
+
+            }
+        );
+
+    }
 
 }
 
@@ -1484,7 +1912,7 @@ function setupNavigation() {
 // LOADING
 // ==========================================
 
-function showSubjectLoading() {
+function showLoading() {
 
     const grid =
         document.getElementById(
@@ -1547,22 +1975,66 @@ function hideLoader() {
 
 function showNoResults() {
 
-    document.getElementById(
-        "noResults"
-    ).classList.remove(
-        "hidden"
-    );
+    const element =
+        document.getElementById(
+            "noResults"
+        );
+
+
+    if (element) {
+
+        element.classList.remove(
+            "hidden"
+        );
+
+    }
 
 }
 
 
 function hideNoResults() {
 
-    document.getElementById(
-        "noResults"
-    ).classList.add(
-        "hidden"
-    );
+    const element =
+        document.getElementById(
+            "noResults"
+        );
+
+
+    if (element) {
+
+        element.classList.add(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// FORMAT TEXT
+// ==========================================
+
+function formatLearningText(text) {
+
+    if (!text) return "";
+
+
+    const safeText =
+        escapeHTML(
+            String(text)
+        );
+
+
+    return safeText
+        .replace(
+            /\n\n/g,
+            "<p></p>"
+        )
+        .replace(
+            /\n/g,
+            "<br>"
+        );
 
 }
 
@@ -1574,22 +2046,27 @@ function hideNoResults() {
 function escapeHTML(value) {
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -1604,11 +2081,12 @@ function escapeHTML(value) {
 
 window.addEventListener(
     "error",
-    (error) => {
+    (event) => {
 
         console.error(
             "Learning Zone Error:",
-            error
+            event.error ||
+            event.message
         );
 
     }
@@ -1621,4 +2099,8 @@ window.addEventListener(
 
 console.log(
     "📚 G THE GENIUS Learning Zone Ready"
+);
+
+console.log(
+    "🔥 Using existing Firestore questions collection"
 );
