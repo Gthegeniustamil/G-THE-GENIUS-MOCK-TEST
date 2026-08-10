@@ -186,12 +186,6 @@ async function initializeLearning() {
 
     setupQuestionButtons();
 
-    setupRefreshButton();
-
-    setupQuickTest();
-
-    prepareInitialUI();
-
     await loadQuestions();
 
     renderSubjects();
@@ -202,7 +196,6 @@ async function initializeLearning() {
         "✅ Learning Zone Ready"
     );
 }
-
 
 // ==========================================
 // LOAD QUESTIONS
