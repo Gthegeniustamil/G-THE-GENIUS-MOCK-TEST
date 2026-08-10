@@ -1828,24 +1828,21 @@ function setupNavigation() {
 
 
     const homeNav =
-        document.getElementById(
-            "homeNav"
-        );
+    // ==========================================
+// HOME → DASHBOARD
+// ==========================================
 
+const homeNav = document.getElementById("homeNav");
 
-    if (homeNav) {
+if (homeNav) {
 
-        homeNav.addEventListener(
-            "click",
-            () => {
+    homeNav.addEventListener("click", () => {
 
-                window.location.href =
-                    "index.html";
+        window.location.href = "dashboard.html";
 
-            }
-        );
+    });
 
-    }
+}
 
 
     const practiceNav =
