@@ -1701,15 +1701,13 @@ function getCorrectAnswer(
 
 
 // ==========================================
-// CHECK CORRECT OPTION - ROBUST VERSION
-// Supports:
-// A / B / C / D
-// 1 / 2 / 3 / 4
-// 0 / 1 / 2 / 3  (zero-based)
-// Option A / Option B
-// (A) / (B) / (C) / (D)
-// A. / B. / C. / D.
-// Full option text
+// CHECK CORRECT OPTION
+// FIRESTORE 0-BASED ANSWER
+//
+// 0 = A
+// 1 = B
+// 2 = C
+// 3 = D
 // ==========================================
 
 function isCorrectOption(
@@ -1748,175 +1746,101 @@ function isCorrectOption(
 
 
     // ======================================
-    // 1. EXACT OPTION VALUE
+    // 1. 0 / 1 / 2 / 3
     // ======================================
 
-    if (correct === value) {
-        return true;
+    if (
+        /^(0|1|2|3)$/.test(correct)
+    ) {
+
+        return (
+            Number(correct) ===
+            index
+        );
+
     }
 
 
     // ======================================
-    // 2. EXACT OPTION TEXT
+    // 2. A / B / C / D
     // ======================================
 
-    if (correct === label) {
+    if (
+        correct === letter
+    ) {
+
         return true;
+
     }
 
 
     // ======================================
-    // 3. A / B / C / D
-    // ======================================
-
-    if (correct === letter) {
-        return true;
-    }
-
-
-    // ======================================
-    // 4. OPTION A / OPTION B / OPTION C / D
+    // 3. Option A / Option B / etc.
     // ======================================
 
     if (
         correct === `option ${letter}`
     ) {
+
         return true;
+
     }
 
 
     // ======================================
-    // 5. (A) / (B) / (C) / (D)
+    // 4. (A) / (B) / (C) / (D)
     // ======================================
 
     if (
         correct === `(${letter})`
     ) {
+
         return true;
+
     }
 
 
     // ======================================
-    // 6. A. / B. / C. / D.
+    // 5. A. / B. / C. / D.
     // ======================================
 
     if (
         correct === `${letter}.`
     ) {
+
         return true;
+
     }
 
 
     // ======================================
-    // 7. "A)" / "B)" / "C)" / "D)"
+    // 6. Full option text
     // ======================================
 
     if (
-        correct === `${letter})`
+        correct === label
     ) {
+
         return true;
-    }
 
-
-    // ======================================
-    // 8. NUMERIC ANSWER
-    // ======================================
-
-    // 1,2,3,4 = A,B,C,D
-    if (
-        correct === String(index + 1)
-    ) {
-        return true;
-    }
-
-
-    // ======================================
-    // 9. ZERO-BASED NUMERIC ANSWER
-    // 0,1,2,3 = A,B,C,D
-    // ======================================
-
-    if (
-        correct === String(index)
-    ) {
-
-        // Only treat 0 as zero-based directly.
-        // For 1,2,3 the checks above already
-        // handle the normal 1-4 format.
-
-        if (correct === "0") {
-            return index === 0;
-        }
-    }
-
-
-    // ======================================
-    // 10. ANSWER TEXT WITH PREFIX
-    // Example:
-    // "Answer: B"
-    // "Correct Answer: C"
-    // "சரியான பதில்: D"
-    // ======================================
-
-    const cleanedCorrect =
-        correct
-            .replace(
-                /^(answer|correct answer|correct|option|சரியான பதில்|பதில்)\s*[:\-]?\s*/i,
-                ""
-            )
-            .trim();
-
-
-    if (
-        cleanedCorrect === letter
-    ) {
-        return true;
     }
 
 
     if (
-        cleanedCorrect === label
+        correct === value
     ) {
+
         return true;
+
     }
 
-
-    if (
-        cleanedCorrect === value
-    ) {
-        return true;
-    }
-
-
-    // ======================================
-    // 11. ANSWER LIKE "B. சென்னை"
-    // OR "(B) சென்னை"
-    // ======================================
-
-    const answerWithoutPrefix =
-        cleanedCorrect
-            .replace(
-                /^[a-e][\.\)\:\-\s]+/i,
-                ""
-            )
-            .trim();
-
-
-    if (
-        answerWithoutPrefix === label
-    ) {
-        return true;
-    }
-
-
-    // ======================================
-    // NO MATCH
-    // ======================================
 
     return false;
 
 }
-        
 
+
+    
 
 // ==========================================
 // FORMAT LEARNING TEXT
