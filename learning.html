@@ -1,5 +1,12 @@
+<!-- ==========================================
+G THE GENIUS
+LEARNING ZONE
+PART 1 / 2
+Subject → Questions
+========================================== -->
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 
 <head>
 
@@ -7,19 +14,17 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <meta
-        name="theme-color"
-        content="#081229">
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>
-        Learning Zone | G THE GENIUS
+        G THE GENIUS - Learning Zone
     </title>
 
     <link
         rel="stylesheet"
-        href="learning.css">
+        href="learning.css"
+    >
 
 </head>
 
@@ -28,16 +33,13 @@
 
 
 <!-- ==========================================
-     PAGE LOADER
+PAGE LOADER
 ========================================== -->
 
 <div
     id="pageLoader"
-    class="page-loader">
-
-    <div class="loader-logo">
-        G
-    </div>
+    class="page-loader"
+>
 
     <div class="loader-spinner"></div>
 
@@ -48,794 +50,449 @@
 </div>
 
 
-
 <!-- ==========================================
-     MAIN APP
+TOP HEADER
 ========================================== -->
 
-<div class="app-container">
+<header class="learning-header">
 
-
-    <!-- ======================================
-         HEADER
-    ======================================= -->
-
-    <header class="top-header">
-
+    <div class="header-left">
 
         <button
-            type="button"
-            class="back-btn"
             id="backBtn"
-            aria-label="Go Back">
-
-            ←
-
-        </button>
-
-
-
-        <div class="header-title">
-
-            <h1>
-                📚 Learning Zone
-            </h1>
-
-            <span>
-                G THE GENIUS • LEARN TO LEAD
-            </span>
-
-        </div>
-
-
-
-        <button
+            class="icon-btn"
             type="button"
-            class="refresh-btn"
-            id="refreshBtn"
-            aria-label="Refresh">
-
-            ↻
-
+        >
+            ←
         </button>
 
+        <div class="brand-area">
 
-    </header>
-
-
-
-    <!-- ======================================
-         WELCOME BANNER
-    ======================================= -->
-
-    <section class="learning-banner">
-
-
-        <div class="banner-content">
-
-            <span class="banner-small">
-                🎓 SMART LEARNING
-            </span>
-
-            <h2>
-                Learn Today.
-                <br>
-                Lead Tomorrow.
-            </h2>
-
-            <p>
-                Choose a subject and start
-                learning important exam topics.
-            </p>
-
-        </div>
-
-
-
-        <div class="banner-icon">
-
-            📖
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- ======================================
-         SEARCH
-    ======================================= -->
-
-    <section class="search-section">
-
-        <div class="search-box">
-
-            <span>
-                🔍
-            </span>
-
-            <input
-                type="search"
-                id="searchInput"
-                placeholder="Search subjects or topics..."
-                autocomplete="off">
-
-            <button
-                type="button"
-                id="clearSearchBtn"
-                class="clear-search">
-
-                ×
-
-            </button>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ======================================
-         SUBJECT SECTION
-    ======================================= -->
-
-    <section
-        id="subjectSection"
-        class="content-section">
-
-
-        <div class="section-heading">
-
+            <div class="brand-logo">
+                🧠
+            </div>
 
             <div>
 
-                <div class="section-icon">
-                    📚
-                </div>
-
-
-                <div>
-
-                    <h3>
-                        Choose a Subject
-                    </h3>
-
-                    <p>
-                        Select a subject to start learning
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <span
-                id="subjectCount"
-                class="count-badge">
-
-                0 Subjects
-
-            </span>
-
-
-        </div>
-
-
-
-        <!-- SUBJECT GRID -->
-
-        <div
-            id="subjectGrid"
-            class="subject-grid">
-
-
-            <!-- JavaScript will load subjects here -->
-
-
-            <div class="loading-card">
-
-                <div class="mini-spinner"></div>
+                <h1>
+                    G THE GENIUS
+                </h1>
 
                 <p>
-                    Loading subjects...
+                    LEARNING ZONE
                 </p>
 
             </div>
 
-
         </div>
 
-
-    </section>
-
+    </div>
 
 
-    <!-- ======================================
-         TOPIC SECTION
-    ======================================= -->
+    <button
+        id="refreshBtn"
+        class="icon-btn"
+        type="button"
+    >
+        ↻
+    </button>
 
-    <section
-        id="topicSection"
-        class="content-section hidden">
-
-
-        <div class="section-heading">
-
-
-            <div>
-
-                <button
-                    type="button"
-                    id="backToSubjectsBtn"
-                    class="small-back-btn">
-
-                    ←
-
-                </button>
+</header>
 
 
-                <div class="section-heading-text">
+<!-- ==========================================
+MAIN
+========================================== -->
 
-                    <h3
-                        id="selectedSubjectTitle">
-
-                        Subject
-
-                    </h3>
-
-                    <p>
-                        Choose a topic to learn
-                    </p>
-
-                </div>
-
-            </div>
+<main class="learning-main">
 
 
-            <span
-                id="topicCount"
-                class="count-badge">
+<!-- ==========================================
+WELCOME
+========================================== -->
 
-                0 Topics
+<section class="learning-hero">
 
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            📚 SMART LEARNING
+        </span>
+
+        <h2>
+            Learn. Practice. Improve.
+        </h2>
+
+        <p>
+            Choose a subject and learn
+            important exam questions
+            with answers and explanations.
+        </p>
+
+    </div>
+
+    <div class="hero-icon">
+        🎓
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+SEARCH
+========================================== -->
+
+<div class="search-box">
+
+    <span class="search-icon">
+        🔍
+    </span>
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search subject..."
+        autocomplete="off"
+    >
+
+    <button
+        id="clearSearchBtn"
+        type="button"
+        style="display:none;"
+    >
+        ✕
+    </button>
+
+</div>
+
+
+<!-- ==========================================
+SUBJECT SECTION
+========================================== -->
+
+<section
+    id="subjectSection"
+    class="learning-section"
+>
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                SELECT SUBJECT
             </span>
 
+            <h3>
+                Choose a Subject
+            </h3>
 
         </div>
 
+        <span
+            id="subjectCount"
+            class="count-badge"
+        >
+            0 Subjects
+        </span>
 
+    </div>
 
-        <!-- SELECTED SUBJECT INFO -->
 
-        <div
-            id="selectedSubjectCard"
-            class="selected-subject-card">
+    <div
+        id="subjectGrid"
+        class="subject-grid"
+    >
 
+        <!-- Subjects loaded by JS -->
 
-            <div
-                id="selectedSubjectIcon"
-                class="selected-subject-icon">
+    </div>
 
-                📚
-
-            </div>
-
-
-            <div>
-
-                <strong
-                    id="selectedSubjectName">
-
-                    Subject
-
-                </strong>
-
-                <span>
-                    Select any topic below
-                    and start learning.
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- TOPIC GRID -->
-
-        <div
-            id="topicGrid"
-            class="topic-grid">
-
-
-            <!-- JavaScript will load topics here -->
-
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- ======================================
-         LEARNING CONTENT SECTION
-    ======================================= -->
-
-    <section
-        id="learningSection"
-        class="content-section hidden">
-
-
-        <!-- CONTENT HEADER -->
-
-        <div class="learning-content-header">
-
-
-            <button
-                type="button"
-                id="backToTopicsBtn"
-                class="small-back-btn">
-
-                ← Topics
-
-            </button>
-
-
-            <div class="learning-breadcrumb">
-
-                <span
-                    id="learningSubjectName">
-
-                    Subject
-
-                </span>
-
-                <b>
-                    /
-                </b>
-
-                <span
-                    id="learningTopicName">
-
-                    Topic
-
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- PROGRESS -->
-
-        <div class="learning-progress">
-
-
-            <div class="progress-info">
-
-                <span>
-                    Learning Progress
-                </span>
-
-                <strong
-                    id="learningProgressText">
-
-                    0%
-
-                </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-                <div
-                    id="learningProgressFill"
-                    class="progress-fill">
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- LEARNING CARD -->
-
-        <article
-            id="learningCard"
-            class="learning-card">
-
-
-            <!-- TOP -->
-
-            <div class="learning-card-top">
-
-
-                <span
-                    id="learningCategory"
-                    class="learning-category">
-
-                    📖 LESSON
-
-                </span>
-
-
-                <span
-                    id="learningNumber"
-                    class="learning-number">
-
-                    1 / 1
-
-                </span>
-
-
-            </div>
-
-
-
-            <!-- TITLE -->
-
-            <h2
-                id="learningTitle">
-
-                Loading...
-
-            </h2>
-
-
-
-            <!-- KEY POINT -->
-
-            <div class="key-point-box">
-
-
-                <div class="key-point-icon">
-                    💡
-                </div>
-
-
-                <div>
-
-                    <span>
-                        KEY POINT
-                    </span>
-
-                    <p
-                        id="learningKeyPoint">
-
-                        Loading key point...
-
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- EXPLANATION -->
-
-            <div class="learning-block">
-
-
-                <h3>
-                    📖 Explanation
-                </h3>
-
-
-                <div
-                    id="learningExplanation"
-                    class="learning-text">
-
-                    Loading explanation...
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- IMPORTANT -->
-
-            <div
-                id="importantBox"
-                class="important-box">
-
-
-                <div class="important-icon">
-                    ⭐
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        Important for Exam
-                    </strong>
-
-
-                    <p
-                        id="learningImportant">
-
-                        Important information
-
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- REMEMBER -->
-
-            <div
-                id="rememberBox"
-                class="remember-box">
-
-
-                <div class="remember-icon">
-                    🧠
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        Remember This
-                    </strong>
-
-
-                    <p
-                        id="learningRemember">
-
-                        Remember this point
-
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- EXAMPLE -->
-
-            <div
-                id="exampleBox"
-                class="example-box">
-
-
-                <h3>
-                    📝 Example Question
-                </h3>
-
-
-                <p
-                    id="learningExample">
-
-                    Example question
-
-                </p>
-
-            </div>
-
-
-
-        </article>
-
-
-
-        <!-- ==================================
-             LESSON NAVIGATION
-        =================================== -->
-
-        <div class="lesson-navigation">
-
-
-            <button
-                type="button"
-                id="previousLessonBtn"
-                class="lesson-nav-btn">
-
-                ← Previous
-
-            </button>
-
-
-            <span
-                id="lessonIndicator">
-
-                1 / 1
-
-            </span>
-
-
-            <button
-                type="button"
-                id="nextLessonBtn"
-                class="lesson-nav-btn primary">
-
-                Next →
-
-            </button>
-
-
-        </div>
-
-
-
-        <!-- ==================================
-             QUICK TEST
-        =================================== -->
-
-        <div
-            id="quickTestCard"
-            class="quick-test-card">
-
-
-            <div class="quick-test-icon">
-                📝
-            </div>
-
-
-            <div class="quick-test-content">
-
-                <span>
-                    TEST YOURSELF
-                </span>
-
-
-                <h3>
-                    Quick Test
-                </h3>
-
-
-                <p>
-                    Finished learning?
-                    Test what you remember
-                    with 5 quick questions.
-                </p>
-
-            </div>
-
-
-            <button
-                type="button"
-                id="startQuickTestBtn"
-                class="quick-test-btn">
-
-                Start Test →
-
-            </button>
-
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- ======================================
-         NO RESULTS
-    ======================================= -->
 
     <div
         id="noResults"
-        class="no-results hidden">
+        class="no-results hidden"
+    >
 
-
-        <div class="no-results-icon">
+        <div>
             🔍
         </div>
 
-
         <h3>
-            No Results Found
+            No Subject Found
         </h3>
 
-
         <p>
-            Try another subject or topic.
+            Try another search.
         </p>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+QUESTION SECTION
+========================================== -->
+
+<section
+    id="questionSection"
+    class="learning-section hidden"
+>
+
+
+    <!-- QUESTION HEADER -->
+
+    <div class="question-page-header">
+
+        <button
+            id="backToSubjectsBtn"
+            class="back-link"
+            type="button"
+        >
+            ← Subjects
+        </button>
+
+
+        <div class="selected-subject">
+
+            <div
+                id="selectedSubjectIcon"
+                class="selected-subject-icon"
+            >
+                📚
+            </div>
+
+            <div>
+
+                <span>
+                    LEARNING
+                </span>
+
+                <h3
+                    id="selectedSubjectName"
+                >
+                    Subject
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <span
+            id="questionCount"
+            class="count-badge"
+        >
+            0 Questions
+        </span>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+
+    <div class="learning-progress">
+
+        <div class="progress-info">
+
+            <span>
+                Learning Progress
+            </span>
+
+            <strong
+                id="learningProgressText"
+            >
+                0%
+            </strong>
+
+        </div>
+
+        <div class="progress-track">
+
+            <div
+                id="learningProgressFill"
+                class="progress-fill"
+                style="width:0%"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUESTION CARD -->
+
+    <div
+        id="learningQuestionCard"
+        class="learning-question-card"
+    >
+
+
+        <div class="question-top">
+
+            <span
+                id="questionNumber"
+                class="question-number"
+            >
+                Question 1
+            </span>
+
+            <span
+                id="questionStatus"
+                class="question-status"
+            >
+                📖 Learn
+            </span>
+
+        </div>
+
+
+        <div
+            id="learningQuestion"
+            class="learning-question"
+        >
+            Loading Question...
+        </div>
+
+
+        <!-- OPTIONS -->
+
+        <div
+            id="learningOptions"
+            class="learning-options"
+        >
+
+            <!-- Options loaded by JS -->
+
+        </div>
+
+
+        <!-- ANSWER -->
+
+        <div
+            id="answerBox"
+            class="answer-box hidden"
+        >
+
+            <div class="answer-title">
+                ✅ Correct Answer
+            </div>
+
+            <div
+                id="correctAnswer"
+                class="correct-answer"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- EXPLANATION -->
+
+        <div
+            id="explanationBox"
+            class="explanation-box hidden"
+        >
+
+            <div class="explanation-title">
+                💡 Explanation
+            </div>
+
+            <div
+                id="learningExplanation"
+                class="learning-explanation"
+            >
+            </div>
+
+        </div>
 
 
     </div>
 
 
+    <!-- NAVIGATION -->
 
-    <!-- ======================================
-         FOOTER
-    ======================================= -->
+    <div class="lesson-navigation">
 
-    <footer class="app-footer">
+        <button
+            id="previousQuestionBtn"
+            class="nav-btn secondary"
+            type="button"
+        >
+            ← Previous
+        </button>
 
 
-        <div class="footer-brand">
+        <span
+            id="questionIndicator"
+            class="question-indicator"
+        >
+            1 / 1
+        </span>
 
-            <strong>
-                G THE GENIUS
-            </strong>
 
-            <span>
-                Learn to Lead
-            </span>
+        <button
+            id="nextQuestionBtn"
+            class="nav-btn primary"
+            type="button"
+        >
+            Next →
+        </button>
+
+    </div>
+
+
+    <!-- PRACTICE -->
+
+    <div class="practice-card">
+
+        <div class="practice-icon">
+            📝
+        </div>
+
+        <div class="practice-content">
+
+            <h3>
+                Ready to Practice?
+            </h3>
+
+            <p>
+                இந்த Subject-ல் Practice Test
+                எழுதி உங்கள் preparation-ஐ
+                check செய்யுங்கள்.
+            </p>
 
         </div>
 
 
-        <p>
-            © 2026 G THE GENIUS.
-            All Rights Reserved.
-        </p>
+        <button
+            id="startPracticeBtn"
+            class="practice-btn"
+            type="button"
+        >
+            Start Practice →
+        </button>
+
+    </div>
 
 
-        <div class="footer-links">
+</section>
 
 
-            <a
-                href="https://youtube.com/@gthegeniustamil?si=K-EUnUHBd6cSdEPr"
-                target="_blank"
-                rel="noopener noreferrer">
-
-                ▶️ YouTube
-
-            </a>
-
-
-            <a
-                href="https://t.me/gthegenius"
-                target="_blank"
-                rel="noopener noreferrer">
-
-                ✈️ Telegram
-
-            </a>
-
-
-            <a
-                href="mailto:gthegenius7@gmail.com">
-
-                📧 Email
-
-            </a>
-
-
-        </div>
-
-
-    </footer>
-
-
-
-</div>
-
+</main>
 
 
 <!-- ==========================================
-     BOTTOM NAVIGATION
+BOTTOM NAVIGATION
 ========================================== -->
 
 <nav class="bottom-nav">
 
-
     <button
+        id="homeNav"
         type="button"
-        class="nav-item"
-        id="homeNav">
+    >
 
         <span>
             🏠
@@ -848,11 +505,10 @@
     </button>
 
 
-
     <button
+        id="practiceNav"
         type="button"
-        class="nav-item"
-        id="practiceNav">
+    >
 
         <span>
             📝
@@ -865,28 +521,27 @@
     </button>
 
 
-
     <button
+        id="learningNav"
+        class="active"
         type="button"
-        class="nav-item active"
-        id="learningNav">
+    >
 
         <span>
             📚
         </span>
 
         <small>
-            Learn
+            Learning
         </small>
 
     </button>
 
 
-
     <button
+        id="profileNav"
         type="button"
-        class="nav-item"
-        id="profileNav">
+    >
 
         <span>
             👤
@@ -898,21 +553,15 @@
 
     </button>
 
-
 </nav>
 
 
-
-<!-- ==========================================
-     JAVASCRIPT
-========================================== -->
-
 <script
     type="module"
-    src="learning.js">
-</script>
+    src="learning.js"
+></script>
 
 
 </body>
 
-  </html>
+</html>
