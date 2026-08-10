@@ -216,8 +216,7 @@ async function initializeLearning() {
 
     setupNavigation();
 
-    setupSearch();
-
+    
     setupSubjectBackButton();
 
     setupQuestionButtons();
