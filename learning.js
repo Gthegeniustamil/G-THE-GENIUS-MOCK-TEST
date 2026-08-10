@@ -1372,7 +1372,17 @@ function renderLearningOptions(
         getCorrectAnswer(
             question
         );
-
+console.log(
+    "🎯 Learning Answer Debug:",
+    {
+        questionId: question.id,
+        correctAnswer: question.correctAnswer,
+        answer: question.answer,
+        correct: question.correct,
+        finalCorrectAnswer: correct,
+        options: options
+    }
+);
 
     // ======================================
     // CREATE OPTIONS
@@ -1692,7 +1702,15 @@ function getCorrectAnswer(
 
 
 // ==========================================
-// CHECK CORRECT OPTION
+// CHECK CORRECT OPTION - ROBUST VERSION
+// Supports:
+// A / B / C / D
+// 1 / 2 / 3 / 4
+// 0 / 1 / 2 / 3  (zero-based)
+// Option A / Option B
+// (A) / (B) / (C) / (D)
+// A. / B. / C. / D.
+// Full option text
 // ==========================================
 
 function isCorrectOption(
@@ -1704,131 +1722,201 @@ function isCorrectOption(
 ) {
 
     if (
-        !correctAnswer
+        correctAnswer === undefined ||
+        correctAnswer === null ||
+        String(correctAnswer).trim() === ""
     ) {
-
         return false;
-
     }
 
 
     const correct =
-        normalizeText(
-            correctAnswer
-        );
+        normalizeText(correctAnswer);
 
 
     const value =
-        normalizeText(
-            optionValue
-        );
+        normalizeText(optionValue);
 
 
     const label =
-        normalizeText(
-            optionLabel
-        );
+        normalizeText(optionLabel);
 
-
-    // --------------------------------------
-    // A / B / C / D
-    // --------------------------------------
 
     const letter =
         normalizeText(
-            getOptionLetter(
-                index
-            )
+            getOptionLetter(index)
         );
 
 
+    // ======================================
+    // 1. EXACT OPTION VALUE
+    // ======================================
+
+    if (correct === value) {
+        return true;
+    }
+
+
+    // ======================================
+    // 2. EXACT OPTION TEXT
+    // ======================================
+
+    if (correct === label) {
+        return true;
+    }
+
+
+    // ======================================
+    // 3. A / B / C / D
+    // ======================================
+
+    if (correct === letter) {
+        return true;
+    }
+
+
+    // ======================================
+    // 4. OPTION A / OPTION B / OPTION C / D
+    // ======================================
+
     if (
-        correct ===
-        value
+        correct === `option ${letter}`
+    ) {
+        return true;
+    }
+
+
+    // ======================================
+    // 5. (A) / (B) / (C) / (D)
+    // ======================================
+
+    if (
+        correct === `(${letter})`
+    ) {
+        return true;
+    }
+
+
+    // ======================================
+    // 6. A. / B. / C. / D.
+    // ======================================
+
+    if (
+        correct === `${letter}.`
+    ) {
+        return true;
+    }
+
+
+    // ======================================
+    // 7. "A)" / "B)" / "C)" / "D)"
+    // ======================================
+
+    if (
+        correct === `${letter})`
+    ) {
+        return true;
+    }
+
+
+    // ======================================
+    // 8. NUMERIC ANSWER
+    // ======================================
+
+    // 1,2,3,4 = A,B,C,D
+    if (
+        correct === String(index + 1)
+    ) {
+        return true;
+    }
+
+
+    // ======================================
+    // 9. ZERO-BASED NUMERIC ANSWER
+    // 0,1,2,3 = A,B,C,D
+    // ======================================
+
+    if (
+        correct === String(index)
     ) {
 
-        return true;
+        // Only treat 0 as zero-based directly.
+        // For 1,2,3 the checks above already
+        // handle the normal 1-4 format.
 
+        if (correct === "0") {
+            return index === 0;
+        }
+    }
+
+
+    // ======================================
+    // 10. ANSWER TEXT WITH PREFIX
+    // Example:
+    // "Answer: B"
+    // "Correct Answer: C"
+    // "சரியான பதில்: D"
+    // ======================================
+
+    const cleanedCorrect =
+        correct
+            .replace(
+                /^(answer|correct answer|correct|option|சரியான பதில்|பதில்)\s*[:\-]?\s*/i,
+                ""
+            )
+            .trim();
+
+
+    if (
+        cleanedCorrect === letter
+    ) {
+        return true;
     }
 
 
     if (
-        correct ===
-        label
+        cleanedCorrect === label
     ) {
-
         return true;
-
     }
 
 
     if (
-        correct ===
-        letter
+        cleanedCorrect === value
     ) {
-
         return true;
-
     }
 
 
-    // --------------------------------------
-    // "Option A" / "Option B"
-    // --------------------------------------
+    // ======================================
+    // 11. ANSWER LIKE "B. சென்னை"
+    // OR "(B) சென்னை"
+    // ======================================
 
-    if (
-        correct ===
-        `option ${letter}`
-    ) {
-
-        return true;
-
-    }
-
-
-    // --------------------------------------
-    // Numeric answer
-    // --------------------------------------
-
-    if (
-        correct ===
-        String(
-            index + 1
-        )
-    ) {
-
-        return true;
-
-    }
-
-
-    // --------------------------------------
-    // Answer contains option
-    // --------------------------------------
-
-    if (
-        correct ===
-        `(${letter})`
-    ) {
-
-        return true;
-
-    }
+    const answerWithoutPrefix =
+        cleanedCorrect
+            .replace(
+                /^[a-e][\.\)\:\-\s]+/i,
+                ""
+            )
+            .trim();
 
 
     if (
-        correct ===
-        `${letter}.`
+        answerWithoutPrefix === label
     ) {
-
         return true;
-
     }
 
+
+    // ======================================
+    // NO MATCH
+    // ======================================
 
     return false;
 
 }
+        
 
 
 // ==========================================
