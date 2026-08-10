@@ -2445,3 +2445,434 @@ button:focus-visible {
 console {
     display: none;
    }
+/* ==========================================
+   G THE GENIUS
+   LEARNING ZONE
+   SUBJECT ONLY - FINAL OVERRIDE
+========================================== */
+
+/* Hide Topic System */
+#topicSection {
+    display: none !important;
+}
+
+/* Subject Grid */
+#subjectGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+/* Subject Card */
+.subject-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-height: 92px;
+    padding: 16px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.065),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid
+        rgba(255,215,0,0.10);
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.16);
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(255,215,0,0.35);
+
+    box-shadow:
+        0 14px 30px
+        rgba(0,0,0,0.25);
+}
+
+/* Icon */
+.subject-icon {
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,215,0,0.08);
+
+    border:
+        1px solid
+        rgba(255,215,0,0.14);
+
+    font-size: 25px;
+}
+
+/* Subject Info */
+.subject-info {
+    min-width: 0;
+}
+
+.subject-info h4 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.subject-info p {
+    margin: 0;
+
+    color: #8995ad;
+
+    font-size: 10px;
+
+    line-height: 1.45;
+}
+
+/* Question Count */
+.subject-question-count {
+    display: inline-block;
+
+    margin-top: 7px;
+
+    color: #ffd700;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+/* Arrow */
+.subject-arrow {
+    position: absolute;
+
+    right: 11px;
+    top: 11px;
+
+    color: #64718a;
+
+    font-size: 16px;
+
+    transition:
+        transform .2s ease,
+        color .2s ease;
+}
+
+.subject-card:hover .subject-arrow {
+    color: #ffd700;
+
+    transform:
+        translateX(3px);
+}
+
+
+/* ==========================================
+   LEARNING QUESTION AREA
+========================================== */
+
+#learningSection {
+    width: 100%;
+}
+
+#learningSection .learning-content-header,
+#learningSection .learning-question-card {
+    width: 100%;
+}
+
+
+/* Question Title */
+#learningTitle {
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    line-height: 1.65;
+
+    margin-bottom: 14px;
+}
+
+
+/* Key Point */
+#learningKeyPoint {
+    color: #ffd700;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   LEARNING OPTIONS
+========================================== */
+
+#learningOptions {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin:
+        18px
+        0;
+}
+
+.learning-option {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 50px;
+
+    padding: 11px 13px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.07);
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.learning-option.correct-option {
+    background:
+        rgba(255,215,0,0.09);
+
+    border-color:
+        rgba(255,215,0,0.35);
+}
+
+.option-letter {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: #dbe3f2;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.correct-option .option-letter {
+    background:
+        rgba(255,215,0,0.16);
+
+    color: #ffd700;
+}
+
+.option-text {
+    flex: 1;
+
+    color: #d9e1ef;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.correct-mark {
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,215,0,0.15);
+
+    color: #ffd700;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   ANSWER / EXPLANATION
+========================================== */
+
+#learningImportant {
+    color: #ffd700;
+
+    font-weight: 700;
+
+    line-height: 1.6;
+}
+
+#learningExplanation {
+    color: #aebbd0;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+}
+
+#learningRemember {
+    color: #dce5f4;
+
+    font-size: 11px;
+
+    line-height: 1.65;
+}
+
+#learningExample {
+    color: #aebbd0;
+
+    font-size: 11px;
+
+    line-height: 1.65;
+}
+
+
+/* ==========================================
+   PROGRESS
+========================================== */
+
+#learningProgressFill {
+    transition:
+        width .35s ease;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+    #subjectGrid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 10px;
+    }
+
+    .subject-card {
+        min-height: 105px;
+
+        padding: 12px;
+
+        align-items: flex-start;
+    }
+
+    .subject-icon {
+        width: 42px;
+        height: 42px;
+
+        font-size: 21px;
+    }
+
+    .subject-info h4 {
+        font-size: 12px;
+
+        padding-right: 8px;
+    }
+
+    .subject-info p {
+        font-size: 9px;
+    }
+
+    .subject-question-count {
+        font-size: 8px;
+    }
+
+    #learningTitle {
+        font-size: 15px;
+    }
+
+    .learning-option {
+        min-height: 48px;
+    }
+
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 380px) {
+
+    #subjectGrid {
+        gap: 8px;
+    }
+
+    .subject-card {
+        min-height: 100px;
+
+        padding: 10px;
+    }
+
+    .subject-icon {
+        width: 38px;
+        height: 38px;
+
+        font-size: 19px;
+    }
+
+    .subject-info h4 {
+        font-size: 11px;
+    }
+
+    .subject-info p {
+        font-size: 8px;
+    }
+
+    .learning-option {
+        padding: 9px;
+    }
+
+    .option-text {
+        font-size: 11px;
+    }
+
+}
