@@ -698,7 +698,45 @@ function escapeHTML(value) {
     .replace(/'/g, "&#039;");
 
 }
+// ==========================================
+// QUICK TEST BUTTON
+// ==========================================
 
+function setupQuickTest() {
+
+    const quickTestButton =
+        document.getElementById("startQuickTestBtn");
+
+    if (!quickTestButton) {
+        return;
+    }
+
+    quickTestButton.addEventListener(
+        "click",
+        function () {
+
+            if (!selectedSubject) {
+
+                alert(
+                    "முதலில் ஒரு Subject-ஐ தேர்வு செய்யவும்."
+                );
+
+                return;
+            }
+
+            const subjectName =
+                encodeURIComponent(
+                    selectedSubject.displayName
+                );
+
+            window.location.href =
+                "practice.html?subject=" +
+                subjectName;
+
+        }
+    );
+
+}
 
 // ==========================================
 // PART 1 END
