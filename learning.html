@@ -796,6 +796,19 @@
     src="learning.js"
 ></script>
 
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const backBtn = document.getElementById("backBtn");
+
+    if (backBtn) {
+        backBtn.addEventListener("click", function () {
+            window.location.href = "dashboard.html";
+        });
+    }
+
+});
+        </script>
 
 </body>
 
