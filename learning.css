@@ -1,13 +1,14 @@
 /* ==========================================
    G THE GENIUS
-   LEARNING ZONE PREMIUM CSS
-   Mobile First
+   LEARNING ZONE
+   PREMIUM CSS - PART 1
+   Dark Blue + Gold
 ========================================== */
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html {
@@ -15,190 +16,387 @@ html {
 }
 
 body {
+    min-height: 100vh;
     font-family:
-        Arial,
         "Noto Sans Tamil",
+        "Poppins",
+        Arial,
         sans-serif;
 
     background:
-        linear-gradient(
-            180deg,
-            #081229 0%,
-            #0b1838 55%,
-            #071126 100%
-        );
+        radial-gradient(
+            circle at top right,
+            rgba(255, 215, 0, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            rgba(30, 90, 180, 0.12),
+            transparent 35%
+        ),
+        #071126;
 
     color: #ffffff;
-
-    min-height: 100vh;
-
-    overflow-x: hidden;
 
     padding-bottom: 90px;
 }
 
 
 /* ==========================================
-   MAIN CONTAINER
+   GLOBAL
 ========================================== */
 
-.learning-container {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-    padding: 16px;
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hidden {
+    display: none !important;
 }
 
 
 /* ==========================================
-   TOP BAR
+   PAGE LOADER
 ========================================== */
 
-.top-bar {
+#pageLoader {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
-    gap: 10px;
+    background: #071126;
 
-    margin-bottom: 12px;
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
 }
 
-.top-bar button {
-    border: 1px solid rgba(255,255,255,.15);
+#pageLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#pageLoader::after {
+    content: "G THE GENIUS";
+
+    position: absolute;
+
+    margin-top: 120px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #ffd700;
+}
+
+
+/* ==========================================
+   SPINNER
+========================================== */
+
+.mini-spinner {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    border: 4px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-top-color: #ffd700;
+
+    animation:
+        learningSpin 0.8s linear infinite;
+}
+
+@keyframes learningSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ==========================================
+   MAIN APP CONTAINER
+========================================== */
+
+.learning-app {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding:
+        18px
+        18px
+        100px;
+}
+
+
+/* ==========================================
+   TOP HEADER
+========================================== */
+
+.learning-header {
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin:
+        -18px
+        -18px
+        20px;
+
+    padding:
+        15px
+        18px;
 
     background:
-        rgba(255,255,255,.08);
+        rgba(7, 17, 38, 0.88);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    border-bottom:
+        1px solid
+        rgba(255, 215, 0, 0.14);
+}
+
+
+/* ==========================================
+   HEADER BUTTON
+========================================== */
+
+.header-btn {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid
+        rgba(255, 215, 0, 0.25);
+
+    border-radius: 13px;
+
+    background:
+        rgba(255, 255, 255, 0.05);
 
     color: #ffffff;
 
-    width: 44px;
-    height: 44px;
-
-    border-radius: 12px;
-
-    font-size: 20px;
+    font-size: 19px;
 
     cursor: pointer;
 
-    backdrop-filter: blur(12px);
-
-    transition: .2s;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.top-bar button:hover {
-    background: rgba(255,215,0,.15);
+.header-btn:hover {
+    background:
+        rgba(255, 215, 0, 0.10);
 
-    border-color: #ffd700;
+    border-color:
+        rgba(255, 215, 0, 0.55);
+
+    transform: translateY(-2px);
+}
+
+.header-btn:active {
+    transform: scale(0.94);
 }
 
 
 /* ==========================================
-   BRAND
+   HEADER TITLE
 ========================================== */
 
-.brand-area {
-    text-align: center;
-
-    padding: 10px 0 22px;
+.learning-header-title {
+    min-width: 0;
+    flex: 1;
 }
 
-.brand-area h1 {
-    font-size: clamp(30px, 8vw, 56px);
-
-    font-weight: 900;
-
-    letter-spacing: 1px;
-
-    color: #ffffff;
-
-    line-height: 1.1;
-}
-
-.brand-area h2 {
-    margin-top: 6px;
-
-    font-size: clamp(18px, 5vw, 30px);
-
-    color: #ffd700;
+.learning-header-title h1 {
+    font-size: 19px;
+    line-height: 1.2;
 
     font-weight: 800;
 
-    letter-spacing: 1px;
+    color: #ffffff;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.learning-header-title p {
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    color: #aab4ca;
 }
 
 
 /* ==========================================
-   SMART LEARNING HERO
+   GOLD BADGE
+========================================== */
+
+.learning-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        6px
+        10px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 215, 0, 0.10);
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.25);
+
+    color: #ffd700;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================
+   HERO
 ========================================== */
 
 .learning-hero {
     position: relative;
 
-    padding: 24px 20px;
+    overflow: hidden;
 
-    margin-bottom: 22px;
+    padding:
+        24px
+        20px;
 
-    border-radius: 24px;
+    margin-bottom: 18px;
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.16);
+
+    border-radius: 22px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(21,43,87,.95),
-            rgba(8,21,48,.95)
+            rgba(18, 38, 76, 0.95),
+            rgba(9, 23, 49, 0.95)
         );
 
-    border: 1px solid
-        rgba(255,215,0,.18);
-
     box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.25);
-
-    overflow: hidden;
+        0 18px 45px
+        rgba(0, 0, 0, 0.20);
 }
 
-.learning-hero::after {
+.learning-hero::before {
     content: "";
 
     position: absolute;
 
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
 
     right: -70px;
-    bottom: -80px;
+    top: -90px;
 
     border-radius: 50%;
 
     background:
-        rgba(255,215,0,.05);
+        rgba(255, 215, 0, 0.08);
 }
 
-.learning-hero .hero-label {
-    font-size: 18px;
+.learning-hero::after {
+    content: "📚";
 
-    color: #ffd700;
+    position: absolute;
 
-    font-weight: 800;
+    right: 20px;
+    bottom: 10px;
+
+    font-size: 65px;
+
+    opacity: 0.08;
+}
+
+.learning-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.learning-hero h2 {
+    font-size: 25px;
+
+    line-height: 1.25;
+
+    font-weight: 900;
 
     margin-bottom: 8px;
-}
 
-.learning-hero h3 {
-    font-size: clamp(24px, 6vw, 36px);
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #ffd700
+        );
 
-    line-height: 1.2;
+    -webkit-background-clip: text;
+    background-clip: text;
 
-    margin-bottom: 10px;
+    color: transparent;
 }
 
 .learning-hero p {
-    color: #b8c4dd;
+    max-width: 650px;
 
-    font-size: 15px;
+    color: #aeb8ce;
 
-    line-height: 1.6;
+    font-size: 13px;
+
+    line-height: 1.7;
 }
 
 
@@ -206,139 +404,157 @@ body {
    SEARCH
 ========================================== */
 
-.search-box {
+.learning-search {
     position: relative;
 
-    margin: 18px 0 24px;
+    margin-bottom: 20px;
 }
 
-.search-box input {
+#searchInput {
     width: 100%;
 
-    height: 58px;
+    height: 52px;
 
     padding:
-        0 52px 0 52px;
+        0
+        48px
+        0
+        17px;
 
-    border-radius: 18px;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.09);
 
-    border: 1px solid
-        rgba(255,255,255,.12);
+    border-radius: 16px;
 
     outline: none;
 
     background:
-        rgba(20,40,76,.85);
+        rgba(255, 255, 255, 0.055);
 
     color: #ffffff;
 
-    font-size: 16px;
+    font-size: 14px;
 
-    backdrop-filter: blur(15px);
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#searchInput::placeholder {
+    color: #75819a;
+}
+
+#searchInput:focus {
+    border-color:
+        rgba(255, 215, 0, 0.55);
+
+    background:
+        rgba(255, 255, 255, 0.075);
 
     box-shadow:
-        inset 0 1px 0
-        rgba(255,255,255,.05);
-}
-
-.search-box input::placeholder {
-    color: #8491aa;
-}
-
-.search-box input:focus {
-    border-color: #ffd700;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255,215,0,.08);
-}
-
-.search-icon {
-    position: absolute;
-
-    left: 18px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    font-size: 22px;
-}
-
-.clear-search {
-    position: absolute;
-
-    right: 15px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    background: transparent;
-
-    border: none;
-
-    color: #ffffff;
-
-    font-size: 20px;
-
-    cursor: pointer;
-
-    display: none;
+        0 0 0 4px
+        rgba(255, 215, 0, 0.06);
 }
 
 
 /* ==========================================
-   SECTION TITLE
+   SEARCH ICON
 ========================================== */
 
-.section-heading {
+.learning-search::before {
+    content: "🔎";
+
+    position: absolute;
+
+    right: 17px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 17px;
+
+    pointer-events: none;
+
+    opacity: 0.75;
+}
+
+
+/* ==========================================
+   CLEAR SEARCH
+========================================== */
+
+#clearSearchBtn {
+    position: absolute;
+
+    right: 43px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 27px;
+    height: 27px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+
+/* ==========================================
+   SECTION HEADER
+========================================== */
+
+.learning-section-header {
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
     gap: 10px;
 
-    margin-bottom: 16px;
+    margin:
+        24px
+        0
+        13px;
 }
 
-.section-heading h3 {
-    font-size: 22px;
+.learning-section-header h3 {
+    font-size: 17px;
 
-    font-weight: 900;
+    font-weight: 800;
 
     color: #ffffff;
 }
 
-.section-heading h3 span {
-    color: #ffd700;
-}
+.learning-section-count {
+    padding:
+        5px
+        9px;
 
-.subject-count,
-.topic-count {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 8px 14px;
-
-    border-radius: 20px;
-
-    color: #ffd700;
+    border-radius: 999px;
 
     background:
-        rgba(255,215,0,.08);
+        rgba(255, 215, 0, 0.08);
 
-    border: 1px solid
-        rgba(255,215,0,.25);
+    color: #ffd700;
 
-    font-size: 13px;
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.18);
 
-    font-weight: 800;
+    font-size: 10px;
 
-    white-space: nowrap;
+    font-weight: 700;
 }
 
 
@@ -350,11 +566,12 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
 
-    gap: 16px;
-
-    margin-bottom: 25px;
+    gap: 14px;
 }
 
 
@@ -365,66 +582,74 @@ body {
 .subject-card {
     position: relative;
 
-    min-height: 180px;
+    min-height: 125px;
 
-    padding: 20px;
+    display: flex;
 
-    border-radius: 24px;
+    align-items: center;
 
-    cursor: pointer;
+    gap: 14px;
+
+    padding: 18px;
 
     overflow: hidden;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.075);
+
+    border-radius: 20px;
 
     background:
         linear-gradient(
             145deg,
-            #132851,
-            #0d1d3c
+            rgba(22, 43, 82, 0.94),
+            rgba(10, 25, 53, 0.94)
         );
 
-    border: 1px solid
-        rgba(255,255,255,.10);
-
-    box-shadow:
-        0 10px 25px
-        rgba(0,0,0,.22);
+    cursor: pointer;
 
     transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
 }
 
-.subject-card::after {
+.subject-card::before {
     content: "";
 
     position: absolute;
 
-    width: 130px;
-    height: 130px;
+    left: 0;
+    top: 0;
 
-    right: -50px;
-    bottom: -60px;
-
-    border-radius: 50%;
+    width: 3px;
+    height: 100%;
 
     background:
-        rgba(255,215,0,.055);
+        linear-gradient(
+            #ffd700,
+            transparent
+        );
+
+    opacity: 0.75;
 }
 
 .subject-card:hover {
-    transform: translateY(-4px);
+    transform:
+        translateY(-4px);
 
     border-color:
-        rgba(255,215,0,.4);
+        rgba(255, 215, 0, 0.35);
 
     box-shadow:
         0 15px 35px
-        rgba(0,0,0,.35);
+        rgba(0, 0, 0, 0.25);
 }
 
 .subject-card:active {
-    transform: scale(.98);
+    transform:
+        scale(0.98);
 }
 
 
@@ -433,25 +658,60 @@ body {
 ========================================== */
 
 .subject-icon {
-    width: 58px;
-    height: 58px;
+    width: 57px;
+    height: 57px;
+
+    flex-shrink: 0;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     border-radius: 17px;
 
     background:
-        rgba(255,255,255,.08);
+        linear-gradient(
+            145deg,
+            rgba(255, 215, 0, 0.15),
+            rgba(255, 215, 0, 0.04)
+        );
 
-    border: 1px solid
-        rgba(255,255,255,.08);
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.20);
 
-    font-size: 30px;
+    font-size: 28px;
 
-    margin-bottom: 18px;
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.05);
+}
+
+
+/* ==========================================
+   SUBJECT INFO
+========================================== */
+
+.subject-info {
+    min-width: 0;
+}
+
+.subject-info h4 {
+    margin-bottom: 6px;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    color: #ffffff;
+}
+
+.subject-info p {
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    color: #8e9ab2;
 }
 
 
@@ -462,40 +722,107 @@ body {
 .subject-arrow {
     position: absolute;
 
-    top: 22px;
-    right: 20px;
+    right: 13px;
+    top: 13px;
 
     color: #ffd700;
 
-    font-size: 22px;
+    font-size: 14px;
 
-    font-weight: 900;
+    opacity: 0.65;
 }
 
 
 /* ==========================================
-   SUBJECT TEXT
+   LOADING CARD
 ========================================== */
 
-.subject-card h4 {
-    font-size: 18px;
+.loading-card {
+    grid-column: 1 / -1;
 
-    line-height: 1.25;
+    width: 100%;
 
-    margin-bottom: 7px;
+    padding: 35px 20px;
 
-    font-weight: 900;
+    text-align: center;
 
-    color: #ffffff;
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.12);
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: #9ba7bd;
 }
 
-.subject-card p {
-    color: #91a1c0;
+.loading-card p {
+    margin-top: 12px;
 
     font-size: 13px;
-
-    line-height: 1.45;
 }
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (
+    max-width: 650px
+) {
+
+    .learning-app {
+        padding:
+            12px
+            12px
+            100px;
+    }
+
+    .learning-header {
+        margin:
+            -12px
+            -12px
+            16px;
+
+        padding:
+            13px
+            12px;
+    }
+
+    .learning-header-title h1 {
+        font-size: 17px;
+    }
+
+    .learning-badge {
+        display: none;
+    }
+
+    .learning-hero {
+        padding: 20px 17px;
+        border-radius: 19px;
+    }
+
+    .learning-hero h2 {
+        font-size: 21px;
+    }
+
+    #subjectGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .subject-card {
+        min-height: 105px;
+    }
+
+   }
+
+/* ==========================================
+   G THE GENIUS
+   LEARNING ZONE
+   PREMIUM CSS - PART 2
+========================================== */
 
 
 /* ==========================================
@@ -506,7 +833,10 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(1, minmax(0, 1fr));
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
 
     gap: 14px;
 }
@@ -517,80 +847,472 @@ body {
 ========================================== */
 
 .topic-card {
-    display: flex;
+    position: relative;
 
+    display: flex;
     align-items: center;
 
     gap: 14px;
 
-    padding: 18px;
+    min-height: 92px;
 
-    border-radius: 20px;
+    padding: 15px 16px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.075);
+
+    border-radius: 18px;
 
     background:
         linear-gradient(
             145deg,
-            #142a54,
-            #0d1d3c
+            rgba(20, 42, 80, 0.95),
+            rgba(9, 24, 50, 0.96)
         );
-
-    border: 1px solid
-        rgba(255,255,255,.09);
 
     cursor: pointer;
 
-    transition: .2s;
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.topic-card::after {
+    content: "";
+
+    position: absolute;
+
+    right: -30px;
+    bottom: -35px;
+
+    width: 100px;
+    height: 100px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 215, 0, 0.045);
+
+    pointer-events: none;
 }
 
 .topic-card:hover {
-    border-color: #ffd700;
+    transform:
+        translateY(-3px);
 
-    transform: translateY(-2px);
+    border-color:
+        rgba(255, 215, 0, 0.32);
+
+    box-shadow:
+        0 14px 30px
+        rgba(0, 0, 0, 0.22);
 }
 
+.topic-card:active {
+    transform:
+        scale(0.985);
+}
+
+
+/* ==========================================
+   TOPIC NUMBER
+========================================== */
+
 .topic-number {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
 
     flex-shrink: 0;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     border-radius: 14px;
 
     background:
-        rgba(255,215,0,.1);
+        linear-gradient(
+            145deg,
+            rgba(255, 215, 0, 0.18),
+            rgba(255, 215, 0, 0.045)
+        );
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.20);
 
     color: #ffd700;
+
+    font-size: 14px;
 
     font-weight: 900;
 }
 
-.topic-info {
-    flex: 1;
 
+/* ==========================================
+   TOPIC INFO
+========================================== */
+
+.topic-info {
     min-width: 0;
+
+    flex: 1;
 }
 
 .topic-info h4 {
-    font-size: 16px;
+    margin-bottom: 5px;
 
-    margin-bottom: 4px;
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    line-height: 1.35;
 }
 
 .topic-info p {
-    color: #8d9bb8;
+    color: #8995ad;
 
-    font-size: 13px;
+    font-size: 10.5px;
+
+    line-height: 1.5;
 }
 
+
+/* ==========================================
+   TOPIC ARROW
+========================================== */
+
 .topic-arrow {
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
     color: #ffd700;
 
-    font-size: 22px;
+    font-size: 16px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.topic-card:hover .topic-arrow {
+    transform:
+        translateX(3px);
+
+    background:
+        rgba(255, 215, 0, 0.10);
+}
+
+
+/* ==========================================
+   LEARNING SECTION
+========================================== */
+
+#learningSection {
+    animation:
+        learningFadeIn
+        0.3s
+        ease;
+}
+
+@keyframes learningFadeIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* ==========================================
+   LEARNING TOP BAR
+========================================== */
+
+.learning-top-bar {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+}
+
+
+/* ==========================================
+   BACK BUTTONS
+========================================== */
+
+#backToSubjectsBtn,
+#backToTopicsBtn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 40px;
+
+    padding:
+        0
+        13px;
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.20);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color: #dbe2f0;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+#backToSubjectsBtn:hover,
+#backToTopicsBtn:hover {
+    background:
+        rgba(255, 215, 0, 0.08);
+
+    border-color:
+        rgba(255, 215, 0, 0.40);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* ==========================================
+   SELECTED SUBJECT / TOPIC
+========================================== */
+
+#selectedSubjectTitle,
+#learningSubjectName,
+#learningTopicName {
+    color: #ffd700;
+
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   LEARNING HEADER CARD
+========================================== */
+
+.learning-content-header {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.17);
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(23, 47, 88, 0.96),
+            rgba(9, 24, 50, 0.96)
+        );
+
+    box-shadow:
+        0 15px 35px
+        rgba(0, 0, 0, 0.18);
+}
+
+.learning-content-header::before {
+    content: "";
+
+    position: absolute;
+
+    width: 160px;
+    height: 160px;
+
+    right: -65px;
+    top: -80px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 215, 0, 0.07);
+}
+
+.learning-content-header h2 {
+    position: relative;
+    z-index: 2;
+
+    margin-bottom: 6px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    line-height: 1.45;
+
+    font-weight: 900;
+}
+
+.learning-content-header p {
+    position: relative;
+    z-index: 2;
+
+    color: #8e9ab2;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   LEARNING NUMBER
+========================================== */
+
+#learningNumber,
+#lessonIndicator {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 58px;
+
+    min-height: 28px;
+
+    padding:
+        0
+        9px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 215, 0, 0.10);
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.20);
+
+    color: #ffd700;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   PROGRESS AREA
+========================================== */
+
+.learning-progress {
+    margin:
+        16px
+        0
+        20px;
+}
+
+.learning-progress-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+}
+
+.learning-progress-top span {
+    color: #8490a8;
+
+    font-size: 10px;
+}
+
+#learningProgressText {
+    color: #ffd700;
+
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   PROGRESS BAR
+========================================== */
+
+.learning-progress-bar {
+    width: 100%;
+    height: 7px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.075);
+}
+
+#learningProgressFill {
+    width: 0;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #b99100,
+            #ffd700,
+            #fff0a0
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(255, 215, 0, 0.25);
+
+    transition:
+        width 0.35s ease;
 }
 
 
@@ -599,396 +1321,461 @@ body {
 ========================================== */
 
 .learning-question-card {
-    padding: 22px;
+    position: relative;
 
-    border-radius: 24px;
+    padding: 22px 19px;
+
+    margin-bottom: 14px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 20px;
 
     background:
-        linear-gradient(
-            145deg,
-            #142b56,
-            #0c1b39
-        );
-
-    border: 1px solid
-        rgba(255,215,0,.14);
+        rgba(255, 255, 255, 0.035);
 
     box-shadow:
-        0 12px 35px
-        rgba(0,0,0,.25);
-}
-
-.question-number {
-    color: #ffd700;
-
-    font-weight: 800;
-
-    margin-bottom: 12px;
-}
-
-.learning-question {
-    font-size: 20px;
-
-    font-weight: 800;
-
-    line-height: 1.55;
-
-    margin-bottom: 20px;
+        0 12px 30px
+        rgba(0, 0, 0, 0.16);
 }
 
 
 /* ==========================================
-   OPTIONS
+   KEY POINT
 ========================================== */
 
-.learning-option {
-    width: 100%;
+.learning-key-point {
+    position: relative;
 
-    text-align: left;
+    margin-bottom: 16px;
 
-    padding: 15px 16px;
-
-    margin-bottom: 11px;
+    padding:
+        14px
+        15px
+        14px
+        17px;
 
     border-radius: 15px;
 
-    border: 1px solid
-        rgba(255,255,255,.10);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 215, 0, 0.10),
+            rgba(255, 215, 0, 0.035)
+        );
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.17);
+}
+
+.learning-key-point::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+
+    width: 3px;
+
+    border-radius: 5px;
 
     background:
-        rgba(255,255,255,.045);
+        #ffd700;
+}
 
+.learning-key-point h4 {
+    margin-bottom: 6px;
+
+    color: #ffd700;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+#learningKeyPoint {
     color: #ffffff;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    cursor: pointer;
+    font-weight: 700;
 
-    transition: .2s;
-}
-
-.learning-option:hover {
-    border-color: #ffd700;
-
-    background:
-        rgba(255,215,0,.07);
-}
-
-.learning-option.correct {
-    border-color: #16d98a;
-
-    background:
-        rgba(22,217,138,.12);
-
-    color: #4ff2ad;
-}
-
-.learning-option.wrong {
-    border-color: #ff5252;
-
-    background:
-        rgba(255,82,82,.12);
-
-    color: #ff7474;
+    line-height: 1.6;
 }
 
 
 /* ==========================================
-   ANSWER / EXPLANATION
+   QUESTION OPTIONS
 ========================================== */
 
-#answerBox,
-#explanationBox {
-    margin-top: 18px;
+#learningOptions {
+    display: flex;
 
-    padding: 17px;
+    flex-direction: column;
 
-    border-radius: 17px;
+    gap: 9px;
 
-    background:
-        rgba(255,255,255,.05);
-
-    border: 1px solid
-        rgba(255,255,255,.08);
+    margin-top: 17px;
 }
 
-#correctAnswer {
-    color: #4ff2ad;
+.learning-option {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-height: 48px;
+
+    padding:
+        9px
+        12px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 13px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: #cbd3e1;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.learning-option-letter {
+    width: 29px;
+    height: 29px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    color: #dce4f2;
+
+    font-size: 11px;
 
     font-weight: 900;
 }
 
-#learningExplanation {
-    color: #c0cbe0;
-
-    line-height: 1.65;
-
-    font-size: 14px;
-}
-
-
-/* ==========================================
-   PROGRESS
-========================================== */
-
-.learning-progress {
-    margin: 18px 0;
-}
-
-.learning-progress-bar {
-    width: 100%;
-
-    height: 8px;
-
-    background:
-        rgba(255,255,255,.08);
-
-    border-radius: 20px;
-
-    overflow: hidden;
-}
-
-#learningProgressFill {
-    height: 100%;
-
-    width: 0%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffd700,
-            #ffed72
-        );
-
-    border-radius: 20px;
-
-    transition: width .3s ease;
-}
-
-.learning-progress-text {
-    margin-top: 7px;
-
-    color: #9ca9c2;
+.learning-option-text {
+    flex: 1;
 
     font-size: 12px;
 
-    text-align: right;
+    line-height: 1.5;
+}
+
+.learning-option.correct {
+    border-color:
+        rgba(255, 215, 0, 0.32);
+
+    background:
+        rgba(255, 215, 0, 0.075);
+
+    color: #ffffff;
+}
+
+.learning-option.correct
+.learning-option-letter {
+    background:
+        rgba(255, 215, 0, 0.16);
+
+    color: #ffd700;
+}
+
+.learning-correct-mark {
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 215, 0, 0.15);
+
+    color: #ffd700;
+
+    font-size: 13px;
+
+    font-weight: 900;
 }
 
 
 /* ==========================================
-   NAVIGATION BUTTONS
+   EXPLANATION CARD
 ========================================== */
 
-.learning-buttons {
-    display: flex;
+.learning-explanation-card {
+    padding: 19px;
 
-    gap: 12px;
+    margin-bottom: 13px;
 
-    margin-top: 20px;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
 }
 
-.learning-buttons button {
+.learning-explanation-card h3 {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+
+    color: #ffd700;
+
+    font-size: 14px;
+
+    font-weight: 800;
+}
+
+#learningExplanation {
+    color: #b4bfd2;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================
+   IMPORTANT / REMEMBER / EXAMPLE
+========================================== */
+
+.learning-info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: 11px;
+
+    margin-top: 13px;
+}
+
+.learning-info-card {
+    min-height: 120px;
+
+    padding: 15px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.065);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255, 255, 255, 0.03);
+}
+
+.learning-info-card h4 {
+    margin-bottom: 8px;
+
+    color: #ffd700;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.learning-info-card p {
+    color: #9da8bc;
+
+    font-size: 11px;
+
+    line-height: 1.65;
+}
+
+
+/* ==========================================
+   LESSON NAVIGATION
+========================================== */
+
+.learning-navigation {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+#previousLessonBtn,
+#nextLessonBtn {
     flex: 1;
 
     min-height: 48px;
 
     border-radius: 14px;
 
-    border: 1px solid
-        rgba(255,255,255,.12);
-
-    background:
-        #14284d;
-
-    color: #ffffff;
+    font-size: 12px;
 
     font-weight: 800;
 
     cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease;
 }
 
-.learning-buttons button:last-child {
+#previousLessonBtn {
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color: #c4ccda;
+}
+
+#nextLessonBtn {
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.35);
+
     background:
         linear-gradient(
             135deg,
-            #ffd700,
-            #e7b900
+            #d3a900,
+            #ffd700
         );
 
     color: #071126;
 
-    border: none;
+    box-shadow:
+        0 8px 22px
+        rgba(255, 215, 0, 0.12);
 }
 
-.learning-buttons button:disabled {
-    opacity: .4;
+#previousLessonBtn:not(:disabled):hover,
+#nextLessonBtn:not(:disabled):hover {
+    transform:
+        translateY(-2px);
+}
+
+#previousLessonBtn:disabled,
+#nextLessonBtn:disabled {
+    opacity: 0.38;
 
     cursor: not-allowed;
 }
 
 
 /* ==========================================
-   PRACTICE BUTTON
+   QUICK TEST BUTTON
 ========================================== */
 
-#startPracticeBtn {
+#startQuickTestBtn {
     width: 100%;
-
-    margin-top: 20px;
 
     min-height: 52px;
 
-    border: none;
+    margin-top: 15px;
 
-    border-radius: 16px;
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.35);
+
+    border-radius: 15px;
 
     background:
         linear-gradient(
             135deg,
-            #ffd700,
-            #e8bd00
+            rgba(255, 215, 0, 0.14),
+            rgba(255, 215, 0, 0.06)
         );
 
-    color: #071126;
+    color: #ffd700;
 
-    font-size: 16px;
+    font-size: 13px;
 
-    font-weight: 900;
+    font-weight: 800;
 
     cursor: pointer;
 
-    box-shadow:
-        0 8px 25px
-        rgba(255,215,0,.15);
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+#startQuickTestBtn:hover {
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255, 215, 0, 0.16);
 }
 
 
 /* ==========================================
-   LOADING
+   NO RESULTS
 ========================================== */
 
-.loading-card {
-    grid-column: 1 / -1;
+#noResults {
+    width: 100%;
+
+    padding: 35px 20px;
 
     text-align: center;
 
-    padding: 45px 20px;
-
-    color: #9eabc4;
-}
-
-.mini-spinner {
-    width: 35px;
-    height: 35px;
-
-    margin: 0 auto 15px;
-
-    border: 4px solid
-        rgba(255,255,255,.12);
-
-    border-top-color: #ffd700;
-
-    border-radius: 50%;
-
-    animation:
-        spin .8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* ==========================================
-   HIDDEN
-========================================== */
-
-.hidden {
-    display: none !important;
-}
-
-
-/* ==========================================
-   BOTTOM NAVIGATION
-========================================== */
-
-.bottom-nav {
-    position: fixed;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    z-index: 1000;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 5px;
-
-    padding: 8px;
-
-    background:
-        rgba(7,17,38,.96);
-
-    border-top:
+    border:
         1px solid
-        rgba(255,215,0,.18);
+        rgba(255, 255, 255, 0.07);
 
-    backdrop-filter:
-        blur(18px);
-}
-
-.bottom-nav button,
-.bottom-nav a {
-    min-height: 58px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 3px;
-
-    border: none;
-
-    border-radius: 12px;
+    border-radius: 20px;
 
     background:
-        transparent;
-
-    color: #9ca9c2;
-
-    text-decoration: none;
-
-    font-size: 12px;
-
-    cursor: pointer;
+        rgba(255, 255, 255, 0.03);
 }
 
-.bottom-nav button span,
-.bottom-nav a span {
-    font-size: 21px;
+#noResults h3 {
+    margin-bottom: 7px;
+
+    color: #ffffff;
+
+    font-size: 15px;
 }
 
-.bottom-nav .active {
-    background:
-        rgba(255,215,0,.10);
+#noResults p {
+    color: #8995ad;
 
-    color: #ffd700;
-}
+    font-size: 11px;
 
-.bottom-nav button:hover,
-.bottom-nav a:hover {
-    color: #ffd700;
+    line-height: 1.6;
 }
 
 
@@ -996,103 +1783,665 @@ body {
    MOBILE
 ========================================== */
 
-@media (max-width: 600px) {
+@media (
+    max-width: 650px
+) {
 
-    .learning-container {
-        padding:
-            12px 12px 25px;
+    #topicGrid {
+        grid-template-columns: 1fr;
     }
 
+    .topic-card {
+        min-height: 84px;
 
-    .brand-area {
-        padding-top: 5px;
+        padding: 13px;
     }
 
-
-    .brand-area h1 {
-        font-size: 32px;
+    .topic-number {
+        width: 38px;
+        height: 38px;
     }
 
-
-    .brand-area h2 {
-        font-size: 20px;
-    }
-
-
-    .learning-hero {
-        padding: 20px 16px;
-    }
-
-
-    .learning-hero h3 {
-        font-size: 25px;
-    }
-
-
-    #subjectGrid {
-        gap: 12px;
-    }
-
-
-    .subject-card {
-        min-height: 175px;
-
+    .learning-content-header {
         padding: 17px;
-
-        border-radius: 20px;
     }
 
-
-    .subject-icon {
-        width: 52px;
-        height: 52px;
-
-        font-size: 26px;
+    .learning-content-header h2 {
+        font-size: 17px;
     }
 
-
-    .subject-card h4 {
-        font-size: 16px;
+    .learning-question-card {
+        padding: 17px 14px;
     }
 
-
-    .subject-card p {
-        font-size: 12px;
+    .learning-info-grid {
+        grid-template-columns: 1fr;
     }
 
-
-    .section-heading {
-        align-items: flex-start;
-        flex-direction: column;
+    .learning-info-card {
+        min-height: auto;
     }
 
+    .learning-navigation {
+        gap: 8px;
+    }
 
-    .learning-question {
-        font-size: 18px;
+    #previousLessonBtn,
+    #nextLessonBtn {
+        min-height: 45px;
+    }
+
+   }
+/* ==========================================
+   G THE GENIUS
+   LEARNING ZONE
+   PREMIUM CSS - PART 3 / FINAL
+========================================== */
+
+
+/* ==========================================
+   GENERAL SMOOTH EFFECTS
+========================================== */
+
+button,
+.subject-card,
+.topic-card,
+.learning-option {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+    outline: 2px solid #ffd700;
+    outline-offset: 2px;
+}
+
+
+/* ==========================================
+   SUBJECT SECTION FINAL
+========================================== */
+
+#subjectSection,
+#topicSection,
+#learningSection {
+    width: 100%;
+}
+
+#subjectSection.hidden,
+#topicSection.hidden,
+#learningSection.hidden {
+    display: none !important;
+}
+
+
+/* ==========================================
+   SUBJECT GRID POLISH
+========================================== */
+
+#subjectGrid {
+    position: relative;
+}
+
+.subject-card {
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
+}
+
+.subject-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffd700,
+            rgba(255, 215, 0, 0.05)
+        );
+
+    opacity: 0;
+
+    transition:
+        opacity 0.2s ease;
+}
+
+.subject-card:hover::before {
+    opacity: 1;
+}
+
+.subject-card:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 32px
+        rgba(0, 0, 0, 0.20);
+}
+
+
+/* ==========================================
+   SUBJECT ICON
+========================================== */
+
+.subject-icon {
+    transition:
+        transform 0.25s ease;
+}
+
+.subject-card:hover .subject-icon {
+    transform:
+        scale(1.07)
+        rotate(-2deg);
+}
+
+
+/* ==========================================
+   SUBJECT ARROW
+========================================== */
+
+.subject-arrow {
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+.subject-card:hover .subject-arrow {
+    transform:
+        translateX(4px);
+
+    color: #ffd700;
+}
+
+
+/* ==========================================
+   SEARCH AREA
+========================================== */
+
+#searchInput {
+    width: 100%;
+
+    min-height: 45px;
+
+    padding:
+        0
+        45px
+        0
+        15px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 13px;
+
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#searchInput::placeholder {
+    color: #68758d;
+}
+
+#searchInput:focus {
+    border-color:
+        rgba(255, 215, 0, 0.35);
+
+    background:
+        rgba(255, 255, 255, 0.055);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 215, 0, 0.045);
+}
+
+
+/* ==========================================
+   CLEAR SEARCH
+========================================== */
+
+#clearSearchBtn {
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+#clearSearchBtn:hover {
+    transform:
+        scale(1.08);
+}
+
+
+/* ==========================================
+   LOADING CARD
+========================================== */
+
+.loading-card {
+    width: 100%;
+
+    min-height: 150px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 25px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.03);
+
+    color: #8995ad;
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   MINI SPINNER
+========================================== */
+
+.mini-spinner {
+    width: 30px;
+    height: 30px;
+
+    border:
+        3px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-top-color:
+        #ffd700;
+
+    border-radius: 50%;
+
+    animation:
+        learningSpin
+        0.8s
+        linear
+        infinite;
+}
+
+@keyframes learningSpin {
+
+    to {
+        transform:
+            rotate(360deg);
     }
 
 }
 
 
 /* ==========================================
-   VERY SMALL SCREEN
+   PAGE LOADER
 ========================================== */
 
-@media (max-width: 360px) {
+#pageLoader {
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
 
-    #subjectGrid {
-        grid-template-columns: 1fr;
-    }
+#pageLoader.hidden {
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
 
 
-    .subject-card {
-        min-height: 155px;
+/* ==========================================
+   LESSON TITLE ICON EFFECT
+========================================== */
+
+.learning-title-icon {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    margin-right: 9px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255, 215, 0, 0.10);
+
+    border:
+        1px solid
+        rgba(255, 215, 0, 0.18);
+
+    vertical-align: middle;
+}
+
+
+/* ==========================================
+   LEARNING TEXT
+========================================== */
+
+#learningExplanation p {
+    margin:
+        0
+        0
+        10px;
+}
+
+#learningExplanation br {
+    line-height: 1.7;
+}
+
+
+/* ==========================================
+   IMPORTANT BOX
+========================================== */
+
+.learning-important {
+    border-left:
+        3px solid
+        #ffd700 !important;
+}
+
+.learning-important h4 {
+    color: #ffd700;
+}
+
+
+/* ==========================================
+   REMEMBER BOX
+========================================== */
+
+.learning-remember {
+    border-left:
+        3px solid
+        rgba(255, 255, 255, 0.35) !important;
+}
+
+.learning-remember h4 {
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   EXAMPLE BOX
+========================================== */
+
+.learning-example {
+    border-left:
+        3px solid
+        #8fa3c7 !important;
+}
+
+.learning-example h4 {
+    color: #b9c7dc;
+}
+
+
+/* ==========================================
+   COMPLETED BUTTON
+========================================== */
+
+#nextLessonBtn.completed,
+#nextLessonBtn[data-completed="true"] {
+    background:
+        rgba(255, 215, 0, 0.10);
+
+    color: #ffd700;
+
+    border-color:
+        rgba(255, 215, 0, 0.30);
+}
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+#learningSection::-webkit-scrollbar,
+#topicSection::-webkit-scrollbar,
+#subjectSection::-webkit-scrollbar {
+    width: 5px;
+}
+
+#learningSection::-webkit-scrollbar-track,
+#topicSection::-webkit-scrollbar-track,
+#subjectSection::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#learningSection::-webkit-scrollbar-thumb,
+#topicSection::-webkit-scrollbar-thumb,
+#subjectSection::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+
+    background:
+        rgba(255, 215, 0, 0.20);
+}
+
+
+/* ==========================================
+   MOBILE BOTTOM NAV
+========================================== */
+
+@media (
+    max-width: 650px
+) {
+
+    .bottom-nav,
+    .mobile-bottom-nav {
+        position: fixed;
+
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+
+        z-index: 999;
+
+        min-height: 62px;
+
+        padding:
+            7px
+            6px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.08);
+
+        border-radius: 20px;
+
+        background:
+            rgba(8, 18, 41, 0.94);
+
+        backdrop-filter:
+            blur(18px);
+
+        -webkit-backdrop-filter:
+            blur(18px);
+
+        box-shadow:
+            0 15px 35px
+            rgba(0, 0, 0, 0.35);
     }
 
 
     .bottom-nav button,
-    .bottom-nav a {
+    .mobile-bottom-nav button {
+        min-height: 50px;
+    }
+
+
+    body {
+        padding-bottom: 82px;
+    }
+
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (
+    max-width: 420px
+) {
+
+    #topicGrid {
+        gap: 10px;
+    }
+
+    .topic-card {
+        gap: 11px;
+
+        border-radius: 16px;
+    }
+
+    .topic-info h4 {
+        font-size: 13px;
+    }
+
+    .topic-info p {
+        font-size: 10px;
+    }
+
+    .topic-arrow {
+        width: 27px;
+        height: 27px;
+
+        font-size: 14px;
+    }
+
+    .learning-content-header {
+        border-radius: 17px;
+    }
+
+    .learning-question-card {
+        border-radius: 17px;
+    }
+
+    #learningKeyPoint {
+        font-size: 13px;
+    }
+
+    #learningExplanation {
+        font-size: 11.5px;
+    }
+
+    .learning-navigation {
+        flex-direction: row;
+    }
+
+}
+
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+@media (
+    max-width: 350px
+) {
+
+    .topic-number {
+        width: 35px;
+        height: 35px;
+
+        border-radius: 11px;
+    }
+
+    .topic-card {
+        padding: 11px;
+    }
+
+    .topic-info h4 {
+        font-size: 12px;
+    }
+
+    #previousLessonBtn,
+    #nextLessonBtn {
         font-size: 11px;
     }
 
 }
+
+
+/* ==========================================
+   REDUCE MOTION
+========================================== */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+
+/* ==========================================
+   FINAL POLISH
+========================================== */
+
+.learning-question-card,
+.learning-explanation-card,
+.learning-info-card,
+.learning-content-header,
+.topic-card,
+.loading-card {
+    isolation: isolate;
+}
+
+
+/* ==========================================
+   END
+========================================== */
+
+console {
+    display: none;
+   }
