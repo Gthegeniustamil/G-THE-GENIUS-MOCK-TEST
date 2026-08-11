@@ -471,9 +471,9 @@ function renderSubjects(
                 "subject-card";
 
             const questionCount =
-                getSubjectQuestionCount(
-                    subject
-                );
+    allQuestions.length === 0
+        ? "⏳ Loading..."
+        : `${getSubjectQuestionCount(subject)} Questions`;
 
             card.innerHTML = `
 
@@ -502,8 +502,8 @@ function renderSubjects(
                     </p>
 
                     <small class="subject-question-count">
-                        ${questionCount} Questions
-                    </small>
+    ${questionCount}
+</small>
 
                 </div>
 
