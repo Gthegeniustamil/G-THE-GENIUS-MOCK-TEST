@@ -149,7 +149,10 @@ async function loadQuestions() {
 
     if (loadingBox) {
 
-        loadingBox.style.display = "none";
+    loadingBox.style.display = "block";
+
+    loadingBox.textContent =
+        "⏳ Questions Loading...";
 
     }
 
