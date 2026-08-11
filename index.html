@@ -1198,7 +1198,21 @@ console.log(
 
 <script src="script.js"></script>
 
+<script>
 
+const adminSection =
+    document.getElementById("adminSection");
+
+if (
+    adminSection &&
+    localStorage.getItem("isAdmin") === "true"
+) {
+
+    adminSection.style.display = "block";
+
+}
+
+</script>
 
 </body>
 
