@@ -631,8 +631,19 @@ function openSubject(subject) {
     selectedSubject =
         subject;
 
+    // ======================================
+    // 💾 LOAD SAVED PROGRESS
+    // ======================================
+
+    const savedProgress =
+        localStorage.getItem(
+            "learningProgress_" + subject.id
+        );
+
     currentQuestion =
-        0;
+        savedProgress !== null
+            ? Number(savedProgress)
+            : 0;
 
     subjectQuestions =
         allQuestions.filter(
@@ -643,11 +654,7 @@ function openSubject(subject) {
                 )
         );
 
-    subjectQuestions =
-        shuffleArray(
-            subjectQuestions
-        );
-
+    
     setText(
         "selectedSubjectName",
         subject.displayName
@@ -863,6 +870,19 @@ function showLearningQuestion() {
     if (!subjectQuestions.length) {
         showNoQuestions();
         return;
+    }
+
+    // ======================================
+    // 💾 SAVE CURRENT PROGRESS
+    // ======================================
+
+    if (selectedSubject) {
+
+        localStorage.setItem(
+            "learningProgress_" + selectedSubject.id,
+            currentQuestion
+        );
+
     }
 
     const question =
