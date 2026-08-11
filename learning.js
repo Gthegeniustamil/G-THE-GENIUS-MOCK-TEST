@@ -252,13 +252,12 @@ async function loadQuestions() {
     try {
 
         const snapshot =
-            await getDocs(
-                collection(
-                    db,
-                    "questions"
-                )
-            ):
-
+    await getDocs(
+        collection(
+            db,
+            "questions"
+        )
+    );
 
         // ==================================
         // CLEAR OLD QUESTIONS
