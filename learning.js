@@ -24,7 +24,7 @@ let selectedSubject = null;
 let currentQuestion = 0;
 
 let subjects = [];
-
+let questionsLoading = true;
 
 // ==========================================
 // SUBJECT CONFIG
@@ -257,7 +257,7 @@ async function loadQuestions() {
                     db,
                     "questions"
                 )
-            );
+            ):
 
 
         // ==================================
@@ -343,70 +343,7 @@ async function loadQuestions() {
 
 }
 
-        // ======================================
-        // QUESTIONS READY
-        // ======================================
-
-        if (loadingBox) {
-
-            loadingBox.style.display =
-                "none";
-
-        }
-
-
-        // ======================================
-        // ENABLE START TEST
-        // ======================================
-
-        if (startBtn) {
-
-            startBtn.disabled =
-                false;
-
-            startBtn.style.opacity =
-                "1";
-
-        }
-
-
-        showMessage(
-            `✅ ${allQuestions.length} questions ready`
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "QUESTION LOAD ERROR:",
-            error
-        );
-
-
-        if (loadingBox) {
-
-            loadingBox.style.display =
-                "block";
-
-            loadingBox.textContent =
-                "❌ Questions load ஆகவில்லை.";
-
-        }
-
-
-        if (startBtn) {
-
-            startBtn.disabled =
-                true;
-
-            startBtn.style.opacity =
-                "0.5";
-
-        }
-
-    }
-
-}
+        
 
 
 // ==========================================
@@ -578,8 +515,8 @@ function renderSubjects(
             card.className =
                 "subject-card";
 
-            const questionCount =
-    allQuestions.length === 0
+ const questionCount =
+    questionsLoading
         ? "⏳ Loading..."
         : `${getSubjectQuestionCount(subject)} Questions`;
 
