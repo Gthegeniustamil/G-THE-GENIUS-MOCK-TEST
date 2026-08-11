@@ -292,7 +292,25 @@ if (loginForm) {
                     "role",
                     student.role
                 );
+// --------------------------------------
+// ADMIN STATUS
+// --------------------------------------
 
+if (student.role === "admin") {
+
+    localStorage.setItem(
+        "isAdmin",
+        "true"
+    );
+
+} else {
+
+    localStorage.setItem(
+        "isAdmin",
+        "false"
+    );
+
+}
 
                 // --------------------------------------
                 // SUCCESS
