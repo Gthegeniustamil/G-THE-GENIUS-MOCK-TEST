@@ -196,8 +196,8 @@ function setTestSettings() {
 
         totalQuestions = 100;
 
-        timeLimit =
-            20 * 60;
+timeLimit =
+    60 * 60;
 
         document.getElementById(
             "testTitle"
