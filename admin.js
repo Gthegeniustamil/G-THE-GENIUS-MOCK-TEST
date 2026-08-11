@@ -19,11 +19,11 @@ import {
     collection,
     addDoc,
     getDocs,
+    getDoc,
     deleteDoc,
     doc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 
 // ============================================================
 // GLOBAL VARIABLES
@@ -161,120 +161,95 @@ onAuthStateChanged(auth, async (user) => {
 
 async function checkAdminAccess(user) {
 
-    let adminFound = false;
-
-
-    // ========================================================
-    // METHOD 1
-    // students/{uid}
-    // ========================================================
-
     try {
 
-        const studentsSnapshot =
-            await getDocs(
-                collection(db, "students")
+        // ========================================================
+        // METHOD 1
+        // CHECK students/{UID}
+        // ========================================================
+
+        const studentRef =
+            doc(
+                db,
+                "students",
+                user.uid
             );
 
 
-        studentsSnapshot.forEach((studentDoc) => {
-
-            const data =
-                studentDoc.data();
+        const studentSnap =
+            await getDoc(studentRef);
 
 
-            if (
-                studentDoc.id === user.uid &&
-                String(data.role || "")
-                    .toLowerCase()
-                    .trim() === "admin"
-            ) {
+        if (studentSnap.exists()) {
 
-                adminFound = true;
+            const studentData =
+                studentSnap.data();
+
+
+            const role =
+                String(
+                    studentData.role || ""
+                )
+                .toLowerCase()
+                .trim();
+
+
+            if (role === "admin") {
+
+                return true;
 
             }
 
-        });
+        }
 
+
+        // ========================================================
+        // METHOD 2
+        // CHECK admins/{UID}
+        // ========================================================
+
+        const adminRef =
+            doc(
+                db,
+                "admins",
+                user.uid
+            );
+
+
+        const adminSnap =
+            await getDoc(adminRef);
+
+
+        if (adminSnap.exists()) {
+
+            return true;
+
+        }
+
+
+        // ========================================================
+        // NOT ADMIN
+        // ========================================================
+
+        return false;
 
     }
 
     catch (error) {
 
-        console.warn(
-            "Students admin check failed:",
+        console.error(
+            "Admin access check error:",
             error
         );
 
-    }
 
-
-    // ========================================================
-    // METHOD 2
-    // admins collection
-    // ========================================================
-
-    if (!adminFound) {
-
-        try {
-
-            const adminsSnapshot =
-                await getDocs(
-                    collection(db, "admins")
-                );
-
-
-            adminsSnapshot.forEach((adminDoc) => {
-
-                const data =
-                    adminDoc.data();
-
-
-                const emailMatch =
-                    data.email &&
-                    String(data.email)
-                        .toLowerCase()
-                        .trim() ===
-                    String(user.email || "")
-                        .toLowerCase()
-                        .trim();
-
-
-                const uidMatch =
-                    adminDoc.id === user.uid ||
-                    data.uid === user.uid;
-
-
-                if (
-                    uidMatch ||
-                    emailMatch
-                ) {
-
-                    adminFound = true;
-
-                }
-
-            });
-
-
-        }
-
-        catch (error) {
-
-            console.warn(
-                "Admins collection check failed:",
-                error
-            );
-
-        }
+        return false;
 
     }
-
-
-    return adminFound;
 
 }
 
+    
 
 // ============================================================
 // LOGOUT
