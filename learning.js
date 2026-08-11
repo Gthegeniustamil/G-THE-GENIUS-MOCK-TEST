@@ -470,6 +470,11 @@ function renderSubjects(
 
     }
 
+
+    // ======================================
+    // SUBJECT COUNT
+    // ======================================
+
     if (count) {
 
         count.textContent =
@@ -477,7 +482,17 @@ function renderSubjects(
 
     }
 
+
+    // ======================================
+    // CLEAR GRID
+    // ======================================
+
     grid.innerHTML = "";
+
+
+    // ======================================
+    // NO SUBJECT
+    // ======================================
 
     if (
         filteredSubjects.length === 0
@@ -503,6 +518,11 @@ function renderSubjects(
 
     }
 
+
+    // ======================================
+    // RENDER SUBJECT CARDS
+    // ======================================
+
     filteredSubjects.forEach(
         subject => {
 
@@ -511,13 +531,24 @@ function renderSubjects(
                     "div"
                 );
 
+
             card.className =
                 "subject-card";
 
- const questionCount =
-    questionsLoading
-        ? "⏳ Loading..."
-        : `${getSubjectQuestionCount(subject)} Questions`;
+
+            // ==================================
+            // QUESTION COUNT
+            // ==================================
+
+            const questionCount =
+                questionsLoading
+                    ? "⏳ Loading..."
+                    : `${getSubjectQuestionCount(subject)} Questions`;
+
+
+            // ==================================
+            // CARD HTML
+            // ==================================
 
             card.innerHTML = `
 
@@ -525,33 +556,50 @@ function renderSubjects(
                     →
                 </span>
 
+
                 <div class="subject-icon">
+
                     ${escapeHTML(
                         subject.icon
                     )}
+
                 </div>
+
 
                 <div class="subject-info">
 
                     <h4>
+
                         ${escapeHTML(
                             subject.displayName
                         )}
+
                     </h4>
 
+
                     <p>
+
                         ${escapeHTML(
                             subject.description
                         )}
+
                     </p>
 
+
                     <small class="subject-question-count">
-    ${questionCount}
-</small>
+
+                        ${questionCount}
+
+                    </small>
 
                 </div>
 
             `;
+
+
+            // ==================================
+            // OPEN SUBJECT
+            // ==================================
 
             card.addEventListener(
                 "click",
@@ -564,14 +612,15 @@ function renderSubjects(
                 }
             );
 
+
             grid.appendChild(
                 card
             );
 
         }
     );
-}
 
+}
 
 // ==========================================
 // OPEN SUBJECT
