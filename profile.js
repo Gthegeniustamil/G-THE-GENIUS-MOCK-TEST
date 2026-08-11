@@ -265,22 +265,58 @@ function hideLoader() {
 // ==========================================
 // FIREBASE AUTH
 // ==========================================
-
 onAuthStateChanged(
     auth,
     async (user) => {
 
         currentUser = user;
 
+        // ======================================
+        // 🚀 INSTANT PROFILE UI
+        // Firebase wait செய்ய வேண்டாம்
+        // ======================================
+
         updateProfileUI();
 
-        await loadResults();
-
+        // Initial statistics
+        // page உடனே complete ஆக தெரியும்
         updateStatistics();
 
         updateAchievements();
 
         hideLoader();
+
+        console.log(
+            "⚡ Profile UI Ready Instantly"
+        );
+
+
+        // ======================================
+        // 🔥 FIREBASE BACKGROUND LOAD
+        // ======================================
+
+        loadResults()
+            .then(() => {
+
+                // Firebase data வந்ததும்
+                // statistics update
+                updateStatistics();
+
+                updateAchievements();
+
+                console.log(
+                    "✅ Profile Results Updated"
+                );
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "❌ Background Results Error:",
+                    error
+                );
+
+            });
 
     }
 );
