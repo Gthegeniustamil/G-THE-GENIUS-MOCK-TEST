@@ -234,7 +234,21 @@ async function initializeLearning() {
 
 async function loadQuestions() {
 
-    
+    // ======================================
+    // QUESTIONS LOADING STATE
+    // ======================================
+
+    questionsLoading = true;
+
+
+    // ======================================
+    // SHOW SUBJECTS IMMEDIATELY
+    // Count மட்டும் Loading...
+    // ======================================
+
+    renderSubjects();
+
+
     try {
 
         const snapshot =
@@ -245,14 +259,25 @@ async function loadQuestions() {
                 )
             );
 
+
+        // ==================================
+        // CLEAR OLD QUESTIONS
+        // ==================================
+
         allQuestions = [];
+
+
+        // ==================================
+        // LOAD FIREBASE QUESTIONS
+        // ==================================
 
         snapshot.forEach(
             (doc) => {
 
                 allQuestions.push({
 
-                    id: doc.id,
+                    id:
+                        doc.id,
 
                     ...doc.data()
 
@@ -261,10 +286,31 @@ async function loadQuestions() {
             }
         );
 
+
         console.log(
             "📚 Questions Loaded:",
             allQuestions.length
         );
+
+
+        // ==================================
+        // FIREBASE LOADING COMPLETE
+        // ==================================
+
+        questionsLoading = false;
+
+
+        // ==================================
+        // UPDATE SUBJECT COUNTS
+        // ==================================
+
+        renderSubjects();
+
+
+        console.log(
+            "✅ Learning Questions Ready"
+        );
+
 
     } catch (error) {
 
@@ -273,31 +319,93 @@ async function loadQuestions() {
             error
         );
 
-        allQuestions = [];
 
-        if (grid) {
+        // ==================================
+        // LOADING COMPLETE
+        // ==================================
 
-            grid.innerHTML = `
+        questionsLoading = false;
 
-                <div class="loading-card">
 
-                    <div style="font-size:32px;">
-                        ⚠️
-                    </div>
+        // ==================================
+        // KEEP SUBJECTS VISIBLE
+        // Don't replace with error card
+        // ==================================
 
-                    <p>
-                        Questions load ஆகவில்லை.
-                    </p>
+        renderSubjects();
 
-                    <small>
-                        Firebase connection check செய்யவும்.
-                    </small>
 
-                </div>
+        console.log(
+            "⚠️ Questions could not be loaded"
+        );
 
-            `;
-        }
     }
+
+}
+
+        // ======================================
+        // QUESTIONS READY
+        // ======================================
+
+        if (loadingBox) {
+
+            loadingBox.style.display =
+                "none";
+
+        }
+
+
+        // ======================================
+        // ENABLE START TEST
+        // ======================================
+
+        if (startBtn) {
+
+            startBtn.disabled =
+                false;
+
+            startBtn.style.opacity =
+                "1";
+
+        }
+
+
+        showMessage(
+            `✅ ${allQuestions.length} questions ready`
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "QUESTION LOAD ERROR:",
+            error
+        );
+
+
+        if (loadingBox) {
+
+            loadingBox.style.display =
+                "block";
+
+            loadingBox.textContent =
+                "❌ Questions load ஆகவில்லை.";
+
+        }
+
+
+        if (startBtn) {
+
+            startBtn.disabled =
+                true;
+
+            startBtn.style.opacity =
+                "0.5";
+
+        }
+
+    }
+
 }
 
 
