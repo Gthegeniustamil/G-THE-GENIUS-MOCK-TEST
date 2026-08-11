@@ -296,14 +296,13 @@ async function loadQuestions() {
 
     finally {
 
-        if (loadingBox) {
+    if (loadingBox) {
 
-    loadingBox.style.display = "block";
+        loadingBox.style.display = "none";
 
-    loadingBox.textContent =
-        "⏳ Questions Loading...";
+        loadingBox.textContent = "";
 
-        }
+    }
 
     }
 
