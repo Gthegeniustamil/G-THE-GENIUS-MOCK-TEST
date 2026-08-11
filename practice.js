@@ -105,24 +105,53 @@ document.addEventListener(
 );
 
 
+
 // ============================================================
-// LOAD FIRESTORE QUESTIONS
+// 🚀 INSTANT PRACTICE PAGE
 // ============================================================
 
-loadQuestions();
+console.log(
+    "⚡ Practice UI Ready Instantly"
+);
+
+// Firebase background loading
+loadQuestions()
+    .then(() => {
+
+        console.log(
+            "✅ Practice Questions Ready"
+        );
+
+    })
+    .catch(error => {
+
+        console.error(
+            "❌ Background Question Load Error:",
+            error
+        );
+
+    });
+
 
 
 async function loadQuestions() {
 
-    if (loadingBox) {
-        loadingBox.style.display = "block";
-    }
+    // ======================================
+    // 🔥 FIREBASE BACKGROUND LOAD
+    // ======================================
 
     if (startBtn) {
+
         startBtn.disabled = true;
         startBtn.style.opacity = "0.5";
+
     }
 
+    if (loadingBox) {
+
+        loadingBox.style.display = "none";
+
+    }
 
     try {
 
