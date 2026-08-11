@@ -171,7 +171,6 @@ document.addEventListener(
 // ==========================================
 // INITIALIZE
 // ==========================================
-
 async function initializeLearning() {
 
     console.log(
@@ -187,17 +186,46 @@ async function initializeLearning() {
 
     setupQuestionButtons();
 
-setupQuickTest();
+    setupQuickTest();
 
-await loadQuestions();
+    // ======================================
+    // 🚀 INSTANT APP UI
+    // Firebase wait செய்ய வேண்டாம்
+    // ======================================
 
     renderSubjects();
 
     hideLoader();
 
     console.log(
-        "✅ Learning Zone Ready"
+        "⚡ Learning UI Ready Instantly"
     );
+
+    // ======================================
+    // 🔥 FIREBASE BACKGROUND LOAD
+    // ======================================
+
+    loadQuestions()
+        .then(() => {
+
+            // Firebase data வந்த பிறகு
+            // question counts மட்டும் update
+            renderSubjects();
+
+            console.log(
+                "✅ Firebase Questions Updated"
+            );
+
+        })
+        .catch(error => {
+
+            console.error(
+                "❌ Background Firebase Error:",
+                error
+            );
+
+        });
+
 }
 
 // ==========================================
@@ -206,28 +234,7 @@ await loadQuestions();
 
 async function loadQuestions() {
 
-    const grid =
-        document.getElementById(
-            "subjectGrid"
-        );
-
-    if (grid) {
-
-        grid.innerHTML = `
-
-            <div class="loading-card">
-
-                <div class="mini-spinner"></div>
-
-                <p>
-                    Loading Questions...
-                </p>
-
-            </div>
-
-        `;
-    }
-
+    
     try {
 
         const snapshot =
