@@ -1982,3 +1982,34 @@ window.addEventListener(
 console.log(
     "📚 G THE GENIUS Learning Zone JS Loaded Successfully"
 );
+// ======================================================
+// PRACTICE THIS SUBJECT BUTTON
+// ======================================================
+
+const startQuickTestBtn =
+    document.getElementById("startQuickTestBtn");
+
+if (startQuickTestBtn) {
+
+    startQuickTestBtn.addEventListener("click", () => {
+
+        const subject =
+            window.currentSubject ||
+            new URLSearchParams(
+                window.location.search
+            ).get("subject");
+
+        if (!subject) {
+
+            alert("Subject not found ❌");
+
+            return;
+
+        }
+
+        window.location.href =
+            `practice.html?subject=${encodeURIComponent(subject)}`;
+
+    });
+
+                                                        }
