@@ -187,7 +187,9 @@ async function initializeLearning() {
 
     setupQuestionButtons();
 
-    await loadQuestions();
+setupQuickTest();
+
+await loadQuestions();
 
     renderSubjects();
 
