@@ -1333,22 +1333,152 @@ if (el("profileNav")) {
 // Test History
 // ------------------------------------------
 
-if (el("historyBtn")) {
+const historyBtn = el("historyBtn");
+const historyPanel = el("historyPanel");
+const historyList = el("historyList");
 
-    el("historyBtn")
-        .addEventListener(
-            "click",
-            () => {
+if (historyBtn) {
 
-                goToPage(
-                    "history.html"
-                );
+    historyBtn.addEventListener(
+        "click",
+        async () => {
+
+            // Show history on same page
+            if (historyPanel) {
+                historyPanel.style.display = "block";
+            }
+
+            if (!historyList) return;
+
+            historyList.innerHTML =
+                "⏳ Loading your test history...";
+
+            try {
+
+                const user = auth.currentUser;
+
+                if (!user) {
+
+                    historyList.innerHTML =
+                        "❌ Please login again.";
+
+                    return;
+                }
+
+                const resultsRef =
+                    collection(db, "results");
+
+                const historyQuery =
+                    query(
+                        resultsRef,
+                        where("uid", "==", user.uid)
+                    );
+
+                const snapshot =
+                    await getDocs(historyQuery);
+
+                if (snapshot.empty) {
+
+                    historyList.innerHTML =
+                        "📭 No test history found.";
+
+                    return;
+                }
+
+                let history = [];
+
+                snapshot.forEach((doc) => {
+
+                    history.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+
+                });
+
+                history.sort((a, b) => {
+
+                    const aTime =
+                        a.createdAt?.toMillis?.() || 0;
+
+                    const bTime =
+                        b.createdAt?.toMillis?.() || 0;
+
+                    return bTime - aTime;
+
+                });
+
+                historyList.innerHTML = "";
+
+                history.forEach((result) => {
+
+                    const score =
+                        Number(result.score || 0);
+
+                    const total =
+                        Number(
+                            result.totalQuestions || 0
+                        );
+
+                    let date = "-";
+
+                    if (result.createdAt) {
+
+                        try {
+
+                            date =
+                                result.createdAt
+                                    .toDate()
+                                    .toLocaleString();
+
+                        } catch {}
+
+                    }
+
+                    const card =
+                        document.createElement("div");
+
+                    card.innerHTML = `
+                        <div class="history-card">
+
+                            <strong>
+                                ${result.testType || "Test"}
+                            </strong>
+
+                            <p>
+                                📝 Score:
+                                ${score} / ${total}
+                            </p>
+
+                            <p>
+                                📅 ${date}
+                            </p>
+
+                        </div>
+                    `;
+
+                    historyList.appendChild(card);
+
+                });
 
             }
-        );
+
+            catch (error) {
+
+                console.error(
+                    "History Error:",
+                    error
+                );
+
+                historyList.innerHTML =
+                    "❌ Unable to load test history.";
+
+            }
+
+        }
+    );
 
 }
-
 
 // ==========================================
 // CLOSE MODALS WHEN CLICKING OUTSIDE
